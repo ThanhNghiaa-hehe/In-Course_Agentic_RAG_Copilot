@@ -13,7 +13,8 @@
 - **Re-ranking & Normalization:** Cross-encoder with **Logistic Sigmoid Normalization** $\sigma(z) = \frac{1}{1 + e^{-z}}$ so the threshold `score >= 0.35` reflects true mathematical probability.
 - **Speech-to-Text & Lexicon Biasing:** `faster-whisper` with automatic domain **`hotwords`** (C++, Java, Python keywords) maintained across every window, tuned Silero VAD (`threshold=0.35`, `speech_pad_ms=400`, `condition_on_previous_text=False`), and CPU fallback if `cublas64_12.dll` is missing.
 - **Context Assembly:** U-shaped layout `[Top 1, Top 3, Top 2]` to eliminate Stanford's "Lost-in-the-Middle" degradation.
-- **Pre-filtering Rule:** In-HNSW single-call pre-filtering (`course_id == current_course_id AND lesson_seq <= current_lesson_seq`).
+- **Pre-filtering Rule:** In-HNSW dynamic single-call pre-filtering (`course_id == current_course_id AND lesson_seq <= current_lesson_seq`). Never hardcode fixed lesson sequences.
+- **Anti-Robotic Socratic Synthesizer:** Single-pass prompt fusion inside the primary Socratic LLM call to distill raw colloquial transcripts into warm, natural 1-on-1 mentoring with zero additional API cost.
 - **Session & State Persistence:** Redis sliding window (4–6 turns) + LangGraph Checkpointer (no separate Postgres needed).
 
 ## 3. Production Conventions
@@ -22,6 +23,8 @@
 - Ensure all text is normalized to Unicode NFC before vectorizing.
 - Never write full solutions in Socratic prompts.
 - Qdrant Cloud Client: Always set `timeout=60.0` for international latency resilience.
+- **Windows CLI & Terminal Output:** Avoid double-width multi-byte emojis (🎬, 📌, 📝) in terminal output logs to prevent PowerShell cursor drift and buffer overwrites. Always wrap lines with textwrap (width <= 75) and enforce flush=True.
+- **Interactive Command Protocol:** Always provide clean, ready-to-run PowerShell commands and explain their purpose before execution, prioritizing user-controlled terminal execution.
 
 ## 4. Enterprise Git & Daily Delivery Cadence
 - **Commit Frequency:** Atomic commits daily. Never accumulate multiple days into a single huge commit.
