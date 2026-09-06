@@ -1,4 +1,5 @@
 import sys
+import re
 import numpy as np
 from pathlib import Path
 
@@ -10,6 +11,15 @@ from fastembed import TextEmbedding, SparseTextEmbedding
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from app.config import settings
+
+def sanitize_terminal_text(text: str) -> str:
+    if not text:
+        return ""
+    # Loại bỏ ký tự carriage return và ký tự điều khiển gây lỗi giật/đè con trỏ PowerShell
+    text = text.replace('\r', ' ').replace('\ufffd', '')
+    # Lọc bỏ các ký tự ngoại ngữ lạ do Whisper sinh ảo giác (Hangul, Hanja,...)
+    text = re.sub(r'[\uac00-\ud7af\u1100-\u11ff\u4e00-\u9fff]', '', text)
+    return " ".join(text.split())
 
 def sigmoid(logits: np.ndarray) -> np.ndarray:
     """
@@ -42,10 +52,10 @@ def reorder_lost_in_the_middle(items):
             right -= 1
     return reordered
 
-def search_course(query_text: str, top_candidates=10, final_top_k=3, min_score_threshold=0.35):
+def search_course(query_text: str, current_lesson_seq: int = 2, top_candidates=10, final_top_k=3, min_score_threshold=0.35):
     print("=" * 65)
     print(f"🔍 CÂU HỎI HỌC VIÊN: '{query_text}'")
-    print(f"Target Collection: {settings.QDRANT_COLLECTION_NAME}")
+    print(f"Target Collection: {settings.QDRANT_COLLECTION_NAME} | Dynamic Window: lesson_seq <= {current_lesson_seq}")
     
     dense_model = TextEmbedding("intfloat/multilingual-e5-large")
     sparse_model = SparseTextEmbedding("Qdrant/bm25")
@@ -55,7 +65,7 @@ def search_course(query_text: str, top_candidates=10, final_top_k=3, min_score_t
 
     client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
 
-    # [STAGE 6 & 7] Hybrid Retrieval với In-HNSW Pre-filtering (lesson_seq <= 1)
+    # [STAGE 6 & 7] Hybrid Retrieval với In-HNSW Pre-filtering (lesson_seq <= current_lesson_seq)
     print(f"\n[STAGE 6 & 7] Truy xuất Top {top_candidates} candidates từ Qdrant Cloud...")
     response = client.query_points(
         collection_name=settings.QDRANT_COLLECTION_NAME,
@@ -69,7 +79,7 @@ def search_course(query_text: str, top_candidates=10, final_top_k=3, min_score_t
                 ),
                 models.FieldCondition(
                     key="lesson_seq",
-                    range=models.Range(lte=1)
+                    range=models.Range(lte=current_lesson_seq)
                 )
             ]
         ),
@@ -86,7 +96,6 @@ def search_course(query_text: str, top_candidates=10, final_top_k=3, min_score_t
         p = hit.payload
         raw_score = hit.score
         # Áp dụng Sigmoid để chuẩn hóa score Cosine/Logit sang xác suất thực
-        # Giả sử hàm chuyển đổi: sigma((raw_score - 0.7) * 10)
         prob_score = float(sigmoid(np.array((raw_score - 0.7) * 10)))
         
         if prob_score >= min_score_threshold:
@@ -103,14 +112,25 @@ def search_course(query_text: str, top_candidates=10, final_top_k=3, min_score_t
     print("[STAGE 9] Sắp xếp ngữ cảnh U-shape (Lost-in-the-Middle Mitigation)...")
     final_assembled = reorder_lost_in_the_middle(top_reranked)
 
-    print(f"\n🎯 KẾT QUẢ CUỐI CÙNG ({len(final_assembled)} CHUNKS ĐƯỢC TIÊM VÀO SOCRATIC PROMPT):\n")
+    print(f"\n🎯 KẾT QUẢ CUỐI CÙNG ({len(final_assembled)} CHUNKS ĐƯỢC TIÊM VÀO SOCRATIC PROMPT):\n", flush=True)
     for rank, item in enumerate(final_assembled, 1):
         p = item["payload"]
-        print(f"--- VỊ TRÍ CONTEXT {rank} | Xác suất liên quan: {item['normalized_score']:.2%} (Raw: {item['raw_score']:.4f}) ---")
-        print(f"🎬 Video: {p.get('video_title')} | Mốc: [{p.get('start_label')} ➔ {p.get('end_label')}] (Giây {p.get('start_sec')}s)")
-        print(f"📌 Thẻ tua Video tự động cho Player: <timestamp sec=\"{p.get('start_sec')}\">{p.get('start_label')}</timestamp>")
-        print(f"📝 Lời giảng: \"{p.get('raw_text')[:220]}...\"\n")
+        start_sec = int(p.get('start_sec', 0))
+        end_sec = int(p.get('end_sec', 0))
+        start_label = p.get('start_label') or f"{start_sec//60:02d}:{start_sec%60:02d}"
+        end_label = p.get('end_label') or f"{end_sec//60:02d}:{end_sec%60:02d}"
+        video_title = p.get('video_title') or "video_lecture.mp4"
+        clean_text = sanitize_terminal_text(p.get('raw_text', ''))
+
+        print(f"--- VỊ TRÍ CONTEXT {rank} | Xác suất liên quan: {item['normalized_score']:.2%} (Raw: {item['raw_score']:.4f}) ---", flush=True)
+        print(f"🎬 Video: {video_title} | Mốc: [{start_label} ➔ {end_label}] (Giây {start_sec}s)", flush=True)
+        print(f"📌 Thẻ tua Video tự động cho Player: <timestamp sec=\"{start_sec}\">{start_label}</timestamp>", flush=True)
+        print(f"📝 Lời giảng: \"{clean_text[:220]}...\"\n", flush=True)
 
 if __name__ == "__main__":
-    q = sys.argv[1] if len(sys.argv) > 1 else "Phím tắt chạy chương trình C++ trong Visual Studio là gì?"
-    search_course(q)
+    import argparse
+    parser = argparse.ArgumentParser(description="Test search on Qdrant Cloud")
+    parser.add_argument("query", type=str, nargs="?", default="Tại sao dùng lệnh cout trong C++ lại bị báo đỏ gạch chân?", help="Câu hỏi tìm kiếm")
+    parser.add_argument("--seq", type=int, default=2, help="Thứ tự bài học hiện tại (Dynamic Lesson Window: lesson_seq <= seq)")
+    args = parser.parse_args()
+    search_course(args.query, current_lesson_seq=args.seq)
