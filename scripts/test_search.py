@@ -133,6 +133,35 @@ def search_course(query_text: str, current_lesson_seq: int = 2, top_candidates=1
         print(f" - Loi giang:\n{wrapped_speech}", flush=True)
         print("-" * 72, flush=True)
 
+    # [STAGE 10] Minh hoa Socratic Synthesis chong van phong "cong nghiep"
+    print("\n" + "=" * 72, flush=True)
+    print("[STAGE 10: MO PHONG SOCRATIC SYNTHESIZER - CHONG VAN PHONG CONG NGHIEP]", flush=True)
+    print("=" * 72, flush=True)
+    
+    if final_assembled:
+        best_p = final_assembled[0]["payload"]
+        best_ts = f'<timestamp sec="{best_p["start_sec"]}">{best_p["start_label"]}</timestamp>'
+        
+        print("\n* NGUYEN TAC: Bo qua cac cau noi dua / tu dem tho ('ngua mat', 'loi lao', 'da gia').", flush=True)
+        print("* CHAT LOC: Tap trung vao ban chat ky thuat va the tua video chinh xac.", flush=True)
+        print("\n--- MAU CAU TRA LOI SOCRATIC (GIAI PHAP 3: KHONG BI 'CONG NGHIEP') ---", flush=True)
+        sample_response = (
+            f"Chào bạn, mình thấy bạn đang gặp lỗi khi dùng lệnh `cout` trong C++.\n\n"
+            f"1. Phân tích nguyên nhân:\n"
+            f"   Lệnh `cout` nằm trong thư viện chuẩn `<iostream>` thuộc không gian tên `std` (Standard Namespace). "
+            f"   Khi bạn chưa khai báo sử dụng không gian tên này, trình biên dịch sẽ không nhận diện được `cout` "
+            f"   và báo gạch đỏ dưới chân chữ.\n\n"
+            f"2. Gợi ý tư duy Socratic:\n"
+            f"   Theo bạn, để trình biên dịch hiểu rằng `cout` thuộc thư viện chuẩn, bạn có thể bổ sung dòng lệnh "
+            f"   `using namespace ...;` ở đầu file, hoặc viết tiền tố nào ngay trước chữ `cout`?\n\n"
+            f"3. Xem lại bài giảng trực quan:\n"
+            f"   Thầy giáo đã giải thích rất chi tiết về lỗi gạch đỏ này và thao tác mẫu trên Visual Studio "
+            f"   ở mốc {best_ts}. Bạn hãy bấm vào mốc thời gian để xem lại đoạn thầy hướng dẫn nhé!"
+        )
+        wrapped_resp = textwrap.fill(sample_response, width=72, replace_whitespace=False)
+        print(wrapped_resp, flush=True)
+        print("=" * 72 + "\n", flush=True)
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Test search on Qdrant Cloud")
