@@ -1,5 +1,6 @@
 import sys
 import re
+import textwrap
 import numpy as np
 from pathlib import Path
 
@@ -112,7 +113,9 @@ def search_course(query_text: str, current_lesson_seq: int = 2, top_candidates=1
     print("[STAGE 9] Sắp xếp ngữ cảnh U-shape (Lost-in-the-Middle Mitigation)...")
     final_assembled = reorder_lost_in_the_middle(top_reranked)
 
-    print(f"\n🎯 KẾT QUẢ CUỐI CÙNG ({len(final_assembled)} CHUNKS ĐƯỢC TIÊM VÀO SOCRATIC PROMPT):\n", flush=True)
+    print(f"\n" + "=" * 72, flush=True)
+    print(f"KET QUA TRUY XUAT ({len(final_assembled)} CHUNKS TIEM VAO SOCRATIC PROMPT):", flush=True)
+    print("=" * 72, flush=True)
     for rank, item in enumerate(final_assembled, 1):
         p = item["payload"]
         start_sec = int(p.get('start_sec', 0))
@@ -121,11 +124,14 @@ def search_course(query_text: str, current_lesson_seq: int = 2, top_candidates=1
         end_label = p.get('end_label') or f"{end_sec//60:02d}:{end_sec%60:02d}"
         video_title = p.get('video_title') or "video_lecture.mp4"
         clean_text = sanitize_terminal_text(p.get('raw_text', ''))
+        wrapped_speech = textwrap.fill(f'"{clean_text[:250]}..."', width=72, initial_indent="   ", subsequent_indent="   ")
 
-        print(f"--- VỊ TRÍ CONTEXT {rank} | Xác suất liên quan: {item['normalized_score']:.2%} (Raw: {item['raw_score']:.4f}) ---", flush=True)
-        print(f"🎬 Video: {video_title} | Mốc: [{start_label} ➔ {end_label}] (Giây {start_sec}s)", flush=True)
-        print(f"📌 Thẻ tua Video tự động cho Player: <timestamp sec=\"{start_sec}\">{start_label}</timestamp>", flush=True)
-        print(f"📝 Lời giảng: \"{clean_text[:220]}...\"\n", flush=True)
+        print(f"\n>>> [CONTEXT {rank}] | Xac suat: {item['normalized_score']:.2%} (Raw: {item['raw_score']:.4f})", flush=True)
+        print(f" - Video: {video_title}", flush=True)
+        print(f" - Moc thoi gian: [{start_label} -> {end_label}] (Giay {start_sec}s)", flush=True)
+        print(f" - The tua video: <timestamp sec=\"{start_sec}\">{start_label}</timestamp>", flush=True)
+        print(f" - Loi giang:\n{wrapped_speech}", flush=True)
+        print("-" * 72, flush=True)
 
 if __name__ == "__main__":
     import argparse
