@@ -95,3 +95,26 @@ Save to `docs/daily_reports/YYYY-MM-DD_report.md` and format as:
 ### 5. 📅 Kế hoạch ngày tiếp theo (Next Day Plan)
 - ...
 ```
+
+---
+
+## 4. Session Cadence & Student Theory Learning Protocol
+
+### A. Session Kickoff Protocol (Bắt đầu phiên làm việc):
+Khi sinh viên hỏi: *"Hôm nay làm gì tiếp theo?"* hoặc các câu tương tự:
+1. Đọc báo cáo ngày gần nhất trong `docs/daily_reports/` để xác định các việc còn dang dở.
+2. Kiểm tra `git status` xem có file nào đang modified/untracked.
+3. Xuất ra kế hoạch làm việc gồm:
+   - 2–3 mục tiêu cốt lõi của ngày (theo roadmap).
+   - Đường dẫn file mã nguồn cụ thể cần tạo/sửa.
+   - Kỹ năng (Skill) liên quan sẽ kích hoạt.
+   - Các câu lệnh PowerShell sẵn sàng chạy.
+
+### B. Session Wrap-up Protocol (Kết thúc phiên làm việc):
+Mỗi khi kết thúc phiên và chuẩn bị đẩy code lên GitHub, thực hiện danh sách kiểm tra sau:
+1. [ ] Rà soát `git status`, đảm bảo không commit `.env`, secret tokens hoặc file video nặng `*.mp4`.
+2. [ ] Tạo Báo cáo Tiến độ Mentor: `docs/daily_reports/YYYY-MM-DD_report.md`.
+3. [ ] **Tạo Tài liệu Học tập Lý thuyết Chuyên sâu cho Sinh viên:** `docs/theory_learning/YYYY-MM-DD_theory.md`.
+   - Tổng hợp và giải thích chuyên sâu toàn bộ lý thuyết, thuật toán, công thức toán học và kiến trúc xuất hiện trong phiên.
+   - Cung cấp bộ câu hỏi phản biện & gợi ý trả lời bảo vệ đồ án trước hội đồng.
+4. [ ] Chạy Git add, commit chuẩn Conventional Commits và push lên `origin/main`.
