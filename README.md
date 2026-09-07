@@ -140,6 +140,6 @@ QDRANT_COLLECTION_NAME=In-Course_Agentic_RAG_Copilot
 ---
 
 ## 👨‍💻 Tác giả & Thông tin Đồ án
-* **Sinh viên thực hiện:** Nguyễn Thành Nghĩa (MSSV: `23DH112252`)
+* **Sinh viên thực hiện:** Trần Thành Nghĩa (MSSV: `23DH112252`)
 * **Trường Đại học:** Ngoại ngữ - Tin học TP.HCM (HUFLIT)
 * **Kho mã nguồn:** [https://github.com/ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot](https://github.com/ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot)
