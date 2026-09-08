@@ -17,15 +17,20 @@ class Settings(BaseSettings):
     # Qdrant
     QDRANT_URL: str = "http://localhost:6333"
     QDRANT_API_KEY: Optional[str] = None
-    QDRANT_COLLECTION_NAME: str = "course_knowledge_v1"
+    QDRANT_COLLECTION_NAME: str = "In-Course_Agentic_RAG_Copilot"
+    QDRANT_TIMEOUT: float = 60.0
 
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
 
-    # Models
-    EMBEDDING_MODEL_NAME: str = "BAAI/bge-m3"
+    # Models & Hybrid Search
+    EMBEDDING_MODEL_NAME: str = "intfloat/multilingual-e5-large"
+    SPARSE_MODEL_NAME: str = "Qdrant/bm25"
     RERANKER_MODEL_NAME: str = "BAAI/bge-reranker-large"
     USE_ONNX: bool = True
+    MIN_SCORE_THRESHOLD: float = 0.35
+    DEFAULT_TOP_CANDIDATES: int = 10
+    DEFAULT_FINAL_TOP_K: int = 3
 
     # Whisper
     WHISPER_MODEL_SIZE: str = "large-v3"

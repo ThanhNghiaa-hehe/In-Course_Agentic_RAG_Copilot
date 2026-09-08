@@ -1,0 +1,19 @@
+[
+  {
+    "chunk_id": "header_1_3",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 3,
+    "raw_text": "#include <iostream>\n\nusing namespace std;",
+    "context_code": "#include <iostream>\n\nusing namespace std;"
+  },
+  {
+    "chunk_id": "func_main_9_30",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 9,
+    "end_line": 30,
+    "raw_text": "int main() {\n    // 1. Khai báo hằng số (constants) - Không thể thay đổi giá trị trong suốt chương trình\n    const int DO_SOI = 100;\n    const int DO_DONG = 0;\n\n    cout << \"Nhiet do soi cua nuoc: \" << DO_SOI << \" do C\" << endl;\n    cout << \"Nhiet do dong dac cua nuoc: \" << DO_DONG << \" do C\" << endl;\n\n    // DO_SOI = 105; // Lỗi biên dịch: Không thể gán lại giá trị cho biến const\n\n    // 2. Thăng cấp kiểu dữ liệu (Type Promotion)\n    // Khi thực hiện biểu thức giữa kiểu số nguyên (int) và số thực (double),\n    // trình biên dịch C++ tự động chuyển đổi sang kiểu dữ liệu lớn hơn (double).\n    int a = 8;\n    double b = 7.5;\n\n    // a (int) + b (double) -> Kết quả tự động thăng cấp thành double (15.5)\n    double tong = a + b;\n    cout << \"Tong a + b (Type Promotion): \" << a << \" + \" << b << \" = \" << tong << endl;\n\n    return 0;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\n\nusing namespace std;\n\n// [Function Implementation]\nint main() {\n    // 1. Khai báo hằng số (constants) - Không thể thay đổi giá trị trong suốt chương trình\n    const int DO_SOI = 100;\n    const int DO_DONG = 0;\n\n    cout << \"Nhiet do soi cua nuoc: \" << DO_SOI << \" do C\" << endl;\n    cout << \"Nhiet do dong dac cua nuoc: \" << DO_DONG << \" do C\" << endl;\n\n    // DO_SOI = 105; // Lỗi biên dịch: Không thể gán lại giá trị cho biến const\n\n    // 2. Thăng cấp kiểu dữ liệu (Type Promotion)\n    // Khi thực hiện biểu thức giữa kiểu số nguyên (int) và số thực (double),\n    // trình biên dịch C++ tự động chuyển đổi sang kiểu dữ liệu lớn hơn (double).\n    int a = 8;\n    double b = 7.5;\n\n    // a (int) + b (double) -> Kết quả tự động thăng cấp thành double (15.5)\n    double tong = a + b;\n    cout << \"Tong a + b (Type Promotion): \" << a << \" + \" << b << \" = \" << tong << endl;\n\n    return 0;\n}"
+  }
+]

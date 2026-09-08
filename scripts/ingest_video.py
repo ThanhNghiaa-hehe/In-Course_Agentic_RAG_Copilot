@@ -303,10 +303,12 @@ def process_video(video_path: str, course_id="cpp-core", lesson_id="lesson-01", 
     dense_model = TextEmbedding("intfloat/multilingual-e5-large")
     sparse_model = SparseTextEmbedding("Qdrant/bm25")
 
-    texts = [c["raw_text"] for c in chunks]
-    print(f"Đang sinh {len(texts)} dense vectors và sparse BM25 vectors...")
-    dense_embeddings = list(dense_model.embed(texts))
-    sparse_embeddings = list(sparse_model.embed(texts))
+    # BẮT BUỘC: Thêm tiền tố 'passage: ' cho mô hình multilingual-e5-large
+    dense_inputs = [f"passage: {c['raw_text']}" for c in chunks]
+    sparse_inputs = [c["raw_text"] for c in chunks]
+    print(f"Đang sinh {len(chunks)} dense vectors và sparse BM25 vectors...")
+    dense_embeddings = list(dense_model.embed(dense_inputs))
+    sparse_embeddings = list(sparse_model.embed(sparse_inputs))
 
     qdrant = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
 

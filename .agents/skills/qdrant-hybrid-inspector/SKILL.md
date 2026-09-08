@@ -68,6 +68,8 @@ Chạy script kiểm thử truy vấn để đo đạc độ trễ và độ ch�
 ```powershell
 .venv\Scripts\python scripts\test_search.py "Tại sao dùng lệnh cout trong C++ lại bị báo đỏ gạch chân?" --seq 2
 ```
+> ⚠️ **Giao thức Tương tác:** Luôn cung cấp câu lệnh dạng copy-ready để người dùng tự chạy trên terminal của họ; không tự ý kích hoạt terminal chạy ngầm trừ khi người dùng yêu cầu trực tiếp.
+
 * **Tiêu chuẩn kết quả:**
   - Lấy được Top 10 ứng viên ban đầu trong $< 400$ms.
   - Điểm Sigmoid Normalized Score $\ge 0.35$.
