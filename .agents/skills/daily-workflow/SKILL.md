@@ -20,6 +20,7 @@ description: Professional 4-week Agile engineering roadmap, enterprise Git commi
 - **Day 8:** Hybrid Dense + Sparse BM25 reciprocal rank fusion (RRF).
 - **Day 9:** Dynamic In-HNSW Pre-filtering (`course_id` and `lesson_seq <= current_seq`).
 - **Day 10:** Cross-Encoder Re-ranking with Logistic Sigmoid Normalization ($\sigma(z) \ge 0.35$).
+  > ⚠️ **Kiến trúc Bất biến (RRF vs. Cross-Encoder):** RRF là thuật toán xếp hạng tương đối (Relative Rank) dùng để lọc thô Top 10–15 ứng viên. RRF không thể tự loại bỏ câu hỏi lạc đề (Out-of-Domain) bằng ngưỡng điểm vì rank 1 luôn được gán điểm cao. Bắt buộc phải có `bge-reranker-large` ở Stage 8 chấm logit $z$ và lọc bằng $\sigma(z) \ge 0.35$ để triệt tiêu câu hỏi ngoài phạm vi.
 - **Day 11:** U-shaped Lost-in-the-Middle Context Assembly (`[Top 1, Top 3, Top 2]`).
 - **Day 12:** Retrieval latency optimization and benchmarking.
 - **Day 13:** Retrieval evaluation with edge-case queries.
