@@ -47,11 +47,11 @@ class SearchRequest(BaseModel):
         le=10,
         description="Số lượng chunks tối ưu sau khi xếp hạng và U-shaped assembly"
     )
-    min_score_threshold: float = Field(
-        default=0.35,
+    min_score_threshold: Optional[float] = Field(
+        default=None,
         ge=0.0,
         le=1.0,
-        description="Ngưỡng lọc điểm tin cậy RRF tối thiểu"
+        description="Ngưỡng lọc điểm tin cậy tùy chỉnh (nếu để trống sẽ dùng ngưỡng phân tầng Modality-Aware)"
     )
 
 
@@ -80,6 +80,17 @@ class SearchChunkResult(BaseModel):
     lesson_seq: int = Field(..., description="Thứ tự bài học trong giáo trình")
     raw_text: str = Field(..., description="Nội dung văn bản sạch phục vụ LLM Context")
 
+    confidence_score: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Điểm xác suất Logistic Sigmoid từ 0.0 đến 1.0"
+    )
+    is_approximate: Optional[bool] = Field(
+        default=False,
+        description="Cờ đánh dấu mốc video tham khảo qua cơ chế Best-Effort Fallback"
+    )
+
     # Thuộc tính đặc thù cho Video Transcript (Multimodal Video Sync)
     video_title: Optional[str] = Field(default=None, description="Tên file bài giảng video")
     start_sec: Optional[int] = Field(default=None, ge=0, description="Mốc giây bắt đầu trong video")
@@ -97,6 +108,10 @@ class SearchChunkResult(BaseModel):
     code_scope: Optional[str] = Field(default=None, description="Phạm vi cú pháp AST (tên hàm, class)")
     start_line: Optional[int] = Field(default=None, ge=1, description="Dòng code bắt đầu trong file")
     end_line: Optional[int] = Field(default=None, ge=1, description="Dòng code kết thúc trong file")
+    context_code: Optional[str] = Field(
+        default=None,
+        description="Mã nguồn kèm Header Preamble (#include, using namespace) chuẩn AST"
+    )
 
 
 class SearchResponse(BaseModel):

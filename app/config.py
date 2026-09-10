@@ -26,9 +26,12 @@ class Settings(BaseSettings):
     # Models & Hybrid Search
     EMBEDDING_MODEL_NAME: str = "intfloat/multilingual-e5-large"
     SPARSE_MODEL_NAME: str = "Qdrant/bm25"
-    RERANKER_MODEL_NAME: str = "BAAI/bge-reranker-large"
+    RERANKER_MODEL_NAME: str = "jinaai/jina-reranker-v2-base-multilingual"
     USE_ONNX: bool = True
-    MIN_SCORE_THRESHOLD: float = 0.35
+    MIN_SCORE_THRESHOLD: float = 0.25
+    CODE_SCORE_THRESHOLD: float = 0.35
+    VIDEO_SCORE_THRESHOLD: float = 0.22
+    VIDEO_FALLBACK_MIN_THRESHOLD: float = 0.15
     DEFAULT_TOP_CANDIDATES: int = 10
     DEFAULT_FINAL_TOP_K: int = 3
 

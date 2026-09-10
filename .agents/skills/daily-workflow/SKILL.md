@@ -26,7 +26,10 @@ description: Professional 4-week Agile engineering roadmap, enterprise Git commi
 - **Day 13:** Retrieval evaluation with edge-case queries.
 - **Day 14:** Tuần 2 Review, retrieval benchmarks, and mentor checkpoint report.
 
-### Tuần 3: Socratic Agentic Copilot & Streaming SSE Backend
+### Tuần 3: Socratic Agentic Copilot & Streaming SSE Backend (Mốc 50% Đồ Án)
+- 🔔 **MANDATORY HALFWAY MILESTONE REMINDER (GIẢI PHÁP 2):**
+  > Khi bước vào Tuần 3 (mốc hơn nửa chặng đường đồ án), AI **BẮT BUỘC PHẢI CHỦ ĐỘNG NHẮC NHỞ** sinh viên:
+  > *"🔔 Nhắc nhở Cột mốc 50%: Chúng ta đã bước qua nửa chặng đường đồ án! Đã đến lúc kích hoạt GIẢI PHÁP 2: Code-to-Video Metadata Binding (gắn trực tiếp mốc `approx_video_sec` vào từng hàm/class trong AST Code Chunk) như đã cam kết để đảm bảo tính ổn định tuyệt đối của video timestamp khi bảo vệ đồ án trước Hội đồng!"*
 - **Day 15:** FastAPI architecture, Pydantic v2 schemas, and dependency injection.
 - **Day 16:** Intent Classifier Router (Chitchat fast-path vs RAG tool call).
 - **Day 17:** Socratic Prompt Engine & Strict Code Guardrail (refusal to write full solution).
@@ -113,9 +116,15 @@ Khi sinh viên hỏi: *"Hôm nay làm gì tiếp theo?"* hoặc các câu tươn
 
 ### B. Session Wrap-up Protocol (Kết thúc phiên làm việc):
 Mỗi khi kết thúc phiên và chuẩn bị đẩy code lên GitHub, thực hiện danh sách kiểm tra sau:
-1. [ ] Rà soát `git status`, đảm bảo không commit `.env`, secret tokens hoặc file video nặng `*.mp4`.
-2. [ ] Tạo Báo cáo Tiến độ Mentor: `docs/daily_reports/YYYY-MM-DD_report.md`.
-3. [ ] **Tạo Tài liệu Học tập Lý thuyết Chuyên sâu cho Sinh viên:** `docs/theory_learning/YYYY-MM-DD_theory.md`.
+1. [ ] **Quét Đối chiếu Chéo Toàn diện (Holistic Session Wrap-up Double-Check):**
+   - Rà soát tính toàn vẹn dữ liệu Vector DB trên Qdrant Cloud (chuẩn tiền tố `passage: ` cho E5, số lượng point chính xác, không lọt token âm học rác).
+   - Kiểm tra khớp nối Schema Pydantic giữa Ingestion, `app/schemas/` và `app/services/` (không rơi rụng `context_code`, `code_language`).
+   - Kiểm tra tính đồng bộ cấu hình môi trường (`.env` vs `.env.example` vs `app/config.py`).
+   - Kiểm tra tính trung thực, No Hallucination, không báo cáo trước những gì chưa hoàn thành.
+2. [ ] Rà soát `git status`, đảm bảo không commit `.env`, secret tokens hoặc file video nặng `*.mp4`.
+3. [ ] Tạo Báo cáo Tiến độ Mentor: `docs/daily_reports/YYYY-MM-DD_report.md`.
+4. [ ] **Tạo Tài liệu Học tập Lý thuyết Chuyên sâu cho Sinh viên:** `docs/theory_learning/YYYY-MM-DD_theory.md`.
    - Tổng hợp và giải thích chuyên sâu toàn bộ lý thuyết, thuật toán, công thức toán học và kiến trúc xuất hiện trong phiên.
    - Cung cấp bộ câu hỏi phản biện & gợi ý trả lời bảo vệ đồ án trước hội đồng.
-4. [ ] Chạy Git add, commit chuẩn Conventional Commits và push lên `origin/main`.
+5. [ ] Chạy Git add, commit chuẩn Conventional Commits và push lên `origin/main`.
+

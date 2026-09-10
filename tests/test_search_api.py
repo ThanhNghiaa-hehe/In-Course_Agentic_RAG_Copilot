@@ -35,8 +35,7 @@ def test_search_endpoint_valid_cpp_query(client):
         "course_id": "cpp-core",
         "lesson_seq": 2,
         "top_candidates": 10,
-        "final_top_k": 3,
-        "min_score_threshold": 0.35
+        "final_top_k": 3
     }
     response = client.post("/api/v1/search", json=payload)
     assert response.status_code == 200
@@ -45,9 +44,10 @@ def test_search_endpoint_valid_cpp_query(client):
     assert data["total_retrieved"] > 0
     assert len(data["results"]) <= 3
 
-    # Kiểm tra cấu trúc đa phương thức của các chunks trả về
+    # Kiểm tra cấu trúc đa phương thức của các chunks trả về (Đồng thời cả Code và Video)
     content_types = [item["content_type"] for item in data["results"]]
-    assert "code_ast" in content_types or "video_transcript" in content_types
+    assert "code_ast" in content_types
+    assert "video_transcript" in content_types
 
     for item in data["results"]:
         assert "rrf_score" in item
@@ -55,17 +55,16 @@ def test_search_endpoint_valid_cpp_query(client):
         if item["content_type"] == "video_transcript":
             assert "timestamp_tag" in item
             assert item["timestamp_tag"].startswith("<timestamp sec=")
+        elif item["content_type"] == "code_ast":
+            assert "context_code" in item
+            assert item["context_code"] is not None
 
 
-@pytest.mark.xfail(
-    reason="TODO(Day-4): Cần tích hợp bge-reranker-large (Cross-Encoder) ở Stage 8 để áp dụng chuẩn hóa Sigmoid lọc tuyệt đối câu hỏi lạc đề (RRF hiện tại chỉ xếp hạng tương đối).",
-    strict=False
-)
 def test_search_endpoint_out_of_domain_guardrails(client):
     """
     Kiểm tra cơ chế phòng thủ Guardrails:
     Khi học viên hỏi câu hỏi ngoài phạm vi khóa học (hỏi về Java Spring Boot trong lớp C++),
-    hệ thống phải loại bỏ nhiễu và trả về danh sách rỗng (total_retrieved == 0).
+    hệ thống dùng Cross-Encoder Sigmoid loại bỏ nhiễu và trả về danh sách rỗng (total_retrieved == 0).
     """
     payload = {
         "query": "Cách cấu hình dependency injection trong Java Spring Boot và tạo Bean",

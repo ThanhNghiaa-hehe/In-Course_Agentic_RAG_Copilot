@@ -13,7 +13,15 @@
 - **Vector DB:** Qdrant with dual Named Vectors (`dense`: 1024-dim Cosine, `sparse`: DotProduct for BM25).
 - **Embedding & Sparse Engine:** `fastembed` with `intfloat/multilingual-e5-large` (1024-dim) and `Qdrant/bm25` (unified single stack, no TEI dependency).
 - **E5 Asymmetric Prefix Standard:** Bắt buộc thêm `passage: ` khi index tài liệu/code và `query: ` khi truy vấn tìm kiếm để tối ưu hóa không gian vector cosine.
-- **Re-ranking & Normalization:** Cross-encoder with **Logistic Sigmoid Normalization** $\sigma(z) = \frac{1}{1 + e^{-z}}$. Triết lý thiết kế **Recall-First** với ngưỡng lọc $\ge 0.35$ kết hợp Calibrated Sigmoid / Min-Max Normalization để loại bỏ nhiễu từ câu hỏi ngắn.
+- **Re-ranking & Normalization:** Cross-encoder with **Logistic Sigmoid Normalization** $\sigma(z) = \frac{1}{1 + e^{-z}}$. Triết lý thiết kế **Recall-First** kết hợp Calibrated Sigmoid / Min-Max Normalization để loại bỏ nhiễu từ câu hỏi ngắn.
+- **Multimodal Thresholding & Fallback Policy (2-Phase Roadmap):**
+  - **Phase 1 (Current - Under 50% Progress):** Áp dụng *Modality-Aware Thresholding*:
+    - `CODE_SCORE_THRESHOLD = 0.35` (nghiêm ngặt cho Code AST nhằm đảm bảo tính đúng đắn cú pháp).
+    - `VIDEO_SCORE_THRESHOLD = 0.22` (linh hoạt cho Video Transcript nhằm dung hòa văn nói tự nhiên và nhiễu âm học Whisper).
+    - *Best-Effort In-Course Fallback:* Nếu Code AST $\ge 0.60$ nhưng không có video nào $\ge 0.22$, hệ thống tự động chọn 1 video chunk có điểm cao nhất thuộc cùng `lesson_seq` đạt $\ge 0.15$ (gắn nhãn `is_approximate: true`) để luôn bảo toàn thẻ `<timestamp>` cho frontend.
+  - **Phase 2 (Halfway Milestone - Over 50% Progress):** Chuyển dịch sang *Code-to-Video Metadata Binding*:
+    - Gắn mốc `approx_video_sec` vào payload của AST Code Chunk trong khâu Ingestion.
+    - **Mandatory AI Reminder:** AI có nghĩa vụ chủ động nhắc nhở sinh viên kích hoạt Phase 2 ngay khi hoàn tất tầng Agentic Orchestration / Chat UI (bắt đầu Tuần 3).
 - **Speech-to-Text & Lexicon Biasing:** `faster-whisper` with automatic domain **`hotwords`** (C++, Java, Python keywords) maintained across every window, tuned Silero VAD (`threshold=0.35`, `speech_pad_ms=400`, `condition_on_previous_text=False`), and CPU fallback if `cublas64_12.dll` is missing.
 - **Context Assembly:** U-shaped layout `[Top 1, Top 3, Top 2]` to eliminate Stanford's "Lost-in-the-Middle" degradation.
 - **Pre-filtering Rule:** In-HNSW dynamic single-call pre-filtering (`course_id == current_course_id AND lesson_seq <= current_lesson_seq`). Never hardcode fixed lesson sequences.
@@ -27,8 +35,7 @@
 - Ensure all text is normalized to Unicode NFC before vectorizing.
 - Never write full solutions in Socratic prompts.
 - Qdrant Cloud Client: Always set `timeout=60.0` for international latency resilience.
-- **Windows CLI & Terminal Output:** Avoid double-width multi-byte emojis (🎬, 📌, 📝) in terminal output logs to prevent PowerShell cursor drift and buffer overwrites. Always wrap lines with textwrap (width <= 75) and enforce flush=True.
-- **Interactive Command Protocol:** Always provide clean, ready-to-run PowerShell commands and explain their purpose before execution, prioritizing user-controlled terminal execution.
+- **Interactive Command Protocol:** Tuyệt đối KHÔNG tự ý chạy lệnh test/tìm kiếm khi chưa có sự yêu cầu rõ ràng từ người dùng. Khi người dùng hỏi lệnh test hoặc cách chạy, AI luôn cung cấp các khối lệnh PowerShell chuẩn, sạch, giải thích mục đích và kết quả mong đợi để người dùng tự copy chạy trên terminal của họ.
 
 ## 4. Enterprise Git & Daily Delivery Cadence
 - **Commit Frequency:** Atomic commits daily. Never accumulate multiple days into a single huge commit.
@@ -48,4 +55,11 @@
 ## 6. Session Kickoff & Student Theory Learning Protocol
 - **Kickoff Protocol:** Khi sinh viên hỏi *"hôm nay làm gì tiếp theo"* hoặc câu tương tự, AI phải ngay lập tức rà soát `docs/daily_reports/` gần nhất và tiến trình hiện tại để xuất ra danh sách ưu tiên gồm 2–3 đầu việc cụ thể, link file trực tiếp, kỹ năng liên quan và lệnh PowerShell sẵn sàng chạy.
 - **Student Theory Document Mandate:** Mỗi khi kết thúc một phiên làm việc bằng việc đẩy code lên GitHub, AI **BẮT BUỘC phải tạo thêm một tài liệu học tập lý thuyết chuyên sâu tại `docs/theory_learning/YYYY-MM-DD_theory.md`**. Tài liệu này giải thích chi tiết toàn bộ kiến thức nền tảng, công thức toán học, nguyên lý thuật toán và bộ câu hỏi phản biện bảo vệ đồ án của phiên đó (đảm bảo tính chính xác 100%, không suy đoán - No Hallucination).
+- **Session Wrap-up Holistic Double-Check Mandate:** Trước khi kết thúc bất kỳ phiên làm việc nào và trước khi viết báo cáo hàng ngày, AI **BẮT BUỘC phải thực hiện một lượt rà soát đối chiếu chéo toàn diện (Holistic End-to-End Audit)** bao gồm:
+  1. **Dữ liệu & Vector DB:** Kiểm tra tính toàn vẹn của dữ liệu trên Qdrant (chuẩn tiền tố `passage: ` cho E5, số lượng point, không chứa token rác âm học).
+  2. **Khớp nối Schema & Service:** Đối chiếu từng trường dữ liệu giữa tầng nạp (Ingestion), mô hình Pydantic (`app/schemas/`), và dịch vụ truy xuất (`app/services/`). Tuyệt đối không để rơi rụng các trường quan trọng (như `context_code`, `code_language`).
+  3. **Cấu hình Môi trường:** Kiểm tra tính đồng nhất giữa `.env`, `.env.example`, và `app/config.py`.
+  4. **Hồ sơ Học thuật:** Đảm bảo có đầy đủ cả Daily Report (`docs/daily_reports/YYYY-MM-DD_report.md`) VÀ tài liệu học tập lý thuyết (`docs/theory_learning/YYYY-MM-DD_theory.md`) tương ứng cho mỗi phiên commit code lên GitHub.
+  5. **Tính trung thực:** Báo cáo đúng thực tế triển khai, tuyệt đối không suy đoán hoặc khẳng định những hạng mục chưa hoàn thành (No Hallucination).
+
 

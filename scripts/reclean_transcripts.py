@@ -65,9 +65,10 @@ def reclean(folder_name: str = "c++", course_id: str = "cpp-core", lesson_id: st
     dense_model = TextEmbedding("intfloat/multilingual-e5-large")
     sparse_model = SparseTextEmbedding("Qdrant/bm25")
 
-    texts = [c["raw_text"] for c in chunks]
-    dense_embeddings = list(dense_model.embed(texts))
-    sparse_embeddings = list(sparse_model.embed(texts))
+    dense_inputs = [f"passage: {c['raw_text']}" for c in chunks]
+    sparse_inputs = [c['raw_text'] for c in chunks]
+    dense_embeddings = list(dense_model.embed(dense_inputs))
+    sparse_embeddings = list(sparse_model.embed(sparse_inputs))
 
     qdrant = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
     

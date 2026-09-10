@@ -86,7 +86,7 @@ flowchart TD
 
 ## 📊 4. Bảng Đo Lường Thực Nghiệm (Empirical Benchmark - Show me the data)
 
-Kết quả đo lường thực nghiệm trên tập **Golden Dataset gồm 30 câu hỏi thực tế** của học viên về khóa học Lập trình C++:
+> *Lưu ý học thuật:* Đây là bảng **Mục tiêu tiêu chuẩn đo lường thực nghiệm (Target Benchmark)** được thiết lập cho đợt kiểm định chất lượng định lượng chính thức bằng thư viện `Ragas / TruLens` trên tập Golden Dataset (30 câu hỏi thực tế) tại **Tuần 4**.
 
 | Chỉ số Đánh giá (Metrics) | Naive RAG (Mô hình truyền thống) | 11-Stage Engine (Dự án này) | Mức độ Cải thiện |
 | :--- | :---: | :---: | :---: |
