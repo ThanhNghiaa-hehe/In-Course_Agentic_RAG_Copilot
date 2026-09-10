@@ -55,11 +55,15 @@
 ## 6. Session Kickoff & Student Theory Learning Protocol
 - **Kickoff Protocol:** Khi sinh viên hỏi *"hôm nay làm gì tiếp theo"* hoặc câu tương tự, AI phải ngay lập tức rà soát `docs/daily_reports/` gần nhất và tiến trình hiện tại để xuất ra danh sách ưu tiên gồm 2–3 đầu việc cụ thể, link file trực tiếp, kỹ năng liên quan và lệnh PowerShell sẵn sàng chạy.
 - **Student Theory Document Mandate:** Mỗi khi kết thúc một phiên làm việc bằng việc đẩy code lên GitHub, AI **BẮT BUỘC phải tạo thêm một tài liệu học tập lý thuyết chuyên sâu tại `docs/theory_learning/YYYY-MM-DD_theory.md`**. Tài liệu này giải thích chi tiết toàn bộ kiến thức nền tảng, công thức toán học, nguyên lý thuật toán và bộ câu hỏi phản biện bảo vệ đồ án của phiên đó (đảm bảo tính chính xác 100%, không suy đoán - No Hallucination).
-- **Session Wrap-up Holistic Double-Check Mandate:** Trước khi kết thúc bất kỳ phiên làm việc nào và trước khi viết báo cáo hàng ngày, AI **BẮT BUỘC phải thực hiện một lượt rà soát đối chiếu chéo toàn diện (Holistic End-to-End Audit)** bao gồm:
-  1. **Dữ liệu & Vector DB:** Kiểm tra tính toàn vẹn của dữ liệu trên Qdrant (chuẩn tiền tố `passage: ` cho E5, số lượng point, không chứa token rác âm học).
-  2. **Khớp nối Schema & Service:** Đối chiếu từng trường dữ liệu giữa tầng nạp (Ingestion), mô hình Pydantic (`app/schemas/`), và dịch vụ truy xuất (`app/services/`). Tuyệt đối không để rơi rụng các trường quan trọng (như `context_code`, `code_language`).
-  3. **Cấu hình Môi trường:** Kiểm tra tính đồng nhất giữa `.env`, `.env.example`, và `app/config.py`.
-  4. **Hồ sơ Học thuật:** Đảm bảo có đầy đủ cả Daily Report (`docs/daily_reports/YYYY-MM-DD_report.md`) VÀ tài liệu học tập lý thuyết (`docs/theory_learning/YYYY-MM-DD_theory.md`) tương ứng cho mỗi phiên commit code lên GitHub.
-  5. **Tính trung thực:** Báo cáo đúng thực tế triển khai, tuyệt đối không suy đoán hoặc khẳng định những hạng mục chưa hoàn thành (No Hallucination).
+- **Session Wrap-up Holistic Double-Check Mandate:** Trước khi kết thúc bất kỳ phiên làm việc nào và trước khi viết báo cáo hàng ngày, AI **BẮT BUỘC phải thực hiện một lượt rà soát đối chiếu chéo toàn diện (Holistic End-to-End Audit)** bao gồm 6 trụ cột theo thứ tự ưu tiên:
+  1. 🚨 **Lỗi Thuật Toán & Logic Toán Học (QUAN TRỌNG NHẤT - TOP PRIORITY):**
+     - Rà soát từng công thức toán học và hàm chuẩn hóa ($\sigma(z)$, RRF, Min-Max, Cosine).
+     - Kiểm tra triệt để nguy cơ tràn số mũ (overflow/underflow), tránh các bẫy điều kiện if-else làm sai lệch bản chất phân phối của mô hình (ví dụ: bẫy ternary condition trên raw logits).
+     - Kiểm tra tính đúng đắn của các điều kiện biên (edge cases), ngưỡng sàn an toàn và cơ chế fallback.
+  2. **Dữ liệu & Vector DB:** Kiểm tra tính toàn vẹn của dữ liệu trên Qdrant (chuẩn tiền tố `passage: ` cho E5, số lượng point, không chứa token rác âm học).
+  3. **Khớp nối Schema & Service:** Đối chiếu từng trường dữ liệu giữa tầng nạp (Ingestion), mô hình Pydantic (`app/schemas/`), và dịch vụ truy xuất (`app/services/`). Tuyệt đối không để rơi rụng các trường quan trọng (như `context_code`, `code_language`, `confidence_score`, `is_approximate`).
+  4. **Cấu hình Môi trường:** Kiểm tra tính đồng nhất giữa `.env`, `.env.example`, và `app/config.py`.
+  5. **Hồ sơ Học thuật:** Đảm bảo có đầy đủ cả Daily Report (`docs/daily_reports/YYYY-MM-DD_report.md`) VÀ tài liệu học tập lý thuyết (`docs/theory_learning/YYYY-MM-DD_theory.md`) tương ứng cho mỗi phiên commit code lên GitHub.
+  6. **Tính trung thực:** Báo cáo đúng thực tế triển khai, tuyệt đối không suy đoán hoặc khẳng định những hạng mục chưa hoàn thành (No Hallucination).
 
 

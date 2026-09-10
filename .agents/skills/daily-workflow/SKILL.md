@@ -117,8 +117,9 @@ Khi sinh viên hỏi: *"Hôm nay làm gì tiếp theo?"* hoặc các câu tươn
 ### B. Session Wrap-up Protocol (Kết thúc phiên làm việc):
 Mỗi khi kết thúc phiên và chuẩn bị đẩy code lên GitHub, thực hiện danh sách kiểm tra sau:
 1. [ ] **Quét Đối chiếu Chéo Toàn diện (Holistic Session Wrap-up Double-Check):**
+   - 🚨 **Rà soát Lỗi Thuật Toán & Logic Toán Học (QUAN TRỌNG NHẤT - TOP PRIORITY):** Kiểm tra từng hàm toán học ($\sigma(z)$, RRF, Min-Max), nguy cơ tràn số mũ, triệt tiêu bẫy điều kiện if-else làm méo mó phân phối xác suất, kiểm tra các ngưỡng phân tầng và cơ chế fallback.
    - Rà soát tính toàn vẹn dữ liệu Vector DB trên Qdrant Cloud (chuẩn tiền tố `passage: ` cho E5, số lượng point chính xác, không lọt token âm học rác).
-   - Kiểm tra khớp nối Schema Pydantic giữa Ingestion, `app/schemas/` và `app/services/` (không rơi rụng `context_code`, `code_language`).
+   - Kiểm tra khớp nối Schema Pydantic giữa Ingestion, `app/schemas/` và `app/services/` (không rơi rụng `context_code`, `code_language`, `confidence_score`, `is_approximate`).
    - Kiểm tra tính đồng bộ cấu hình môi trường (`.env` vs `.env.example` vs `app/config.py`).
    - Kiểm tra tính trung thực, No Hallucination, không báo cáo trước những gì chưa hoàn thành.
 2. [ ] Rà soát `git status`, đảm bảo không commit `.env`, secret tokens hoặc file video nặng `*.mp4`.
