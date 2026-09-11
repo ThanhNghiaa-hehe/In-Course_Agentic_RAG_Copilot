@@ -14,6 +14,10 @@ from app.services.retrieval import (
     RetrievalService,
     get_retrieval_service
 )
+from app.services.chat import (
+    ChatService,
+    get_chat_service
+)
 
 __all__ = [
     "get_async_qdrant_client",
@@ -22,5 +26,7 @@ __all__ = [
     "EmbeddingService",
     "get_embedding_service",
     "RetrievalService",
-    "get_retrieval_service"
+    "get_retrieval_service",
+    "ChatService",
+    "get_chat_service"
 ]

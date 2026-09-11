@@ -66,4 +66,15 @@
   5. **Hồ sơ Học thuật:** Đảm bảo có đầy đủ cả Daily Report (`docs/daily_reports/YYYY-MM-DD_report.md`) VÀ tài liệu học tập lý thuyết (`docs/theory_learning/YYYY-MM-DD_theory.md`) tương ứng cho mỗi phiên commit code lên GitHub.
   6. **Tính trung thực:** Báo cáo đúng thực tế triển khai, tuyệt đối không suy đoán hoặc khẳng định những hạng mục chưa hoàn thành (No Hallucination).
 
+## 7. Local AI Serving & Windows Engineering Protocols
+- **Explicit IPv4 Standard:** Luôn sử dụng `http://127.0.0.1:<PORT>` thay vì `localhost` trong toàn bộ cấu hình backend (`app/config.py`, `.env`) để ngăn ngừa triệt để lỗi phân giải chậm/timeout do IPv6 `[::1]` trên Windows.
+- **Hugging Face Container Extract Standard:** Khi trích xuất file model GGUF từ Docker/WSL sang Windows, TUYỆT ĐỐI KHÔNG copy từ `snapshots/` (chỉ là Linux symlink 1.5KB); bắt buộc phải copy trực tiếp từ `blobs/<hash>` thật sự.
+- **PowerShell CLI Hygiene:**
+  - Không bao giờ dùng `Out-File -Encoding utf8` khi tạo file cấu hình cho Golang/Ollama (tránh lỗi UTF-8 BOM `\ufeff`). Phải dùng `Set-Content -Encoding Ascii`.
+  - Không cung cấp lệnh `curl.exe` với chuỗi JSON lồng ngoặc kép `\"` tiếng Việt. Luôn cung cấp script test Python (`httpx`) hoặc `Invoke-RestMethod` để tránh vỡ chuỗi Punycode.
+- **Anti-Hallucination Socratic Prompt Guardrail:**
+  - Không đưa số giây/mốc thời gian cụ thể (như `145`, `02:25`) vào câu ví dụ của System Prompt để tránh việc các mô hình LLM nhỏ (3B) sao chép mù quáng.
+  - Khi RAG trả về `0 chunks` (nội dung chưa học trong phạm vi bài hiện tại), hệ thống phải kích hoạt prompt rẽ nhánh cảnh báo tiêu cực: TUYỆT ĐỐI CẤM sinh thẻ `<timestamp>`, thông báo cho sinh viên biết bài học hiện tại chưa giảng dạy chủ đề này và chỉ giải thích lý thuyết thuần túy.
+- **Uvicorn Development Standard:** Luôn khởi chạy uvicorn với cờ `--reload` để đảm bảo code chỉnh sửa lập tức được cập nhật vào RAM.
+
 

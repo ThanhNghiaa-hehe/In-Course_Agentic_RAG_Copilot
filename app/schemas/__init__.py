@@ -9,6 +9,7 @@ from app.schemas.search import (
 from app.schemas.chat import (
     ChatRequest,
     SuggestedTimestamp,
+    RouterClassification,
     StreamMetadataEvent
 )
 from app.schemas.metadata import (
@@ -25,6 +26,7 @@ __all__ = [
     "SearchResponse",
     "ChatRequest",
     "SuggestedTimestamp",
+    "RouterClassification",
     "StreamMetadataEvent",
     "ContentType",
     "BaseChunkPayload",

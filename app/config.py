@@ -10,8 +10,13 @@ class Settings(BaseSettings):
     PORT: int = 8000
     HOST: str = "0.0.0.0"
 
-    # LLM API Keys
-    OPENAI_API_KEY: Optional[str] = None
+    # LLM Settings (Ollama / Local / OpenAI Cloud)
+    LLM_PROVIDER: str = "ollama"  # "ollama" or "openai"
+    LLM_BASE_URL: str = "http://127.0.0.1:11434/v1"
+    LLM_MODEL_NAME: str = "qwen2.5"
+    LLM_TEMPERATURE: float = 0.3
+    LLM_MAX_TOKENS: int = 2048
+    OPENAI_API_KEY: Optional[str] = "ollama"
     ANTHROPIC_API_KEY: Optional[str] = None
 
     # Qdrant
