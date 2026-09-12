@@ -38,7 +38,14 @@
 - **Interactive Command Protocol:** Tuyệt đối KHÔNG tự ý chạy lệnh test/tìm kiếm khi chưa có sự yêu cầu rõ ràng từ người dùng. Khi người dùng hỏi lệnh test hoặc cách chạy, AI luôn cung cấp các khối lệnh PowerShell chuẩn, sạch, giải thích mục đích và kết quả mong đợi để người dùng tự copy chạy trên terminal của họ.
 
 ## 4. Enterprise Git & Daily Delivery Cadence
-- **Commit Frequency:** Atomic commits daily. Never accumulate multiple days into a single huge commit.
+- **Commit Frequency & Granular Protocol (Quy Tắc Cam Kết Đa Tầng):**
+  - TUYỆT ĐỐI KHÔNG gom toàn bộ các file thay đổi trong ngày vào một lệnh commit duy nhất (`git add .`).
+  - AI BẮT BUỘC phải chia nhỏ các lệnh commit thành từng nhóm nguyên tử (Atomic Commits) theo ranh giới chức năng rõ ràng:
+    1. `feat(agent/backend):` Commit riêng cho logic lõi, router, retrieval, chat service.
+    2. `fix(agent/rag):` Commit riêng cho các bản vá resilience, guardrail, loop breaker.
+    3. `feat(ui/scripts):` Commit riêng cho giao diện HTML/CSS, script kiểm toán hoặc tiện ích.
+    4. `docs(daily/theory):` Commit riêng cho hồ sơ học thuật (Daily Report & Theory Document).
+  - Điều này giúp lịch sử Git minh bạch, dễ truy vết và phản ánh chân thực các đóng góp kỹ thuật (contributions) chất lượng cao trên GitHub của sinh viên.
 - **Conventional Commits Standard:** Follow strict prefixes:
   - `feat:` New feature or pipeline stage (e.g., `feat(ingest): add tech canonicalizer and subfolder splitting`)
   - `fix:` Bug fix or resilience patch (e.g., `fix(whisper): add CPU fallback for missing cublas DLL`)
@@ -47,6 +54,7 @@
   - `test:` Search or pipeline verification tests
   - `chore:` Dependency, gitignore or config updates
 - **Secret & Data Hygiene:** Always inspect `git status` before commit. NEVER commit `.env`, secret tokens, or raw video media files (`*.mp4`).
+
 
 ## 5. Academic Mentor Daily Briefing Mandate
 - At the end of each working session/day, generate a structured Daily Summary report at `docs/daily_reports/YYYY-MM-DD_report.md`.
