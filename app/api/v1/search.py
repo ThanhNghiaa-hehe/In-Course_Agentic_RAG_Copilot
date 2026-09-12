@@ -27,7 +27,7 @@ async def search_course_context(
     retrieval_service: RetrievalService = Depends(get_retrieval_service)
 ) -> SearchResponse:
     try:
-        raw_chunks = await retrieval_service.search(
+        retrieval_result = await retrieval_service.search(
             query_text=request.query,
             course_id=request.course_id,
             current_lesson_seq=request.lesson_seq,
@@ -36,13 +36,16 @@ async def search_course_context(
             min_score_threshold=request.min_score_threshold
         )
 
-        results = [SearchChunkResult(**chunk) for chunk in raw_chunks]
+        results = [SearchChunkResult(**chunk) for chunk in retrieval_result.chunks]
 
         return SearchResponse(
             query=request.query,
             course_id=request.course_id,
             current_lesson_seq=request.lesson_seq,
             total_retrieved=len(results),
+            status=retrieval_result.status,
+            is_low_confidence=retrieval_result.is_low_confidence,
+            target_lesson_seq=retrieval_result.target_lesson_seq,
             results=results
         )
     except Exception as e:

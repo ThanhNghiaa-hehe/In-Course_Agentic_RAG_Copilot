@@ -77,4 +77,38 @@
   - Khi RAG trả về `0 chunks` (nội dung chưa học trong phạm vi bài hiện tại), hệ thống phải kích hoạt prompt rẽ nhánh cảnh báo tiêu cực: TUYỆT ĐỐI CẤM sinh thẻ `<timestamp>`, thông báo cho sinh viên biết bài học hiện tại chưa giảng dạy chủ đề này và chỉ giải thích lý thuyết thuần túy.
 - **Uvicorn Development Standard:** Luôn khởi chạy uvicorn với cờ `--reload` để đảm bảo code chỉnh sửa lập tức được cập nhật vào RAM.
 
+## 8. Direct Communication & Zero-Hallucination Answering Protocols
+- **Direct Answer First (Trả lời trực diện trước tiên):** Khi người dùng đặt câu hỏi kỹ thuật, kiến trúc hoặc xác nhận phạm vi (Yes/No, có phải/không phải, tại sao), AI BẮT BUỘC phải đưa ra câu trả lời trực tiếp ngay ở câu đầu tiên (Đúng/Sai/Có/Không/Kết luận trọng tâm). Tuyệt đối không vòng vo, không lan man lý thuyết giáo trình khi không được yêu cầu.
+- **Strict Scope & Conciseness (Đúng trọng tâm, không lan man):** Chỉ trả lời đúng câu hỏi người dùng đưa ra. Không tự ý mở rộng phân tích các chủ đề ngoài lề trừ khi người dùng yêu cầu "hãy phân tích chi tiết" hoặc "giải thích sâu hơn".
+- **Codebase Cross-Verification Mandate (Đối chiếu mã nguồn tuyệt đối):** Tuyệt đối KHÔNG dựa vào suy đoán hoặc dữ liệu mẫu cũ về tên mô hình, thuật toán và tham số cấu hình. Mọi phát biểu kỹ thuật phải đối chiếu trực tiếp từ `app/config.py`, `.env` và các tệp services liên quan (ví dụ: mô hình Re-ranker là `jinaai/jina-reranker-v2-base-multilingual`, tuyệt đối không nhầm sang BGE).
+
+## 9. Anti-Quick-Fix, Deep Research & Strict Code Integrity Mandate
+- **Cấm Tuyệt Đối Phương Pháp Vá Tạm (Zero Quick-Fix Policy):**
+  - Tuyệt đối KHÔNG đề xuất hoặc áp dụng các giải pháp "chữa cháy tình huống" (như hardcode tăng/giảm ngưỡng threshold cục bộ, viết thêm regex thủ công bắt câu chữ, hoặc cắt bớt các tầng phòng thủ kiến trúc vì lý do tiện tay).
+  - Mọi giải pháp cho bài toán RAG, Router, Context Misalignment hoặc LLM Degeneration phải được xây dựng dựa trên các chuẩn mực kiến trúc đã được thẩm định từ tài liệu học thuật và công nghiệp chính thống (ví dụ: *CRAG - Corrective RAG (Yan et al., 2024)*, *Semantic Router (Aurelio AI)*, *Decoding Constraints (Holtzman et al., 2019)*).
+- **Quy Trình Nghiên Cứu Thấu Đáo & Zero-Hallucination (Deep Research Mandate):**
+  - Khi đối mặt với lỗi kiến trúc hoặc bài toán mới, AI BẮT BUỘC phải thực hiện tra cứu tài liệu chuyên sâu, đối chiếu các paper và tài liệu chính thống (LangChain, LlamaIndex, vLLM, Meta AI), giải thích rõ cơ chế khoa học, không phỏng đoán, không giải thích nửa vời.
+- **Kỷ Luật Bất Khả Xâm Phạm Mã Nguồn Khi Yêu Cầu Test (Strict Code Integrity):**
+  - Mỗi khi người dùng yêu cầu lệnh test hoặc test case: AI TUYỆT ĐỐI KHÔNG được tự ý chỉnh sửa bất kỳ file mã nguồn, file script hay file HTML nào.
+  - AI chỉ cung cấp lệnh kiểm thử và giải thích kết quả mong đợi.
+  - Mọi đề xuất cải tiến hoặc chỉnh sửa file phát sinh BẮT BUỘC phải trình bày phương án rõ ràng và xin ý kiến phê duyệt từ người dùng; chỉ khi người dùng bấm đồng ý mới được phép chỉnh sửa.
+
+## 10. Evaluation-Driven Development (EDD) & Benchmark-First Mandate
+- **Nguyên Tắc Benchmark-First (Thước Đo Đi Trước, Tối Ưu Đi Sau):**
+  - Tuyệt đối KHÔNG tiến hành chỉnh sửa hàng loạt prompt, router threshold hay thuật toán retrieval chỉ vì 1–2 ca test thử nghiệm thủ công đơn lẻ.
+  - Mọi hoạt động cải tiến, nâng cấp hệ thống (đặc biệt là bước chuyển dịch từ Phase 1 sang Phase 2 - Code-to-Video Metadata Binding) BẮT BUỘC phải dựa trên kết quả đo lường từ **Bộ Benchmark Tự Động (Stage 11)**.
+- **Tiêu Chuẩn Bộ Benchmark Định Lượng (Golden Dataset Standard):**
+  - Thiết lập Golden Dataset tối thiểu 40–50 kịch bản thử nghiệm bao phủ 4 tầng:
+    1. *In-Scope Technical:* Khái niệm lập trình, bộ nhớ, cú pháp thuộc bài học hiện tại.
+    2. *Out-of-Lesson Scope:* Khái niệm thuộc bài tương lai (kiểm tra rào chắn rò rỉ kiến thức).
+    3. *Adversarial Hybrid Queries:* Câu hỏi lập trình lồng ghép nội dung đời sống phi logic (nhậu nhẹt, nấu ăn, du lịch,...).
+    4. *Chit-Chat / Out-of-Domain:* Lời chào hỏi, cảm ơn hoặc hoàn toàn ngoài lề.
+  - Đo lường định lượng tự động 4 chỉ số cốt lõi:
+    - **Router & Grader Accuracy:** Tỷ lệ phân luồng và thẩm định chunk chính xác.
+    - **Timestamp Precision & Recall:** Sai số $|\Delta t| \le 15$s khi có video, và tỷ lệ 0 timestamp khi out-of-scope/gap (chống ảo giác).
+    - **Faithfulness (RAG Triad):** Độ trung thực của câu trả lời dựa trên ngữ cảnh thực tế, không sinh liên hệ phi lý.
+    - **Latency (TTFT & Total Duration):** Tốc độ phản hồi thời gian thực qua luồng SSE.
+- **Quy Tắc Chống Thụt Lùi (Regression Prevention):**
+  - Một thay đổi kiến trúc chỉ được phép phê duyệt và commit vào repository khi điểm Benchmark tổng thể tăng lên hoặc giữ vững, không làm sụt giảm độ chính xác của các bài test chuẩn.
+
 

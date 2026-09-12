@@ -122,6 +122,18 @@ class SearchResponse(BaseModel):
     course_id: str = Field(..., description="Khóa học tìm kiếm")
     current_lesson_seq: int = Field(..., description="Cửa sổ bài học tối đa được phép truy cập")
     total_retrieved: int = Field(..., description="Tổng số chunks vượt qua ngưỡng lọc tin cậy")
+    status: Literal["grounded", "out_of_lesson", "coverage_gap"] = Field(
+        default="grounded",
+        description="Trạng thái xác thực ngữ cảnh: grounded, out_of_lesson, coverage_gap"
+    )
+    is_low_confidence: bool = Field(
+        default=False,
+        description="Cờ đánh dấu kết quả được giữ lại qua cơ chế Graceful Degradation"
+    )
+    target_lesson_seq: Optional[int] = Field(
+        default=None,
+        description="Thứ tự bài học tương lai phát hiện được kiến thức liên quan khi status là out_of_lesson"
+    )
     results: List[SearchChunkResult] = Field(
         default_factory=list,
         description="Danh sách các chunks đã được sắp xếp hình chữ U chống Lost-in-the-Middle"

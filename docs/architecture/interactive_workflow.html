@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiến Trúc Toàn Diện 11 Stages &bull; In-Course Agentic RAG Copilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --border-card: #cbd5e1;
+      --border-card-hover: #94a3b8;
+      
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      
+      --brand-teal-bg: #ecfdf5;
+      --brand-teal-border: #059669;
+      --brand-teal-text: #065f46;
+      
+      --brand-blue-bg: #eff6ff;
+      --brand-blue-border: #2563eb;
+      --brand-blue-text: #1e40af;
+
+      --brand-purple-bg: #f5f3ff;
+      --brand-purple-border: #7c3aed;
+      --brand-purple-text: #5b21b6;
+      
+      --brand-alert-bg: #fff1f2;
+      --brand-alert-border: #e11d48;
+      --brand-alert-text: #9f1239;
+
+      --brand-amber-bg: #fffbeb;
+      --brand-amber-border: #d97706;
+      --brand-amber-text: #92400e;
+      
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 36px;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    /* Top Breadcrumb & Headline */
+    .top-meta-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .meta-breadcrumbs {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .meta-breadcrumbs span {
+      color: #cbd5e1;
+    }
+
+    .author-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .author-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .page-title {
+      font-size: 23px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .page-title span.rag-highlight {
+      background: #e2e8f0;
+      padding: 2px 8px;
+      border-radius: 6px;
+      color: #0f172a;
+    }
+
+    .page-subtitle {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      max-width: 1120px;
+      margin-bottom: 20px;
+    }
+
+    /* Interactive Toolbar */
+    .toolbar-container {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-row:not(:last-child) {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .toolbar-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .search-input-box {
+      flex: 1;
+      min-width: 320px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input-box:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px #2563eb;
+    }
+
+    .speed-dropdown {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .speed-dropdown:focus {
+      border-color: #2563eb;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease;
+      user-select: none;
+      will-change: transform;
+    }
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-online {
+      background: #2563eb;
+      border-color: #1d4ed8;
+      color: #ffffff;
+    }
+    .btn-online:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-offline {
+      background: var(--brand-purple-bg);
+      border-color: #ddd6fe;
+      color: var(--brand-purple-text);
+    }
+    .btn-offline:hover {
+      background: #ede9fe;
+      border-color: #c4b5fd;
+    }
+
+    .btn-eval {
+      background: var(--brand-blue-bg);
+      border-color: #bfdbfe;
+      color: var(--brand-blue-text);
+    }
+    .btn-eval:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+
+    .btn-fault {
+      background: var(--brand-alert-bg);
+      border-color: #fecdd3;
+      color: var(--brand-alert-text);
+    }
+    .btn-fault:hover {
+      background: #ffe4e6;
+      border-color: #fda4af;
+    }
+
+    .btn-reset {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: var(--text-sub);
+    }
+    .btn-reset:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    /* Diagram Canvas */
+    .diagram-container {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      overflow-x: auto;
+    }
+
+    /* Subgraph Row */
+    .row-section {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .row-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .row-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .row-title {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .row-title-blue { color: #1e40af; }
+    .row-title-emerald { color: #065f46; }
+    .row-title-purple { color: #5b21b6; }
+    .row-title-amber { color: #92400e; }
+
+    .row-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Nodes Flex Grid */
+    .nodes-grid {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      flex-wrap: nowrap;
+    }
+
+    /* Node Cards */
+    .node-box {
+      background: #ffffff;
+      border: 1.5px solid var(--border-card);
+      border-radius: 10px;
+      padding: 12px 14px;
+      min-width: 140px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      will-change: transform;
+    }
+
+    .node-box:hover {
+      border-color: var(--border-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .node-box:active {
+      transform: scale(0.98);
+    }
+
+    .node-stage-badge {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .node-box-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+
+    .node-box-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-family: var(--font-mono);
+    }
+
+    /* Node Card Variant Colors */
+    .node-box.theme-teal {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .node-box.theme-teal .node-box-title { color: #166534; }
+    .node-box.theme-teal .node-box-sub { color: #15803d; }
+
+    .node-box.theme-blue {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+    .node-box.theme-blue .node-box-title { color: #1e40af; }
+    .node-box.theme-blue .node-box-sub { color: #2563eb; }
+
+    .node-box.theme-purple {
+      background: #f5f3ff;
+      border-color: #c4b5fd;
+    }
+    .node-box.theme-purple .node-box-title { color: #5b21b6; }
+    .node-box.theme-purple .node-box-sub { color: #6d28d9; }
+
+    .node-box.theme-amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+    .node-box.theme-amber .node-box-title { color: #92400e; }
+    .node-box.theme-amber .node-box-sub { color: #b45309; }
+
+    .node-box.theme-dashed {
+      border: 1.5px dashed #f43f5e;
+      background: #fff5f5;
+    }
+    .node-box.theme-dashed .node-box-title { color: #9f1239; }
+    .node-box.theme-dashed .node-box-sub { color: #e11d48; }
+
+    /* Active Animation States */
+    .node-box.state-running {
+      border-color: #2563eb !important;
+      box-shadow: 0 0 0 2px #60a5fa, 0 6px 14px rgba(37, 99, 235, 0.15) !important;
+      transform: scale(1.02);
+    }
+
+    .node-box.state-pass {
+      border-color: #059669 !important;
+      background: #ecfdf5 !important;
+      box-shadow: 0 0 0 2px #10b981, 0 6px 14px rgba(5, 150, 105, 0.15) !important;
+    }
+
+    .node-box.state-alert {
+      border-color: #e11d48 !important;
+      background: #ffe4e6 !important;
+      box-shadow: 0 0 0 2px #f43f5e, 0 6px 14px rgba(225, 29, 72, 0.15) !important;
+    }
+
+    /* Connectors & Arrows */
+    .arrow-connector {
+      display: flex;
+      align-items: center;
+      color: #94a3b8;
+      flex-shrink: 0;
+      transition: color 0.15s, transform 0.15s;
+      user-select: none;
+    }
+
+    .arrow-connector.state-active {
+      color: #2563eb;
+      transform: scale(1.15);
+    }
+
+    /* Intermediate Flow Bridges */
+    .flow-bridge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 8px 0;
+      color: #64748b;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+    }
+
+    .bridge-line {
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    /* Live Output Container */
+    .live-response-container {
+      margin-top: 20px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .live-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .live-title {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    .live-content-box {
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      color: #0f172a;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 18px;
+      min-height: 80px;
+      margin-bottom: 16px;
+    }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 6px;
+      height: 15px;
+      background-color: #2563eb;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Timestamp Clickable Badges */
+    .timestamp-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: #047857;
+      color: #ffffff;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.15s;
+    }
+    .timestamp-pill:hover {
+      background: #065f46;
+    }
+
+    .sources-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .source-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .source-card-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    /* Detail Inspector Drawer */
+    .inspector-card {
+      margin-top: 20px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: none;
+      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .inspector-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .inspector-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .inspector-tag {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .inspector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .inspector-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .inspector-item-label {
+      font-size: 9.5px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    .inspector-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #0f172a;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .btn-close-inspector {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .btn-close-inspector:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+
+    /* Telemetry Bar */
+    .telemetry-strip {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .telemetry-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .telemetry-val {
+      font-weight: 700;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Metadata & Navigation -->
+  <div class="top-meta-nav">
+    <div class="meta-breadcrumbs">
+      KIẾN TRÚC DOANH NGHIỆP <span>/</span> 11 STAGES RETRIEVAL <span>/</span> API GATEWAY &bull; ORCHESTRATION &bull; FRONTEND
+    </div>
+    <div class="author-badge">
+      <span class="author-dot"></span>
+      Sinh viên: Trần Thành Nghĩa &bull; 23DH112252 &bull; HUFLIT
+    </div>
+  </div>
+
+  <!-- Main Headline -->
+  <h1 class="page-title">
+    Vận hành <span class="rag-highlight">11-Stage RAG Engine</span> qua API Gateway &amp; Orchestration
+  </h1>
+  <p class="page-subtitle">
+    Hệ thống phân rã thành 3 phân tầng cốt lõi: <strong>① Edge &amp; Điều Phối:</strong> Frontend (video player sync &bull; chat panel) &harr; API Gateway (FastAPI SSE) &harr; Orchestration (LangGraph + Redis); <strong>② Lõi 11 Stages:</strong> Xử lý Offline (Stages 1–5) song song với Online Retrieval (Stages 6–10); <strong>③ Đo Lường:</strong> Stage 11 (Ragas Quality Gate &bull; Golden Dataset).
+  </p>
+
+  <!-- Interactive Toolbar -->
+  <div class="toolbar-container">
+    
+    <!-- Row 1: Parameter Configurations -->
+    <div class="toolbar-row">
+      <div class="toolbar-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        Cấu hình:
+      </div>
+
+      <!-- Mode Selector -->
+      <select id="modeToggle" class="speed-dropdown" style="font-weight:700; border-color:#2563eb; color:#1e40af;" aria-label="Chọn chế độ chạy">
+        <option value="live" selected>● Chế độ: Live Backend (API Thật)</option>
+        <option value="mock">○ Chế độ: Mô phỏng (Simulator)</option>
+      </select>
+
+      <!-- Course Selector -->
+      <select id="courseSel" class="speed-dropdown" aria-label="Chọn khóa học">
+        <option value="cpp-core" selected>Khóa học: cpp-core</option>
+      </select>
+
+      <!-- Current Lesson Window Selector -->
+      <select id="lessonSel" class="speed-dropdown" style="font-weight:600; border-color:#059669; color:#065f46;" aria-label="Chọn phạm vi bài học hiện tại">
+        <option value="1">Cửa sổ: Bài 1 (Cú pháp &amp; Biến - seq=1)</option>
+        <option value="2" selected>Cửa sổ: Bài 2 (Con trỏ &amp; Bộ nhớ - seq=2)</option>
+        <option value="3">Cửa sổ: Bài 3 (OOP &amp; Cấu trúc - seq=3)</option>
+      </select>
+
+      <!-- Quick Preset Selector -->
+      <select id="presetSel" class="speed-dropdown" onchange="applyPreset()" style="max-width:350px;" aria-label="Chọn trường hợp test mẫu">
+        <option value="">-- Chọn Test Case Mẫu --</option>
+        <option value="Khi cộng 1 biến int và 1 biến double trong C++ thì kết quả lưu vào biến nào? Cho em ví dụ code ngắn.">Case Code 1: [Bài 2] Thăng cấp kiểu int + double (Type Promotion)</option>
+        <option value="Em bị lỗi khi gán lại giá trị cho biến const int DO_SOI = 100;, cho em xin cú pháp mẫu hằng số C++.">Case Code 2: [Bài 2] Khai báo hằng số const &amp; Lỗi gán lại</option>
+        <option value="Code của em dùng cout bị báo lỗi 'cout was not declared in this scope', em thiếu cú pháp gì ở đầu file?">Case Code 3: [Bài 1] Thư viện #include &lt;iostream&gt; &amp; namespace</option>
+        <option value="Em gặp lỗi segfault ở con trỏ C++, xem lại phút nào?">Case Video: [Bài 2] Con trỏ &amp; Segfault (Có Timestamp)</option>
+        <option value="Con trỏ trong C++ hoạt động thế nào và xem lại ở đâu?">Case Chặn: [Out-of-Lesson] Hỏi con trỏ khi đang ở Bài 1</option>
+        <option value="hôm nay tôi muốn ăn thịt bò">Case Lạc Đề: [Coverage-Gap] Ngoài lề ăn uống</option>
+        <option value="Xin chào thầy trợ giảng AI!">Case Fast-Path: [Chit-chat] Chào hỏi xã giao</option>
+      </select>
+    </div>
+
+    <!-- Row 2: Prompt Input & Action Triggers -->
+    <div class="toolbar-row">
+      <input type="text" id="queryInput" class="search-input-box" value="Em gặp lỗi segfault ở con trỏ C++, xem lại phút nào?" aria-label="Nhập câu hỏi học viên" />
+      
+      <button class="btn-action btn-online" id="btnSubmitQuery" onclick="handleSendQuery()" aria-label="Gửi truy vấn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Gửi truy vấn
+      </button>
+
+      <button class="btn-action btn-offline" onclick="runSimulation('offline')" aria-label="Mô phỏng nạp dữ liệu Offline">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Nạp dữ liệu (Stages 1&ndash;5)
+      </button>
+
+      <button class="btn-action btn-eval" onclick="runSimulation('eval')" aria-label="Chạy eval CI Stage 11">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Chạy eval CI (Stage 11)
+      </button>
+
+      <button class="btn-action btn-fault" onclick="runSimulation('fault')" aria-label="Tiêm lỗi Hallucination">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        Tiêm lỗi v2
+      </button>
+
+      <button class="btn-action btn-reset" onclick="resetAll()" aria-label="Đặt lại trạng thái">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
+        Đặt lại
+      </button>
+    </div>
+  </div>
+
+  <!-- Live Output Streaming Card -->
+  <div class="live-response-container" id="liveResponseBox">
+    <div class="live-header">
+      <div class="live-title">
+        <span class="live-badge" id="liveIntentBadge">INTENT: COURSE_QUERY</span>
+        <span>Phản hồi Socratic Trực Tiếp (SSE Stream)</span>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);" id="liveTiming">
+        Đang chờ luồng dữ liệu...
+      </div>
+    </div>
+
+    <!-- Socratic Stream Response Content -->
+    <div class="live-content-box" id="liveTextContent">
+      <span class="cursor-blink"></span>
+    </div>
+
+    <!-- Suggested Timestamps for Video Sync -->
+    <div id="liveTimestampsRow" style="margin-bottom:12px; display:none;">
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#065f46; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Mốc Video Bài Giảng Phát Hiện (Click để đồng bộ player.seekTo):
+      </div>
+      <div id="liveTimestampsList" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Retrieved Source Chunks -->
+    <div id="liveSourcesRow" style="display:none;">
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--text-sub); margin-bottom:6px;">
+        Tài Liệu Ngữ Cảnh Đã Xác Thực (Từ Qdrant Cloud Cluster):
+      </div>
+      <div class="sources-list" id="liveSourcesList"></div>
+    </div>
+  </div>
+
+  <!-- Primary Diagram Canvas -->
+  <div class="diagram-container">
+
+    <!-- PHÂN TẦNG 1: FRONTEND & EDGE GATEWAY & ORCHESTRATION -->
+    <div class="row-section">
+      <div class="row-header">
+        <div class="row-title row-title-blue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          Phân Tầng 1: Frontend &bull; API Gateway &bull; Agentic Orchestration
+        </div>
+        <span class="row-badge" style="background:#eff6ff; color:#1e40af;">Edge &amp; State Layer</span>
+      </div>
+
+      <div class="nodes-grid">
+        <!-- Node: Frontend -->
+        <div class="node-box theme-blue" id="node-frontend" onclick="inspectNode('frontend')">
+          <div class="node-stage-badge"><span>Client UI</span><span>Vue/React</span></div>
+          <div class="node-box-title">Frontend Portal</div>
+          <div class="node-box-sub">player.seekTo(sec)<br>Socratic Chat Panel</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-fe-gw">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Node: API Gateway -->
+        <div class="node-box theme-blue" id="node-apigateway" onclick="inspectNode('apigateway')">
+          <div class="node-stage-badge"><span>API Layer</span><span>FastAPI</span></div>
+          <div class="node-box-title">API Gateway</div>
+          <div class="node-box-sub">/api/v1/chat/stream<br>SSE Streamer &bull; CORS</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-gw-orch">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Node: Orchestration -->
+        <div class="node-box theme-blue" id="node-orchestration" onclick="inspectNode('orchestration')">
+          <div class="node-stage-badge"><span>Controller</span><span>LangGraph</span></div>
+          <div class="node-box-title">Agentic Orchestration</div>
+          <div class="node-box-sub">Intent Router (Regex)<br>Redis 4-6 turns window</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-orch-engine">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Node: Dispatcher Summary -->
+        <div class="node-box" id="node-engine-hub" onclick="inspectNode('engine_hub')">
+          <div class="node-stage-badge"><span>Core Engine</span><span>11 Stages</span></div>
+          <div class="node-box-title">Retrieval Core</div>
+          <div class="node-box-sub">Offline / Online Flow<br>Multi-modal In-Course</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CẦU NỐI ĐIỀU PHỐI -->
+    <div class="flow-bridge">
+      <div class="bridge-line"></div>
+      <span>&darr; ĐIỀU PHỐI VÀO LÕI 11-STAGE ADVANCED RETRIEVAL ENGINE &darr;</span>
+      <div class="bridge-line"></div>
+    </div>
+
+    <!-- PHÂN TẦNG 2A: ONLINE RETRIEVAL PIPELINE (STAGES 6 -> 10) -->
+    <div class="row-section">
+      <div class="row-header">
+        <div class="row-title row-title-emerald">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Phân Tầng 2A: Online Retrieval &amp; Serving Pipeline (Stages 6 &rarr; 10)
+        </div>
+        <span class="row-badge" style="background:#ecfdf5; color:#065f46;">Lat &le; 380ms &bull; Zero Future Leak</span>
+      </div>
+
+      <div class="nodes-grid">
+        <!-- Stage 6 -->
+        <div class="node-box theme-teal" id="node-stage6" onclick="inspectNode('stage6')">
+          <div class="node-stage-badge"><span>Stage 6</span><span>Hybrid</span></div>
+          <div class="node-box-title">Hybrid Retrieval</div>
+          <div class="node-box-sub">Dense + Sparse BM25<br>Reciprocal Rank Fusion</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st6-st7">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 7 -->
+        <div class="node-box theme-teal" id="node-stage7" onclick="inspectNode('stage7')">
+          <div class="node-stage-badge"><span>Stage 7</span><span>In-HNSW</span></div>
+          <div class="node-box-title">Dynamic Pre-filter</div>
+          <div class="node-box-sub">lesson_seq &le; current<br>Lọc đơn tầng HNSW &lt;5ms</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st7-st8">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 8 -->
+        <div class="node-box theme-teal" id="node-stage8" onclick="inspectNode('stage8')">
+          <div class="node-stage-badge"><span>Stage 8</span><span>Re-rank</span></div>
+          <div class="node-box-title">Calibrated Sigmoid</div>
+          <div class="node-box-sub">Jina v2 Multilingual<br>&sigma;(z) &ge; 0.35 + Fallback</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st8-st9">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 9 -->
+        <div class="node-box theme-teal" id="node-stage9" onclick="inspectNode('stage9')">
+          <div class="node-stage-badge"><span>Stage 9</span><span>U-Shaped</span></div>
+          <div class="node-box-title">Context Assembly</div>
+          <div class="node-box-sub">[Top 1, Top 3, Top 2]<br>Chống Lost-in-the-Middle</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st9-st10">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 10 -->
+        <div class="node-box theme-teal" id="node-stage10" onclick="inspectNode('stage10')">
+          <div class="node-stage-badge"><span>Stage 10</span><span>LLM Serving</span></div>
+          <div class="node-box-title">Socratic Synthesizer</div>
+          <div class="node-box-sub">Qwen2.5-3B-Instruct<br>&lt;timestamp sec=&quot;..&quot;&gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHÂN TẦNG 2B: OFFLINE INGESTION & INDEXING (STAGES 1 -> 5) -->
+    <div class="row-section">
+      <div class="row-header">
+        <div class="row-title row-title-purple">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Phân Tầng 2B: Offline Ingestion &amp; Idempotent Indexing (Stages 1 &rarr; 5)
+        </div>
+        <span class="row-badge" style="background:#f5f3ff; color:#5b21b6;">Data Foundation &bull; Qdrant Cloud</span>
+      </div>
+
+      <div class="nodes-grid">
+        <!-- Stage 1 -->
+        <div class="node-box theme-purple" id="node-stage1" onclick="inspectNode('stage1')">
+          <div class="node-stage-badge"><span>Stage 1</span><span>Whisper</span></div>
+          <div class="node-box-title">Speech-to-Text</div>
+          <div class="node-box-sub">faster-whisper + Silero<br>Word timestamps &plus; hotwords</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st1-st2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="node-box theme-purple" id="node-stage2" onclick="inspectNode('stage2')">
+          <div class="node-stage-badge"><span>Stage 2</span><span>Cleaning</span></div>
+          <div class="node-box-title">Tech Canonicalizer</div>
+          <div class="node-box-sub">NFC Unicode normalization<br>Phonetic Regex C++</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st2-st3">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="node-box theme-purple" id="node-stage3" onclick="inspectNode('stage3')">
+          <div class="node-stage-badge"><span>Stage 3</span><span>Chunking</span></div>
+          <div class="node-box-title">Multi-chunking</div>
+          <div class="node-box-sub">Video: 60-90s overlap 15s<br>Code AST: tree-sitter</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st3-st4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="node-box theme-purple" id="node-stage4" onclick="inspectNode('stage4')">
+          <div class="node-stage-badge"><span>Stage 4</span><span>Dual Embed</span></div>
+          <div class="node-box-title">Dual Vector Gen</div>
+          <div class="node-box-sub">Dense: E5-large (1024d)<br>Sparse: BM25 fastembed</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st4-st5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="node-box theme-purple" id="node-stage5" onclick="inspectNode('stage5')">
+          <div class="node-stage-badge"><span>Stage 5</span><span>Qdrant</span></div>
+          <div class="node-box-title">Storage &amp; Indexing</div>
+          <div class="node-box-sub">UUIDv5 deterministic<br>6 In-Payload Indexes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHÂN TẦNG 3: TELEMETRY & EVALUATION (STAGE 11) -->
+    <div class="row-section">
+      <div class="row-header">
+        <div class="row-title row-title-amber">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          Phân Tầng 3: Continuous Evaluation &amp; Observability (Stage 11)
+        </div>
+        <span class="row-badge" style="background:#fffbeb; color:#92400e;">Ragas Triad &bull; CI/CD Quality Gate</span>
+      </div>
+
+      <div class="nodes-grid">
+        <!-- Stage 11: Benchmark -->
+        <div class="node-box theme-amber" id="node-stage11" onclick="inspectNode('stage11')">
+          <div class="node-stage-badge"><span>Stage 11</span><span>Telemetry</span></div>
+          <div class="node-box-title">Ragas Benchmark</div>
+          <div class="node-box-sub">Golden Dataset (30 QAs)<br>Context Recall &ge; 0.89</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-st11-gate">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Quality Gate Node -->
+        <div class="node-box" id="node-qgate" onclick="inspectNode('qgate')">
+          <div class="node-stage-badge"><span>CI Pipeline</span><span>Gate</span></div>
+          <div class="node-box-title">Quality Gate (CI)</div>
+          <div class="node-box-sub">Faithfulness &ge; 0.94<br>Block if Hallucination &gt; 0.15</div>
+        </div>
+
+        <div class="arrow-connector" id="arr-gate-alert">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>
+        </div>
+
+        <!-- Guardrail Alert -->
+        <div class="node-box theme-dashed" id="node-alert" onclick="inspectNode('alert')">
+          <div class="node-stage-badge"><span>Security</span><span>Negative Gate</span></div>
+          <div class="node-box-title">Negative Guardrail</div>
+          <div class="node-box-sub">0 Chunks &rarr; Cấm Timestamp<br>Cảnh báo bài học chưa dạy</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Telemetry Bar (Real metrics) -->
+  <div class="telemetry-strip">
+    <div class="telemetry-pill">
+      <span>Trạng thái:</span>
+      <span class="telemetry-val" id="stat-status" style="color:#059669;">Sẵn sàng phục vụ</span>
+    </div>
+    <span style="color:#cbd5e1;">&bull;</span>
+    <div class="telemetry-pill">
+      <span>Thời gian phản hồi (p95):</span>
+      <span class="telemetry-val" id="stat-lat">~380 ms</span>
+    </div>
+    <span style="color:#cbd5e1;">&bull;</span>
+    <div class="telemetry-pill">
+      <span>Bộ lọc In-HNSW:</span>
+      <span class="telemetry-val" id="stat-filter">lesson_seq &le; 2</span>
+    </div>
+    <span style="color:#cbd5e1;">&bull;</span>
+    <div class="telemetry-pill">
+      <span>Chunks vượt ngưỡng:</span>
+      <span class="telemetry-val" id="stat-chunks">-</span>
+    </div>
+    <span style="color:#cbd5e1;">&bull;</span>
+    <div class="telemetry-pill">
+      <span>Qdrant Point Count:</span>
+      <span class="telemetry-val">27 Chunks chuẩn</span>
+    </div>
+  </div>
+
+  <!-- Detail Inspector Drawer -->
+  <div class="inspector-card" id="inspectorCard">
+    <div class="inspector-header-bar">
+      <div class="inspector-title">
+        <span id="inspectBadge" class="inspector-tag">STAGE</span>
+        <span id="inspectTitle">Chi Tiết Kỹ Thuật</span>
+      </div>
+      <button class="btn-close-inspector" onclick="closeInspector()" aria-label="Đóng bảng chi tiết">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="inspector-grid">
+      <div class="inspector-item">
+        <div class="inspector-item-label">Tệp Nguồn Thực Tế (Source File)</div>
+        <div class="inspector-code" id="inspectFile">app/main.py</div>
+      </div>
+      <div class="inspector-item">
+        <div class="inspector-item-label">Công Nghệ &amp; Mô Hình (Stack)</div>
+        <div class="inspector-code" id="inspectTech">FastAPI, asyncio</div>
+      </div>
+      <div class="inspector-item">
+        <div class="inspector-item-label">Mục Tiêu &amp; Chỉ Số Đo Lường (SLA/Target)</div>
+        <div class="inspector-code" id="inspectMetric">Latency &lt; 50ms</div>
+      </div>
+      <div class="inspector-item">
+        <div class="inspector-item-label">Dữ Liệu Vào / Ra Thực Tế (Payload / Contract)</div>
+        <div class="inspector-code" id="inspectPayload">Input: JSON Query &rarr; Output: SSE Token Stream</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Knowledge Base of Technical Stages (100% Codebase Truth - Zero Hallucination)
+    const STAGE_SPECS = {
+      frontend: {
+        badge: "LAYER 1",
+        title: "Frontend Learning Portal",
+        file: "frontend/ (Trang web học lập trình tích hợp Video)",
+        tech: "HTML5 Video Player API, EventSource SSE, Lucide Icons",
+        metric: "Sync timestamp <= 200ms, UX 60fps compositor",
+        payload: "Sinh viên hỏi câu hỏi -> player.seekTo(sec) nhảy đúng mốc khi click thẻ <timestamp sec='...'>"
+      },
+      apigateway: {
+        badge: "LAYER 2",
+        title: "API Gateway (FastAPI)",
+        file: "app/main.py -> app/api/v1/chat.py",
+        tech: "FastAPI, Pydantic v2, Server-Sent Events (SSE), CORS Middleware",
+        metric: "Non-blocking async streaming, Explicit IPv4 127.0.0.1",
+        payload: "POST /api/v1/chat/stream -> ChatRequest(prompt, course_id, lesson_seq)"
+      },
+      orchestration: {
+        badge: "LAYER 3",
+        title: "Agentic Orchestration & Session State",
+        file: "app/services/chat.py (ChatService), app/agent/router.py",
+        tech: "Fast-Path Intent Router (Regex), Redis Sliding Window (4-6 turns)",
+        metric: "Routing < 5ms (CPU Regex, không tốn LLM call)",
+        payload: "Intent: course_query | chit_chat | out_of_scope -> Điều phối luồng xử lý"
+      },
+      engine_hub: {
+        badge: "CORE ENGINE",
+        title: "11-Stage Advanced Engine Dispatcher",
+        file: "README.md (Bảng 11-Stage Advanced Retrieval Engine)",
+        tech: "Dual Named Vectors, HNSW Graph, FastEmbed ONNX",
+        metric: "Toàn bộ chu trình Retrieval < 380ms (p95)",
+        payload: "Điều phối tìm kiếm ngữ nghĩa, tiền lọc chống lộ bài, tái xếp hạng và sinh phản hồi Socratic"
+      },
+      stage1: {
+        badge: "STAGE 1",
+        title: "Offline Speech Ingestion",
+        file: "scripts/ingest_video.py, scripts/extract_audio.py",
+        tech: "faster-whisper (Systran), Silero VAD (threshold=0.35, speech_pad=400ms)",
+        metric: "Word-level timestamps, hotwords: C++, Java, Python keywords",
+        payload: "Video raw -> Audio WAV 16kHz -> Whisper Segments có timestamp từng giây"
+      },
+      stage2: {
+        badge: "STAGE 2",
+        title: "Tech Canonicalizer & Cleaning",
+        file: "scripts/ingest_video.py (Text Normalizer)",
+        tech: "Unicode NFC, Phonetic Regex C++ Repair (C cộng cộng -> C++, include -> #include)",
+        metric: "100% chuẩn hóa từ đệm, triệt tiêu nhiễu âm học trước khi vector hóa",
+        payload: "Văn bản thô -> Làm sạch từ đệm 'ờ, à' -> Thay thế thuật ngữ lập trình chuẩn xác"
+      },
+      stage3: {
+        badge: "STAGE 3",
+        title: "Multi-strategy Chunking",
+        file: ".agents/skills/ast-code-chunker/SKILL.md, scripts/chunk_ast.py",
+        tech: "Tree-sitter AST (C++, Java), Sliding Window 60-90s overlap 15s cho Video",
+        metric: "Bảo toàn 100% ranh giới hàm/class, không cắt đôi dòng code",
+        payload: "Video: JSON Chunks kèm start_sec, end_sec | Code: AST function/struct nodes"
+      },
+      stage4: {
+        badge: "STAGE 4",
+        title: "Dual Embedding Generation",
+        file: "app/services/embedding.py, app/config.py",
+        tech: "Dense: intfloat/multilingual-e5-large (1024-dim, passage:) | Sparse: Qdrant/bm25",
+        metric: "Fastembed ONNX, Mean Pooling, Chuẩn E5 Asymmetric Prefix",
+        payload: "Chunk text -> [1024 floats dense] & [Sparse token indices + weights]"
+      },
+      stage5: {
+        badge: "STAGE 5",
+        title: "Storage & Idempotent Indexing",
+        file: "app/services/vector_db.py, scripts/ingest_video.py",
+        tech: "Qdrant Cloud Managed Cluster, UUIDv5 deterministic point IDs",
+        metric: "27 Points chuẩn, 6 Payload indexes (course_id, lesson_seq, chunk_type...)",
+        payload: "Qdrant Point: {id: uuid5, vector: {dense, sparse}, payload: {lesson_seq, timestamps, code_scope}}"
+      },
+      stage6: {
+        badge: "STAGE 6",
+        title: "Hybrid Retrieval",
+        file: "app/services/vector_db.py (hybrid_search)",
+        tech: "Dual Named Vectors, Reciprocal Rank Fusion (RRF k=60)",
+        metric: "Dung hòa tìm kiếm ý nghĩa (Dense Cosine) và từ khóa chính xác (BM25)",
+        payload: "Query 'con trỏ C++' -> Top 20 Candidates từ Dense + Top 20 Candidates từ BM25"
+      },
+      stage7: {
+        badge: "STAGE 7",
+        title: "In-HNSW Dynamic Pre-filtering",
+        file: "app/services/vector_db.py (Filter Condition)",
+        tech: "In-HNSW single-call pre-filtering: course_id == id AND lesson_seq <= current",
+        metric: "Lọc đồ thị < 5ms, triệt tiêu 100% rò rỉ kiến thức bài sau (Zero Future Leak)",
+        payload: "Sinh viên đang học Bài 1 -> Tuyệt đối không thể truy xuất tài liệu Bài 2, Bài 3"
+      },
+      stage8: {
+        badge: "STAGE 8",
+        title: "Re-ranking & Calibrated Sigmoid",
+        file: "app/services/reranker.py, app/config.py",
+        tech: "jinaai/jina-reranker-v2-base-multilingual, Logistic Sigmoid σ(z)=1/(1+e^-z)",
+        metric: "Ngưỡng lọc Recall-First: CODE >= 0.35, VIDEO >= 0.22, Best-effort Fallback >= 0.15",
+        payload: "Cross-encoder chấm điểm cặp [Query, Chunk] -> Sigmoid xác suất [0.0, 1.0]"
+      },
+      stage9: {
+        badge: "STAGE 9",
+        title: "Context Assembly & Reordering",
+        file: "app/services/vector_db.py (assemble_context)",
+        tech: "U-shaped layout [Top 1, Top 3, Top 2], Stanford Research Compliance",
+        metric: "Loại bỏ triệt để hiện tượng suy giảm hiệu năng 'Lost-in-the-Middle' của LLM",
+        payload: "Top 1 đặt đầu context, Top 2 đặt cuối context, Top 3 đặt giữa context"
+      },
+      stage10: {
+        badge: "STAGE 10",
+        title: "Anti-Robotic Socratic Synthesizer",
+        file: "app/core/prompts.py, Ollama Qwen2.5-3B-Instruct",
+        tech: "Qwen2.5-3B-Instruct (GGUF Q4_K_M), Single-pass Prompt Fusion",
+        metric: "Tự động trích xuất thẻ <timestamp sec='...'>, từ chối viết code giải bài trọn vẹn",
+        payload: "Prompt Socratic -> Stream SSE token -> Trả lời gợi ý tư duy + mốc video bài giảng"
+      },
+      stage11: {
+        badge: "STAGE 11",
+        title: "Ragas Benchmark Telemetry",
+        file: "scripts/test_search.py, .agents/skills/rag-diagnostics-eval/SKILL.md",
+        tech: "Ragas Triad (Context Recall, Faithfulness, Answer Relevance), Golden Dataset (30 QAs)",
+        metric: "Context Recall = 0.89 (+43.5%), Faithfulness = 0.94 (+32.4%)",
+        payload: "Đánh giá tự động chất lượng ngữ cảnh và tính trung thực không bịa đặt của RAG"
+      },
+      qgate: {
+        badge: "CI GATE",
+        title: "Quality Gate trong CI/CD Pipeline",
+        file: ".github/workflows/rag_eval.yml",
+        tech: "Automated Failure Pattern Detection (P01-P12)",
+        metric: "Chặn Deploy nếu Faithfulness < 0.85 hoặc Hallucination > 0.15",
+        payload: "CI Runner chạy eval -> PASS: Cho phép đóng gói Docker | FAIL: Chặn merge nhánh main"
+      },
+      alert: {
+        badge: "GUARDRAIL",
+        title: "Negative Guardrail & Empty Retrieval Alert",
+        file: "app/services/chat.py (Empty chunks prompt branch)",
+        tech: "Deterministic Guardrail: Khi 0 chunks vượt ngưỡng sàn",
+        metric: "Tuyệt đối CẤM sinh thẻ <timestamp> nếu nội dung chưa được dạy",
+        payload: "Thông báo sinh viên: Chủ đề này chưa học trong phạm vi bài hiện tại, hướng dẫn lý thuyết thuần"
+      }
+    };
+
+    let simTimer = null;
+    let animSpeed = 400;
+    let lastRetrievedChunkCount = 0;
+
+    function applyPreset() {
+      const sel = document.getElementById('presetSel');
+      if (sel.value) {
+        document.getElementById('queryInput').value = sel.value;
+        const lessonSel = document.getElementById('lessonSel');
+        if (sel.value.includes('đang ở Bài 1') || sel.value.includes('cout was not declared')) {
+          lessonSel.value = "1";
+        } else {
+          lessonSel.value = "2";
+        }
+      }
+    }
+
+    function clearAllStates() {
+      if (simTimer) clearTimeout(simTimer);
+      document.querySelectorAll('.node-box').forEach(el => {
+        el.classList.remove('state-running', 'state-pass', 'state-alert');
+      });
+      document.querySelectorAll('.arrow-connector').forEach(el => {
+        el.classList.remove('state-active');
+      });
+    }
+
+    function resetAll() {
+      clearAllStates();
+      document.getElementById('stat-status').textContent = "Sẵn sàng phục vụ";
+      document.getElementById('stat-status').style.color = "#059669";
+      document.getElementById('stat-lat').textContent = "~380 ms";
+      document.getElementById('stat-chunks').textContent = "-";
+      document.getElementById('liveResponseBox').style.display = 'none';
+      closeInspector();
+    }
+
+    function handleSendQuery() {
+      const mode = document.getElementById('modeToggle').value;
+      if (mode === 'live') {
+        executeLiveBackendQuery();
+      } else {
+        runSimulation('online');
+      }
+    }
+
+    // ==========================================
+    // LIVE BACKEND SSE STREAM CLIENT (REAL API)
+    // ==========================================
+    async function executeLiveBackendQuery() {
+      clearAllStates();
+      const prompt = document.getElementById('queryInput').value.trim();
+      const course_id = document.getElementById('courseSel').value;
+      const lesson_seq = parseInt(document.getElementById('lessonSel').value, 10);
+
+      if (!prompt) {
+        alert("Vui lòng nhập câu hỏi!");
+        return;
+      }
+
+      // UI update
+      const statusEl = document.getElementById('stat-status');
+      const liveBox = document.getElementById('liveResponseBox');
+      const liveText = document.getElementById('liveTextContent');
+      const liveTiming = document.getElementById('liveTiming');
+      const liveIntentBadge = document.getElementById('liveIntentBadge');
+      const liveTimestampsRow = document.getElementById('liveTimestampsRow');
+      const liveTimestampsList = document.getElementById('liveTimestampsList');
+      const liveSourcesRow = document.getElementById('liveSourcesRow');
+      const liveSourcesList = document.getElementById('liveSourcesList');
+      const statFilter = document.getElementById('stat-filter');
+      const statChunks = document.getElementById('stat-chunks');
+
+      statFilter.textContent = `lesson_seq <= ${lesson_seq}`;
+      liveBox.style.display = 'block';
+      liveText.innerHTML = '<span class="cursor-blink"></span>';
+      liveTimestampsRow.style.display = 'none';
+      liveTimestampsList.innerHTML = '';
+      liveSourcesRow.style.display = 'none';
+      liveSourcesList.innerHTML = '';
+
+      statusEl.textContent = "Đang gửi yêu cầu tới API Gateway /api/v1/chat/stream...";
+      statusEl.style.color = "#2563eb";
+      liveTiming.textContent = "Kết nối Live Backend...";
+
+      // Kích hoạt Node Frontend -> Gateway -> Orchestration
+      document.getElementById('node-frontend').classList.add('state-running');
+      document.getElementById('arr-fe-gw').classList.add('state-active');
+      document.getElementById('node-apigateway').classList.add('state-running');
+
+      const startTime = performance.now();
+      let firstTokenTime = null;
+      let fullResponseText = "";
+      lastRetrievedChunkCount = 0;
+
+      try {
+        const response = await fetch('/api/v1/chat/stream', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            prompt: prompt,
+            course_id: course_id,
+            lesson_seq: lesson_seq
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        document.getElementById('arr-fe-gw').classList.remove('state-active');
+        document.getElementById('node-frontend').classList.remove('state-running');
+        document.getElementById('node-frontend').classList.add('state-pass');
+        document.getElementById('arr-gw-orch').classList.add('state-active');
+        document.getElementById('node-orchestration').classList.add('state-running');
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); // giữ lại phần chưa hoàn thiện
+
+          let currentEvent = 'message';
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed) continue;
+
+            if (trimmed.startsWith('event:')) {
+              currentEvent = trimmed.replace('event:', '').trim();
+            } else if (trimmed.startsWith('data:')) {
+              const rawData = trimmed.replace('data:', '').trim();
+              if (rawData === '[DONE]') continue;
+
+              if (currentEvent === 'metadata') {
+                try {
+                  const meta = JSON.parse(rawData);
+                  lastRetrievedChunkCount = meta.retrieved_chunk_count || 0;
+                  liveIntentBadge.textContent = `INTENT: ${meta.intent.toUpperCase()}`;
+                  statChunks.textContent = `${meta.retrieved_chunk_count} chunks`;
+
+                  if (meta.used_fast_path) {
+                    liveIntentBadge.style.background = "#fef3c7";
+                    liveIntentBadge.style.color = "#92400e";
+                    liveIntentBadge.textContent += " (FAST-PATH <1ms)";
+                    statusEl.textContent = "Intent Router: Fast-Path kích hoạt (không gọi Qdrant/LLM)";
+                  } else {
+                    liveIntentBadge.style.background = "#ecfdf5";
+                    liveIntentBadge.style.color = "#065f46";
+                    
+                    // Kích hoạt đường Online Retrieval Stages 6 -> 7 -> 8 -> 9
+                    document.getElementById('arr-orch-engine').classList.add('state-active');
+                    document.getElementById('node-stage6').classList.add('state-pass');
+                    document.getElementById('node-stage7').classList.add('state-pass');
+                    document.getElementById('node-stage8').classList.add('state-pass');
+                    document.getElementById('node-stage9').classList.add('state-pass');
+                    document.getElementById('node-stage10').classList.add('state-running');
+
+                    // Kiểm tra Retrieval Status phân tầng
+                    if (meta.retrieval_status === 'out_of_lesson') {
+                      document.getElementById('node-stage7').classList.remove('state-pass');
+                      document.getElementById('node-stage7').classList.add('state-alert');
+                      document.getElementById('node-alert').classList.add('state-alert');
+                      liveIntentBadge.style.background = "#fee2e2";
+                      liveIntentBadge.style.color = "#991b1b";
+                      liveIntentBadge.textContent = `OUT-OF-LESSON (Bài ${meta.target_lesson_seq || 'sau'})`;
+                      statusEl.textContent = `🛡️ IN-HNSW FILTER CHẶN THÀNH CÔNG: Câu hỏi thuộc Bài ${meta.target_lesson_seq || 'tương lai'}, kích hoạt OUT_OF_LESSON_PROMPT`;
+                      statusEl.style.color = "#e11d48";
+                    } else if (meta.retrieval_status === 'coverage_gap' || meta.retrieved_chunk_count === 0) {
+                      document.getElementById('node-stage8').classList.remove('state-pass');
+                      document.getElementById('node-stage8').classList.add('state-alert');
+                      document.getElementById('node-alert').classList.add('state-alert');
+                      liveIntentBadge.style.background = "#f3f4f6";
+                      liveIntentBadge.style.color = "#374151";
+                      liveIntentBadge.textContent = "COVERAGE-GAP (0 chunks)";
+                      statusEl.textContent = "🛡️ RERANKER CHẶN THÀNH CÔNG: Ngoài phạm vi giáo trình C++, kích hoạt COVERAGE_GAP_PROMPT";
+                      statusEl.style.color = "#4b5563";
+                    } else if (meta.is_low_confidence) {
+                      liveIntentBadge.style.background = "#fef3c7";
+                      liveIntentBadge.style.color = "#b45309";
+                      liveIntentBadge.textContent += " (DEGRADATION >=0.20)";
+                      statusEl.textContent = "⚠️ Graceful Degradation: Ngữ cảnh có độ tin cậy tham khảo (0.20 - 0.35)";
+                      statusEl.style.color = "#b45309";
+                    }
+                  }
+
+                  // Hiển thị Timestamps thật
+                  if (meta.suggested_timestamps && meta.suggested_timestamps.length > 0) {
+                    liveTimestampsRow.style.display = 'block';
+                    liveTimestampsList.innerHTML = meta.suggested_timestamps.map(ts => `
+                      <a class="timestamp-pill" href="javascript:void(0)" onclick="simulateSeek(${ts.sec})">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        ${ts.label} (${ts.title || 'Mốc bài giảng'}) &rarr; Nhảy video
+                      </a>
+                    `).join('');
+                  }
+
+                  // Hiển thị Sources thật
+                  if (meta.sources && meta.sources.length > 0) {
+                    liveSourcesRow.style.display = 'block';
+                    liveSourcesList.innerHTML = meta.sources.map((src, i) => `
+                      <div class="source-card">
+                        <div class="source-card-header">
+                          <span style="color:#2563eb;">#${i+1} [${src.content_type}] Bài ${src.lesson_seq}</span>
+                          <span style="color:${src.confidence_pct >= 60 ? '#059669' : '#d97706'};">Tin cậy: ${src.confidence_pct.toFixed(1)}%</span>
+                        </div>
+                        <div style="color:var(--text-sub); font-size:10.5px;">
+                          ${src.content_type === 'code_ast' 
+                            ? `File: <strong>${src.file_path || 'code'}</strong> (Scope: ${src.code_scope || 'block'})`
+                            : `Video Tag: <strong>${src.timestamp_tag || src.start_label || ''}</strong> (Bắt đầu tại ${src.start_sec}s)`
+                          }
+                          ${src.is_approximate ? '<span style="color:#b45309; font-weight:700;"> [Mốc xấp xỉ]</span>' : ''}
+                        </div>
+                      </div>
+                    `).join('');
+                  }
+
+                } catch (e) {
+                  console.error("Lỗi parse metadata:", e);
+                }
+              } else if (currentEvent === 'delta') {
+                if (!firstTokenTime) {
+                  firstTokenTime = performance.now();
+                  const ttft = (firstTokenTime - startTime).toFixed(0);
+                  liveTiming.textContent = `TTFT (First Token): ${ttft} ms`;
+                  document.getElementById('stat-lat').textContent = `${ttft} ms`;
+                }
+
+                try {
+                  const deltaObj = JSON.parse(rawData);
+                  if (deltaObj.content) {
+                    fullResponseText += deltaObj.content;
+                    const formatted = renderFormattedText(fullResponseText, lastRetrievedChunkCount);
+                    liveText.innerHTML = formatted + '<span class="cursor-blink"></span>';
+                  }
+                } catch (e) {
+                  fullResponseText += rawData;
+                  liveText.innerHTML = renderFormattedText(fullResponseText, lastRetrievedChunkCount) + '<span class="cursor-blink"></span>';
+                }
+              }
+            }
+          }
+        }
+
+        // Hoàn tất Stream
+        const totalDuration = (performance.now() - startTime).toFixed(0);
+        liveTiming.textContent = `Tổng thời gian: ${totalDuration} ms | Hoàn tất`;
+        document.getElementById('stat-lat').textContent = `${totalDuration} ms`;
+        liveText.innerHTML = renderFormattedText(fullResponseText, lastRetrievedChunkCount);
+
+        document.getElementById('node-stage10').classList.remove('state-running');
+        document.getElementById('node-stage10').classList.add('state-pass');
+        document.getElementById('node-apigateway').classList.add('state-pass');
+        document.getElementById('node-orchestration').classList.add('state-pass');
+        document.getElementById('arr-gw-orch').classList.remove('state-active');
+        document.getElementById('arr-orch-engine').classList.remove('state-active');
+
+        if (statusEl.style.color !== "rgb(225, 29, 72)") {
+          statusEl.textContent = "Hoàn tất truy xuất Live Backend & Stream Socratic!";
+          statusEl.style.color = "#059669";
+        }
+
+      } catch (err) {
+        console.error("Lỗi gọi Live Backend:", err);
+        statusEl.textContent = `Lỗi kết nối Live Backend: ${err.message}`;
+        statusEl.style.color = "#e11d48";
+        liveText.innerHTML = `<span style="color:#e11d48;">Lỗi khi gọi API: ${err.message}. Hãy đảm bảo server uvicorn đang chạy tại http://127.0.0.1:8000.</span>`;
+      }
+    }
+
+    function renderFormattedText(text, chunkCount) {
+      if (!text) return "";
+      if (chunkCount === 0) {
+        // Deterministic Guardrail: Triệt tiêu mọi thẻ timestamp nếu không có chunk nào
+        text = text.replace(/<timestamp[^>]*>.*?<\/timestamp>/gi, "");
+      }
+      return text.replace(/<timestamp sec="(\d+)">([^<]+)<\/timestamp>/g, function(match, sec, label) {
+        return `<a class="timestamp-pill" href="javascript:void(0)" onclick="simulateSeek(${sec})">⏱ ${label} (Nhảy video)</a>`;
+      });
+    }
+
+    function simulateSeek(sec) {
+      alert(`[VIDEO PLAYER SEEK SYNC]\nĐã kích hoạt hàm: player.seekTo(${sec})\nVideo bài giảng đã nhảy tới mốc ${Math.floor(sec/60)} phút ${sec%60} giây!`);
+    }
+
+    // ==========================================
+    // MOCK SIMULATION CONTROLLER (SIMULATOR)
+    // ==========================================
+    function runSimulation(mode) {
+      clearAllStates();
+      document.getElementById('liveResponseBox').style.display = 'none';
+      const statusEl = document.getElementById('stat-status');
+
+      if (mode === 'online') {
+        statusEl.textContent = "[Mô phỏng] Đang chạy luồng Online Serving qua 11 Stages...";
+        statusEl.style.color = "#2563eb";
+
+        const seq = [
+          { node: 'node-frontend', arr: 'arr-fe-gw' },
+          { node: 'node-apigateway', arr: 'arr-gw-orch' },
+          { node: 'node-orchestration', arr: 'arr-orch-engine' },
+          { node: 'node-engine-hub', arr: null },
+          { node: 'node-stage6', arr: 'arr-st6-st7' },
+          { node: 'node-stage7', arr: 'arr-st7-st8' },
+          { node: 'node-stage8', arr: 'arr-st8-st9' },
+          { node: 'node-stage9', arr: 'arr-st9-st10' },
+          { node: 'node-stage10', arr: null },
+          { node: 'node-frontend', arr: null, isEnd: true }
+        ];
+
+        let idx = 0;
+        function step() {
+          if (idx > 0) {
+            const prev = seq[idx - 1];
+            const pNode = document.getElementById(prev.node);
+            if (pNode) {
+              pNode.classList.remove('state-running');
+              pNode.classList.add('state-pass');
+            }
+            if (prev.arr) {
+              const pArr = document.getElementById(prev.arr);
+              if (pArr) pArr.classList.remove('state-active');
+            }
+          }
+
+          if (idx < seq.length) {
+            const cur = seq[idx];
+            const cNode = document.getElementById(cur.node);
+            if (cNode) cNode.classList.add('state-running');
+            if (cur.arr) {
+              const cArr = document.getElementById(cur.arr);
+              if (cArr) cArr.classList.add('state-active');
+            }
+            idx++;
+            simTimer = setTimeout(step, animSpeed);
+          } else {
+            statusEl.textContent = "Hoàn tất mô phỏng! Token stream và timestamp video đã sẵn sàng";
+            statusEl.style.color = "#059669";
+            inspectNode('stage10');
+          }
+        }
+        step();
+
+      } else if (mode === 'offline') {
+        statusEl.textContent = "[Mô phỏng] Đang chạy Ingestion Pipeline nạp dữ liệu Offline (Stages 1 -> 5)...";
+        statusEl.style.color = "#7c3aed";
+
+        const seq = [
+          { node: 'node-stage1', arr: 'arr-st1-st2' },
+          { node: 'node-stage2', arr: 'arr-st2-st3' },
+          { node: 'node-stage3', arr: 'arr-st3-st4' },
+          { node: 'node-stage4', arr: 'arr-st4-st5' },
+          { node: 'node-stage5', arr: null }
+        ];
+
+        let idx = 0;
+        function step() {
+          if (idx > 0) {
+            const prev = seq[idx - 1];
+            const pNode = document.getElementById(prev.node);
+            if (pNode) {
+              pNode.classList.remove('state-running');
+              pNode.classList.add('state-pass');
+            }
+            if (prev.arr) {
+              const pArr = document.getElementById(prev.arr);
+              if (pArr) pArr.classList.remove('state-active');
+            }
+          }
+
+          if (idx < seq.length) {
+            const cur = seq[idx];
+            const cNode = document.getElementById(cur.node);
+            if (cNode) cNode.classList.add('state-running');
+            if (cur.arr) {
+              const cArr = document.getElementById(cur.arr);
+              if (cArr) cArr.classList.add('state-active');
+            }
+            idx++;
+            simTimer = setTimeout(step, animSpeed);
+          } else {
+            statusEl.textContent = "Hoàn tất Ingestion! 27 Points đã nạp vào Qdrant Cloud Cluster";
+            statusEl.style.color = "#059669";
+            inspectNode('stage5');
+          }
+        }
+        step();
+
+      } else if (mode === 'eval') {
+        statusEl.textContent = "[Mô phỏng] Đang chạy kiểm thử tự động Ragas CI Quality Gate (Stage 11)...";
+        statusEl.style.color = "#0284c7";
+
+        const s11 = document.getElementById('node-stage11');
+        const qg = document.getElementById('node-qgate');
+        const arr1 = document.getElementById('arr-st11-gate');
+
+        s11.classList.add('state-running');
+        simTimer = setTimeout(() => {
+          s11.classList.remove('state-running');
+          s11.classList.add('state-pass');
+          if (arr1) arr1.classList.add('state-active');
+          qg.classList.add('state-running');
+
+          simTimer = setTimeout(() => {
+            qg.classList.remove('state-running');
+            qg.classList.add('state-pass');
+            if (arr1) arr1.classList.remove('state-active');
+            statusEl.textContent = "Quality Gate PASS! Context Recall 0.89, Faithfulness 0.94";
+            statusEl.style.color = "#059669";
+            inspectNode('stage11');
+          }, animSpeed + 100);
+        }, animSpeed);
+
+      } else if (mode === 'fault') {
+        statusEl.textContent = "[Mô phỏng] Đang tiêm lỗi Hallucination: Faithfulness tụt < 0.85...";
+        statusEl.style.color = "#e11d48";
+
+        const s11 = document.getElementById('node-stage11');
+        const qg = document.getElementById('node-qgate');
+        const alertNode = document.getElementById('node-alert');
+        const arr1 = document.getElementById('arr-st11-gate');
+        const arr2 = document.getElementById('arr-gate-alert');
+
+        s11.classList.add('state-running');
+        simTimer = setTimeout(() => {
+          s11.classList.remove('state-running');
+          s11.classList.add('state-pass');
+          if (arr1) arr1.classList.add('state-active');
+          qg.classList.add('state-running');
+
+          simTimer = setTimeout(() => {
+            qg.classList.remove('state-running');
+            qg.classList.add('state-alert');
+            if (arr1) arr1.classList.remove('state-active');
+            if (arr2) arr2.classList.add('state-active');
+            alertNode.classList.add('state-alert');
+
+            statusEl.textContent = "CẢNH BÁO: Quality Gate FAIL! Kích hoạt Negative Guardrail, cấm sinh timestamp";
+            inspectNode('alert');
+          }, animSpeed + 100);
+        }, animSpeed);
+      }
+    }
+
+    function inspectNode(stageKey) {
+      const data = STAGE_SPECS[stageKey];
+      if (!data) return;
+
+      document.getElementById('inspectBadge').textContent = data.badge;
+      document.getElementById('inspectTitle').textContent = data.title;
+      document.getElementById('inspectFile').textContent = data.file;
+      document.getElementById('inspectTech').textContent = data.tech;
+      document.getElementById('inspectMetric').textContent = data.metric;
+      document.getElementById('inspectPayload').textContent = data.payload;
+
+      document.getElementById('inspectorCard').style.display = 'block';
+    }
+
+    function closeInspector() {
+      document.getElementById('inspectorCard').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

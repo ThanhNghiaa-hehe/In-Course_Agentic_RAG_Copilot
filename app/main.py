@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
+from fastapi.responses import FileResponse, HTMLResponse
 from app.config import settings
 from app.services.qdrant import get_async_qdrant_client, close_async_qdrant_client, check_qdrant_health
 from app.services.embedding import get_embedding_service
@@ -67,5 +69,15 @@ async def health_check():
 async def root():
     return {
         "message": "In-Course Agentic RAG Copilot API is running",
-        "docs_url": "/docs"
+        "docs_url": "/docs",
+        "workflow_simulator_url": "/workflow"
     }
+
+
+@app.get("/workflow")
+async def get_interactive_workflow():
+    """Phục vụ trực tiếp trang mô phỏng tương tác 11 Stages & Quality Gate."""
+    workflow_path = Path(__file__).resolve().parent.parent / "docs" / "architecture" / "interactive_workflow.html"
+    if workflow_path.exists():
+        return FileResponse(workflow_path, media_type="text/html")
+    return HTMLResponse("<h1>Tệp mô phỏng interactive_workflow.html chưa sẵn sàng</h1>", status_code=404)

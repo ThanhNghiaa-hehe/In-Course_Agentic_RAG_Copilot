@@ -36,6 +36,9 @@ class StreamMetadataEvent(BaseModel):
     retrieved_chunk_count: int = 0
     used_fast_path: bool = False
     is_approximate: bool = False
+    retrieval_status: Literal["grounded", "out_of_lesson", "coverage_gap", "fast_path"] = "grounded"
+    is_low_confidence: bool = False
+    target_lesson_seq: Optional[int] = None
     sources: List[Dict[str, Any]] = Field(
         default_factory=list,
         description="Danh sách nguồn trích dẫn phục vụ hiển thị source cards trên UI"
