@@ -36,6 +36,11 @@
 - Never write full solutions in Socratic prompts.
 - Qdrant Cloud Client: Always set `timeout=60.0` for international latency resilience.
 - **Interactive Command Protocol:** Tuyệt đối KHÔNG tự ý chạy lệnh test/tìm kiếm khi chưa có sự yêu cầu rõ ràng từ người dùng. Khi người dùng hỏi lệnh test hoặc cách chạy, AI luôn cung cấp các khối lệnh PowerShell chuẩn, sạch, giải thích mục đích và kết quả mong đợi để người dùng tự copy chạy trên terminal của họ.
+- **Strict Pre-Action Audit & Zero-Assumption Rule (Rà Soát Kỷ Luật Trước Hành Động):**
+  - Trước bất kỳ hành động nào liên quan đến tạo file mới, sửa file cũ hoặc chạy lệnh terminal: AI BẮT BUỘC phải tự động rà soát lại toàn bộ User Rules và Skills trong dự án.
+  - Ngay cả khi người dùng nói mệt mỏi, nhờ làm hộ, hoặc đề cập đến việc tạo contribution: AI TUYỆT ĐỐI KHÔNG ĐƯỢC tự ý thực thi các thao tác tạo/sửa mã nguồn hoặc chạy lệnh ngầm trong âm thầm.
+  - AI BẮT BUỘC phải: (1) Trình bày phương án và danh sách tệp dự kiến tạo/sửa; (2) Chờ người dùng phản hồi hoặc bấm nút phê duyệt (Proceed); (3) Chỉ cung cấp khối lệnh PowerShell sạch để người dùng tự kiểm soát và thực thi trên terminal của họ.
+
 
 ## 4. Enterprise Git & Daily Delivery Cadence
 - **Commit Frequency & Granular Protocol (Quy Tắc Cam Kết Đa Tầng):**
