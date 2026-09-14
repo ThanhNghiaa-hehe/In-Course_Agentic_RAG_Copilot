@@ -15,13 +15,16 @@
 - **E5 Asymmetric Prefix Standard:** Bắt buộc thêm `passage: ` khi index tài liệu/code và `query: ` khi truy vấn tìm kiếm để tối ưu hóa không gian vector cosine.
 - **Re-ranking & Normalization:** Cross-encoder with **Logistic Sigmoid Normalization** $\sigma(z) = \frac{1}{1 + e^{-z}}$. Triết lý thiết kế **Recall-First** kết hợp Calibrated Sigmoid / Min-Max Normalization để loại bỏ nhiễu từ câu hỏi ngắn.
 - **Multimodal Thresholding & Fallback Policy (2-Phase Roadmap):**
-  - **Phase 1 (Current - Under 50% Progress):** Áp dụng *Modality-Aware Thresholding*:
+  - **Phase 1 (Legacy - Under 50% Progress):** Áp dụng *Modality-Aware Thresholding*:
     - `CODE_SCORE_THRESHOLD = 0.35` (nghiêm ngặt cho Code AST nhằm đảm bảo tính đúng đắn cú pháp).
     - `VIDEO_SCORE_THRESHOLD = 0.22` (linh hoạt cho Video Transcript nhằm dung hòa văn nói tự nhiên và nhiễu âm học Whisper).
     - *Best-Effort In-Course Fallback:* Nếu Code AST $\ge 0.60$ nhưng không có video nào $\ge 0.22$, hệ thống tự động chọn 1 video chunk có điểm cao nhất thuộc cùng `lesson_seq` đạt $\ge 0.15$ (gắn nhãn `is_approximate: true`) để luôn bảo toàn thẻ `<timestamp>` cho frontend.
-  - **Phase 2 (Halfway Milestone - Over 50% Progress):** Chuyển dịch sang *Code-to-Video Metadata Binding*:
-    - Gắn mốc `approx_video_sec` vào payload của AST Code Chunk trong khâu Ingestion.
-    - **Mandatory AI Reminder:** AI có nghĩa vụ chủ động nhắc nhở sinh viên kích hoạt Phase 2 ngay khi hoàn tất tầng Agentic Orchestration / Chat UI (bắt đầu Tuần 3).
+  - **Phase 2 (Active - Over 50% Progress - Tuần 3):** *Code-to-Video Metadata Binding (ĐÃ KÍCH HOẠT CHÍNH THỨC)*:
+    - Thuộc tính `approx_video_sec` đã được tích hợp vào `SearchChunkResult`, `RetrievalService` và `ChatService` SSE streaming.
+    - Khi truy xuất đoạn Code AST có `approx_video_sec`, hệ thống ưu tiên tuyệt đối mốc video Ground-Truth này (`is_approximate: false`), loại bỏ hoàn toàn cơ chế đoán mò xác suất của Phase 1.
+  - **Pre/Post-Optimization Benchmark Cycle (Chu Trình Khảo Thí Đối Chiếu):**
+    - Mọi hoạt động tinh chỉnh kiến trúc và cấu hình hệ thống bắt buộc phải được kẹp giữa 2 lượt đo lường của Bộ Benchmark Stage 11 (Trước tối ưu để lấy Baseline và Sau tối ưu để xác nhận không hồi quy).
+
 - **Speech-to-Text & Lexicon Biasing:** `faster-whisper` with automatic domain **`hotwords`** (C++, Java, Python keywords) maintained across every window, tuned Silero VAD (`threshold=0.35`, `speech_pad_ms=400`, `condition_on_previous_text=False`), and CPU fallback if `cublas64_12.dll` is missing.
 - **Context Assembly:** U-shaped layout `[Top 1, Top 3, Top 2]` to eliminate Stanford's "Lost-in-the-Middle" degradation.
 - **Pre-filtering Rule:** In-HNSW dynamic single-call pre-filtering (`course_id == current_course_id AND lesson_seq <= current_lesson_seq`). Never hardcode fixed lesson sequences.
