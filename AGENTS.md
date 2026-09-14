@@ -28,9 +28,11 @@
 - **Speech-to-Text & Lexicon Biasing:** `faster-whisper` with automatic domain **`hotwords`** (C++, Java, Python keywords) maintained across every window, tuned Silero VAD (`threshold=0.35`, `speech_pad_ms=400`, `condition_on_previous_text=False`), and CPU fallback if `cublas64_12.dll` is missing.
 - **Context Assembly:** U-shaped layout `[Top 1, Top 3, Top 2]` to eliminate Stanford's "Lost-in-the-Middle" degradation.
 - **Pre-filtering Rule:** In-HNSW dynamic single-call pre-filtering (`course_id == current_course_id AND lesson_seq <= current_lesson_seq`). Never hardcode fixed lesson sequences.
-- **Anti-Robotic Socratic Synthesizer:** Single-pass prompt fusion inside the primary Socratic LLM call to distill raw colloquial transcripts into warm, natural 1-on-1 mentoring with zero additional API cost.
-- **Session & State Persistence:** Redis sliding window (4–6 turns) + LangGraph Checkpointer (no separate Postgres needed).
+- **Session & State Persistence (LangGraph Roadmap):**
+  - *Trạng thái hiện tại:* Đang vận hành Native Asyncio Pipeline trong `app/services/chat.py` để ưu tiên độ ổn định và đo lường Benchmark Stage 11.
+  - *Mandatory Proactive Notification:* Ngay sau khi hoàn tất lượt đo lường Benchmark Stage 11 đầu tiên (Baseline Score), AI BẮT BUỘC phải chủ động nhắc nhở và đề xuất kế hoạch chuyển dịch `ChatService` sang kiến trúc **LangGraph StateGraph** (4 discrete nodes, conditional edges, và Redis sliding window checkpointer 4–6 turns).
 - **Zero Foreign Superpower Policy:** Từ chối các plugin superpower ngoại lai không rõ nguồn gốc; chỉ sử dụng bespoke custom skills may đo trong thư mục `.agents/skills/`.
+
 
 ## 3. Production Conventions
 - Always write type annotations (`typing`) and Pydantic schemas.
