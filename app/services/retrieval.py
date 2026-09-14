@@ -356,14 +356,20 @@ class RetrievalService:
             if content_type == "code_ast":
                 ctx_code = p.get("context_code") or p.get("raw_text", "")
                 code_lang = p.get("code_language") or p.get("language", "cpp")
+                approx_vid_sec = p.get("approx_video_sec")
+                parsed_vid_sec = int(approx_vid_sec) if approx_vid_sec is not None else None
                 item.update({
                     "file_path": p.get("file_path", ""),
                     "language": code_lang,
                     "code_scope": p.get("code_scope", ""),
                     "start_line": p.get("start_line", 0),
                     "end_line": p.get("end_line", 0),
-                    "context_code": ctx_code
+                    "context_code": ctx_code,
+                    "approx_video_sec": parsed_vid_sec
                 })
+                if parsed_vid_sec is not None:
+                    lbl = f"{parsed_vid_sec//60:02d}:{parsed_vid_sec%60:02d}"
+                    item["timestamp_tag"] = f'<timestamp sec="{parsed_vid_sec}">{lbl}</timestamp>'
                 texts_to_rerank.append(f"[Mã nguồn {code_lang.upper()} - {p.get('code_scope', '')}]\n{ctx_code}")
             else:
                 start_sec = int(p.get("start_sec", 0))
@@ -427,9 +433,11 @@ class RetrievalService:
                     f"[RetrievalService] Bỏ qua chunk {item['id']} ({c_type}) vì độ tin cậy {prob:.4f} < {threshold}"
                 )
 
-        # Best-Effort In-Course Video Fallback (Phase 1 Roadmap):
+        # Roadmap Phase 2 & Phase 1 Video Fallback Policy:
         has_video_in_scored = any(it.get("content_type") != "code_ast" for it in scored_items)
-        if has_high_confidence_code and not has_video_in_scored and discarded_videos:
+        has_bound_code_video = any(it.get("approx_video_sec") is not None for it in scored_items if it.get("content_type") == "code_ast")
+
+        if has_high_confidence_code and not has_video_in_scored and not has_bound_code_video and discarded_videos:
             eligible_fallback_videos = [
                 v for v in discarded_videos
                 if v.get("confidence_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
@@ -442,6 +450,8 @@ class RetrievalService:
                     f"[RetrievalService] Best-Effort Fallback kích hoạt: Chọn video mốc {best_fallback_video.get('start_label')} "
                     f"với độ tin cậy {best_fallback_video.get('confidence_score'):.4f} >= {settings.VIDEO_FALLBACK_MIN_THRESHOLD}."
                 )
+        elif has_bound_code_video:
+            logger.info("[RetrievalService] Roadmap Phase 2: Kích hoạt Ground-Truth Code-to-Video Metadata Binding, bỏ qua Heuristic Fallback.")
 
         # [CRAG Stage: Document Relevance Grading (Meta AI 2024)]
         # Thẩm định độ tương quan thực tế giữa câu hỏi và các tài liệu trước khi nạp vào Prompt

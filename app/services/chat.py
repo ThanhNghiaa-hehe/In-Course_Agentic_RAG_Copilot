@@ -159,6 +159,16 @@ class ChatService:
                             title=chunk.get("video_title", "Đoạn video bài giảng liên quan")
                         )
                     )
+                elif chunk.get("content_type") == "code_ast" and chunk.get("approx_video_sec") is not None:
+                    # Roadmap Phase 2: Code-to-Video Metadata Binding
+                    v_sec = int(chunk["approx_video_sec"])
+                    suggested_timestamps.append(
+                        SuggestedTimestamp(
+                            sec=v_sec,
+                            label=f"{v_sec//60:02d}:{v_sec%60:02d}",
+                            title=f"Bài giảng giải thích cú pháp [{chunk.get('code_scope', 'Code AST')}]"
+                        )
+                    )
 
                 sources.append({
                     "id": chunk.get("id"),
@@ -168,12 +178,13 @@ class ChatService:
                     "is_approximate": chunk.get("is_approximate", False),
                     "lesson_id": chunk.get("lesson_id"),
                     "lesson_seq": chunk.get("lesson_seq"),
-                    "start_sec": chunk.get("start_sec"),
-                    "start_label": chunk.get("start_label"),
+                    "start_sec": chunk.get("start_sec") or chunk.get("approx_video_sec"),
+                    "start_label": chunk.get("start_label") or (f"{int(chunk['approx_video_sec'])//60:02d}:{int(chunk['approx_video_sec'])%60:02d}" if chunk.get("approx_video_sec") is not None else None),
                     "timestamp_tag": chunk.get("timestamp_tag"),
                     "file_path": chunk.get("file_path"),
                     "code_scope": chunk.get("code_scope"),
                     "context_code": chunk.get("context_code"),
+                    "approx_video_sec": chunk.get("approx_video_sec")
                 })
 
         # 5. Gửi sự kiện 'metadata' đầu tiên cho Frontend
