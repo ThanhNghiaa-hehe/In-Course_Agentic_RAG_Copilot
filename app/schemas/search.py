@@ -112,6 +112,12 @@ class SearchChunkResult(BaseModel):
         default=None,
         description="Mã nguồn kèm Header Preamble (#include, using namespace) chuẩn AST"
     )
+    approx_video_sec: Optional[int] = Field(
+        default=None,
+        ge=0,
+        description="Mốc giây video bài giảng Ground-Truth liên kết trực tiếp với Code AST (Roadmap Phase 2)"
+    )
+
 
 
 class SearchResponse(BaseModel):
