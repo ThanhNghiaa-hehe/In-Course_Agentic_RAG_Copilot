@@ -137,12 +137,28 @@ class CppASTChunker:
 
         return chunks
 
+
+def load_video_bindings() -> dict:
+    """Nạp bảng ánh xạ Ground-Truth mốc giây video cho Code AST từ metadata manifest độc lập."""
+    manifest_path = PROJECT_ROOT / "data" / "metadata" / "lesson_code_video_binding.json"
+    if not manifest_path.exists():
+        return {}
+    try:
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("bindings", {})
+    except Exception as e:
+        print(f"[CẢNH BÁO] Không thể đọc manifest video bindings ({e}).")
+        return {}
+
+
 def ingest_single_file(file_path: Path, course_id: str, lesson_id: str, lesson_seq: int, clean_old: bool = True):
     print("=" * 72)
     print(f">> DANG XU LY MA NGUON AST: {file_path.name}")
     print(f" - Khoa hoc: {course_id} | Bai hoc: {lesson_id} (Seq: {lesson_seq})")
     print("=" * 72)
 
+    video_bindings = load_video_bindings()
     chunker = CppASTChunker()
     chunks = chunker.chunk_file(file_path, course_id, lesson_id, lesson_seq)
     print(f"[STAGE 3] Tree-sitter da trich xuat thanh cong {len(chunks)} chunks cu phap.")
@@ -193,6 +209,10 @@ def ingest_single_file(file_path: Path, course_id: str, lesson_id: str, lesson_s
         deterministic_key = f"{course_id}_{lesson_id}_ast_{c['chunk_id']}"
         point_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, deterministic_key))
 
+        # Phân giải mốc video Ground-Truth từ metadata manifest (Phase 2)
+        scope_key = f"{lesson_id}:{c['code_scope']}"
+        approx_video_sec = video_bindings.get(scope_key)
+
         point = models.PointStruct(
             id=point_id,
             vector={
@@ -213,7 +233,8 @@ def ingest_single_file(file_path: Path, course_id: str, lesson_id: str, lesson_s
                 "raw_text": c["raw_text"],
                 "context_code": c["context_code"],
                 "file_path": str(file_path.relative_to(PROJECT_ROOT)).replace("\\", "/"),
-                "code_language": "cpp"
+                "code_language": "cpp",
+                "approx_video_sec": approx_video_sec
             }
         )
         points.append(point)
