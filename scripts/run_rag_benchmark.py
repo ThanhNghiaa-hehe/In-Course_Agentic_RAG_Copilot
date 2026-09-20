@@ -27,7 +27,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from app.agent.router import get_intent_router
 from app.services.retrieval import RetrievalService
 from app.services.embedding import get_embedding_service
-from app.services.qdrant import get_qdrant_service
+from app.services.qdrant import get_async_qdrant_client, close_async_qdrant_client
 from app.config import settings
 
 
@@ -51,8 +51,8 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
     print("[INFO] Đang khởi tạo các mô hình và kết nối Qdrant...")
     router = get_intent_router()
     embedding_service = get_embedding_service()
-    qdrant_service = get_qdrant_service()
-    retrieval_service = RetrievalService(qdrant_service, embedding_service)
+    qdrant_client = get_async_qdrant_client()
+    retrieval_service = RetrievalService(client=qdrant_client, embedding_service=embedding_service)
 
     # Thống kê tổng thể
     router_correct = 0
@@ -115,6 +115,10 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
                     actual_has_ts = True
                     actual_ts_sec = c["start_sec"]
                     break
+                elif c.get("content_type") == "code_ast" and c.get("approx_video_sec") is not None:
+                    actual_has_ts = True
+                    actual_ts_sec = c["approx_video_sec"]
+                    break
         else:
             # Fast-path hoặc out-of-scope không gọi RAG
             actual_status = "coverage_gap"
@@ -130,7 +134,7 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
             # Kỳ vọng KHÔNG có timestamp (chống ảo giác): Nếu thực tế không có -> ĐẠT
             is_ts_ok = (actual_has_ts is False)
         else:
-            # Kỳ vọng CÓ timestamp: Nếu có và |Δt| <= 15s (hoặc có video cùng bài)
+            # Kỳ vọng CÓ timestamp: Nếu có và |Δt| <= 30s (hoặc có video cùng bài)
             if actual_has_ts:
                 if target_sec is not None:
                     delta_t = abs(actual_ts_sec - target_sec)
@@ -148,20 +152,55 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
         total_time_ms += t_elapsed_ms
         tier_stats[tier]["time_ms"] += t_elapsed_ms
 
+        fail_reasons = []
+        if not is_router_ok:
+            fail_reasons.append(f"Router(Act: {actual_intent} != Exp: {expected_intent})")
+        if not is_status_ok:
+            fail_reasons.append(f"Status(Act: {actual_status} != Exp: {expected_status})")
+        if not is_ts_ok:
+            fail_reasons.append(f"TS(Act: {actual_ts_sec} != Exp: {target_sec}, has_ts: {actual_has_ts})")
+
+        reason_str = f" | [Lý do: {', '.join(fail_reasons)}]" if fail_reasons else ""
         status_flag = "PASS" if (is_router_ok and is_status_ok and is_ts_ok) else "WARN"
-        print(f"[{idx:02d}/{total_cases:02d}] {test_id} ({tier[:4].upper()}): {status_flag} | Latency: {t_elapsed_ms:6.1f}ms | Query: {query[:40]}...")
+        print(f"[{idx:02d}/{total_cases:02d}] {test_id} ({tier[:4].upper()}): {status_flag} | Latency: {t_elapsed_ms:6.1f}ms | Query: {query[:40]}...{reason_str}")
 
         results_detail.append({
             "id": test_id,
             "tier": tier,
             "query": query,
-            "router_ok": is_router_ok,
-            "status_ok": is_status_ok,
-            "ts_ok": is_ts_ok,
+            "course_id": course_id,
+            "lesson_seq": lesson_seq,
+            "expected": {
+                "intent": expected_intent,
+                "status": expected_status,
+                "has_timestamp": expected_has_ts,
+                "target_video_sec": target_sec
+            },
+            "actual": {
+                "intent": actual_intent,
+                "status": actual_status,
+                "has_timestamp": actual_has_ts,
+                "video_sec": actual_ts_sec
+            },
+            "pass_flags": {
+                "router_ok": is_router_ok,
+                "status_ok": is_status_ok,
+                "ts_ok": is_ts_ok,
+                "overall_pass": (is_router_ok and is_status_ok and is_ts_ok)
+            },
+            "fail_reasons": fail_reasons,
+            "notes": item.get("notes", ""),
             "latency_ms": round(t_elapsed_ms, 1),
-            "actual_intent": actual_intent,
-            "actual_status": actual_status,
-            "has_ts": actual_has_ts
+            "chunks": [
+                {
+                    "id": c.get("id"),
+                    "content_type": c.get("content_type"),
+                    "confidence_score": round(float(c.get("confidence_score", 0.0)), 4),
+                    "lesson_seq": c.get("lesson_seq"),
+                    "snippet": (c.get("raw_text", "") or c.get("context_code", ""))[:250]
+                }
+                for c in (retrieval_res.chunks if router_res.is_course_query else [])
+            ]
         })
 
     # Tính toán chỉ số tổng hợp
@@ -170,13 +209,38 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
     ts_acc = (timestamp_correct / total_cases) * 100.0
     avg_latency = total_time_ms / total_cases
 
-    print("=" * 70)
+    print("\n" + "=" * 70)
     print(" KẾT QUẢ TỔNG QUAN BENCHMARK STAGE 11")
     print(f" - Tổng số ca kiểm thử:       {total_cases}")
     print(f" - Router Accuracy:            {router_acc:5.1f}% ({router_correct}/{total_cases})")
     print(f" - CRAG Grader Precision:      {crag_acc:5.1f}% ({crag_status_correct}/{total_cases})")
     print(f" - Timestamp Precision/Safety: {ts_acc:5.1f}% ({timestamp_correct}/{total_cases})")
     print(f" - Thời gian trung bình/câu:   {avg_latency:5.1f} ms")
+    print("=" * 70)
+
+    print("\n" + "=" * 70)
+    print(" CHI TIẾT TỪNG TẦNG KIỂM THỬ (BREAKDOWN BY TIERS)")
+    print("=" * 70)
+    tier_titles = {
+        "in_scope": "1. In-Scope Technical (Kiến thức trong bài)",
+        "out_of_lesson": "2. Out-of-Lesson (Chặn bài tương lai)",
+        "adversarial_hybrid": "3. Adversarial Hybrid (Bẫy đời sống)",
+        "chit_chat": "4. Chit-Chat / Out-of-Scope (Giao tiếp)"
+    }
+    for t_key, t_title in tier_titles.items():
+        st = tier_stats[t_key]
+        total = st["total"]
+        # Đếm số ca PASS toàn diện (cả 3 tiêu chuẩn đều đạt)
+        tier_pass = sum(1 for r in results_detail if r["tier"] == t_key and r["pass_flags"]["overall_pass"])
+        tier_fail = total - tier_pass
+        avg_t = st["time_ms"] / max(1, total)
+
+        print(f"\n▶ {t_title} (Tổng: {total} câu):")
+        print(f"   • Kết quả tổng thể:     {tier_pass}/{total} ĐẠT ({tier_fail} câu có điểm WARN)")
+        print(f"   • Router Phân luồng:    {st['router_ok']}/{total} ĐÚNG ({total - st['router_ok']} SAI)")
+        print(f"   • CRAG Grader Ngữ cảnh: {st['status_ok']}/{total} ĐÚNG ({total - st['status_ok']} SAI)")
+        print(f"   • Timestamp Video:      {st['ts_ok']}/{total} ĐÚNG ({total - st['ts_ok']} SAI)")
+        print(f"   • Độ trễ trung bình:    {avg_t:.1f} ms")
     print("=" * 70)
 
     # Xuất báo cáo Markdown
@@ -217,10 +281,50 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
 * Bước tiếp theo: Kích hoạt **Roadmap Phase 2 (Code-to-Video Metadata Binding)**, sau đó chạy lại Benchmark để đo lường mức độ cải thiện của Timestamp Precision.
 """)
 
-    print(f"\n[XONG] Báo cáo chi tiết đã được lưu trữ tại: {output_report_path}")
+    # Xuất tệp JSON chi tiết phục vụ Interactive Workflow Dashboard
+    json_export_path = PROJECT_ROOT / "docs" / "benchmarks" / "latest_benchmark_results.json"
+    benchmark_payload = {
+        "metadata": {
+            "timestamp": time.strftime('%Y-%m-%d %H:%M:%S'),
+            "student_name": "Trần Thành Nghĩa",
+            "student_id": "23DH112252",
+            "university": "HUFLIT",
+            "dataset_name": dataset_path.name,
+            "total_cases": total_cases
+        },
+        "summary": {
+            "router_accuracy": round(router_acc, 1),
+            "router_correct": router_correct,
+            "crag_precision": round(crag_acc, 1),
+            "crag_correct": crag_status_correct,
+            "timestamp_safety": round(ts_acc, 1),
+            "timestamp_correct": timestamp_correct,
+            "avg_latency_ms": round(avg_latency, 1),
+            "tier_breakdown": {
+                t_key: {
+                    "total": tier_stats[t_key]["total"],
+                    "router_ok": tier_stats[t_key]["router_ok"],
+                    "status_ok": tier_stats[t_key]["status_ok"],
+                    "ts_ok": tier_stats[t_key]["ts_ok"],
+                    "avg_latency_ms": round(tier_stats[t_key]["time_ms"] / max(1, tier_stats[t_key]["total"]), 1)
+                } for t_key in tier_stats
+            }
+        },
+        "cases": results_detail
+    }
+    with open(json_export_path, "w", encoding="utf-8") as f:
+        json.dump(benchmark_payload, f, ensure_ascii=False, indent=2)
+
+    print(f"\n[XONG] Báo cáo chi tiết Markdown: {output_report_path}")
+    print(f"[XONG] Dữ liệu JSON trực quan:     {json_export_path}")
+    await close_async_qdrant_client()
 
 
 if __name__ == "__main__":
     DATASET_FILE = PROJECT_ROOT / "tests" / "data" / "benchmark_golden_dataset.json"
-    REPORT_FILE = PROJECT_ROOT / "docs" / "benchmarks" / "stage11_baseline_report.md"
+    
+    # Định dạng tên tệp: stage11_report_YYYY-MM-DD_HH-MM-SS.md (tránh dấu : vì Windows cấm)
+    timestamp_str = time.strftime("%Y-%m-%d_%H-%M-%S")
+    REPORT_FILE = PROJECT_ROOT / "docs" / "benchmarks" / f"stage11_report_{timestamp_str}.md"
+    
     asyncio.run(run_benchmark(DATASET_FILE, REPORT_FILE))

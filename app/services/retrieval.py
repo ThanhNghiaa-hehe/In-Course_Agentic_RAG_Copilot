@@ -93,51 +93,34 @@ def sigmoid(z: float) -> float:
     return float(1.0 / (1.0 + math.exp(-clipped)))
 
 
-def grade_document_relevance(query: str, item: Dict[str, Any]) -> str:
+def grade_document_relevance(query: str, item: Dict[str, Any], min_confidence: float = 0.40) -> str:
     """
-    CRAG Document Relevance Grader (Yan et al., Meta AI 2024):
-    Thẩm định độ tương quan thực tế giữa Query và Chunk trước khi cho phép nạp vào Prompt.
-    Trả về 'CORRECT' nếu tài liệu thực sự liên quan, hoặc 'INCORRECT' nếu lạc đề.
+    CRAG Document Relevance Grader (Yan et al., Meta AI 2024 & Self-RAG ICLR 2024):
+    Thẩm định độ tương quan thực tế giữa Query và Chunk dựa trên:
+    1. Multilingual Cross-Attention Confidence Score (Logistic Sigmoid Normalization).
+    2. Ngưỡng tương quan tối thiểu (Calibrated Decision Boundary):
+       - Code AST: prob >= 0.35 (do đặc thù cú pháp mã nguồn).
+       - Video Transcript: prob >= 0.40 (loại bỏ triệt để câu hỏi đối nghịch và nhiễu âm học).
+    3. Kiểm tra tính toàn vẹn nội dung của tài liệu.
+    Trả về 'CORRECT' nếu tài liệu thực sự liên quan, hoặc 'INCORRECT' nếu không đạt ngưỡng tin cậy.
     """
     prob = float(item.get("confidence_score", 0.0))
-    text = (item.get("raw_text", "") + " " + item.get("context_code", "")).lower()
-    query_lower = query.lower()
+    c_type = item.get("content_type", "video_transcript")
 
-    # 1. Nếu điểm Cross-Encoder rất cao (>= 0.45), tin cậy vào mô hình
-    if prob >= 0.45:
+    text = (item.get("raw_text", "") + " " + item.get("context_code", "")).strip()
+    if not text or len(text) < 10:
+        logger.info(f"[CRAG Grader] Chunk {item.get('id')} bị đánh giá INCORRECT: Nội dung rỗng hoặc không hợp lệ.")
+        return "INCORRECT"
+
+    target_threshold = 0.35 if c_type == "code_ast" else min_confidence
+    if prob >= target_threshold:
         return "CORRECT"
 
-    # 2. Bóc tách các từ khóa thực thể ngoài lề đời sống
-    casual_words = [
-        "nhậu", "uống bia", "uống rượu", "thịt bò", "ăn lẩu", "đi chơi", "hát karaoke",
-        "chơi game", "bóng đá", "tình cảm", "giải rượu", "nấu ăn", "thời tiết"
-    ]
-    has_casual_query = any(cw in query_lower for cw in casual_words)
-
-    # Nếu câu hỏi chứa thực thể đời sống mà nội dung tài liệu hoàn toàn không có thực thể tương ứng -> INCORRECT
-    if has_casual_query and not any(cw in text for cw in casual_words):
-        logger.info(
-            f"[CRAG Grader] Chunk {item.get('id')} bị đánh giá INCORRECT: Câu hỏi chứa từ đời sống ngoài lề không khớp tài liệu."
-        )
-        return "INCORRECT"
-
-    # 3. Với video transcript điểm biên (0.22 <= prob < 0.30), kiểm tra có thuật ngữ kỹ thuật chung không
-    stop_words = {
-        "cho", "em", "hỏi", "với", "là", "gì", "thế", "nào", "trong", "bài", "thì",
-        "có", "không", "nhé", "ạ", "ơi", "bạn", "thầy", "tôi", "mình", "làm", "sao",
-        "được", "và", "ở", "này", "đó", "của", "để", "như", "một", "các", "hello", "hi"
-    }
-    raw_tokens = re.findall(r"\b[\w\+\#]+\b", query_lower)
-    content_tokens = [t for t in raw_tokens if t not in stop_words and len(t) >= 2]
-
-    # Nếu có từ khóa nội dung nhưng không có từ nào xuất hiện trong chunk và prob < 0.30 -> INCORRECT
-    if content_tokens and not any(t in text for t in content_tokens) and prob < 0.30:
-        logger.info(
-            f"[CRAG Grader] Chunk {item.get('id')} bị đánh giá INCORRECT: Thiếu liên kết thực thể (Prob: {prob:.4f} < 0.30)."
-        )
-        return "INCORRECT"
-
-    return "CORRECT"
+    logger.info(
+        f"[CRAG Grader] Chunk {item.get('id')} ({c_type}) bị đánh giá INCORRECT: "
+        f"Độ tin cậy {prob:.4f} < ngưỡng chuẩn {target_threshold}."
+    )
+    return "INCORRECT"
 
 
 class RetrievalService:
@@ -433,25 +416,13 @@ class RetrievalService:
                     f"[RetrievalService] Bỏ qua chunk {item['id']} ({c_type}) vì độ tin cậy {prob:.4f} < {threshold}"
                 )
 
-        # Roadmap Phase 2 & Phase 1 Video Fallback Policy:
-        has_video_in_scored = any(it.get("content_type") != "code_ast" for it in scored_items)
-        has_bound_code_video = any(it.get("approx_video_sec") is not None for it in scored_items if it.get("content_type") == "code_ast")
-
-        if has_high_confidence_code and not has_video_in_scored and not has_bound_code_video and discarded_videos:
-            eligible_fallback_videos = [
-                v for v in discarded_videos
-                if v.get("confidence_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
-            ]
-            if eligible_fallback_videos:
-                best_fallback_video = max(eligible_fallback_videos, key=lambda x: x.get("confidence_score", 0.0))
-                best_fallback_video["is_approximate"] = True
-                scored_items.append(best_fallback_video)
-                logger.info(
-                    f"[RetrievalService] Best-Effort Fallback kích hoạt: Chọn video mốc {best_fallback_video.get('start_label')} "
-                    f"với độ tin cậy {best_fallback_video.get('confidence_score'):.4f} >= {settings.VIDEO_FALLBACK_MIN_THRESHOLD}."
-                )
-        elif has_bound_code_video:
-            logger.info("[RetrievalService] Roadmap Phase 2: Kích hoạt Ground-Truth Code-to-Video Metadata Binding, bỏ qua Heuristic Fallback.")
+        # Roadmap Phase 2: Code-to-Video Metadata Binding (Chính thức kích hoạt)
+        # Các đoạn Code AST đã được liên kết mốc video Ground-Truth từ Ingestion Metadata Manifest
+        has_bound_code_video = any(
+            it.get("approx_video_sec") is not None for it in scored_items if it.get("content_type") == "code_ast"
+        )
+        if has_bound_code_video:
+            logger.info("[RetrievalService] Roadmap Phase 2: Sử dụng Ground-Truth Code-to-Video Metadata Binding.")
 
         # [CRAG Stage: Document Relevance Grading (Meta AI 2024)]
         # Thẩm định độ tương quan thực tế giữa câu hỏi và các tài liệu trước khi nạp vào Prompt

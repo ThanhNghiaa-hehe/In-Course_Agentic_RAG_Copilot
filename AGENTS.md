@@ -31,6 +31,9 @@
 - **Session & State Persistence (LangGraph Roadmap):**
   - *Trạng thái hiện tại:* Đang vận hành Native Asyncio Pipeline trong `app/services/chat.py` để ưu tiên độ ổn định và đo lường Benchmark Stage 11.
   - *Mandatory Proactive Notification:* Ngay sau khi hoàn tất lượt đo lường Benchmark Stage 11 đầu tiên (Baseline Score), AI BẮT BUỘC phải chủ động nhắc nhở và đề xuất kế hoạch chuyển dịch `ChatService` sang kiến trúc **LangGraph StateGraph** (4 discrete nodes, conditional edges, và Redis sliding window checkpointer 4–6 turns).
+- **Data/Code Separation Invariant (Bất Biến Tách Rời Dữ Liệu & Mã Nguồn):**
+  - Tuyệt đối KHÔNG hardcode các bảng tra cứu, từ điển ánh xạ metadata (như bảng gắn mốc video `AST_VIDEO_GROUND_TRUTH`) trực tiếp vào mã nguồn Python (`.py`).
+  - Mọi metadata nghiệp vụ bắt buộc phải được lưu trữ độc lập trong thư mục `data/metadata/*.json` (ví dụ: `data/metadata/lesson_code_video_binding.json`), và các script/service chỉ được đọc động từ file manifest này.
 - **Zero Foreign Superpower Policy:** Từ chối các plugin superpower ngoại lai không rõ nguồn gốc; chỉ sử dụng bespoke custom skills may đo trong thư mục `.agents/skills/`.
 
 
@@ -128,5 +131,11 @@
     - **Latency (TTFT & Total Duration):** Tốc độ phản hồi thời gian thực qua luồng SSE.
 - **Quy Tắc Chống Thụt Lùi (Regression Prevention):**
   - Một thay đổi kiến trúc chỉ được phép phê duyệt và commit vào repository khi điểm Benchmark tổng thể tăng lên hoặc giữ vững, không làm sụt giảm độ chính xác của các bài test chuẩn.
+- **Data-Centric AI Label Audit & Versioning Protocol (Chuẩn Kiểm Toán & Hiệu Đính Nhãn Đề Thi):**
+  - Khi phát hiện ca kiểm thử thất bại do đề thi gán sai thực tế (False Ground-Truth / Label Noise P13), TUYỆT ĐỐI KHÔNG được lén sửa đè lên file kiểm thử cũ.
+  - Bắt buộc thực hiện quy trình 3 bước minh bạch:
+    1. **Preserve Legacy:** Lưu bản sao lưu nguyên trạng `tests/data/<dataset_name>_v1_legacy.json`.
+    2. **Ground-Truth Re-annotation:** Cập nhật phiên bản mới `<dataset_name>.json` (v2.0.0) dựa trên bằng chứng đối chiếu 1:1 từ transcript video và code AST thật.
+    3. **Academic Changelog:** Lập báo cáo kiểm toán khoa học tại `docs/benchmarks/dataset_audit_and_changelog_v2.md` giải trình rõ nguyên nhân từng ca lệch nhãn.
 
 

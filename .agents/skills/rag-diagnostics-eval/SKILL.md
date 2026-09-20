@@ -27,6 +27,15 @@ Khi hệ thống gặp lỗi truy xuất, chất lượng câu trả lời bị 
 | **P10** | **Pedagogical Ethics Violation** | Trợ giảng AI tự ý viết trọn vẹn mã nguồn giải bài tập hộ sinh viên. | Khóa chặt System Prompt: Bắt buộc từ chối giải hộ, chỉ cung cấp mã giả (pseudocode) và 1–2 câu hỏi gợi mở. |
 | **P11** | **Quantization Degeneration** | Model LLM cục bộ bị lặp từ, sinh token vô nghĩa do lượng tử hóa quá sâu. | Sử dụng phiên bản lượng tử hóa chuẩn `Q4_K_M` (1.88 GB) hoặc `Q5_K_M` để bảo toàn năng lực lý luận. |
 | **P12** | **Tag & Syntax Corruption** | Thẻ `<timestamp>` bị gõ sai cú pháp (thiếu thuộc tính `sec` hoặc sai định dạng `mm:ss`). | Kiểm soát đầu ra bằng Regex Validator trước khi phát luồng qua kênh Dual-Channel SSE. |
+| **P13** | **Benchmark Label Skew / Data Contamination** | Tập kiểm thử gán nhãn kiến thức không tồn tại trong học liệu thực tế, dẫn đến kết quả đánh giá sai lệch. | Áp dụng quy trình Data-Centric AI Audit: (1) Preserve v1_legacy; (2) Re-annotate dựa trên transcript thật; (3) Lập Academic Changelog. |
+| **P14** | **Spurious Mention Leakage** | Lời thoại video giới thiệu thoáng qua các từ khóa của bài sau khiến Reranker bị đánh lừa và vượt qua bộ lọc In-HNSW. | Tích hợp Semantic Coverage Evaluator vào CRAG Grader để phân biệt giữa câu giới thiệu lướt qua và nội dung giảng dạy thực chất. |
+
+### Quy Trình Xử Lý Sự Cố P13 (Data-Centric AI Label Audit Protocol)
+Khi kết quả Benchmark xuất hiện sự sai lệch giữa dự đoán của hệ thống và nhãn kỳ vọng của đề thi:
+1. **Source Grounding:** Trích xuất transcript video thật tại `data/transcripts/` và code AST để xác minh xem bài học đó có thực sự chứa kiến thức/mốc thời gian đó không.
+2. **Preserve Legacy:** Lưu bản sao lưu nguyên trạng `tests/data/<dataset>_v1_legacy.json`.
+3. **Re-annotation & Versioning:** Cập nhật phiên bản chuẩn hóa `v2.0.0` (chuyển sang `coverage_gap` và `has_timestamp: false` nếu bài học chưa dạy).
+4. **Academic Changelog:** Lập tài liệu giải trình khoa học minh bạch tại `docs/benchmarks/dataset_audit_and_changelog_v2.md`.
 
 ---
 
