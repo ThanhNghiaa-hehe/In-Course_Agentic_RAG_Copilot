@@ -694,6 +694,448 @@
       font-weight: 700;
       color: #0f172a;
     }
+
+    /* ===================================================
+       Stage 11 Benchmark Explorer & Tab Navigation Styles
+       (Enterprise Observability & Zero AI Slop Standard)
+       =================================================== */
+    .view-mode-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding-bottom: 8px;
+    }
+
+    .view-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      background: #ffffff;
+      color: var(--text-sub);
+      transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      user-select: none;
+      font-family: var(--font-sans);
+    }
+
+    .view-tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .view-tab-btn:active {
+      transform: scale(0.98);
+    }
+
+    .view-tab-btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .tab-badge-live {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #10b981;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    /* Benchmark Explorer Container */
+    .benchmark-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .benchmark-header-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .benchmark-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .benchmark-header-sub {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .badge-pass {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-warn {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .kpi-val-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .kpi-target {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .kpi-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .kpi-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .fill-emerald { background: #10b981; }
+    .fill-amber { background: #f59e0b; }
+    .fill-blue { background: #2563eb; }
+
+    .kpi-subtext {
+      font-size: 11px;
+      color: var(--text-sub);
+      line-height: 1.4;
+      font-family: var(--font-mono);
+    }
+
+    /* Filter & Search Toolbar */
+    .filter-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn-group {
+      display: inline-flex;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .filter-pill {
+      border: none;
+      background: transparent;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: background-color 0.15s, color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .filter-pill:hover {
+      color: var(--text-main);
+    }
+
+    .filter-pill.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    .filter-search-box {
+      flex: 1;
+      min-width: 260px;
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .filter-search-box input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 12.5px;
+      padding: 8px 0;
+      font-family: var(--font-sans);
+      color: var(--text-main);
+    }
+
+    /* Interactive Data Table */
+    .benchmark-table-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 12.5px;
+    }
+
+    .benchmark-table th {
+      background: #f8fafc;
+      padding: 11px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1.5px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .benchmark-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .benchmark-table tr.table-row-item {
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+    }
+
+    .benchmark-table tr.table-row-item:hover {
+      background: #f8fafc;
+    }
+
+    .tier-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .tier-in_scope { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .tier-out_of_lesson { background: #f5f3ff; color: #5b21b6; border: 1px solid #ddd6fe; }
+    .tier-adversarial_hybrid { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+    .tier-chit_chat { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+
+    .status-check-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .check-ok { background: #ecfdf5; color: #065f46; }
+    .check-fail { background: #fff1f2; color: #9f1239; }
+
+    /* Drawer Inspector */
+    .drawer-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .drawer-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .benchmark-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 580px;
+      max-width: 90vw;
+      height: 100vh;
+      background: #ffffff;
+      border-left: 1.5px solid #cbd5e1;
+      box-shadow: -6px 0 24px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+      transform: translateX(100%);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .benchmark-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 16px 20px;
+      border-bottom: 1.5px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+
+    .drawer-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .drawer-section {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+
+    .drawer-section-title {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      margin-top: 6px;
+    }
+
+    .compare-table th {
+      text-align: left;
+      padding: 6px 8px;
+      background: #f1f5f9;
+      color: var(--text-sub);
+      font-weight: 700;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .compare-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .pedagogical-highlight {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+      color: #1e3a8a;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -716,6 +1158,22 @@
   <p class="page-subtitle">
     Hệ thống phân rã thành 3 phân tầng cốt lõi: <strong>① Edge &amp; Điều Phối:</strong> Frontend (video player sync &bull; chat panel) &harr; API Gateway (FastAPI SSE) &harr; Orchestration (LangGraph + Redis); <strong>② Lõi 11 Stages:</strong> Xử lý Offline (Stages 1–5) song song với Online Retrieval (Stages 6–10); <strong>③ Đo Lường:</strong> Stage 11 (Ragas Quality Gate &bull; Golden Dataset).
   </p>
+
+  <!-- View Mode Switcher Tabs -->
+  <div class="view-mode-tabs" role="tablist" aria-label="Chuyển chế độ xem">
+    <button class="view-tab-btn active" id="tabBtnPipeline" role="tab" aria-selected="true" onclick="switchViewMode('pipeline')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      Mô Phỏng Kiến Trúc 11 Stages
+    </button>
+    <button class="view-tab-btn" id="tabBtnBenchmark" role="tab" aria-selected="false" onclick="switchViewMode('benchmark')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+      Stage 11 Benchmark &amp; Golden Dataset Explorer (50 QAs)
+      <span class="tab-badge-live">LIVE</span>
+    </button>
+  </div>
+
+  <!-- PIPELINE SIMULATION VIEW CONTAINER -->
+  <div id="pipeline-view-container">
 
   <!-- Interactive Toolbar -->
   <div class="toolbar-container">
@@ -1115,6 +1573,219 @@
       <div class="inspector-item">
         <div class="inspector-item-label">Dữ Liệu Vào / Ra Thực Tế (Payload / Contract)</div>
         <div class="inspector-code" id="inspectPayload">Input: JSON Query &rarr; Output: SSE Token Stream</div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ========================================================
+       STAGE 11 BENCHMARK & GOLDEN DATASET EXPLORER VIEW
+       (Enterprise Observability Standard & Zero AI Slop)
+       ======================================================== -->
+  <div id="benchmark-view-container" class="benchmark-container" style="display:none;">
+    
+    <!-- Top Summary & Control Header -->
+    <div class="benchmark-header-card">
+      <div>
+        <div class="benchmark-header-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          Stage 11 Quantitative Benchmark &amp; Golden Dataset Explorer
+        </div>
+        <div class="benchmark-header-sub">
+          Đo lường định lượng 50 kịch bản thử nghiệm chuẩn qua 4 tầng (In-Scope, Out-of-Lesson, Adversarial, Chit-Chat).
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);" id="bm-meta-time">Thời gian đo: 2026-09-20 21:54:25</span>
+        <button class="btn-action btn-eval" onclick="loadBenchmarkData()" aria-label="Tải lại dữ liệu Benchmark" style="padding:6px 12px; font-size:11.5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
+          Tải lại dữ liệu
+        </button>
+      </div>
+    </div>
+
+    <!-- 4 KPI Metrics Grid -->
+    <div class="kpi-grid">
+      <!-- Card 1: Router -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Router Accuracy</span>
+          <span class="kpi-badge badge-warn" id="kpi-router-badge">⚠️ CẦN TỐI ƯU</span>
+        </div>
+        <div class="kpi-val-row">
+          <span class="kpi-val" id="kpi-router-val">86.0%</span>
+          <span class="kpi-target" id="kpi-router-target">Mục tiêu: &ge; 90.0% (43/50)</span>
+        </div>
+        <div class="kpi-bar-bg">
+          <div class="kpi-bar-fill fill-amber" id="kpi-router-bar" style="width: 86%;"></div>
+        </div>
+        <div class="kpi-subtext">Tier 1, 2, 3: 100% OK &bull; Tier 4: 3/10 (6 câu lệch nhãn Fast-Path)</div>
+      </div>
+
+      <!-- Card 2: CRAG Grader -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">CRAG Grader Precision</span>
+          <span class="kpi-badge badge-warn" id="kpi-crag-badge">⚠️ CẦN TỐI ƯU</span>
+        </div>
+        <div class="kpi-val-row">
+          <span class="kpi-val" id="kpi-crag-val">64.0%</span>
+          <span class="kpi-target" id="kpi-crag-target">Mục tiêu: &ge; 85.0% (32/50)</span>
+        </div>
+        <div class="kpi-bar-bg">
+          <div class="kpi-bar-fill fill-amber" id="kpi-crag-bar" style="width: 64%;"></div>
+        </div>
+        <div class="kpi-subtext">Tier 3: 14/15 OK &bull; Tier 2: 0/10 do DB mới nạp Bài 1 &amp; 2</div>
+      </div>
+
+      <!-- Card 3: Timestamp Safety -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Timestamp Safety &amp; Acc</span>
+          <span class="kpi-badge badge-warn" id="kpi-ts-badge">⚠️ CẦN TỐI ƯU</span>
+        </div>
+        <div class="kpi-val-row">
+          <span class="kpi-val" id="kpi-ts-val">76.0%</span>
+          <span class="kpi-target" id="kpi-ts-target">Mục tiêu: &ge; 88.0% (38/50)</span>
+        </div>
+        <div class="kpi-bar-bg">
+          <div class="kpi-bar-fill fill-emerald" id="kpi-ts-bar" style="width: 76%;"></div>
+        </div>
+        <div class="kpi-subtext">Tier 2: 10/10 ĐÚNG (100% Chặn ảo giác) &bull; Tier 3: 14/15 ĐÚNG</div>
+      </div>
+
+      <!-- Card 4: Latency -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Độ Trễ Trung Bình</span>
+          <span class="kpi-badge badge-pass" id="kpi-lat-badge">✅ ĐẠT</span>
+        </div>
+        <div class="kpi-val-row">
+          <span class="kpi-val" id="kpi-lat-val">2322.3 ms</span>
+          <span class="kpi-target">SLA: &le; 3000 ms</span>
+        </div>
+        <div class="kpi-bar-bg">
+          <div class="kpi-bar-fill fill-blue" id="kpi-lat-bar" style="width: 77%;"></div>
+        </div>
+        <div class="kpi-subtext">Fast-Path: ~75ms &bull; True Hybrid Search: ~2600ms</div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="filter-card">
+      <div class="filter-row">
+        <!-- Tier Filter Group -->
+        <div class="filter-btn-group" id="tierFilterGroup">
+          <button class="filter-pill active" onclick="setTierFilter('all')" data-tier="all">Tất cả (50)</button>
+          <button class="filter-pill" onclick="setTierFilter('in_scope')" data-tier="in_scope">1. In-Scope (15)</button>
+          <button class="filter-pill" onclick="setTierFilter('out_of_lesson')" data-tier="out_of_lesson">2. Out-of-Lesson (10)</button>
+          <button class="filter-pill" onclick="setTierFilter('adversarial_hybrid')" data-tier="adversarial_hybrid">3. Adversarial (15)</button>
+          <button class="filter-pill" onclick="setTierFilter('chit_chat')" data-tier="chit_chat">4. Chit-Chat (10)</button>
+        </div>
+
+        <!-- Status Filter Group -->
+        <div class="filter-btn-group" id="statusFilterGroup">
+          <button class="filter-pill active" onclick="setStatusFilter('all')" data-status="all">Tất cả</button>
+          <button class="filter-pill" onclick="setStatusFilter('warn')" data-status="warn">Cần lưu ý (WARN)</button>
+          <button class="filter-pill" onclick="setStatusFilter('pass')" data-status="pass">Đạt (PASS)</button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="filter-search-box">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="bmSearchInput" oninput="handleBenchmarkSearch()" placeholder="Tìm kiếm theo mã (BENCH-006) hoặc từ khóa (con trỏ, kế thừa)..." aria-label="Tìm kiếm trong benchmark" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Data Table Card -->
+    <div class="benchmark-table-card">
+      <table class="benchmark-table">
+        <thead>
+          <tr>
+            <th style="width:95px;">Mã ID</th>
+            <th style="width:140px;">Tầng Thử Nghiệm</th>
+            <th>Câu Hỏi Học Viên</th>
+            <th style="width:105px;">Router</th>
+            <th style="width:115px;">CRAG Grader</th>
+            <th style="width:115px;">Timestamp</th>
+            <th style="width:95px;">Kết Quả</th>
+            <th style="width:80px; text-align:center;">Thao Tác</th>
+          </tr>
+        </thead>
+        <tbody id="benchmarkTableBody">
+          <!-- Rows rendered by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Drawer Backdrop & Modal Inspector -->
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeBenchmarkDrawer()"></div>
+  
+  <div class="benchmark-drawer" id="benchmarkDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerCaseId">
+    <div class="drawer-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="tier-badge" id="drawerTierBadge">TIER</span>
+        <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:#0f172a;" id="drawerCaseId">BENCH-001</span>
+        <span class="kpi-badge badge-pass" id="drawerOverallBadge">PASS</span>
+      </div>
+      <button class="btn-close-inspector" onclick="closeBenchmarkDrawer()" aria-label="Đóng bảng chi tiết câu hỏi">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Query -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">Câu Hỏi Của Sinh Viên</div>
+        <div style="font-size:13.5px; font-weight:600; color:#0f172a; line-height:1.45;" id="drawerQueryText">
+          -
+        </div>
+      </div>
+
+      <!-- Side-by-Side Comparison -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">Đối Chiếu Kỳ Vọng (Expected) vs Thực Tế (Actual)</div>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Chỉ Tiêu Thẩm Định</th>
+              <th>Kỳ Vọng (Ground-Truth)</th>
+              <th>Thực Tế Hệ Thống</th>
+              <th>Đánh Giá</th>
+            </tr>
+          </thead>
+          <tbody id="drawerCompareBody">
+            <!-- Rows rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pedagogical Root Cause Explanation -->
+      <div class="drawer-section" style="background:#ffffff; border:1.5px solid #bfdbfe;">
+        <div class="drawer-section-title" style="color:#1e40af; display:flex; align-items:center; gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Phân Tích Sư Phạm &amp; Kỹ Thuật (Zero Hallucination)
+        </div>
+        <div class="pedagogical-highlight" id="drawerPedagogicalNote">
+          -
+        </div>
+      </div>
+
+      <!-- Retrieved Context Chunks -->
+      <div class="drawer-section" id="drawerChunksSection">
+        <div class="drawer-section-title">Tài Liệu / Code AST Đã Trích Xuất (Qdrant Cloud)</div>
+        <div id="drawerChunksList" style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+          <!-- Chunks rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Telemetry Info -->
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); display:flex; justify-content:space-between; padding-top:4px;">
+        <span id="drawerCourseInfo">Khóa học: cpp-core &bull; Bài học: Seq 2</span>
+        <span id="drawerLatencyInfo">Độ trễ: 2500.0 ms</span>
       </div>
     </div>
   </div>
@@ -1727,6 +2398,302 @@
 
     function closeInspector() {
       document.getElementById('inspectorCard').style.display = 'none';
+    }
+
+    // ========================================================
+    // STAGE 11 BENCHMARK & GOLDEN DATASET EXPLORER LOGIC
+    // ========================================================
+    let currentViewMode = 'pipeline'; // 'pipeline' | 'benchmark'
+    let benchmarkData = null;
+    let currentTierFilter = 'all';
+    let currentStatusFilter = 'all';
+    let currentSearchTerm = '';
+
+    function switchViewMode(mode) {
+      currentViewMode = mode;
+      const pipelineBtn = document.getElementById('tabBtnPipeline');
+      const benchmarkBtn = document.getElementById('tabBtnBenchmark');
+      const pipelineContainer = document.getElementById('pipeline-view-container');
+      const benchmarkContainer = document.getElementById('benchmark-view-container');
+
+      if (mode === 'pipeline') {
+        pipelineBtn.classList.add('active');
+        pipelineBtn.setAttribute('aria-selected', 'true');
+        benchmarkBtn.classList.remove('active');
+        benchmarkBtn.setAttribute('aria-selected', 'false');
+        pipelineContainer.style.display = 'block';
+        benchmarkContainer.style.display = 'none';
+      } else {
+        benchmarkBtn.classList.add('active');
+        benchmarkBtn.setAttribute('aria-selected', 'true');
+        pipelineBtn.classList.remove('active');
+        pipelineBtn.setAttribute('aria-selected', 'false');
+        pipelineContainer.style.display = 'none';
+        benchmarkContainer.style.display = 'flex';
+
+        if (!benchmarkData) {
+          loadBenchmarkData();
+        }
+      }
+    }
+
+    async function loadBenchmarkData() {
+      try {
+        const res = await fetch('/docs/benchmarks/latest_benchmark_results.json');
+        if (res.ok) {
+          benchmarkData = await res.json();
+          renderBenchmarkUI();
+          return;
+        }
+      } catch (err) {
+        console.warn("[Benchmark] Không thể fetch latest_benchmark_results.json:", err);
+      }
+      
+      // Nếu mở trực tiếp qua file://, fetch có thể bị CORS, tự động render data nếu có sẵn
+      if (benchmarkData) {
+        renderBenchmarkUI();
+      }
+    }
+
+    function setTierFilter(tier) {
+      currentTierFilter = tier;
+      document.querySelectorAll('#tierFilterGroup .filter-pill').forEach(btn => {
+        if (btn.getAttribute('data-tier') === tier) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderBenchmarkTable();
+    }
+
+    function setStatusFilter(status) {
+      currentStatusFilter = status;
+      document.querySelectorAll('#statusFilterGroup .filter-pill').forEach(btn => {
+        if (btn.getAttribute('data-status') === status) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderBenchmarkTable();
+    }
+
+    function handleBenchmarkSearch() {
+      currentSearchTerm = (document.getElementById('bmSearchInput').value || '').trim().toLowerCase();
+      renderBenchmarkTable();
+    }
+
+    function renderBenchmarkUI() {
+      if (!benchmarkData) return;
+      const s = benchmarkData.summary;
+      const meta = benchmarkData.metadata;
+
+      // Update Header Time
+      if (meta && meta.timestamp) {
+        document.getElementById('bm-meta-time').textContent = `Thời gian đo: ${meta.timestamp}`;
+      }
+
+      // Update KPI 1: Router
+      document.getElementById('kpi-router-val').textContent = `${s.router_accuracy}%`;
+      document.getElementById('kpi-router-target').textContent = `Mục tiêu: ≥ 90.0% (${s.router_correct}/${meta.total_cases})`;
+      document.getElementById('kpi-router-bar').style.width = `${s.router_accuracy}%`;
+      const rBadge = document.getElementById('kpi-router-badge');
+      if (s.router_accuracy >= 90) {
+        rBadge.className = 'kpi-badge badge-pass';
+        rBadge.textContent = '✅ ĐẠT';
+      } else {
+        rBadge.className = 'kpi-badge badge-warn';
+        rBadge.textContent = '⚠️ CẦN TỐI ƯU';
+      }
+
+      // Update KPI 2: CRAG
+      document.getElementById('kpi-crag-val').textContent = `${s.crag_precision}%`;
+      document.getElementById('kpi-crag-target').textContent = `Mục tiêu: ≥ 85.0% (${s.crag_correct}/${meta.total_cases})`;
+      document.getElementById('kpi-crag-bar').style.width = `${s.crag_precision}%`;
+      const cBadge = document.getElementById('kpi-crag-badge');
+      if (s.crag_precision >= 85) {
+        cBadge.className = 'kpi-badge badge-pass';
+        cBadge.textContent = '✅ ĐẠT';
+      } else {
+        cBadge.className = 'kpi-badge badge-warn';
+        cBadge.textContent = '⚠️ CẦN TỐI ƯU';
+      }
+
+      // Update KPI 3: Timestamp
+      document.getElementById('kpi-ts-val').textContent = `${s.timestamp_safety}%`;
+      document.getElementById('kpi-ts-target').textContent = `Mục tiêu: ≥ 88.0% (${s.timestamp_correct}/${meta.total_cases})`;
+      document.getElementById('kpi-ts-bar').style.width = `${s.timestamp_safety}%`;
+      const tBadge = document.getElementById('kpi-ts-badge');
+      if (s.timestamp_safety >= 88) {
+        tBadge.className = 'kpi-badge badge-pass';
+        tBadge.textContent = '✅ ĐẠT';
+      } else {
+        tBadge.className = 'kpi-badge badge-warn';
+        tBadge.textContent = '⚠️ CẦN TỐI ƯU';
+      }
+
+      // Update KPI 4: Latency
+      document.getElementById('kpi-lat-val').textContent = `${s.avg_latency_ms} ms`;
+
+      renderBenchmarkTable();
+    }
+
+    function renderBenchmarkTable() {
+      if (!benchmarkData || !benchmarkData.cases) return;
+      const tbody = document.getElementById('benchmarkTableBody');
+      tbody.innerHTML = '';
+
+      const tierLabels = {
+        in_scope: "In-Scope (Bài 1&2)",
+        out_of_lesson: "Out-of-Lesson",
+        adversarial_hybrid: "Adversarial Hybrid",
+        chit_chat: "Chit-Chat / Fast-P"
+      };
+
+      const filtered = benchmarkData.cases.filter(c => {
+        // Filter by tier
+        if (currentTierFilter !== 'all' && c.tier !== currentTierFilter) return false;
+        // Filter by status
+        if (currentStatusFilter === 'pass' && !c.pass_flags.overall_pass) return false;
+        if (currentStatusFilter === 'warn' && c.pass_flags.overall_pass) return false;
+        // Search term
+        if (currentSearchTerm) {
+          const matchId = c.id.toLowerCase().includes(currentSearchTerm);
+          const matchQuery = c.query.toLowerCase().includes(currentSearchTerm);
+          const matchNotes = (c.notes || '').toLowerCase().includes(currentSearchTerm);
+          if (!matchId && !matchQuery && !matchNotes) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--text-muted); font-family:var(--font-mono);">Không tìm thấy ca kiểm thử nào phù hợp với bộ lọc hiện tại.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = 'table-row-item';
+        tr.onclick = () => openBenchmarkDrawer(item.id);
+
+        const routerBadge = item.pass_flags.router_ok
+          ? `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`
+          : `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
+
+        const cragBadge = item.pass_flags.status_ok
+          ? `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`
+          : `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
+
+        const tsBadge = item.pass_flags.ts_ok
+          ? `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`
+          : `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
+
+        const overallBadge = item.pass_flags.overall_pass
+          ? `<span class="kpi-badge badge-pass">PASS</span>`
+          : `<span class="kpi-badge badge-warn">WARN</span>`;
+
+        tr.innerHTML = `
+          <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${item.id}</td>
+          <td><span class="tier-badge tier-${item.tier}">${tierLabels[item.tier] || item.tier}</span></td>
+          <td style="font-weight:500; max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${item.query}">${item.query}</td>
+          <td>${routerBadge}</td>
+          <td>${cragBadge}</td>
+          <td>${tsBadge}</td>
+          <td>${overallBadge}</td>
+          <td style="text-align:center;">
+            <button class="btn-action" style="padding:4px 8px; font-size:11px; background:#f1f5f9; border-color:#cbd5e1; color:#334155;" aria-label="Xem chi tiết ${item.id}">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              Soi
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openBenchmarkDrawer(caseId) {
+      if (!benchmarkData || !benchmarkData.cases) return;
+      const item = benchmarkData.cases.find(c => c.id === caseId);
+      if (!item) return;
+
+      const tierLabels = {
+        in_scope: "1. In-Scope Technical",
+        out_of_lesson: "2. Out-of-Lesson Scope",
+        adversarial_hybrid: "3. Adversarial Hybrid",
+        chit_chat: "4. Chit-Chat / Fast-Path"
+      };
+
+      document.getElementById('drawerCaseId').textContent = item.id;
+      const tBadge = document.getElementById('drawerTierBadge');
+      tBadge.textContent = tierLabels[item.tier] || item.tier;
+      tBadge.className = `tier-badge tier-${item.tier}`;
+
+      const oBadge = document.getElementById('drawerOverallBadge');
+      if (item.pass_flags.overall_pass) {
+        oBadge.textContent = 'PASS';
+        oBadge.className = 'kpi-badge badge-pass';
+      } else {
+        oBadge.textContent = 'WARN';
+        oBadge.className = 'kpi-badge badge-warn';
+      }
+
+      document.getElementById('drawerQueryText').textContent = item.query;
+      document.getElementById('drawerPedagogicalNote').textContent = item.pedagogical_note || item.notes || "Không có ghi chú thêm.";
+      document.getElementById('drawerCourseInfo').textContent = `Khóa: ${item.course_id} • Cửa sổ: Seq ${item.lesson_seq}`;
+      document.getElementById('drawerLatencyInfo').textContent = `Độ trễ: ${item.latency_ms || 2500.0} ms`;
+
+      // Compare table
+      const compareBody = document.getElementById('drawerCompareBody');
+      const rCheck = item.pass_flags.router_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
+      const sCheck = item.pass_flags.status_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
+      const tCheck = item.pass_flags.ts_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
+
+      compareBody.innerHTML = `
+        <tr>
+          <td>Intent Phân Luồng</td>
+          <td><code>${item.expected.intent}</code></td>
+          <td><code>${item.actual.intent}</code></td>
+          <td>${rCheck}</td>
+        </tr>
+        <tr>
+          <td>Trạng Thái CRAG</td>
+          <td><code>${item.expected.status}</code></td>
+          <td><code>${item.actual.status}</code></td>
+          <td>${sCheck}</td>
+        </tr>
+        <tr>
+          <td>Mốc Video Timestamp</td>
+          <td><code>${item.expected.has_timestamp ? (item.expected.target_video_sec + 's') : 'None (Cấm sinh)'}</code></td>
+          <td><code>${item.actual.has_timestamp ? (item.actual.video_sec + 's') : 'None'}</code></td>
+          <td>${tCheck}</td>
+        </tr>
+      `;
+
+      // Chunks
+      const chunksList = document.getElementById('drawerChunksList');
+      if (item.chunks && item.chunks.length > 0) {
+        document.getElementById('drawerChunksSection').style.display = 'block';
+        chunksList.innerHTML = item.chunks.map(c => `
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-family:var(--font-mono); font-size:11px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-weight:700; color:#1e40af;">
+              <span>${c.id || 'Chunk'} (${c.content_type || 'text'})</span>
+              <span>Score: ${c.confidence_score || '0.0'}</span>
+            </div>
+            <div style="color:#334155; line-height:1.4; white-space:pre-wrap;">${c.snippet || ''}</div>
+          </div>
+        `).join('');
+      } else {
+        chunksList.innerHTML = `<div style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-muted); font-style:italic;">Không trích xuất chunk nào (Câu hỏi ngoài lề hoặc Fast-Path không gọi RAG).</div>`;
+      }
+
+      document.getElementById('drawerBackdrop').classList.add('active');
+      document.getElementById('benchmarkDrawer').classList.add('open');
+    }
+
+    function closeBenchmarkDrawer() {
+      document.getElementById('drawerBackdrop').classList.remove('active');
+      document.getElementById('benchmarkDrawer').classList.remove('open');
     }
   </script>
 </body>

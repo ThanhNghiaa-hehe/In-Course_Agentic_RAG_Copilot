@@ -81,3 +81,12 @@ async def get_interactive_workflow():
     if workflow_path.exists():
         return FileResponse(workflow_path, media_type="text/html")
     return HTMLResponse("<h1>Tệp mô phỏng interactive_workflow.html chưa sẵn sàng</h1>", status_code=404)
+
+
+@app.get("/docs/benchmarks/latest_benchmark_results.json")
+async def get_latest_benchmark_json():
+    """Phục vụ tệp dữ liệu kết quả Benchmark Stage 11 cho giao diện tương tác."""
+    json_path = Path(__file__).resolve().parent.parent / "docs" / "benchmarks" / "latest_benchmark_results.json"
+    if json_path.exists():
+        return FileResponse(json_path, media_type="application/json")
+    return HTMLResponse("{\"error\": \"Benchmark data not found\"}", status_code=404, media_type="application/json")
