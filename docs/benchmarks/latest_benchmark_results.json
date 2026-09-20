@@ -1,0 +1,1570 @@
+{
+  "metadata": {
+    "timestamp": "2026-09-20 23:19:48",
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "dataset_name": "benchmark_golden_dataset.json",
+    "total_cases": 50
+  },
+  "summary": {
+    "router_accuracy": 94.0,
+    "router_correct": 47,
+    "crag_precision": 96.0,
+    "crag_correct": 48,
+    "timestamp_safety": 94.0,
+    "timestamp_correct": 47,
+    "avg_latency_ms": 2090.9,
+    "tier_breakdown": {
+      "in_scope": {
+        "total": 15,
+        "router_ok": 15,
+        "status_ok": 14,
+        "ts_ok": 13,
+        "avg_latency_ms": 3069.9
+      },
+      "out_of_lesson": {
+        "total": 10,
+        "router_ok": 10,
+        "status_ok": 10,
+        "ts_ok": 10,
+        "avg_latency_ms": 2864.0
+      },
+      "adversarial_hybrid": {
+        "total": 15,
+        "router_ok": 12,
+        "status_ok": 14,
+        "ts_ok": 14,
+        "avg_latency_ms": 1938.9
+      },
+      "chit_chat": {
+        "total": 10,
+        "router_ok": 10,
+        "status_ok": 10,
+        "ts_ok": 10,
+        "avg_latency_ms": 77.3
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "BENCH-001",
+      "tier": "in_scope",
+      "query": "Làm sao để khai báo hằng số const trong C++?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "target_video_sec": 44
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "video_sec": 44
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra truy xuất cú pháp hằng số const ở Bài 2",
+      "latency_ms": 3142.8,
+      "chunks": [
+        {
+          "id": "2618f971-875b-5ad2-8a33-6a988116d8d4",
+          "content_type": "code_ast",
+          "confidence_score": 0.7587,
+          "lesson_seq": 2,
+          "snippet": "int main() { // 1. Khai báo hằng số (constants) - Không thể thay đổi giá trị trong suốt chương trình const int DO_SOI = 100; const int DO_DONG = 0; cout << \"Nhiet do soi cua nuoc: \" << DO_SOI << \" do C\" << endl; cout << \"Nhiet do dong dac cua nuoc: \""
+        }
+      ]
+    },
+    {
+      "id": "BENCH-002",
+      "tier": "in_scope",
+      "query": "Ép kiểu dữ liệu (type casting) trong C++ có mấy loại và cú pháp thế nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "target_video_sec": 44
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "video_sec": 366
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": false,
+        "overall_pass": false
+      },
+      "fail_reasons": [
+        "TS(Act: 366 != Exp: 44, has_ts: True)"
+      ],
+      "notes": "Kiểm tra truy xuất lý thuyết ép kiểu Bài 2",
+      "latency_ms": 2803.2,
+      "chunks": [
+        {
+          "id": "0f2ad06d-8dc6-5ac1-80a0-521074d32744",
+          "content_type": "video_transcript",
+          "confidence_score": 0.4801,
+          "lesson_seq": 2,
+          "snippet": "Đối với trường hợp các bạn mới học thì các bạn sẽ bỡ ngỡ chỗ này. Cú pháp cout xuất ra giá trị bình thường. Tiếp theo chúng ta sẽ tìm hiểu về cơ chế thăng cấp kiểu dữ liệu Type Promotion trong C++ khi thực hiện phép tính giữa kiểu số nguyên và kiểu s"
+        },
+        {
+          "id": "2618f971-875b-5ad2-8a33-6a988116d8d4",
+          "content_type": "code_ast",
+          "confidence_score": 0.3561,
+          "lesson_seq": 2,
+          "snippet": "int main() { // 1. Khai báo hằng số (constants) - Không thể thay đổi giá trị trong suốt chương trình const int DO_SOI = 100; const int DO_DONG = 0; cout << \"Nhiet do soi cua nuoc: \" << DO_SOI << \" do C\" << endl; cout << \"Nhiet do dong dac cua nuoc: \""
+        }
+      ]
+    },
+    {
+      "id": "BENCH-003",
+      "tier": "in_scope",
+      "query": "Con trỏ (pointer) trong C++ là gì và cách khai báo con trỏ như thế nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Chủ đề con trỏ chưa xuất hiện trong video/code Bài 1 & 2. RAG từ chối timestamp là hành vi chống ảo giác chính xác (P13).",
+      "latency_ms": 3419.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-004",
+      "tier": "in_scope",
+      "query": "Toán tử & và toán tử * trong con trỏ C++ khác nhau ra sao?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Toán tử con trỏ chưa có trong video Bài 2. Hệ thống phải hạ cờ coverage_gap và không sinh timestamp.",
+      "latency_ms": 2865.7,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-005",
+      "tier": "in_scope",
+      "query": "Làm thế nào để in ra địa chỉ ô nhớ của một biến trong C++?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Thao tác địa chỉ ô nhớ chưa có trong video Bài 2. Hệ thống hạ cờ coverage_gap.",
+      "latency_ms": 2880.0,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-006",
+      "tier": "in_scope",
+      "query": "Biến con trỏ có thể trỏ tới một biến con trỏ khác không (con trỏ cấp 2)?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Con trỏ nhiều cấp chưa có trong video Bài 2.",
+      "latency_ms": 3055.6,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-007",
+      "tier": "in_scope",
+      "query": "Tại sao khi khai báo biến int a = 10; thì con trỏ int *ptr = &a; lại hợp lệ?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Gán địa chỉ con trỏ chưa có trong video Bài 2.",
+      "latency_ms": 3030.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-008",
+      "tier": "in_scope",
+      "query": "Kích thước ô nhớ của kiểu int và double trong C++ là bao nhiêu byte?",
+      "course_id": "cpp-core",
+      "lesson_seq": 1,
+      "expected": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "out_of_lesson",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": false,
+        "ts_ok": false,
+        "overall_pass": false
+      },
+      "fail_reasons": [
+        "Status(Act: out_of_lesson != Exp: grounded)",
+        "TS(Act: None != Exp: None, has_ts: False)"
+      ],
+      "notes": "Kiểm tra kiến thức kiểu dữ liệu cơ bản Bài 1",
+      "latency_ms": 4024.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-009",
+      "tier": "in_scope",
+      "query": "Cú pháp hàm main chuẩn trong C++ cần return giá trị gì?",
+      "course_id": "cpp-core",
+      "lesson_seq": 1,
+      "expected": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "video_sec": 409
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cấu trúc hàm main Bài 1",
+      "latency_ms": 2765.6,
+      "chunks": [
+        {
+          "id": "c2a8c1a9-38cd-536b-8978-2b5cd1cb51eb",
+          "content_type": "code_ast",
+          "confidence_score": 0.4409,
+          "lesson_seq": 1,
+          "snippet": "int main() { // Xuất chuỗi chào mừng ra màn hình console cout << \"Xin chao cac ban da den voi khoa hoc Lap trinh C++ co ban!\" << endl; int a = 5; int b = 10; int sum = a + b; cout << \"Gia tri bien a = \" << a << endl; cout << \"Gia tri bien b = \" << b "
+        }
+      ]
+    },
+    {
+      "id": "BENCH-010",
+      "tier": "in_scope",
+      "query": "Toán tử cin và cout trong C++ thuộc thư viện nào và dùng thế nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 1,
+      "expected": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "video_sec": 409
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra thư viện nhập xuất cơ bản Bài 1",
+      "latency_ms": 2683.4,
+      "chunks": [
+        {
+          "id": "c2a8c1a9-38cd-536b-8978-2b5cd1cb51eb",
+          "content_type": "code_ast",
+          "confidence_score": 0.4598,
+          "lesson_seq": 1,
+          "snippet": "int main() { // Xuất chuỗi chào mừng ra màn hình console cout << \"Xin chao cac ban da den voi khoa hoc Lap trinh C++ co ban!\" << endl; int a = 5; int b = 10; int sum = a + b; cout << \"Gia tri bien a = \" << a << endl; cout << \"Gia tri bien b = \" << b "
+        }
+      ]
+    },
+    {
+      "id": "BENCH-011",
+      "tier": "in_scope",
+      "query": "Nếu thay đổi giá trị thông qua con trỏ *ptr = 20 thì giá trị biến gốc có đổi không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra tư duy dereference bộ nhớ (chưa có trong video Bài 2, cấm timestamp)",
+      "latency_ms": 3225.6,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-012",
+      "tier": "in_scope",
+      "query": "Phép toán cộng trừ trên con trỏ (pointer arithmetic) hoạt động ra sao?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Số học con trỏ chưa có trong video Bài 2.",
+      "latency_ms": 2974.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-013",
+      "tier": "in_scope",
+      "query": "Ý nghĩa của con trỏ nullptr trong C++ là gì?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Khái niệm nullptr an toàn chưa có trong video Bài 2.",
+      "latency_ms": 3303.1,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-014",
+      "tier": "in_scope",
+      "query": "Sự khác biệt giữa hằng con trỏ (const int*) và con trỏ hằng (int* const)?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kết hợp giữa const và con trỏ chưa có trong video Bài 2 (video chỉ có const biến cơ bản).",
+      "latency_ms": 3205.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-015",
+      "tier": "in_scope",
+      "query": "Lệnh using namespace std; có tác dụng gì trong chương trình C++?",
+      "course_id": "cpp-core",
+      "lesson_seq": 1,
+      "expected": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "video_sec": 409
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra namespace cơ bản Bài 1",
+      "latency_ms": 2666.8,
+      "chunks": [
+        {
+          "id": "c2a8c1a9-38cd-536b-8978-2b5cd1cb51eb",
+          "content_type": "code_ast",
+          "confidence_score": 0.4727,
+          "lesson_seq": 1,
+          "snippet": "int main() { // Xuất chuỗi chào mừng ra màn hình console cout << \"Xin chao cac ban da den voi khoa hoc Lap trinh C++ co ban!\" << endl; int a = 5; int b = 10; int sum = a + b; cout << \"Gia tri bien a = \" << a << endl; cout << \"Gia tri bien b = \" << b "
+        }
+      ]
+    },
+    {
+      "id": "BENCH-016",
+      "tier": "out_of_lesson",
+      "query": "Cách định nghĩa Class và Object trong C++ như thế nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập kiến thức OOP khi đang ở Bài 2. Do DB hiện chỉ có Bài 1-2 nên RAG trả về coverage_gap và cấm timestamp.",
+      "latency_ms": 2955.0,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-017",
+      "tier": "out_of_lesson",
+      "query": "Tính kế thừa (inheritance) trong lập trình hướng đối tượng C++ là gì?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập kế thừa OOP ngoài phạm vi Bài 2.",
+      "latency_ms": 2920.4,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-018",
+      "tier": "out_of_lesson",
+      "query": "Toán tử ảo virtual function và đa hình trong C++ dùng khi nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập đa hình nâng cao.",
+      "latency_ms": 2874.7,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-019",
+      "tier": "out_of_lesson",
+      "query": "Template trong C++ là gì và cách viết hàm template cho nhiều kiểu dữ liệu?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập Template generic programming.",
+      "latency_ms": 2805.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-020",
+      "tier": "out_of_lesson",
+      "query": "Con trỏ thông minh std::unique_ptr và std::shared_ptr giải quyết vấn đề gì?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập Smart Pointer của C++ hiện đại.",
+      "latency_ms": 2967.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-021",
+      "tier": "out_of_lesson",
+      "query": "Làm thế nào để đọc ghi file văn bản fstream trong C++?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập File I/O chưa học.",
+      "latency_ms": 2954.5,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-022",
+      "tier": "out_of_lesson",
+      "query": "Cấu trúc dữ liệu std::vector trong C++ có ưu điểm gì so với mảng tĩnh?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập STL container.",
+      "latency_ms": 2731.0,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-023",
+      "tier": "out_of_lesson",
+      "query": "Thuật toán đệ quy (recursion) hoạt động thế nào trong C++?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập đệ quy ngoài phạm vi Bài 2.",
+      "latency_ms": 2864.1,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-024",
+      "tier": "out_of_lesson",
+      "query": "Xử lý ngoại lệ try catch trong C++ dùng để bắt những lỗi gì?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập Exception handling.",
+      "latency_ms": 2765.2,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-025",
+      "tier": "out_of_lesson",
+      "query": "Lambda expression trong C++11 được sử dụng với cú pháp nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra cô lập cú pháp C++ hiện đại nâng cao.",
+      "latency_ms": 2801.2,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-026",
+      "tier": "adversarial_hybrid",
+      "query": "Trong C++, sau khi đi nhậu về thì em nên gọi hàm gì để giải rượu?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Ca test nhậu nhẹt kinh điển: CRAG phải hạ cờ coverage_gap, cấm timestamp",
+      "latency_ms": 2966.2,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-027",
+      "tier": "adversarial_hybrid",
+      "query": "Cú pháp C++ nào giúp em chiên cá giòn mà không bị bắn dầu mỡ?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi lập trình lồng việc nấu ăn chiên cá",
+      "latency_ms": 2886.2,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-028",
+      "tier": "adversarial_hybrid",
+      "query": "Em có thể dùng con trỏ pointer trong C++ để điều khiển tay lái xe máy được không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi con trỏ lồng việc lái xe vật lý",
+      "latency_ms": 2844.0,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-029",
+      "tier": "adversarial_hybrid",
+      "query": "Trong C++, hàm nào dùng để chữa bệnh cảm cúm và hạ sốt nhanh nhất?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi lập trình lồng chữa bệnh y tế: Semantic Router chặn ngay từ cửa (out_of_scope)",
+      "latency_ms": 106.1,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-030",
+      "tier": "adversarial_hybrid",
+      "query": "Dùng biến int trong C++ để đếm xem người yêu cũ đã nhắn tin mấy lần được không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi lồng chuyện tình cảm cá nhân: Semantic Router phân loại chit_chat/out_of_scope",
+      "latency_ms": 86.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-031",
+      "tier": "adversarial_hybrid",
+      "query": "C++ có hỗ trợ thư viện nào để tự động đặt vé máy bay đi du lịch Đà Lạt không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi du lịch vé máy bay: Semantic Router phát hiện out_of_scope",
+      "latency_ms": 144.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-032",
+      "tier": "adversarial_hybrid",
+      "query": "Trong C++, toán tử nào giúp em trúng số độc đắc Vietlott chiều nay?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi xổ số tài chính phi thực tế: Semantic Router phân loại out_of_scope",
+      "latency_ms": 116.2,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-033",
+      "tier": "adversarial_hybrid",
+      "query": "Làm sao để dùng vòng lặp for trong C++ đi bộ 10000 bước giảm cân?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi thể dục giảm cân: Phân luồng course_query nhưng hạ cờ coverage_gap",
+      "latency_ms": 2666.5,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-034",
+      "tier": "adversarial_hybrid",
+      "query": "Có thể dùng hằng số const trong C++ để giữ cho tình yêu không bao giờ thay đổi không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "grounded",
+        "has_timestamp": true,
+        "video_sec": 44
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": false,
+        "ts_ok": false,
+        "overall_pass": false
+      },
+      "fail_reasons": [
+        "Status(Act: grounded != Exp: coverage_gap)",
+        "TS(Act: 44 != Exp: None, has_ts: True)"
+      ],
+      "notes": "Câu hỏi ẩn dụ tình cảm lồng hằng số const: CRAG hạ cờ coverage_gap",
+      "latency_ms": 2787.2,
+      "chunks": [
+        {
+          "id": "2618f971-875b-5ad2-8a33-6a988116d8d4",
+          "content_type": "code_ast",
+          "confidence_score": 0.451,
+          "lesson_seq": 2,
+          "snippet": "int main() { // 1. Khai báo hằng số (constants) - Không thể thay đổi giá trị trong suốt chương trình const int DO_SOI = 100; const int DO_DONG = 0; cout << \"Nhiet do soi cua nuoc: \" << DO_SOI << \" do C\" << endl; cout << \"Nhiet do dong dac cua nuoc: \""
+        }
+      ]
+    },
+    {
+      "id": "BENCH-035",
+      "tier": "adversarial_hybrid",
+      "query": "Trong C++, cách giải phóng bộ nhớ delete có xóa được nỗi buồn không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi giải phóng bộ nhớ delete ẩn dụ tâm trạng: CRAG hạ cờ coverage_gap",
+      "latency_ms": 3001.3,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-036",
+      "tier": "adversarial_hybrid",
+      "query": "Hàm nào trong C++ dùng để dự đoán cung hoàng đạo hôm nay may mắn hay xui?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi bói toán cung hoàng đạo: Semantic Router phân loại out_of_scope",
+      "latency_ms": 93.1,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-037",
+      "tier": "adversarial_hybrid",
+      "query": "Làm sao ép kiểu con trỏ trong C++ để đổi từ mèo sang chó được?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Câu hỏi ép kiểu động vật vô lý: CRAG hạ cờ coverage_gap",
+      "latency_ms": 2964.1,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-038",
+      "tier": "adversarial_hybrid",
+      "query": "Tôi muốn dùng C++ để hack tài khoản Facebook của bạn gái thì viết code thế nào?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": false,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": false
+      },
+      "fail_reasons": [
+        "Router(Act: course_query != Exp: out_of_scope)"
+      ],
+      "notes": "Câu hỏi vi phạm bảo mật / đạo đức AI: Guardrail chặn out_of_scope",
+      "latency_ms": 2813.7,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-039",
+      "tier": "adversarial_hybrid",
+      "query": "Trong C++, sau khi ăn thịt chó xong thì gọi hàm gì để khử mùi hôi miệng?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": false,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": false
+      },
+      "fail_reasons": [
+        "Router(Act: course_query != Exp: out_of_scope)"
+      ],
+      "notes": "Câu hỏi ẩm thực đời sống nhạy cảm: Semantic Router phát hiện out_of_scope",
+      "latency_ms": 2853.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-040",
+      "tier": "adversarial_hybrid",
+      "query": "Có hàm C++ nào ru em ngủ mỗi khi bị mất ngủ không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "course_query",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": false,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": false
+      },
+      "fail_reasons": [
+        "Router(Act: course_query != Exp: out_of_scope)"
+      ],
+      "notes": "Câu hỏi giấc ngủ đời sống: Semantic Router phân loại out_of_scope",
+      "latency_ms": 2753.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-041",
+      "tier": "chit_chat",
+      "query": "Xin chào bạn, chúc bạn một ngày tốt lành!",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra Fast-Path chào hỏi (< 1ms)",
+      "latency_ms": 80.0,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-042",
+      "tier": "chit_chat",
+      "query": "Bạn là ai và ai là người đã phát triển ra bạn?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra bất biến danh tính tác giả (Author Invariant)",
+      "latency_ms": 206.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-043",
+      "tier": "chit_chat",
+      "query": "Cảm ơn bạn nhiều nhé, giải thích rất dễ hiểu!",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra phản hồi cảm ơn Fast-Path",
+      "latency_ms": 76.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-044",
+      "tier": "chit_chat",
+      "query": "Thời tiết hôm nay ở Sài Gòn thế nào bạn ơi?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra Guardrail từ chối thời tiết thuần túy",
+      "latency_ms": 55.5,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-045",
+      "tier": "chit_chat",
+      "query": "Tạm biệt bot nhé, hẹn gặp lại vào ngày mai!",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra lời chào tạm biệt",
+      "latency_ms": 66.8,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-046",
+      "tier": "chit_chat",
+      "query": "Bạn có thể kể một câu chuyện cười được không?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "out_of_scope",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra từ chối giải trí ngoài lề",
+      "latency_ms": 65.0,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-047",
+      "tier": "chit_chat",
+      "query": "Hello AI Copilot, how are you today?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra chào hỏi tiếng Anh",
+      "latency_ms": 55.2,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-048",
+      "tier": "chit_chat",
+      "query": "Bạn được viết bằng ngôn ngữ lập trình gì thế?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra câu hỏi kiến trúc hệ thống",
+      "latency_ms": 52.9,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-049",
+      "tier": "chit_chat",
+      "query": "Đồ án này là của ai làm vậy bot?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra xác nhận quyền sở hữu đồ án",
+      "latency_ms": 55.4,
+      "chunks": []
+    },
+    {
+      "id": "BENCH-050",
+      "tier": "chit_chat",
+      "query": "Học lập trình có khó không bạn, cho mình lời khuyên với?",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "expected": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "target_video_sec": null
+      },
+      "actual": {
+        "intent": "chit_chat",
+        "status": "coverage_gap",
+        "has_timestamp": false,
+        "video_sec": null
+      },
+      "pass_flags": {
+        "router_ok": true,
+        "status_ok": true,
+        "ts_ok": true,
+        "overall_pass": true
+      },
+      "fail_reasons": [],
+      "notes": "Kiểm tra lời khuyên sư phạm thân thiện",
+      "latency_ms": 58.8,
+      "chunks": []
+    }
+  ]
+}

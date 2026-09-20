@@ -1,0 +1,33 @@
+# BÁO CÁO KHẢO THÍ ĐỊNH LƯỢNG RAG STAGE 11 (BASELINE BENCHMARK)
+**Thời gian thực hiện:** 2026-09-20 21:33:20  
+**Sinh viên thực hiện:** Trần Thành Nghĩa (MSSV: `23DH112252`)  
+**Đồ án:** In-Course Agentic RAG Copilot - Trường ĐH Ngoại ngữ - Tin học TP.HCM (HUFLIT)  
+**Tập dữ liệu chuẩn:** `benchmark_golden_dataset.json` (50 test cases qua 4 tầng)
+
+---
+
+## 1. TỔNG HỢP CHỈ SỐ ĐỊNH LƯỢNG CỐT LÕI (OVERALL METRICS)
+
+| Chỉ số khảo thí | Kết quả đạt được | Ngưỡng cam kết (CI Gate) | Đánh giá |
+| :--- | :---: | :---: | :---: |
+| **Router Accuracy** (Phân luồng ý định) | **86.0%** (43/50) | $\ge 90.0\%$ | ⚠️ CẦN TỐI ƯU |
+| **CRAG Grader Precision** (Thẩm định ngữ cảnh) | **62.0%** (31/50) | $\ge 85.0\%$ | ⚠️ CẦN TỐI ƯU |
+| **Timestamp Safety & Accuracy** (|Δt| $\le$ 15s / 0 ảo giác) | **68.0%** (34/50) | $\ge 88.0\%$ | ⚠️ CẦN TỐI ƯU |
+| **Độ trễ trung bình truy xuất** | **2177.4 ms** | $\le 300.0 \text{ ms}$ | ✅ ĐẠT |
+
+---
+
+## 2. PHÂN TÍCH THEO TỪNG TẦNG KIỂM THỬ (BREAKDOWN BY TIERS)
+
+| Tầng kiểm thử (Tier) | Số ca | Router OK | CRAG OK | Timestamp OK | Độ trễ TB (ms) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **1. In-Scope Technical** (C++ cơ bản) | 15 | 15/15 | 8/15 | 4/15 | 2648.0 |
+| **2. Out-of-Lesson** (Bài tương lai) | 10 | 10/10 | 0/10 | 7/10 | 2550.7 |
+| **3. Adversarial Hybrid** (Truy vấn đối nghịch) | 15 | 15/15 | 14/15 | 14/15 | 2710.9 |
+| **4. Chit-Chat / Out-of-Domain** | 10 | 3/10 | 9/10 | 9/10 | 297.7 |
+
+---
+
+## 3. KẾT LUẬN & ĐỊNH HƯỚNG KÍCH HOẠT PHASE 2
+* Bộ chỉ số trên đóng vai trò là **Baseline Score (Thước đo cơ sở)** chính thức của đồ án trước khi nâng cấp.
+* Bước tiếp theo: Kích hoạt **Roadmap Phase 2 (Code-to-Video Metadata Binding)**, sau đó chạy lại Benchmark để đo lường mức độ cải thiện của Timestamp Precision.
