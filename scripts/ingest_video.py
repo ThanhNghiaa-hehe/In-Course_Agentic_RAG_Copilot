@@ -164,7 +164,19 @@ def load_whisper_model(model_size="small"):
     print(f"Khởi chạy Whisper ({model_size}) trên CPU (int8)...")
     return WhisperModel(model_size, device="cpu", compute_type="int8")
 
-def process_video(video_path: str, course_id="cpp-core", lesson_id="lesson-01", lesson_seq=1, model_size="small", custom_hotwords: str = None, clean_old_points: bool = True):
+def process_video(
+    video_path: str,
+    course_id="cpp-core",
+    lesson_id="lesson-01",
+    lesson_seq=1,
+    model_size="small",
+    custom_hotwords: str = None,
+    clean_old_points: bool = True,
+    whisper_model=None,
+    dense_model=None,
+    sparse_model=None,
+    qdrant_client=None
+):
     video_file = Path(video_path)
     if not video_file.exists():
         print(f"❌ Lỗi: Không tìm thấy file video tại: {video_path}")
@@ -178,7 +190,8 @@ def process_video(video_path: str, course_id="cpp-core", lesson_id="lesson-01", 
     hotwords_str = get_hotwords_for_course(course_id, custom_hotwords)
     print(f"🔥 Kích hoạt Hotwords: {hotwords_str}")
 
-    whisper_model = load_whisper_model(model_size=model_size)
+    if whisper_model is None:
+        whisper_model = load_whisper_model(model_size=model_size)
 
     vad_parameters = {
         "threshold": 0.35,
@@ -270,20 +283,22 @@ def process_video(video_path: str, course_id="cpp-core", lesson_id="lesson-01", 
     chunks = time_aware_chunking(extracted_segments, min_duration=60, max_duration=90, overlap=15)
     print(f"✓ Đã tạo thành công {len(chunks)} chunks ngữ cảnh chuẩn hóa.")
 
-    # 4. Lưu kết quả ra file JSON & Markdown
-    stem_name = video_file.stem.replace(" ", "_")
-    output_dir = PROJECT_ROOT / "data" / "transcripts" / stem_name
+    # 4. Lưu kết quả ra file JSON & Markdown (Chuẩn hóa đường dẫn an toàn cho Windows MAX_PATH)
+    clean_title = re.sub(r'[^\w\-]', '_', video_file.stem)
+    clean_title = re.sub(r'_+', '_', clean_title).strip('_')[:40]
+    folder_name = f"{lesson_id}_{clean_title}" if clean_title else lesson_id
+    output_dir = PROJECT_ROOT / "data" / "transcripts" / course_id / folder_name
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    json_path = output_dir / f"{stem_name}_chunks.json"
+    json_path = output_dir / f"{lesson_id}_chunks.json"
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(chunks, f, ensure_ascii=False, indent=2)
 
-    raw_json_path = output_dir / f"{stem_name}_raw_segments.json"
+    raw_json_path = output_dir / f"{lesson_id}_raw_segments.json"
     with open(raw_json_path, "w", encoding="utf-8") as f:
         json.dump(extracted_segments, f, ensure_ascii=False, indent=2)
 
-    md_path = output_dir / f"{stem_name}_report.md"
+    md_path = output_dir / f"{lesson_id}_report.md"
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(f"# Báo cáo Trích xuất Bài giảng Video (Canonicalized): {video_file.name}\n\n")
         f.write(f"- **Mã khóa học:** `{course_id}`\n")
@@ -300,8 +315,10 @@ def process_video(video_path: str, course_id="cpp-core", lesson_id="lesson-01", 
 
     # 5. Embeddings & Indexing vào Qdrant Cloud kèm Progress Bar
     print("\n[STAGE 4 & 5] Sinh Vector kép & Nạp lên Qdrant Cloud...")
-    dense_model = TextEmbedding("intfloat/multilingual-e5-large")
-    sparse_model = SparseTextEmbedding("Qdrant/bm25")
+    if dense_model is None:
+        dense_model = TextEmbedding("intfloat/multilingual-e5-large")
+    if sparse_model is None:
+        sparse_model = SparseTextEmbedding("Qdrant/bm25")
 
     # BẮT BUỘC: Thêm tiền tố 'passage: ' cho mô hình multilingual-e5-large
     dense_inputs = [f"passage: {c['raw_text']}" for c in chunks]
@@ -310,7 +327,10 @@ def process_video(video_path: str, course_id="cpp-core", lesson_id="lesson-01", 
     dense_embeddings = list(dense_model.embed(dense_inputs))
     sparse_embeddings = list(sparse_model.embed(sparse_inputs))
 
-    qdrant = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
+    if qdrant_client is None:
+        qdrant = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
+    else:
+        qdrant = qdrant_client
 
     if clean_old_points:
         print(f"🧹 Dọn dẹp dữ liệu cũ của bài '{lesson_id}' trên Qdrant Cloud...")
