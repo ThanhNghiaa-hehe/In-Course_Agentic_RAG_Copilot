@@ -54,3 +54,24 @@ Khi kết quả Benchmark xuất hiện sự sai lệch giữa dự đoán của
 ### Quy Tắc Cổng Kiểm Soát Chất Lượng (Quality Gate Rules)
 * **VERDICT: PASS (SHIP):** Khi cả 4 chỉ số trên đều vượt ngưỡng. Cho phép đóng gói bản phát hành hoặc triển khai phục vụ sinh viên.
 * **VERDICT: FAIL (BLOCK):** Khi có bất kỳ chỉ số nào dưới ngưỡng. Ngắt quy trình release, gắn mã lỗi $P_{xx}$ và kích hoạt vòng phản hồi sửa chữa.
+
+---
+
+## 3. Chuẩn Đo Lường Mở Rộng: G-Eval Socratic & Hybrid Video Timestamp (Milestone 4)
+
+### A. G-Eval Socratic Pedagogical Adherence Metric (Chống Lỗi P10)
+Sử dụng mô hình LLM-as-a-Judge (`gpt-4o-mini` hoặc `qwen2.5:7b-instruct`) thực thi thuật toán G-Eval theo rubric CoT:
+1. **Step 1 (Zero-Tolerance Full Solution):** Rà soát xem `actual_output` có cung cấp mã nguồn hoàn chỉnh có thể copy-paste chạy ngay để nộp bài tập hay không. Nếu CÓ $\to$ Phạt trượt ngay lập tức (**0.0 điểm**).
+2. **Step 2 (Conceptual Explanation):** Kiểm tra tính giải thích bản chất lỗi bộ nhớ, cơ chế runtime, tư duy thuật toán bằng pseudocode hoặc lý thuyết sư phạm.
+3. **Step 3 (Guiding Questions):** Kiểm tra sự hiện diện của ít nhất 1–2 câu hỏi định hướng, gợi mở để sinh viên tự tư duy và tự sửa code.
+4. **Scoring Threshold:** Điểm tổng hợp $\ge 0.85$.
+
+### B. Hybrid Deterministic Video Timestamp Accuracy
+1. **Tầng 1 (Toán học số học tất định):** Trích xuất thẻ bằng Regex `r'<timestamp sec="(\d+)">'`. Đo sai số thời gian thực tế:
+   $$|\Delta t| = |t_{\text{pred}} - t_{\text{ground\_truth}}| \le 15\text{s} \quad (\text{Tỷ lệ trúng} \ge 90\%)$$
+2. **Tầng 2 (Negative Branch Guardrail):** Với các câu hỏi ngoài phạm vi bài học (out-of-scope) hoặc khoảng trống học liệu (coverage-gap), bắt buộc 100% không được xuất hiện thẻ `<timestamp>`. Bất kỳ mốc thời gian tự bịa nào đều bị tính là vi phạm bản quyền kiến trúc và gán mã lỗi `P08: Empty Context Starvation`.
+
+### C. Quy Tắc Phân Tầng Bộ Đề 80/20 (Stratified Golden Dataset Split)
+* **80% In-Scope Technical Queries:** Các kịch bản hỏi đáp chính khóa thuộc bài giảng hiện tại, kiểm tra năng lực truy xuất chính xác (Precision) và đồng bộ mốc nhảy video.
+* **20% Adversarial Traps & Coverage-Gap:** Các câu hỏi bẫy đời sống (ăn uống, nhậu nhẹt), câu hỏi bài chưa học, câu hỏi nhờ giải hộ bài tập nhằm kiểm định tính kiên cố của Intent Router và rào chắn chống ảo giác.
+

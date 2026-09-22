@@ -102,6 +102,9 @@
 - **Direct Answer First (Trả lời trực diện trước tiên):** Khi người dùng đặt câu hỏi kỹ thuật, kiến trúc hoặc xác nhận phạm vi (Yes/No, có phải/không phải, tại sao), AI BẮT BUỘC phải đưa ra câu trả lời trực tiếp ngay ở câu đầu tiên (Đúng/Sai/Có/Không/Kết luận trọng tâm). Tuyệt đối không vòng vo, không lan man lý thuyết giáo trình khi không được yêu cầu.
 - **Strict Scope & Conciseness (Đúng trọng tâm, không lan man):** Chỉ trả lời đúng câu hỏi người dùng đưa ra. Không tự ý mở rộng phân tích các chủ đề ngoài lề trừ khi người dùng yêu cầu "hãy phân tích chi tiết" hoặc "giải thích sâu hơn".
 - **Codebase Cross-Verification Mandate (Đối chiếu mã nguồn tuyệt đối):** Tuyệt đối KHÔNG dựa vào suy đoán hoặc dữ liệu mẫu cũ về tên mô hình, thuật toán và tham số cấu hình. Mọi phát biểu kỹ thuật phải đối chiếu trực tiếp từ `app/config.py`, `.env` và các tệp services liên quan (ví dụ: mô hình Re-ranker là `jinaai/jina-reranker-v2-base-multilingual`, tuyệt đối không nhầm sang BGE).
+- **Runtime Data State Invariant (Bất biến Trạng thái Dữ liệu Thực tế):**
+  - Tuyệt đối KHÔNG suy đoán rằng Database đã có dữ liệu chỉ vì thấy trường tương ứng trong Schema, Model hoặc Entity (ví dụ: thấy `codeSnippets` trong `Lesson.java` không đồng nghĩa với việc MongoDB đã có code).
+  - Mọi phát biểu khẳng định về dữ liệu thực tế bắt buộc phải dựa trên việc kiểm tra trực tiếp (truy vấn DB, đọc file JSON/CSV thực tế) hoặc xác nhận từ người dùng. Nếu chưa xác minh, phải phát biểu rõ là "schema hỗ trợ nhưng cần kiểm tra xem DB đã nạp dữ liệu hay chưa".
 
 ## 9. Anti-Quick-Fix, Deep Research & Strict Code Integrity Mandate
 - **Cấm Tuyệt Đối Phương Pháp Vá Tạm (Zero Quick-Fix Policy):**

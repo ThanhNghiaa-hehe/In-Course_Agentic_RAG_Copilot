@@ -38,14 +38,32 @@ description: Professional 4-week Agile engineering roadmap, enterprise Git commi
 - **Day 20:** Redis sliding window session & LangGraph state checkpointer.
 - **Day 21:** Tuần 3 Review, API testing, and mentor checkpoint report.
 
-### Tuần 4: Evaluation, Frontend Integration & Final Defense Preparation
-- **Day 22:** RAG Triad automated evaluation (TruLens/Ragas: Faithfulness, Answer Relevance).
-- **Day 23:** Frontend React Hook contract & Video Player sync (`player.seekTo(sec)`).
-- **Day 24:** End-to-end integration testing (Docker Compose, Redis, FastAPI).
-- **Day 25:** System performance profiling, load testing, and caching optimizations.
-- **Day 26:** Comprehensive project documentation, API docs (Swagger/OpenAPI).
-- **Day 27:** Final thesis report draft & slide deck for Academic Mentor review.
-- **Day 28:** Project defense rehearsal & final production release.
+### Tuần 4: Evaluation, Full-Stack Integration & Final Defense Preparation (Active)
+
+Hệ thống bước vào giai đoạn nước rút hoàn thiện đồ án với chuỗi **5 Cột mốc tuần tự (5 Sequential Milestones)**:
+
+1. **Milestone 1 (Batch Video Ingestion - GPU CUDA):**
+   - Chạy bóc băng tự động toàn bộ 83 video OOP 28tech trên card đồ họa NVIDIA RTX 2050 (CUDA 12, FP16).
+   - Chuẩn hóa ranh giới câu bằng Silero VAD, sửa ngữ âm bằng Tech Canonicalizer, cắt chunk 60–90s (overlap 15s) và nạp dual vectors (`multilingual-e5-large` + `bm25`) lên Qdrant Cloud.
+2. **Milestone 2 (Automated LLM Code Extraction & AST Binding):**
+   - Ứng dụng script tự động dùng LLM đọc transcript, trích xuất mã nguồn C++ chuẩn cú pháp cho các bài lý thuyết OOP trọng điểm (Class, Kế thừa, Đa hình, Virtual Destructor, Operator Overloading).
+   - Tự động đánh dấu mốc video `approx_video_sec` vào file `data/metadata/lesson_code_video_binding.json` và dùng `tree-sitter` nạp AST chunks vào Qdrant (Phase 2 Ground-Truth Binding).
+3. **Milestone 3 (Full-Stack Frontend Copilot Integration):**
+   - Dựng tab "Trợ Giảng AI (Socratic Copilot)" trực tiếp trên giao diện học bài `CourseContent.jsx` (React 19, Tailwind v4).
+   - Kết nối luồng Server-Sent Events (SSE) thời gian thực tới FastAPI (`/api/v1/chat/stream`), tự động truyền ngữ cảnh `course_id` và `lesson_seq`.
+   - Bắt sự kiện click thẻ `<timestamp sec="...">` để kích hoạt giao thức `player.seekTo(sec)` điều khiển YouTube Iframe (`postMessage`) hoặc HTML5 `<video>`.
+4. **Milestone 4 (OOP Quantitative Benchmark Suite & RAGAS Triad):**
+   - Xây dựng Golden Dataset chuyên sâu cho OOP: `tests/data/benchmark_oop_dataset.json` (50 test cases bao phủ 4 tầng: In-Scope OOP, Out-of-Lesson, Adversarial Traps, Chitchat).
+   - Đo lường tự động 4 chỉ số vàng: Router Accuracy $\ge 90\%$, Grader Precision $\ge 85\%$, Video Timestamp Accuracy $|\Delta t| \le 15$s $\ge 90\%$, và RAGAS Triad (Faithfulness $\ge 0.85$, Relevance $\ge 0.80$, Precision $\ge 0.80$).
+   - Xuất báo cáo khoa học tự động tại `docs/benchmarks/oop_benchmark_report.md`.
+5. **Milestone 5 (E2E System Verification, Final Thesis & Defense Preparation):**
+   - Kiểm thử toàn diện môi trường tích hợp: Spring Boot (:8080) + MongoDB Docker + FastAPI (:8000) + Qdrant Cloud + React Frontend (:5173).
+   - Hoàn thiện bản thảo Luận văn tốt nghiệp và bộ Slide thuyết trình bảo vệ trước Hội đồng chấm đồ án HUFLIT.
+
+> 🔒 **Cadence Invariant (Quy Chuẩn Chuyển Giao Tự Động):**
+> Khi hoàn tất bất kỳ Milestone nào trong danh sách trên, AI **BẮT BUỘC** phải:
+> 1. Xác nhận kết quả thực thi và kiểm toán dữ liệu của Milestone vừa hoàn thành.
+> 2. Tự động đề xuất phương án và cung cấp ngay khối lệnh PowerShell sạch để người dùng triển khai Milestone kế tiếp mà không làm đứt gãy luồng làm việc.
 
 ---
 
