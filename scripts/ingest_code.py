@@ -152,101 +152,133 @@ def load_video_bindings() -> dict:
         return {}
 
 
+_DENSE_MODEL = None
+_SPARSE_MODEL = None
+_QDRANT_CLIENT = None
+
+def get_dense_model() -> TextEmbedding:
+    """Singleton getter cho dense embedding model."""
+    global _DENSE_MODEL
+    if _DENSE_MODEL is None:
+        _DENSE_MODEL = TextEmbedding("intfloat/multilingual-e5-large")
+    return _DENSE_MODEL
+
+def get_sparse_model() -> SparseTextEmbedding:
+    """Singleton getter cho sparse BM25 model."""
+    global _SPARSE_MODEL
+    if _SPARSE_MODEL is None:
+        _SPARSE_MODEL = SparseTextEmbedding("Qdrant/bm25")
+    return _SPARSE_MODEL
+
+def get_qdrant_client() -> QdrantClient:
+    """Singleton getter cho Qdrant client."""
+    global _QDRANT_CLIENT
+    if _QDRANT_CLIENT is None:
+        _QDRANT_CLIENT = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
+    return _QDRANT_CLIENT
+
+
 def ingest_single_file(file_path: Path, course_id: str, lesson_id: str, lesson_seq: int, clean_old: bool = True):
     print("=" * 72)
     print(f">> DANG XU LY MA NGUON AST: {file_path.name}")
     print(f" - Khoa hoc: {course_id} | Bai hoc: {lesson_id} (Seq: {lesson_seq})")
     print("=" * 72)
 
-    video_bindings = load_video_bindings()
-    chunker = CppASTChunker()
-    chunks = chunker.chunk_file(file_path, course_id, lesson_id, lesson_seq)
-    print(f"[STAGE 3] Tree-sitter da trich xuat thanh cong {len(chunks)} chunks cu phap.")
+    try:
+        video_bindings = load_video_bindings()
+        chunker = CppASTChunker()
+        chunks = chunker.chunk_file(file_path, course_id, lesson_id, lesson_seq)
+        print(f"[STAGE 3] Tree-sitter da trich xuat thanh cong {len(chunks)} chunks cu phap.")
 
-    for i, c in enumerate(chunks, 1):
-        print(f"   + Chunk {i}: Scope='{c['code_scope']}', Dong [{c['start_line']} -> {c['end_line']}]")
+        for i, c in enumerate(chunks, 1):
+            print(f"   + Chunk {i}: Scope='{c['code_scope']}', Dong [{c['start_line']} -> {c['end_line']}]")
 
-    # Lưu bản JSON mô tả chunks cục bộ để kiểm tra
-    json_path = file_path.parent / f"{file_path.stem}_ast_chunks.json"
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(chunks, f, ensure_ascii=False, indent=2)
-    print(f"v Da luu danh sach AST chunks tai: {json_path}")
+        # Lưu bản JSON mô tả chunks cục bộ để kiểm tra
+        json_path = file_path.parent / f"{file_path.stem}_ast_chunks.json"
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(chunks, f, ensure_ascii=False, indent=2)
+        print(f"v Da luu danh sach AST chunks tai: {json_path}")
 
-    # [STAGE 4 & 5] Sinh Vector kép & Nạp lên Qdrant Cloud
-    print("\n[STAGE 4 & 5] Sinh Vector kep (Dense E5 + Sparse BM25) & Indexing Qdrant...")
-    dense_model = TextEmbedding("intfloat/multilingual-e5-large")
-    sparse_model = SparseTextEmbedding("Qdrant/bm25")
+        # [STAGE 4 & 5] Sinh Vector kép & Nạp lên Qdrant Cloud (Singleton instance)
+        print("\n[STAGE 4 & 5] Sinh Vector kep (Dense E5 + Sparse BM25) & Indexing Qdrant...")
+        dense_model = get_dense_model()
+        sparse_model = get_sparse_model()
 
-    # BẮT BUỘC: Thêm tiền tố 'passage: ' cho mô hình multilingual-e5-large
-    dense_inputs = [f"passage: {c['context_code']}" for c in chunks]
-    sparse_inputs = [c['context_code'] for c in chunks]
+        # BẮT BUỘC: Thêm tiền tố 'passage: ' cho mô hình multilingual-e5-large
+        dense_inputs = [f"passage: {c['context_code']}" for c in chunks]
+        sparse_inputs = [c['context_code'] for c in chunks]
 
-    dense_embeddings = list(dense_model.embed(dense_inputs))
-    sparse_embeddings = list(sparse_model.embed(sparse_inputs))
+        dense_embeddings = list(dense_model.embed(dense_inputs))
+        sparse_embeddings = list(sparse_model.embed(sparse_inputs))
 
-    qdrant = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=60.0)
+        qdrant = get_qdrant_client()
 
-    if clean_old:
-        print(f"Dọn dẹp code cũ của bài '{lesson_id}' trên Qdrant Cloud...")
-        try:
-            qdrant.delete(
-                collection_name=settings.QDRANT_COLLECTION_NAME,
-                points_selector=models.Filter(
-                    must=[
-                        models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
-                        models.FieldCondition(key="lesson_id", match=models.MatchValue(value=lesson_id)),
-                        models.FieldCondition(key="content_type", match=models.MatchValue(value="code_ast"))
-                    ]
+        if clean_old:
+            print(f"Dọn dẹp code cũ của bài '{lesson_id}' trên Qdrant Cloud...")
+            try:
+                qdrant.delete(
+                    collection_name=settings.QDRANT_COLLECTION_NAME,
+                    points_selector=models.Filter(
+                        must=[
+                            models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
+                            models.FieldCondition(key="lesson_id", match=models.MatchValue(value=lesson_id)),
+                            models.FieldCondition(key="content_type", match=models.MatchValue(value="code_ast"))
+                        ]
+                    )
                 )
+            except Exception as e:
+                pass
+
+        points = []
+        for i, c in enumerate(chunks):
+            sparse_val = sparse_embeddings[i]
+            # Định danh tất định UUIDv5 chống trùng lặp điểm
+            deterministic_key = f"{course_id}_{lesson_id}_ast_{c['chunk_id']}"
+            point_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, deterministic_key))
+
+            # Phân giải mốc video Ground-Truth từ metadata manifest (Phase 2)
+            scope_key = f"{lesson_id}:{c['code_scope']}"
+            approx_video_sec = video_bindings.get(scope_key)
+
+            point = models.PointStruct(
+                id=point_id,
+                vector={
+                    "dense": dense_embeddings[i].tolist(),
+                    "sparse": models.SparseVector(
+                        indices=sparse_val.indices.tolist(),
+                        values=sparse_val.values.tolist()
+                    )
+                },
+                payload={
+                    "course_id": course_id,
+                    "lesson_id": lesson_id,
+                    "lesson_seq": lesson_seq,
+                    "content_type": "code_ast",
+                    "code_scope": c["code_scope"],
+                    "start_line": c["start_line"],
+                    "end_line": c["end_line"],
+                    "raw_text": c["raw_text"],
+                    "context_code": c["context_code"],
+                    "file_path": str(file_path.resolve().relative_to(PROJECT_ROOT.resolve())).replace("\\", "/"),
+                    "code_language": "cpp",
+                    "approx_video_sec": approx_video_sec
+                }
             )
-        except Exception as e:
-            pass
+            points.append(point)
 
-    points = []
-    for i, c in enumerate(chunks):
-        sparse_val = sparse_embeddings[i]
-        # Định danh tất định UUIDv5 chống trùng lặp điểm
-        deterministic_key = f"{course_id}_{lesson_id}_ast_{c['chunk_id']}"
-        point_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, deterministic_key))
+        with tqdm(total=len(points), desc=">> Nap AST Points len Qdrant Cloud", unit="pt") as pbar:
+            qdrant.upsert(
+                collection_name=settings.QDRANT_COLLECTION_NAME,
+                points=points
+            )
+            pbar.update(len(points))
 
-        # Phân giải mốc video Ground-Truth từ metadata manifest (Phase 2)
-        scope_key = f"{lesson_id}:{c['code_scope']}"
-        approx_video_sec = video_bindings.get(scope_key)
-
-        point = models.PointStruct(
-            id=point_id,
-            vector={
-                "dense": dense_embeddings[i].tolist(),
-                "sparse": models.SparseVector(
-                    indices=sparse_val.indices.tolist(),
-                    values=sparse_val.values.tolist()
-                )
-            },
-            payload={
-                "course_id": course_id,
-                "lesson_id": lesson_id,
-                "lesson_seq": lesson_seq,
-                "content_type": "code_ast",
-                "code_scope": c["code_scope"],
-                "start_line": c["start_line"],
-                "end_line": c["end_line"],
-                "raw_text": c["raw_text"],
-                "context_code": c["context_code"],
-                "file_path": str(file_path.relative_to(PROJECT_ROOT)).replace("\\", "/"),
-                "code_language": "cpp",
-                "approx_video_sec": approx_video_sec
-            }
-        )
-        points.append(point)
-
-    with tqdm(total=len(points), desc=">> Nap AST Points len Qdrant Cloud", unit="pt") as pbar:
-        qdrant.upsert(
-            collection_name=settings.QDRANT_COLLECTION_NAME,
-            points=points
-        )
-        pbar.update(len(points))
-
-    print(f"v HOAN TAT NAP {len(points)} AST CODE CHUNKS CUA '{file_path.name}' VAO QDRANT CLOUD!\n")
+        print(f"v HOAN TAT NAP {len(points)} AST CODE CHUNKS CUA '{file_path.name}' VAO QDRANT CLOUD!\n")
+    except Exception as e:
+        import traceback
+        print(f"\n[LỖI XỬ LÝ {file_path.name}]: {e}")
+        traceback.print_exc()
+        raise e
 
 def main():
     parser = argparse.ArgumentParser(description="Pipeline bóc tách cú pháp AST mã nguồn C++ và nạp lên Qdrant Cloud.")
@@ -259,7 +291,7 @@ def main():
     args = parser.parse_args()
 
     if args.all or (args.path and Path(args.path).is_dir()):
-        target_dir = Path(args.path) if args.path else PROJECT_ROOT / "data" / "sample_codes" / "cpp-core"
+        target_dir = Path(args.path).resolve() if args.path else (PROJECT_ROOT / "data" / "sample_codes" / "cpp-core").resolve()
         cpp_files = sorted(list(target_dir.glob("*.cpp")))
         if not cpp_files:
             print(f"Không tìm thấy file .cpp nào trong thư mục: {target_dir}")
@@ -282,7 +314,7 @@ def main():
         if not args.path:
             print("Vui long cung cap duong dan file .cpp hoac dung flag --all")
             return
-        target_file = Path(args.path)
+        target_file = Path(args.path).resolve()
         if not target_file.exists():
             print(f"File khong ton tai: {target_file}")
             return
