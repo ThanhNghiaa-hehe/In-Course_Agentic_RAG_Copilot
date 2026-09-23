@@ -1,0 +1,3747 @@
+[
+  {
+    "start": 0.4,
+    "end": 5.4,
+    "text": "Trong video này mình sẽ hướng dẫn các bạn một thuật toán sắp xếp tiếp theo để thật toán sắp xếp nhanh quích xọc."
+  },
+  {
+    "start": 5.4,
+    "end": 11.98,
+    "text": "Thật toán sắp xếp nhanh quích xọc này thì tương tự như là thật toán mật xọc đấy chính là nó cũng dựa trên giải thoát chia và trị."
+  },
+  {
+    "start": 11.98,
+    "end": 17.98,
+    "text": "Độ phức tạp của thằng này thì là nologner trong trường hợp trung bình, thế còn trong trường hợp xấu nhất thì nó có thể lên đến ON ở bình."
+  },
+  {
+    "start": 17.98,
+    "end": 22.98,
+    "text": "Tức là trong trường hợp tệ nhất nó còn chậm hơn so với mật xọc và híp xọc đúng không?"
+  },
+  {
+    "start": 22.98,
+    "end": 26.98,
+    "text": "bởi vì mật xóa phải hiếp xóa thì chung bình hay là tệ nhất thì vẫn là nó lúc nờ"
+  },
+  {
+    "start": 26.98,
+    "end": 29.98,
+    "text": "nhưng mà trên thực tế thì quích xọc lại được ứng dụng rất là rộng dã"
+  },
+  {
+    "start": 29.98,
+    "end": 33.98,
+    "text": "bởi vì thằng này nó rất là phù hợp với các tập dữ liệu thực tế"
+  },
+  {
+    "start": 33.98,
+    "end": 39.74,
+    "text": "và nó cũng chỉ là một trong những thật toán sắp xếp phổ biến nhất, ứng dụng nhiều nhất"
+  },
+  {
+    "start": 39.74,
+    "end": 46.9,
+    "text": "về tư tưởng của thằng quích xọc này thì nó tương tự như là thật toán mật xó cậy"
+  },
+  {
+    "start": 46.9,
+    "end": 48.9,
+    "text": "thành ra là các bạn sẽ thấy nó rất là quen thuộc"
+  },
+  {
+    "start": 48.9,
+    "end": 54.22,
+    "text": "Ở đây thì các bạn có thể xem qua cái tư tưởng của thuật toàn quicksort thông qua cái mã giả của nó nhé"
+  },
+  {
+    "start": 54.22,
+    "end": 60.7,
+    "text": "thuật toàn quicksort này thì mình sẽ sub-shape một cái mảng A bắt đầu từ chỉ số P và cái thúc ở chỉ số R"
+  },
+  {
+    "start": 60.7,
+    "end": 61.7,
+    "text": "ok?"
+  },
+  {
+    "start": 61.7,
+    "end": 65.54,
+    "text": "và nếu mà cái đoạn từ P đến R của mình nghĩa, tức là"
+  },
+  {
+    "start": 65.54,
+    "end": 70.85,
+    "text": "chỉ số P nó còn nhỏ hơn chỉ số R ấy, tức là cái đoạn của mình mà mình muốn sub-shape lại nói"
+  },
+  {
+    "start": 70.85,
+    "end": 72.61,
+    "text": "còn tuổi thiệu là 2 phần tử ấy"
+  },
+  {
+    "start": 72.61,
+    "end": 76.29,
+    "text": "thì mình sẽ có một cái thao task đấy chính là mình partition"
+  },
+  {
+    "start": 76.29,
+    "end": 82.45,
+    "text": "phân cái đoạn từ P đến R của mình thành 2 nửa"
+  },
+  {
+    "start": 82.45,
+    "end": 85.05,
+    "text": "Thì nữa mình sẽ nói rõ hơn về cái thao tác partition này"
+  },
+  {
+    "start": 85.05,
+    "end": 87.29,
+    "text": "Thao tác quan trọng nhất của thật toán QuizSoc này"
+  },
+  {
+    "start": 87.29,
+    "end": 92.49,
+    "text": "Nó tương tự như là thao tác merge, thao tác trộn 2 dãy đã được sắp xếp của thật toán Mershock"
+  },
+  {
+    "start": 92.49,
+    "end": 96.85,
+    "text": "Thì trong QuizSoc này nó có một cái thao tác tương tự như, thế là partition"
+  },
+  {
+    "start": 96.85,
+    "end": 104.49,
+    "text": "Sau đó thì tương tự Mershock đấy chính là nó sẽ gọi đệ quy để nó sắp xếp đoạn bên trái của cái chỉ số P a quy này này"
+  },
+  {
+    "start": 104.49,
+    "end": 110.77,
+    "text": "và nó gọi đến địa quy đến bên phải, là từ đoạn quy cộng bộ cho đến error này"
+  },
+  {
+    "start": 110.77,
+    "end": 115.97,
+    "text": "tức là nó sẽ gọi địa quy để nó sắp xếp 2 cái dạy con sau khi mình chia cái 2 cái dạy con đấy ra"
+  },
+  {
+    "start": 115.97,
+    "end": 120.48,
+    "text": "chia cái dạy bàn đầu thành 2 cái dạy con, không còn cái thao tác là thao tác partition"
+  },
+  {
+    "start": 120.48,
+    "end": 124.76,
+    "text": "thế còn cái thao tác partition này này, thì nó có 2 cái phận, người ta gọi là phân hoạch"
+  },
+  {
+    "start": 124.76,
+    "end": 126.96,
+    "text": "ok, cái thao tác phân hoạch này"
+  },
+  {
+    "start": 126.96,
+    "end": 130.0,
+    "text": "thì nó có 2 phân hoạch chính, đấy là phân hoạch glomoto"
+  },
+  {
+    "start": 130.0,
+    "end": 132.88,
+    "text": "và phân hoạch của cái tác giả của thật toán quick sort này"
+  },
+  {
+    "start": 132.88,
+    "end": 136.88,
+    "text": "hò gì đấy? ok, đây nó muốn viết như thế này"
+  },
+  {
+    "start": 136.88,
+    "end": 143.21,
+    "text": "hò, hò, như thế này đúng không? ạ, hơi khó đọc một chí"
+  },
+  {
+    "start": 143.21,
+    "end": 145.71,
+    "text": "và thế phân hoạch kính nhất là Lomuto"
+  },
+  {
+    "start": 145.71,
+    "end": 149.71,
+    "text": "phân hoạch Lomuto thì dễ hiểu hơn và nó cũng dễ cài đặt hơn"
+  },
+  {
+    "start": 149.71,
+    "end": 156.03,
+    "text": "nhưng mà cái... cái cái... nó sẽ không tốt bằng thật toán của tác giả"
+  },
+  {
+    "start": 156.03,
+    "end": 163.03,
+    "text": "ok, tác giả viết ở trong vapor của ông ấy thì nó sẽ hoạt động tốt hơn so với phân hoạch Lomuto"
+  },
+  {
+    "start": 163.03,
+    "end": 168.87,
+    "text": "trước tiên thì mình sẽ nói qua về phân hoạch Lomuto trước, sau đó thì mình sẽ sang phân hoạch của ta giả chính ở đây nhá"
+  },
+  {
+    "start": 168.87,
+    "end": 176.42,
+    "text": "thì cái tư tưởng của thật toán Quixote đây chính là nó sẽ phân hoạch cái mạng của bạn"
+  },
+  {
+    "start": 176.42,
+    "end": 181.94,
+    "text": "từ cái chỉ số B cho đến chỉ số R, thành 2, ok, thành 2 cái dãi nhỏ"
+  },
+  {
+    "start": 181.94,
+    "end": 185.06,
+    "text": "dãi thứ nhất thì bắt đầu từ chỉ số B đến chỉ số Quy chứ 1"
+  },
+  {
+    "start": 185.06,
+    "end": 188.9,
+    "text": "và cái dãi thứ 2 thì bắt đầu từ chỉ số Quy cộng 1 cho tới chỉ số R"
+  },
+  {
+    "start": 188.9,
+    "end": 192.42,
+    "text": "sao cho tất cả các phần tử nằm trong đoạn ở bên trái"
+  },
+  {
+    "start": 192.42,
+    "end": 194.94,
+    "text": "tức là từ chỉ số b cho tới chỉ số quy chứ 1"
+  },
+  {
+    "start": 194.94,
+    "end": 197.74,
+    "text": "là nhỏ hơn hoặc bằng aque"
+  },
+  {
+    "start": 197.74,
+    "end": 198.94,
+    "text": "ok"
+  },
+  {
+    "start": 198.94,
+    "end": 203.75,
+    "text": "và tất cả các phần tử mà"
+  },
+  {
+    "start": 203.75,
+    "end": 208.62,
+    "text": "nhỏ hơn hoặc bằng aque và"
+  },
+  {
+    "start": 208.62,
+    "end": 215.94,
+    "text": "và cái thằng aque này thì sẽ nhỏ hơn hoặc bằng tất cả các phần tử nằm ở đoạn ở bên phải"
+  },
+  {
+    "start": 215.94,
+    "end": 217.94,
+    "text": "từ aque cộng 1 cho tới"
+  },
+  {
+    "start": 217.94,
+    "end": 221.64,
+    "text": "error ok"
+  },
+  {
+    "start": 221.64,
+    "end": 224.64,
+    "text": "trong đó quy ở đây, nó chính là cái vị trí phân hoạch"
+  },
+  {
+    "start": 224.64,
+    "end": 230.32,
+    "text": "tức là cái vị trí mà nó chia cái giáy từ P đến error của các bạn thành 2 nửa đấy, ok?"
+  },
+  {
+    "start": 230.32,
+    "end": 236.21,
+    "text": "Thế các bạn hiểu đơn giản đấy, chính là cái nửa bên trái thì nó nhỏ hơn hoặc bằng cái thằng đứng giữa"
+  },
+  {
+    "start": 236.21,
+    "end": 239.37,
+    "text": "Cái còn cái nửa bên phải thì nó lớn hơn hoặc bằng cái thằng đứng giữa"
+  },
+  {
+    "start": 239.37,
+    "end": 242.81,
+    "text": "sau đó nó gọi địa quy đến cái nửa bên trái và cái nửa bên phải"
+  },
+  {
+    "start": 242.81,
+    "end": 247.33,
+    "text": "và cái lời gọi địa quy đấy nó sẽ tiếp tục nó xắp xếp hai cái giải con bên trái và cái con bên phải"
+  },
+  {
+    "start": 247.33,
+    "end": 250.77,
+    "text": "Ok, và đây nó sẽ không cần combine gì cả, nó chỉ chia thôi"
+  },
+  {
+    "start": 250.77,
+    "end": 254.69,
+    "text": "Ok, cái thật toán mở xọc của các bạn có một cái bước là bước combine lại, đúng không?"
+  },
+  {
+    "start": 254.69,
+    "end": 259.25,
+    "text": "Khi mà bạn đã sắp xếp được 2 cái dạy con rồi, bạn phải combine lại và chộn 2 cái dạy đấy vào mùi nhau"
+  },
+  {
+    "start": 259.25,
+    "end": 262.57,
+    "text": "để tạo thành 1 cái dạy sắp xếp tăng dần, hoặc là dám dần, đúng không?"
+  },
+  {
+    "start": 262.57,
+    "end": 266.17,
+    "text": "Nhưng mà thằng quích xọc này thì cái bước combine của nó thì không cần"
+  },
+  {
+    "start": 266.17,
+    "end": 270.37,
+    "text": "bởi vì là cái dạy con bên trái và cái dạy con cái bên phải của nó đã được sắp xếp rồi"
+  },
+  {
+    "start": 270.37,
+    "end": 275.48,
+    "text": "Ok, thì đấy, thì đây chính là cái giải thuật của quích xọc nhá"
+  },
+  {
+    "start": 275.48,
+    "end": 277.96,
+    "text": "Thì bây giờ mình sẽ nói đến cái việc mà phân hoạch"
+  },
+  {
+    "start": 277.96,
+    "end": 281.6,
+    "text": "ok, phân hoạch ở đây là phân hoạch lomuto"
+  },
+  {
+    "start": 281.6,
+    "end": 282.92,
+    "text": "ok"
+  },
+  {
+    "start": 282.92,
+    "end": 286.56,
+    "text": "nhìn chung có 2 phân hoạch là lomuto và phân hoạch của tá giả thì"
+  },
+  {
+    "start": 286.56,
+    "end": 289.48,
+    "text": "mục tiêu của nó đều là như thế"
+  },
+  {
+    "start": 289.48,
+    "end": 292.24,
+    "text": "thế nó sẽ chia cái mạng của bạn thành 2 nữa, đúng không?"
+  },
+  {
+    "start": 292.24,
+    "end": 296.2,
+    "text": "ở bên trái thì nhỏ hơn hoặc bằng cái phân tử pai vọt, người ta gọi là pai vọt"
+  },
+  {
+    "start": 296.2,
+    "end": 298.54,
+    "text": "cái thằng chốt, ok"
+  },
+  {
+    "start": 298.54,
+    "end": 299.9,
+    "text": "pi vọt của cái gì nào?"
+  },
+  {
+    "start": 299.9,
+    "end": 302.14,
+    "text": "người ta gọi là chốt, pi vọt"
+  },
+  {
+    "start": 302.14,
+    "end": 303.14,
+    "text": "ok"
+  },
+  {
+    "start": 303.14,
+    "end": 305.39,
+    "text": "thằng này gọi là chốt này"
+  },
+  {
+    "start": 305.39,
+    "end": 307.95,
+    "text": "thì những cái thằng mà nhỏ hơn hoặc bằng chốt thì nó sẽ đứng bên trái"
+  },
+  {
+    "start": 307.95,
+    "end": 309.95,
+    "text": "bản lĩnh thẳng và lớn hơn là bằng trốt, nó sẽ đứng bên phải"
+  },
+  {
+    "start": 309.95,
+    "end": 313.95,
+    "text": "ok, thì mình sẽ nói qua về cái lômuto partition trước nhá"
+  },
+  {
+    "start": 313.95,
+    "end": 315.95,
+    "text": "cái phân hoạch lômuto trước, thì đây là cái phân hoạch lômuto"
+  },
+  {
+    "start": 315.95,
+    "end": 322.34,
+    "text": "thì từ các bạn có thể xem qua cái 1 cái ví dụ về 1 cái bước phân hoạch của nó nhá"
+  },
+  {
+    "start": 322.34,
+    "end": 327.34,
+    "text": "đây thật toán quích xò của mình nó sẽ chạy trên cái mảng 9 này, chứ 3, 5, 2, 6, 8, chứ 6, 1, 3 này"
+  },
+  {
+    "start": 327.34,
+    "end": 332.34,
+    "text": "thì người ta chọn pivot là cái trốt, là thằng 3, là cái phần tử ở cuối này"
+  },
+  {
+    "start": 332.34,
+    "end": 340.59,
+    "text": "Mỗi lần phân hoạch, mảng bên đầu sẽ phân hoạch thành 2 nửa"
+  },
+  {
+    "start": 340.59,
+    "end": 345.59,
+    "text": "Nửa bên trái sẽ nhỏ hơn bằng 3, còn nửa bên phải sẽ lớn hơn bằng 3"
+  },
+  {
+    "start": 345.59,
+    "end": 351.59,
+    "text": "Nửa bên trái sẽ có trừ 3, 2, trừ 6, 1, nửa bên phải sẽ là 8, 5, 9, 6"
+  },
+  {
+    "start": 351.59,
+    "end": 357.59,
+    "text": "Sau đó tiếp tục nó gọi địa quy đến nửa bên trái này"
+  },
+  {
+    "start": 357.59,
+    "end": 368.39,
+    "text": "Bên trái này nó tiếp tục nó lại chọn pivot là phần tử 1, và nó lại tiếp tục nó phân hoạch cái đoạn này thành 1 cái nửa mà nhỏ hơn là 1, và 1 cái phần nửa lớn hơn là 1, chứ 3, 6, 1, 2"
+  },
+  {
+    "start": 368.39,
+    "end": 375.77,
+    "text": "Ok, thì cái thật toán này, cái hình này nó đang sử dụng Lomoto partition nhé, nó sử dụng phần hoạch Lomoto đấy"
+  },
+  {
+    "start": 375.77,
+    "end": 381.77,
+    "text": "Ok, và cứ tiếp tục như thế nhé, đến khi nào mà cái dãi con của các bạn nó chỉ có 1 phần tử thôi, thì nó sẽ dừng"
+  },
+  {
+    "start": 381.77,
+    "end": 386.49,
+    "text": "Ok, còn trừng nào mà nó có 2 phần tử trả lên ấy, thì nó sẽ tiếp tục nó phân hoạch"
+  },
+  {
+    "start": 386.49,
+    "end": 395.53,
+    "text": "Thì bạn thấy sau khi mình phân hoạch xong thì cái mảng của mình sẽ là chữ 6 này, chữ 3 này, 1 này, 2 này, 5 này, 6 này, 8 và 9, là 1 cái mảng tăng dần"
+  },
+  {
+    "start": 395.53,
+    "end": 402.25,
+    "text": "Ok, bây giờ mình sẽ nói qua về cái tư tưởng Paterson nhé, xin lỗi tư tưởng lông của tư tưởng Paterson nhé"
+  },
+  {
+    "start": 402.25,
+    "end": 405.05,
+    "text": "Còn cái tư tưởng của thuật toán chắc là các bạn đã nhìn ra rồi đúng không?"
+  },
+  {
+    "start": 405.05,
+    "end": 410.81,
+    "text": "Ok, cứ phân hoạch sau đó là tiếp tục liếc cuship để cõi các cái nhánh con bên phải và con bên trái"
+  },
+  {
+    "start": 410.81,
+    "end": 414.22,
+    "text": "Và đây thằng này nó không cần combine gì cả đúng không?"
+  },
+  {
+    "start": 414.22,
+    "end": 419.46,
+    "text": "như là mật xọc thì đến cái bước này lại phải có cái bước combine 2 cái đoạn bên này vào với nhau để tạo thành một cái dãy tăng dần đúng không?"
+  },
+  {
+    "start": 419.46,
+    "end": 423.86,
+    "text": "OK, nhưng mà quicksort nhờ cái thấp táp artisan của nó thì nó đã..."
+  },
+  {
+    "start": 423.86,
+    "end": 428.94,
+    "text": "cái dãy con bên trái bao giờ nó cũng nhỏ hơn hoặc bằng cái dãy con bên phải rồi, thế ra là mình sẽ không cần phải combine lại nữa."
+  },
+  {
+    "start": 428.94,
+    "end": 436.94,
+    "text": "Vậy thì bây giờ mình sẽ nói qua về cái phần hoạch Lomuto nhé. Các bạn có thể nhìn qua cái mẽ giả của phần hoạch Lomuto đấy chính là..."
+  },
+  {
+    "start": 436.94,
+    "end": 447.02,
+    "text": "Nó sẽ lấy thằng x, thằng trốt, là phần tử cuối cùng trong đoạn từ P tới y, mình hay dùng lap cho tới y"
+  },
+  {
+    "start": 447.02,
+    "end": 453.22,
+    "text": "Sau đó thì nó sẽ dùng 1 chỉ số y bằng P chứ 1, tức là trước cái chỉ số bên trái"
+  },
+  {
+    "start": 453.22,
+    "end": 461.62,
+    "text": "và nó sẽ lập 1 cái vòng 4 chạy từ cái chỉ số bên trái, cho tới cái chỉ số bên phải chứ đi 1 đơn vị, từ P cho tới y chứ 1"
+  },
+  {
+    "start": 461.62,
+    "end": 464.82,
+    "text": "và nó kiểm tra nếu mà az mà nhỏ hơn là bằng x"
+  },
+  {
+    "start": 464.82,
+    "end": 467.0,
+    "text": "tức là nó nhỏ hơn là bằng chốt"
+  },
+  {
+    "start": 467.0,
+    "end": 469.21,
+    "text": "mình gọi thằng x nào là chốt nhá"
+  },
+  {
+    "start": 469.21,
+    "end": 473.37,
+    "text": "thì nó sẽ tiến hành nó tăng cái chỉ số y này lên và hoán vị hai thằng ai và az"
+  },
+  {
+    "start": 473.37,
+    "end": 477.13,
+    "text": "cái này thì nó chưa hơi khó hiểu một tí đúng không?"
+  },
+  {
+    "start": 477.13,
+    "end": 480.49,
+    "text": "tại vì nên các bạn chưa nhìn ra cái bức ưởng của nó tiến hợp một chút mình sẽ"
+  },
+  {
+    "start": 480.49,
+    "end": 484.89,
+    "text": "làm như thế này cho các bạn nó dễ hiểu này"
+  },
+  {
+    "start": 484.89,
+    "end": 489.37,
+    "text": "dạ sứ như bạn có một, ở đây mình lấy cái ví dụ của cái phân hoạch Lomuto này luôn nhá"
+  },
+  {
+    "start": 489.37,
+    "end": 507.75,
+    "text": "Ví dụ như này này, 2, 8, 7, 1, 3, 5, 6, 4, 2, 8, 7, 1, 5, 6, 4, 2, 8, 7, 1, 5, 5, 6, 4, ok"
+  },
+  {
+    "start": 507.75,
+    "end": 511.59,
+    "text": "Bạn có 1 cái mạng như thế này, cái chỉ số ở đây lép ở đây á"
+  },
+  {
+    "start": 511.59,
+    "end": 515.59,
+    "text": "Mình hay đặt là chỉ số lép nhá, nó bằng không là của ông này này"
+  },
+  {
+    "start": 515.59,
+    "end": 521.34,
+    "text": "Và chỉ số y ở đây đôi 4, 6, 8 nữa không, chỉ số y ở đây nó sẽ là 7"
+  },
+  {
+    "start": 521.34,
+    "end": 524.78,
+    "text": "Thì cái thuật phân hoạch Lomuto nó làm như thế này"
+  },
+  {
+    "start": 524.78,
+    "end": 529.98,
+    "text": "Đấy chính là nó sẽ duy trì cho bạn một cái chỉ số y, là cái chỉ số mà bằng lép chữ 1"
+  },
+  {
+    "start": 529.98,
+    "end": 532.22,
+    "text": "Ok, lép chữ 1, tức là bằng chữ 1 đấy"
+  },
+  {
+    "start": 532.22,
+    "end": 534.94,
+    "text": "Tức là bây giờ cái chỉ số y của các bạn nó đang đứng ở đây này"
+  },
+  {
+    "start": 534.94,
+    "end": 537.34,
+    "text": "Đây, y nó đang đứng ở cái chỉ số chữ 1 này này"
+  },
+  {
+    "start": 537.34,
+    "end": 544.94,
+    "text": "Đây chỉ số 0 nhá, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7"
+  },
+  {
+    "start": 544.94,
+    "end": 548.62,
+    "text": "Ok, và nó sẽ tiến hành là nó chọn ra cái chốt"
+  },
+  {
+    "start": 548.62,
+    "end": 552.78,
+    "text": "trót ở đây nó ích ấy, nơi chính là cái phần tử cuối cùng này là bố nè, ư vọt, ok"
+  },
+  {
+    "start": 552.78,
+    "end": 558.38,
+    "text": "sau đó nó sẽ tiến hành duyệt qua cái chỉ số tư không cho tới chỉ số, tức là chỉ số lab ấy, cho tới chỉ số raw chứ 1"
+  },
+  {
+    "start": 558.38,
+    "end": 560.22,
+    "text": "đây đến ông này nè, đấy"
+  },
+  {
+    "start": 560.22,
+    "end": 563.28,
+    "text": "thì thằng này là trót nhá, để nghiên nè, nguyên này"
+  },
+  {
+    "start": 563.28,
+    "end": 564.88,
+    "text": "rồi nó sẽ tiến hành như sao?"
+  },
+  {
+    "start": 564.88,
+    "end": 569.84,
+    "text": "nó sẽ duyệt qua từng cái chỉ số 1 tới cái chỉ số này, ok, chỉ số g sẽ chạy từ đây"
+  },
+  {
+    "start": 569.84,
+    "end": 574.4,
+    "text": "và nếu mà az mà lớn, anh sẽ lỗi az mà nhỏ hơn hoặc bằng, đây nè"
+  },
+  {
+    "start": 574.4,
+    "end": 578.16,
+    "text": "nếu mà az mà nhỏ hơn hoặc bằng trót ấy, thì nó sẽ tiến hành tăng y lên"
+  },
+  {
+    "start": 578.16,
+    "end": 580.16,
+    "text": "và nó hoán vị ai với az"
+  },
+  {
+    "start": 580.16,
+    "end": 584.72,
+    "text": "Ví dụ này, trong trường hợp này các bạn thấy là gì nhỉ?"
+  },
+  {
+    "start": 584.72,
+    "end": 588.08,
+    "text": "Cái thằng 2 này này, nó nhỏ hơn là bằng chốt đúng không?"
+  },
+  {
+    "start": 588.08,
+    "end": 590.32,
+    "text": "az bây giờ nó bằng 2 nó nhỏ hơn là bằng 4"
+  },
+  {
+    "start": 590.32,
+    "end": 593.84,
+    "text": "thì nó sẽ tiến hành nó làm 1 công việc đấy là nó tăng i lên 1 ưu vị"
+  },
+  {
+    "start": 593.84,
+    "end": 598.5,
+    "text": "Ok, thì trong trường hợp này là i của mình đang bằng chư 1 đúng không?"
+  },
+  {
+    "start": 598.5,
+    "end": 602.18,
+    "text": "Đây này, thì nó sẽ được tăng lên 1 ưu vị thành a, thành i bằng 0"
+  },
+  {
+    "start": 602.18,
+    "end": 604.82,
+    "text": "Tức là khi đó i nó cũng sẽ chỉ đến cái chỉ số này luôn này"
+  },
+  {
+    "start": 604.82,
+    "end": 606.66,
+    "text": "i bây giờ nó đang ở chỉ số này rồi này"
+  },
+  {
+    "start": 606.66,
+    "end": 609.14,
+    "text": "và nó sẽ tiến hành swap ai với az"
+  },
+  {
+    "start": 609.14,
+    "end": 611.58,
+    "text": "ok, swap ai với ai zi"
+  },
+  {
+    "start": 611.58,
+    "end": 616.58,
+    "text": "thì trong trường hợp này nó swap cái thằng 2 này với chính nó cũng trẻ có gì kìa, đúng không?"
+  },
+  {
+    "start": 616.58,
+    "end": 618.5,
+    "text": "swap 2 với chính nó"
+  },
+  {
+    "start": 618.5,
+    "end": 621.14,
+    "text": "thì khi đó là đã xong cái bước thứ nhất rồi nhá"
+  },
+  {
+    "start": 621.14,
+    "end": 624.14,
+    "text": "tương tự như vậy, bây giờ zi nó sẽ tăng cái chỉ xuống này lên"
+  },
+  {
+    "start": 624.14,
+    "end": 628.74,
+    "text": "nếu mà nó gặp một cái thằng nào đó mà nó lớn hơn pi vọt ấy, nó lớn hơn chốt thì nó bỏ qua"
+  },
+  {
+    "start": 628.74,
+    "end": 630.9,
+    "text": "ví dụ trong trường hợp này nó gặp 8 thì nó bỏ qua"
+  },
+  {
+    "start": 630.9,
+    "end": 632.9,
+    "text": "tiếp tục nó dịch zi sang bên này"
+  },
+  {
+    "start": 632.9,
+    "end": 634.9,
+    "text": "7 cũng lớn hơn pi vọt bỏ qua"
+  },
+  {
+    "start": 634.9,
+    "end": 636.93,
+    "text": "đến đây là 1 này"
+  },
+  {
+    "start": 636.93,
+    "end": 641.89,
+    "text": "Thì trong trường hợp này này, khi mà nó duyệt qua cái chỉ số này này, chỉ số 3 này này thì nó thấy là"
+  },
+  {
+    "start": 641.89,
+    "end": 644.93,
+    "text": "cái thằng az bây giờ, cái thằng 1 này này nó nhỏ hơn pi vọt"
+  },
+  {
+    "start": 644.93,
+    "end": 650.22,
+    "text": "Ok, thì nó sẽ tiến hành là nó sẽ tăng cái chỉ số i lên để làm gì?"
+  },
+  {
+    "start": 650.22,
+    "end": 656.22,
+    "text": "Để khi đó cái chỉ số i của mình ấy, nó sẽ nhảy sang 1 phần tử mà nó lớn hơn pi vọt mà lúc nãy mình đã bỏ qua"
+  },
+  {
+    "start": 656.22,
+    "end": 657.22,
+    "text": "Nó chính là thằng 8 này này"
+  },
+  {
+    "start": 657.22,
+    "end": 660.22,
+    "text": "i bây giờ của bạn nó đang chỉ vào chỉ số 0"
+  },
+  {
+    "start": 660.22,
+    "end": 661.22,
+    "text": "Đây, nó đang ở chỉ số 0"
+  },
+  {
+    "start": 661.22,
+    "end": 666.57,
+    "text": "Thì bây giờ nó sẽ tiến hành nó tăng cái chỉ số của i lên thành 1, nó nhảy sang đây này"
+  },
+  {
+    "start": 666.57,
+    "end": 670.69,
+    "text": "Thì bạn thấy là có phải nó sẽ nhảy ra cái số mà nó lớn hơn pi vọt và lúc nãy mình đã bỏ qua không?"
+  },
+  {
+    "start": 670.69,
+    "end": 673.57,
+    "text": "Và nó sẽ tiến hành nó hoán vị 2 cho thằng ai với azi"
+  },
+  {
+    "start": 673.57,
+    "end": 676.37,
+    "text": "Tức là ông này bây giờ thành 1 và ông này thì thành 8, đấy"
+  },
+  {
+    "start": 676.37,
+    "end": 678.77,
+    "text": "Cái tư tưởng của nó là như thế, ok?"
+  },
+  {
+    "start": 678.77,
+    "end": 681.28,
+    "text": "Chỗ này thành 1 nhé"
+  },
+  {
+    "start": 681.28,
+    "end": 683.08,
+    "text": "Và chỗ này thì thành 8"
+  },
+  {
+    "start": 683.08,
+    "end": 685.58,
+    "text": "Rồi tiếp tục như thế, chỉ số di sẽ rượt qua 5"
+  },
+  {
+    "start": 685.58,
+    "end": 687.88,
+    "text": "5 cũng lớn hơn pi vọt thì bỏ qua"
+  },
+  {
+    "start": 687.88,
+    "end": 691.68,
+    "text": "Ok, 3 lớn hơn, 3 nhỏ hơn pi vọt, 3 nhỏ hơn là bằng pi vọt"
+  },
+  {
+    "start": 691.68,
+    "end": 696.18,
+    "text": "Vậy thì khi mà, đây này, khi mà cái thằng azi của bạn nhỏ hơn bằng pi vọt chốt này"
+  },
+  {
+    "start": 696.18,
+    "end": 699.38,
+    "text": "Thì nó sẽ tiến hành tăng chỉ số y, hông hông? Nó đau hán vị AeAz"
+  },
+  {
+    "start": 699.38,
+    "end": 705.1,
+    "text": "Thì bây giờ trong trường hợp này, nó sẽ tăng cái chỉ số y của bạn lên thành 2, tức là ông Ngài rồi đấy, nhảy ra đây này"
+  },
+  {
+    "start": 705.1,
+    "end": 709.66,
+    "text": "Thì có phải bạn cái thằng 7 này, nó chính là cái thằng mà nó lớn hơn Python mà lúc nãy mà bạn đã bỏ qua"
+  },
+  {
+    "start": 709.66,
+    "end": 715.82,
+    "text": "Đúng không? Khi mà bạn set az, bởi vì ở đây các bạn chỉ, bạn chỉ xử lý khi mà az nó nhỏ hơn là vòng ích thôi"
+  },
+  {
+    "start": 715.82,
+    "end": 719.62,
+    "text": "Thế còn trong trường hợp mà bạn set là một cái thằng az mà nó lớn hơn ích, thì mình tạo thời bỏ qua"
+  },
+  {
+    "start": 719.62,
+    "end": 728.1,
+    "text": "Để tí nữa, mình sẽ tăng cái chỉ số y lên thì nó sẽ nhảy ra cái thằng lớn hơn ích mà bạn đã bỏ qua đấy để mình hoán vị với một cái thằng az mà nó nhỏ hơn hơn ích"
+  },
+  {
+    "start": 728.1,
+    "end": 736.52,
+    "text": "Trong trường hợp này thì nó sẽ hoán vị thằng gì nhỉ? Thằng 7 này với thằng ba này, oh ok, à đúng không nhỉ?"
+  },
+  {
+    "start": 736.52,
+    "end": 747.03,
+    "text": "À, 2 với á 5 rồi, đấy thì thằng này thằng ba này, xóa thằng này đi nhé, thằng này thằng 7 này đúng không nhỉ?"
+  },
+  {
+    "start": 747.03,
+    "end": 752.03,
+    "text": "Ba và thằng này thằng 7, sau đó nó sẽ tiếp tục tăng cái chỉ số y lên một lần nữa là 6"
+  },
+  {
+    "start": 752.03,
+    "end": 754.03,
+    "text": "Sáu lưu hơn bây vọt thì nó cũng bỏ qua"
+  },
+  {
+    "start": 754.03,
+    "end": 761.03,
+    "text": "Ok, và khi đó thì cái dì của bạn nó đã duyệt tất cả các chỉ số từ chỉ số left cho tới chỉ số right cho 1 rồi, đúng không?"
+  },
+  {
+    "start": 761.03,
+    "end": 766.03,
+    "text": "Ok, thế là xong cái vòng 4 này nè, xong cái vòng 4 này, đúng không?"
+  },
+  {
+    "start": 766.03,
+    "end": 771.03,
+    "text": "Ê, thì bây giờ nó làm thêm một cái việc nữa, đấy chính là nó sẽ tiến hành nó tăng cái chỉ số y lên"
+  },
+  {
+    "start": 771.03,
+    "end": 774.6,
+    "text": "Ok, nó sẽ tiến hành nó tăng cái chỉ số y lên"
+  },
+  {
+    "start": 774.6,
+    "end": 784.61,
+    "text": "Sau khi vòng 4 này nó kết thúc í, thì nó có thêm một cái bước nữa, đấy chính là nó sẽ tăng cái chỉ số y của bạn lên, bây giờ y của bạn nó đang ở chỉ số 2 này"
+  },
+  {
+    "start": 784.61,
+    "end": 789.69,
+    "text": "b 짓 2, tăng i thêm 1 lần thỉ xổ 3"
+  },
+  {
+    "start": 789.69,
+    "end": 794.09,
+    "text": "nãy sẽ nhảy ra 1 phần tử lớn hơn pineabot là 4"
+  },
+  {
+    "start": 794.09,
+    "end": 799.01,
+    "text": "8 thêm 1 bước nữa sẽ hoán vị tầm pineabot"
+  },
+  {
+    "start": 799.01,
+    "end": 802.49,
+    "text": "với 1 trong thầm lớn hơn nó"
+  },
+  {
+    "start": 802.49,
+    "end": 804.87,
+    "text": "ok thầm 4 này"
+  },
+  {
+    "start": 804.87,
+    "end": 809.87,
+    "text": "hình trăm trường hợp này hoán vị 4 với tầm là bước cuối cùng của phân hoạch longuto"
+  },
+  {
+    "start": 809.87,
+    "end": 813.2,
+    "text": "thầm này bây giờ thành 8, thành 4"
+  },
+  {
+    "start": 813.2,
+    "end": 814.48,
+    "text": "ok"
+  },
+  {
+    "start": 814.48,
+    "end": 817.48,
+    "text": "và khi đó, cái chỉ số y của các bạn nó rất là bè"
+  },
+  {
+    "start": 817.48,
+    "end": 822.48,
+    "text": "thì khi đó nhé, cái quá trình phân hoạch Lomuto của các bạn ấy, nó đã phân hoạch xong rồi đấy"
+  },
+  {
+    "start": 822.48,
+    "end": 824.48,
+    "text": "nó sẽ chia cái màng của các bạn ấy"
+  },
+  {
+    "start": 824.48,
+    "end": 826.48,
+    "text": "chia cái đoạn thì chính xác hơn"
+  },
+  {
+    "start": 826.48,
+    "end": 828.48,
+    "text": "chia cái đoạn của bạn thành 2 nữa á"
+  },
+  {
+    "start": 828.48,
+    "end": 832.48,
+    "text": "cái nửa thứ nhất ấy, nó chính là cái phần mà nó nằm ở bên trái cái vị trí của thằng y này này"
+  },
+  {
+    "start": 832.48,
+    "end": 834.58,
+    "text": "đấy, nó chính là cái thằng 4 này này"
+  },
+  {
+    "start": 834.58,
+    "end": 838.58,
+    "text": "đây này, đấy, là những cái thằng mà nó nhỏ hơn là bằng 4, đúng không?"
+  },
+  {
+    "start": 838.58,
+    "end": 840.68,
+    "text": "ok, thế còn cái nửa bên phải này này"
+  },
+  {
+    "start": 840.68,
+    "end": 842.68,
+    "text": "là những cái thằng mà nó lớn hơn là bằng 4"
+  },
+  {
+    "start": 842.68,
+    "end": 846.89,
+    "text": "Vì vậy thì bạn thấy là nó sẽ phân hoạch ra như thế"
+  },
+  {
+    "start": 846.89,
+    "end": 850.65,
+    "text": "và tiếp tục bạn sẽ gọi địa quy đến giải con bên trái này và giải con bên phải này"
+  },
+  {
+    "start": 850.65,
+    "end": 856.01,
+    "text": "và việc mà bạn gọi địa quy đến giải con bên trái và giải con bên phải này thì nó lại tiếp tục nó phân hoạch như cái bước vừa rồi"
+  },
+  {
+    "start": 856.01,
+    "end": 860.01,
+    "text": "cho tới khi mà cái mảng của các bạn chỉ có một thần tử thôi"
+  },
+  {
+    "start": 860.01,
+    "end": 866.33,
+    "text": "Ok, thì đây chính là cái tư tưởng của thuật toán quích xọc với Lomuto Cartesian, với phân hoạch Lomuto"
+  },
+  {
+    "start": 866.33,
+    "end": 872.66,
+    "text": "và phân hoạch Lomuto này của các bạn, các bạn phân hoạch xong nhưng mà các bạn phải trả về được cho mình cái chỉ số này này"
+  },
+  {
+    "start": 872.66,
+    "end": 876.3,
+    "text": "cái vị trí của cái chốt sau khi mình phân hoạch xong"
+  },
+  {
+    "start": 876.3,
+    "end": 879.42,
+    "text": "để mình biết được rằng là mình sẽ gọi đệ quy từ đâu đến đâu"
+  },
+  {
+    "start": 879.42,
+    "end": 883.78,
+    "text": "thì khi đó cái phân hoạch lomuto này nó sẽ trả về vị trí ở đây, đúng không?"
+  },
+  {
+    "start": 883.78,
+    "end": 886.01,
+    "text": "mình đặt là P, đúng không nhỉ?"
+  },
+  {
+    "start": 886.01,
+    "end": 889.41,
+    "text": "thì khi đó nhé, mình sẽ gọi đệ quy quick sort đến cái đoạn từ"
+  },
+  {
+    "start": 889.41,
+    "end": 891.13,
+    "text": "lab cho tới P chứ 1"
+  },
+  {
+    "start": 891.13,
+    "end": 893.41,
+    "text": "tức là cái đoạn 2, 1, 3 này này"
+  },
+  {
+    "start": 893.41,
+    "end": 895.97,
+    "text": "và mình gọi đệ quy đến cái đoạn ở bên pha này"
+  },
+  {
+    "start": 895.97,
+    "end": 898.17,
+    "text": "tức là P cộng 1 cho tới y"
+  },
+  {
+    "start": 898.17,
+    "end": 899.69,
+    "text": "đấy, cứ như thế"
+  },
+  {
+    "start": 899.69,
+    "end": 902.81,
+    "text": "và tiếp tục 2 cái lời gọi đệ quy này nó sẽ tiếp tục nó phân hoạch ra"
+  },
+  {
+    "start": 902.81,
+    "end": 908.09,
+    "text": "Vậy thì bạn thấy là phân hoạch Lomuto cũng không có khó, khó hiểu đúng không? Rất là dễ hiểu"
+  },
+  {
+    "start": 908.09,
+    "end": 910.41,
+    "text": "Nó chia thành 3 phần như thế"
+  },
+  {
+    "start": 910.41,
+    "end": 912.6,
+    "text": "Đúng không? Nó chia thành 3 phần"
+  },
+  {
+    "start": 912.6,
+    "end": 919.24,
+    "text": "Đây, người ta cũng ví dụ phân hoạch Lomuto cho các bạn này, đúng không nhỉ?"
+  },
+  {
+    "start": 919.24,
+    "end": 923.64,
+    "text": "Bàn đầu thì chỉ số bên trái là P và chỉ số bên phải là R"
+  },
+  {
+    "start": 923.64,
+    "end": 925.8,
+    "text": "Và người ta lấy ra cái chốt này, nó chỉ là bổn"
+  },
+  {
+    "start": 925.8,
+    "end": 930.44,
+    "text": "Cái còn thằng i này là cái thằng mà nó đứng trước, nó đứng trước chỉ số P, tức là 1P chứ 1"
+  },
+  {
+    "start": 930.44,
+    "end": 932.76,
+    "text": "và người ta tiến hành diệt qua từng phần tử 1"
+  },
+  {
+    "start": 932.76,
+    "end": 935.8,
+    "text": "và nếu cái phần tử của bạn mà nó nhỏ hơn ở bằng chốt"
+  },
+  {
+    "start": 935.8,
+    "end": 937.96,
+    "text": "ví dụ trong trường hợp này 2 nhỏ hơn ở bằng chốt"
+  },
+  {
+    "start": 937.96,
+    "end": 941.16,
+    "text": "thì người ta sẽ tiến hành păng i lên, thằng i nó sẽ nhảy ra đây"
+  },
+  {
+    "start": 941.16,
+    "end": 943.96,
+    "text": "và người ta sẽ hoán vị ai với az"
+  },
+  {
+    "start": 943.96,
+    "end": 945.64,
+    "text": "đúng là hoán vị ai với az"
+  },
+  {
+    "start": 945.64,
+    "end": 948.52,
+    "text": "nhưng mà trong trường hợp này, hoán vị ai với az thì nó chính là"
+  },
+  {
+    "start": 948.52,
+    "end": 950.92,
+    "text": "hoán vị với chính nó, cái thằng nó vị trí 2 này này"
+  },
+  {
+    "start": 950.92,
+    "end": 953.56,
+    "text": "phần tử ở vị trí 2 này này, đúng không?"
+  },
+  {
+    "start": 953.56,
+    "end": 957.0,
+    "text": "thế còn khi mà cái thằng z của bạn này nó là một cái thằng 8 như thế này này"
+  },
+  {
+    "start": 957.0,
+    "end": 959.32,
+    "text": "rất là nó lớn hơn cái thằng chốt này này"
+  },
+  {
+    "start": 959.32,
+    "end": 963.24,
+    "text": "thì nó sẽ bỏ qua cái phần màu đen này, phần màu xám đậm này, nó sẽ bỏ qua"
+  },
+  {
+    "start": 963.24,
+    "end": 967.84,
+    "text": "đấy, thằng 7 này cũng thế này, khi mà az mà bằng 7 thì nó cũng bỏ qua, 87"
+  },
+  {
+    "start": 967.84,
+    "end": 972.28,
+    "text": "nhưng mà khi az mà bằng 1 thì nó sẽ cho cái thằng i của bạn này, nhảy ra thằng 8"
+  },
+  {
+    "start": 972.28,
+    "end": 976.92,
+    "text": "nó chính là một cái thằng mà nó lớn hơn tai vọt và lúc đấy bạn nó bỏ qua, đúng không?"
+  },
+  {
+    "start": 976.92,
+    "end": 981.76,
+    "text": "thì khi đó có phải nó tìm thấy được một cái cặp đấy chính là gì nhỉ? az thì nhỏ hơn, nhỏ hơn tai vọt"
+  },
+  {
+    "start": 981.76,
+    "end": 982.76,
+    "text": "A"
+  },
+  {
+    "start": 987.98,
+    "end": 990.82,
+    "text": "ID lớn hơn拜Bot, ai dùng AI"
+  },
+  {
+    "start": 990.82,
+    "end": 994.08,
+    "text": "Thằng 8 là AI, lớn hơn拜Bot, còn ai dùng AI là con thằng"
+  },
+  {
+    "start": 994.08,
+    "end": 997.76,
+    "text": "nhỏ hơn bằng bài bọt, nó sẽ tiến hành hoán vị 2 thằng này với nhau"
+  },
+  {
+    "start": 998.78,
+    "end": 1001.72,
+    "text": "虽 lắm, khi đó thằng 8 sẽ nhảy sang thằng 1, thằng 1 sẽ nhảy người ta"
+  },
+  {
+    "start": 1003.1,
+    "end": 1005.3,
+    "text": "OK, thằng 1 sẽ nhảy ra đây, người ta sẽ nhảy ra đây"
+  },
+  {
+    "start": 1005.3,
+    "end": 1010.46,
+    "text": "Khi đó bạn thấy là bạn đang ruồn các số mà nhỏ hơn拜Bot vì bên trái, và các số mà lớn hơn bài bọt lại phải rồi"
+  },
+  {
+    "start": 1010.46,
+    "end": 1016.22,
+    "text": "và tiếp tục 3 cũng thế, 3 mà nhỏ hơn tai vọt là 4"
+  },
+  {
+    "start": 1016.22,
+    "end": 1018.78,
+    "text": "thì tiến hành cho i nhảy sang o kê 7 này"
+  },
+  {
+    "start": 1018.78,
+    "end": 1022.66,
+    "text": "là cái thằng lớn hơn tai vọt đúng để bọn bỏ qua, sau đó bạn là án vị hắn đấy với nhau"
+  },
+  {
+    "start": 1022.66,
+    "end": 1025.7,
+    "text": "đây, 3 này, còn thằng này thì thằng 7"
+  },
+  {
+    "start": 1025.7,
+    "end": 1029.42,
+    "text": "5 thì lớn hơn trốt rồi thì bỏ qua, 6 lớn hơn trốt rồi thì bỏ qua"
+  },
+  {
+    "start": 1029.42,
+    "end": 1032.34,
+    "text": "thì đấy chính là công tác ở trong vòng 4 nó thực hiện xong"
+  },
+  {
+    "start": 1032.34,
+    "end": 1036.58,
+    "text": "tức là di duyệt từ chỉ số đầu tiên cho tới chỉ số trước, cái chỉ số cuối cùng, đúng nhỉ?"
+  },
+  {
+    "start": 1036.58,
+    "end": 1039.82,
+    "text": "Thì sau cái vòng 4 đấy đúng hông?"
+  },
+  {
+    "start": 1039.82,
+    "end": 1048.19,
+    "text": "Thì bạn làm thêm 1 cái bước nữa, đây chính là mình sẽ cho cái thầm pi 4 ở thằng Chốt về vị trí ở giữa"
+  },
+  {
+    "start": 1048.19,
+    "end": 1055.99,
+    "text": "Đúng hông? Thì người ta sẽ tăng cái chỉ số y này nè, nó đang ở vị trí của thằng 3 này, nó nhảy sang thằng 8"
+  },
+  {
+    "start": 1055.99,
+    "end": 1062.11,
+    "text": "Sau đó người ta sẽ hoán vị 2 thằng đến chính thằng thằng Chốt ở vị trí cuối cùng với cái thằng 4 này"
+  },
+  {
+    "start": 1062.11,
+    "end": 1066.51,
+    "text": "Thì khi đó bây giờ bạn thấy nó phân hoạch ra rồi, cái nửa bên trái là những phần tử mà nhỏ hơn nó phân"
+  },
+  {
+    "start": 1066.51,
+    "end": 1069.99,
+    "text": "nhỏ hôm hôm chốt là 4 í, còn các phần tửa bên phải nó lớn hơn chốt"
+  },
+  {
+    "start": 1069.99,
+    "end": 1074.39,
+    "text": "ok, và người ta tiếp tục gọi địa quy đến đoạn 213 và 7568 này nữa là xong"
+  },
+  {
+    "start": 1074.39,
+    "end": 1077.39,
+    "text": "ok, còn ở đây thì mình sẽ không giải thích những cái việc mà"
+  },
+  {
+    "start": 1077.39,
+    "end": 1081.23,
+    "text": "người ta gọi địa quy nó lại chia nhỏ, chia nhỏ ra như thế nào nhé, tương tự như cái hình này này"
+  },
+  {
+    "start": 1081.23,
+    "end": 1084.03,
+    "text": "ok, các bạn có thể tự viết ra giấy để xem là"
+  },
+  {
+    "start": 1084.03,
+    "end": 1086.39,
+    "text": "cái phần hoạch này tiếp tục gọi địa quy như thế nào"
+  },
+  {
+    "start": 1086.39,
+    "end": 1092.05,
+    "text": "ok, hôm nhỏ, thì đây chính là cái tư tưởng của tư tưởng của Lomuto nhé"
+  },
+  {
+    "start": 1092.05,
+    "end": 1093.49,
+    "text": "ok, phần hoạch Lomuto"
+  },
+  {
+    "start": 1093.49,
+    "end": 1096.33,
+    "text": "nó chia thành 3 phần, 3 vùng như thế đúng không?"
+  },
+  {
+    "start": 1096.33,
+    "end": 1103.21,
+    "text": "từ vùng từ chỉ số P đến chỉ số I, đều là các phần tử má. Nó lớn hơn hoặc nhỏ hơn vào phần trốt rồi."
+  },
+  {
+    "start": 1103.21,
+    "end": 1109.65,
+    "text": "Thế còn cái phần màu đen sậm này này, nó chính là các phần tử từ chỉ số I, cộng 1 cho tới chỉ số G, chứ 1,"
+  },
+  {
+    "start": 1109.65,
+    "end": 1113.65,
+    "text": "là các phần tử mà nó lớn hơn ít mà bạn đã tạm thời bỏ qua ở cái vòng con này."
+  },
+  {
+    "start": 1113.65,
+    "end": 1118.69,
+    "text": "Đúng nha. Thế còn cái phần mà unrestricted này là cái phần mà mình chưa xét tới."
+  },
+  {
+    "start": 1118.69,
+    "end": 1123.13,
+    "text": "Và mỗi khi mà bạn đã nhảy sang một phần mà unrestricted,"
+  },
+  {
+    "start": 1123.13,
+    "end": 1129.89,
+    "text": "cái là phần thử mà bạn chưa xét, mà nó lớn hơn ích thì bạn sẽ cho nó vào phần lớn hơn ích, cái phần màu xám đậm này nè"
+  },
+  {
+    "start": 1129.89,
+    "end": 1136.48,
+    "text": "chứ không nhờ, còn nếu mà bạn gặp một phần thử nào đó ở trị số G này nè, mà nó nhỏ hơn là vàng ích ích"
+  },
+  {
+    "start": 1136.48,
+    "end": 1141.54,
+    "text": "thì mình sẽ tiến hành, mình tăng cái trị số E lên cái ô tiếp theo để nó nhảy vào cái"
+  },
+  {
+    "start": 1141.54,
+    "end": 1146.54,
+    "text": "giá trị đầu tiên mà nó lớn hơn ích, cái phần màu xám đậm này nè, mà lúc nãy mình bỏ qua"
+  },
+  {
+    "start": 1146.54,
+    "end": 1149.54,
+    "text": "để mình sẽ tiến hành ngoán vị 2 thần đây với nhau, ok?"
+  },
+  {
+    "start": 1149.54,
+    "end": 1154.14,
+    "text": "Các phần khác như thế cái thằng mà nhỏ hơn là một ích, nó sẽ nhảy về vị trí trường trước"
+  },
+  {
+    "start": 1154.14,
+    "end": 1156.82,
+    "text": "và nó hợp với cái đoạn mà nhỏ hơn là một ích này, đúng không?"
+  },
+  {
+    "start": 1156.82,
+    "end": 1161.94,
+    "text": "Đấy, bạn thấy là khi mà nó hoán vị thì cái phần tử mà nhỏ hơn là một ích thì nó sẽ vôp vào cái đoạn"
+  },
+  {
+    "start": 1161.94,
+    "end": 1165.14,
+    "text": "nó vôp vào cái đoạn từ P đến I là những ích phần tử mà nhỏ hơn là một ích"
+  },
+  {
+    "start": 1165.14,
+    "end": 1170.22,
+    "text": "Ok, thế còn cái phần restricted của, à, xin lỗi cái phần mà lớn hơn ích của các bạn thì"
+  },
+  {
+    "start": 1170.22,
+    "end": 1174.9,
+    "text": "nó sẽ bị mất đi cái phần tử này, đúng không? Ok"
+  },
+  {
+    "start": 1174.9,
+    "end": 1177.99,
+    "text": "Thì đấy chính là phần hoạch Lomuto nhé, ok"
+  },
+  {
+    "start": 1177.99,
+    "end": 1181.07,
+    "text": "Bây giờ mình sẽ cốt thuật toán quý sóc này bằng phân hoạch nô mù tô trước"
+  },
+  {
+    "start": 1181.07,
+    "end": 1181.87,
+    "text": "Đúng nhỉ?"
+  },
+  {
+    "start": 1181.87,
+    "end": 1186.31,
+    "text": "Đây, mình sẽ cốt ý hợp cái tư tưởng như thế này nhé"
+  },
+  {
+    "start": 1186.31,
+    "end": 1189.11,
+    "text": "Đầu tiên mình sẽ cần 1 cái ham là ham Paterson"
+  },
+  {
+    "start": 1189.11,
+    "end": 1191.59,
+    "text": "Ham Paterson này có nhiệm vụ là phân hoạch, đúng không?"
+  },
+  {
+    "start": 1191.59,
+    "end": 1195.87,
+    "text": "Bằng phân hoạch nô mù tô và trẻ về cái vị trí của cái chốt sau khi mà phân hoạch"
+  },
+  {
+    "start": 1195.87,
+    "end": 1200.59,
+    "text": "Cái việc lựa chọn chốt ở đây thì mình sẽ lựa chọn cái chốt là phân thử ở bên phải cùng nhé"
+  },
+  {
+    "start": 1200.59,
+    "end": 1205.43,
+    "text": "OK, ROI mà, đây các bạn thấy cái chốt mà người ta chọn nó chính là cái phân thử ROI này"
+  },
+  {
+    "start": 1205.43,
+    "end": 1207.51,
+    "text": "Đây, nó tương tự nhìn này"
+  },
+  {
+    "start": 1207.51,
+    "end": 1227.16,
+    "text": "Order. Chốt. Mã giả này mình lấy trong cuốn introduction to Anchorism. Bây giờ mình sẽ cốt nhé. Mỗi lần bài vọt chốt nó sẽ là phần tử cuối cùng nhé."
+  },
+  {
+    "start": 1227.16,
+    "end": 1230.68,
+    "text": "Vậy thì ở đây mình sẽ viết 1 cái ham là ham partition"
+  },
+  {
+    "start": 1230.68,
+    "end": 1235.28,
+    "text": "OK, 1 cái mảng a, bắt đầu thì chỉ số left là kết thúc và chỉ số right"
+  },
+  {
+    "start": 1235.28,
+    "end": 1239.94,
+    "text": "Nhịa vụ của cái ham partition này, đấy chính là phân hoạch cái đoạn từ left cho từ right"
+  },
+  {
+    "start": 1239.94,
+    "end": 1241.54,
+    "text": "Ở đây là cái đoạn nhá, OK"
+  },
+  {
+    "start": 1241.54,
+    "end": 1244.54,
+    "text": "Nó tổng quá hơn, nó từ đoạn từ left cho từ right"
+  },
+  {
+    "start": 1244.54,
+    "end": 1247.54,
+    "text": "Và nó trả về cái vị trí của trốt sau khi mình phân hoạch sau"
+  },
+  {
+    "start": 1247.54,
+    "end": 1249.54,
+    "text": "Tôi nói chia thành 2 phần đấy, OK"
+  },
+  {
+    "start": 1249.54,
+    "end": 1253.04,
+    "text": "Thì các bạn làm như sau, bạn dùng cho mình 1 cái trốt"
+  },
+  {
+    "start": 1253.04,
+    "end": 1259.48,
+    "text": "Đang là pivot, nó sẽ bắn ary, nó chính là phần tử cuối cùng đấy, bên phải cùng đấy"
+  },
+  {
+    "start": 1259.48,
+    "end": 1266.48,
+    "text": "Được nhỉ, sau đó mình dùng một cái chỉ số y bằng lab chứ 1 và chỉ số z, ok, lab chứ 1 thôi"
+  },
+  {
+    "start": 1266.48,
+    "end": 1272.48,
+    "text": "Sau đó các bạn thấy là nó sẽ dùng một cái vòng for chạy từ lab cho tới y chứ 1 đúng không?"
+  },
+  {
+    "start": 1272.48,
+    "end": 1279.48,
+    "text": "Mình sẽ dùng một cái vòng for chạy từ z bằng lab cho tới z nhỏ on dry, không xét thằng dry nhá, ok"
+  },
+  {
+    "start": 1279.48,
+    "end": 1282.19,
+    "text": "sau đó là nó kiểm tra là gì?"
+  },
+  {
+    "start": 1282.19,
+    "end": 1284.19,
+    "text": "nếu mà az mà nhỏ hơn là bằng x ấy"
+  },
+  {
+    "start": 1284.19,
+    "end": 1287.19,
+    "text": "rồi, if az mà nhỏ hơn là bằng x"
+  },
+  {
+    "start": 1287.19,
+    "end": 1289.19,
+    "text": "x ở đây chính là pivot, ok"
+  },
+  {
+    "start": 1289.19,
+    "end": 1291.32,
+    "text": "thì mình sẽ làm cái công việc gì nhỉ?"
+  },
+  {
+    "start": 1291.32,
+    "end": 1293.32,
+    "text": "đấy là mình sẽ tăng cái chỉ số y lên 1 nâng vị"
+  },
+  {
+    "start": 1293.32,
+    "end": 1295.32,
+    "text": "để cái thằng y làm sao?"
+  },
+  {
+    "start": 1295.32,
+    "end": 1297.32,
+    "text": "thằng y nó nhảy ra cái vị trí này này"
+  },
+  {
+    "start": 1297.32,
+    "end": 1299.32,
+    "text": "đây này, thằng y nó sẽ nhảy ra cái vị trí màu đen đầu tiên này"
+  },
+  {
+    "start": 1299.32,
+    "end": 1301.32,
+    "text": "đấy chính là cái phần cử lớn hơn x, lúc nãy mình bỏ qua"
+  },
+  {
+    "start": 1301.32,
+    "end": 1303.32,
+    "text": "ok, sau đó nó sẽ swap 2 thằng này nhá"
+  },
+  {
+    "start": 1303.32,
+    "end": 1306.32,
+    "text": "ok, thì đây mình sẽ tăng y lên"
+  },
+  {
+    "start": 1306.32,
+    "end": 1308.32,
+    "text": "sau đó mình sẽ swap 2 thằng đấy là ai và az"
+  },
+  {
+    "start": 1308.32,
+    "end": 1310.86,
+    "text": "ok"
+  },
+  {
+    "start": 1310.86,
+    "end": 1314.04,
+    "text": "và sau cái vòng for này, sau cái vòng for này thì mình phải làm"
+  },
+  {
+    "start": 1314.04,
+    "end": 1318.67,
+    "text": "thêm 1 cái công việc nữa ở đây, mình sẽ đưa chốt về giữa"
+  },
+  {
+    "start": 1318.67,
+    "end": 1324.03,
+    "text": "đúng không? về đúng vị trí mà làm sao cho những phần tử mà đứng bên trái chốt thì nó nhỏ hơn là màng chốt"
+  },
+  {
+    "start": 1324.03,
+    "end": 1326.87,
+    "text": "thì còn các phần tử mà đứng bên trái chốt thì nó lớn hơn chốt, đúng không?"
+  },
+  {
+    "start": 1326.87,
+    "end": 1330.07,
+    "text": "thì mình sẽ phải làm 1 cái công việc nữa ở đây là mình sẽ tăng cái chỉ số i lên"
+  },
+  {
+    "start": 1330.07,
+    "end": 1333.53,
+    "text": "để i nó nhảy ra cái vị trí của cái phần tử đầu tiên mà lớn hơn ích"
+  },
+  {
+    "start": 1333.53,
+    "end": 1335.03,
+    "text": "đấy, đây nhỉ"
+  },
+  {
+    "start": 1335.03,
+    "end": 1340.53,
+    "text": "sau cái bộng 4 thì các bạn có như thế này, sau cái bước hát này là sau cái bộng 4 rồi đấy"
+  },
+  {
+    "start": 1340.53,
+    "end": 1345.53,
+    "text": "bây giờ cái thằng i nó đang là thằng 3, cái con chốt của bạn vẫn là 4"
+  },
+  {
+    "start": 1345.53,
+    "end": 1350.03,
+    "text": "thì nó sẽ tiến hành tăng i lên 1 để nó nhảy ra thằng 8 là thằng lớn non chốt này"
+  },
+  {
+    "start": 1350.03,
+    "end": 1352.53,
+    "text": "rồi nó sẽ hoán bị 48, ok"
+  },
+  {
+    "start": 1352.53,
+    "end": 1356.03,
+    "text": "rồi nó return cái vị trí của ông 4 này, nó chính là cái trị số của i đấy"
+  },
+  {
+    "start": 1356.03,
+    "end": 1362.03,
+    "text": "sau đó thì nó sẽ swap 2 thằng đấy là ai và a, ai và r y, ok"
+  },
+  {
+    "start": 1362.03,
+    "end": 1367.91,
+    "text": "and return to i, vị trí, vị trí chốt sau khi phân hoạch"
+  },
+  {
+    "start": 1367.91,
+    "end": 1372.87,
+    "text": "đây chính là thao tác partition dựa trên LUMUTO, giải thuật LUMUTO"
+  },
+  {
+    "start": 1372.87,
+    "end": 1375.67,
+    "text": "bây giờ thật toán quicksort của các bạn"
+  },
+  {
+    "start": 1375.67,
+    "end": 1380.37,
+    "text": "các bạn chỉ cần dùng một mảng A, bắt đầu chỉ xuống LEFT và kết thúc chỉ xuống RIGHT"
+  },
+  {
+    "start": 1380.37,
+    "end": 1384.21,
+    "text": "và bạn kiểm tra nếu LEFT mà lớn hơn bằng RIGHT thì có thể return"
+  },
+  {
+    "start": 1384.21,
+    "end": 1391.21,
+    "text": "Ok, tức là khi nào mà người ta gọi đến đệ quy mà cái đoạn left and right của các bạn có một phần tử hoặc là"
+  },
+  {
+    "start": 1391.21,
+    "end": 1396.97,
+    "text": "left nó lớn hơn drive thì mình có thể dừng hoặc là cái chỗ này các bạn cũng có thể ip, left nhỏ hơn drive cũng được, ít hết như thế này cũng được nhé"
+  },
+  {
+    "start": 1396.97,
+    "end": 1406.01,
+    "text": "hoặc là các bạn, đây nè, các bạn có thể kiểm tra là ip, left nhỏ hơn drive, sau đó thì mình phân hoạch bỏ gọi đến dạy con bên trái và dạy con bên phải"
+  },
+  {
+    "start": 1406.01,
+    "end": 1410.21,
+    "text": "hoặc là các bạn kiểm tra ip, left lớn bằng drive bạn hủy tên cũng được, tuy các bạn"
+  },
+  {
+    "start": 1410.21,
+    "end": 1414.21,
+    "text": "nếu mà các bạn thích thôi, biết này cho dễ hiểu nhé, lab này on drive thì mình sẽ..."
+  },
+  {
+    "start": 1414.21,
+    "end": 1420.71,
+    "text": "Ơm, tại vì mình thích cái kiểu là lab lớn hơn bằng drive thì mình return để mình hiểu được là khi nào thì nó sẽ dừng ấy"
+  },
+  {
+    "start": 1420.71,
+    "end": 1425.71,
+    "text": "mà mình để như thế nhé, đây là, nếu mà lab lớn hơn bằng drive thì mình sẽ return"
+  },
+  {
+    "start": 1425.71,
+    "end": 1428.71,
+    "text": "để bạn biết là khi nào cái lời để gọi, để quick-pix-off này nó sẽ dừng ấy"
+  },
+  {
+    "start": 1428.71,
+    "end": 1435.0,
+    "text": "sau đó thì bạn sẽ dùng 1 cái biến P, nó sẽ chính bằng partition của a, lab và raw"
+  },
+  {
+    "start": 1435.0,
+    "end": 1439.13,
+    "text": "ok, vậy là mình đã phân hoạch cái mạng này ra rồi, cái đoạn này ra rồi"
+  },
+  {
+    "start": 1439.13,
+    "end": 1440.61,
+    "text": "Đúng không? Thành 2 cái nữa rồi"
+  },
+  {
+    "start": 1440.61,
+    "end": 1445.05,
+    "text": "Thì bây giờ bạn chỉ gọi địa quy để nó quích xọc đến cái đoạn ở bên trái"
+  },
+  {
+    "start": 1445.05,
+    "end": 1448.75,
+    "text": "Rất là cái đoạn màng A bắt đầu thì xuống left và kết thúc ở chỉ số P chứ 1"
+  },
+  {
+    "start": 1448.75,
+    "end": 1449.35,
+    "text": "Đây nè"
+  },
+  {
+    "start": 1450.96,
+    "end": 1451.92,
+    "text": "Nó chính là cái tan này nè"
+  },
+  {
+    "start": 1451.92,
+    "end": 1454.42,
+    "text": "Đấy sau khi mà bạn tìm được chốt ở vị trí của thằng 3 này"
+  },
+  {
+    "start": 1454.42,
+    "end": 1457.24,
+    "text": "Nó ở chỉ số là 0, 1, 2, 3, 4"
+  },
+  {
+    "start": 1457.24,
+    "end": 1459.84,
+    "text": "Thì bạn sẽ gọi quích xọc đến chỉ số 0"
+  },
+  {
+    "start": 1459.84,
+    "end": 1462.12,
+    "text": "Cái đoạn từ chỉ số 0 và kết thúc ở chỉ số 3"
+  },
+  {
+    "start": 1462.12,
+    "end": 1465.1,
+    "text": "Vào gọi quích xọc đến cái tự vị trí là 3 đúng không?"
+  },
+  {
+    "start": 1465.1,
+    "end": 1487.77,
+    "text": "C"
+  },
+  {
+    "start": 1498.01,
+    "end": 1504.78,
+    "text": "y nhỏ hơn đó ý cộng cộng mà mình sẽ cho ai bằng F, bằng grand đúng không?"
+  },
+  {
+    "start": 1504.78,
+    "end": 1506.78,
+    "text": "Cần trăm y đi"
+  },
+  {
+    "start": 1506.78,
+    "end": 1509.78,
+    "text": "sau đó thì mình sẽ tiến hành mình quicksort cái mạng này"
+  },
+  {
+    "start": 1509.78,
+    "end": 1513.78,
+    "text": "quicksort, để chạy quicksort thì các bạn chỉ cần gọi chỉ số a đúng không?"
+  },
+  {
+    "start": 1513.78,
+    "end": 1517.78,
+    "text": "bắt đầu từ chỉ số lab và kết thúc của chỉ số ride để nó phân hoạch từ ban đầu luôn"
+  },
+  {
+    "start": 1517.78,
+    "end": 1519.78,
+    "text": "từ cái cả cái mạng ban đầu luôn"
+  },
+  {
+    "start": 1519.78,
+    "end": 1524.87,
+    "text": "nếu mà a bắt đầu chỉ số không vào, kết thúc là chỉ số 1, sau đó mình sẽ dựa các phần từ ở trong"
+  },
+  {
+    "start": 1524.87,
+    "end": 1529.87,
+    "text": "bằng ai này vào với int ra xem là liệu rằng sau khi mình quicksort thì nó có sắp xếp căng dần hay không?"
+  },
+  {
+    "start": 1529.87,
+    "end": 1540.73,
+    "text": "OK, rồi. Vì dụ mình nhập bằng 10 đi, OK cho nó ngắn nè."
+  },
+  {
+    "start": 1540.73,
+    "end": 1548.18,
+    "text": "Let's run quicksort."
+  },
+  {
+    "start": 1548.18,
+    "end": 1552.18,
+    "text": "Mình cũng viết sai chỗ nào nhỉ, xem có khi nó đang bị lập vĩnh viễn."
+  },
+  {
+    "start": 1552.18,
+    "end": 1556.18,
+    "text": "Y hi vọng let chứa 1 đúng không? Chỗ này là nhỏ hơn chứa 1."
+  },
+  {
+    "start": 1556.18,
+    "end": 1558.18,
+    "text": "Đúng không nhỏ hơn drive mà đúng không?"
+  },
+  {
+    "start": 1558.18,
+    "end": 1565.41,
+    "text": "azm nhỏ hơn mà không phải bọc thì tăng y, swap ai và azm, swap ai và ava, tên y, đúng không?"
+  },
+  {
+    "start": 1565.41,
+    "end": 1569.86,
+    "text": "if lab mà lớn hơn mà bằng dry thì mình sẽ return đúng không?"
+  },
+  {
+    "start": 1569.86,
+    "end": 1575.62,
+    "text": "còn không thì mình sẽ dùng python, alabry và alabp chữ 1"
+  },
+  {
+    "start": 1575.62,
+    "end": 1578.62,
+    "text": "và ap cộng 1 dry, đúng không?"
+  },
+  {
+    "start": 1578.62,
+    "end": 1586.43,
+    "text": "một cái mạng a, mình sẽ see in cho nó ở đây"
+  },
+  {
+    "start": 1586.43,
+    "end": 1593.74,
+    "text": "mình quýt xọc cái mạng a bắt đầu từ không với cái thú của chí suen là chữ 1 đúng không?"
+  },
+  {
+    "start": 1593.74,
+    "end": 1610.57,
+    "text": "Mới sang, Java thì bằng ary này, lab mà chứa 1 này, tree bằng lab đúng không? tree nhỏ hơn rye jy c速 avy, đúng không?"
+  },
+  {
+    "start": 1610.57,
+    "end": 1617.87,
+    "text": "ai y vào azy, peanutzy số y lên, sau đó, return mee y đúng không?"
+  },
+  {
+    "start": 1617.87,
+    "end": 1624.47,
+    "text": "Quickstock, page 1, page cộng 1 real rye đúng không?"
+  },
+  {
+    "start": 1624.47,
+    "end": 1630.81,
+    "text": "từ từ thì mình thử nhập tay xem nào, okay"
+  },
+  {
+    "start": 1630.81,
+    "end": 1635.78,
+    "text": "Mình sẽ nhập 1 cái mạng có 10 phần tử nhé"
+  },
+  {
+    "start": 1635.78,
+    "end": 1644.92,
+    "text": "10, 5, 9, 8, 1, 2, 6, 7, 2, 4, 6, 8, 9, 10"
+  },
+  {
+    "start": 1644.92,
+    "end": 1648.98,
+    "text": "2, 4, 6, 8, 10"
+  },
+  {
+    "start": 1648.98,
+    "end": 1651.42,
+    "text": "Uuu, nó đã bị lập tỉnh viễn"
+  },
+  {
+    "start": 1651.42,
+    "end": 1654.24,
+    "text": "chưa thấy in ra, đi 1 con"
+  },
+  {
+    "start": 1654.24,
+    "end": 1662.41,
+    "text": "Ủa, làm sao nhỏ kìa, path từ từ để mình xem lại cái path decision này"
+  },
+  {
+    "start": 1662.41,
+    "end": 1670.72,
+    "text": "V bằng page 1 đúng không?"
+  },
+  {
+    "start": 1670.72,
+    "end": 1673.72,
+    "text": "If lab mà lớn hơn vòng dry thì mình sẽ return"
+  },
+  {
+    "start": 1673.72,
+    "end": 1679.03,
+    "text": "còn không thì mình sẽ phân hoạch ra là bằng partition của alabry"
+  },
+  {
+    "start": 1679.03,
+    "end": 1682.03,
+    "text": "quicksort từ đoạn bên trái đến page 1"
+  },
+  {
+    "start": 1682.03,
+    "end": 1686.06,
+    "text": "quicksort đến đoạn page 1, write"
+  },
+  {
+    "start": 1686.06,
+    "end": 1689.8,
+    "text": "đợi mình chút nhé, để mình xem xe chỗ nào"
+  },
+  {
+    "start": 1689.8,
+    "end": 1691.8,
+    "text": "rồi ok, thấy ngay rồi, cái chỗ này mình viết nhầm dữ y"
+  },
+  {
+    "start": 1691.8,
+    "end": 1693.8,
+    "text": "cái này phải là chữ y này"
+  },
+  {
+    "start": 1693.8,
+    "end": 1696.41,
+    "text": "ok, chạy nha"
+  },
+  {
+    "start": 1696.41,
+    "end": 1700.02,
+    "text": "cái khẩu thế đấy, sai mất một chữ y mà"
+  },
+  {
+    "start": 1700.02,
+    "end": 1702.02,
+    "text": "mãi thầm tìm thấy 10 này"
+  },
+  {
+    "start": 1702.02,
+    "end": 1707.52,
+    "text": "99, 1, 2, 3, 5, 4, 10"
+  },
+  {
+    "start": 1707.52,
+    "end": 1711.18,
+    "text": "Thì nó sẽ phân xếp thành 1, 2, 3, 4, 7, 9, 10"
+  },
+  {
+    "start": 1711.18,
+    "end": 1713.18,
+    "text": "Mình sẽ cho cái cỡ nó to lưu 1 tí nhé"
+  },
+  {
+    "start": 1713.18,
+    "end": 1715.18,
+    "text": "Rang lung số thôi"
+  },
+  {
+    "start": 1715.18,
+    "end": 1719.24,
+    "text": "AI, bằng, rank 101"
+  },
+  {
+    "start": 1719.24,
+    "end": 1720.24,
+    "text": "Ok, được"
+  },
+  {
+    "start": 1720.24,
+    "end": 1722.24,
+    "text": "Mình sẽ nhập là 100 số đi"
+  },
+  {
+    "start": 1722.24,
+    "end": 1730.54,
+    "text": "Thì bạn thấy là khi mình xếp xếp xong thì nó cũng sẽ tạo thành 1 cái mảng căng giật như thế này"
+  },
+  {
+    "start": 1730.54,
+    "end": 1731.54,
+    "text": "Ok không nhỉ?"
+  },
+  {
+    "start": 1731.54,
+    "end": 1737.7,
+    "text": "Đây chính là thật toán quý sọc, sử dụng cái giải thuật phân hoạch là Lomuto"
+  },
+  {
+    "start": 1737.7,
+    "end": 1739.9,
+    "text": "Cũng không có quá khó hiểu đúng không?"
+  },
+  {
+    "start": 1739.9,
+    "end": 1748.22,
+    "text": "Đúng nha, chứ các bạn, khi mà chưa học về nó thì thấy nó cao vời, xa vời, nhưng mà khi mà mình đã tiếp cận rồi thì"
+  },
+  {
+    "start": 1748.22,
+    "end": 1755.42,
+    "text": "nó cũng không hề khó đúng không, chỉ có khoảng 20 dòng cốt là có thể ca được thật toán quý sọc bằng phân hoạch Lomuto rồi"
+  },
+  {
+    "start": 1755.42,
+    "end": 1761.18,
+    "text": "Ok, vậy là các bạn đã hiểu tư tưởng của nó rồi, đúng không? Và cái cách mà mình phân hoạch cái mẻ của mình rồi"
+  },
+  {
+    "start": 1761.18,
+    "end": 1771.2,
+    "text": "Bây giờ thì mình sẽ... nhưng mà cái phân hoạch Lomuto này có một cái nhiệm một điểm yếu đấy, chính là trong truyền hợp mà cái dãy của các bạn ấy, đoạn của các bạn nó làm một cái đoạn tăng dần ấy"
+  },
+  {
+    "start": 1771.2,
+    "end": 1784.24,
+    "text": "Thì cái thằng này đã swap rất là nhiều. Nice swap nó rất là nhiều. Ok, thành ra là nó sẽ rất tệ trong truyền hợp mà cái đoạn mà bạn cần phân hoạch ấy nó đã sắp xếp tăng dần rồi"
+  },
+  {
+    "start": 1784.24,
+    "end": 1790.38,
+    "text": "và người ta sẽ có một cái phân hoạch mà nó hiệu quả hơn so với phân hoạch của LoMoto, đó chỉ là phân hoạch"
+  },
+  {
+    "start": 1790.77,
+    "end": 1793.07,
+    "text": "gì nhỉ, đặc là horror đúng không?"
+  },
+  {
+    "start": 1793.33,
+    "end": 1796.65,
+    "text": "của ông, của tác giả của thuật toán này luôn ấy, ok?"
+  },
+  {
+    "start": 1797.68,
+    "end": 1804.08,
+    "text": "thì sau đây các bạn sẽ nhìn qua cái tư tưởng của phân hoạch của ông tác giả này nhé, các bạn thấy nó sẽ rất là hiệu quả đấy"
+  },
+  {
+    "start": 1804.34,
+    "end": 1809.2,
+    "text": "nó cũng vẫn là phân hoạch từ cái đoạn từ chỉ số lab cho tới chỉ số write, pay đến write"
+  },
+  {
+    "start": 1809.46,
+    "end": 1811.26,
+    "text": "và ở đây thì"
+  },
+  {
+    "start": 1811.5,
+    "end": 1813.56,
+    "text": "họ chọn cái chốt là cái thằng phân tử bên trái"
+  },
+  {
+    "start": 1813.56,
+    "end": 1817.46,
+    "text": "ok, chọn phần tử chốt là phần tử bên trái, là ap"
+  },
+  {
+    "start": 1817.46,
+    "end": 1822.9,
+    "text": "sau đó thì họ bắt đầu từ chi số y bằng p chứ 1, và z thì bằng write up 1"
+  },
+  {
+    "start": 1822.9,
+    "end": 1825.73,
+    "text": "ok, và họ lập"
+  },
+  {
+    "start": 1825.73,
+    "end": 1830.6,
+    "text": "chừng nào mà z còn, chừng nào mà az nó còn lớn hơn x"
+  },
+  {
+    "start": 1830.6,
+    "end": 1835.73,
+    "text": "thì người ta sẽ á giảm cái chi số z đi, và chừng nào mà az in nó còn nhỏ hơn x"
+  },
+  {
+    "start": 1835.73,
+    "end": 1841.17,
+    "text": "thì người ta sẽ tăng cái chi số y lên, và nếu mà y mà nhỏ hơn z thì người ta sẽ hoán vị 2 thằng a với az"
+  },
+  {
+    "start": 1841.17,
+    "end": 1843.65,
+    "text": "nhìn chung các bạn nhìn thế này thì nó hơi khó hiểu đúng không?"
+  },
+  {
+    "start": 1843.65,
+    "end": 1846.53,
+    "text": "Nhưng mà thực ra, cái tư tưởng của cái phân hoạch này ấy"
+  },
+  {
+    "start": 1846.53,
+    "end": 1851.73,
+    "text": "Đấy chính là nó sẽ có một cái mạng, ví dụ mình có một cái mạng như thế này"
+  },
+  {
+    "start": 1851.73,
+    "end": 1856.16,
+    "text": "Nó vẫn là phân hoạch nhé"
+  },
+  {
+    "start": 1856.16,
+    "end": 1863.18,
+    "text": "Tức là nó vẫn sẽ chia một cái nửa bên trái thì nhỏ hơn là bằng cái vị trí một cái phần tử chốt nào đó vào cái đoạn bây ph lớn hơn"
+  },
+  {
+    "start": 1863.18,
+    "end": 1867.12,
+    "text": "Ok, ví dụ bạn có một cái mạng như thế này đấy chính là"
+  },
+  {
+    "start": 1867.12,
+    "end": 1870.52,
+    "text": "Đoạn nào nhỉ?"
+  },
+  {
+    "start": 1870.52,
+    "end": 1880.57,
+    "text": "Mình sẽ chọn là 8 đi, 2, 3, 4, 9, 5, 1"
+  },
+  {
+    "start": 1880.57,
+    "end": 1886.31,
+    "text": "Ok, và người ta sẽ chọn cái chốt là cái phần tử, có nhiều cách chọn chốt lắm"
+  },
+  {
+    "start": 1886.31,
+    "end": 1891.31,
+    "text": "Người thì chọn chốt là phần tử đầu tiên, người thì chọn chốt ở giữa, người thì chọn chốt cuối cùng"
+  },
+  {
+    "start": 1891.31,
+    "end": 1894.31,
+    "text": "Người thì chọn chốt là vị trí gỗ nhiên, ok"
+  },
+  {
+    "start": 1894.31,
+    "end": 1897.31,
+    "text": "Ở đây mình sẽ chọn chốt là cái phần tử đầu tiên này là 8 nhá"
+  },
+  {
+    "start": 1897.31,
+    "end": 1901.31,
+    "text": "Đấy, thì cái tư tưởng của phân hoạch này nè, phân hoạch ho này"
+  },
+  {
+    "start": 1901.31,
+    "end": 1906.2,
+    "text": "Thì ông ấy sẽ tìm ra một cái cặp là cặp nghịt thế"
+  },
+  {
+    "start": 1906.2,
+    "end": 1910.43,
+    "text": "OK, inversion mà mình đã từng hướng dẫn ở trong thời toán mật xóa cái"
+  },
+  {
+    "start": 1910.43,
+    "end": 1914.43,
+    "text": "Để người ta sẽ, cái cặp ngực thế ở đây chính là một cái cặp mà"
+  },
+  {
+    "start": 1914.43,
+    "end": 1919.43,
+    "text": "cái phần tửa bên trái á, nó lại lớn hơn, nó lại lớn hơn chốt, lớn hơn bằng chốt"
+  },
+  {
+    "start": 1919.43,
+    "end": 1924.43,
+    "text": "Và cái phần tửa bên phải á, thì nó lại nhỏ hơn hoặc bằng chốt"
+  },
+  {
+    "start": 1924.43,
+    "end": 1929.15,
+    "text": "Ví dụ như trong trường hợp này bạn muốn phân hoạch mà cái thằng 8 này được đúng giữa, đúng không?"
+  },
+  {
+    "start": 1929.15,
+    "end": 1933.59,
+    "text": "Thì những cái thằng mà đứng bên trái nó nhỏ hơn, còn những thằng bên phải lớn hơn, đúng không?"
+  },
+  {
+    "start": 1933.59,
+    "end": 1937.63,
+    "text": "Thì nó dùng 1 cái chỉ số i chạy từ đây, và 1 cái chỉ số dì chạy từ cuối này này."
+  },
+  {
+    "start": 1937.63,
+    "end": 1940.31,
+    "text": "Và ông ấy cứ dịch dần, dịch dần."
+  },
+  {
+    "start": 1940.31,
+    "end": 1948.16,
+    "text": "Khi nào mà ông tìm thấy 1 cái chỉ số ở bên trái này, mà nó lớn hơn hoặc bằng cái chốt của bạn, thì ông ấy sẽ dừng."
+  },
+  {
+    "start": 1948.16,
+    "end": 1955.1,
+    "text": "Đã xử như trong trình hợp này là ông ấy tìm thấy một cái thằng tám là cái thằng là bên trái này, bắt đầu từ bên trái mà nó lớn hơn trốt thì ông sẽ dừng"
+  },
+  {
+    "start": 1955.1,
+    "end": 1963.36,
+    "text": "và ông ấy sẽ tìm được một cái phần tử mà đứng ở bên phải mà nhỏ hơn trốt, nhỏ hơn loang trốt thì ông ấy sẽ dừng, trong trình hợp này là ông ấy sẽ tìm thấy một bột đây này"
+  },
+  {
+    "start": 1963.36,
+    "end": 1967.64,
+    "text": "thì khi đó cái cặp 81 này, mọi người ta gọi là một cái cặp nghịch thế trong trình hợp này"
+  },
+  {
+    "start": 1967.64,
+    "end": 1973.04,
+    "text": "bởi vì là nếu mà mình phân hoạch đúng ra thì thằng 1 này nó phải nằm ở bên trái, thì 8 đúng không?"
+  },
+  {
+    "start": 1973.04,
+    "end": 1975.4,
+    "text": "Thế còn thằng 8 này phòng 5 ở bên phải đúng không?"
+  },
+  {
+    "start": 1975.4,
+    "end": 1978.2,
+    "text": "Thì khi đó nó sẽ tiến hành nó swap hai thằng này với nhau luôn"
+  },
+  {
+    "start": 1978.2,
+    "end": 1982.0,
+    "text": "Thế là ông này thì thành một của ông này hình tám ấy, kiểu như thế"
+  },
+  {
+    "start": 1982.0,
+    "end": 1986.76,
+    "text": "Thế thì người ta gọi là ông ấy tìm cái cặp hình thế như thế, nó rất là hiệu quả"
+  },
+  {
+    "start": 1986.76,
+    "end": 1990.28,
+    "text": "Thì ở đây người ta sẽ cho thằng này là thành một của ông này hình tám"
+  },
+  {
+    "start": 1990.28,
+    "end": 1995.0,
+    "text": "Sau tiếp tục người ta lại xét các cái chỉ số, các cái cặp tiếp theo, mà người ta cắt càng i lên"
+  },
+  {
+    "start": 1995.0,
+    "end": 1996.64,
+    "text": "Thằng này là hai nhá"
+  },
+  {
+    "start": 1996.64,
+    "end": 1999.52,
+    "text": "Hai thì nó nhỏ hơn 8 rồi, bỏ qua"
+  },
+  {
+    "start": 1999.52,
+    "end": 2001.52,
+    "text": "Bởi vì nó đã đúng vị trí rồi, đúng không?"
+  },
+  {
+    "start": 2001.52,
+    "end": 2003.96,
+    "text": "thì tiếp tục lại đi tìm thằng ba này xem coi là"
+  },
+  {
+    "start": 2003.96,
+    "end": 2007.32,
+    "text": "xem là có phải là ông này lớn hơn bằng táo hơn để tôi còn hoán vị"
+  },
+  {
+    "start": 2007.32,
+    "end": 2009.28,
+    "text": "nhưng ông ba này cũng nhỏ hơn bỏ qua"
+  },
+  {
+    "start": 2009.28,
+    "end": 2011.0,
+    "text": "ông bốn này cũng nhỏ hơn bỏ qua"
+  },
+  {
+    "start": 2011.0,
+    "end": 2014.64,
+    "text": "ông chín này ở đây tôi lại tìm thấy một cái ông má lớn hơn và bằng chốt"
+  },
+  {
+    "start": 2014.64,
+    "end": 2015.6,
+    "text": "đấy"
+  },
+  {
+    "start": 2015.6,
+    "end": 2017.48,
+    "text": "thì ông cứ đứng đây đã để tôi tìm"
+  },
+  {
+    "start": 2017.48,
+    "end": 2019.72,
+    "text": "ở đây mình dùng vào chỉ số i nhé"
+  },
+  {
+    "start": 2019.72,
+    "end": 2020.48,
+    "text": "đúng không nhỉ?"
+  },
+  {
+    "start": 2020.48,
+    "end": 2023.96,
+    "text": "thế còn cái chỉ số mà chạy từ bên phải về thì mình dùng là chỉ số g"
+  },
+  {
+    "start": 2023.96,
+    "end": 2028.95,
+    "text": "g thì bây giờ nó sẽ nhảy, đúng để nó set xong thằng này rồi thì bây giờ g nó sẽ nhảy trong đây"
+  },
+  {
+    "start": 2028.95,
+    "end": 2030.11,
+    "text": "thì nói lại sao?"
+  },
+  {
+    "start": 2030.11,
+    "end": 2032.11,
+    "text": "Nó sẽ lại tìm thấy một cái thằng mà"
+  },
+  {
+    "start": 2032.11,
+    "end": 2033.63,
+    "text": "Nó là thằng Nam"
+  },
+  {
+    "start": 2033.63,
+    "end": 2036.43,
+    "text": "Thằng Nam này nhé, nó nhỏ hơn chốt, nó nhỏ hơn bằng chốt"
+  },
+  {
+    "start": 2036.43,
+    "end": 2038.94,
+    "text": "Thì khi nó phải nằm ở bên trái chốt đúng không?"
+  },
+  {
+    "start": 2038.94,
+    "end": 2042.06,
+    "text": "Thì bây giờ cái cặp nghịch thế của mình, nó chính là cái cặp 9 Nam này nè"
+  },
+  {
+    "start": 2042.06,
+    "end": 2044.06,
+    "text": "Một thằng thì nằm ở bên trái"
+  },
+  {
+    "start": 2044.06,
+    "end": 2047.74,
+    "text": "Mà lớn hơn là một thằng là nằm ở bên trái, mà lớn hơn là bằng chốt"
+  },
+  {
+    "start": 2047.74,
+    "end": 2049.9,
+    "text": "Còn một cái thằng nằm bên phải thì lại nhỏ hơn là bằng chốt"
+  },
+  {
+    "start": 2049.9,
+    "end": 2052.7,
+    "text": "Thì nó sẽ tiến hành hoán vị 2 cái thằng 9 với 5 này với nhau"
+  },
+  {
+    "start": 2052.7,
+    "end": 2055.18,
+    "text": "Thì nó sẽ tạo thành cái cặp đấy"
+  },
+  {
+    "start": 2055.18,
+    "end": 2057.18,
+    "text": "5 cái này là 9, đấy"
+  },
+  {
+    "start": 2057.18,
+    "end": 2060.94,
+    "text": "OK"
+  },
+  {
+    "start": 2060.94,
+    "end": 2068.42,
+    "text": "và trường nèo mà cái chỉ số IVG này nó gặp nhau ấy thì các bạn có thể dừng rồi thì khi đó cái phân hoạch của bạn nó đã xong rồi đấy"
+  },
+  {
+    "start": 2068.42,
+    "end": 2075.48,
+    "text": "Ok, thì khi đó nó cũng sẽ phân hoạch ra một cái đoạn mà nửa bên trái và nửa bên phải đúng không?"
+  },
+  {
+    "start": 2075.48,
+    "end": 2083.08,
+    "text": "Trong trường hợp này thì đây, nửa bên trái của bạn sẽ xét ra cái đoạn này, đúng nhỉ"
+  },
+  {
+    "start": 2083.08,
+    "end": 2087.08,
+    "text": "và còn nửa bên phải của bạn nó sẽ là cái đoạn này, và tiếp tục bạn gọi địa quy đến như thế nào"
+  },
+  {
+    "start": 2087.08,
+    "end": 2092.08,
+    "text": "2 nửa bên trái và nửa bên phải tự tự như là ở toàn quick sort, nhưng mà cái phân hoạch của nó tự tưởng nó khác thôi"
+  },
+  {
+    "start": 2092.08,
+    "end": 2095.76,
+    "text": "Vậy thì bây giờ mình sẽ lấy một cái mạng mà nó dài hơn một chút nhé"
+  },
+  {
+    "start": 2095.76,
+    "end": 2102.76,
+    "text": "Sau đó mình sẽ phân hoạch cho các bạn xem là giả sử từ cái mạng bàn đầu thì nó sẽ phân hoạch như thế nào"
+  },
+  {
+    "start": 2102.76,
+    "end": 2109.43,
+    "text": "Thì từ mình có một cái mạng như thế nào"
+  },
+  {
+    "start": 2109.43,
+    "end": 2115.73,
+    "text": "Giả sử như mình có một cái, mình thường vẹn cái này nhé"
+  },
+  {
+    "start": 2115.73,
+    "end": 2132.3,
+    "text": "Giả sử như mình có một cái mạng đấy chính là mạng gì nhỉ"
+  },
+  {
+    "start": 2132.3,
+    "end": 2138.18,
+    "text": "48, 48"
+  },
+  {
+    "start": 2138.18,
+    "end": 2161.78,
+    "text": "1, 21, Audit h curling-t Being"
+  },
+  {
+    "start": 2163.62,
+    "end": 2167.34,
+    "text": "2"
+  },
+  {
+    "start": 2167.34,
+    "end": 2168.84,
+    "text": "v니까"
+  },
+  {
+    "start": 2168.84,
+    "end": 2171.02,
+    "text": "phân hoạch hồ"
+  },
+  {
+    "start": 2171.02,
+    "end": 2176.02,
+    "text": "hoạt động 12"
+  },
+  {
+    "start": 2176.02,
+    "end": 2179.9,
+    "text": "Rồi, bây giờ người ta sẽ dùng một cái chỉ số y chạy từ bên trái"
+  },
+  {
+    "start": 2179.9,
+    "end": 2182.22,
+    "text": "Đúng không? Và một cái chỉ số y chạy từ bên phải"
+  },
+  {
+    "start": 2182.22,
+    "end": 2183.9,
+    "text": "Đây, y đang nằm ở đây"
+  },
+  {
+    "start": 2183.9,
+    "end": 2185.3,
+    "text": "y đang nằm ở đây"
+  },
+  {
+    "start": 2185.3,
+    "end": 2186.02,
+    "text": "Đấy"
+  },
+  {
+    "start": 2186.02,
+    "end": 2189.46,
+    "text": "Và người ta có một cái điều kiện lập như thế này, đấy là trừng nào ấy"
+  },
+  {
+    "start": 2189.46,
+    "end": 2192.57,
+    "text": "y, ai"
+  },
+  {
+    "start": 2192.57,
+    "end": 2195.13,
+    "text": "Nó còn nhỏ hơn chốt, ở đây mình đặt là"
+  },
+  {
+    "start": 2195.13,
+    "end": 2199.57,
+    "text": "Vivo, ok, thì người ta sẽ tăng cái chỉ số y lên lên"
+  },
+  {
+    "start": 2199.57,
+    "end": 2203.26,
+    "text": "Điều này có nghĩa là gì?"
+  },
+  {
+    "start": 2203.26,
+    "end": 2206.1,
+    "text": "Và người ta có một cái vòng form nữa, đây chính là y"
+  },
+  {
+    "start": 2206.1,
+    "end": 2212.19,
+    "text": "Azi, lớn hơn, chỗ này là nhỏ hơn chứ nhỉ, nhỏ hơn nhé"
+  },
+  {
+    "start": 2212.19,
+    "end": 2215.19,
+    "text": "Đấy là y ai nhỏ hơn tai vọt thì mình sẽ tăng y"
+  },
+  {
+    "start": 2215.19,
+    "end": 2225.41,
+    "text": "Còn y ai z lớn hơn tai vọt thì mình sẽ, mình hay quên gọi là tai vọt, nó phải là pi vọt, cái gì đấy"
+  },
+  {
+    "start": 2225.41,
+    "end": 2231.41,
+    "text": "Cái ý nghĩa của cái vòng lập y này và cái ý nghĩa của vòng lập y này, cái vòng lập y trên này này thực chất ý nghĩa của là gì"
+  },
+  {
+    "start": 2231.41,
+    "end": 2236.41,
+    "text": "Cái vòng lập y này trên này nó sẽ dừng khi nào nhỉ, nó sẽ dừng khi ai lớn hơn hoặc bằng cái chốt"
+  },
+  {
+    "start": 2267.5,
+    "end": 2272.78,
+    "text": "nó sẽ tìm cái vị trí vụa phần tứa má, az của mình, nhỏ hơn vào bằng chốt"
+  },
+  {
+    "start": 2272.78,
+    "end": 2278.56,
+    "text": "Thành ra là bạn thấy cái điều kiện lặp là gì nhỉ, chừng nào mà i nhỏ hơn bài vọt"
+  },
+  {
+    "start": 2278.56,
+    "end": 2282.84,
+    "text": "tức là nó đã đúng vị trí rồi, cái thằng ai đấy đúng vị trí rồi, thôi tôi bỏ qua"
+  },
+  {
+    "start": 2282.84,
+    "end": 2287.08,
+    "text": "bởi vì nó nằm bên trái mà, thằng i nó đại diện cho các phần tứa đứng chạy từ bên trái"
+  },
+  {
+    "start": 2287.08,
+    "end": 2292.96,
+    "text": "tương tự như vậy, ngoài az lớn bài vọt, tức là ok, ông đã lớn hơn rồi đúng không, tôi cũng bỏ qua ông"
+  },
+  {
+    "start": 2292.96,
+    "end": 2294.96,
+    "text": "bởi vì ông đúng vị trí rồi"
+  },
+  {
+    "start": 2294.96,
+    "end": 2297.96,
+    "text": "Vậy thì sau 2 cái vòng lập ngoài này này"
+  },
+  {
+    "start": 2297.96,
+    "end": 2300.96,
+    "text": "thì nó có thể tìm ra được 1 cái cặp nghịch thế"
+  },
+  {
+    "start": 2300.96,
+    "end": 2304.96,
+    "text": "tức là cái cặp mà cái phần tử nó nằm ở bên trái, là thằng AI"
+  },
+  {
+    "start": 2304.96,
+    "end": 2306.96,
+    "text": "nó lại lớn hơn hoặc bằng chốt"
+  },
+  {
+    "start": 2306.96,
+    "end": 2309.96,
+    "text": "còn 1 cái thằng nằm ở bên phải, nó lại nhỏ hơn là bằng chốt"
+  },
+  {
+    "start": 2309.96,
+    "end": 2312.96,
+    "text": "thì khi đó mình sẽ hoán vị 2 thằng này với nhau để nó về đúng vị trí"
+  },
+  {
+    "start": 2312.96,
+    "end": 2314.96,
+    "text": "OK không nhỉ?"
+  },
+  {
+    "start": 2314.96,
+    "end": 2316.96,
+    "text": "Trong trường hợp này cái chốt của mình là 4 nhé"
+  },
+  {
+    "start": 2316.96,
+    "end": 2318.96,
+    "text": "OK không nhỉ? cái chốt của mình là 4"
+  },
+  {
+    "start": 2318.96,
+    "end": 2323.66,
+    "text": "chờ, vậy thì cái thật toán nó làm như thế này này"
+  },
+  {
+    "start": 2323.66,
+    "end": 2327.98,
+    "text": "Nó rượt qua 4, thì cái màu lập y này, y ai nhỏ hơn vai vọt nó sẽ dừng ngay"
+  },
+  {
+    "start": 2327.98,
+    "end": 2330.14,
+    "text": "và khi đó cái chỉ số y của bạn nó sẽ là thằng này"
+  },
+  {
+    "start": 2330.14,
+    "end": 2333.58,
+    "text": "Đó nghĩa là y nó bắt đầu từ chỉ số này này, còn y nó bắt đầu từ chỉ số cuối này này"
+  },
+  {
+    "start": 2333.58,
+    "end": 2335.26,
+    "text": "Đấy, ok"
+  },
+  {
+    "start": 2335.26,
+    "end": 2341.66,
+    "text": "Thì khi mà y nó nhảy lên thằng 4 này này thì nó kiểm tra cái điều kiện lập là y ai nhỏ hơn vai vọt nó bị sai thì nó sẽ dừng ngay đó"
+  },
+  {
+    "start": 2341.66,
+    "end": 2345.5,
+    "text": "và khi đó cái thằng ai của bạn mà bây giờ đang tìm năng để hoán vị nó chính là thằng 4 như này"
+  },
+  {
+    "start": 2345.5,
+    "end": 2348.06,
+    "text": "là cái thằng mà lớn hơn rồi bằng vai vọt, ok"
+  },
+  {
+    "start": 2348.06,
+    "end": 2351.74,
+    "text": "Thì khi đó nó tiếp tục nó đi tìm cái thằng ở bên phải là thằng ai dì"
+  },
+  {
+    "start": 2351.74,
+    "end": 2357.76,
+    "text": "Thì thằng hai này này, nó lại gặp ngay thằng hai này là một cái thằng mà nhỏ hơn mà bằng Python"
+  },
+  {
+    "start": 2357.76,
+    "end": 2364.76,
+    "text": "Thì khi đó cái cặp 4 này này và cặp 2 này này, làm một cặp nhịt thế và nó sẽ tiến hành hoán vị cho nhau để hai thằng này về đúng vị trí"
+  },
+  {
+    "start": 2364.76,
+    "end": 2367.76,
+    "text": "Thì khi đó ông này trở thành 2 và ông này trở thành 4"
+  },
+  {
+    "start": 2367.76,
+    "end": 2372.46,
+    "text": "Được không nhỉ? Đấy, thế là xâm một cái cặp nhịt thế"
+  },
+  {
+    "start": 2372.46,
+    "end": 2375.46,
+    "text": "Thì tiếp tục i nó sẽ tăng cái chi số i này lên, cái bằng lột y này này"
+  },
+  {
+    "start": 2375.46,
+    "end": 2380.46,
+    "text": "Thì y i i nhỏ hơn bay bỏt đúng không? Ở đây nó có một cái bằng lập là y 2 này này"
+  },
+  {
+    "start": 2380.46,
+    "end": 2386.9,
+    "text": "Ok, tức là nó lập vĩnh viễn ấy, nó cứ tìm cái cặp iz đến trường nào mà i còn nhỏ hơn zi cơ?"
+  },
+  {
+    "start": 2386.9,
+    "end": 2393.4,
+    "text": "Ok, ra trong trường hợp này, i với zi của các bạn, i nó có nhỏ hơn zi, zi ở tận đây còn i ở đây, thì vòng lập qua nó vẫn cứ lập nhé."
+  },
+  {
+    "start": 2393.4,
+    "end": 2396.9,
+    "text": "Ok, và nó sẽ thực hiện cái 2 cái công tác này để tìm cái cặp nhỉ thế."
+  },
+  {
+    "start": 2396.9,
+    "end": 2403.9,
+    "text": "Thì 8 này này, có nhỏ hơn pi bọt không? Không, thành ra là i cũng dừng ngay ở đó và cái tổng tác này lại là ông tiềm năng để hoán vị rồi này."
+  },
+  {
+    "start": 2403.9,
+    "end": 2406.4,
+    "text": "Thì nó tìm thằng zi, thằng az bên phải."
+  },
+  {
+    "start": 2406.4,
+    "end": 2411.4,
+    "text": "6, ok, bỏ qua, bởi vì sao? bởi vì 6 lớn hơn chốt rồi, đây nè"
+  },
+  {
+    "start": 2411.4,
+    "end": 2414.66,
+    "text": "thì g nó sẽ giảm, g nó sẽ giảm sang đây"
+  },
+  {
+    "start": 2414.66,
+    "end": 2417.66,
+    "text": "đúng vậy, xin lỗi, g 16 đúng không? g bây giờ sẽ giảm sang đây"
+  },
+  {
+    "start": 2417.66,
+    "end": 2422.66,
+    "text": "8 đúng không? 8 lại lớn hơn chốt rồi, thì cũng bỏ qua bởi vì 2 cái thằng 8, 6 này nó đúng vị trí rồi"
+  },
+  {
+    "start": 2422.66,
+    "end": 2425.66,
+    "text": "nó nằm bên phải chốt rồi, 4 này này, ok"
+  },
+  {
+    "start": 2425.66,
+    "end": 2429.66,
+    "text": "thì bây giờ g nó dày sang đây, đến 3, thì cái điều kiện lập này qua này nó xai"
+  },
+  {
+    "start": 2429.66,
+    "end": 2431.66,
+    "text": "bởi vì khi đó thằng 3 này nó nhỏ hơn nó bằng chốt mà"
+  },
+  {
+    "start": 2431.66,
+    "end": 2435.66,
+    "text": "thì khi bây giờ lại phải công việc thôi, để làm hãn vi ai với ai g, đúng không nhỉ?"
+  },
+  {
+    "start": 2435.66,
+    "end": 2439.06,
+    "text": "Này tháng 3, ngày tháng 8, ok, hôm nay tháng tháng"
+  },
+  {
+    "start": 2439.06,
+    "end": 2440.62,
+    "text": "Hôm nay tháng 3"
+  },
+  {
+    "start": 2440.62,
+    "end": 2444.22,
+    "text": "Đấy bạn thấy là nó cứ làm việc như thế"
+  },
+  {
+    "start": 2444.22,
+    "end": 2446.48,
+    "text": "Này tháng đúng không?"
+  },
+  {
+    "start": 2446.48,
+    "end": 2451.26,
+    "text": "Đấy, và tiếp theo thôi, đứng nhỏ, i vẫn nhỏ hơn gì thì vẫn là, nhá"
+  },
+  {
+    "start": 2451.26,
+    "end": 2453.54,
+    "text": "I đã tăng cái chỉ số lên đây, 4"
+  },
+  {
+    "start": 2453.54,
+    "end": 2456.32,
+    "text": "Có nhỏ hơn bài vọt đó không? Không, đúng không?"
+  },
+  {
+    "start": 2456.32,
+    "end": 2459.2,
+    "text": "Thì khi đó i cũng sẽ rừng luôn và khi đó i nằm ngay ở đây"
+  },
+  {
+    "start": 2459.2,
+    "end": 2461.58,
+    "text": "Tìm được ngay cái phần tử này rồi này"
+  },
+  {
+    "start": 2461.58,
+    "end": 2463.98,
+    "text": "Thì gì đi tìm gì, mode"
+  },
+  {
+    "start": 2463.98,
+    "end": 2467.74,
+    "text": "Ai y lớn hơn bài vọt? Ai gì lớn hơn bài vọt?"
+  },
+  {
+    "start": 2467.74,
+    "end": 2471.86,
+    "text": "G nó sẽ ở đây đúng không? Bây giờ nó sẽ ở đây đúng không?"
+  },
+  {
+    "start": 2471.86,
+    "end": 2476.3,
+    "text": "Cái này không đúng. Tức là thằng 1 này nó không đúng vị trí này, nó không nằm búng vị trí."
+  },
+  {
+    "start": 2476.3,
+    "end": 2479.62,
+    "text": "Thì nó sẽ tiến hành hoán vị 2 cái thằng hiện tại là thằng 1 với thằng 1 này."
+  },
+  {
+    "start": 2479.62,
+    "end": 2482.5,
+    "text": "Vậy thì ông này thành 4, còn ông này thì thành 1."
+  },
+  {
+    "start": 2482.5,
+    "end": 2489.85,
+    "text": "Được không nhỉ? I vẫn nhỏ hơn G thì tiếp tục lại đi tìm A, I và A, G một lần nữa."
+  },
+  {
+    "start": 2489.85,
+    "end": 2492.73,
+    "text": "Y, A, I nhỏ hơn pi bọt, thằng này nhỏ hơn đúng không?"
+  },
+  {
+    "start": 2492.73,
+    "end": 2497.05,
+    "text": "OK, tăng. Sao nó nhảy sang bên này, thằng 1 này cũng nhỏ hơn đúng không? Tăng."
+  },
+  {
+    "start": 2497.05,
+    "end": 2502.55,
+    "text": "ok, nó nhảy sang thằng bốn này thì nó lớn, nó pai vọt thì nó sẽ dừng vậy thì khi đó i nó nhảy sang đây"
+  },
+  {
+    "start": 2502.55,
+    "end": 2507.55,
+    "text": "ok, sẽ còn vòng lọc y này, az lớn hơn pai vọt, ghi trừ trừ"
+  },
+  {
+    "start": 2507.55,
+    "end": 2513.05,
+    "text": "trong trường hợp này thì cái vòng lọc y này nó không thực hiện một lần nào cả, bởi vì 4 thì nó không lớn hơn mà"
+  },
+  {
+    "start": 2513.05,
+    "end": 2517.05,
+    "text": "nó nhỏ hơn là bằng, thì khi đó 2 cái vòng lọc y này nó sẽ kết thúc"
+  },
+  {
+    "start": 2517.05,
+    "end": 2522.05,
+    "text": "nhưng khi đó nhá, các bạn thấy là gì nhỉ, cái thằng i với thằng ghi của mình bây giờ nó đúng, nó chùng nhau này này"
+  },
+  {
+    "start": 2522.05,
+    "end": 2526.59,
+    "text": "đấy, thằng i với thằng ghi này nó chùng nhau"
+  },
+  {
+    "start": 2526.59,
+    "end": 2532.18,
+    "text": "Thì khi đó có nghĩa là bạn đã phân hoạch xong rồi và bạn có thể return bởi vị trí của thằng G này nè"
+  },
+  {
+    "start": 2532.18,
+    "end": 2539.9,
+    "text": "Ok, tức là mình sẽ không cần phải xét phân hoạch nữa, vòng lập y của mình khi đó nó sẽ kết thúc"
+  },
+  {
+    "start": 2539.9,
+    "end": 2546.1,
+    "text": "Ok, bao giờ mà nó tìm thấy được 1 cái cặp ai và ai G mà cái thằng i bên trái nó còn nhỏ hơn cơ,"
+  },
+  {
+    "start": 2546.1,
+    "end": 2548.1,
+    "text": "thằng i nó phải nhỏ hơn thằng G cơ"
+  },
+  {
+    "start": 2548.1,
+    "end": 2552.16,
+    "text": "Tức là 2 cái phần tử này nó là 2 cái phần tử mà nó khác nhau hoàn toàn ấy"
+  },
+  {
+    "start": 2552.16,
+    "end": 2554.16,
+    "text": "Mình phát hiện là phân hoạch xong và mình sẽ return bởi cái chí số ghi này"
+  },
+  {
+    "start": 2554.16,
+    "end": 2562.16,
+    "text": "Thì khi đó, cái lời gọi đệ quy của mình tiếp theo, nó lại tiếp tục gọi đệ quy đến cái đoạn ở bên gì nhỉ?"
+  },
+  {
+    "start": 2562.16,
+    "end": 2568.44,
+    "text": "Có hình như là mình biết nó bị sai hay sao nhỉ? Có bị sai chỗ nào không nhỉ?"
+  },
+  {
+    "start": 2568.44,
+    "end": 2572.88,
+    "text": "2, 1, 3, 1, 1, 4"
+  },
+  {
+    "start": 2572.88,
+    "end": 2580.74,
+    "text": "Cái mạng ban đầu của mình là 3, 6, 1 đúng không? 2, 6, 4"
+  },
+  {
+    "start": 2580.74,
+    "end": 2590.25,
+    "text": "Cái mạng bắt đầu của mình là 3, số 1, 2, số 4"
+  },
+  {
+    "start": 2590.25,
+    "end": 2601.48,
+    "text": "Thì tiếp tục nó sẽ gọi phân hoạch đến cái đoạn ở bên trái và đoạn bên phái thì nó sẽ bắt đầu từ chỉ số y cộng 1"
+  },
+  {
+    "start": 2601.48,
+    "end": 2606.78,
+    "text": "Thế còn cái đoạn bên trái của mình thì nó sẽ nằm ở đây"
+  },
+  {
+    "start": 2606.78,
+    "end": 2608.85,
+    "text": "Ok"
+  },
+  {
+    "start": 2608.85,
+    "end": 2614.19,
+    "text": "Nó hơi khác một chút so với thật toạm Lomuto ở vị trí phân hoạch nhé"
+  },
+  {
+    "start": 2614.19,
+    "end": 2618.91,
+    "text": "Vì trí phân hoạch đối với Lomuto thì mình sẽ chia nó thành 2 cái nửa, 1 nửa bên trái và 1 nửa bên thoại luôn"
+  },
+  {
+    "start": 2618.91,
+    "end": 2626.35,
+    "text": "Thì còn trong phân hoạch của Ho thì cái nửa bên trái nó sẽ include nó sẽ gồm cả cái phần tử này"
+  },
+  {
+    "start": 2626.35,
+    "end": 2627.39,
+    "text": "Ok không nhỉ?"
+  },
+  {
+    "start": 2627.39,
+    "end": 2632.38,
+    "text": "Thì đây chính là cái phân hoạch của tác giả của cái thật toán này luôn"
+  },
+  {
+    "start": 2632.38,
+    "end": 2633.42,
+    "text": "Ok không?"
+  },
+  {
+    "start": 2633.42,
+    "end": 2636.22,
+    "text": "Vậy thì bây giờ mình sẽ đi tiến hành cao đặt cái thật toán này thôi"
+  },
+  {
+    "start": 2636.22,
+    "end": 2641.82,
+    "text": "Nói chung là mình chỉ sửa 1 tý thôi, ok, mình cai đặt lại phân hoài xa đó để mình gọi quicksort thôi, ok"
+  },
+  {
+    "start": 2641.82,
+    "end": 2643.42,
+    "text": "Đúng không nhỉ, ok"
+  },
+  {
+    "start": 2643.42,
+    "end": 2647.82,
+    "text": "Từ từ, như mình bị chỉ số gì của mình, từ từ"
+  },
+  {
+    "start": 2647.82,
+    "end": 2652.64,
+    "text": "Gì lúc nãy phải nhảy sang đây chứ nhỉ, đúng không, gì nó phải nhảy sang đây chứ"
+  },
+  {
+    "start": 2652.64,
+    "end": 2656.8,
+    "text": "Bởi vì sau khi mình hoán vị thằng 1 với thằng 1 ở chỗ này thì gì nó phải nhảy sang đây, chứ lỗi"
+  },
+  {
+    "start": 2656.8,
+    "end": 2659.52,
+    "text": "Ok, gì nó không còn ở đây mà nó nhảy ở đây"
+  },
+  {
+    "start": 2659.52,
+    "end": 2665.76,
+    "text": "Thì đó gì của bạn nó lớn hơn i rồi ấy, thì mình không có hoán vị gì nữa và mình có thể return với cái chỉ số của thằng gì này"
+  },
+  {
+    "start": 2665.76,
+    "end": 2668.08,
+    "text": "ok, chỉ số hông d này, mình xin lỗi"
+  },
+  {
+    "start": 2668.08,
+    "end": 2671.94,
+    "text": "cái này hơi nhằm một chút"
+  },
+  {
+    "start": 2671.94,
+    "end": 2677.94,
+    "text": "rồi, thế là nó đã phân hoạch xong đúng không? thì khi đó bạn sẽ gọi reducip đến cái đoạn bên trái, đúng không?"
+  },
+  {
+    "start": 2677.94,
+    "end": 2679.94,
+    "text": "sau đó là reducip đến cái đoạn bên phải"
+  },
+  {
+    "start": 2679.94,
+    "end": 2682.42,
+    "text": "ok, nó hơi khác một chút, đấy là nó sẽ..."
+  },
+  {
+    "start": 2682.42,
+    "end": 2686.9,
+    "text": "nó không phân tách ra một cái phần ở giữa, cái chốt nó không nằm ở giữa nữa"
+  },
+  {
+    "start": 2686.9,
+    "end": 2689.62,
+    "text": "mà cái phần chốt bây giờ nó sẽ thuộc vào cái đoạn bên trái đuôi"
+  },
+  {
+    "start": 2689.62,
+    "end": 2692.42,
+    "text": "từ chỉ số LED cho tới chỉ số d"
+  },
+  {
+    "start": 2692.42,
+    "end": 2697.54,
+    "text": "ok, thế còn cái đoạn bên phải thì bắt đầu từ chỉ số d cộng 1 đúng không?"
+  },
+  {
+    "start": 2697.54,
+    "end": 2699.86,
+    "text": "cho tới chỉ số đoá"
+  },
+  {
+    "start": 2699.86,
+    "end": 2701.52,
+    "text": "ok"
+  },
+  {
+    "start": 2701.52,
+    "end": 2705.46,
+    "text": "vậy thì giải thuật mà sử dụng lua mù tô nó như thế nhé"
+  },
+  {
+    "start": 2705.46,
+    "end": 2708.98,
+    "text": "ok, ảy xưa lỗi, sử dụng phân hoạch hô nó như thế nhé"
+  },
+  {
+    "start": 2708.98,
+    "end": 2711.06,
+    "text": "bây giờ mình sẽ đi vào cái đạt thật ván này thôi"
+  },
+  {
+    "start": 2711.06,
+    "end": 2713.86,
+    "text": "hy vọng là các bạn đã hiểu được cái tư tưởng của cái phân hoạch này"
+  },
+  {
+    "start": 2713.86,
+    "end": 2714.5,
+    "text": "đúng nhá"
+  },
+  {
+    "start": 2714.5,
+    "end": 2717.3,
+    "text": "cứ tìm 1 cái cặp 1 thằng ở bên trái thì"
+  },
+  {
+    "start": 2717.3,
+    "end": 2719.86,
+    "text": "thằng bên trái thì lớn hơn vai vọt, lớn hơn 1 vai vọt"
+  },
+  {
+    "start": 2719.86,
+    "end": 2721.86,
+    "text": "thằng bên phải thì nhỏ hơn 1 vai vọt"
+  },
+  {
+    "start": 2721.86,
+    "end": 2724.34,
+    "text": "thì khi đó 2 thằng là nó không đúng vị trí thì"
+  },
+  {
+    "start": 2724.34,
+    "end": 2727.14,
+    "text": "swap 2 thằng đấy với nhau thôi, ok"
+  },
+  {
+    "start": 2727.14,
+    "end": 2732.26,
+    "text": "Vậy thì mình sẽ viết phân hoạch thứ 2 như sau, đây là int partition 2"
+  },
+  {
+    "start": 2732.26,
+    "end": 2735.78,
+    "text": "nằm e có bắt đầu từ lab vào cái túa write, đúng nhỉ?"
+  },
+  {
+    "start": 2735.78,
+    "end": 2738.02,
+    "text": "Đây, mình sẽ ca đặt i hết như thế này cho các bạn xem này."
+  },
+  {
+    "start": 2738.02,
+    "end": 2740.18,
+    "text": "Mình sẽ chọn thằng chốt là cái thằng bên trái."
+  },
+  {
+    "start": 2740.18,
+    "end": 2747.98,
+    "text": "Mình sẽ đặt là pivot, vắng, hand lab, ok, sau đó mình dùng cái chỉ số i bằng lab chứ 1"
+  },
+  {
+    "start": 2747.98,
+    "end": 2754.35,
+    "text": "và chỉ số g bằng write cộng 1, ở đây mình cho chỉ số i bằng lab chứ 1 và"
+  },
+  {
+    "start": 2754.35,
+    "end": 2758.79,
+    "text": "z1, y cộng 1 để tí nữa trong vòng lập vĩnh viễn này"
+  },
+  {
+    "start": 2758.79,
+    "end": 2760.79,
+    "text": "mình sẽ sử dụng do y, ok"
+  },
+  {
+    "start": 2760.79,
+    "end": 2763.29,
+    "text": "đây mình sẽ lập là y1, ok"
+  },
+  {
+    "start": 2763.29,
+    "end": 2764.63,
+    "text": "do mình cho do"
+  },
+  {
+    "start": 2764.63,
+    "end": 2766.43,
+    "text": "mình sẽ tăng cái chỉ số y lên"
+  },
+  {
+    "start": 2766.43,
+    "end": 2769.47,
+    "text": "thì vừa, vừa, vừa, vừa hit, đấy là"
+  },
+  {
+    "start": 2769.47,
+    "end": 2772.79,
+    "text": "mình khởi tạo y bằng lep chỉ 1 thì trong vòng do này nó tăng y phát"
+  },
+  {
+    "start": 2772.79,
+    "end": 2775.83,
+    "text": "thì nó nhảy ra cái vị trí lep đầu tiên luôn, ok"
+  },
+  {
+    "start": 2775.83,
+    "end": 2777.79,
+    "text": "và cái điều kiện lập của mình đấy chính là"
+  },
+  {
+    "start": 2777.79,
+    "end": 2785.09,
+    "text": "chừng nào mà y ai đấy, nó còn nhỏ hơn, ok, nó còn nhỏ hơn ai vào, ok"
+  },
+  {
+    "start": 2785.09,
+    "end": 2790.32,
+    "text": "tức là cái thằng ai này nó đúng vị trí rồi, thì khi đó ai nó nhỏ hơn chốt, đúng không?"
+  },
+  {
+    "start": 2790.32,
+    "end": 2797.12,
+    "text": "ok, tương tự như vậy, mình sẽ đu, mình chữ chữ y, thì cái thằng y ở trên này mình khởi tạm bằng rai cộng 1 đấy"
+  },
+  {
+    "start": 2797.12,
+    "end": 2801.36,
+    "text": "thì dưới này mình chữ chữ y phát là nó nhảy sang cái chữ rai, nó sẽ xếp từ rai luôn, tương tự như"
+  },
+  {
+    "start": 2801.36,
+    "end": 2805.32,
+    "text": "chỉ số lép nó xếp từ y luôn, ok, xếp lỗi, chỉ số y nó xếp từ lép luôn"
+  },
+  {
+    "start": 2805.32,
+    "end": 2811.48,
+    "text": "và cái điều kiện lập của cái vòng đu y này là y, az, tức là cái thằng ở bên phải, nó còn lớn hơn trốt"
+  },
+  {
+    "start": 2811.48,
+    "end": 2814.48,
+    "text": "thì có nghĩa là ông ấy hông đúng vị trí rồi, đúng nhạc"
+  },
+  {
+    "start": 2814.48,
+    "end": 2819.55,
+    "text": "đấy, được chưa, ý nghĩa của 2 vòng lòng y như thế, nhá"
+  },
+  {
+    "start": 2819.55,
+    "end": 2824.64,
+    "text": "rồi và dưới này này, sau khi 2 cái vòng y này nó thực hiện xong"
+  },
+  {
+    "start": 2824.64,
+    "end": 2829.28,
+    "text": "thì mình sẽ kiểm tra nếu mà cái chỉ số y nó còn nhỏ hơn chỉ số y, tức là 2 cái thằng này"
+  },
+  {
+    "start": 2829.28,
+    "end": 2833.08,
+    "text": "vẫn có thể hoán vị cho nhau được, 1 thằng ở bên trái, 1 thằng ở bên phải"
+  },
+  {
+    "start": 2833.08,
+    "end": 2835.08,
+    "text": "thì mình sẽ swap 2 thằng này với nhau"
+  },
+  {
+    "start": 2835.08,
+    "end": 2837.56,
+    "text": "ai và azi"
+  },
+  {
+    "start": 2837.56,
+    "end": 2839.48,
+    "text": "ok"
+  },
+  {
+    "start": 2839.48,
+    "end": 2840.48,
+    "text": "còn không ít"
+  },
+  {
+    "start": 2840.48,
+    "end": 2842.48,
+    "text": "thì mình sẽ return luôn về cái chỉ số z"
+  },
+  {
+    "start": 2842.48,
+    "end": 2844.48,
+    "text": "đấy là cái vị trí của nó"
+  },
+  {
+    "start": 2844.48,
+    "end": 2846.48,
+    "text": "để mình phân hoạch cái dãi này thành 2"
+  },
+  {
+    "start": 2846.48,
+    "end": 2847.48,
+    "text": "cái đoạn này thành 2 nữa"
+  },
+  {
+    "start": 2847.48,
+    "end": 2848.48,
+    "text": "ok"
+  },
+  {
+    "start": 2848.48,
+    "end": 2851.48,
+    "text": "tức là trình nào mà i mà lớn hơn bằng z thì các bạn có thể return z luôn"
+  },
+  {
+    "start": 2851.48,
+    "end": 2852.48,
+    "text": "đúng nhỉ"
+  },
+  {
+    "start": 2852.48,
+    "end": 2854.48,
+    "text": "để về cái vị trí ấy"
+  },
+  {
+    "start": 2854.48,
+    "end": 2856.48,
+    "text": "return về cái vị trí phân hoạch luôn"
+  },
+  {
+    "start": 2856.48,
+    "end": 2859.48,
+    "text": "và bạn thấy là nếu mà trong trường hợp cái ip này nó xảy ra này"
+  },
+  {
+    "start": 2859.48,
+    "end": 2861.48,
+    "text": "cái ip này nó xảy ra thì quay trở lại vào lập qua này"
+  },
+  {
+    "start": 2861.48,
+    "end": 2863.48,
+    "text": "cái đu qua này nó rất hay"
+  },
+  {
+    "start": 2863.48,
+    "end": 2865.48,
+    "text": "bởi vì khi nó tự khắc nó tăng cái chỉ số i lên một lần"
+  },
+  {
+    "start": 2865.48,
+    "end": 2866.86,
+    "text": "ID lên một lần, ai?"
+  },
+  {
+    "start": 2866.86,
+    "end": 2867.68,
+    "text": "đúng không?"
+  },
+  {
+    "start": 2867.68,
+    "end": 2867.96,
+    "text": "Thế còn,"
+  },
+  {
+    "start": 2867.96,
+    "end": 2870.04,
+    "text": "dk nó giảm đi một lần"
+  },
+  {
+    "start": 2870.04,
+    "end": 2873.12,
+    "text": "Thành ra cái DUY nó hay ở trong trường hợp hay là như thế"
+  },
+  {
+    "start": 2873.12,
+    "end": 2876.5,
+    "text": "nên ở đây mình mới khởi tạo I vào LF chữ 1 và DI vào Y chữ 1"
+  },
+  {
+    "start": 2876.5,
+    "end": 2879.06,
+    "text": "và nó cũng tiện, trong lòng vàng lạc vịn viễn này"
+  },
+  {
+    "start": 2879.06,
+    "end": 2883.84,
+    "text": "Thức khi mà bạn swap I và I xong, thì quay trở lại vào lòng Y thì nó sẽ tìm vị trí"
+  },
+  {
+    "start": 2883.84,
+    "end": 2888.12,
+    "text": "I và I mới thì tựoster nó tăng I và nó giảm D để đứng nhảy sang vị trí mới luôn"
+  },
+  {
+    "start": 2888.12,
+    "end": 2888.84,
+    "text": "OK không nhỉ?"
+  },
+  {
+    "start": 2888.84,
+    "end": 2892.64,
+    "text": "còn không bạn dùng vào lòng Y thì ở chỗ Y bạn là phải tăng I và giảm D lên"
+  },
+  {
+    "start": 2892.64,
+    "end": 2893.96,
+    "text": "cũng được, không có bijang gì"
+  },
+  {
+    "start": 2893.96,
+    "end": 2894.74,
+    "text": "OK"
+  },
+  {
+    "start": 2895.58,
+    "end": 2900.58,
+    "text": "Vậy thì cái partition 2 này, bây giờ mình sẽ gọi hàm quicksort, bây giờ mình sẽ xây dựng hàm quicksort mà vẫn như thế này thôi"
+  },
+  {
+    "start": 2900.58,
+    "end": 2903.58,
+    "text": "Đây chỉ là nếu mà i lép mà lớn màng ra thì mình vượt cơ"
+  },
+  {
+    "start": 2903.58,
+    "end": 2905.58,
+    "text": "Đây chỉ là cái điều kiện dừng của cái quicksort này"
+  },
+  {
+    "start": 2905.58,
+    "end": 2912.06,
+    "text": "Còn không thì bạn sẽ dùng p bằng partition 2 của a, left và right"
+  },
+  {
+    "start": 2912.06,
+    "end": 2918.48,
+    "text": "Sau đó thì mình sẽ quicksort, mình sẽ gọi để quy đến đoạn bên trái, quicksort"
+  },
+  {
+    "start": 2918.48,
+    "end": 2921.48,
+    "text": "Đấy là a, left và p, ok"
+  },
+  {
+    "start": 2921.48,
+    "end": 2926.4,
+    "text": "and quicksort, a, p, 1, y"
+  },
+  {
+    "start": 2926.4,
+    "end": 2931.83,
+    "text": "Thế thôi, cái này nó hơi khác một chút nhé, đấy chính là khi mà bạn sử dụng phân hoạch lô mô tô ấy"
+  },
+  {
+    "start": 2931.83,
+    "end": 2937.72,
+    "text": "thì mình sẽ gọi quicksort đến cái đoạn bên trái là từ left cho từ p, chứ 1"
+  },
+  {
+    "start": 2937.72,
+    "end": 2946.12,
+    "text": "OK, cái còn trong trường hợp này thì mình sẽ gọi từ a, left cho từ p, cái còn được bị ảnh phải là từ p, 1 cho từ y"
+  },
+  {
+    "start": 2946.12,
+    "end": 2951.32,
+    "text": "OK, bạn nào mà chỗ này gọi là p, chứ 1 nó sẽ bị sai đấy nhé"
+  },
+  {
+    "start": 2951.32,
+    "end": 2955.76,
+    "text": "Ok, ví dụ như trong trình hợp này, mình return z đúng không? là cái vị trí của thằng P đấy"
+  },
+  {
+    "start": 2955.76,
+    "end": 2959.16,
+    "text": "Thì khi đó bạn sẽ phải gọi cái đoạn con bên trái này, cái đoạn này này"
+  },
+  {
+    "start": 2959.16,
+    "end": 2961.08,
+    "text": "Đấy, 21111 thế này"
+  },
+  {
+    "start": 2961.08,
+    "end": 2963.84,
+    "text": "Ok, còn đoạn bên phái nó là cái đoạn này"
+  },
+  {
+    "start": 2963.84,
+    "end": 2967.56,
+    "text": "Nếu mà bạn gọi đến P chứ 1 thì nó sẽ bỏ mất tầm 1 này và sẽ dẫn đến sai đấy nhá"
+  },
+  {
+    "start": 2967.56,
+    "end": 2970.52,
+    "text": "Đành ra là cái thật toán quick sort này nó yêu cầu các bạn ca đặt nó"
+  },
+  {
+    "start": 2970.52,
+    "end": 2972.64,
+    "text": "Tương đối là cẩn thận và chính xác"
+  },
+  {
+    "start": 2972.64,
+    "end": 2974.68,
+    "text": "Ok, vậy thì tuy các bạn nhá"
+  },
+  {
+    "start": 2974.68,
+    "end": 2977.32,
+    "text": "Tất nhiên là phân hoạch của Ho thì nó sẽ nhanh hơn"
+  },
+  {
+    "start": 2977.32,
+    "end": 2980.04,
+    "text": "Với hiệu quả hơn thì các bạn nên sử dụng phân hoạch này"
+  },
+  {
+    "start": 2980.04,
+    "end": 2982.04,
+    "text": "Ok, nó cũng không quá khó hiểu đúng không?"
+  },
+  {
+    "start": 2982.04,
+    "end": 2983.04,
+    "text": "Đúng nhỉ?"
+  },
+  {
+    "start": 2983.04,
+    "end": 2986.34,
+    "text": "Rồi, vào trong hàm main thì mình có thể gọi quicksor, sorrow, check"
+  },
+  {
+    "start": 2986.34,
+    "end": 2990.08,
+    "text": "Ví dụ mình nhập 100 phần tử đi"
+  },
+  {
+    "start": 2990.08,
+    "end": 2997.08,
+    "text": "Ok, thì nó cũng sẽ được sắp xếp tăng dần hoặc là mình nhập 1.000 phần tử đi"
+  },
+  {
+    "start": 2997.08,
+    "end": 3002.96,
+    "text": "Thì nó cũng sẽ sắp xếp thành 1 cái mạng tăng dần như thế"
+  },
+  {
+    "start": 3002.96,
+    "end": 3004.16,
+    "text": "Ok không nhỉ?"
+  },
+  {
+    "start": 3004.16,
+    "end": 3007.46,
+    "text": "Giả sứ nhé, bạn mà chỗ này bạn gọi mà P, chứ 1 nhé"
+  },
+  {
+    "start": 3007.46,
+    "end": 3008.96,
+    "text": "Nó sẽ bị sai đó"
+  },
+  {
+    "start": 3008.96,
+    "end": 3013.46,
+    "text": "Mình nhập 10 đó"
+  },
+  {
+    "start": 3013.46,
+    "end": 3017.65,
+    "text": "Đấy, bạn thấy nó sẽ bị sai này, 1, 6, 3 này, 1, 4, 5 này"
+  },
+  {
+    "start": 3017.65,
+    "end": 3019.65,
+    "text": "Nó không còn là sắp xếp tăng dần đâu"
+  },
+  {
+    "start": 3019.65,
+    "end": 3022.65,
+    "text": "Đấy, thành ra là nó chỉ cần sai một cái chỗ này thôi"
+  },
+  {
+    "start": 3022.65,
+    "end": 3025.65,
+    "text": "Rất là nhỏ như thế này thôi, là các bạn có thể làm cột toán ăn vị xa"
+  },
+  {
+    "start": 3025.65,
+    "end": 3032.74,
+    "text": "Nó yêu cầu cà đặt rất là chính xác, đúng không? Mới thẳng... Quyết sọc với thẳng một sọc ấy là bạn phải yêu cầu cà đặt rất là chính xác"
+  },
+  {
+    "start": 3032.74,
+    "end": 3033.74,
+    "text": "Ok"
+  },
+  {
+    "start": 3033.74,
+    "end": 3037.81,
+    "text": "Vậy thì mình đã cung cấp xong cho các bạn cái kiến thức về thật toán Quyết sọc"
+  },
+  {
+    "start": 3037.81,
+    "end": 3043.81,
+    "text": "Vậy hy vọng các bạn có thể cà đặt nó một cách thoải mái và hiểu nó với 2-3 vision này nó hoạt động như thế này"
+  },
+  {
+    "start": 3043.81,
+    "end": 3045.81,
+    "text": "Đúng nhau, ok"
+  },
+  {
+    "start": 3045.81,
+    "end": 3052.21,
+    "text": "Vì còn về tư tưởng của nó, tất nhiên là bây giờ các bạn có thể sử dụng suy viện std là để sử dụng ạm soft rồi"
+  },
+  {
+    "start": 3052.21,
+    "end": 3055.81,
+    "text": "Nhưng mà cái việc mà các bạn hiểu được tư tưởng của toán rất là tốt, đúng không?"
+  },
+  {
+    "start": 3055.81,
+    "end": 3059.81,
+    "text": "Vì có những cái bài toán nó sẽ áp dụng các cái tư tưởng của cái thật toán quick sort này"
+  },
+  {
+    "start": 3059.81,
+    "end": 3063.81,
+    "text": "Nhưng dụ như mà sort thì nó có bài toán cao inversion nữa"
+  },
+  {
+    "start": 3063.81,
+    "end": 3068.61,
+    "text": "Ok? Thế còn quick sort này thì nó cũng sẽ có những cái bài toán mà áp dụng tư tưởng của quick sort"
+  },
+  {
+    "start": 3068.61,
+    "end": 3074.21,
+    "text": "Ok? Thế đây cũng chính là cái video cuối cùng về phần sắp xếp của mình nhé"
+  },
+  {
+    "start": 3074.21,
+    "end": 3077.85,
+    "text": "mình nghĩ là mình cung cấp cho các bạn 7 thật toán sắp xếp đúng không?"
+  },
+  {
+    "start": 3077.85,
+    "end": 3082.09,
+    "text": "đây chính là sắp xếp trộn này, sắp xếp, xe lỗi không phải trộn"
+  },
+  {
+    "start": 3082.09,
+    "end": 3087.33,
+    "text": "mà đầu tiên là sắp xếp chèn, sắp xếp trọn, sắp xếp nổi bọt, sắp xếp đến phân phối"
+  },
+  {
+    "start": 3087.33,
+    "end": 3090.77,
+    "text": "sắp xếp trộn, sắp xếp vun đống và sắp xếp quyết sọc"
+  },
+  {
+    "start": 3090.77,
+    "end": 3092.53,
+    "text": "nó còn vài thật toán sắp xếp nữa"
+  },
+  {
+    "start": 3092.53,
+    "end": 3097.85,
+    "text": "nhưng mà mình nghĩ là những cái thật toán sắp xếp này tư tưởng của nó hay và nó cũng quan trọng nhất"
+  },
+  {
+    "start": 3097.85,
+    "end": 3102.19,
+    "text": "thì mình sẽ hướng dẫn những thật toán đó để cho các bạn có thể nắm bắt được các thật toán đấy"
+  },
+  {
+    "start": 3102.19,
+    "end": 3103.65,
+    "text": "ok"
+  },
+  {
+    "start": 3103.65,
+    "end": 3107.21,
+    "text": "Thế còn các thật toán khác thì các bạn có thể tự tìm hiểu thêm"
+  },
+  {
+    "start": 3107.21,
+    "end": 3108.21,
+    "text": "ok"
+  }
+]

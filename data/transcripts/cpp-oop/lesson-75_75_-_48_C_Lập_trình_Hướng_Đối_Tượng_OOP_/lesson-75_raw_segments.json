@@ -1,0 +1,3937 @@
+[
+  {
+    "start": 1.52,
+    "end": 8.84,
+    "text": "Cái kiến thức về lập trình hương đối tượng này thì nó khá là kênh thuộc, tại vì hôm trước bọn em đã học cái phần struct này nè."
+  },
+  {
+    "start": 8.84,
+    "end": 18.14,
+    "text": "Bây giờ mình sẽ học một cái phần lập trình hương đối tượng, nó cũng sẽ xây dựng ra các kiểu dữ liệu mới tương tự như struct, người ta gọi là các cái lớp class."
+  },
+  {
+    "start": 18.14,
+    "end": 27.26,
+    "text": "Nhưng mà nó có điều là nó sẽ yêu cầu cao hơn, nó yêu cầu chắc chẽ hơn, còn cái thằng struct của các bạn thì tương đối là thoải mái về cái vấn đề là"
+  },
+  {
+    "start": 27.26,
+    "end": 32.94,
+    "text": "khi mà các bạn muốn truy cập vào một cái thành phần nào đó trong một cái struct, thì các bạn chỉ cần chấm cái là mình truy cập đúng không?"
+  },
+  {
+    "start": 32.94,
+    "end": 36.22,
+    "text": "Nhưng mà trong lập trình hôn nối tượng thì nó sẽ quy định thêm cái cách truy cập"
+  },
+  {
+    "start": 36.22,
+    "end": 40.86,
+    "text": "cái nghĩa là không phải lúc nào mình thích là mình cũng có thể truy cập được vào, ok?"
+  },
+  {
+    "start": 40.86,
+    "end": 48.7,
+    "text": "Thế thì sau khi mà hoàn thành nội dung buổi học của ngày hôm nay thì bọn em có thể sử dụng cái kiến thức về lập trình hôn nối tượng"
+  },
+  {
+    "start": 48.7,
+    "end": 52.14,
+    "text": "để mình có thể xây dựng ra các cái class, xây dựng ra các cái lớp"
+  },
+  {
+    "start": 52.14,
+    "end": 57.24,
+    "text": "và sử dụng nó để giải quyết những cái bài toán cơ bản ở phần lập trình hồn đối tượng này trước"
+  },
+  {
+    "start": 57.24,
+    "end": 64.74,
+    "text": "ví dụ như các cái bài toán liên quan đến sắp xếp và tìm kiếm trên một cái... tất nhiên là mình phải biết xây dựng lớp đúng không?"
+  },
+  {
+    "start": 64.74,
+    "end": 75.24,
+    "text": "sau đó thì mình sử dụng kiến thức về lớp để mình giải quyết các cái bài toán liên quan đến tìm kiếm và sắp xếp trên một cái danh sách, danh sách đối tượng"
+  },
+  {
+    "start": 75.24,
+    "end": 90.54,
+    "text": "Thế thì trong buổi ngày hôm nay á, anh sẽ hướng dẫn lập trình hướng nối tượng, đồng thời các bạn sẽ cố gắng hoàn thành luôn cái 1 phần bài tập có tên là class và object nha"
+  },
+  {
+    "start": 90.54,
+    "end": 98.54,
+    "text": "Nó có 10 bài, thì các bạn vừa học lý thuyết và các bạn hoàn thành luôn cho mình cái phần bài tập này nó cũng dễ thôi nha"
+  },
+  {
+    "start": 98.54,
+    "end": 106.02,
+    "text": "Mình nghĩ là học đến tập này rồi thì các bạn làm bài này nó dễ thôi, chủ yếu là mình nắm bắt cái lý thuyết mới thôi"
+  },
+  {
+    "start": 106.02,
+    "end": 110.22,
+    "text": "rồi, thế thì lập trình hướng đứng đối tượng ấy, nó là một phương pháp lập trình"
+  },
+  {
+    "start": 110.22,
+    "end": 111.58,
+    "text": "đấy, phương pháp lập trình"
+  },
+  {
+    "start": 111.58,
+    "end": 114.62,
+    "text": "trước giờ bạn em lập trình xị ẩm cộng ấy, chủ yếu là các bạn lập trình hàm"
+  },
+  {
+    "start": 114.62,
+    "end": 117.38,
+    "text": "cứ là mình xây dựng hàm để giải quyết các các bài toán, đúng không?"
+  },
+  {
+    "start": 117.38,
+    "end": 120.38,
+    "text": "thì còn nó có một phương pháp khác để gọi là lập trình hướng đối tượng"
+  },
+  {
+    "start": 120.38,
+    "end": 123.86,
+    "text": "đấy, lập trình hướng đối tượng ấy là nó sẽ cố gắng"
+  },
+  {
+    "start": 123.86,
+    "end": 126.38,
+    "text": "xây dựng một cái phần mềm ở trong thực tế"
+  },
+  {
+    "start": 126.38,
+    "end": 128.66,
+    "text": "nó sẽ có cần nhiều đối tượng cần phải quản lý"
+  },
+  {
+    "start": 128.66,
+    "end": 131.86,
+    "text": "thì thông thường cái phần mềm của bạn em sẽ phải xây dựng lên"
+  },
+  {
+    "start": 131.86,
+    "end": 138.68,
+    "text": "xây dựng nên các cái đối tượng tương ứng như vậy thì phần mềm của mình nó mới quản lý được"
+  },
+  {
+    "start": 138.68,
+    "end": 148.55,
+    "text": "Ví dụ như ở trên website khóa học của anh chẳng hạn thì anh sẽ phải cần phải quản lý học viên, đúng không?"
+  },
+  {
+    "start": 148.55,
+    "end": 152.89,
+    "text": "Quản lý học viên, thì khi đó anh sẽ có thể xây dựng ra một lớp học viên"
+  },
+  {
+    "start": 152.89,
+    "end": 159.63,
+    "text": "Mỗi học viên khi đó thì mình sẽ lưu thông tin về tài khoản này, mật khấu này, rồi là tên số điện thoại, email"
+  },
+  {
+    "start": 159.63,
+    "end": 162.79,
+    "text": "và danh sách các khóa học mà người ta đã đăng ký"
+  },
+  {
+    "start": 162.79,
+    "end": 167.31,
+    "text": "rồi mình cũng phải xây dựng nên các lớp như lớp đơn hàng"
+  },
+  {
+    "start": 167.31,
+    "end": 170.59,
+    "text": "hoặc là lớp khóa học các thứ để mình quản lý website của mình"
+  },
+  {
+    "start": 170.59,
+    "end": 176.21,
+    "text": "hoặc là khi mà các bạn truy cập vào một website đăng ký của một trường đại học"
+  },
+  {
+    "start": 176.21,
+    "end": 178.49,
+    "text": "trên cái website đấy thì các bạn thấy là"
+  },
+  {
+    "start": 178.49,
+    "end": 180.89,
+    "text": "nó cũng sẽ phải quản lý rất là nhiều, đúng không?"
+  },
+  {
+    "start": 180.89,
+    "end": 184.41,
+    "text": "nó sẽ phải quản lý rất là nhiều các đối tượng khác nhau"
+  },
+  {
+    "start": 184.41,
+    "end": 186.69,
+    "text": "ví dụ như sinh viên này, giáo viên này"
+  },
+  {
+    "start": 186.69,
+    "end": 191.09,
+    "text": "hay là quản lý nhân viên rồi là quản lý các môn học giữa các thứ"
+  },
+  {
+    "start": 191.09,
+    "end": 196.09,
+    "text": "tất cả những người thấy nó đều được xây dựng thành các cái đối tượng để quản lý cho nó dễ"
+  },
+  {
+    "start": 196.09,
+    "end": 200.77,
+    "text": "vậy thì các bạn hình dung sẽ có 2 cái khái niệm"
+  },
+  {
+    "start": 200.77,
+    "end": 203.17,
+    "text": "đầu tiên là class vào object"
+  },
+  {
+    "start": 203.17,
+    "end": 206.97,
+    "text": "thì mình hình dung cái class này này nó giống như là kiểu dữ liệu"
+  },
+  {
+    "start": 206.97,
+    "end": 210.37,
+    "text": "ví dụ như là bây giờ các bạn muốn xây dựng ra một lớp là lớp người"
+  },
+  {
+    "start": 210.37,
+    "end": 213.97,
+    "text": "lớp sinh viên, lớp giáo viên, lớp sản phẩm, lớp đơn hàng"
+  },
+  {
+    "start": 213.97,
+    "end": 218.97,
+    "text": "class tài khoản, vân vân, thì mình sẽ xây dựng ra 1 class tương ứng như thế"
+  },
+  {
+    "start": 218.97,
+    "end": 220.97,
+    "text": "đấy thì đấy là định nghĩa về class, nha"
+  },
+  {
+    "start": 220.97,
+    "end": 224.47,
+    "text": "thì còn cái object, tiếng Anh dịch ra tiếng Việt nó là đối tượng"
+  },
+  {
+    "start": 224.47,
+    "end": 230.27,
+    "text": "là nó là 1 cái biến, các bạn hình dung nó giống như là 1 cái biến của kiểu dữ liệu class"
+  },
+  {
+    "start": 230.27,
+    "end": 236.27,
+    "text": "để trên nhà, thì thằng class này nó sẽ có chức năng là nó định nghĩa về thông tin,"
+  },
+  {
+    "start": 236.27,
+    "end": 240.67,
+    "text": "các cái thông tin và các hành động mà cái lớp đấy có thể thực hiện"
+  },
+  {
+    "start": 240.67,
+    "end": 245.47,
+    "text": "Còn cái object này là một cái đối tượng cụ thể, ví dụ như bạn em có một lớp là lớp sinh viên"
+  },
+  {
+    "start": 245.47,
+    "end": 249.39,
+    "text": "và có một cái đối tượng là bạn nguyễn văn E, đấy là một đối tượng cụ thể"
+  },
+  {
+    "start": 249.39,
+    "end": 256.55,
+    "text": "thì khi đó mình chỉ cần xây dựng ra một lớp thôi là lớp sinh viên, nhưng mà mình có thể tạo ra hàng nghìn, hoặc là hàng chục nghìn object, đấy"
+  },
+  {
+    "start": 256.55,
+    "end": 261.39,
+    "text": "nó giống như các bạn hình dung nó giống như là kiểu dữ liệu và biến, nhá"
+  },
+  {
+    "start": 261.39,
+    "end": 265.79,
+    "text": "thì đấy là hai khái niệm đầu tiên, class và object, đấy"
+  },
+  {
+    "start": 265.79,
+    "end": 274.64,
+    "text": "Đúng rồi. Thế thì khi mà bọn em xây dựng một class, thì mình sẽ phải xây dựng những cái hai cái chính, một là các cái thuộc tính"
+  },
+  {
+    "start": 274.64,
+    "end": 277.84,
+    "text": "Các bạn có thể gọi là attribute hoặc là gọi là data field cũng được"
+  },
+  {
+    "start": 277.84,
+    "end": 280.8,
+    "text": "Tức là các cái thông tin, có cái thông tin của đối tượng đó"
+  },
+  {
+    "start": 280.8,
+    "end": 285.14,
+    "text": "Ví dụ như trên website này của anh, một sinh viên thì nó sẽ có những cái thông tin"
+  },
+  {
+    "start": 285.14,
+    "end": 290.9,
+    "text": "Ví dụ như họ tên này, máy học viên này, email này, tài khoán này, giới tính số điện thoại địa chỉ ngay sinh"
+  },
+  {
+    "start": 290.9,
+    "end": 294.6,
+    "text": "và có thêm cả các cái đơn hàng mà anh ta đã đặt nữa, ok chưa?"
+  },
+  {
+    "start": 294.6,
+    "end": 299.36,
+    "text": "Thì khi đó, đấy chính là ca kê, ca kê thuộc tính"
+  },
+  {
+    "start": 299.36,
+    "end": 301.36,
+    "text": "Thế còn cái thứ hai là ca phương thức"
+  },
+  {
+    "start": 301.36,
+    "end": 306.6,
+    "text": "Ca kê phương thức tức là nó sẽ mô tả là cái hành động của cái đối tượng đấy có thể thực hiện ở trong ứng dụng là gì"
+  },
+  {
+    "start": 306.6,
+    "end": 313.44,
+    "text": "Ví dụ như cái lớp khách hàng của mình ở trên website này thì nó có thể thực hiện ca kê tha tác ví dụ như là đăng kí học này"
+  },
+  {
+    "start": 313.44,
+    "end": 316.92,
+    "text": "hoặc là thay đổi thông tin này, thay đổi mật khẩu, các thứ"
+  },
+  {
+    "start": 316.92,
+    "end": 319.04,
+    "text": "Thì nó sẽ có ca phương thức tương ứng như vậy"
+  },
+  {
+    "start": 319.04,
+    "end": 323.12,
+    "text": "Nhìn chung là nó sẽ có ca thuộc tính và ca phương thức"
+  },
+  {
+    "start": 323.12,
+    "end": 326.9,
+    "text": "Thì khi mà người ta xây dựng lớp thì người ta sẽ mô tả lớp thành 3 phần như này"
+  },
+  {
+    "start": 326.9,
+    "end": 328.5,
+    "text": "Phần trên cùng này là tên lớp"
+  },
+  {
+    "start": 328.5,
+    "end": 330.42,
+    "text": "Sau đó phần thứ 2 là các thục tính"
+  },
+  {
+    "start": 330.42,
+    "end": 333.54,
+    "text": "Và phần thứ 3 là các phương thức, nó sẽ có 3 phần như thế"
+  },
+  {
+    "start": 333.54,
+    "end": 336.1,
+    "text": "Thì nó tựa tựa như cái câu chúc mà bạn em đã học, đúng không?"
+  },
+  {
+    "start": 336.1,
+    "end": 338.62,
+    "text": "Có bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 338.62,
+    "end": 341.7,
+    "text": "Có bạn nào có câu hỏi gì về cái phần mà mình vừa nói không?"
+  },
+  {
+    "start": 341.7,
+    "end": 351.86,
+    "text": "Ờm, được"
+  },
+  {
+    "start": 351.86,
+    "end": 355.08,
+    "text": "Em có thể học nó với C++ được"
+  },
+  {
+    "start": 355.08,
+    "end": 357.32,
+    "text": "Nếu mà trường ví dụ như trường em sau này"
+  },
+  {
+    "start": 357.32,
+    "end": 360.56,
+    "text": "Người ta dậy cái môn là lập trình hương đối tượng mà người ta dậy bằng C++"
+  },
+  {
+    "start": 360.56,
+    "end": 363.04,
+    "text": "Bọn em dùng sysapp để cốt thôi, nó không có gì khác đâu"
+  },
+  {
+    "start": 363.04,
+    "end": 366.58,
+    "text": "Tất nhiên là nó sẽ có nhiều cái khác biệt một chút thôi"
+  },
+  {
+    "start": 366.58,
+    "end": 372.3,
+    "text": "Nhưng mà về cái khái niệm và những kiến thức chính của lập trình và nối tượng"
+  },
+  {
+    "start": 372.3,
+    "end": 374.86,
+    "text": "thì mình nghĩ là nó giống nhau đến khoảng 85%"
+  },
+  {
+    "start": 377.34,
+    "end": 379.34,
+    "text": "Rồi thì bây giờ bọn em sẽ đi xây dựng lớp"
+  },
+  {
+    "start": 380.67,
+    "end": 383.67,
+    "text": "Để mà xây dựng một lớp thì các bạn sẽ khai báo bằng thì khóa là class"
+  },
+  {
+    "start": 383.67,
+    "end": 385.37,
+    "text": "sau đó đến tên của tên lớp"
+  },
+  {
+    "start": 385.37,
+    "end": 388.97,
+    "text": "Ở bên trăm này bọn em sẽ liệt kê các cái thuộc tính rồi mình liệt kê các cái phương thức"
+  },
+  {
+    "start": 388.97,
+    "end": 390.97,
+    "text": "và dưới này nó sẽ có một cái dấu chấm phải nhé"
+  },
+  {
+    "start": 390.97,
+    "end": 404.45,
+    "text": "nhưng mà khác với struct một chút, để chính là bây giờ các cái thuộc tính và các cái phương thức của bạn em thì nó sẽ có thêm 1 cái, có tên là access spacefire, tạm gọi là tạm dịch là cái quyền truy cập"
+  },
+  {
+    "start": 404.45,
+    "end": 413.93,
+    "text": "cái quyền truy cập, tức là nó sẽ quy định là khi mà bạn em muốn truy cập vào các cái thuộc tính hay là các cái phương thức này mình truy cập như thế nào"
+  },
+  {
+    "start": 413.93,
+    "end": 416.25,
+    "text": "Chứ không thích thì không phải thích là G-Cup nữa"
+  },
+  {
+    "start": 416.25,
+    "end": 421.81,
+    "text": "Và nó sẽ có 3 quyền G-Cup, 1 là Public, 2 là Private, và 3 là Protective"
+  },
+  {
+    "start": 421.81,
+    "end": 425.35,
+    "text": "Thế thì bây giờ mình sẽ xây dựng cho các bạn 1 class"
+  },
+  {
+    "start": 425.35,
+    "end": 429.85,
+    "text": "Ở đây mình sẽ xây dựng 1 class là class sản phẩm"
+  },
+  {
+    "start": 429.85,
+    "end": 436.7,
+    "text": "Cái sản phẩm này thì mình sẽ có các thuộc tính, ví dụ như mã sản phẩm, tên sản phẩm và gia bán"
+  },
+  {
+    "start": 436.7,
+    "end": 441.66,
+    "text": "Thì anh sẽ khai báo mã và tên sản phẩm là string, mã, tên"
+  },
+  {
+    "start": 441.66,
+    "end": 445.54,
+    "text": "và giả bán thì anh khai báo là double hoặc là inner T nhé, rồi"
+  },
+  {
+    "start": 445.54,
+    "end": 447.62,
+    "text": "vậy là mình đã xây dựng xăm một lớp rồi"
+  },
+  {
+    "start": 447.62,
+    "end": 451.14,
+    "text": "nhưng mà khi đó các bạn phải quy định xem là các thuộc tính này nè"
+  },
+  {
+    "start": 451.14,
+    "end": 452.86,
+    "text": "nó sẽ có phạm VGP là gì"
+  },
+  {
+    "start": 452.86,
+    "end": 456.02,
+    "text": "thường thì là các thuộc tính nó sẽ có cùng phạm VGP"
+  },
+  {
+    "start": 456.02,
+    "end": 459.14,
+    "text": "ví dụ như đều là public, đều là private hoặc là đều là protected"
+  },
+  {
+    "start": 459.14,
+    "end": 461.5,
+    "text": "thì ở đây anh sẽ để là public, 2 chấm"
+  },
+  {
+    "start": 461.5,
+    "end": 465.7,
+    "text": "thì có nghĩa là 3 cái thuộc tính mà anh sẽ khai báo sau từ public này nè"
+  },
+  {
+    "start": 465.7,
+    "end": 469.1,
+    "text": "đấy là mã, tên và giá thì nó sẽ có phạm VGP là public"
+  },
+  {
+    "start": 469.1,
+    "end": 473.62,
+    "text": "Tiếp theo, khi mình khai báo xong các thuộc tính rồi thì mình sẽ khai báo điên hàm"
+  },
+  {
+    "start": 473.62,
+    "end": 474.42,
+    "text": "Phương thức ạ"
+  },
+  {
+    "start": 474.42,
+    "end": 482.49,
+    "text": "Ví dụ như anh lại muốn khai báo các phương thức là public, ví dụ như là hiển thị trang hạn, void, hiển thị đúng không?"
+  },
+  {
+    "start": 482.49,
+    "end": 488.09,
+    "text": "Ở bên trong này anh sẽ CL, dâm mẽ, tên và giá của sản phẩm nào"
+  },
+  {
+    "start": 488.09,
+    "end": 491.22,
+    "text": "Rồi, thế thì ở trong bên nhá"
+  },
+  {
+    "start": 491.22,
+    "end": 494.54,
+    "text": "Bây giờ các bạn muốn tạo ra một cái đối tượng thì các bạn khai báo thôi"
+  },
+  {
+    "start": 494.54,
+    "end": 498.3,
+    "text": "Sản phẩm S trang hạn, nó vậy thì S của bạn em ở đây nó chính là object"
+  },
+  {
+    "start": 498.3,
+    "end": 503.26,
+    "text": "Đối tượng thì còn cái sản phẩm của bạn em chính là class"
+  },
+  {
+    "start": 503.26,
+    "end": 507.06,
+    "text": "Thế thôi, các bạn hiểu ngay được cái khái niệm là class và object, đúng không?"
+  },
+  {
+    "start": 507.06,
+    "end": 512.37,
+    "text": "Ok, chính xác các bạn"
+  },
+  {
+    "start": 512.37,
+    "end": 519.75,
+    "text": "Thế thì bây giờ này, để mà truy cập vào các thuộc tính và phương thức thì các bạn cũng dùng dấu chấm thôi"
+  },
+  {
+    "start": 519.75,
+    "end": 523.55,
+    "text": "Ví dụ như bạn em cho f.mãi bằng sản phẩm 001, đúng không?"
+  },
+  {
+    "start": 523.55,
+    "end": 526.79,
+    "text": "Tên của cái sản phẩm này đấy chính là ban phím cơ chẳng hẹn"
+  },
+  {
+    "start": 526.79,
+    "end": 531.01,
+    "text": "sau đó thì các bạn sẽ cho giá bán của nó bằng 300k chẳng ạ"
+  },
+  {
+    "start": 531.01,
+    "end": 532.33,
+    "text": "ok chưa?"
+  },
+  {
+    "start": 532.33,
+    "end": 539.01,
+    "text": "và các bạn có thể gọi cái ham s.hiển thị để nó hiển thị cái thông tin với mã, tên và giá của cái sản phẩm này cho các bạn"
+  },
+  {
+    "start": 539.01,
+    "end": 540.91,
+    "text": "nào bọn em chạy này"
+  },
+  {
+    "start": 540.91,
+    "end": 546.72,
+    "text": "thì nó sẽ hiển thị là sản phẩm 001 bàn phím cư của 300k ở chỗ này đúng không?"
+  },
+  {
+    "start": 546.72,
+    "end": 549.74,
+    "text": "đấy"
+  },
+  {
+    "start": 549.74,
+    "end": 551.65,
+    "text": "xong nhá"
+  },
+  {
+    "start": 551.65,
+    "end": 553.84,
+    "text": "các bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 553.84,
+    "end": 556.35,
+    "text": "nó khá giống struct đúng không?"
+  },
+  {
+    "start": 556.35,
+    "end": 560.83,
+    "text": "Mà có điều là mình sẽ phải thêm access specifier ở đây này các bạn này"
+  },
+  {
+    "start": 560.83,
+    "end": 569.5,
+    "text": "Thế thì khi mà các bạn khai báo thuộc tính hoặc là phương thức ý mà các bạn để cái phạm vi truy cập là public này này"
+  },
+  {
+    "start": 569.5,
+    "end": 575.26,
+    "text": "thì các bạn em có thể truy cập đến các cái thuộc tính hoặc là phương thức public ở bất cứ đâu trong chương trình của mình"
+  },
+  {
+    "start": 575.26,
+    "end": 579.62,
+    "text": "Thông qua đối tượng, mà cách là các bạn chấm, nó không có cản trở gì hết"
+  },
+  {
+    "start": 579.62,
+    "end": 584.58,
+    "text": "Tức là ví dụ như ở trong cái lớp sản phẩm này, các bạn em có thể truy cập vào má tên và giá một cách thoải mái"
+  },
+  {
+    "start": 584.58,
+    "end": 591.18,
+    "text": "hoặc là bên ngoài cái lớp sản phẩm này ở trong bên, thì thông qua cái đối tượng S các bạn cũng có thể truy cập đến mẽ tên và giá một cách thoải mái"
+  },
+  {
+    "start": 591.18,
+    "end": 597.4,
+    "text": "thì đấy là public, public tức là công khai, nó không có cấm các bạn truy cập vào các cái thuộc tính vào phương thức public"
+  },
+  {
+    "start": 597.4,
+    "end": 601.88,
+    "text": "nha, ngay, ok chưa?"
+  },
+  {
+    "start": 601.88,
+    "end": 612.26,
+    "text": "thì đấy là public, ok, có bạn nào hỏi gì với public không?"
+  },
+  {
+    "start": 612.26,
+    "end": 617.18,
+    "text": "khi mà bạn em để là public thì bạn em hình dùng cái class này nó tương tự như struct, đúng không?"
+  },
+  {
+    "start": 617.18,
+    "end": 621.12,
+    "text": "từ từ mình sẽ hướng dẫn luôn cái protected về private"
+  },
+  {
+    "start": 621.12,
+    "end": 625.12,
+    "text": "Rồi, thế thì, bây giờ này, mình sẽ đổi cái này thành private"
+  },
+  {
+    "start": 625.12,
+    "end": 631.62,
+    "text": "Private, tức là bí mật, thì khi mà thuộc tính hoặc là phương thức mà bạn em khai báo là private"
+  },
+  {
+    "start": 631.62,
+    "end": 636.62,
+    "text": "thì các bạn chỉ có thể truy cập nó ở bên trong cái phạm vi của lớp thôi, tức là trong cái đóng bỏ ngọt nhọn này thôi"
+  },
+  {
+    "start": 636.62,
+    "end": 640.28,
+    "text": "còn ra ngoài, bạn em không truy cập được, không truy cập được"
+  },
+  {
+    "start": 640.28,
+    "end": 644.78,
+    "text": "Ví dụ như trong trường hợp này, trong bên ấy mà các bạn truy cập vào mẽ tên và giá này, nó sẽ báo lỗi ngay"
+  },
+  {
+    "start": 644.78,
+    "end": 649.28,
+    "text": "tại vì các bạn đã khai báo access specify của nó là private, đúng không?"
+  },
+  {
+    "start": 649.28,
+    "end": 651.76,
+    "text": "Mình không truy cập được, các bạn chạy nè, nó báo lỗi ngay"
+  },
+  {
+    "start": 651.76,
+    "end": 658.79,
+    "text": "Nó, nó báo là sản phẩm 2.200 mẻ là private này, đúng không?"
+  },
+  {
+    "start": 658.79,
+    "end": 664.79,
+    "text": "Nói, public thì truy cập thoải mái, còn private thì chỉ có thể truy cập ở bên trong phạm V của lớp đấy thôi"
+  },
+  {
+    "start": 664.79,
+    "end": 668.87,
+    "text": "Thế nên là ví dụ nhé, ở trong cái hàm hiển thị này của anh ấy"
+  },
+  {
+    "start": 668.87,
+    "end": 673.25,
+    "text": "Thì các bạn hoàn toàn có thể truy cập vào mẻ tên và giá được"
+  },
+  {
+    "start": 673.25,
+    "end": 676.33,
+    "text": "Tại vì cái hàm hiển thị này thì nó đang nằm ở trong cái phạm V của lớp sản phẩm"
+  },
+  {
+    "start": 676.33,
+    "end": 680.49,
+    "text": "Nên là mặc dù mẻ tên và giá của mình có là private đi trang nữa nhưng mà truy cập thoải mái"
+  },
+  {
+    "start": 680.49,
+    "end": 684.85,
+    "text": "Nhưng mà khi mà bọn em chạy thì máa tên và giá nó đang là giá trị ngậu nhiên, mặc địch"
+  },
+  {
+    "start": 684.85,
+    "end": 690.81,
+    "text": "nên nó thường là sâu rộng và số không, đấy, rồi chìa, thì đấy là private, nhé"
+  },
+  {
+    "start": 690.81,
+    "end": 694.41,
+    "text": "Nếu mà bây giờ mà cái hiển thị này mà anh cũng để là private đấy"
+  },
+  {
+    "start": 694.41,
+    "end": 696.81,
+    "text": "thì là bọn em cũng không truy cập được vào hiển thị luôn"
+  },
+  {
+    "start": 696.81,
+    "end": 699.81,
+    "text": "chỗ này chạy nó báo sạc báo lỗi ngay, nhé"
+  },
+  {
+    "start": 699.81,
+    "end": 703.61,
+    "text": "đấy, thì đấy là public và private, được chìa"
+  },
+  {
+    "start": 703.61,
+    "end": 707.61,
+    "text": "public thì có thể truy cập thoải mái ở bên trong hoặc là ở bên ngoài lớp"
+  },
+  {
+    "start": 707.61,
+    "end": 710.61,
+    "text": "còn private thì chỉ có thể truy cập ở bên trong lớp thôi"
+  },
+  {
+    "start": 710.61,
+    "end": 713.25,
+    "text": "còn rang ngoài thì không truy cập được"
+  },
+  {
+    "start": 713.25,
+    "end": 714.25,
+    "text": "OK"
+  },
+  {
+    "start": 714.25,
+    "end": 719.8,
+    "text": "Thế còn 1 phạm vi truy cập nữa là Protector thì anh sẽ hướng dẫn vào buổi sau khi mà các bạn học cái kế thừa"
+  },
+  {
+    "start": 719.8,
+    "end": 724.8,
+    "text": "Đấy, bây giờ các bạn nắm cho mình 2 cái thằng là Public và Private này là được"
+  },
+  {
+    "start": 724.8,
+    "end": 728.8,
+    "text": "Bạn này hỏi là trong cshap thì Private và Public nó có hạt động như vậy không?"
+  },
+  {
+    "start": 728.8,
+    "end": 733.8,
+    "text": "Nó giống nhau hết, em cốt ở trong Java, trong cshap thì nó cũng..."
+  },
+  {
+    "start": 733.8,
+    "end": 740.78,
+    "text": "khi mà các bạn để là Private và Public thì nó cũng hạt động như ở trong xị ổng cộng thôi, không có gì khác"
+  },
+  {
+    "start": 740.78,
+    "end": 749.61,
+    "text": "Thế thì trong lập trình hướng đối tượng này, nó sẽ có một tính chất, có tên là tính chất đầu tiên của hợp trình hướng tượng"
+  },
+  {
+    "start": 749.61,
+    "end": 752.93,
+    "text": "Mười ta gọi là tính chất đóng gói, hoặc là tính chất bao đóng cũng được"
+  },
+  {
+    "start": 752.93,
+    "end": 758.38,
+    "text": "Tính anh nói là encapsulation"
+  },
+  {
+    "start": 758.38,
+    "end": 767.66,
+    "text": "Thì khi đó, khi mà để mà đảm bảo cái tính chất bao đóng của lập trình hướng đối tượng, thì thuộc tính ở trong lớp của bạn phải khai báo là private"
+  },
+  {
+    "start": 767.66,
+    "end": 773.58,
+    "text": "Phương thức thì bạn em cứ để là public, nhưng mà các cái thuộc tính thì các bạn sẽ phải để là private"
+  },
+  {
+    "start": 773.58,
+    "end": 778.62,
+    "text": "Thì nhiều bạn lập luận là em không hiểu sao thuộc tính phải private"
+  },
+  {
+    "start": 778.62,
+    "end": 782.7,
+    "text": "Trong khi đó mình để là public thì cốt vẫn bình thường mà nó còn dễ hơn là để là private"
+  },
+  {
+    "start": 782.7,
+    "end": 784.8,
+    "text": "Thì các bạn hình dung như thế này này"
+  },
+  {
+    "start": 784.8,
+    "end": 791.29,
+    "text": "Bạn em nha, khi mà bạn em để chỗ này là public, thì có nghĩa là các bạn có thể truy cập vào thuộc tính đấy để các bạn truy vấn"
+  },
+  {
+    "start": 791.29,
+    "end": 794.65,
+    "text": "hoặc là các bạn thay đổi các thuộc tính đấy một cách thoải mái, đúng không?"
+  },
+  {
+    "start": 794.65,
+    "end": 798.43,
+    "text": "Điều đó tưởng chừng như là không sao nhưng mà thực tế nó rất nguy hiểm"
+  },
+  {
+    "start": 798.43,
+    "end": 800.43,
+    "text": "Bây giờ, bạn em hình dung nha"
+  },
+  {
+    "start": 800.43,
+    "end": 802.25,
+    "text": "Giả sứ đi"
+  },
+  {
+    "start": 802.25,
+    "end": 809.25,
+    "text": "Cái giá của một cái sản phẩm nào đó thì tối thiệu nó cũng bằng không, nếu mà các bạn miễn phí 100%, giảm giá 100% thì giá của nó cũng phải bằng không, đúng không?"
+  },
+  {
+    "start": 809.25,
+    "end": 816.25,
+    "text": "Nhưng nếu mà bây giờ các bạn để là public như thế này, thì khi đó mà các bạn truy cập vào giá, các bạn gán nó bằng ấm 5 triệu cũng được."
+  },
+  {
+    "start": 816.25,
+    "end": 822.64,
+    "text": "Hoặc là các bạn gán nó bằng một con số không tưởng cũng được. Điều này nó sẽ là nguy hiểm đấy."
+  },
+  {
+    "start": 822.64,
+    "end": 828.86,
+    "text": "Tại vì khi mà các bạn để là public thì có nghĩa là mình có thể truy cập đến thuộc tính vào phương thức đấy thông qua đối tượng."
+  },
+  {
+    "start": 828.86,
+    "end": 837.86,
+    "text": "Má, nó sẽ không cần phải kiểm tra cái điều kiện, không cần phải kiểm tra các cái doang buộc trước khi mà mình tác động đến cái thục tính đấy"
+  },
+  {
+    "start": 837.86,
+    "end": 841.86,
+    "text": "Các bạn hình dung thế không? Tức là ví dụ như bây giờ cái giá của một cái sản phẩm đi"
+  },
+  {
+    "start": 841.86,
+    "end": 847.86,
+    "text": "Bọn em phải kiểm tra xem là nó có thoảm ảnh cái điều kiện gì đó về giá không? Ví dụ như giá nó phải nằm tới đâu đến đâu"
+  },
+  {
+    "start": 847.86,
+    "end": 851.86,
+    "text": "Nó không thể là số âm chẳng hạn, thì mình bắt đầu mới được cho phép thay đổi"
+  },
+  {
+    "start": 851.86,
+    "end": 856.86,
+    "text": "Nhưng mà nếu mà các bạn để là public ấy, nó nhảy vào phát nó gán luôn, nó không cần phải kiểm tra điều kiện gì đã, đúng không?"
+  },
+  {
+    "start": 856.86,
+    "end": 860.38,
+    "text": "hoặc là bây giờ các bạn có tài khoản, đúng không?"
+  },
+  {
+    "start": 860.38,
+    "end": 861.98,
+    "text": "Tài khoản nó có số dư, chẳng hạn"
+  },
+  {
+    "start": 861.98,
+    "end": 865.29,
+    "text": "Thì nhiều khi các bạn không cần phải kiểm trai điều kiện gì ké"
+  },
+  {
+    "start": 865.29,
+    "end": 867.53,
+    "text": "ví dụ như trong tài khoản của bạn nó dư không 50.000"
+  },
+  {
+    "start": 867.53,
+    "end": 871.05,
+    "text": "nhưng mà bây giờ nó cần một cái thao tác mà nó sẽ làm cái..."
+  },
+  {
+    "start": 871.05,
+    "end": 874.17,
+    "text": "mình cần phải chuyển khoản đi từ cái tài khoản đến 500.000 chẳng hạn, đúng không?"
+  },
+  {
+    "start": 874.17,
+    "end": 875.45,
+    "text": "Thì rõ ràng là không đủ tiền"
+  },
+  {
+    "start": 875.45,
+    "end": 880.09,
+    "text": "nhưng mà nhiều khi mình lấy 500.000 mình chứ đi 500.000 thì mình cho cái số tài khoản của mình"
+  },
+  {
+    "start": 880.09,
+    "end": 884.33,
+    "text": "nó thành cái số âm luôn, mà đáng nghĩa là cái thao tác đấy không được thực hiện, đúng không?"
+  },
+  {
+    "start": 884.33,
+    "end": 888.99,
+    "text": "Thế nên là cái tính chất bao đóng này nhìn có vẻ là không quan trọng nhưng thực tế nó lại rất là quan trọng"
+  },
+  {
+    "start": 888.99,
+    "end": 898.15,
+    "text": "Nó sẽ yêu cầu bạn em khi mà các bạn muốn truy vấn hoặc là các bạn muốn thay đổi các cái thuộc tính thì các bạn phải thông qua hàm"
+  },
+  {
+    "start": 898.15,
+    "end": 902.42,
+    "text": "Chứ không có chấm trực tiếp như kia được, phải thông qua hàm"
+  },
+  {
+    "start": 902.42,
+    "end": 910.04,
+    "text": "Tại sao phải thông qua hàm? Tại vì thông qua hàm thì mình mới bắt đầu, mình mới dàng buộc được điều kiện, mình mới kiểm tra được điều kiện, mình mới kiểm tra được cái tham số"
+  },
+  {
+    "start": 910.04,
+    "end": 913.28,
+    "text": "trước khi mà mình thay đổi các cái thuộc tính đó, nhé"
+  },
+  {
+    "start": 913.28,
+    "end": 919.24,
+    "text": "Thế nên là nhiều bạn này cứ bảo là không biết là em không hiểu là vì sao nó cứ phải để là private"
+  },
+  {
+    "start": 919.24,
+    "end": 921.68,
+    "text": "mà không để public luôn dùng cho nó dễ"
+  },
+  {
+    "start": 921.68,
+    "end": 925.68,
+    "text": "Thì để tránh cái việc là các bạn thay đổi một cách tùy tiện, nhé"
+  },
+  {
+    "start": 925.68,
+    "end": 928.4,
+    "text": "Nó có nghĩa là sao?"
+  },
+  {
+    "start": 928.4,
+    "end": 929.92,
+    "text": "Có nghĩa là bây giờ nhé"
+  },
+  {
+    "start": 929.92,
+    "end": 931.72,
+    "text": "Các bạn có một cái sản phẩm S kìa"
+  },
+  {
+    "start": 931.72,
+    "end": 937.28,
+    "text": "Bọn em muốn thay mã, thay tên, thay giá cho nó hoặc là các bạn muốn lấy về mã, lấy về tên, lấy về giá"
+  },
+  {
+    "start": 937.28,
+    "end": 940.96,
+    "text": "Các bạn phải viết cái hàm tương hứng với cái chức năng đó sau mình gọi"
+  },
+  {
+    "start": 940.96,
+    "end": 943.44,
+    "text": "Tại vì hàm thì là nó là public, đúng không?"
+  },
+  {
+    "start": 943.44,
+    "end": 946.16,
+    "text": "Nấy, ok chưa?"
+  },
+  {
+    "start": 946.16,
+    "end": 949.16,
+    "text": "Thế nên là phải thông qua hàm hết, chứ không có truy cập trực tiếp"
+  },
+  {
+    "start": 949.16,
+    "end": 952.44,
+    "text": "Thì đấy chính là kế tính chất đóng gói của lập trình hương lưỡi tượng"
+  },
+  {
+    "start": 952.44,
+    "end": 958.51,
+    "text": "Ví dụ như bây giờ nha, mà bạn em muốn viết"
+  },
+  {
+    "start": 958.51,
+    "end": 960.75,
+    "text": "Ví dụ như ở cái dòng số 20 này này"
+  },
+  {
+    "start": 960.75,
+    "end": 963.79,
+    "text": "Bạn em muốn gán là s.mẽ bằng sản phẩm 001 đúng không?"
+  },
+  {
+    "start": 963.79,
+    "end": 965.63,
+    "text": "Thì các bạn phải xây dựng hàm"
+  },
+  {
+    "start": 965.63,
+    "end": 975.72,
+    "text": "Các bạn muốn thay đổi tên thì các bạn cũng xây dựng hàm và nó sẽ có hai cái bộ đôi là ghép và set"
+  },
+  {
+    "start": 975.72,
+    "end": 981.38,
+    "text": "ghép ấy, tức là lấy về, còn set có nghĩa là gán đúng không?"
+  },
+  {
+    "start": 981.38,
+    "end": 984.38,
+    "text": "Thì cái hàm ghép ấy nó sẽ có chức năng lấy về thuộc tính"
+  },
+  {
+    "start": 984.38,
+    "end": 987.38,
+    "text": "còn cái hàm set thì nó có chức năng là thay đổi thuộc tính"
+  },
+  {
+    "start": 987.38,
+    "end": 992.38,
+    "text": "Anh ví dụ bây giờ mà bạn em muốn viết một cái hàm mà có thể lấy về mã chẳng hạn ấy"
+  },
+  {
+    "start": 992.38,
+    "end": 995.38,
+    "text": "thì các bạn xem cái thuộc tính mã đấy nó có kiểu dữ liệu là gì?"
+  },
+  {
+    "start": 995.38,
+    "end": 999.06,
+    "text": "string đúng không? thì các bạn viết cho anh 1 cái hàm là string get mẽ"
+  },
+  {
+    "start": 999.06,
+    "end": 1001.98,
+    "text": "sau đó ở bên trong này bạn em return với cái thuộc tính mẽ đó"
+  },
+  {
+    "start": 1001.98,
+    "end": 1006.02,
+    "text": "thì trong bên ấy, khi mà các bạn muốn lấy về mẽ, các bạn gọi hàm get mẽ là sao?"
+  },
+  {
+    "start": 1006.02,
+    "end": 1009.94,
+    "text": "thì khi đó mình không có truy cập trực tiếp vào thuộc tính mẽ, nhưng mà mình vẫn lấy về được"
+  },
+  {
+    "start": 1009.94,
+    "end": 1011.38,
+    "text": "đấy, nha"
+  },
+  {
+    "start": 1011.38,
+    "end": 1017.02,
+    "text": "hoặc là bây giờ các bạn muốn thay đổi mẽ, thì các bạn phải viết cho mình 1 cái hàm là set mẽ"
+  },
+  {
+    "start": 1017.02,
+    "end": 1020.97,
+    "text": "nó có tham số, nước chơi nhỉ, mẹ mới chẳng hẹn nó"
+  },
+  {
+    "start": 1020.97,
+    "end": 1023.49,
+    "text": "ở trong này các bạn sẽ gán làm mẹ thì bằng mẹ mới"
+  },
+  {
+    "start": 1023.49,
+    "end": 1029.74,
+    "text": "Thì ở trong bên này này, ví dụ như bây giờ các bạn muốn gán sản phẩm cho ông này là sản phẩm 001 thì bạn em phải viết là"
+  },
+  {
+    "start": 1029.74,
+    "end": 1041.16,
+    "text": "S, set, nói, các bạn chuyển là sản phẩm 001 vào, thì khi đó cái thuộc tính mã của ông S nó sẽ được gán thành cái sản phẩm 001"
+  },
+  {
+    "start": 1041.16,
+    "end": 1049.16,
+    "text": "Và bạn em muốn lấy về cái thuộc tính mã thì bạn em sẽ see out là S, get, nói chung mình phải tương tác các cái thuộc tính này này"
+  },
+  {
+    "start": 1049.16,
+    "end": 1054.2,
+    "text": "Thông qua 2 bộ đôi là hamgap và hamset, người ta gọi là interface, giao tiếp"
+  },
+  {
+    "start": 1054.2,
+    "end": 1058.04,
+    "text": "Bọn em có thể tương tác trực tiếp với các thuộc tính"
+  },
+  {
+    "start": 1058.04,
+    "end": 1066.92,
+    "text": "Rõ ràng, bây giờ bọn em xây dựng ham, trong ham này, nếu người ta yêu cầu kiểm tra điều kiện hoặc là dàng buộc, mình có thể kiểm tra trước khi mình thay đổi"
+  },
+  {
+    "start": 1066.92,
+    "end": 1070.94,
+    "text": "Thì đấy là bộ đôi, gap và set"
+  },
+  {
+    "start": 1070.94,
+    "end": 1078.34,
+    "text": "Gap thì là lấy về, được chưa, nên nó sẽ có kiểu trả về giống như cái thuộc tính mà bạn em đang muốn gap, muốn lấy về"
+  },
+  {
+    "start": 1078.34,
+    "end": 1085.54,
+    "text": "Thế con set thì nó sẽ có tham số, đấy, để mình gán, đấy, gọi là bộ đôi gap, nó set, nhá"
+  },
+  {
+    "start": 1085.54,
+    "end": 1092.18,
+    "text": "Các bạn muốn xây dựng cho thuộc tính nào thì các bạn cứ xây dựng ra ví dụ như bây giờ mà bạn em muốn viết thêm 1 cái ham để có thể lấy về tên"
+  },
+  {
+    "start": 1092.18,
+    "end": 1122.44,
+    "text": "Các bạn muốn viết hạm để thay đổi giá chẳng hạn, thì mình viết là set giá, cho này nó sẽ có 1 biến đắp bồ giá mới chẳng hạn, sau mà em gán là giá thì bằng giá mới, ok chứ ạ, hạm set thì nó có kiểu là void và nó có tham số, còn hạm get thì nó sẽ có kiểu trả về tương ứng với kiểu dữ liệu của thuộc tính mà bạn em đang muốn lấy về, thấy, thì đây là bộ đôi, get và set, nha,"
+  },
+  {
+    "start": 1122.44,
+    "end": 1127.7,
+    "text": "Các bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 1127.7,
+    "end": 1141.51,
+    "text": "Có câu hỏi gì không?"
+  },
+  {
+    "start": 1141.51,
+    "end": 1143.51,
+    "text": "Set mà tham số không cần tham chiếu hả anh?"
+  },
+  {
+    "start": 1143.51,
+    "end": 1146.82,
+    "text": "Không, không cần em ạ"
+  },
+  {
+    "start": 1146.82,
+    "end": 1149.82,
+    "text": "Tại vì mình có thay đổi cái tham chiếu này đâu"
+  },
+  {
+    "start": 1149.82,
+    "end": 1152.82,
+    "text": "Mình có thay đổi cái tham chiếu mạm mới hay là giá mới đâu"
+  },
+  {
+    "start": 1152.82,
+    "end": 1154.82,
+    "text": "Mình đang thay đổi cái thuộc tính đấy chứ"
+  },
+  {
+    "start": 1154.82,
+    "end": 1158.93,
+    "text": "Nên là không cần tham chiếu"
+  },
+  {
+    "start": 1158.93,
+    "end": 1161.93,
+    "text": "Thế thì hôm trước anh đã hướng dẫn cho bạn em về hàm tạo rồi đúng không?"
+  },
+  {
+    "start": 1161.93,
+    "end": 1165.93,
+    "text": "Thì trong class này nó cũng có hàm tạo luôn"
+  },
+  {
+    "start": 1165.93,
+    "end": 1167.93,
+    "text": "Nó cũng có hàm tạo"
+  },
+  {
+    "start": 1167.93,
+    "end": 1182.99,
+    "text": "Hàm tạo, con structure, Hàm tạo là cái hàm mà nó có cùng tên với class"
+  },
+  {
+    "start": 1182.99,
+    "end": 1186.52,
+    "text": "ví dụ như hàm của bạn em có tên là sản phẩm trưởng hạn, đúng không?"
+  },
+  {
+    "start": 1186.52,
+    "end": 1191.4,
+    "text": "đây thì đây chính là hàm tạo đấy, anh để lại cái hàm hiển thị này nhé"
+  },
+  {
+    "start": 1191.4,
+    "end": 1194.81,
+    "text": "bây giờ anh sẽ xây dựng một cái hàm tạo là sản phẩm"
+  },
+  {
+    "start": 1194.81,
+    "end": 1198.75,
+    "text": "cái hàm tạo này thì tất nhiên là nó không có kiểu trả về"
+  },
+  {
+    "start": 1198.75,
+    "end": 1203.71,
+    "text": "có thể có nhiều hoặc có một hoặc là nhiều tham số, tuy bạn em thích bao, bao nhiêu hàm tạo cũng được"
+  },
+  {
+    "start": 1203.71,
+    "end": 1206.35,
+    "text": "ở đây anh đang xây dựng ra một cái hàm tạo nó không có tham số"
+  },
+  {
+    "start": 1206.35,
+    "end": 1211.48,
+    "text": "ở trong này anh sẽ xeo ra là hàm tạo được gọi chẳng hạn"
+  },
+  {
+    "start": 1211.48,
+    "end": 1213.68,
+    "text": "thì các bạn hình dung là trong mên ấy"
+  },
+  {
+    "start": 1213.68,
+    "end": 1217.56,
+    "text": "cứ bất cứ khi nào các bạn khai báo ra một cái đối tượng thuộc lớp sản phẩm ấy"
+  },
+  {
+    "start": 1217.56,
+    "end": 1220.33,
+    "text": "thì là nó sẽ gọi cái hàm tạo đó"
+  },
+  {
+    "start": 1220.33,
+    "end": 1222.65,
+    "text": "dụ sản phẩm app là nó cũng gọi này"
+  },
+  {
+    "start": 1222.65,
+    "end": 1224.57,
+    "text": "sản phẩm tê nó cũng phải gọi này"
+  },
+  {
+    "start": 1224.57,
+    "end": 1227.72,
+    "text": "đó, ok"
+  },
+  {
+    "start": 1227.72,
+    "end": 1232.31,
+    "text": "thì khi đó nó sẽ gọi hàm tạo thôi"
+  },
+  {
+    "start": 1232.31,
+    "end": 1238.31,
+    "text": "hoặc là bạn em khai báo ra một cái mảng sản phẩm, ví dụ như anh có một cái mảng mạc 1 chiều là sản phẩm A1000"
+  },
+  {
+    "start": 1238.31,
+    "end": 1242.81,
+    "text": "thì khi đó có phải là 1 nghìn ông ở trong mảng A này sẽ được gọi 1 nghìn cái hàm tạo không?"
+  },
+  {
+    "start": 1242.81,
+    "end": 1246.31,
+    "text": "Bạn em sẽ có hàm tạo được gọi 1 nghìn lần ở chỗ đoạn này"
+  },
+  {
+    "start": 1246.31,
+    "end": 1250.17,
+    "text": "Ok, thì đấy là hàm tạo"
+  },
+  {
+    "start": 1250.17,
+    "end": 1257.17,
+    "text": "thì ở trong hàm tạo, tức là các bạn hình dung cái hàm tạo này nó có chức năng là khởi tạo các cái thông tin cho các cái thuộc tính"
+  },
+  {
+    "start": 1257.17,
+    "end": 1261.93,
+    "text": "Anh ví dụ như bây giờ cái hàm tạo sản phẩm này của anh ấy, anh trả có gán mã tên và giá đâu"
+  },
+  {
+    "start": 1261.93,
+    "end": 1265.89,
+    "text": "Thì thường cái thuộc tính mã tên và giá nó sẽ là cái ngỗ nhiên"
+  },
+  {
+    "start": 1265.89,
+    "end": 1267.45,
+    "text": "Đây, anh gọi hiển thị này"
+  },
+  {
+    "start": 1267.45,
+    "end": 1271.95,
+    "text": "Mã tên và giá nó sẽ ngỗ nhiên, mã và tên là chuỗi, nó thường là sâu dỗng"
+  },
+  {
+    "start": 1271.95,
+    "end": 1275.03,
+    "text": "Còn giá thì nó là số đáp bồ, thường là số không"
+  },
+  {
+    "start": 1275.03,
+    "end": 1279.75,
+    "text": "Nhưng mà các trong cái hàm tạo này các bạn có thể khỏi tạo thông tin luôn cho thuộc tính được"
+  },
+  {
+    "start": 1279.75,
+    "end": 1284.51,
+    "text": "Ví dụ như cứ mỗi lần mà bọn em gọi hàm tạo ấy, em sẽ gán mã nó bằng sản phẩm 000"
+  },
+  {
+    "start": 1284.51,
+    "end": 1287.27,
+    "text": "Đúng không? Tên nó là sản phẩm trang hạn"
+  },
+  {
+    "start": 1287.27,
+    "end": 1290.47,
+    "text": "và giá nó bằng không đồng chẳng hạn"
+  },
+  {
+    "start": 1290.47,
+    "end": 1291.87,
+    "text": "thì bây giờ nó ngược lại"
+  },
+  {
+    "start": 1291.87,
+    "end": 1295.07,
+    "text": "bây giờ bọn em cứ khai báo ra một cái đối tượng nào thuộc lớp sản phẩm ấy"
+  },
+  {
+    "start": 1295.07,
+    "end": 1298.57,
+    "text": "thì cái thuộc tính mã tên và giá của cái sản phẩm đấy nó sẽ được gán như này"
+  },
+  {
+    "start": 1298.57,
+    "end": 1301.5,
+    "text": "đấy nó sẽ được gán như vậy"
+  },
+  {
+    "start": 1301.5,
+    "end": 1306.23,
+    "text": "ví dụ như sản phẩm S cũng vậy mà sản phẩm T cũng vậy"
+  },
+  {
+    "start": 1306.23,
+    "end": 1308.33,
+    "text": "tại vì bọn này nó đều gọi hàm tạo đó mà"
+  },
+  {
+    "start": 1308.33,
+    "end": 1310.73,
+    "text": "mà trong hàm tạo đó thì mình lại gán luôn cho"
+  },
+  {
+    "start": 1310.73,
+    "end": 1313.23,
+    "text": "các cái thuộc tính mã tên và giá cho nó rồi"
+  },
+  {
+    "start": 1313.23,
+    "end": 1315.66,
+    "text": "đây thấy không"
+  },
+  {
+    "start": 1315.66,
+    "end": 1316.86,
+    "text": "đấy"
+  },
+  {
+    "start": 1316.86,
+    "end": 1323.15,
+    "text": "Hàm tạo, hàm luôn được gọi khi mà các bạn em khai báo ra một cái đối tượng thuộc lớp đó"
+  },
+  {
+    "start": 1323.15,
+    "end": 1327.07,
+    "text": "Và các bạn có thể xây dựng các hàm tạo mà nó có nhiều tham số"
+  },
+  {
+    "start": 1327.07,
+    "end": 1332.35,
+    "text": "Thông thường thì người ta sẽ xây dựng thêm cái hàm tạo mà nó có cả 3 cái tham số là mã, tên và giá luôn"
+  },
+  {
+    "start": 1332.35,
+    "end": 1336.43,
+    "text": "Mà đây anh sẽ xây dựng một cái hàm tạo thêm, là sản phẩm"
+  },
+  {
+    "start": 1336.43,
+    "end": 1340.35,
+    "text": "Có 3 tham số cơ, string m, string t và double G"
+  },
+  {
+    "start": 1340.35,
+    "end": 1345.19,
+    "text": "Ở trong này anh sẽ gán mã thì bằng m, tên thì bằng t"
+  },
+  {
+    "start": 1345.19,
+    "end": 1348.0,
+    "text": "và ré thì bằng gờ"
+  },
+  {
+    "start": 1348.0,
+    "end": 1350.2,
+    "text": "thì khi đó mình sẽ có 2 hàm tạo"
+  },
+  {
+    "start": 1350.2,
+    "end": 1353.56,
+    "text": "thế thì trong bên này này, tuy em khai báo cái đối tượng như thế nào"
+  },
+  {
+    "start": 1353.56,
+    "end": 1358.6,
+    "text": "nếu mà em khai báo đối tượng sản phẩm F như thế này, nó sẽ gọi cái hàm tạo này, tại vì mình không có tham số"
+  },
+  {
+    "start": 1358.6,
+    "end": 1363.7,
+    "text": "còn nếu mà các bạn khai báo sản phẩm T, nhưng mà mình lại chuyển 3 tham số vào, ví dụ"
+  },
+  {
+    "start": 1363.7,
+    "end": 1365.9,
+    "text": "sản phẩm 001 đúng không?"
+  },
+  {
+    "start": 1365.9,
+    "end": 1367.8,
+    "text": "à..."
+  },
+  {
+    "start": 1367.8,
+    "end": 1369.84,
+    "text": "quần DIN đi"
+  },
+  {
+    "start": 1369.84,
+    "end": 1371.68,
+    "text": "500k được chưa?"
+  },
+  {
+    "start": 1371.68,
+    "end": 1372.64,
+    "text": "rồi"
+  },
+  {
+    "start": 1372.64,
+    "end": 1376.4,
+    "text": "thì bây giờ cái thằng T này này, nó lại được khởi tạo bằng cái hàm tạo này"
+  },
+  {
+    "start": 1376.4,
+    "end": 1378.84,
+    "text": "Thế vì mình chuyển ba tham số mà, được chìa?"
+  },
+  {
+    "start": 1378.84,
+    "end": 1382.54,
+    "text": "Thì khi đó cái thông tin của T, nó sẽ giống như cái tham số mà em đã chuyển vào"
+  },
+  {
+    "start": 1383.81,
+    "end": 1384.45,
+    "text": "Thấy không?"
+  },
+  {
+    "start": 1384.97,
+    "end": 1387.33,
+    "text": "Đây là ông F nhá, còn đây là ông T"
+  },
+  {
+    "start": 1387.96,
+    "end": 1391.16,
+    "text": "Nhưng mà nhiều bạn mắc cái lỗi này mà không biết, đấy là"
+  },
+  {
+    "start": 1391.76,
+    "end": 1395.44,
+    "text": "Trong cái lớp này này, bọn em chỉ có xây dựng cái hàm tạo mà nó có ba tham số này thôi"
+  },
+  {
+    "start": 1395.99,
+    "end": 1397.75,
+    "text": "Thì khi mà các bạn chạy nó sẽ bao lỗi đấy"
+  },
+  {
+    "start": 1398.27,
+    "end": 1403.15,
+    "text": "Tại vì nếu mà trong cái lớp sản phẩm này, bọn em thì nó chỉ có cái hàm tạo mà nó có ba tham số như thế này ấy"
+  },
+  {
+    "start": 1403.15,
+    "end": 1406.55,
+    "text": "Thì trong bên, các bạn cũng phải khai báo ra một cái đối tượng mà nó có ba tham số"
+  },
+  {
+    "start": 1406.55,
+    "end": 1410.72,
+    "text": "Khi mà mình gọi hàm tạo, mình khai báo đối tượng thì mình phải chuyển 3 tham số vào"
+  },
+  {
+    "start": 1410.72,
+    "end": 1415.92,
+    "text": "Chứ khai báo S như thế này thì nó sẽ thông báo là nó không có cái hàm tạo nào phù hợp cho cái đối tượng S này"
+  },
+  {
+    "start": 1415.92,
+    "end": 1420.32,
+    "text": "Tại vì bạn em đang muốn một cái hàm tạo không có tham số mà mình lại xóa mất nữa rồi, đúng không?"
+  },
+  {
+    "start": 1420.32,
+    "end": 1424.12,
+    "text": "Nói, nó sẽ báo lỗi ngay để chờ no matching function for code này"
+  },
+  {
+    "start": 1424.12,
+    "end": 1431.52,
+    "text": "Cái nên là nếu mà các bạn muốn vừa muốn khai báo cái hàm tạo đối tượng mà nó không có tham số thì mình dữ lại cái thằng này nữa nhá"
+  },
+  {
+    "start": 1431.52,
+    "end": 1435.12,
+    "text": "Kể cái bạn em không làm gì ở trong này cũng được"
+  },
+  {
+    "start": 1435.12,
+    "end": 1438.72,
+    "text": "Ok chìa, không dám gì cũng được, không sao"
+  },
+  {
+    "start": 1438.72,
+    "end": 1446.07,
+    "text": "Họ là các bạn có thể xây dựng hàm tạo có nhiều tham số cũng được, không sao nhé"
+  },
+  {
+    "start": 1446.07,
+    "end": 1450.07,
+    "text": "Tức là xây dựng mình có thể xây dựng nhiều hàm tạo, người ta gọi nạp trồng, nạp trồng nhiều hàm tạo khác nhau"
+  },
+  {
+    "start": 1450.07,
+    "end": 1469.41,
+    "text": "Rồi, có câu hỏi gì không các bạn?"
+  },
+  {
+    "start": 1469.41,
+    "end": 1474.41,
+    "text": "Rồi, thế thì có một lưu ý nữa, đấy chính là nó có một cái khái niệm là con trò zít"
+  },
+  {
+    "start": 1474.41,
+    "end": 1480.56,
+    "text": "Ở đây nhé, ví dụ như cái hàm tạo sản phẩm này, cái thuộc tính anh đặt lại là"
+  },
+  {
+    "start": 1480.56,
+    "end": 1482.56,
+    "text": "là tên là mã, tên và giá chẳng hạn"
+  },
+  {
+    "start": 1482.56,
+    "end": 1488.8,
+    "text": "Thì khi đó, bạn em thấy là nó sẽ có sự trùng nhau giữa tham số và thuộc tính"
+  },
+  {
+    "start": 1488.8,
+    "end": 1494.24,
+    "text": "Nên là nếu mà mình sẽ gán là mãi bằng mã tên và giá bằng giá thì nó sẽ rất là nguy hiểm"
+  },
+  {
+    "start": 1494.24,
+    "end": 1500.44,
+    "text": "Tại vì khi đó, nó sẽ gán tham số mã này cho chính nó, tên để cho chính nó và giá này cho chính nó"
+  },
+  {
+    "start": 1500.44,
+    "end": 1505.32,
+    "text": "Chứ nó không lấy 3 tham số mà em gửi vào hàn tạo này để nó khởi tạo cho 3 thuộc tính đâu"
+  },
+  {
+    "start": 1505.32,
+    "end": 1509.4,
+    "text": "Tại vì bây giờ nó chung tên, nên là các bạn biết rồi, học phạm VGCP rồi"
+  },
+  {
+    "start": 1509.4,
+    "end": 1513.84,
+    "text": "thì nó sẽ lấy má này nó gán cho chính nó, tên nó gán cho chính nó, và giá nó gán cho chính nó"
+  },
+  {
+    "start": 1513.84,
+    "end": 1518.56,
+    "text": "Thế thì khi mà các bạn xây dựng cái hàm tạo mà nó chùng tên tham số với thuộc tính ấy"
+  },
+  {
+    "start": 1518.56,
+    "end": 1522.2,
+    "text": "thì người ta sẽ cần phải phân biệt giữa tham số và thuộc tính"
+  },
+  {
+    "start": 1522.2,
+    "end": 1527.53,
+    "text": "bằng cách là người ta sẽ cho con trỏ zip vào trước thuộc tính như này"
+  },
+  {
+    "start": 1527.53,
+    "end": 1530.69,
+    "text": "Nếu mà anh viết là zip.má thì khi đó nó sẽ hiểu"
+  },
+  {
+    "start": 1530.69,
+    "end": 1533.33,
+    "text": "cái zip.má này là thuộc tính mạ"
+  },
+  {
+    "start": 1533.33,
+    "end": 1535.17,
+    "text": "còn cái thằng mạ này là tham số"
+  },
+  {
+    "start": 1535.17,
+    "end": 1539.57,
+    "text": "zip.tên là thuộc tính tên của lớp sản phẩm và zip.já thì là"
+  },
+  {
+    "start": 1539.57,
+    "end": 1541.77,
+    "text": "thuộc tính giá của cái lớp sản phẩm này"
+  },
+  {
+    "start": 1541.77,
+    "end": 1545.77,
+    "text": "thì khi đó mình nhìn vào đây phát là mình đang biết ngay là mình đang muốn cái thời gian tham số"
+  },
+  {
+    "start": 1545.77,
+    "end": 1549.27,
+    "text": "tham số cho thuộc tính, tham số cho thuộc tính, tham số cho thuộc tính"
+  },
+  {
+    "start": 1549.27,
+    "end": 1551.27,
+    "text": "chứ các bạn mà bỏ cái con trò zít này ấy"
+  },
+  {
+    "start": 1551.27,
+    "end": 1554.47,
+    "text": "thì bọn em phải đặt tham số này nó khác tên đi"
+  },
+  {
+    "start": 1554.47,
+    "end": 1556.47,
+    "text": "chứ không được đặt tên chung với thuộc tính"
+  },
+  {
+    "start": 1556.47,
+    "end": 1559.47,
+    "text": "nhưng mà người ta lại rất hay đặt tên tham số chung với thuộc tính"
+  },
+  {
+    "start": 1559.47,
+    "end": 1561.97,
+    "text": "nên là mình sẽ phải có thêm con trò zít ở đằng trước"
+  },
+  {
+    "start": 1561.97,
+    "end": 1563.6,
+    "text": "để nó phân biệt"
+  },
+  {
+    "start": 1563.6,
+    "end": 1565.6,
+    "text": "và trong cả ham set nữa"
+  },
+  {
+    "start": 1565.6,
+    "end": 1566.6,
+    "text": "ham set ấy"
+  },
+  {
+    "start": 1566.6,
+    "end": 1570.3,
+    "text": "mấy dụ nhanh có một cái ham là set tên đúng không?"
+  },
+  {
+    "start": 1570.3,
+    "end": 1574.9,
+    "text": "Các bạn sẽ gán dít mũi tên tên bằng với tên"
+  },
+  {
+    "start": 1574.9,
+    "end": 1579.74,
+    "text": "Thì thường con trò dít này bọn em hay dùng ở trong hàm tạo"
+  },
+  {
+    "start": 1579.74,
+    "end": 1587.95,
+    "text": "và ở trong hàm ghét xin lỗi hàm xét khi mà nó có sự trùng nhau giữa thuộc tính và tham số"
+  },
+  {
+    "start": 1587.95,
+    "end": 1590.43,
+    "text": "Còn ở chỗ khác các bạn dùng cũng được không sao"
+  },
+  {
+    "start": 1590.43,
+    "end": 1592.67,
+    "text": "Ví dụ như ở trong hàm hiển thị thông tin này này"
+  },
+  {
+    "start": 1592.67,
+    "end": 1597.75,
+    "text": "Cái chỗ mã tên và giá này hoàn toàn anh có thể cho con trò dít vào được"
+  },
+  {
+    "start": 1597.75,
+    "end": 1600.24,
+    "text": "Cho con trò dít vào được"
+  },
+  {
+    "start": 1600.24,
+    "end": 1608.04,
+    "text": "nhưng mà nó không cần thiết, tại vì nó không có cái sự nhập nhằn, nó không có cái sự trùng tên giữa tham số và thuộc tính nên là mình không cần thiết"
+  },
+  {
+    "start": 1608.04,
+    "end": 1611.72,
+    "text": "OK, đấy, thì đấy là phần con trỏ zít"
+  },
+  {
+    "start": 1611.72,
+    "end": 1617.73,
+    "text": "Thế thôi, vậy là các bạn có thể xây dựng được lớp rồi đúng không?"
+  },
+  {
+    "start": 1617.73,
+    "end": 1623.6,
+    "text": "Bây giờ ví dụ như nó bắt bạn em nhập thông tin có 1 cái sản phẩm từ bàn phím"
+  },
+  {
+    "start": 1623.6,
+    "end": 1628.8,
+    "text": "ví dụ sản phẩm 001, đúng không? TV, đấy, giá là 5 triệu chẳng hạn"
+  },
+  {
+    "start": 1628.8,
+    "end": 1634.16,
+    "text": "Bây giờ, bạn em muốn nhập thông tin kia từ bàn phím, đây là mẽ, đây là tên, đây là giá của sản phẩm thì"
+  },
+  {
+    "start": 1634.16,
+    "end": 1646.8,
+    "text": "Các bạn thích các bạn có thể viết 1 hạm nhập dãn được, nhưng mà thường thì anh sẽ thích viết như sau là anh sẽ khai báo ra 3 cái thạc biến là mã tên và đắp bổ giá sau đó anh nhập từ bàn phím"
+  },
+  {
+    "start": 1646.8,
+    "end": 1655.1,
+    "text": "GetLine, seeIn, mã, GetLine, seeIn, tên, và các bạn seeIn cho giá"
+  },
+  {
+    "start": 1655.1,
+    "end": 1664.83,
+    "text": "Sau đó mình mới khai báo ra 1 cái đối tượng sản phẩm S từ 3 cái thông tin mà mình vừa nhập mã, tên và giá, sau đó thì anh gọi S.hiển thị"
+  },
+  {
+    "start": 1664.83,
+    "end": 1667.7,
+    "text": "Nó sẽ in ra thông tin thôi"
+  },
+  {
+    "start": 1667.7,
+    "end": 1670.48,
+    "text": "Thế thôi"
+  },
+  {
+    "start": 1670.48,
+    "end": 1672.48,
+    "text": "Thường mình thích dùng cách này hơn"
+  },
+  {
+    "start": 1672.48,
+    "end": 1676.52,
+    "text": "Thầm hủy tin được anh sẽ nói cái đó"
+  },
+  {
+    "start": 1676.52,
+    "end": 1679.47,
+    "text": "Mẹ nó hiện thị số thức nhé"
+  },
+  {
+    "start": 1679.47,
+    "end": 1683.47,
+    "text": "Còn không thì bạn em thích, bạn em viết hẳn cho anh 1 cái hạm nhập ở trong này cũng được"
+  },
+  {
+    "start": 1683.47,
+    "end": 1686.54,
+    "text": "Hạm nhập thông tin thì bàn phí mệnh, void nhập"
+  },
+  {
+    "start": 1686.54,
+    "end": 1689.54,
+    "text": "Thì ở trong này bạn em sẽ get like cho cái thuộc tính mẹ"
+  },
+  {
+    "start": 1689.54,
+    "end": 1692.54,
+    "text": "Xin lỗi mẹ trước đúng không?"
+  },
+  {
+    "start": 1692.54,
+    "end": 1694.54,
+    "text": "Sau mẹ em get like tên"
+  },
+  {
+    "start": 1694.54,
+    "end": 1697.46,
+    "text": "Sau đó em see in cho anh rẻ"
+  },
+  {
+    "start": 1697.46,
+    "end": 1702.98,
+    "text": "cout, min, print"
+  },
+  {
+    "start": 1702.98,
+    "end": 1707.39,
+    "text": "ut, cout"
+  },
+  {
+    "start": 1707.39,
+    "end": 1709.87,
+    "text": "min J"
+  },
+  {
+    "start": 1709.87,
+    "end": 1712.47,
+    "text": "min i"
+  },
+  {
+    "start": 1712.47,
+    "end": 1716.01,
+    "text": "min cout"
+  },
+  {
+    "start": 1716.01,
+    "end": 1719.71,
+    "text": "min i"
+  },
+  {
+    "start": 1719.71,
+    "end": 1721.83,
+    "text": "min id"
+  },
+  {
+    "start": 1721.83,
+    "end": 1732.91,
+    "text": "Bây giờ các bạn sẽ làm luôn cho anh cái bài student class aner, coutnorn rồi đúng không?"
+  },
+  {
+    "start": 1732.91,
+    "end": 1740.29,
+    "text": "Đây nó bắt các bạn xây dựng một cái lớp là lớp sinh viên, có các thuộc tính là má, họ tên Ngài sinh lớp và gpair,"
+  },
+  {
+    "start": 1740.29,
+    "end": 1746.46,
+    "text": "thì bốn khi thuộc tính đầu tiên này là string, còn gpair thì mình em sẽ knew là double."
+  },
+  {
+    "start": 1746.46,
+    "end": 1753.66,
+    "text": "Ở đây nó sẽ có 3 hạm, một là hạm tạo không có tham số này, một hạm tạo có cả 5 tham số và một hạm có tên"
+  },
+  {
+    "start": 1753.66,
+    "end": 1756.1,
+    "text": "print information để bọn em in thông tin"
+  },
+  {
+    "start": 1756.1,
+    "end": 1759.98,
+    "text": "sau đó thì nó bắt các bạn nhập thông tin của một sinh viên từ bàn phiếm"
+  },
+  {
+    "start": 1759.98,
+    "end": 1762.46,
+    "text": "và in thông tin của sinh viên đấy ra màn hình"
+  },
+  {
+    "start": 1762.46,
+    "end": 1765.46,
+    "text": "với ge in 2 trị số đằng sau dấu phẩy"
+  },
+  {
+    "start": 1765.46,
+    "end": 1768.7,
+    "text": "thế thì khi mà bọn em nhìn vào một cái lớp ấy"
+  },
+  {
+    "start": 1768.7,
+    "end": 1770.42,
+    "text": "mà bọn em thấy cái thuộc tính này này"
+  },
+  {
+    "start": 1770.42,
+    "end": 1772.42,
+    "text": "nó có cái dấu trừ ở đằng trước này này"
+  },
+  {
+    "start": 1772.42,
+    "end": 1775.3,
+    "text": "thì cái dấu trừ này nó thể hiện cái phạm V"
+  },
+  {
+    "start": 1775.3,
+    "end": 1777.3,
+    "text": "truy cập là private"
+  },
+  {
+    "start": 1777.3,
+    "end": 1779.59,
+    "text": "dấu trừ là private"
+  },
+  {
+    "start": 1779.59,
+    "end": 1781.27,
+    "text": "còn các cái thuộc tính này nó có dấu cộng này"
+  },
+  {
+    "start": 1781.27,
+    "end": 1784.15,
+    "text": "Thì nó thể hiện là các cái hàm này của bà em là các cái hàm public"
+  },
+  {
+    "start": 1784.71,
+    "end": 1790.55,
+    "text": "Đúng như cái mà các bạn hãy thiết kế để chính là thuộc tính thì là private, còn phương thức thì là public"
+  },
+  {
+    "start": 1790.79,
+    "end": 1795.83,
+    "text": "Nói chứ không phải thự nhiên người ta để dấu trực với dấu cộng đâu, nó có ý nghĩa cả đấy các bạn"
+  },
+  {
+    "start": 1796.15,
+    "end": 1798.15,
+    "text": "Rồi, bây giờ bà em làm cho anh cái bài số 1 này"
+  },
+  {
+    "start": 1798.39,
+    "end": 1800.87,
+    "text": "Trong 5 phút sau đó thì anh sẽ hướng dẫn, nha"
+  },
+  {
+    "start": 1801.27,
+    "end": 1802.23,
+    "text": "Làm 1 class"
+  },
+  {
+    "start": 1803.57,
+    "end": 1808.85,
+    "text": "Nếu đã gọi hàm tạo của S 1 lần rồi, xong lại gọi hàm tạo của S 1 lần nữa với 3 thông tin"
+  },
+  {
+    "start": 1808.85,
+    "end": 1812.29,
+    "text": "khác lần gọi đầu thì nó vẫn thay đổi thông tin cho em"
+  },
+  {
+    "start": 1812.29,
+    "end": 1816.13,
+    "text": "nếu mà em đã khai báo, thông tin, hạm tạo nó chỉ gọi một lần thôi"
+  },
+  {
+    "start": 1816.13,
+    "end": 1820.85,
+    "text": "lúc mà em khai báo ra, ra ra, ba cái ký ký"
+  },
+  {
+    "start": 1820.85,
+    "end": 1828.52,
+    "text": "lần đầu em gọi, một là em gọi luôn, không có tham số, hai là em gọi đầy đủ ba tham số"
+  },
+  {
+    "start": 1828.52,
+    "end": 1831.0,
+    "text": "mình không gọi lần thứ nhất, lần thứ hai, lần thứ ba đâu"
+  },
+  {
+    "start": 1831.0,
+    "end": 1831.88,
+    "text": "nha"
+  },
+  {
+    "start": 1831.88,
+    "end": 1842.96,
+    "text": "nếu các bạn cốt bài này trong năm hoặc là 6 phút sau đó anh sẽ hướng dẫn"
+  },
+  {
+    "start": 1842.96,
+    "end": 1848.8,
+    "text": "Cout nhanh cái tay lên thì các bạn có thể tham khảo cái lớp sản phẩm của anh để cốt tương tự"
+  },
+  {
+    "start": 1850.18,
+    "end": 1853.1,
+    "text": "Nếu mà bạn em thích thì bạn em có thể viết hạm nhập và hạm hiển thị"
+  },
+  {
+    "start": 1854.02,
+    "end": 1857.86,
+    "text": "Nhập thông tin của sinh viên từ bàn phím và hiển thị thông tin của sinh viên ra màn hình"
+  },
+  {
+    "start": 1858.06,
+    "end": 1863.34,
+    "text": "Hay là các bạn có thể nhập các biến sau đó thì mình gọi hạm tạo sinh viên sau đó mình in ra là được"
+  },
+  {
+    "start": 1865.36,
+    "end": 1867.04,
+    "text": "Bài này thì quá là dễ rồi đúng không?"
+  },
+  {
+    "start": 1868.32,
+    "end": 1871.88,
+    "text": "Nhưng mà hôm trước các bạn làm bằng struct thì hôm nay bà em làm bằng class struct"
+  },
+  {
+    "start": 1871.88,
+    "end": 1875.69,
+    "text": "Thế thôi, mình đã biết cách xây dựng lớp rồi, đúng không?"
+  },
+  {
+    "start": 1875.69,
+    "end": 1885.24,
+    "text": "Ý em gọi là gọi 2 lần đều đủ tham số, nếu mà em gọi 2 lần thì nó sẽ tạo ra 2 biến khác nhau"
+  },
+  {
+    "start": 1885.24,
+    "end": 1890.44,
+    "text": "còn nếu mà em gọi 2 lần mà em đặt tên chung biến thì nó sẽ báo lỗi, thế thôi"
+  },
+  {
+    "start": 1890.44,
+    "end": 1899.04,
+    "text": "Đúng không? Có phải bây giờ em khai báo ra, em gọi 2 lần thì là nếu mà chung tên là nó báo lỗi không?"
+  },
+  {
+    "start": 1899.04,
+    "end": 1904.25,
+    "text": "Còn nếu mà em khai báo ra 2 biến khác tên thì nó không ảnh hưởng gì"
+  },
+  {
+    "start": 1904.25,
+    "end": 1910.17,
+    "text": "Đây, các bạn làm cái bài này xem nào"
+  },
+  {
+    "start": 1910.17,
+    "end": 1921.46,
+    "text": "Đấy thì các bạn chỉ cần bỏ ra 1 tiếng, 2 tiếng nên là các bạn biết lập trình hướng đối tượng là gì, biết private là gì, biết public là gì, biết ham ghét, ham set rồi, constructor các thứ đúng không"
+  },
+  {
+    "start": 1921.46,
+    "end": 1923.46,
+    "text": "Biết xây dựng lớp và làm các các bài tập"
+  },
+  {
+    "start": 1923.46,
+    "end": 1928.46,
+    "text": "Nó là kỹ năng cực kỳ cơ bản và cần thiết, nhưng mà nếu mà các bạn không bỏ thời gian ra tìm hiểu"
+  },
+  {
+    "start": 1928.46,
+    "end": 1931.46,
+    "text": "Thì có khi các bạn đang ký học ở tháng 4 đúng không?"
+  },
+  {
+    "start": 1931.46,
+    "end": 1935.46,
+    "text": "Đang nghĩa là học đến tháng 6 là mình đã xong rồi và mình biết lập trình hướng đối tượng rồi"
+  },
+  {
+    "start": 1935.46,
+    "end": 1965.46,
+    "text": "Các bạn nhắc là lập chính hơn nối tượng, mình vẫn mu mơ, mình trả biết nó là cái gì, nói chung thời gian học tập của các bạn là có hạn, nên là tranh thủ học càng sớm càng tốt, tranh thủ tích lưỡi những lúc mà người ta chảnh mạng, người ta không chịu khó học hành, đấy là thời điểm tốt để mình học tập, mình phân đấu, tại vì thời hạn học đại học thì nó cũng như nhau, 4-5 năm ông nào ra trường buộn thì được thêm 1-2 năm nữa,"
+  },
+  {
+    "start": 1965.46,
+    "end": 1971.74,
+    "text": "Đúng không? Nhưng mà tính ra thì nó cũng vẫn là vào thời gian ở cái giai đoạn thanh niên của các bạn kẻ"
+  },
+  {
+    "start": 1971.74,
+    "end": 1977.0,
+    "text": "Nhưng mà các bạn chăm chỉ học hành nghiêm túc thì các bạn chỉ mất 4-5 năm"
+  },
+  {
+    "start": 1977.0,
+    "end": 1981.64,
+    "text": "Các bạn học tập, còn không thì các bạn này mất 6-7 năm thậm chí nhiều hơn"
+  },
+  {
+    "start": 1981.64,
+    "end": 1987.0,
+    "text": "Mà riêng những ông nào mà đã mất 6-7 năm rồi thì giai trường nói chung là nó cũng rất là khó khăn"
+  },
+  {
+    "start": 1987.0,
+    "end": 1990.6,
+    "text": "Tại vì nó đều thuộc vào kiểu là đã lừa học rồi"
+  },
+  {
+    "start": 1990.6,
+    "end": 2002.38,
+    "text": "nên là ra trường kiến thức nó cũng có khi cũng trả ngon lành, khó sin việp các bạn"
+  },
+  {
+    "start": 2002.38,
+    "end": 2004.3,
+    "text": "hằng anh rồi này"
+  },
+  {
+    "start": 2004.3,
+    "end": 2008.3,
+    "text": "đây có mấy bạn cốt trước rồi, chỗ ý cho nó cốt trước rồi"
+  },
+  {
+    "start": 2008.3,
+    "end": 2013.0,
+    "text": "nhưng mà chắc là cốt bằng struct, đúng không?"
+  },
+  {
+    "start": 2013.0,
+    "end": 2309.21,
+    "text": "bọn em cốt bằng OOP đi"
+  },
+  {
+    "start": 2309.21,
+    "end": 2312.44,
+    "text": "ok, có vẻ các bạn cốt hơi chậm, đúng không?"
+  },
+  {
+    "start": 2312.44,
+    "end": 2324.44,
+    "text": "bây giờ anh sẽ xây dựng lớp sinh viên này"
+  },
+  {
+    "start": 2324.44,
+    "end": 2357.72,
+    "text": "class, talim, private, mãt, claud, mold, transform, custom, tablefoot result,"
+  },
+  {
+    "start": 2357.72,
+    "end": 2376.23,
+    "text": "dít mũi tên mẹ bằng mẹ, dít mũi tên tên bằng tên, ngay sinh, lớp, gpa, ok"
+  },
+  {
+    "start": 2376.23,
+    "end": 2381.23,
+    "text": "sau đó mình biết 1 hàm hiển thị, thông tin, void, hiển thị"
+  },
+  {
+    "start": 2381.23,
+    "end": 2395.3,
+    "text": "các bạn sẽ hiển thị lần lượt các thông tin mà người ta yêu cầu là mẹ, tên, ngay sinh, lớp, gpa với 2 số đằng sau đột phải"
+  },
+  {
+    "start": 2395.3,
+    "end": 2435.4,
+    "text": "Trong bên này, tiến hành khai báo ra mấy biến thôi, mình nhập tìm bàn phí, để các bạn sẽ khai báo ra mấy biến, mẹ, tên, ngày sinh, lớp, lớp bồ, gpa, sau đó các bạn ghét like, ghét like, see in, mẹ, ghét like, see in, tên, ghét like, see in, ngày sinh, ghét like, see in, lớp và các bạn see in cho gpa"
+  },
+  {
+    "start": 2435.4,
+    "end": 2444.36,
+    "text": "sau đó thì bọn em tạo ra cho mình 1 cái sinh viên S, mẹ, tên, ngay sinh, lớp, gpa, sau đó mình S, hiển thị, xong"
+  },
+  {
+    "start": 2444.36,
+    "end": 2450.16,
+    "text": "thế thôi, bạn nào thích thì có thể viết hạm nhập, nhưng mà anh thì thích cái cách này hơn"
+  },
+  {
+    "start": 2450.16,
+    "end": 2458.7,
+    "text": "cũng được, ok, vậy là xong rồi các bạn, nếu bạn lấy và sắp mít là xong rồi thôi"
+  },
+  {
+    "start": 2458.7,
+    "end": 2468.8,
+    "text": "thế thì cái bài số 2 này các bạn này, cái bài số 2 này thì nó vẫn là cái lớp sinh viên đó"
+  },
+  {
+    "start": 2468.8,
+    "end": 2474.16,
+    "text": "nhưng mà bây giờ cái thông tin về tên và ngay sinh của sinh viên nó chưa có chuẩn"
+  },
+  {
+    "start": 2474.16,
+    "end": 2476.66,
+    "text": "thì nó bắt các bạn phải chuẩn hóa trước, bắt đầu mình in"
+  },
+  {
+    "start": 2476.66,
+    "end": 2480.0,
+    "text": "thì bây giờ bạn em xây dựng thêm cho anh 1 hàm chức năng"
+  },
+  {
+    "start": 2480.0,
+    "end": 2483.98,
+    "text": "để chuẩn hóa sinh thông tin về ngay sinh và tên"
+  },
+  {
+    "start": 2483.98,
+    "end": 2487.08,
+    "text": "thì bây giờ trong cái lớp sinh viên này, anh sẽ xây dựng thêm 1 hàm"
+  },
+  {
+    "start": 2487.08,
+    "end": 2488.52,
+    "text": "là hàm chuẩn hóa tên"
+  },
+  {
+    "start": 2488.52,
+    "end": 2491.02,
+    "text": "các bạn biết chuẩn hóa tên ở phần string rồi đúng không?"
+  },
+  {
+    "start": 2491.02,
+    "end": 2494.33,
+    "text": "anh sẽ attack nó ra này"
+  },
+  {
+    "start": 2494.33,
+    "end": 2496.33,
+    "text": "sau đó anh dùng cái rest này"
+  },
+  {
+    "start": 2496.33,
+    "end": 2497.93,
+    "text": "và 1 cái sâu rỗng này"
+  },
+  {
+    "start": 2497.93,
+    "end": 2505.61,
+    "text": "Why? Này, không nói lại nữa nhé, ss ngũi tên vkf này các bạn sẽ cho res, cộng bằng tu uppers của vkf0 này chuẩn hóa tên"
+  },
+  {
+    "start": 2505.61,
+    "end": 2511.3,
+    "text": "for innerti bằng 1i nhỏ hơn vkf.side"
+  },
+  {
+    "start": 2511.3,
+    "end": 2516.74,
+    "text": "i cộng cộng mình sẽ cho res cộng bằng tu lau y của vkf i, rồi xong các bạn cộng thêm 1 cái dô cách ở đây"
+  },
+  {
+    "start": 2516.74,
+    "end": 2522.74,
+    "text": "các bạn red.popback sau đó phải gán ngược lại cho anh cái thuộc tính mẽ, thuộc tính tên bằng red nhé"
+  },
+  {
+    "start": 2522.74,
+    "end": 2525.22,
+    "text": "không gán ngược lại là không có chuẩn hóa đâu"
+  },
+  {
+    "start": 2525.22,
+    "end": 2530.98,
+    "text": "Thì tí nữa ở trong men khi mình có một cái đối tượng thuộc lớp sinh viên mà các bạn muốn chuẩn hóa tên về dạng chuẩn"
+  },
+  {
+    "start": 2530.98,
+    "end": 2532.98,
+    "text": "Các bạn gọi chuẩn hóa tên là sao?"
+  },
+  {
+    "start": 2532.98,
+    "end": 2537.17,
+    "text": "Ok, viết thêm cái hàm chuẩn hóa ngày sinh nữa"
+  },
+  {
+    "start": 2537.17,
+    "end": 2541.17,
+    "text": "Đấy, các bạn kiểm tra íp ngày sinh ở chỉ số 1"
+  },
+  {
+    "start": 2541.17,
+    "end": 2547.56,
+    "text": "Vào vàng dấu cách chéo, bạn em cho thêm một số 0 vào đầu"
+  },
+  {
+    "start": 2547.56,
+    "end": 2555.77,
+    "text": "Nếu mà ngày sinh ở chỉ số 4 và bằng dấu cách chéo, các bạn chỉ ăn thêm cái số 0 và chỉ số 3 đúng không?"
+  },
+  {
+    "start": 2555.77,
+    "end": 2558.11,
+    "text": "Rồi, ok, nọ"
+  },
+  {
+    "start": 2558.11,
+    "end": 2562.87,
+    "text": "Thế thôi, trong bên mình vẫn nhập thông tin bình thường nhưng mà bây giờ cái tên và cái ngay sinh nó chưa chuẩn"
+  },
+  {
+    "start": 2562.87,
+    "end": 2566.71,
+    "text": "nên là trước khi mà bạn em bị hiện thị thì bạn em gọi S chấm chuẩn hóa tên"
+  },
+  {
+    "start": 2566.71,
+    "end": 2569.79,
+    "text": "với lại bọn em gọi S chấm chuẩn hóa ngay sinh"
+  },
+  {
+    "start": 2569.79,
+    "end": 2574.99,
+    "text": "rồi hẳn in nhé, thì khi đó cái phần tên và phần ngay sinh của mình nó sẽ được chuẩn hóa"
+  },
+  {
+    "start": 2574.99,
+    "end": 2578.59,
+    "text": "Thì đấy là bài số 2 nhé"
+  },
+  {
+    "start": 2578.59,
+    "end": 2584.7,
+    "text": "Tức là khi mà bạn em xây dựng lớp thì mình cảm thấy nó cần các hành chức năng nào thì các bạn"
+  },
+  {
+    "start": 2584.7,
+    "end": 2587.5,
+    "text": "mạnh dạn mà xây dựng thêm các hành chức năng đấy nhỉ"
+  },
+  {
+    "start": 2587.5,
+    "end": 2593.42,
+    "text": "Còn cái bài số 3 thì anh nghĩ là các bạn tự cốt được"
+  },
+  {
+    "start": 2593.42,
+    "end": 2597.42,
+    "text": "Bài số 3 thì nó ấn bắt bọn em xây dựng một cái lớp, tương tự như cái lớp sinh viên thôi"
+  },
+  {
+    "start": 2597.42,
+    "end": 2599.42,
+    "text": "Đấy chính là một cái lớp là lớp customer"
+  },
+  {
+    "start": 2599.42,
+    "end": 2604.42,
+    "text": "Về bọn em xây dựng lớp customer sau đó thì làm tương tự như bài 1 nhá"
+  },
+  {
+    "start": 2604.42,
+    "end": 2606.42,
+    "text": "Không có gì khó đâu"
+  },
+  {
+    "start": 2606.42,
+    "end": 2610.42,
+    "text": "Thế thì anh đã hướng dẫn cho các bạn mấy kiến thức này rồi đúng không"
+  },
+  {
+    "start": 2610.42,
+    "end": 2614.42,
+    "text": "Hàm tạo này, rồi là ham get, ham set này, public, private này"
+  },
+  {
+    "start": 2614.42,
+    "end": 2618.68,
+    "text": "Thì ở trong cái lớp của các bạn nó có một cái ham nữa, gọi là ham hủy"
+  },
+  {
+    "start": 2618.68,
+    "end": 2621.64,
+    "text": "Hàm Hủy, Deathstrucker"
+  },
+  {
+    "start": 2621.64,
+    "end": 2628.26,
+    "text": "Hàm Hủy là hàm nó sẽ được gọi khi mà các bạn hủy đi một cái đối tượng thuộc lớp đó"
+  },
+  {
+    "start": 2628.26,
+    "end": 2633.54,
+    "text": "ví dụ như trường trình kết thúc hoặc là phạm vi của biến nên nó kết thúc hoặc là hàm chưa nó kết thúc"
+  },
+  {
+    "start": 2633.54,
+    "end": 2640.91,
+    "text": "Nhìn chung là khi một cái đối tượng thuộc lớp đấy bị thua hồi, thì người ta sẽ gọi Hàm Hủy"
+  },
+  {
+    "start": 2640.91,
+    "end": 2645.71,
+    "text": "Hàm Hủy thì nó hơi đặc trưng một chút là nó sẽ có một cái dấu ngã ở trước tên"
+  },
+  {
+    "start": 2645.71,
+    "end": 2648.71,
+    "text": "Nó cũng không có kiểu trả về, nó sẽ có kiểu như thế này"
+  },
+  {
+    "start": 2648.71,
+    "end": 2650.71,
+    "text": "Ê, đây chưa?"
+  },
+  {
+    "start": 2650.71,
+    "end": 2653.71,
+    "text": "Thì đây, mình sẽ ghét là ham hủy được gọi"
+  },
+  {
+    "start": 2653.71,
+    "end": 2659.71,
+    "text": "Thì khi nào mà ví dụ như hết trường trình này, hoặc là hết ham này, hoặc là hết cái phạm vi mà"
+  },
+  {
+    "start": 2659.71,
+    "end": 2663.71,
+    "text": "Bọn em khai báo ra một cái đối tượng ấy, thuộc lớp sinh viên ấy là nó gọi cái ham hủy này đấy"
+  },
+  {
+    "start": 2663.71,
+    "end": 2667.71,
+    "text": "Ví dụ như trong trường hợp này, hết hàm main thì cái ống S này nó bị hủy á"
+  },
+  {
+    "start": 2667.71,
+    "end": 2669.71,
+    "text": "Nên nó sẽ gọi cái ham hủy sinh viên"
+  },
+  {
+    "start": 2669.71,
+    "end": 2672.1,
+    "text": "Hà, ham hủy"
+  },
+  {
+    "start": 2672.1,
+    "end": 2680.06,
+    "text": "Thế thì nhiều bạn lập luận là em thấy là cái hàm hủy này nó trẻ có cái chức năng gì, đúng không?"
+  },
+  {
+    "start": 2680.06,
+    "end": 2685.86,
+    "text": "Đấy, thực ra nó có đấy, trong các ngôn ngữ lập trình vật cao nhá, ví dụ như Java, hoặc là Python chẳng hạn."
+  },
+  {
+    "start": 2685.86,
+    "end": 2690.06,
+    "text": "Java, Python, sysad chẳng hạn, thì nó sẽ không tổn tại cái khái niệm hàm hủy này,"
+  },
+  {
+    "start": 2690.06,
+    "end": 2694.06,
+    "text": "tại vì ở trong các ngôn ngữ lập trình đấy nó sẽ có cơ chế là tự, tự rọn rác."
+  },
+  {
+    "start": 2694.06,
+    "end": 2699.06,
+    "text": "Đấy, nó là tự thu hồi bộ nhớ mà các bạn đã xin cấp phát, nhưng trong ngôn ngữ lập trình xị ộng cộng ấy,"
+  },
+  {
+    "start": 2699.06,
+    "end": 2701.26,
+    "text": "thì nó sẽ phải có hàm hủy này, tại sao?"
+  },
+  {
+    "start": 2701.26,
+    "end": 2709.02,
+    "text": "Bọn em hình dùng ý, nếu mà bây giờ cái lớp sinh viên này của bọn em ý, các cái thuộc tính là mã tên ngày sinh lớp và GPE kia ý, nó không phải là cấp phát động ý"
+  },
+  {
+    "start": 2709.02,
+    "end": 2714.06,
+    "text": "Thì các bạn, khi mà cái đối tượng thuộc lớp sinh viên mà bị hủy, bị thu hồi ý, mình chả cần phải làm gì"
+  },
+  {
+    "start": 2714.06,
+    "end": 2726.31,
+    "text": "Nhưng mà nếu mà nó xảy ra cái tình trạng là, anh ví dụ như bây giờ một cái lớp ý mà cái thuộc tính của nó nó lại có cái tham số là, là là là là là là, nó lại có tham số là là"
+  },
+  {
+    "start": 2726.31,
+    "end": 2734.72,
+    "text": "xin lỗi nó có thuộc tính là thuộc tính khỏi là gì nha, nó có cái thuộc tính mà nó cấp phát động đi"
+  },
+  {
+    "start": 2734.72,
+    "end": 2738.22,
+    "text": "thì khi mà các bạn hủy thì các bạn phải giải phóng cái vùng nhớ đấy, anh ví dụ nhé"
+  },
+  {
+    "start": 2738.22,
+    "end": 2740.72,
+    "text": "bây giờ anh sẽ có 1 cái lớp sinh viên như sao"
+  },
+  {
+    "start": 2740.72,
+    "end": 2747.08,
+    "text": "trong này nó sẽ có string, máy và tên, private nhé"
+  },
+  {
+    "start": 2747.08,
+    "end": 2754.33,
+    "text": "ok, nhưng mà cái điểm bây giờ anh sẽ lưu 1 phát 5 môn học đi"
+  },
+  {
+    "start": 2754.33,
+    "end": 2758.02,
+    "text": "ví dụ như cái ông sinh viên này cần phải lưu 5 môn học ở kỷ đó chẳng hạn"
+  },
+  {
+    "start": 2758.02,
+    "end": 2762.02,
+    "text": "thì khi đó anh sẽ có 1 cái biến double, sell, poi"
+  },
+  {
+    "start": 2762.02,
+    "end": 2766.14,
+    "text": "Đây là một cái mảng, và cái mảng này nó sẽ là Ctrl"
+  },
+  {
+    "start": 2766.14,
+    "end": 2772.0,
+    "text": "Thì bạn em hình dung, khi mà các bạn muốn tạo ra một cái ông sinh viên này này"
+  },
+  {
+    "start": 2772.0,
+    "end": 2775.48,
+    "text": "Thì cái thuộc tính máy và thuộc tính tên thì mình không phải làm gì đâu"
+  },
+  {
+    "start": 2775.48,
+    "end": 2781.2,
+    "text": "Nhưng mà bây giờ mà mà các em muốn cái thuộc tính point này nó có thể lưu được 5 điểm trong 4 học ấy"
+  },
+  {
+    "start": 2781.2,
+    "end": 2784.84,
+    "text": "Thì các bạn sẽ phải cấp phát động, nhá"
+  },
+  {
+    "start": 2784.84,
+    "end": 2791.75,
+    "text": "Nó sẽ báo không cấp phát được thôi, chứ không có vấn đề gì kẻ"
+  },
+  {
+    "start": 2791.75,
+    "end": 2828.92,
+    "text": "Ví dụ như trong hàm tạo này, bạn em có thể không cần khởi tạo mẽ và tên, nhưng mà riêng cái thằng point mà bạn em muốn lưu được 5 điểm, thì bạn em phải new double 5, thì nó mới lưu được, nha, nấy, hoặc là bây giờ em muốn tạo ra một cái ông sinh viên mà nó có đủ cái 5 tham số truyền mẽ này, truyền tên này, đúng không, và double p1, p2, p3, p4, p5 để anh lưu 5 điểm nhé, đấy thì ở trong này mình sẽ gán là git mũi tên mẽ bằng mẽ này, git mũi tên tên bằng tên, nhưng mà trước khi mà em gán 5 cái điểm"
+  },
+  {
+    "start": 2828.92,
+    "end": 2834.42,
+    "text": "P1, P2, P3, P4, P5 kìa cho cái mảng point này, bạn em phải cấp phát động nữa"
+  },
+  {
+    "start": 2834.42,
+    "end": 2844.61,
+    "text": "point bằng new, double, 5, khi đó bắt đầu bạn em cho point 0, khi bạn em lưu cái P1 được, ở P1 được, hiểu hông nhỉ?"
+  },
+  {
+    "start": 2844.61,
+    "end": 2852.61,
+    "text": "nói, tại vì nó là con trỏ mà, chứ bạn em lưu P0, P1, P2, P3, P4 mà chưa có cấp phát là nó sẽ bị lỗi bộ nhớ nhé"
+  },
+  {
+    "start": 2852.61,
+    "end": 2858.24,
+    "text": "cái này anh có nói ở phần danh sách liên kết rồi"
+  },
+  {
+    "start": 2858.24,
+    "end": 2864.23,
+    "text": "Nói, thì bây giờ có phải là mình đã lưu được cảm thông tin của một sinh viên không?"
+  },
+  {
+    "start": 2864.23,
+    "end": 2868.83,
+    "text": "Thế thì khi đó các bạn hình dung ở trong bên khi mà bạn em khai báo một ông sinh viên S và các bạn truyền"
+  },
+  {
+    "start": 2868.83,
+    "end": 2874.03,
+    "text": "Mãi là sinh viên 001 này, đúng không? Tên là teo này. Điểm là 1, 2, 3, 4, 5 chẳng hạn."
+  },
+  {
+    "start": 2874.03,
+    "end": 2877.96,
+    "text": "Là ok, không vấn đề gì cả ấy."
+  },
+  {
+    "start": 2877.96,
+    "end": 2882.82,
+    "text": "Nhưng mà khi mà cái ông, cái chương trình này nó kết thúc ấy, đúng không nhỉ?"
+  },
+  {
+    "start": 2882.82,
+    "end": 2884.42,
+    "text": "Thì ông S nó sẽ bị huỷ đi."
+  },
+  {
+    "start": 2884.42,
+    "end": 2889.42,
+    "text": "Thì khi đó cái poi của các bạn ấy, các bạn em đã xin cấp phát trong cái hàm tạo này này."
+  },
+  {
+    "start": 2889.42,
+    "end": 2900.84,
+    "text": "các bạn phải giải phóng, thì khi đó mình sẽ giải phóng nó trong hàm hủy sinh lỗi, delete, point"
+  },
+  {
+    "start": 2900.84,
+    "end": 2907.84,
+    "text": "để mình giải phóng cái vùng nhứa mà bọn em đã cấp phát ở trong cái hàm tạo này, hoặc là cái hàm tạo này, nhá"
+  },
+  {
+    "start": 2907.84,
+    "end": 2910.84,
+    "text": "đấy, chứ không phải là nó không có chức năng, nó có các bạn"
+  },
+  {
+    "start": 2910.84,
+    "end": 2914.91,
+    "text": "ok, thì đấy là một anh lấy cho các bạn một cái ví dụ về cái trường hợp là"
+  },
+  {
+    "start": 2914.91,
+    "end": 2918.91,
+    "text": "mình sẽ áp dụng hàm hủy để mình có thể hủy đi các cái thuộc tính mà mình đã cấp phát động"
+  },
+  {
+    "start": 2918.91,
+    "end": 2928.43,
+    "text": "Còn nếu mà cái lớp của bạn em, mà nó chỉ có các thuộc tính mà nó có phát tĩnh rồi, thì mình không cần phải có hàm hủy, nha, rồi"
+  },
+  {
+    "start": 2928.43,
+    "end": 2938.28,
+    "text": "Thế thôi, có bạn nào có thắc mắc gì không? Có bạn nào có thắc mắc gì về cái kiến thức mà anh nói từ nãy giờ không?"
+  },
+  {
+    "start": 2938.28,
+    "end": 2949.1,
+    "text": "Gửi cho em cái lớp sinh viên này hả? Đây, anh vứt cái hàm hủy đi nha, lớp sinh viên đây"
+  },
+  {
+    "start": 2949.1,
+    "end": 2954.66,
+    "text": "có hàm tạo này, có hàm chuẩn hóa này, có hàm hiển thị thông tin này"
+  },
+  {
+    "start": 2954.66,
+    "end": 2957.43,
+    "text": "các bạn có thể lấy về"
+  },
+  {
+    "start": 2957.43,
+    "end": 2965.77,
+    "text": "sau khi mà mà em đã thành thạo chức năng là mình xây dựng lớp này và mình xây dựng các hàm chức năng cho lớp đó"
+  },
+  {
+    "start": 2965.77,
+    "end": 2971.27,
+    "text": "thì bạn em sẽ phải xử lý được các bài tòa liên quan đến sub-save và tìm kiếm ở trên gianh sách lớp"
+  },
+  {
+    "start": 2971.27,
+    "end": 2977.13,
+    "text": "tức là bây giờ bạn em sẽ cần phải lưu một mảng hoặc là một vét tơ các đối tượng"
+  },
+  {
+    "start": 2977.13,
+    "end": 2982.67,
+    "text": "cái dít này là con trò dít, trong đấy anh mới nói rồi mà"
+  },
+  {
+    "start": 2982.67,
+    "end": 2986.67,
+    "text": "con trò zít được đặt trước thuộc tính để chỉ ra đấy là thuộc tính"
+  },
+  {
+    "start": 2986.67,
+    "end": 2990.67,
+    "text": "khi mà nó có cái sự trùng tên giữa tham số và thuộc tính"
+  },
+  {
+    "start": 2990.67,
+    "end": 2995.67,
+    "text": "đây, chỗ này cái thuộc tính mã của em nó trùng với cái tham số mã"
+  },
+  {
+    "start": 2995.67,
+    "end": 3000.67,
+    "text": "nên là nếu mà em muốn gán tham số mã cho thuộc tính mã thì mình đặt con trò zít ở trước cái thuộc tính"
+  },
+  {
+    "start": 3000.67,
+    "end": 3003.67,
+    "text": "để nó phân biệt được 2 cái đấy là 2 cái khác nhau"
+  },
+  {
+    "start": 3003.67,
+    "end": 3012.49,
+    "text": "cái mã này và cái mã này là 2 cái thằng khác nhau"
+  },
+  {
+    "start": 3012.49,
+    "end": 3016.49,
+    "text": "thế thì cái bài tìm kiếm, tìm kiếm, tìm kiếm này thì 3 bài này nó dễ"
+  },
+  {
+    "start": 3016.49,
+    "end": 3021.69,
+    "text": "tức là nó sẽ cho bạn em 1 gianh sách sinh viên hoặc là 1 gianh sách sản phẩm hoặc là 1 gianh sách gì đấy"
+  },
+  {
+    "start": 3021.69,
+    "end": 3027.29,
+    "text": "các bạn sẽ lưu nó vào trong mạng hoặc là vector, sau đó thì bạn em thực hiện các cái thao tác tìm kiếm và sắp xếp trên gianh sách đấy"
+  },
+  {
+    "start": 3027.29,
+    "end": 3029.69,
+    "text": "anh nghĩ là bây giờ bạn em cốt thì nó ngon rồi"
+  },
+  {
+    "start": 3029.69,
+    "end": 3036.84,
+    "text": "anh ví dụ, bây giờ mình ví dụ cho các bạn 1 bài nhé, sau các bạn làm cái bài khó hơn nhé"
+  },
+  {
+    "start": 3036.84,
+    "end": 3041.36,
+    "text": "bài này nó cho bạn em 1 gianh sách sinh viên, được chìa?"
+  },
+  {
+    "start": 3041.36,
+    "end": 3042.96,
+    "text": "đây, gianh sách sinh viên"
+  },
+  {
+    "start": 3042.96,
+    "end": 3047.08,
+    "text": "cái dòng đầu tiên này là số lượng sinh viên"
+  },
+  {
+    "start": 3047.08,
+    "end": 3050.52,
+    "text": "sau đó mỗi thông tin của 1 sinh viên sẽ được mô tả bởi 5 dòng"
+  },
+  {
+    "start": 3050.52,
+    "end": 3055.12,
+    "text": "mã, tên, ngày sinh, lớp và GPE nó giống cái lớp mà bọn em vừa vừa cho bọn em đó"
+  },
+  {
+    "start": 3055.12,
+    "end": 3060.2,
+    "text": "sau đó nó yêu cầu các bạn là sắp xếp cái danh xách sinh viên này theo điểm GPE giảm dân"
+  },
+  {
+    "start": 3060.2,
+    "end": 3064.8,
+    "text": "nếu mà hai bạn có cùng GPE thì sắp xếp theo mã tăng dân về tư điển"
+  },
+  {
+    "start": 3064.8,
+    "end": 3067.64,
+    "text": "và cái ngày sinh và tên phải được trởn hóa"
+  },
+  {
+    "start": 3067.64,
+    "end": 3071.29,
+    "text": "thế đây là một cái bài sắp xếp cơ bản, đúng không, các bạn học kiến thức rồi"
+  },
+  {
+    "start": 3071.29,
+    "end": 3074.89,
+    "text": "các bạn học với comparator rồi, các bạn học với sắp xếp theo nhiều tiêu trí rồi"
+  },
+  {
+    "start": 3074.89,
+    "end": 3080.61,
+    "text": "Bây giờ mình áp dụng nó với đối tượng thôi, mình sẽ làm mẫu một bài, các bạn sẽ làm cái bài sau"
+  },
+  {
+    "start": 3080.61,
+    "end": 3086.85,
+    "text": "Ở trong bên này, đầu tiên mình sẽ tiến hành nhập số lượng sinh viên"
+  },
+  {
+    "start": 3086.85,
+    "end": 3091.0,
+    "text": "Ở trong trường hợp này mình sẽ nhập nờ đi"
+  },
+  {
+    "start": 3091.0,
+    "end": 3096.04,
+    "text": "Sau mọi em có thể khai báo tuy các bạn, các bạn có thể khai báo ra một mảng sinh viên nờ"
+  },
+  {
+    "start": 3096.04,
+    "end": 3099.44,
+    "text": "hoặc là mọi em có thể tạo ra một vét tờ sinh viên như thế này cũng được"
+  },
+  {
+    "start": 3099.44,
+    "end": 3105.98,
+    "text": "Nếu mà các bạn gán nờ thì các bạn làm cái vòng for trạy từ không cho tới nờ này"
+  },
+  {
+    "start": 3105.98,
+    "end": 3113.05,
+    "text": "sau đó bạn em khai báo ra các tham số màa tên, rồi bạn em nhập từ bàn phím, rồi em khai báo cho anh một cái ông sinh viên ết"
+  },
+  {
+    "start": 3113.31,
+    "end": 3116.63,
+    "text": "từ những cái thông tin đó sau các bạn gán AI bằng ết cho anh là được"
+  },
+  {
+    "start": 3116.89,
+    "end": 3122.01,
+    "text": "còn nếu mà bạn em dùng vector thì chỗ này bạn em chỉ cần cho v.pushback cái ông ết vào trong vector là được"
+  },
+  {
+    "start": 3122.27,
+    "end": 3124.57,
+    "text": "nhưng mà trước khi mà mình gán cho thằng AI"
+  },
+  {
+    "start": 3124.83,
+    "end": 3128.67,
+    "text": "hoặc là mình ném vào trong vector thì bạn em chuẩn hóa tên và chuẩn hóa ngay sinh trước nhá"
+  },
+  {
+    "start": 3128.93,
+    "end": 3133.79,
+    "text": "ở đây để xử lý trôi lệnh thì các bạn phải để seein.ignor, đây cái này có phương giải thích rồi đúng không?"
+  },
+  {
+    "start": 3133.79,
+    "end": 3143.52,
+    "text": "Vậy là mình đã có 1 gianh sách sinh viên được lưu ở trong mảng A, các bạn em có thể đem mảng A này bởi em sort, sort A và A cộp nờ đúng không?"
+  },
+  {
+    "start": 3143.52,
+    "end": 3152.96,
+    "text": "Thì ở đây mình sẽ viết comparator thôi, sinh viên thứ 1 là x, sinh viên thứ 2 là y"
+  },
+  {
+    "start": 3152.96,
+    "end": 3157.92,
+    "text": "Ở đây nó bắt các bạn là đầu tiên phải sắp xếp theo gpa thì các bạn em biết làm như nào rồi đúng không?"
+  },
+  {
+    "start": 3157.92,
+    "end": 3165.92,
+    "text": "Thì khi đó mình phải truy cập vào gpa của x và y, thì các bạn phải viết hàm, phải viết hàm ghét gpa, hiểu không?"
+  },
+  {
+    "start": 3165.92,
+    "end": 3172.01,
+    "text": "Ừ, thì khi đó bạn em sẽ viết hàm đắp bồ ghét gpa, thì bạn em sẽ return về cho anh gpa."
+  },
+  {
+    "start": 3172.01,
+    "end": 3178.01,
+    "text": "Nóng ti nữa, gpa nó bằng nhau thì nó phải so sánh đến mã, nên mình lại viết ghét thêm 1 cái hàm ghét mã nữa."
+  },
+  {
+    "start": 3178.01,
+    "end": 3181.17,
+    "text": "Thế thôi, thì ở trong này mình gọi ghét ghia rồi."
+  },
+  {
+    "start": 3181.17,
+    "end": 3190.69,
+    "text": "Nếu mà x, gpa, get, gpa mà nó khác, i, get, i, get, gpa thì bọn em return về"
+  },
+  {
+    "start": 3190.69,
+    "end": 3195.33,
+    "text": "x, gpa, lớn hơn, i, gpa để nó sắp xếp giảm dần"
+  },
+  {
+    "start": 3195.33,
+    "end": 3197.91,
+    "text": "Còn nếu mà hai ông này có cùng gpa thì return về"
+  },
+  {
+    "start": 3197.91,
+    "end": 3205.35,
+    "text": "x, gpa nhỏ hơn, i, gpa để nó sắp xếp theo thứ tự điển tăng dần"
+  },
+  {
+    "start": 3205.35,
+    "end": 3207.75,
+    "text": "Các bạn sọt các bạn ném cái comparator để vào"
+  },
+  {
+    "start": 3207.75,
+    "end": 3210.15,
+    "text": "sau đó các bạn duyệt từng ông 1 ở trong mảng e"
+  },
+  {
+    "start": 3210.15,
+    "end": 3213.99,
+    "text": "Bạn em diệt bằng range bay follow-up cũng được, mà diệt bằng chỉ số cũng được nhé"
+  },
+  {
+    "start": 3213.99,
+    "end": 3216.19,
+    "text": "sinh viên x, 2.e"
+  },
+  {
+    "start": 3216.19,
+    "end": 3220.78,
+    "text": "Đây là diệt bằng range bay follow-up, bạn em gọi x, hiển thị xong"
+  },
+  {
+    "start": 3220.78,
+    "end": 3224.02,
+    "text": "Là khi đó các bạn sẽ có cái danh sách kia được hiển thị theo"
+  },
+  {
+    "start": 3224.02,
+    "end": 3228.96,
+    "text": "gpa giảm dần"
+  },
+  {
+    "start": 3228.96,
+    "end": 3231.76,
+    "text": "Anh bị xóa mất cái hàm tạo không có tham số rồi"
+  },
+  {
+    "start": 3231.76,
+    "end": 3233.96,
+    "text": "Nên khi mà anh khai báo cái mảng sinh viên"
+  },
+  {
+    "start": 3233.96,
+    "end": 3237.98,
+    "text": "Nó sẽ bao lỗi, ok, rồi được rồi đấy"
+  },
+  {
+    "start": 3237.98,
+    "end": 3242.35,
+    "text": "Tại vì cái mảng sinh viên này nó sẽ gọi hàm tạo mặc định mà"
+  },
+  {
+    "start": 3242.35,
+    "end": 3243.95,
+    "text": "Ok chưa?"
+  },
+  {
+    "start": 3243.95,
+    "end": 3246.11,
+    "text": "Đấy"
+  },
+  {
+    "start": 3246.11,
+    "end": 3251.11,
+    "text": "3.6, 3.4, 2.6, 2.2, 2.2, có bạn nào có thắc mắt gì không?"
+  },
+  {
+    "start": 3251.11,
+    "end": 3254.69,
+    "text": "Anh đã gửi cho bạn em cái lớp sinh viên rồi đúng không?"
+  },
+  {
+    "start": 3254.69,
+    "end": 3255.69,
+    "text": "Nói."
+  },
+  {
+    "start": 3255.69,
+    "end": 3258.75,
+    "text": "Còn đoạn này thì anh nghĩ là bạn em xử lý được này."
+  },
+  {
+    "start": 3258.75,
+    "end": 3263.75,
+    "text": "Với cái hạm tạo, cái con trót tư này thì viết không biết bao nhiêu lần rồi, đúng không?"
+  },
+  {
+    "start": 3263.75,
+    "end": 3265.75,
+    "text": "Nói thì khi mà các bạn sắp xếp thì các bạn xem là"
+  },
+  {
+    "start": 3265.75,
+    "end": 3270.75,
+    "text": "à, mình cần phải lấy về cái thuộc tính gì để mình sắp xếp thì mình viết hạm ghét"
+  },
+  {
+    "start": 3270.75,
+    "end": 3273.75,
+    "text": "mà lấy về mà sắp xếp nhá."
+  },
+  {
+    "start": 3273.75,
+    "end": 3279.09,
+    "text": "Bạn em làm cho anh bài số 8 đi, đây là code bài số 7"
+  },
+  {
+    "start": 3279.09,
+    "end": 3281.85,
+    "text": "Mình sẽ nộp cái bài số 7 này thì nó không quấn đề gì"
+  },
+  {
+    "start": 3281.85,
+    "end": 3286.15,
+    "text": "Nhưng bài số 8 thì nó sẽ khó hơn một chút"
+  },
+  {
+    "start": 3286.15,
+    "end": 3293.19,
+    "text": "Bài số 8 thì nó cũng là danh sách sinh viên đó"
+  },
+  {
+    "start": 3293.19,
+    "end": 3295.95,
+    "text": "Nhưng mà nó yêu cầu bạn em là sắp xếp từ già tới trẻ"
+  },
+  {
+    "start": 3295.95,
+    "end": 3301.07,
+    "text": "Nếu mà hai ông có cùng ngày sinh ấy, thì sắp xếp theo mã tăng dần với từ điện"
+  },
+  {
+    "start": 3301.07,
+    "end": 3304.11,
+    "text": "Thì bài này là nó bắt bạn em sắp xếp từ già tới trẻ"
+  },
+  {
+    "start": 3304.11,
+    "end": 3306.79,
+    "text": "Nó là các bạn phải dựa vào cái thuộc tính ngày sinh"
+  },
+  {
+    "start": 3306.79,
+    "end": 3308.05,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 3308.05,
+    "end": 3311.13,
+    "text": "Từ già tới trẻ, tức là ông nào mà sinh trước thì đứng trước"
+  },
+  {
+    "start": 3311.13,
+    "end": 3313.13,
+    "text": "Ông nào sinh sau thì đứng sau đúng không?"
+  },
+  {
+    "start": 3313.13,
+    "end": 3317.13,
+    "text": "Thì cái này mình cũng đã hướng dẫn cho các bạn một cái lần ở phần string rồi"
+  },
+  {
+    "start": 3317.13,
+    "end": 3321.29,
+    "text": "Bạn em không thể đem cái mẽ cái ngày sinh mà em so sánh đâu nhớ?"
+  },
+  {
+    "start": 3321.29,
+    "end": 3323.12,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 3323.12,
+    "end": 3331.5,
+    "text": "Em đem cái ngày sinh em so sánh là toang ấy"
+  },
+  {
+    "start": 3331.5,
+    "end": 3335.5,
+    "text": "Ví dụ như có 2 ông, 1 ông là 22 tháng 10 năm 2002"
+  },
+  {
+    "start": 3335.5,
+    "end": 3337.5,
+    "text": "1 ông là 30 tháng 3 năm 1991"
+  },
+  {
+    "start": 3337.5,
+    "end": 3341.5,
+    "text": "Thì rõ ràng cái ông này là cái ông mà sinh trước, đúng không?"
+  },
+  {
+    "start": 3341.5,
+    "end": 3345.5,
+    "text": "Nhưng nếu mà bạn em đem 2 cái chuỗi này, bạn em so sánh trực tiếp với nhau ấy"
+  },
+  {
+    "start": 3345.5,
+    "end": 3347.5,
+    "text": "là nó sẽ so sánh ngày trước"
+  },
+  {
+    "start": 3347.5,
+    "end": 3349.5,
+    "text": "mà trong khi đó 22 lại nhỏ hơn 30"
+  },
+  {
+    "start": 3349.5,
+    "end": 3353.5,
+    "text": "thì là mình kết luận luôn được cái ông này là ông sinh trước là chết rở ngay"
+  },
+  {
+    "start": 3353.5,
+    "end": 3356.69,
+    "text": "thế nên là bài này nó sẽ cần phải xử lý thêm 1 bước nữa"
+  },
+  {
+    "start": 3356.69,
+    "end": 3361.69,
+    "text": "là ở trong cái hềm, trong cái lớp sinh viên này khi mà bọn em ghét ngày sinh ấy"
+  },
+  {
+    "start": 3361.69,
+    "end": 3363.69,
+    "text": "thì đừng có trẻ về cái thuộc tính ngày sinh"
+  },
+  {
+    "start": 3363.69,
+    "end": 3367.75,
+    "text": "mà bọn em phải tách cái phần ngày sinh ra làm 3 phần"
+  },
+  {
+    "start": 3367.75,
+    "end": 3369.75,
+    "text": "tách theo cái dấu gạch chéo này này"
+  },
+  {
+    "start": 3369.75,
+    "end": 3372.75,
+    "text": "sau đó thì các bạn lộn cái ngày sinh lên chữa, cái năm sinh lên trước"
+  },
+  {
+    "start": 3372.75,
+    "end": 3374.75,
+    "text": "sau đó đến cái tháng, rồi đến cái ngày"
+  },
+  {
+    "start": 3374.75,
+    "end": 3378.13,
+    "text": "sau đó mình lấy cái chuỗi đấy, mình so sánh thì được"
+  },
+  {
+    "start": 3378.13,
+    "end": 3382.93,
+    "text": "hiểu không nhỉ, cái này anh hướng dẫn cho bạn em một lần ở cái phần già và trẻ ở phần chuỗi rồi đó"
+  },
+  {
+    "start": 3382.93,
+    "end": 3390.85,
+    "text": "chứ các bạn mà return về cái thuộc tính ngày sinh, xong bạn em đem và em so sánh là nó sẽ so sánh như"
+  },
+  {
+    "start": 3390.85,
+    "end": 3395.01,
+    "text": "là ngày tháng 5 rồi chết, mình phải so sánh 5 đến tháng rồi đến ngày"
+  },
+  {
+    "start": 3395.01,
+    "end": 3398.81,
+    "text": "thế ví dụ, bây giờ mình so sánh như thế này, phát là cái ông 1991 này là sinh trước ngay"
+  },
+  {
+    "start": 3398.81,
+    "end": 3401.05,
+    "text": "đúng không, nhỏ hơn 2002 mà"
+  },
+  {
+    "start": 3401.05,
+    "end": 3408.57,
+    "text": "Bây giờ anh gợi ý là trong lớp sinh viên này, cái hàm mà bọn em ghép ở đây, ví dụ như bọn em viết là cái ghép ngày sinh đúng không?"
+  },
+  {
+    "start": 3408.57,
+    "end": 3415.8,
+    "text": "Thì ở trong cái hàm ghép ngày sinh này này, bọn em phải tách cái thuộc tính ngày sinh ra làm 3 phần"
+  },
+  {
+    "start": 3415.8,
+    "end": 3423.42,
+    "text": "Ngày, tháng, năm, bằng string, string nhá, sau đó thì mình return về năm, cộng tháng, cộng ngày"
+  },
+  {
+    "start": 3423.42,
+    "end": 3429.34,
+    "text": "để mình đảo cái năm lên trước, tháng, đến ngày, thì khi đó trong cái comparator này này thì bọn em có thể"
+  },
+  {
+    "start": 3429.34,
+    "end": 3435.18,
+    "text": "có thể gọi hàm ghép ngày xinh để xóa sánh ngày xinh, khi đó nó xóa sánh đúng"
+  },
+  {
+    "start": 3435.18,
+    "end": 3440.66,
+    "text": "các bạn làm cho bài số 8 này sẽ hơi khó cho các bạn 7 phút"
+  },
+  {
+    "start": 3440.66,
+    "end": 3448.28,
+    "text": "về bạn nào mà cảm thấy chưa cứng, bạn luyện cho anh 10 bài class và object này là các bạn sẽ thành thạo việc là xây dựng lớp"
+  },
+  {
+    "start": 3448.28,
+    "end": 3454.24,
+    "text": "các khái niệm hàm tạo, sắp xếp tình kiếm trên danh sách, bắt đầu mình lập phần OOP ra"
+  },
+  {
+    "start": 3454.24,
+    "end": 3456.44,
+    "text": "bắt đầu mình làm"
+  },
+  {
+    "start": 3456.44,
+    "end": 3459.16,
+    "text": "Bởi sao anh hướng dẫn sang phần kế thừa nữa?"
+  },
+  {
+    "start": 3459.16,
+    "end": 3467.72,
+    "text": "Mình đã bảo rồi mà, nếu mà các bạn học các phần về sub-shape tìm kiếm set-map-string,"
+  },
+  {
+    "start": 3467.72,
+    "end": 3472.04,
+    "text": "nấy, rồi vector, các thứ, mạng 1 triều, các cái thuật toán cơ bản,"
+  },
+  {
+    "start": 3472.04,
+    "end": 3476.12,
+    "text": "các cái kỹ năng cơ bản mà mình đã dậy trước đây mà các bạn thành thạo thì học đến cái phần,"
+  },
+  {
+    "start": 3476.12,
+    "end": 3481.32,
+    "text": "học đến cái phần struct, học vào phần OOP này, bạn em học nó rất là nhèn,"
+  },
+  {
+    "start": 3481.32,
+    "end": 3487.72,
+    "text": "và sau này, khi mà bạn em đi làm hoặc là đi học ấy, các bạn muốn cài đặt cái thuật toán mà nó phức tạp ấy,"
+  },
+  {
+    "start": 3487.72,
+    "end": 3490.88,
+    "text": "Thì mình tin là các bạn cài đặt nó sẽ dễ dàng hơn rất là nhiều"
+  },
+  {
+    "start": 3490.88,
+    "end": 3496.88,
+    "text": "Còn nếu mà bạn em không có vai trạm với nhiều các cái bài tập khó, nhiều cái kỹ năng mà người ta ít học ấy"
+  },
+  {
+    "start": 3496.88,
+    "end": 3499.88,
+    "text": "Thì khi đó các bạn gặp những cái bài cơ bản với các bạn em"
+  },
+  {
+    "start": 3499.88,
+    "end": 3503.87,
+    "text": "Tức là ví dụ như mình cần phải nghiên cứu một thuật toán hoặc là một"
+  },
+  {
+    "start": 3503.87,
+    "end": 3506.11,
+    "text": "Nhiều khi mình biết cái thuật toán đấy rồi"
+  },
+  {
+    "start": 3506.11,
+    "end": 3511.03,
+    "text": "Ví dụ như cái đề tài này mình phải áp dụng thuật toán đấy, phải cài đặt cái chương trình theo cái hướng đó"
+  },
+  {
+    "start": 3511.03,
+    "end": 3513.11,
+    "text": "Nhưng mà các em không đủ khái năng để khái đặt được"
+  },
+  {
+    "start": 3513.11,
+    "end": 3514.43,
+    "text": "Và đấy là rất nguy hiểm"
+  },
+  {
+    "start": 3514.43,
+    "end": 3517.71,
+    "text": "Mình các bạn học xị ộng cộng và thuật toán này làm sao cho nó chắc vào"
+  },
+  {
+    "start": 3517.71,
+    "end": 3521.55,
+    "text": "Thì sau này khi mà các bạn học nên học lên các công nghệ khác"
+  },
+  {
+    "start": 3521.55,
+    "end": 3525.63,
+    "text": "Các kiến thức khác có các thuật toán hoặc là các trường trình mà nó phức tạp hơn"
+  },
+  {
+    "start": 3525.63,
+    "end": 3529.47,
+    "text": "Nhưng mà cái kỹ năng cài đặt của mình, cái khả năng cài đặt cốt của mình nó tốt rồi"
+  },
+  {
+    "start": 3529.47,
+    "end": 3531.71,
+    "text": "Thì các bạn học và các bạn cốt nó rất là dễ"
+  },
+  {
+    "start": 3531.71,
+    "end": 3535.15,
+    "text": "Lúc đấy cái vấn đề là triển khai cốt và triển khai mã nguồn"
+  },
+  {
+    "start": 3535.15,
+    "end": 3538.59,
+    "text": "Và triển khai một cách tối yêu nó không phải là cái vấn đề của mình nữa"
+  },
+  {
+    "start": 3538.59,
+    "end": 3541.47,
+    "text": "Chứ còn khi mà các bạn học đến công nghệ rồi"
+  },
+  {
+    "start": 3541.47,
+    "end": 3545.47,
+    "text": "Học đến lập trình web, lập trình trí tuệ nhân tạo, các thứ rồi, lập trình game rồi"
+  },
+  {
+    "start": 3545.47,
+    "end": 3550.97,
+    "text": "Mà khi mà cài đặt một thuật toán nào đấy, hay là cài đặt một chương trình giải quyết một vấn đề nào đó"
+  },
+  {
+    "start": 3550.97,
+    "end": 3556.47,
+    "text": "Các bạn cũng trẻ biết cài đặt, hoặc là các bạn cài đặt nó không tối yêu cốt, nó rối hết cả lên ấy"
+  },
+  {
+    "start": 3556.47,
+    "end": 3559.54,
+    "text": "Thì khi đó các bạn mới chết rợ, nhá"
+  },
+  {
+    "start": 3559.54,
+    "end": 3562.72,
+    "text": "Mình lại mất thời gian học lại"
+  },
+  {
+    "start": 3562.72,
+    "end": 3567.98,
+    "text": "Đúng rồi, bài 8 em ạ"
+  },
+  {
+    "start": 3567.98,
+    "end": 3574.07,
+    "text": "8"
+  },
+  {
+    "start": 3574.07,
+    "end": 3579.0,
+    "text": "Đây cũng được 1 triệu dưỡi lượt submeter"
+  },
+  {
+    "start": 3579.0,
+    "end": 3584.92,
+    "text": "tuyệt duukt.net App"
+  },
+  {
+    "start": 3584.92,
+    "end": 3589.65,
+    "text": "được khoảng 1 năm 2 tháng, được 1 triệu dưỡi lượt sắp mít rồi đó"
+  },
+  {
+    "start": 3589.65,
+    "end": 3597.35,
+    "text": "đây, đây cái phần này các bạn tham khảo nhé"
+  },
+  {
+    "start": 3597.35,
+    "end": 3599.85,
+    "text": "còn cái class sinh viên thì anh đã gửi cho bạn em rồi"
+  },
+  {
+    "start": 3599.85,
+    "end": 3603.53,
+    "text": "còn cái hàm ghét ngày sinh này thì bạn em phải tự cài đặt lấy"
+  },
+  {
+    "start": 3603.53,
+    "end": 4040.64,
+    "text": "tự cài đặt lấy cái hàm ghét ngày sinh"
+  },
+  {
+    "start": 4040.64,
+    "end": 4049.71,
+    "text": "bà này có vẻ nó hơi dài các bạn, cốt nó sẽ lâu hơn"
+  },
+  {
+    "start": 4049.71,
+    "end": 4051.71,
+    "text": "này thì có 4 bốn máy"
+  },
+  {
+    "start": 4051.71,
+    "end": 4065.22,
+    "text": "truyền vô tượng OOP"
+  },
+  {
+    "start": 4065.22,
+    "end": 4085.49,
+    "text": "ok mình sẽ chữa cái bài số 8 này nhé"
+  },
+  {
+    "start": 4085.49,
+    "end": 4089.49,
+    "text": "bắt bạn em sắp xếp theo ngày sinh đúng không, từ già tới trẻ"
+  },
+  {
+    "start": 4089.49,
+    "end": 4094.61,
+    "text": "Thế thì ở trong cái hàm ghét ngày sinh này, đầu tiên anh sẽ dùng shrink-shrim"
+  },
+  {
+    "start": 4094.61,
+    "end": 4097.61,
+    "text": "để anh tách cái phần ngày sinh thành 3 phần"
+  },
+  {
+    "start": 4097.61,
+    "end": 4101.52,
+    "text": "Anh dùng shrink-shrim, ss các bạn chuyển ngày sinh vào đây"
+  },
+  {
+    "start": 4101.52,
+    "end": 4106.62,
+    "text": "Sau đó thì mình sẽ tạo ra 3 cái biến là ngày tháng và năm"
+  },
+  {
+    "start": 4106.62,
+    "end": 4112.43,
+    "text": "Sau đó mình sẽ ghét like"
+  },
+  {
+    "start": 4112.43,
+    "end": 4114.83,
+    "text": "Đầu tiên là mình sẽ ghét like ngày, đúng không?"
+  },
+  {
+    "start": 4114.83,
+    "end": 4120.6,
+    "text": "Rồi, sau đến tháng đến năm"
+  },
+  {
+    "start": 4120.6,
+    "end": 4122.76,
+    "text": "Ngày tháng năm"
+  },
+  {
+    "start": 4122.76,
+    "end": 4127.36,
+    "text": "Vậy sau 3 lần đọc thì mình đã tách được 3 phần ngày tháng 5 theo dô cách chéo rồi"
+  },
+  {
+    "start": 4127.36,
+    "end": 4136.45,
+    "text": "Thì mà em chỉ cần return về 5 phần dô cách cộng ngày tháng sau đó cộng dô cách cộng ngày là được"
+  },
+  {
+    "start": 4136.45,
+    "end": 4140.28,
+    "text": "Mình đảo cái phần 5 lên trước, cái thôi"
+  },
+  {
+    "start": 4140.28,
+    "end": 4145.28,
+    "text": "Thì đó khi ở trong compen này, khi mà mình so sánh 2 cái 2 người theo ngày sinh"
+  },
+  {
+    "start": 4145.28,
+    "end": 4149.28,
+    "text": "Giả trước, xuất hiện trước trẻ thì mình em sẽ check là"
+  },
+  {
+    "start": 4149.28,
+    "end": 4153.5,
+    "text": "ích chấm ghét ngày sinh, nó khác y chấm ghét ngày sinh này"
+  },
+  {
+    "start": 4153.5,
+    "end": 4156.46,
+    "text": "mình sẽ return về nhỏ hơn, đúng không? nhỏ hơn"
+  },
+  {
+    "start": 4156.46,
+    "end": 4159.46,
+    "text": "cái chuỗi ngày sinh mà nó nhỏ hơn thì là ông này xinh trước"
+  },
+  {
+    "start": 4159.46,
+    "end": 4162.86,
+    "text": "còn nếu mà hai người có cùng ngày sinh thì các bạn sẽ return về"
+  },
+  {
+    "start": 4162.86,
+    "end": 4165.26,
+    "text": "ích chấm ghét mẽ, nhỏ hơn ích chấm ghét mẽ"
+  },
+  {
+    "start": 4165.26,
+    "end": 4168.86,
+    "text": "vì nó bạo là nếu hai sinh viên có cùng ngày sinh"
+  },
+  {
+    "start": 4168.86,
+    "end": 4171.1,
+    "text": "thì sắt mẽ tăng dần theo tư điển"
+  },
+  {
+    "start": 4171.1,
+    "end": 4173.48,
+    "text": "rồi"
+  },
+  {
+    "start": 4173.48,
+    "end": 4179.46,
+    "text": "nếu các bạn chạy là xâm thôi có gì đâu"
+  },
+  {
+    "start": 4179.46,
+    "end": 4190.76,
+    "text": "ở chỗ này của mình là ghét ngày sinh"
+  },
+  {
+    "start": 4190.76,
+    "end": 4195.08,
+    "text": "đó, năm 1998, 2001, 2001, 2001 này, ok"
+  },
+  {
+    "start": 4195.08,
+    "end": 4213.67,
+    "text": "Còn bài số 9 thì nó cũng là cho các bạn danh sách sinh viên và bắt bọn em là sắp xếp theo tên, tăng dần việc, đầu tiên là sắp xếp theo lớp"
+  },
+  {
+    "start": 4213.67,
+    "end": 4223.06,
+    "text": "Tức là những bạn mà cùng lớp thì đứng cạnh nhau, đúng không? Các sinh viên trong cùng 1 lớp thì sẽ sắp xếp theo tên tăng dần về từ điển"
+  },
+  {
+    "start": 4223.06,
+    "end": 4229.06,
+    "text": "Cái này thì nó cũng khá là phổ biến, ví dụ như là bọn em thi xong 1 món học nào đấy đúng không?"
+  },
+  {
+    "start": 4229.06,
+    "end": 4234.74,
+    "text": "dụ như môn đại xu tiên tính chẳng hạn, người ta làm một cái bảng điểm số một cái là"
+  },
+  {
+    "start": 4234.74,
+    "end": 4241.63,
+    "text": "cứ từng lớp, từng lớp, từng lớp một, thì trong cùng lớp đấy thì tên abc theo thứ tự tự điển đúng không?"
+  },
+  {
+    "start": 4241.63,
+    "end": 4244.67,
+    "text": "Thì thì bọn em làm bài số 9 này."
+  },
+  {
+    "start": 4244.67,
+    "end": 4250.9,
+    "text": "Bây giờ trong cái lớp sinh viên này, bọn em xây dựng thêm một cái hàm là ghét tên, đúng không?"
+  },
+  {
+    "start": 4250.9,
+    "end": 4253.06,
+    "text": "Nhưng mà cái hàm ghét tên này thì"
+  },
+  {
+    "start": 4253.06,
+    "end": 4258.02,
+    "text": "bọn em sẽ trẻ về cái tên mà mình có thể xắp xếp luôn."
+  },
+  {
+    "start": 4258.02,
+    "end": 4262.65,
+    "text": "ở đây người ta sẽ set tên trước rồi mình đến họ và đệm, đúng không?"
+  },
+  {
+    "start": 4262.65,
+    "end": 4265.41,
+    "text": "ví dụ như bọn em có cái chuỗi ngày, chuỗi tên là"
+  },
+  {
+    "start": 4265.41,
+    "end": 4270.83,
+    "text": "Nguyễn Văn Nam trưởng hệ, thì em phải chuyển cái tên thành Nam Nguyễn Văn"
+  },
+  {
+    "start": 4270.83,
+    "end": 4275.55,
+    "text": "thì mình đem cái chuỗi này mình so sánh, thì nó so sánh tên trước rồi mình đến họ rồi mình đến đệm"
+  },
+  {
+    "start": 4275.55,
+    "end": 4277.39,
+    "text": "rồi mình đến đệm nhất thứ 2, thứ 3"
+  },
+  {
+    "start": 4277.39,
+    "end": 4278.39,
+    "text": "ok"
+  },
+  {
+    "start": 4278.39,
+    "end": 4279.39,
+    "text": "này"
+  },
+  {
+    "start": 4279.39,
+    "end": 4282.8,
+    "text": "và các bạn phải viết hàm ghép lớp nữa"
+  },
+  {
+    "start": 4282.8,
+    "end": 4286.56,
+    "text": "tại vì ở đây đầu, cái tiêu trí đầu tiên là nó bắt bản em sắp xếp theo lớp"
+  },
+  {
+    "start": 4286.56,
+    "end": 4289.08,
+    "text": "sau đó trong cùng 1 lớp mới lại sắp xếp theo tên"
+  },
+  {
+    "start": 4289.08,
+    "end": 4296.8,
+    "text": "và tên thì phải xét họ trước rồi mới đến tên, xét xét tên thì phải xét tên trước rồi mới đến họ rồi mới đến đệm"
+  },
+  {
+    "start": 4296.8,
+    "end": 4304.2,
+    "text": "2 bạn này cũng công nghiệm tin 1, 2 bạn này cũng điện tự viện thông 1, bạn này khoa hồng máy tính 1"
+  },
+  {
+    "start": 4304.2,
+    "end": 4313.93,
+    "text": "ok, các bạn làm bài số 9 đi"
+  },
+  {
+    "start": 4313.93,
+    "end": 4336.06,
+    "text": "các bạn nào xong bài 9 thì có thể làm bài 10 nhá"
+  },
+  {
+    "start": 4336.06,
+    "end": 4348.98,
+    "text": "từ này xem cái bài phần, có bài này ở bên này mà các bạn có làm được không?"
+  },
+  {
+    "start": 4348.98,
+    "end": 4355.17,
+    "text": "hơi dài"
+  },
+  {
+    "start": 4355.17,
+    "end": 4371.28,
+    "text": "này của anh là buổi số 21 à?"
+  },
+  {
+    "start": 4380.9,
+    "end": 4401.08,
+    "text": "chắc là trong tuần sau bọn em xong á"
+  },
+  {
+    "start": 4401.08,
+    "end": 4403.97,
+    "text": "trong tuần sau"
+  },
+  {
+    "start": 4403.97,
+    "end": 4408.76,
+    "text": "này là thứ 6 à?"
+  },
+  {
+    "start": 4408.76,
+    "end": 4419.33,
+    "text": "là thứ 5"
+  },
+  {
+    "start": 4419.33,
+    "end": 4421.33,
+    "text": "ở bài 9 em ạ"
+  },
+  {
+    "start": 4421.33,
+    "end": 4426.92,
+    "text": "sắp xếp lớp sinh viên bè"
+  },
+  {
+    "start": 4426.92,
+    "end": 4430.92,
+    "text": "nhưng mà làm cái, đúng rồi, làm cái bài, làm cái tét về lập trình đối tượng nó dài lắm"
+  },
+  {
+    "start": 4430.92,
+    "end": 4432.92,
+    "text": "làm tét về lập trình đối tượng nó dài"
+  },
+  {
+    "start": 4432.92,
+    "end": 4436.95,
+    "text": "bởi vì là mỗi thông tin, mỗi đối tượng nó rất là dài"
+  },
+  {
+    "start": 4436.95,
+    "end": 4441.95,
+    "text": "Công tin mỗi đối tượng nó rất là dài, tên, ngày sinh, lớp, các thứ"
+  },
+  {
+    "start": 4441.95,
+    "end": 4448.84,
+    "text": "Đây là khi mà tạo test nó dài lắm"
+  },
+  {
+    "start": 4448.84,
+    "end": 4454.84,
+    "text": "Đây là anh làm cái test cho phần lập trình đối tượng này, nó tương đối là vất vẻ"
+  },
+  {
+    "start": 4454.84,
+    "end": 4472.39,
+    "text": "Các bạn cốt gì?"
+  },
+  {
+    "start": 4472.39,
+    "end": 4474.74,
+    "text": "Nó hơi lâu đấy"
+  },
+  {
+    "start": 4474.74,
+    "end": 4478.74,
+    "text": "Thế thôi, vậy là mình đã học được xong cái phần thứ nhất rồi, lập trình đối tượng rồi"
+  },
+  {
+    "start": 4478.74,
+    "end": 4492.93,
+    "text": "À, được các bạn"
+  },
+  {
+    "start": 4492.93,
+    "end": 4504.47,
+    "text": "Java, Java thì nắng tương tự mà như lúc nãy cốt của bạn, ví dụ như bạn nguyễn phú trọng này, bạn ấy cốt bằng, bằng Java này"
+  },
+  {
+    "start": 4504.47,
+    "end": 4519.6,
+    "text": "Trong Java nó cũng có class thôi, có class, các kiểu các kiểu thôi, class, tác giả này, lớp, book này"
+  },
+  {
+    "start": 4519.6,
+    "end": 4528.96,
+    "text": "Nhưng mà nó cốt bằng Java, đưa cái mạng, có bạn cốt đi"
+  },
+  {
+    "start": 4528.96,
+    "end": 4935.16,
+    "text": "ok, hướng dẫn node 9 nha"
+  },
+  {
+    "start": 4935.16,
+    "end": 4938.36,
+    "text": "các bạn cốt cái phần này thì nó hơi dài"
+  },
+  {
+    "start": 4938.36,
+    "end": 4944.61,
+    "text": "dài thì khó thì nó trẻ khó đâu, như bạn em cốt thì nó không khó đâu, nhưng mà nó dài thế"
+  },
+  {
+    "start": 4944.61,
+    "end": 4952.52,
+    "text": "bây giờ này là sub set theo lớp đúng không? bởi thì ở trong lớp sinh viên này sẽ viết 1 cái ham get lớp"
+  },
+  {
+    "start": 4952.52,
+    "end": 4959.24,
+    "text": "bạn return về cho anh cái thuộc tính lớp là được"
+  },
+  {
+    "start": 4959.24,
+    "end": 4966.24,
+    "text": "với lại là cái tên đúng không? ở đây anh sẽ viết 1 get tên, nhưng mà cái tên này sẽ tag nó ra"
+  },
+  {
+    "start": 4966.24,
+    "end": 4991.3,
+    "text": "stringcheam, saya sẽ tạo 1 frame by form, trする ném, ném, nét, lạc ngược, lấy phần họ vào đệm"
+  },
+  {
+    "start": 4991.3,
+    "end": 5002.32,
+    "text": "rass, cộng mạng dấu cách, cộng thêm vi, return, rass, tuy可 thhill, nâng xanh"
+  },
+  {
+    "start": 5002.32,
+    "end": 5007.82,
+    "text": "gép tên, so sánh, xanh tên trước, tr recep thịt bắt đầu đến họ, menrete"
+  },
+  {
+    "start": 5007.82,
+    "end": 5043.99,
+    "text": "Hãy nhập trở ra khu vực để các bạn nhập thử tử điển tăng dần"
+  },
+  {
+    "start": 5043.99,
+    "end": 5049.78,
+    "text": "41 buổi, các bạn phải học 41, 42 buổi"
+  },
+  {
+    "start": 5049.78,
+    "end": 5055.97,
+    "text": "đây nó đã sắp xếp theo lớp từ các bạn, cùng lớp thì sắp xếp theo tên"
+  },
+  {
+    "start": 5055.97,
+    "end": 5072.02,
+    "text": "các bạn nào có câu hỏi, câu hỏi gì không?"
+  }
+]

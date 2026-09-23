@@ -1,0 +1,786 @@
+[
+  {
+    "chunk_id": "chunk_1_63",
+    "start_sec": 1,
+    "end_sec": 63,
+    "start_label": "00:01",
+    "end_label": "01:03",
+    "raw_text": "Trong video này, mình sẽ hướng dẫn các bạn một cái thuật toàn, chính là thuật toàn quay lùi nhé. Ok, và mình sẽ hướng dẫn các bạn 5 bài toàn, nhất là sinh sâu nhị phân này, sinh tổ hợp trực ca của này, sinh hoàn vị này, bài toàn sếp quân hậu này, và bài toàn con trùa này trong mấy cung. Thì mình sẽ nói qua một chút về thuật toàn quay lùi này nhé, thuật toàn quay lùi này yêu cầu các bạn phải hiểu được đệ quy đấy. Bạn nào bị yếu đệ quy là học phần quay lùi này thì chỉ biết học thuật code rồi, chỉ còn không tự code được. Thành ra là nếu mà bạn không hiểu được thuật toán quay lùi nó chạy như thế nào thì thực chất là mình đang yếu về phần đệ quy Thì các bạn nên học lại phần đệ quy một chút nhé Thì thuật toán quay lùi này tương tự như là cái thuật toán sinh mà mình đã từng hướng dẫn Thì nó dùng để giải quyết cái bài toán mà bạn cần liệt kê một cái cấu hình gì đó Nhưng mà không phải lúc nào mình cũng biết được một cái thuật toán sinh từ cái cấu hình này mình sinh ra cái cấu hình tiếp theo đúng không? Thành ra là thằng quay lùi này sẽ được sử dụng trong các cái trường hợp đấy Thì mình sẽ được học về quay lưu thì cái định nghĩa của nó như sau nhá"
+  },
+  {
+    "chunk_id": "chunk_45_106",
+    "start_sec": 45,
+    "end_sec": 106,
+    "start_label": "00:45",
+    "end_label": "01:46",
+    "raw_text": "Thì nó dùng để giải quyết cái bài toán mà bạn cần liệt kê một cái cấu hình gì đó Nhưng mà không phải lúc nào mình cũng biết được một cái thuật toán sinh từ cái cấu hình này mình sinh ra cái cấu hình tiếp theo đúng không? Thành ra là thằng quay lùi này sẽ được sử dụng trong các cái trường hợp đấy Thì mình sẽ được học về quay lưu thì cái định nghĩa của nó như sau nhá Đấy chính là Tờ toán quay lưu ít dùng để giải quyết bài toán liệt kê các cái cấu hình Thì thằng quay lưu này nó kiểu tấn công theo kiểu Đấy chính là mỗi bước nó sẽ xây dựng từ phần tử 1 của cái cấu hình mà bạn đang cần xây dựng Đó, giả sử như cái cấu hình mà bạn cần liệt kê Nó là một cái cấu hình có n là phần tử từ x1 cho tới xn Thì thằng quay lưu này nó sẽ đi từng xây dựng từng thằng 1 Nó sẽ dựng x1, x2, x3, x4 cho tới khi mà bạn xây dựng được x nó, thì nó sẽ ghi nhận được 1 cấu hình Ok, đấy, nó tấn công kiểu đấy, nó tấn công từng bước 1, từng bước 1 Thì cái thật toán của nó thực hiện theo cái kiểu là, đầu tiên nó sẽ xét tất cả các cái giá trị mà x1 có thể nhận được Và nó gán lần lượt các cái giá trị đấy cho cái thằng x1 nhá"
+  },
+  {
+    "chunk_id": "chunk_87_149",
+    "start_sec": 87,
+    "end_sec": 149,
+    "start_label": "01:27",
+    "end_label": "02:29",
+    "raw_text": "Nó sẽ dựng x1, x2, x3, x4 cho tới khi mà bạn xây dựng được x nó, thì nó sẽ ghi nhận được 1 cấu hình Ok, đấy, nó tấn công kiểu đấy, nó tấn công từng bước 1, từng bước 1 Thì cái thật toán của nó thực hiện theo cái kiểu là, đầu tiên nó sẽ xét tất cả các cái giá trị mà x1 có thể nhận được Và nó gán lần lượt các cái giá trị đấy cho cái thằng x1 nhá Sau khi mà nó đã gán được lần lượt cái giá trị cho x1 rồi, thì nó tiếp tục nó xét đến x2 và nó xét xem là Đã xem là thằng x2 này có thể nhận được bao nhiêu khả năng Thì nó lại là gán lần lượt lần lượt các cái khả năng đấy cho thằng x2 Ok, đó Và tương tự như vậy nó sẽ xây dựng đến x3 nhá Và nó xem là x3 có bao nhiêu khả năng và nó cũng sẽ gán lần lượt các cái giá trị đấy cho x3 Cứ tương tự như vậy tiếp tục cho đến x4, x5 và khi mà bạn xây dựng được xong x9 Ok, khi mà bạn xây dựng được xong x9 thì khi đó thì nó sẽ ghi nhận cái cấu hình của các bạn vừa xây dựng xong thì bạn thấy là cái thằng quay lùi nó sẽ sinh ra rất là nhiều cấu hình, đúng không? Nếu mà không có yêu cầu gì về gán giá trị cho xe, xe đây chạy từ 1 cho tới nói,"
+  },
+  {
+    "chunk_id": "chunk_132_193",
+    "start_sec": 132,
+    "end_sec": 193,
+    "start_label": "02:12",
+    "end_label": "03:13",
+    "raw_text": "Ok, khi mà bạn xây dựng được xong x9 thì khi đó thì nó sẽ ghi nhận cái cấu hình của các bạn vừa xây dựng xong thì bạn thấy là cái thằng quay lùi nó sẽ sinh ra rất là nhiều cấu hình, đúng không? Nếu mà không có yêu cầu gì về gán giá trị cho xe, xe đây chạy từ 1 cho tới nói, thì ở mỗi bước, thật toán quay lùi này nó sẽ xếp bao nhiêu trường hợp, ví dụ là x1 thì bạn xếp 3 trường hợp, đúng không? x2 bạn xếp 3 trường hợp, x3 bạn xếp 3 trường hợp, thì cứ như thế, ở mỗi bước nó có 3 trường hợp thì nó sẽ ra, theo quý tăng nhân thì mình sẽ có 27 trường hợp tất cả để thử cho x1 cho tới x3, đúng không, giả sử như nở vòng 3 ra cái số lời gọi đệ quy của thắng quay lưu này tương đối là nhiều cái đấy mình sẽ giải thích thêm ở cuối nhá, ok? thì đây chính là cái định nghĩa về thuật toán quay lưu của mình, đúng nhỉ? tư tưởng của nó ở đây chính là nó sẽ tấn công dần dần xây dựng từng phần thử x1, x2, x3 đến bao giờ được xn thì nó sẽ ghi nhận cái câu hình, ok? còn đây chính là cái mã giả của thuật toán quay lưu"
+  },
+  {
+    "chunk_id": "chunk_178_241",
+    "start_sec": 178,
+    "end_sec": 241,
+    "start_label": "02:58",
+    "end_label": "04:01",
+    "raw_text": "thì đây chính là cái định nghĩa về thuật toán quay lưu của mình, đúng nhỉ? tư tưởng của nó ở đây chính là nó sẽ tấn công dần dần xây dựng từng phần thử x1, x2, x3 đến bao giờ được xn thì nó sẽ ghi nhận cái câu hình, ok? còn đây chính là cái mã giả của thuật toán quay lưu giả sử như mình cần xây dựng một cái câu hình có cái dạng là từ x1 cho tới xn như thế này thì thuật toán quay lùi này nó sẽ là một thuật toán đệ quy ok, với cái tham số lại i trong đó cái hàm try i này được dùng để mình đi xây dựng cái giá trị cho cái thằng xe cho cái phần từ xe ở trong cái câu hình này này đó, thì đơn giản thôi, đây chính là đối với mỗi khi mà bạn xây dựng cái phần từ xe thì bạn phải xét tất cả các khái năng mà bạn có thể gán cho thằng xe này cho phần tử thứ y của cấu hình của mình thì đây mình chỉ cần dùng 1 cái vòng for chạy từ khả năng đầu tiên cho tới khả năng cuối cùng ok, và lần luật bạn kiểm tra là nếu mà bạn có thể bạn có thể gán cái khả năng thứ y này này cho cái thằng y, cho thằng xy"
+  },
+  {
+    "chunk_id": "chunk_224_288",
+    "start_sec": 224,
+    "end_sec": 288,
+    "start_label": "03:44",
+    "end_label": "04:48",
+    "raw_text": "cho phần tử thứ y của cấu hình của mình thì đây mình chỉ cần dùng 1 cái vòng for chạy từ khả năng đầu tiên cho tới khả năng cuối cùng ok, và lần luật bạn kiểm tra là nếu mà bạn có thể bạn có thể gán cái khả năng thứ y này này cho cái thằng y, cho thằng xy thì mình gán, ok, đôi khi thì bạn có 1 cái điều kiện gì đó để bạn biết rằng liệu cái khả năng thứ y có gán được cho thằng xy này hay không ok, thì ở đây nó có 1 cái bước đấy là kiểm tra nếu có thể chấp nhận được khả năng ghi thì mình mới gán ít i bằng khả năng ghi và sau khi mà bạn gán xâm nhé, thì bạn kiểm tra nếu mà ít mà bằng ít nó tức là cái phần tử mà bạn đã xây dựng xâm nó chính là phần tử cuối cùng rồi thì mình sẽ ít ra cái cấu hình mà bạn đã xây dựng bởi vì khi đó bạn đã xây dựng được tất cả các phần tử từ ít 1 cho tới ít nờ rồi còn nếu mà nó chưa phải là cái phần tử cấu cuối cùng ấy, chưa phải là ít nờ ấy thì bạn sẽ gọi tủ tục để quay try í cộng 1 để nó tiếp tục xây dựng cái phần tử thứ í cộng 1 Ok, bạn nào mà không hiểu đệ quy thì cái phần này hơi khó hiểu, còn không hiểu là nó chạy như thế nào cơ"
+  },
+  {
+    "chunk_id": "chunk_271_332",
+    "start_sec": 271,
+    "end_sec": 332,
+    "start_label": "04:31",
+    "end_label": "05:32",
+    "raw_text": "còn nếu mà nó chưa phải là cái phần tử cấu cuối cùng ấy, chưa phải là ít nờ ấy thì bạn sẽ gọi tủ tục để quay try í cộng 1 để nó tiếp tục xây dựng cái phần tử thứ í cộng 1 Ok, bạn nào mà không hiểu đệ quy thì cái phần này hơi khó hiểu, còn không hiểu là nó chạy như thế nào cơ Ok, thì mình cứ xem cái mẽ giả của nó như thế này đã nhá, tư tưởng của nó như thế thôi, đây chính là đối với mỗi phần tử thứ y thì mình sẽ phải set tất cả các cái khả năng mà nó có thể nhận được, và mình lần lượt rán các cái khả năng đấy cho cái thằng xy ok, và kiểm tra là, nếu mà cái thằng i đấy chính là cái cậu là cái phần tử cuối cùng thì mình sẽ in ra kết quả còn không thì mình tiếp tục gọi đệ quy để nó xây dựng cái phần tử xi cậu 1 ok, nó cũng không khó đúng không? đây, thủ tục đệ quy của nó chỉ như thế này thôi cái mã giả của nó chỉ như thế này thôi vậy thì bây giờ mình sẽ đi vào một cái bài toán đầu tiên nhé, để hiểu rõ hơn cái thằng quay lùi này nó hoạt động như thế nào thì đây chính là cái bài toán mà sinh ra sau nhị phân có độ dài n"
+  },
+  {
+    "chunk_id": "chunk_314_385",
+    "start_sec": 314,
+    "end_sec": 385,
+    "start_label": "05:14",
+    "end_label": "06:25",
+    "raw_text": "ok, nó cũng không khó đúng không? đây, thủ tục đệ quy của nó chỉ như thế này thôi cái mã giả của nó chỉ như thế này thôi vậy thì bây giờ mình sẽ đi vào một cái bài toán đầu tiên nhé, để hiểu rõ hơn cái thằng quay lùi này nó hoạt động như thế nào thì đây chính là cái bài toán mà sinh ra sau nhị phân có độ dài n ok Bây giờ bạn sẽ phải xây dựng cái cấu hình là từ x1, x2, cho tới xn Ok, bạn cần xây dựng 1 cái cấu hình như thế Thì mình cũng tấn công dần dần thôi, mình sẽ xây dựng xem là cái beat thứ nhất thì nhận cái giá trị gì Đúng không, beat thứ 2 nhận cái giá trị gì, thế như thế Đây chính là cái thủ tục, cái ham để xây dựng xâu nhị phân của độ dài n nó, nó rất là ngắn Ok, thì bạn thấy là gì nhập đối với cái bài mà xâu nhị phân Cát bít từ bít 1 cho tới bít n, từ x1 cho tới xn, mỗi bít chỉ nhận được 2 cái giá trị thôi, là không hoặc 1 Thành ra là đối với thủ tục Trine này, mình gán giá trị cho bít thứ y, thì bình thường mình phải diệt tất cả các khả năng mà cái thằng cái bít thứ y có thể nhận được"
+  },
+  {
+    "chunk_id": "chunk_364_426",
+    "start_sec": 364,
+    "end_sec": 426,
+    "start_label": "06:04",
+    "end_label": "07:06",
+    "raw_text": "Cát bít từ bít 1 cho tới bít n, từ x1 cho tới xn, mỗi bít chỉ nhận được 2 cái giá trị thôi, là không hoặc 1 Thành ra là đối với thủ tục Trine này, mình gán giá trị cho bít thứ y, thì bình thường mình phải diệt tất cả các khả năng mà cái thằng cái bít thứ y có thể nhận được Đây chính là cái vòng 4 đấy này, thì đối với bài toán sinh sâu nhị phân này thì bạn chỉ cần diệt cho mình 2 cái giá trị thôi, đấy là không hoặc 1 vòng 1, vòng 4 cho ghi chạy từ vòng 0 cho ghi nhỏ vòng 1 với ghi cộng cộng và mình gán xe bằng ghi nhé thông thường thì ở chỗ này nó sẽ phải có 1 điều kiện để check xem là liệu rằng bạn có thể gán cái giá trị ghi cho xe hay không nhưng đối với các bạn toán sinh sâu những phần này thì không có điều kiện gì cả thằng ra là bạn chỉ cần gán trực tiếp xe bằng ghi là được sau khi mà bạn đang gán xe bằng ghi nhé, nó chính là cái bước này này thì bạn kiểm tra xem là y có bằng nó hay không đây là bạn kiểm tra nếu mà y bằng bằng nó tuyệt là bạn đã xây dựng được đến cái cấu hình cuối cùng rồi à xin lỗi không phải là cấu hình cuối cùng mà là xây dựng đến cái beat cuối cùng rồi"
+  },
+  {
+    "chunk_id": "chunk_411_474",
+    "start_sec": 411,
+    "end_sec": 474,
+    "start_label": "06:51",
+    "end_label": "07:54",
+    "raw_text": "sau khi mà bạn đang gán xe bằng ghi nhé, nó chính là cái bước này này thì bạn kiểm tra xem là y có bằng nó hay không đây là bạn kiểm tra nếu mà y bằng bằng nó tuyệt là bạn đã xây dựng được đến cái cấu hình cuối cùng rồi à xin lỗi không phải là cấu hình cuối cùng mà là xây dựng đến cái beat cuối cùng rồi thì mình sẽ in ra kết quả ok còn không thì mình sẽ gọi trial của e1 để tiếp tục xây dựng cái beat từ e1 trong trường hợp này thì mình sẽ sử dụng 1 cái mảng ích nhé để lưu cái cấu hình và khi mà bạn chạy cái thủ tục trial này thì nó sẽ xinh ra 1 cái cây quay lui như thế này ok nó sẽ xinh ra 1 cái cây quay lui như thế này thì đây mình sẽ cốt thuật toán trước nhé, sau đó mình sẽ hướng dẫn cho các bạn cái thuật toán này nó chạy như thế nào ở đây mình sẽ dùng 1 cái biến này nr này vào 1 cái màng x để lưu cấu hình, ok, thì tụi tục try của mình nó sẽ chỉ cần như sau thôi này mình sẽ duyệt từ 4, ở đây mình sẽ, cái đầu tiên khi mà mình xây dựng cái bít thứ e đấy chính là gì nhà mình sẽ duyệt các khả năng của xe đúng không thì bít nào cũng thế thôi, vị trí nào cũng thế thôi, chỉ có 2 khả năng 1 là bít 1 hoặc là bít 1"
+  },
+  {
+    "chunk_id": "chunk_459_520",
+    "start_sec": 459,
+    "end_sec": 520,
+    "start_label": "07:39",
+    "end_label": "08:40",
+    "raw_text": "mình sẽ duyệt từ 4, ở đây mình sẽ, cái đầu tiên khi mà mình xây dựng cái bít thứ e đấy chính là gì nhà mình sẽ duyệt các khả năng của xe đúng không thì bít nào cũng thế thôi, vị trí nào cũng thế thôi, chỉ có 2 khả năng 1 là bít 1 hoặc là bít 1 thì bạn duyệt cho mình từ ghi bằng không cho tới ghi nhỏ bằng 1 và ghi cộng cộng và bạn chỉ gán cho mình, cần gán cho mình là ích y nằm ghi ra được, ok? sau khi mà gán xâm nhé, thì bạn kiểm tra là nếu mà y mà bằng n tức là bạn đã xây dựng được đến cái bít thứ n rồi, thì bạn sẽ in ra kết quả ở đây mình sẽ mình viết 1 cái hàm in kết quả nhé, void in kết quả In kết quả thì mình diệt tường 1 cho tới nr thôi Cho nó mình in ra kế câu hình thôi Không có gì cả Ok Và hết một rong thì mình sẽ xuống rong Hết một câu hình thì mình sẽ xuống rong Ê mình sẽ gọi cái hàm in kết quả ở đây nhá Ok Còn L này Thì mình sẽ gọi đến try của i cộp 1 Ok Hó Rất dễ đúng không? Dùi là tất cả các khả năng có thể Khả năng của í này"
+  },
+  {
+    "chunk_id": "chunk_504_568",
+    "start_sec": 504,
+    "end_sec": 568,
+    "start_label": "08:24",
+    "end_label": "09:28",
+    "raw_text": "Và hết một rong thì mình sẽ xuống rong Hết một câu hình thì mình sẽ xuống rong Ê mình sẽ gọi cái hàm in kết quả ở đây nhá Ok Còn L này Thì mình sẽ gọi đến try của i cộp 1 Ok Hó Rất dễ đúng không? Dùi là tất cả các khả năng có thể Khả năng của í này Sau đó gán í bằng cái khả năng thứ dì đó Và kiểm tra nếu mà mình đã xây dựng đến cái beat cuối cùng rồi Thì mình sẽ in ra kết quả còn không thì mình sẽ tiếp tục gọi try của e-1 để xây dựng từ bít e-1 trong hàm mê thì các bạn chỉ cần nhập vào 2 cái hàm này, các bạn không cần từ ghi vào nhé, mình để đọc ghi-5 thôi mình sẽ nhập vào sau đó là mình chỉ cần gọi try của 1, nó bắt đầu từ try 1 nhé để mình xây dựng từ cái bít thứ 1 là được ok thì khi nó sẽ xây dựng cho mình tất cả các cấu hình nhị phân mà có n bít ví dụ như ở đây mình nhập 3 bít nhé, thì nó sẽ in là 8 cấu hình như sau ok nó sẽ có 8 cấu hình như thế này, rất là dễ hiểu đúng không? Cout rất là ngắn và dễ hiểu Nhưng lại không, các bạn gặp một trường hợp đấy chứ là các bạn không hiểu cái code này nó chạy như thế nào ấy"
+  },
+  {
+    "chunk_id": "chunk_552_616",
+    "start_sec": 552,
+    "end_sec": 616,
+    "start_label": "09:12",
+    "end_label": "10:16",
+    "raw_text": "ok nó sẽ có 8 cấu hình như thế này, rất là dễ hiểu đúng không? Cout rất là ngắn và dễ hiểu Nhưng lại không, các bạn gặp một trường hợp đấy chứ là các bạn không hiểu cái code này nó chạy như thế nào ấy Ok, v đây mình sẽ hướng dẫn các bạn xem là cái code này nó chạy như thế nào nhá Cái này thì giải thích nó hơi khó một chút đấy Đầu tiên này, các bạn gọi cái ham là ham try với i bằng 1 đúng không? Ok, hỏi ham try với i bằng 1 Thì bạn thấy nhá, khi đó này try i bằng 1 thì nó làm sao? Nó sẽ có 2 vòng fo, fo dùi từ dì vòng không cho tới dì vòng 1 mà Ok, thì cái vòng fo thứ nhất í, đó, đây chính là cái vòng fo mà bạn gán íc y vòng không Ok, vậy thì khi đó nhé, cái hạm try này là sẽ chỉ add ra 2 nhánh Nó chính là 2 cái nhánh của vòng fo của các bạn ý Cái nhánh thứ nhất í, đây chính là cái nhánh mà bạn gán íc 1 vòng không Đúng không, cái nhánh mà bạn gán íc 1 vòng không, cái vòng fo thứ nhất của cái vòng fo này này"
+  },
+  {
+    "chunk_id": "chunk_599_663",
+    "start_sec": 599,
+    "end_sec": 663,
+    "start_label": "09:59",
+    "end_label": "11:03",
+    "raw_text": "Ok, vậy thì khi đó nhé, cái hạm try này là sẽ chỉ add ra 2 nhánh Nó chính là 2 cái nhánh của vòng fo của các bạn ý Cái nhánh thứ nhất í, đây chính là cái nhánh mà bạn gán íc 1 vòng không Đúng không, cái nhánh mà bạn gán íc 1 vòng không, cái vòng fo thứ nhất của cái vòng fo này này Thành ra khi đó bạn sẽ gán lại íc 1 vòng không ok sau đó thì cái nhánh vòng for này chưa chạy nhé cái nhánh vòng for thứ 2 này chưa chạy nhé đúng không? nó vẫn đứng ở đây đã thì ở đây bạn lại kiểm tra là nếu mà i mà bằng n thì trong trường hợp này, i mới bằng 1 chưa bằng n được thì nó chưa in ra được kết quả mà nó nhảy vào cái L này và nó gọi đến ham try1 tức là khi đó cái nhánh phòng for thứ nhất của các bạn này nó lại gọi một cái thủ tục đấy chính là try của try của i cộng 1 tức là try của i bằng 2 đấy và bây giờ cái hàm mà đang chạy nhé, cái hàm mà đang chạy, nó chính là cái hàm try2 này, đúng không? bạn gọi địa quy mà, vậy thì khi đó trong stack của các bạn nó sẽ có là gì nhỉ? cái hàm đầu tiên là cái hàm try1 1, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_648_711",
+    "start_sec": 648,
+    "end_sec": 711,
+    "start_label": "10:48",
+    "end_label": "11:51",
+    "raw_text": "và bây giờ cái hàm mà đang chạy nhé, cái hàm mà đang chạy, nó chính là cái hàm try2 này, đúng không? bạn gọi địa quy mà, vậy thì khi đó trong stack của các bạn nó sẽ có là gì nhỉ? cái hàm đầu tiên là cái hàm try1 1, đúng không? và cái hàm tiếp theo là hàm try2 đúng không? đấy, cái hàm try1 này chưa chạy xong, và bây giờ cái hàm mà đang chạy, đang chạy chính là try2 cơ ok, và tương tự như thế, cái hàm try2 của các bạn nó lại làm cái công việc y hệt như cái này thôi Đúng không? Nó chính là cái thủ tục này rồi mà Thứ này nó sẽ gần duyệt các cái khẻ năng mà nó có thể gán cho thằng, cho thằng x2 Thì khi đó cái vòng fo của các bạn, ở trong cái hạm tròi 2, nhá, cái hạm tròi 2 này này Nó cũng chẽ ra 2 nhánh Nhánh thứ nhất là bạn gán cái x2 bằng 0 Và cái nhánh thứ 2 là bạn gán x2 bằng 1 Thì bây giờ nhá, nó sẽ chạy vào cái nhánh thứ nhất của cái vòng fo đấy Thế là bạn sẽ gán x2 bằng 0 đấy Có đúng như thế không? Ok, cái vòng fo thứ 2 chưa chạy nhá, để nhờ Khi mà bạn gán ích 2 bằng 0 thì bạn lại kiểm tra là 2 có bằng 0 hay không?"
+  },
+  {
+    "chunk_id": "chunk_692_753",
+    "start_sec": 692,
+    "end_sec": 753,
+    "start_label": "11:32",
+    "end_label": "12:33",
+    "raw_text": "Thì bây giờ nhá, nó sẽ chạy vào cái nhánh thứ nhất của cái vòng fo đấy Thế là bạn sẽ gán x2 bằng 0 đấy Có đúng như thế không? Ok, cái vòng fo thứ 2 chưa chạy nhá, để nhờ Khi mà bạn gán ích 2 bằng 0 thì bạn lại kiểm tra là 2 có bằng 0 hay không? Không phải thì nó lại gọi, nó lại nhảy với em, nó gọi là try của y cộng 1, thì khi đó nó sẽ gọi cái ham là ham tròi ba Ok, tròi y bằng ba, thì bây giờ lại có 1 cái hòi là ham đệ quy, đúng không? Thì khi đó cái trạng thái của cái ham tròi ba này nó sẽ được đẩy với trong stack, như thế này này Và bây giờ cái ham mà đang chạy là cái ham tròi ba này, và cái ham tròi ba này thì nó cũng... cái thủ tục của nó chạy khác với cái ham truy này và nó cũng sẽ duyệt cái vòng for từ ghi bằng không cho tới ghi hoàng 1 đúng nhỉ? thì đầu tiên mình sẽ xét cái vòng được for đầu tiên nhớ, tức là ghi bằng không ấy thì nó sẽ gán gán x3 bằng không này đấy, nó sẽ gán x3 bằng không sau đó làm sao? sau đó thì xong khi mà gán xong thì nó kiểm tra là ip i bằng nò, tức là ip 3 bằng 3 đấy"
+  },
+  {
+    "chunk_id": "chunk_737_799",
+    "start_sec": 737,
+    "end_sec": 799,
+    "start_label": "12:17",
+    "end_label": "13:19",
+    "raw_text": "đúng nhỉ? thì đầu tiên mình sẽ xét cái vòng được for đầu tiên nhớ, tức là ghi bằng không ấy thì nó sẽ gán gán x3 bằng không này đấy, nó sẽ gán x3 bằng không sau đó làm sao? sau đó thì xong khi mà gán xong thì nó kiểm tra là ip i bằng nò, tức là ip 3 bằng 3 đấy thì là thấy là đúng thì làm sao? thì nó sẽ in ra kết quả thì khi đó mình sẽ gọi cái ham in kết quả này đúng không? thì nó sẽ ghi in ra cái gì? nó sẽ in ra 3 cái số 0 bởi vì cái nhánh mà bạn vừa gán ấy là bạn đang gán ích 0 mà 0 anh sẽ lỗi ích 1 mà 0, ích 2 mà 0 và ích 3 mà 0 đây mình sẽ gán cho ở đây nhé, các bạn thấy ích 1 này ích 2 này và ích 3 này thì nó đang là 3 con 0 như thế này 0 này, 0 này, 0 đúng không? cái lúc nãy cái hàm tròi 1 ấy thì mình gán ích 1 mà 0 này cái hàm tròi 2 này, mình gán ích 2 mà 0 này và cái hàm tròi 3 thì mình cũng xét cái vòng phó thứ nhất mình cũng gán ích 3 mà 0 thì khi đó in ra cái cấu hình của mình ấy Mình duyệt từ cái vòng for từ y bằng 1 cho tới y bằng 3 đúng không? Thì mình yên ra thì nó sẽ là ba xuống không? Đấy, ok."
+  },
+  {
+    "chunk_id": "chunk_783_844",
+    "start_sec": 783,
+    "end_sec": 844,
+    "start_label": "13:03",
+    "end_label": "14:04",
+    "raw_text": "cái hàm tròi 2 này, mình gán ích 2 mà 0 này và cái hàm tròi 3 thì mình cũng xét cái vòng phó thứ nhất mình cũng gán ích 3 mà 0 thì khi đó in ra cái cấu hình của mình ấy Mình duyệt từ cái vòng for từ y bằng 1 cho tới y bằng 3 đúng không? Thì mình yên ra thì nó sẽ là ba xuống không? Đấy, ok. Sau khi mà mình yên ra kết quả nhé, sau khi mà mình yên ra kết quả thì bạn thấy là khi đó nó chạy hết cái vòng for này đúng không? Nó sẽ chạy hết cái vòng for mà bạn vừa gán cái x3 bằng 0 ý. Cái vòng for thứ nhất của cái vòng for thứ nhất khi mà bạn gán x3 bằng 0, y bằng 0 ý của cái lời gọi hàn tròi ba, đúng không? Thì làm sao? Khi đó y, y cộng cộng thôi, để nó tăng y lên 1 Ok? Chú ý nhá Sau khi mà bạn y ra 0.0.0 này, thực chất nó sẽ là cái vòng fo thư nhất của lời gọi HamTribe nó thực hiện xong Bây giờ nó sẽ sang cái vòng fo thứ 2, đây chính là cái vòng fo mà y bằng 1 ý, của cái vòng fo này này Ê, thì khi đó bạn sẽ gán x3 bằng 1 Chụ này bạn gán x3 bằng 1 này"
+  },
+  {
+    "chunk_id": "chunk_824_887",
+    "start_sec": 824,
+    "end_sec": 887,
+    "start_label": "13:44",
+    "end_label": "14:47",
+    "raw_text": "Sau khi mà bạn y ra 0.0.0 này, thực chất nó sẽ là cái vòng fo thư nhất của lời gọi HamTribe nó thực hiện xong Bây giờ nó sẽ sang cái vòng fo thứ 2, đây chính là cái vòng fo mà y bằng 1 ý, của cái vòng fo này này Ê, thì khi đó bạn sẽ gán x3 bằng 1 Chụ này bạn gán x3 bằng 1 này Thì khi đó, cái x3 của các bạn, cái mảng của các bạn nữa, x3 bây giờ nó không còn là không nữa mà nó chuyển thành 1 thôi đấy Được chưa? Sau đó thì làm sao? Nó lại kiểm tra là i bằng nờ Thì khi đó, i của bạn nó vẫn đang bằng 3 nhá, bởi vì bạn đang chạy trong cái hàm try 3 mà Ok, thì bạn sẽ in ra cấu hình đúng không? Bạn sẽ in ra kết quả đúng không? Thì khi đó, mình sẽ in ra cái cấu hình từ x1 cho tới x3 thì nó sẽ là 0, 0 và 1 Ok, sau khi mà nó in ra 0, 0, 1 nhá Thì cái vòng 4, cái hàm try 3 của các bạn có 2 vòng 4 phò thứ 1 là ghi bằng không, phò thứ 2 là ghi bằng 1 phò ghi bằng không thì nó chạy xong rồi phò thứ 2, ghi bằng 1, nó cũng chạy xong rồi khi đó làm sao? thì nó sẽ nhảy xuống chỗ này, hàm tròi ba"
+  },
+  {
+    "chunk_id": "chunk_871_932",
+    "start_sec": 871,
+    "end_sec": 932,
+    "start_label": "14:31",
+    "end_label": "15:32",
+    "raw_text": "Thì cái vòng 4, cái hàm try 3 của các bạn có 2 vòng 4 phò thứ 1 là ghi bằng không, phò thứ 2 là ghi bằng 1 phò ghi bằng không thì nó chạy xong rồi phò thứ 2, ghi bằng 1, nó cũng chạy xong rồi khi đó làm sao? thì nó sẽ nhảy xuống chỗ này, hàm tròi ba khi đó nó cũng là kết thúc của hàm tròi ba, đúng không? khi đó trạng thái của hàm tròi ba của các bạn sẽ được đẩy ra khóa stack được đẩy ra khóa stack vậy thì hàm tròi ba là hàm được thực hiện xăm đầu tiên và khi đó thì nó lại tiếp tục nó chạy chạy lại chai hai thôi cái tr为 hai của lúc đấy của các bạn ấy các bạn mới chạy được cái trường hợp đấy là cái trường hợp vòng foc thứ nhất thôi đấy là cái trường hợp mà bạn gắn vòng foc thứ nhất, bạn gắn ghi bằng không ấy thì bây giờ nhá cái nhánh cái hành video của vòng foc này đã chạy xong rồi đấy cái nhánh này nó chạy xong rồi đấy cái nhánh này thực chất ra nó chính là cái gì? cái nhánh này này thực chất ra nó chính là cái vòng foc mà bạn gắn cái vòng foc mà dì bằng không của cái lời gọi h Molly2 đấy Thì bây giờ cái vòng fo đã chạy xong đúng không?"
+  },
+  {
+    "chunk_id": "chunk_914_976",
+    "start_sec": 914,
+    "end_sec": 976,
+    "start_label": "15:14",
+    "end_label": "16:16",
+    "raw_text": "cái nhánh cái hành video của vòng foc này đã chạy xong rồi đấy cái nhánh này nó chạy xong rồi đấy cái nhánh này thực chất ra nó chính là cái gì? cái nhánh này này thực chất ra nó chính là cái vòng foc mà bạn gắn cái vòng foc mà dì bằng không của cái lời gọi h Molly2 đấy Thì bây giờ cái vòng fo đã chạy xong đúng không? Thì mình sẽ tiếp tục chạy cái vòng fo thứ 2 thôi Đấy chính là cái trường hợp MZ bằng 1 của lời gọi ham try 2 Nhưng mình sẽ gán là ít high ít high bằng 1, hảy? Nó chính là câu lệnh này này Và khi đó bạn kiểm tra là i vòng nò thì cũng không đúng đúng không? cũng không đúng Bởi vì i bây giờ có mình mới bằng 2 mà đúng chứ à? cái lời ham đang chạy là try 2 nhé Thì tiếp tục nó làm sao? Nó gọi đến tròi của y cộng 1, tức là nó gọi đến tròi 3 Mình xóa cái nhánh này đi nhé, ok Cho nó có rộng chỗ này Thì khi đó cái chỗ này nó sẽ là tròi của 3 Nói đấy, tròi y bằng 3 Thì bây giờ cái hàm tròi 3 lại được đẩy với trong stack thôi Ok, tròi 3 được đẩy với trong stack Và tiếp tục như thế"
+  },
+  {
+    "chunk_id": "chunk_960_1024",
+    "start_sec": 960,
+    "end_sec": 1024,
+    "start_label": "16:00",
+    "end_label": "17:04",
+    "raw_text": "Mình xóa cái nhánh này đi nhé, ok Cho nó có rộng chỗ này Thì khi đó cái chỗ này nó sẽ là tròi của 3 Nói đấy, tròi y bằng 3 Thì bây giờ cái hàm tròi 3 lại được đẩy với trong stack thôi Ok, tròi 3 được đẩy với trong stack Và tiếp tục như thế Thằng tròi 3 này thì nó cũng lại có 1 cái vòng phone nó sẽ ra 2 nhánh Đúng nhỉ, đầu tiên mình sẽ xét cái nhánh vòng phone thứ nhất nhé Điều là z vòng 0 ấy Thì nó gán x3 vòng 0 Nói đấy, tức là cái vòng phone thứ nhất đây vòng for 1 sẽ gán x3.0 và khi đó, cái x3 của bạn này, chỗ này nó không có là 1 đầu, mà nó truyền hình không rồi đấy và nó kiểm tra, sau khi mà nó gán x3.0, thì nó kiểm tra thì nó thấy là i bằng 3 thì nó sẽ in ra kết quả và khi đó bạn sẽ in ra cái cấu hình là xin lỗi nhé, cái chỗ này là cái mình chưa sửa cái x2 nhé, x2 chỗ này nó truyền thành 1 rồi này khi đó, cái cấu hình của mình nó sẽ là 0, 1, 0 Vậy thì bạn sẽ in là 0 1 0 Và đấy cũng là cái vòng for đầu tiên của cái ham try bar Thì bây giờ nó sẽ xét sang cái vòng for, sau cái vòng for đầu tiên đấy thì bây giờ nó sẽ tăng dì lên"
+  },
+  {
+    "chunk_id": "chunk_1006_1067",
+    "start_sec": 1006,
+    "end_sec": 1067,
+    "start_label": "16:46",
+    "end_label": "17:47",
+    "raw_text": "xin lỗi nhé, cái chỗ này là cái mình chưa sửa cái x2 nhé, x2 chỗ này nó truyền thành 1 rồi này khi đó, cái cấu hình của mình nó sẽ là 0, 1, 0 Vậy thì bạn sẽ in là 0 1 0 Và đấy cũng là cái vòng for đầu tiên của cái ham try bar Thì bây giờ nó sẽ xét sang cái vòng for, sau cái vòng for đầu tiên đấy thì bây giờ nó sẽ tăng dì lên Để nó xét cái vòng for thứ 2 của cái ham try bar Tức là dì vòng 1 đấy, cái trường hợp bên dì vòng 1 đấy Thì nó lại gán x3 vòng 1, nó sẽ trẻ ra cái nhánh này Nó sẽ gán x3 vòng 1 ở chỗ này Và khi đó x3 của bạn không còn là không nữa mà nó chuyển thành, chuyển thành 1 nhá Nên mình không xóa được, nó chuyển thành 1 đó ok, và bạn là in ra cấu hình thôi, bởi vì khi đó y mà bằng 3 mà, thì nó sẽ in ra cái cấu hình khi đó là 0, 1, 1 đấy, và sau khi mà bạn in ra cái cấu hình là 0, 1, 1, xong nhá, thì nó cũng sẽ là kết thúc 2 cái vòng 4 đúng không? kết thúc 2 vòng 4 của cái hàm Troi Bear, đây, cái vòng 4 thứ nhất đây còn đây là cái vòng 4 thứ 2, vậy thì sau khi mà 2 cái vòng 4 đến nó lập xong thì nó chạy xuống cái dòng 25 này của cái hàm Troi Bear đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1049_1115",
+    "start_sec": 1049,
+    "end_sec": 1115,
+    "start_label": "17:29",
+    "end_label": "18:35",
+    "raw_text": "đấy, và sau khi mà bạn in ra cái cấu hình là 0, 1, 1, xong nhá, thì nó cũng sẽ là kết thúc 2 cái vòng 4 đúng không? kết thúc 2 vòng 4 của cái hàm Troi Bear, đây, cái vòng 4 thứ nhất đây còn đây là cái vòng 4 thứ 2, vậy thì sau khi mà 2 cái vòng 4 đến nó lập xong thì nó chạy xuống cái dòng 25 này của cái hàm Troi Bear đúng không? Thì nó cũng là kết thúc hàm choi 3, vì đó cái hàm choi 3 của bạn được đẩy cho khỏi stack Đấy cho khỏi stack, ok, đây cho khỏi stack Và bạn thấy là gì nhỉ? Bây giờ cái hàm choi 2 nó lại tiếp tục chạy Hàm choi 2 lúc nãy nữa, tiếp tục chạy, nhưng mà cái hàm choi 2 của các bạn ạ Cái vòng 4 thứ nhất nó đã xét đến đây rồi này Còn đây là cái vòng 4 thứ 2 này Đấy, thì vòng 4 thứ nhất chạy xong rồi Vòng 4 thứ 2 chạy xong rồi thì nó cũng sẽ xong 2 cái vòng 4 Cái lời gọi ham choi 2 thì khi nó cũng sẽ nhảy xuống cái dòng từ 25 này của ham choi 2 và khi đó cái ham choi 2 của các bạn cũng sẽ kết thúc nhá, ok? Thì khi đó cái ham choi 2 của các bạn nó cũng sẽ được đẩy đâu khỏi stack, ơ, đấy và mình sẽ tận thời xoai cái phần này đi nhá, ok?"
+  },
+  {
+    "chunk_id": "chunk_1099_1168",
+    "start_sec": 1099,
+    "end_sec": 1168,
+    "start_label": "18:19",
+    "end_label": "19:28",
+    "raw_text": "và khi đó cái ham choi 2 của các bạn cũng sẽ kết thúc nhá, ok? Thì khi đó cái ham choi 2 của các bạn nó cũng sẽ được đẩy đâu khỏi stack, ơ, đấy và mình sẽ tận thời xoai cái phần này đi nhá, ok? Thì bây giờ cái ham choi 1 của các bạn nó bắt đầu mới lại chạy tiếp, ok? Lúc nãy cái cái cái cái mà bạn rượt cái vòng 4 thứ nhất của cái ham choi 1 thì nó chính là cái nhánh này này Đó chính là cái vòng for mà bạn giết cái nhánh này nè Thì bây giờ, sau khi mà bạn gán cái vòng for thứ nhất là ghi bằng không, thì bây giờ cái vòng for thứ 2 là ghi bằng 1, mà mấy đứa ạ được chặn Đấy, nó rất là phức tạp đúng không? Thì bây giờ, ích 1 của bạn mới gán là bằng 1 Ok, và tiếp tục như thế, cái thủ tục của mình nó lại tiếp tục chạy như thế, nó xinh ra cái cây quay lùi như thế này nè Đấy, phần cái nhánh thứ 2, cái vòng for thứ 2 của cái lời gọi hamtriom 1 mình không giải thích nữa nhé, nó tương tự như cái nhánh thứ nhất này nè Thì bạn thấy là gì nhỉ? Nó vẽ cái hình ra như thế này thì nhiều người mình hướng dẫn thì các bạn ấy hay tưởng là cái vòng 4 này nhìn cái cây quay lùi tìm kiếm như thế này, lại tưởng là nó chạy đồng thời, nhưng mà không phải, không phải"
+  },
+  {
+    "chunk_id": "chunk_1153_1243",
+    "start_sec": 1153,
+    "end_sec": 1243,
+    "start_label": "19:13",
+    "end_label": "20:43",
+    "raw_text": "Thì bạn thấy là gì nhỉ? Nó vẽ cái hình ra như thế này thì nhiều người mình hướng dẫn thì các bạn ấy hay tưởng là cái vòng 4 này nhìn cái cây quay lùi tìm kiếm như thế này, lại tưởng là nó chạy đồng thời, nhưng mà không phải, không phải Đầu tiên nó gọi tròi 1 đúng không? Tròi 1 thì nó có 2 vòng 4, thì nó sẽ chạy cái vòng 4 thứ nhất trước để nó gán cái trường hợp mà ghi vòng không, nó gán ít đi vòng không Sao bắt đầu nó lại chạy đến tròi 2? Sao tròi 2 gọi tròi 3? vòng for của nó, vòng for thứ 1, vòng for thứ 2, thì hàm tròi 2 này khi đó mới kết thúc, mà khi mà tròi 2 đã kết thúc, thì đấy chính là cái trường hợp mà, cái nhánh vòng for thứ 1 của cái hàm tròi 1 kết thúc, chính là cái vòng for mà i và ghi bằng không, mà bạn gán x1 bằng không, thì bây giờ nó lại mới xét cái vòng for thứ 2, và tiếp tục cái công việc như thế. Vậy thì nhớ nhá, đến là nó xây dựng để tròi 1, tròi 2, tròi 3, sau nó gán các phần từ tròi x3, sau nó chạy xong, thì bắt đầu quay lại đây, quay lại đây, quay lại đây,"
+  },
+  {
+    "chunk_id": "chunk_1213_1273",
+    "start_sec": 1213,
+    "end_sec": 1273,
+    "start_label": "20:13",
+    "end_label": "21:13",
+    "raw_text": "vòng for của nó, vòng for thứ 1, vòng for thứ 2, thì hàm tròi 2 này khi đó mới kết thúc, mà khi mà tròi 2 đã kết thúc, thì đấy chính là cái trường hợp mà, cái nhánh vòng for thứ 1 của cái hàm tròi 1 kết thúc, chính là cái vòng for mà i và ghi bằng không, mà bạn gán x1 bằng không, thì bây giờ nó lại mới xét cái vòng for thứ 2, và tiếp tục cái công việc như thế. Vậy thì nhớ nhá, đến là nó xây dựng để tròi 1, tròi 2, tròi 3, sau nó gán các phần từ tròi x3, sau nó chạy xong, thì bắt đầu quay lại đây, quay lại đây, quay lại đây, Ấn nhé, dẹo sang nhắn này, dẹo xuống đây, in da thằng này, in da thằng này, sau đó quay trở lại đây, dẹo xuống đây, in da thằng này, in da thằng này, quay lại đây, quay lại đây Vậy thì cái hạm mà kết thúc cuối cùng ấy, nó chính là cái hạm try 1, nhé Cái hạm quết, kết thúc, cái hạm try 1 là hạm gọi đầu tiên nhưng mà nó lại kết thúc cuối cùng, ok Vậy thì các bạn cố gắng nhé, hiểu, cố gắng hiểu nhé Thực ra thì nếu mà mình có một cái bản thì mình có thể giải thích các bạn rõ hơn một chút Nhưng ở đây, cái việc mà vẽ ở trên cái microsoft yboard này thì nó hơi khó"
+  },
+  {
+    "chunk_id": "chunk_1256_1317",
+    "start_sec": 1256,
+    "end_sec": 1317,
+    "start_label": "20:56",
+    "end_label": "21:57",
+    "raw_text": "Cái hạm quết, kết thúc, cái hạm try 1 là hạm gọi đầu tiên nhưng mà nó lại kết thúc cuối cùng, ok Vậy thì các bạn cố gắng nhé, hiểu, cố gắng hiểu nhé Thực ra thì nếu mà mình có một cái bản thì mình có thể giải thích các bạn rõ hơn một chút Nhưng ở đây, cái việc mà vẽ ở trên cái microsoft yboard này thì nó hơi khó Ok, nhưng các bạn có cố gắng hiểu đi thế nhá Mình nghĩ là các bạn nên viết ra giấy Vì chưa, viết ra giấy Để xem là từng bước 1, từng bước 1 cái lời gọi hàm backchat này nó chạy như thế nào Thì các bạn sẽ hiểu rõ hơn Ok, thực chất nó sẽ là xé từng cái nhánh 1, từng cái nhánh 1 thôi Nó chẽ ra các cái cây quay lùi này, nó thực chất là nó các cái nhánh của cái vòng 4 của các bạn thôi và mỗi vòng 4 thì các bạn gán 1 cái giá trị khác nhau thì nó sẽ chịa ra các cái nhánh khác nhau tiếp và nó tiếp tục gọi các cái rồi gọi hàm quay lưu ở bên dưới thì đây chính là cái bài toán đầu tiên nhé, đây chỉ là bài toán mà xinh ra xinh ra sâu nhị phân có độ dài n ok, nó rất là ngắn đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1297_1362",
+    "start_sec": 1297,
+    "end_sec": 1362,
+    "start_label": "21:37",
+    "end_label": "22:42",
+    "raw_text": "và mỗi vòng 4 thì các bạn gán 1 cái giá trị khác nhau thì nó sẽ chịa ra các cái nhánh khác nhau tiếp và nó tiếp tục gọi các cái rồi gọi hàm quay lưu ở bên dưới thì đây chính là cái bài toán đầu tiên nhé, đây chỉ là bài toán mà xinh ra xinh ra sâu nhị phân có độ dài n ok, nó rất là ngắn đúng không? đó, vậy thì đối với cái bài toán xinh sâu nhị phân có độ dài n thì các bạn có thể cốt vào quay lưu thay vì các bạn sử dụng phương pháp sinh, pháp sinh thì nó dài hơn 1 tý ok Rồi, mình sẽ xe an cái bài toàn thứ 2 nhé, đây chính là sinh ra tổ hợp chất ca của nờ Vậy bây giờ mình sẽ có 1 cái biến nữa là 1 cái biến là biến K Ok, rồi thì mình sẽ xe an cái bài toàn thứ 2, đây chính là bài toàn liệt cái tổ hợp chất ca của nờ Thì cái cốt của nó tương tự nó, đúng không? Nó cũng có 1 cái thủ tục tròi với cái tham số là i Và nó cũng sẽ duyệt tất cả các khả năng mà cái phần tử thứ i có thể nhận được và nó gán xi bằng cái khả năng đó và kiểm tra là nếu mà mình xây dựng đến cái phần tử thứ K rồi đối với bài tuấn tổ hợp chụp K của nó thì mình sẽ xây dựng cái cấu hình từ x1, x2 cho tới xK nhé"
+  },
+  {
+    "chunk_id": "chunk_1344_1408",
+    "start_sec": 1344,
+    "end_sec": 1408,
+    "start_label": "22:24",
+    "end_label": "23:28",
+    "raw_text": "Nó cũng có 1 cái thủ tục tròi với cái tham số là i Và nó cũng sẽ duyệt tất cả các khả năng mà cái phần tử thứ i có thể nhận được và nó gán xi bằng cái khả năng đó và kiểm tra là nếu mà mình xây dựng đến cái phần tử thứ K rồi đối với bài tuấn tổ hợp chụp K của nó thì mình sẽ xây dựng cái cấu hình từ x1, x2 cho tới xK nhé chú ý, ok? thành ra là trong trường hợp này nếu mà bạn xây dựng đến cái phần tử thứ K là y bằng K rồi thì bạn có thể in là kết quả còn không thì bạn lại tiếp tục gọi try đến y cộp 1 thì mình xây dựng cái phần tử thứ y cộp 1 ok? vậy thì bây giờ mình sẽ cốt cái tổ hợp chụp K của nó này nhé Đây, mình sẽ viết lại cái ham-try này, void, try, id, te, ok? Chỗ này thì mình, ít kết quả thì mình duyệt từ 1 cho tới ca thôi nhé Rồi, thì bây giờ mình sẽ làm sao nhỉ? Mình sẽ duyệt các khả năng mà xe có thể nhận được Đối với cái bài toán xi sâu nhị phân ấy, thì các cái khả năng mà cái bít thứ e có thể nhận được, nó sẽ có 2 khả năng 1 là 0, 2 là 1"
+  },
+  {
+    "chunk_id": "chunk_1387_1448",
+    "start_sec": 1387,
+    "end_sec": 1448,
+    "start_label": "23:07",
+    "end_label": "24:08",
+    "raw_text": "Rồi, thì bây giờ mình sẽ làm sao nhỉ? Mình sẽ duyệt các khả năng mà xe có thể nhận được Đối với cái bài toán xi sâu nhị phân ấy, thì các cái khả năng mà cái bít thứ e có thể nhận được, nó sẽ có 2 khả năng 1 là 0, 2 là 1 Nhưng đối với cái bài toán tổ hợp chập ca của nó thì nó chặt chẽ hơn rất là nhiều Các bạn học phương pháp sinh có còn nhớ không? Đấy là mình nói là gì nhỉ? Đối với bài toán tổ hợp chập ca của nó, cái bít thứ i sẽ lỡ cái phần tử thứ i của cấu hình tổ hợp chập ca của nó cái giá trị mắc của nó có thể đạt được, nó chính là n trừ đi ca cộng với i, còn nhớ không? Và khi mà tất cả các phần tử đều đạt cái giá trị là n trừ ca cộng y, nó chỉ là cấu hình cuối cùng ấy. Vậy thì bạn biết được rằng là gì nhỉ? Cái thằng xe của các bạn ấy, cái giá trị mà lớn nhất mà nó có thể nhận được, đấy chính là nờ chữ K cộng y Ờ, ok, vậy thì cái khả năng của các bạn ấy, các bạn không được vượt quá cái thằng này, không được vượt quá nờ chữ K cộng y"
+  },
+  {
+    "chunk_id": "chunk_1428_1492",
+    "start_sec": 1428,
+    "end_sec": 1492,
+    "start_label": "23:48",
+    "end_label": "24:52",
+    "raw_text": "Và khi mà tất cả các phần tử đều đạt cái giá trị là n trừ ca cộng y, nó chỉ là cấu hình cuối cùng ấy. Vậy thì bạn biết được rằng là gì nhỉ? Cái thằng xe của các bạn ấy, cái giá trị mà lớn nhất mà nó có thể nhận được, đấy chính là nờ chữ K cộng y Ờ, ok, vậy thì cái khả năng của các bạn ấy, các bạn không được vượt quá cái thằng này, không được vượt quá nờ chữ K cộng y Còn cái khả năng mà nhỏ nhất mà nó có thể nhận được ấy, nó chính là cái giá trị của phần tử đứng trước của nó cộng thêm 1 Ok, bởi vì ở đây mình không có liệt kê trùng đúng không? Ví dụ cái cấu hình của các bạn nó như thế này này Cái cấu hình 1, 2, 3 của các bạn đúng không? Ví dụ như cái cấu hình bằng 6 đi và ca bằng 4 đi Già sử cái cấu hình của các bạn là 1, 2, 3, 4 đúng không? Hoặc là 1, 2, 3, 5 cho nên ạ? Già sử nhá, bạn muốn xây dựng cái bít thứ 4 này này Thì cái bít thứ 4 của các bạn này này Lớn nhất nó sẽ có cái giá trị là n, chứ, dì, k, cộng với i Lớn giá trị lớn nhất mà có thể đạt được là n, chứ k, cộng, i, tức là 6 dù đi 4 là 2, 4 là 6, giá trị mắc mà nó có thể đạt được là 6"
+  },
+  {
+    "chunk_id": "chunk_1474_1536",
+    "start_sec": 1474,
+    "end_sec": 1536,
+    "start_label": "24:34",
+    "end_label": "25:36",
+    "raw_text": "Già sử nhá, bạn muốn xây dựng cái bít thứ 4 này này Thì cái bít thứ 4 của các bạn này này Lớn nhất nó sẽ có cái giá trị là n, chứ, dì, k, cộng với i Lớn giá trị lớn nhất mà có thể đạt được là n, chứ k, cộng, i, tức là 6 dù đi 4 là 2, 4 là 6, giá trị mắc mà nó có thể đạt được là 6 còn cái giá trị nhỏ nhất mà nó có thể nhận được, là sao? là nó không được nhỏ hơn cái thằng đứng trước nó bởi vì bạn biết rồi đấy, khi mà xinh tổ hợp chập ca của nó thì cái cấu hình của mình, liệt kê không có chuyện là thằng đứng trước lại nhỏ hơn xin lỗi lớn hơn là bằng thằng đứng sau đúng không, nó luôn là một số tăng dần được không nhờ? thằng ra là phần tựa vị trí này có thể nhận được bao nhiêu nó phụ thuộc vào cái thằng đứng trước của nó này Thằng đứng trước nó là 3 đúng không? Vậy thì ông này ít nhất phải là từ 3 à, cộng 1 trở lên Tức là phải duyệt từ 4 cho tới giá trị lớn nhất là 6 Nó có thể nhận được 3 giá trị là 4, 5, 6 Ok, còn giá sử nhá, ví dụ cấu hình của bạn nó đang là 1, 2, 5 chảy nhạc Và bạn đi xây dựng cái thằng thứ 4 này này Thì cái thằng thứ 4 này á, cái giá trị của nó có thể nhận được là bằng bao nhiêu á"
+  },
+  {
+    "chunk_id": "chunk_1520_1580",
+    "start_sec": 1520,
+    "end_sec": 1580,
+    "start_label": "25:20",
+    "end_label": "26:20",
+    "raw_text": "Tức là phải duyệt từ 4 cho tới giá trị lớn nhất là 6 Nó có thể nhận được 3 giá trị là 4, 5, 6 Ok, còn giá sử nhá, ví dụ cấu hình của bạn nó đang là 1, 2, 5 chảy nhạc Và bạn đi xây dựng cái thằng thứ 4 này này Thì cái thằng thứ 4 này á, cái giá trị của nó có thể nhận được là bằng bao nhiêu á Thì nhỏ nhất nó sẽ là cái giá trị của thằng đứng trước này nó cộng thêm 1 Tức là nó sẽ bắt đầu từ 6, thế còn mắt thì nó sẽ là n là chiều ca cộng y đây mình ví dụi rồi nhé Vậy thì đối với bài toán mà xinh tổ hợp chập ca của các bạn ấy đây chính là cái giá trị lớn nhất mà nó có thể đạt được, nó chính là nở chứ ca cộng i ok, đây chính là giá trị lớn nhất thế còn cái giá trị nhỏ nhất mà nó có thể đạt được ấy nó chính là cái giá trị của phần tử đứng trước của nó cộng thêm 1 đơn vị tức là x của i chứ 1 cộng thêm 1 Vậy thì bây giờ bạn đã giới hạn được các khẻ năng các phần tử mà bạn có ăn ăn gán cho thằng í rồi Đúng không? Nó không thỏa má như là cái sâu dị phân nữa Vậy thì các bạn dùa cho mình cái vòng for, chạy từ cái giá trị nhỏ nhất Nó chính là cái phần tử đứng trước của nó, tức là ích y chứ 1 ấy"
+  },
+  {
+    "chunk_id": "chunk_1565_1626",
+    "start_sec": 1565,
+    "end_sec": 1626,
+    "start_label": "26:05",
+    "end_label": "27:06",
+    "raw_text": "Vậy thì bây giờ bạn đã giới hạn được các khẻ năng các phần tử mà bạn có ăn ăn gán cho thằng í rồi Đúng không? Nó không thỏa má như là cái sâu dị phân nữa Vậy thì các bạn dùa cho mình cái vòng for, chạy từ cái giá trị nhỏ nhất Nó chính là cái phần tử đứng trước của nó, tức là ích y chứ 1 ấy Được chứ à? Cộng thêm 1 Và cái giá trị mà lớn nhất mà có thể đạt được ấy, nói chính là n chù đi k, cộng vì y, gì cộng cộng Và tương tự như vậy bạn sẽ gán thôi Ok, bạn sẽ gán Hôm nay, bạn sẽ xét xem là, thông thường là bạn sẽ phải xét nhé hãy xem là có cái thằng xe có thể nhận được khá năng di này không thì trong trường hợp này không có điều kiện gì kẽ cứ gán thôi nhé, gán là xe vắng di và tương tự như vậy bạn kiểm trai là nếu mà nó đã xây dựng được xong cái phần tử thứ ca rồi thì bạn sẽ y ra kết quả còn không thì mình lại gọi đến try của y cộng màu thôi ok, nhó cái này thì mình sẽ không giải thích cái code nó chạy như thế nào nữa nhé, nó cũng sẽ sinh ra một cái cây tìm kiếm như thế này này ok, đó"
+  },
+  {
+    "chunk_id": "chunk_1604_1669",
+    "start_sec": 1604,
+    "end_sec": 1669,
+    "start_label": "26:44",
+    "end_label": "27:49",
+    "raw_text": "cứ gán thôi nhé, gán là xe vắng di và tương tự như vậy bạn kiểm trai là nếu mà nó đã xây dựng được xong cái phần tử thứ ca rồi thì bạn sẽ y ra kết quả còn không thì mình lại gọi đến try của y cộng màu thôi ok, nhó cái này thì mình sẽ không giải thích cái code nó chạy như thế nào nữa nhé, nó cũng sẽ sinh ra một cái cây tìm kiếm như thế này này ok, đó Trong các bạn chỉ cần hiểu được một cái bài toán đầu tiên thôi là các bạn có thể hiểu được cái thể thủ tục đề quy này, cái quay lưu này nó chạy như thế nào Đúng nhỉ? Vì dưới này mình sẽ nhập vào ca nhé Ví dụ như mình nhập tổ hợp chập m4 và 6 đi, thì nó sẽ sinh ra được 6, 5, 10, 9, 2 là 15 cấu hình, đúng không? Bạn sẽ có 15 cấu hình như thế này Vậy thì khi mà làm cái bài quán mà xinh quay lưu í ạ à xin lỗi quay lưu tổ hộp cho ca của nó, các bạn chỉ cần nhớ cho mình cái giá trị nhỏ nhất mà cái phần tử Xe có thể nhận được để chính là cái phần tử đứng trước của nó cộng thêm 1 thế còn cái giá trị lớn nhất mà nó có thể đạt được, nó chính là nời trị ca cộng Y cái này mình lại hướng dẫn vào phần"
+  },
+  {
+    "chunk_id": "chunk_1651_1711",
+    "start_sec": 1651,
+    "end_sec": 1711,
+    "start_label": "27:31",
+    "end_label": "28:31",
+    "raw_text": "Vậy thì khi mà làm cái bài quán mà xinh quay lưu í ạ à xin lỗi quay lưu tổ hộp cho ca của nó, các bạn chỉ cần nhớ cho mình cái giá trị nhỏ nhất mà cái phần tử Xe có thể nhận được để chính là cái phần tử đứng trước của nó cộng thêm 1 thế còn cái giá trị lớn nhất mà nó có thể đạt được, nó chính là nời trị ca cộng Y cái này mình lại hướng dẫn vào phần cái gì nhỉ, phần xinh rồi đúng không để mà cẩn thận í, để mà cẩn thận thì các bạn đặt cho mình ít không mà không nhé ok, thực ra thì bạn khai báo cái hàm ích ở bên ngoài, cái mảng ích bên ngoài này thì ích không luôn bằng không nhưng mà để mà cẩn thận thì các bạn khán cho mình ích không bằng không để khi mà bạn xây dựng y bằng 1 thì khi mà bạn y xây dựng y bằng 1 thì cái giá trị nhỏ nhất của cái phần tử ở vị trí thứ 1 mà nó có thể nhận được nó chính là ích không cộng thứ 1, tức là bằng không cộng thứ 1 đấy thì nó nó bắt đầu từ 1, ok, đây này, các cái số mà ở cái phần tử y bằng 1 thì cái giá trị nhỏ nhất mà có thể nhận được là 1 đúng không? Ok, vậy thì cận tận cho mình thêm cái này vào"
+  },
+  {
+    "chunk_id": "chunk_1694_1757",
+    "start_sec": 1694,
+    "end_sec": 1757,
+    "start_label": "28:14",
+    "end_label": "29:17",
+    "raw_text": "mà nó có thể nhận được nó chính là ích không cộng thứ 1, tức là bằng không cộng thứ 1 đấy thì nó nó bắt đầu từ 1, ok, đây này, các cái số mà ở cái phần tử y bằng 1 thì cái giá trị nhỏ nhất mà có thể nhận được là 1 đúng không? Ok, vậy thì cận tận cho mình thêm cái này vào Thì đấy chính là cái bài toàn thứ 2 nhé Đấy là xinh tổ hợp cho ca của nó Bài này cũng không có gì khó cả Bạn chỉ cần biết được các cái khả năng mà nó có thể nhận được Ok Mình sẽ sang cái bài toàn thứ 3 nhé Đấy chính là xinh quay lưu hán vị của Enna Phần Thử Thì cái bài này là cái bài mà nó thể hiện cái tư tưởng quay lưu y rõ nhất này 2 cái bài toàn vừa rồi các bạn vừa xét đấy Chưa thấy nhìn rõ lắm cái tư tưởng của quay lưu y đúng không? Nhưng mà trong cái bài này thì các bạn sẽ thấy được rõ hơn cái tử tưởng quay lùi của nó nè Ok, không phải thấy rõ hơn cái tử tưởng quay lùi của nó mà là các bạn sẽ phải 2 cái bài toán vừa rồi của các bạn ấy Đấy chính là cái trường hợp mà khi mà bạn gán íc y bằng di ấy tức là bạn sẽ cho cái phần tử thứ y chấp nhận khả năng di ấy"
+  },
+  {
+    "chunk_id": "chunk_1741_1803",
+    "start_sec": 1741,
+    "end_sec": 1803,
+    "start_label": "29:01",
+    "end_label": "30:03",
+    "raw_text": "Ok, không phải thấy rõ hơn cái tử tưởng quay lùi của nó mà là các bạn sẽ phải 2 cái bài toán vừa rồi của các bạn ấy Đấy chính là cái trường hợp mà khi mà bạn gán íc y bằng di ấy tức là bạn sẽ cho cái phần tử thứ y chấp nhận khả năng di ấy thì bạn chỉ cần gán íc y bằng di thôi đúng không? Nhưng mà đôi khi với các cái bài toán quay lùi của mình của mình ấy Sau khi mà bạn đã gán íc y bằng di ấy bạn lại phải làm thêm 1 cái thủ tục gì đó Để ghi nhận cái việc đó ngoài cái việc là bạn gán íc y bằng ghi Vậy chưa? Và sau khi mà bạn đã gán íc y bằng ghi, cái lời gọi đệ quy này nó chạy xong ấy, thì bạn phải bắt chép lại Bạn phải trẻ lại cái trạng thái ban đầu trước khi mà bạn gán íc y bằng ghi Ví dụ như bạn làm cái bài tòan là tính tổng chảy ạ? Ok Ví dụ bạn dùng một cái biến tổng và bạn tính, ví dụ như là nó có bài tòan đính là set tổ hợp chấp ca của N, đúng không? sau đó thì tổ hợp chấp ca của nó có phải thỏa mạn là tổng các phân tử trong tổ hợp chấp ca của nó nó phải thỏa mạn là tổng bằng bao nhiêu đó ấy?"
+  },
+  {
+    "chunk_id": "chunk_1785_1849",
+    "start_sec": 1785,
+    "end_sec": 1849,
+    "start_label": "29:45",
+    "end_label": "30:49",
+    "raw_text": "Ví dụ bạn dùng một cái biến tổng và bạn tính, ví dụ như là nó có bài tòan đính là set tổ hợp chấp ca của N, đúng không? sau đó thì tổ hợp chấp ca của nó có phải thỏa mạn là tổng các phân tử trong tổ hợp chấp ca của nó nó phải thỏa mạn là tổng bằng bao nhiêu đó ấy? thì chỗ này bạn có một cái bước đấy là bạn cho xâm cộng bằng ghi và chỗ này bạn kiểm tra i bằng kê và xâm của mình bằng một cái tổng ghi đó ấy rồi chưa? thì sau khi mà cái lời gọi tròi của i cộng một cái thúc y thì bạn sẽ phải bắt check lại bạn sẽ phải lấy cái biến xâm này, bạn chư đi cái giá trị của ghi Đấy, thì đấy, cái tư tưởng của BatchTrack nó rõ ràng vào chỗ đấy hơn Cái còn hai cái bài tòán vừa rồi của các bạn thì các bạn chỉ gán xe vâng gì thôi Thành ra là nó không, nó chưa rõ được cái tư tưởng lắm Thì mình sẽ làm quen với cái bài tòán mà xinh sâu hán vị này nhé Xinh quay lùi hán vị này nhé Để rõ hơn được cái quay lùi, ok Rồi, thì thủ tục của nó cũng như thế này Đấy chưa, nó cũng xây dựng cái phần tử thứ y và đối với cái phần tử mỗi phần tử thứ y"
+  },
+  {
+    "chunk_id": "chunk_1833_1894",
+    "start_sec": 1833,
+    "end_sec": 1894,
+    "start_label": "30:33",
+    "end_label": "31:34",
+    "raw_text": "Thì mình sẽ làm quen với cái bài tòán mà xinh sâu hán vị này nhé Xinh quay lùi hán vị này nhé Để rõ hơn được cái quay lùi, ok Rồi, thì thủ tục của nó cũng như thế này Đấy chưa, nó cũng xây dựng cái phần tử thứ y và đối với cái phần tử mỗi phần tử thứ y thì mình sẽ xét tất cả các khả năng mà cái phần tử Xe có thể nhận được đúng không? Đối với cái bài toán sinh quay lù hán vị của nờ phần tử thì các bạn biết rồi đấy, phần tử ở vị trí bất kỳ nó có thể nhận 1 cái giá trị nằm trong khoảng từ 1 cho tới nờ đúng không? Thành ra là đối với mỗi cái phần tử Xe của các bạn ấy, phần tử thứ Y thì bạn duyệt cho mình tất cả các cái giá trị từ 1 cho tới nờ giá trị nào cũng có thể gán được cho thằng Xe đúng không? Nó, nhưng mà có 1 cái điều đặc biệt đấy chính là đối với cái bài toán mà khoán vị này này 1 cái phần tử không thể xuất hiện 2 lần trong cái câu hình đấy, thế là nếu mà bạn đã sử dụng 1 cái phần tử rồi ví dụ như íc 1, bạn đã sử dụng 1 rồi, đúng không? ví dụ íc 1 của bạn đã gán được bằng 1 rồi thì khi đó bạn xây dựng những cái thằng là íc 2, íc 3, íc 4, íc 5 ấy, ở trong cái câu hình này này"
+  },
+  {
+    "chunk_id": "chunk_1879_1941",
+    "start_sec": 1879,
+    "end_sec": 1941,
+    "start_label": "31:19",
+    "end_label": "32:21",
+    "raw_text": "1 cái phần tử không thể xuất hiện 2 lần trong cái câu hình đấy, thế là nếu mà bạn đã sử dụng 1 cái phần tử rồi ví dụ như íc 1, bạn đã sử dụng 1 rồi, đúng không? ví dụ íc 1 của bạn đã gán được bằng 1 rồi thì khi đó bạn xây dựng những cái thằng là íc 2, íc 3, íc 4, íc 5 ấy, ở trong cái câu hình này này bạn không được nhận như giá trị 1 này nữa đấy, thành ra là đối với các bạn toàn sinh hoán vị này này mình sẽ sử dụng thêm 1 cái mảng nữa để đánh dấu xem là liệu rằng 1 cái phần tử nào đó đã được sử dụng 2 chưa thì mình sẽ sử dụng mảng yêu ok, đó thì ở cái chỗ này nó sẽ rõ ràng hơn ở cái tư tưởng ở chỗ này này đây chính là, nếu mà có thể chấp nhận cá năng thứ g có thể chấp nhận cá năng thứ g 2 cái bài toán rồi, rồi bạn không cần phải kiểm tra cái là liệu bạn có thể gán cái thằng g cho thằng xe hay không, đúng không? nhưng mà đối với cái bài toán sinh hoán vị này thì bạn cần thì ở chỗ này bạn kiểm tra là nếu mà g mà chưa được sử dụng ở đây bạn cho yêu của g bằng không cho nó rõ nhá yêu của g bằng không, tức là g chưa được sử dụng ok, đó"
+  },
+  {
+    "chunk_id": "chunk_1925_1988",
+    "start_sec": 1925,
+    "end_sec": 1988,
+    "start_label": "32:05",
+    "end_label": "33:08",
+    "raw_text": "thì ở chỗ này bạn kiểm tra là nếu mà g mà chưa được sử dụng ở đây bạn cho yêu của g bằng không cho nó rõ nhá yêu của g bằng không, tức là g chưa được sử dụng ok, đó bắt đầu mình sẽ không sử khởi tạo cái mảng ưu này có giá trị là không hết nhé thì khi đó nhé, bạn sẽ đánh dấu cho mình là ưu của ghi bằng 1 ok, đó sau đó bạn gán íc ghi bằng ghi chỗ gán íc ghi bằng ghi này thì không vấn đề gì đúng không nhưng mà chủ này nó có 1 cái bước để chính là ưu của ghi bằng 1 đó để đánh dấu là gì nhỉ đánh dấu đánh dấu phần tử thứ y xin lỗi phần tử đánh dấu phần tử ghi Đã được chọn. Đã được sử dụng. Bạn bịch nó lặn. Bạn cho cái y của y nó bằng một. Ok. Ok. Và bạn kiểm tra nếu mà y mà bằng tức là bạn đã xây dựng đến cái câu hình cuối cùng rồi thì bạn sẽ in ra kết quả nhá. Bạn sẽ in ra kết quả. Ok. Còn không thì bạn sẽ gọi đến trial của y cộng một."
+  },
+  {
+    "chunk_id": "chunk_1968_2029",
+    "start_sec": 1968,
+    "end_sec": 2029,
+    "start_label": "32:48",
+    "end_label": "33:49",
+    "raw_text": "Đã được chọn. Đã được sử dụng. Bạn bịch nó lặn. Bạn cho cái y của y nó bằng một. Ok. Ok. Và bạn kiểm tra nếu mà y mà bằng tức là bạn đã xây dựng đến cái câu hình cuối cùng rồi thì bạn sẽ in ra kết quả nhá. Bạn sẽ in ra kết quả. Ok. Còn không thì bạn sẽ gọi đến trial của y cộng một. Nhưng ở chỗ này nó có một cái batch check. Đây chính là cái quay lùi ở cái chỗ này nè. Đối với cái bài toán này nhá. Thì nó không đơn thuần là đối với mũi khả năng y bạn chỉ gán xy vầng y nữa. Mà bạn làm thêm một cái bước nữa, đấy là bạn cho của yêu của Di bằng 1 Tức là bạn đánh dấu là cái phần tử Di này đã được sử dụng Thì sau cái lời gọi quay lùi này nó chạy chạy hết nhé Sau cái làm, sau cái nó chạy từ đến đây này, nó chạy hết Tri E cộng 1 Hoặc là nó chạy đến cái dòng thế này này Thì nó sẽ chuyển của yêu của Di mà không Nó trẻ lại cái giá trị ban đầu của Di, yêu Di Ok Thành ra chỗ này nó có một cái bắt check ở chỗ này Thì nữa mình sẽ giải thích rõ hơn ở cái chỗ bắt check này nhé"
+  },
+  {
+    "chunk_id": "chunk_2014_2075",
+    "start_sec": 2014,
+    "end_sec": 2075,
+    "start_label": "33:34",
+    "end_label": "34:35",
+    "raw_text": "Hoặc là nó chạy đến cái dòng thế này này Thì nó sẽ chuyển của yêu của Di mà không Nó trẻ lại cái giá trị ban đầu của Di, yêu Di Ok Thành ra chỗ này nó có một cái bắt check ở chỗ này Thì nữa mình sẽ giải thích rõ hơn ở cái chỗ bắt check này nhé Ok Mình sẽ giải thích rõ hơn cái phần yêu của ghi bằng không này khi mà mình cốt xong nhé Mình chạy tay thì các bạn sẽ hướng dẫn các bạn tại sao chỗ này nó lại có yêu ghi bằng không Và chính là cái chỗ mà bắt chắc đấy Và trên bạn đã gán yêu của ghi bằng mode rồi đấy Vậy thì sau khi mà chạy xong cái nhánh đấy bạn phải trả lại giá trị cho yêu ghi bằng không, cái giá trị bạn đầu của nó Còn không thì nếu mà bạn không có cái bước bắt chắc này thì thằng ghi này nó chỉ được sử dụng một lần Và sau đó thì các cái nhánh quay lúi tiếp theo thằng ghi này sẽ không được sử dụng nữa ok vậy thì mình sẽ cốt cái thuật toán này như sau yên kết quả thì các bạn diệt cho mình từ 1 tới n ok rồi ở đây mình sẽ sử dụng thêm một cái mảng nữa là mảng ưu ok nhờ ban đầu thì tí nữa mình sẽ khởi tạo tất cả các phần tử của mảng ưu này bằng không nhé"
+  },
+  {
+    "chunk_id": "chunk_2058_2120",
+    "start_sec": 2058,
+    "end_sec": 2120,
+    "start_label": "34:18",
+    "end_label": "35:20",
+    "raw_text": "ok vậy thì mình sẽ cốt cái thuật toán này như sau yên kết quả thì các bạn diệt cho mình từ 1 tới n ok rồi ở đây mình sẽ sử dụng thêm một cái mảng nữa là mảng ưu ok nhờ ban đầu thì tí nữa mình sẽ khởi tạo tất cả các phần tử của mảng ưu này bằng không nhé thì cái thủ tục try của nó như thế này bây giờ bạn sẽ diệt tất cả các khả năng mà xe có thể nhận được đúng không á để đối với cái bài toán và sinh hoán vị này thì nó không có cái giới hạn gì về cái phần tử xe xe của các bạn có thể nhận một cái giá trị bất kỳ nằm trong khoảng từ 1 tới n ra mình diệt 1 cái vòng core thứ 1 cho tới nò ok, đó nhưng mà nó lại có 1 cái điều kiện khi mà nhận trước khi mà bạn phải set xem liệu rằng có thể gán xe bằng zi hay không phải check thì trong trường hợp này bạn phải kiểm tra là cái thằng zi này này, cái phần tử zi này này nó chưa được nằm trong cái cỡ nó chưa được sử dụng đúng chưa ví dụ như bạn muốn xây dựng cái phần tử thứ y đúng không"
+  },
+  {
+    "chunk_id": "chunk_2103_2164",
+    "start_sec": 2103,
+    "end_sec": 2164,
+    "start_label": "35:03",
+    "end_label": "36:04",
+    "raw_text": "có thể gán xe bằng zi hay không phải check thì trong trường hợp này bạn phải kiểm tra là cái thằng zi này này, cái phần tử zi này này nó chưa được nằm trong cái cỡ nó chưa được sử dụng đúng chưa ví dụ như bạn muốn xây dựng cái phần tử thứ y đúng không Thì bạn phải đảm bảo được rằng là các phần tử từ thứ 1 cho thứ 1 của các bạn Nó chưa có cái giá trị nào là giá trị G Bởi vì sinh hoán vị thì nó không cho phép là 2 phần tử trong 1 cấu hình nó giống nhau mà Ok, bởi vì bạn phải kiếm cho là íp, yêu của G mà bằng không Tức là các phần tử từ 1 cho tới 1 của các bạn íc 1 cho tới íc 1 của các bạn, thằng G này chưa được sử dụng Thì bạn mới được gán Còn nếu mà nó đã được sử dụng thôi thì mình không được gán đâu bởi vì khi đó nó sẽ in ra trùng Cái bạn sẽ gán ít bằng ghi Sau đó có một cái bước rất là quan trọng Đấy chính là bạn sẽ phải cho y của ghi bằng 1 Chỗ này nói chính là đánh dấu đấy Đánh dấu là thằng ghi được sử dụng rồi Thì khi đó nhé, thì nữa mà bạn gọi tròi của e cộng 1"
+  },
+  {
+    "chunk_id": "chunk_2148_2209",
+    "start_sec": 2148,
+    "end_sec": 2209,
+    "start_label": "35:48",
+    "end_label": "36:49",
+    "raw_text": "Cái bạn sẽ gán ít bằng ghi Sau đó có một cái bước rất là quan trọng Đấy chính là bạn sẽ phải cho y của ghi bằng 1 Chỗ này nói chính là đánh dấu đấy Đánh dấu là thằng ghi được sử dụng rồi Thì khi đó nhé, thì nữa mà bạn gọi tròi của e cộng 1 Thì bạn sẽ xây dựng các phần tử từ e cộng 1, e cộng 2 cho tới phần tử thứ n, đúng không? Thì khi đó cái thằng ghi này này Các cái lời gọi tròi của e cộng 1 khi đó nó cũng sẽ xét lại các cái giá trị từ ghi bằng 1 cho tới ghi bằng n đúng không? Nhưng mà trước khi mà sử dụng thằng di thì nó check, thì nó gặp phải ngay cái điều kiện đến là ưu của di bằng 1 thì nó sẽ không được Các phần tử thứ i cộng 1 cho tới thứ nờ, nó sẽ không được dùng lại thằng di này nữa Được không nhỉ? Đấy, v bạn kiểm tra nếu mà in m bạn sẽ gọi cái ham là in kết quả Còn không thì bạn sẽ gọi đến try của i cộng 1, ok? Và chỗ này bạn có một cái bước backtrack ở chỗ này này Đấy chính là bạn sẽ phải cho ưu của di bằng 0 mình sẽ phải trả lại cái giá trị ban đầu lúc nãy mà mình đã gán lại yêu của dì bằng mùa"
+  },
+  {
+    "chunk_id": "chunk_2193_2255",
+    "start_sec": 2193,
+    "end_sec": 2255,
+    "start_label": "36:33",
+    "end_label": "37:35",
+    "raw_text": "Còn không thì bạn sẽ gọi đến try của i cộng 1, ok? Và chỗ này bạn có một cái bước backtrack ở chỗ này này Đấy chính là bạn sẽ phải cho ưu của di bằng 0 mình sẽ phải trả lại cái giá trị ban đầu lúc nãy mà mình đã gán lại yêu của dì bằng mùa đây mình sẽ giải thích cái thằng này nhé ở trong hà men thì bạn sẽ nhập vào ca này, ở đây mình sẽ nhập vào ba thôi nhé và bạn gọi là thủ tục tròi 1 thì nó sẽ sinh ra được tất cả các cái hoán vị của 3 phần tử ok, nó sẽ là 6 đúng không? 3 dây thừa, đó vậy thì bây giờ cái quan trọng hơn đấy đấy chính là các bạn sẽ phải hiểu được cái cốt này nó chạy như thế nào thì cái cốt này nó chạy sẽ khó hơn 2 tháng trước bởi vì là nhiều bạn không hiểu tại sao yêu của ghi vòng 1 ở chỗ này, sau đó chỗ này là yêu của ghi vòng không, nó chỉ có chỗ này thôi chỉ có hiểu 2 chỗ này thôi, bây giờ mình sẽ giải thích 2 cái phần này giả sử như nò của các bạn bằng ba nhá, ok, nò bằng ba, đây là 1 này, 2 này, 3 này, ok"
+  },
+  {
+    "chunk_id": "chunk_2236_2300",
+    "start_sec": 2236,
+    "end_sec": 2300,
+    "start_label": "37:16",
+    "end_label": "38:20",
+    "raw_text": "bởi vì là nhiều bạn không hiểu tại sao yêu của ghi vòng 1 ở chỗ này, sau đó chỗ này là yêu của ghi vòng không, nó chỉ có chỗ này thôi chỉ có hiểu 2 chỗ này thôi, bây giờ mình sẽ giải thích 2 cái phần này giả sử như nò của các bạn bằng ba nhá, ok, nò bằng ba, đây là 1 này, 2 này, 3 này, ok ít 1 ít 2 ít 3 này, ở đây mình sẽ sử dụng thêm 1 cái mạng nữa là mạng ius, ok, mạng ius Thằng 1 này, thằng 2 này, thằng 3 này, xem đã được sử dụng hay chưa ấy Ở đây nò vòng 3 nhá Thì khi đó các bạn sẽ gọi try của 1 đúng không? Ừ, ok, khi đó nó sẽ là try 1 Ok Ban đầu ở đây mình sẽ có một cái memset cho cái giá trị của màng yếu của giá trị là không hết nhá Ban đầu mình sẽ khởi tạo tất cả các giá trị của cái thằng này là không hết Đây, 3 thằng 1, 2, 3 ban đầu mà không hết Ok, ban đầu là không hết nhá Không này, không này, là không"
+  },
+  {
+    "chunk_id": "chunk_2283_2351",
+    "start_sec": 2283,
+    "end_sec": 2351,
+    "start_label": "38:03",
+    "end_label": "39:11",
+    "raw_text": "Ban đầu mình sẽ khởi tạo tất cả các giá trị của cái thằng này là không hết Đây, 3 thằng 1, 2, 3 ban đầu mà không hết Ok, ban đầu là không hết nhá Không này, không này, là không Ok, bây giờ mình sẽ nhảy vào ham-try1 để thực hiện ham-try1 thì khi đó nó sẽ xét tất cả các khả năng từ ghi vòng 1 cho tới ghi bằng nờ đúng không? Thì trong trường hợp này có bạn ấy, cái vòng 4 của ham-try1 này nó lại có 3 cái vòng 4 Nó dựa từ 1 cho tới 3 mà, thì khi đó mình sẽ xét cái vòng 4 đầu tiên nhé, tức là cái vòng form ghi bằng 1 ấy Ok, thì nó kiểm tra là gì? Nó kiểm tra i của ghi bằng 1, xin lỗi nó kiểm tra i của 1 Thì nó thấy có vòng không không? Có đây này, i của 1 là vòng không này Thì khi đó, nó sẽ làm gì? Nó sẽ gán x1 bằng, x1 bằng 1, đúng không nhỉ? Đây, x1, x2, x3, thì khi đó nó sẽ gán x1 còn 1, ok? Nó sẽ gán x1 còn 1, sau đó làm sao? Nó cho yêu của 1 bằng không, ai sẽ đối yêu của 1 còn 1, rất là cái chỗ 1 này này, nó không còn là không nữa mà nó chuyển thành 1 rồi"
+  },
+  {
+    "chunk_id": "chunk_2330_2393",
+    "start_sec": 2330,
+    "end_sec": 2393,
+    "start_label": "38:50",
+    "end_label": "39:53",
+    "raw_text": "Thì khi đó, nó sẽ làm gì? Nó sẽ gán x1 bằng, x1 bằng 1, đúng không nhỉ? Đây, x1, x2, x3, thì khi đó nó sẽ gán x1 còn 1, ok? Nó sẽ gán x1 còn 1, sau đó làm sao? Nó cho yêu của 1 bằng không, ai sẽ đối yêu của 1 còn 1, rất là cái chỗ 1 này này, nó không còn là không nữa mà nó chuyển thành 1 rồi Hãy, yêu của 1 bây giờ là 1, để chỉ ra rằng là gì? Ừ, ok, tôi đã gán x1 còn 1 rồi, đó, đây chỗ này nó là x1 còn 1 này Ok, mình đang xét cái vòng 4 thứ nhất của cái hàm Tr1 nhé Ok, cái vòng 4 này có 3 vòng 4 đấy Sau đó làm sao nó kiểm tra y bằng n này? Thì không phải đúng không, y là 1, thì nó làm sao? Nó gọi đến tròi của y cộng 1 Tức là nó sẽ gọi đến tròi 2 Đó, nó sẽ gọi đến tròi 2 Các bạn chú ý nhé, nó chưa chạy đến cái dòng 28 này đâu Để chờ, nó chưa chạy đến cái dòng 28 của cái vòng 4 thứ nhất của cái hàm Tr1 này đâu nhé bây giờ nó đang nhảy vào cái hài đời lời gọi hàm đệ quy là trai hai, trai hai nó thực hiện đấy"
+  },
+  {
+    "chunk_id": "chunk_2377_2440",
+    "start_sec": 2377,
+    "end_sec": 2440,
+    "start_label": "39:37",
+    "end_label": "40:40",
+    "raw_text": "Đó, nó sẽ gọi đến tròi 2 Các bạn chú ý nhé, nó chưa chạy đến cái dòng 28 này đâu Để chờ, nó chưa chạy đến cái dòng 28 của cái vòng 4 thứ nhất của cái hàm Tr1 này đâu nhé bây giờ nó đang nhảy vào cái hài đời lời gọi hàm đệ quy là trai hai, trai hai nó thực hiện đấy thấy chưa, nó ra nó chưa chạy xuống cái dòng này đâu, thấy chưa ok, nó đang còn nhảy với trai hai, sau đó trai hai lại chạy lên trên này để thực hiện cái hàm trai hai mới cơ thì khi đó bây giờ i của mình đang bằng hai đúng không, thì nó lại duyệt ba cái vòng 4 từ ghi vòng 1 cho tới ghi vòng n của cái lời gọi hàm trai hai ấy và khi đó này thì mình sẽ xét cái vòng 4 đầu tiên nhé, mình sẽ xét cái vòng 4 đầu tiên của cái lời gọi hàm trai hai gi bằng 1 ý, gi bằng 1 ý, thì nó thấy là yêu của, đầu tiên nó sẽ xét là yêu của 1 thì có bằng không không? yêu của 1, không bằng không, thì nó sẽ, cái vòng for này này, nó vẫn sẽ chạy nhá, cái vòng for mà y, x1 bằng 1 này à, sẽ lỗi cái vòng for mà gi bằng 1 của cái, gi bằng 1 của cái hàm trái 2 ý, nó vẫn chạy, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2423_2487",
+    "start_sec": 2423,
+    "end_sec": 2487,
+    "start_label": "40:23",
+    "end_label": "41:27",
+    "raw_text": "thì có bằng không không? yêu của 1, không bằng không, thì nó sẽ, cái vòng for này này, nó vẫn sẽ chạy nhá, cái vòng for mà y, x1 bằng 1 này à, sẽ lỗi cái vòng for mà gi bằng 1 của cái, gi bằng 1 của cái hàm trái 2 ý, nó vẫn chạy, đúng không? nhưng mà nó sẽ kiểm tra là yêu của gi bằng, bằng 1 rồi, thì nó sẽ không làm các cái thao tác ở trong này nữa và nó sẽ nhảy sang cái vòng 4 thứ 2 luôn đấy, nó sẽ nhảy sang cái vòng 4 thứ 2 luôn đấy chính là cái vòng 4 mà ghi bằng 2 ấy, đúng không? thì khi đó nó sẽ kiểm tra ghi bằng 2 ghi bằng 2 này thì nó kiểm tra yêu của 2 có bằng không không? có đây này, đây này yêu của 2 bằng không thì khi đó nó biết là thằng 2 chưa được sử dụng thì làm sao? thì nó lại gian ích ích 2 bằng, ích 2 bằng 2 thôi, vậy thì chỗ này ích 2 nó sẽ bằng 2 này Ok, và làm sao? Nó chuyển yêu của hai bằng một, đấy, thì chỗ này không còn là không nữa, mà nó chuyển thành một rồi Ok, vậy thì cái nhánh của vòng 4 thứ 2 này chỉ là cái nhánh mà bạn sẽ gán ít hai bằng, ít hai bằng hai"
+  },
+  {
+    "chunk_id": "chunk_2472_2534",
+    "start_sec": 2472,
+    "end_sec": 2534,
+    "start_label": "41:12",
+    "end_label": "42:14",
+    "raw_text": "Ok, và làm sao? Nó chuyển yêu của hai bằng một, đấy, thì chỗ này không còn là không nữa, mà nó chuyển thành một rồi Ok, vậy thì cái nhánh của vòng 4 thứ 2 này chỉ là cái nhánh mà bạn sẽ gán ít hai bằng, ít hai bằng hai và tiếp tục như thế, nó kiểm tra xem hai có bằng nờ hay không, không, thì nó sẽ gọi hàm, try của y cộng một thì nó sẽ gọi cái hàm là hàm try 3 Được chưa? Try 3 Các bạn chú ý nhá, cái câu lệnh 28 này chưa được thực hiện, được chưa? ok, chưa được thực hiện, nó lại phải nhảy vào trybar nó thực hiện trước ok, thì bây giờ mình lại xét cái hàm trybar thôi, thì trybar này cũng có 3 cái vòng 4 chạy từ ghi vòng 1 cho tới ghi nhỏ hơn vòng 3 thì nó cũng sẽ trẻ ra 3 nhánh ghi vòng 1 này, ghi vòng 2 này, ghi vòng 3, thì cái nhánh ghi vòng 1 này nhá thấy chưa, thì nó nhảy vào đây nó kiểm tra là yêu của 1 vòng 0 thì nó thấy là không đúng, đây yêu của 1 vòng 1 rồi thì nó sẽ không xét cái nhánh này, nó sẽ gán, nó sẽ gán không gán x3 vòng 1 này Cắt cái thủ tục ở bên dưới này nữa, mà nó sẽ bỏ qua cái vòng for đấy"
+  },
+  {
+    "chunk_id": "chunk_2519_2581",
+    "start_sec": 2519,
+    "end_sec": 2581,
+    "start_label": "41:59",
+    "end_label": "43:01",
+    "raw_text": "thấy chưa, thì nó nhảy vào đây nó kiểm tra là yêu của 1 vòng 0 thì nó thấy là không đúng, đây yêu của 1 vòng 1 rồi thì nó sẽ không xét cái nhánh này, nó sẽ gán, nó sẽ gán không gán x3 vòng 1 này Cắt cái thủ tục ở bên dưới này nữa, mà nó sẽ bỏ qua cái vòng for đấy Vòng for đấy cũng đã kết thúc, đúng không? Thì nó lại nhảy sang ghi cộng cộng để nó nhảy sang cái vòng for thứ 2 của cái lời gọi hamtribe, đúng không? Thì khi đó nó sẽ gán là gì, nó sẽ kiểm tra là ưu của 2, ghi vòng 2 mà, vòng không, có đúng không? Không đúng, bởi vì ưu của 2 đang vòng 1 Thì khi đó, cái vòng for đấy cũng đã chạy xong rồi, nó không rơi vào cái íp này nó chạy đúng không? Thì nó lại tăng ghi lên và nó nhảy sang cái vòng for thứ 3 của cái lời gọi hamtribe Thì nó kiểm tra này, yêu của ba, thì thấy bằng không nữa Ừ, vậy thì cái íp này nó đúng, thì nó mới nhảy vào đây nó gán là ít ba bằng, bằng di, tức là khi đó ít ba của mình bằng ba, và làm sao nhỉ? Và nó sẽ đánh dấu là yêu của di bằng một, đấy tức là yêu của ba bằng một đấy, vậy thì chỗ này này Nó không còn là không nữa, mà nó là một rồi, đúng chưa?"
+  },
+  {
+    "chunk_id": "chunk_2563_2630",
+    "start_sec": 2563,
+    "end_sec": 2630,
+    "start_label": "42:43",
+    "end_label": "43:50",
+    "raw_text": "Ừ, vậy thì cái íp này nó đúng, thì nó mới nhảy vào đây nó gán là ít ba bằng, bằng di, tức là khi đó ít ba của mình bằng ba, và làm sao nhỉ? Và nó sẽ đánh dấu là yêu của di bằng một, đấy tức là yêu của ba bằng một đấy, vậy thì chỗ này này Nó không còn là không nữa, mà nó là một rồi, đúng chưa? Sau khi mà gán xong, yêu của ba bằng một rồi thì nó kiểm tra là i bằng đò, thì thấy là giống ba mà bà bằng 3 thì nó sẽ in ra kết quả và cái cấu hình đầu tiên mà các bạn in ra được, nói chính là cấu hình hiện tại đây này 1, 2, 3, x1, 1, x2, 2 và cái bà bằng 3 bạn sẽ in ra được cái cấu hình là 1, 2, 3 sau đó làm sao? sau đó thì cái vòng 4 thứ 3 của cái lời gọi ham tri ba nó kết thúc đúng không? có phải là sau khi mà bạn gán bạn in ra kết quả này thì nó cũng chính là kết thúc của cái ham lời gọi ham mà ảy xin lỗi nó in ra xong kết quả thì nó sẽ Nó sẽ kết thúc hàm lời gọi hàm của thằng D, lời gọi hàm tròi ba đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2615_2678",
+    "start_sec": 2615,
+    "end_sec": 2678,
+    "start_label": "43:35",
+    "end_label": "44:38",
+    "raw_text": "Nó sẽ kết thúc hàm lời gọi hàm của thằng D, lời gọi hàm tròi ba đúng không? Nó sẽ không rơi với cái eo này, nhưng nó nhảy xuống câu lệnh 28 này Nó sẽ cho là gì? Nó sẽ cho yêu của D bằng không dì của bạn, đây giờ đang là ba nhé, cái vòng for dì của bạn nó đang vòng ba nhé thì nó sẽ cho yêu của dì vắng không, đó là khi đó ấy nó sẽ trẻ lại cái giá trị của yêu ba này bây giờ là thành không, không phải là một đâu, nó sẽ là không, đấy nó sẽ là không ok, và sau cái vòng for thứ ba đấy thì cái lời gọi hàm try ba của các bạn cũng kết thúc nó sẽ nhảy xuống cái dòng thứ 31 này của cái lời gọi hàm try ba đúng không bởi vì nó vừa xét ba cái nhánh vòng for được, nhánh vòng for nhất, nhánh vòng for thứ hai và nhánh vòng for thứ ba Vòng foc thứ 3 mới được thực hiện thì còn 2 vòng nhánh này thì không thực hiện được Bởi vì khi mà nó xét dì vòng 1 này, dì vòng 2 thì đều bị trạng bởi giá trị yêu này"
+  },
+  {
+    "chunk_id": "chunk_2661_2721",
+    "start_sec": 2661,
+    "end_sec": 2721,
+    "start_label": "44:21",
+    "end_label": "45:21",
+    "raw_text": "nó sẽ nhảy xuống cái dòng thứ 31 này của cái lời gọi hàm try ba đúng không bởi vì nó vừa xét ba cái nhánh vòng for được, nhánh vòng for nhất, nhánh vòng for thứ hai và nhánh vòng for thứ ba Vòng foc thứ 3 mới được thực hiện thì còn 2 vòng nhánh này thì không thực hiện được Bởi vì khi mà nó xét dì vòng 1 này, dì vòng 2 thì đều bị trạng bởi giá trị yêu này và nó chỉ xét được mỗi dì vòng 3 thôi và khi đó nó sẽ gán ích 3 vòng 3 đấy, ok và nó in ra được cái cấu hình là 1, 2, 3 đúng không? Ừ, thì sau đó thì 3 cái vòng foc này của cái lời gọi hamtribe này nó cũng sẽ kết thúc và cái hamtribe nó sẽ chạy xuống dòng 31 này và nó sẽ kết thúc của cái lời gọi hamtribe OK, vậy thì cái hamtribe của bạn khi đó nó sẽ kết thúc nhá In ra được 1 cái cấu hình là 1, 2, 3 Ok Bây giờ nhé Các bạn còn nhớ không? Đấy chính là lúc nãy mình đẩy cái trạng thái stack của mình Đấy là try 1 đúng không? Try 1, sau đó là try 2 này Đúng không? Try 2 này Sau đó là try 3 đúng không? Try 3 vừa kết thúc nhé"
+  },
+  {
+    "chunk_id": "chunk_2704_2766",
+    "start_sec": 2704,
+    "end_sec": 2766,
+    "start_label": "45:04",
+    "end_label": "46:06",
+    "raw_text": "Bây giờ nhé Các bạn còn nhớ không? Đấy chính là lúc nãy mình đẩy cái trạng thái stack của mình Đấy là try 1 đúng không? Try 1, sau đó là try 2 này Đúng không? Try 2 này Sau đó là try 3 đúng không? Try 3 vừa kết thúc nhé Vậy thì bây giờ tiếp tục nó sẽ thực hiện cái lời gọi ham try 2 Đấy Try 2 lúc nãy nhé, bạn đã xét cái vòng phô thứ 1 của hàm choi 2 này, đây này, ghi vòng 1 này, ghi vòng 2 đúng không? Vậy thì cái vòng phô thứ 2 này này, cái vòng phô thứ 2 này của cái lời gọi hàm choi 2 nó cũng đã kết thúc rồi đấy, ok? Có đúng như thế không? 1, 2, 3 rồi đúng không? Ok? Thì khi đó nhé, cái tròi 3 này này, cái vòng phô thứ 2 của các bạn ấy, cái vòng phô thứ 2 của cái lời gọi hàm choi 2 của các bạn ấy nó thực hiện xong cái hư lời gọi hàn tròi ba thì nó sẽ thực hiện đến cái câu lệnh 28 chú ý là nó sẽ thực hiện cái câu lệnh thứ 28 của cái vòng foe thứ 2"
+  },
+  {
+    "chunk_id": "chunk_2750_2814",
+    "start_sec": 2750,
+    "end_sec": 2814,
+    "start_label": "45:50",
+    "end_label": "46:54",
+    "raw_text": "Thì khi đó nhé, cái tròi 3 này này, cái vòng phô thứ 2 của các bạn ấy, cái vòng phô thứ 2 của cái lời gọi hàm choi 2 của các bạn ấy nó thực hiện xong cái hư lời gọi hàn tròi ba thì nó sẽ thực hiện đến cái câu lệnh 28 chú ý là nó sẽ thực hiện cái câu lệnh thứ 28 của cái vòng foe thứ 2 đây chính là vòng foe thứ 1 này, đây chính là vòng foe thứ 2 này vòng foe thứ 2 của các bạn lúc nãy gọi tròi ba đấy, được chứ à? thì tròi ba khi đó nó thực hiện xong này này, được chứ à? nó thực hiện xong rồi thì nó nhảy xuống cái câu lệnh 28 này này tức là nó sẽ tròi yêu của gi bằng không, gi của đỏ, các bạn khi đó nó là gi của bạn, đây là gi bằng 1 nhé, còn đây là gi bằng 2 nhé, được chứ à? hả? thì sẽ cho yếu của ghi vą không. Thế là sẽ trẻ lại giá trị của yếu 2 này là không, chứ không phải là một. Này, nó sẽ chuyển thành này là không. Ây! Ok. Và khi đó làm sao? Và khi đó thì nó cũng sẽ, sau cái ip này, thì nó cũng sẽ là kết thúc vòng fall thứ hai, tức là phó ghi v anak hai của lời gọi ham try high. Thì nó sẽ nhảy sang cái vòng fall thứ ba thôi, nó sẽ tăng ghi lên. Và nó sẽ nhảy sang ghi vòng 3."
+  },
+  {
+    "chunk_id": "chunk_2797_2864",
+    "start_sec": 2797,
+    "end_sec": 2864,
+    "start_label": "46:37",
+    "end_label": "47:44",
+    "raw_text": "Và khi đó làm sao? Và khi đó thì nó cũng sẽ, sau cái ip này, thì nó cũng sẽ là kết thúc vòng fall thứ hai, tức là phó ghi v anak hai của lời gọi ham try high. Thì nó sẽ nhảy sang cái vòng fall thứ ba thôi, nó sẽ tăng ghi lên. Và nó sẽ nhảy sang ghi vòng 3. và m прun của vòng for tròi 2 này nhé dù vòng 3 Ok lời gọi là tròi 2 của các bạn là cũng chiếc ra ba vòng for nhé Vòng for thver nhất thì không thể thực hiện được Vòng for thứ 2 thì thực hiện được sau đó là gọi tròi 3 và nhìn ra cấu hình 1, 2 ba, xong rồi thì bây giờ nó sẽ tiếp vòng for là dù vòng 3 thì ở trong này nó lại kiểm tra là yêu của ba bằng không Đúng Đây này Đúng Thì làm sao? Nó sẽ gán x2 bằng 3 Vậy thì x2 của các bạn chủ này không phải là 2 mà là x2 nó sẽ thành 3 ok, khi ai có bạn nó sẽ bằng ba và tiếp tục thôi nó đánh dấu yêu của nó, yêu của gì nhỉ, yêu của di, tức là yêu của ba đấy bằng 1 v chỗ này nó chuyển cái yêu của ba này này, không còn là không nữa, còn là chuyển thành một và nó kiểm tra là gì nhỉ, nó kiểm tra là i bằng nò, thì không phải bởi vì i của bạn đang làm 2"
+  },
+  {
+    "chunk_id": "chunk_2847_2910",
+    "start_sec": 2847,
+    "end_sec": 2910,
+    "start_label": "47:27",
+    "end_label": "48:30",
+    "raw_text": "và tiếp tục thôi nó đánh dấu yêu của nó, yêu của gì nhỉ, yêu của di, tức là yêu của ba đấy bằng 1 v chỗ này nó chuyển cái yêu của ba này này, không còn là không nữa, còn là chuyển thành một và nó kiểm tra là gì nhỉ, nó kiểm tra là i bằng nò, thì không phải bởi vì i của bạn đang làm 2 thì nó tiếp tục nó nhảy vào cái eo này nó gọi đến try của i cộng 1, tức là try của ba, đúng không? khi đó cái lời gọi hàm chỗ này nó sẽ là try ba này và tương tự như vậy nhỉ, try ba cũng chỉ á ra ba nhá node 3 nhanh nhánh difícil unforgettable Nhanh thứ 2 là dyi bằng 2 và nhánh Vậy thì nó sẽ gát xét là nó sẽ gát là ích y bằng zi, tức là ích 3 bằng 2"
+  },
+  {
+    "chunk_id": "chunk_2882_2944",
+    "start_sec": 2882,
+    "end_sec": 2944,
+    "start_label": "48:02",
+    "end_label": "49:04",
+    "raw_text": "và nhánh Vậy thì nó sẽ gát xét là nó sẽ gát là ích y bằng zi, tức là ích 3 bằng 2 Ok, và tiếp tục nó gát là ích của 2 bằng 1, cho nên chuyển thành 1 này không còn là không đâu Ok, 1 Và sau khi mà gán xong thì nó kiểm tra là ích bằng 3, bằng nồi thì nó sẽ in ra kết quả Và cái cấu hình của các bạn khi đó nó sẽ là, đang cấu hình là 1, 3 là 2, đấy cấu hình là 1, 3 là 2 sao đó làm sao? sau khi int ra kết quả xong nhé thì nó nhảy xuống đây thôi, 1, 2, 3"
+  },
+  {
+    "chunk_id": "chunk_2927_2990",
+    "start_sec": 2927,
+    "end_sec": 2990,
+    "start_label": "48:47",
+    "end_label": "49:50",
+    "raw_text": "Và cái cấu hình của các bạn khi đó nó sẽ là, đang cấu hình là 1, 3 là 2, đấy cấu hình là 1, 3 là 2 sao đó làm sao? sau khi int ra kết quả xong nhé thì nó nhảy xuống đây thôi, 1, 2, 3 thì nó sẽ nhảy xuống câu lệnh 28 này này, câu 28 của cái vòng 4 thứ 2 này này và nó sẽ gán là yêu của ghi bằng không, cái là yêu của ghi khi đó là 2 đúng không, nó sẽ chuyển xuống này thành không và nó cũng sẽ kết thúc cái vòng 4 thứ 2, nó chạy hết câu y này thì nó sẽ xuống đây và nó sẽ nhảy sang cái vòng 4 mới, tức là dì vòng 3 tức là sẽ nhảy sang cái vòng 4 dì vòng 3 này này thì dì vòng 3 của các bạn khi đó á dì của bạn 3 khi đó nó lại kiểm tra là ưu của ba có bằng không hay không? ưu của ba bằng không bằng không, nó bằng 1 mà thành ra là nó cũng sẽ kết thúc cái vòng 4 thứ 3 của cái lời gọi ham tri ba và nó nhảy xuống cái ba mốt này và khi đó cái ham tri ba của các bạn ấy nó sẽ được thực hiện xong và nó sẽ được đẩy ra khỏi stack"
+  },
+  {
+    "chunk_id": "chunk_2970_3032",
+    "start_sec": 2970,
+    "end_sec": 3032,
+    "start_label": "49:30",
+    "end_label": "50:32",
+    "raw_text": "dì của bạn 3 khi đó nó lại kiểm tra là ưu của ba có bằng không hay không? ưu của ba bằng không bằng không, nó bằng 1 mà thành ra là nó cũng sẽ kết thúc cái vòng 4 thứ 3 của cái lời gọi ham tri ba và nó nhảy xuống cái ba mốt này và khi đó cái ham tri ba của các bạn ấy nó sẽ được thực hiện xong và nó sẽ được đẩy ra khỏi stack Đúng nhờ? Ok Và thi đó, ham try ban này thực hiện xong thì nó sẽ lại xong cái nhánh thứ 3 của cái lời gọi ham try 2 và nó quay lại trở lại ham try 1 Vậy thì ở đây mình chỉ giải thích 1 cái nhánh như thế tôi nhé Vậy thì mấu chốt của cái bài này ấy, đây chính là nó sẽ sử dụng thêm 1 cái mảng ưu, để làm gì Để ở 1 cái nhánh quay lui nào đó nhé, ví dụ như bạn gọi quay lui như kiểu này này X1 này, sau đó là x2 này Sau đó là x3 này, đúng không? x1, x2, x3 khi diệt qua các phần tử này, nếu thẳng là x1 đã chọn một phần tử nào rồi, nhánh quay lưu này, x2 và x3 sẽ không được chọn nữa"
+  },
+  {
+    "chunk_id": "chunk_3016_3078",
+    "start_sec": 3016,
+    "end_sec": 3078,
+    "start_label": "50:16",
+    "end_label": "51:18",
+    "raw_text": "Sau đó là x3 này, đúng không? x1, x2, x3 khi diệt qua các phần tử này, nếu thẳng là x1 đã chọn một phần tử nào rồi, nhánh quay lưu này, x2 và x3 sẽ không được chọn nữa nhưng sau khi x2 và x3 được thực hiện xong, bạn sẽ phải trả lại cái giá trị trả lại cái giá trị yêu của gì? để các nhánh quay lưu khác nó có thể thực hiện, nó có thể sử dụng được cái giá trị mà x2 và x3 này đã sử dụng Thế còn nếu mà bạn xây dựng x1 bằng 1 nhé, để sử dựng như thế x2 bằng 2 nhé, và x3 bằng 3 nhé Nhưng mà sau khi cái lời gọi là cái ham tri ban này thực hiện xong í bạn không trải phóng thằng ban này này thì các cái nhánh quay lùi tiếp theo này thằng ban này sẽ không được sử dụng nữa Thằng 2 này cũng thế Thành ra là gì? Sau khi mà cái lời gọi ham tri ban này thực hiện xong í, cái nhánh quay lùi này thực hiện xong thì bạn phải trả lại được cái giá trị ban đầu của nó thì đấy chính là cái tư tưởng bắt chắc ở chỗ này nè ok, bạn đã sử dụng vào trong cái nhánh quay lùi này xong rồi"
+  },
+  {
+    "chunk_id": "chunk_3062_3124",
+    "start_sec": 3062,
+    "end_sec": 3124,
+    "start_label": "51:02",
+    "end_label": "52:04",
+    "raw_text": "Thằng 2 này cũng thế Thành ra là gì? Sau khi mà cái lời gọi ham tri ban này thực hiện xong í, cái nhánh quay lùi này thực hiện xong thì bạn phải trả lại được cái giá trị ban đầu của nó thì đấy chính là cái tư tưởng bắt chắc ở chỗ này nè ok, bạn đã sử dụng vào trong cái nhánh quay lùi này xong rồi thì sau khi sử dụng bạn phải trả lại cái giá trị đấy, không thì nó sẽ không được sử dụng lại một lần nữa đâu ok, cái quay lùi của nó cũng như thế này nè, đấy, đúng nha, họ trong trường hợp này họ cũng làm với nó bằng 3 tròi 1 nó cũng sẽ ra 3 nhánh trú ý nhé, nó thực hiện như thế này này nó gán íc 1 vòng 1 này, sau nó gán íc 2 vòng 2 này, sau nó gán íc 3 vòng 3 ok, xong rồi là, ra kế cấu hình 1, 2, 3 xong thì khi nó mới được trở lại tròi 2, tròi 3 thằng tròi 3 này này, bình thường thì nó sẽ chẽ ra 3 nhánh như thế này đúng không? nó sẽ chẽ ra nhánh là x1 bằng 1, ạ xin lỗi, x3 bằng 1, x3 bằng 2 và x3 bằng 3, bằng 4 đấy đúng không? nhưng mà do 2 cái thằng x1 và x2 của bạn ấy, ở cái nhánh quay luôn này này nó chiếm thằng 1 và thằng 2 rồi, thành ra là khi đó cái giá trị 1 và 2 này này"
+  },
+  {
+    "chunk_id": "chunk_3109_3174",
+    "start_sec": 3109,
+    "end_sec": 3174,
+    "start_label": "51:49",
+    "end_label": "52:54",
+    "raw_text": "nó sẽ chẽ ra nhánh là x1 bằng 1, ạ xin lỗi, x3 bằng 1, x3 bằng 2 và x3 bằng 3, bằng 4 đấy đúng không? nhưng mà do 2 cái thằng x1 và x2 của bạn ấy, ở cái nhánh quay luôn này này nó chiếm thằng 1 và thằng 2 rồi, thành ra là khi đó cái giá trị 1 và 2 này này Nó bị chặn rồi, nó chuyển thành yêu của gì, nó chuyển thành mod rồi Thành ra là khi mà bạn gọi hamtribe, bạn không sử dụng được lại 2 cái giá trị là 1 và 2 của 2 cái phần từ x1 và x2 đã sử dụng Nói chung là x1 đã sử dụng 1 rồi, x2 đã sử dụng rồi thì x3 x1 sử dụng 1, x2 sử dụng 2 và x3 Thì khi đó x3 của bạn sẽ không sử dụng lại được 1, 2 nữa, bởi vì mình Cố hình hoán vị của mình không cho phép sử dụng lại mà, không cho lập mà Nhưng mà sang cái nhánh quay lùi khác nhá, sang cái nhánh quay lùi khác, nè nè Nếu mà cái chỗ này sau khi mà bạn gán x3 bằng ba, mà bạn không trả lại cái giá trị cho cái thằng yêu của ba Thì nó sẽ khi mà nó gọi đến các cái lời gọi ham tryba, tryba, tryba ở bên này thì thằng ba sẽ không bao giờ được sử dụng bạn nữa Bạn đã xong cái nhánh này rồi thì bạn phải trả lại cái giá trị cho cái thằng giải phóng nó để các cái lời gọi"
+  },
+  {
+    "chunk_id": "chunk_3155_3215",
+    "start_sec": 3155,
+    "end_sec": 3215,
+    "start_label": "52:35",
+    "end_label": "53:35",
+    "raw_text": "Nếu mà cái chỗ này sau khi mà bạn gán x3 bằng ba, mà bạn không trả lại cái giá trị cho cái thằng yêu của ba Thì nó sẽ khi mà nó gọi đến các cái lời gọi ham tryba, tryba, tryba ở bên này thì thằng ba sẽ không bao giờ được sử dụng bạn nữa Bạn đã xong cái nhánh này rồi thì bạn phải trả lại cái giá trị cho cái thằng giải phóng nó để các cái lời gọi Quay lùi tiếp theo nó có thể sử dụng tiếp Thì đây chính là cái tư tưởng của cái bài toán xinh quay lùi nữa Thoán vị này nó rõ ràng hơn rất là nhiều so với Hai cái bài toán trước, hai cái bài toán trước nó không có cái chỗ backtrack này này Đấy, nó chỉ đơn thuần là gán xe bằng gì, đúng nhỉ Nhưng ở đây bạn sẽ phải có thêm một cái bước nữa, đấy là bước đánh dấu ấy bước... Ở chỗ này, ở chỗ này mình không ghi, đấy chính là bạn phải ghi nhận Ghi nhận thêm một cái điều kiện gì đó, và khi mà cái nhánh quay lùi đấy kết thúc thì bạn phải trả lại cái điều kiện mà bạn đã ghi nhận Ok, trong trường hợp này chỉ là đánh dấu và mở đánh dấu thôi Còn nó có thể có bài toán là cậu Sau đó thì sử dụng xong thì chư, ví dụ như thế, ok? Rồi thì đấy chính là cái bài toán quay lưu hoàn vị nhé"
+  },
+  {
+    "chunk_id": "chunk_3198_3258",
+    "start_sec": 3198,
+    "end_sec": 3258,
+    "start_label": "53:18",
+    "end_label": "54:18",
+    "raw_text": "Ghi nhận thêm một cái điều kiện gì đó, và khi mà cái nhánh quay lùi đấy kết thúc thì bạn phải trả lại cái điều kiện mà bạn đã ghi nhận Ok, trong trường hợp này chỉ là đánh dấu và mở đánh dấu thôi Còn nó có thể có bài toán là cậu Sau đó thì sử dụng xong thì chư, ví dụ như thế, ok? Rồi thì đấy chính là cái bài toán quay lưu hoàn vị nhé Sau khi mình đã xét xong cái bài toán đến sinh phần này, sinh tổ hợp chức ca của nờ và sinh hoàn vị rồi thì mình sẽ sang cái bài toán rất là kinh điển của tổ toán quay lưu này, đấy chính là bài toán nờ quân hậu đúng không? Phát biểu của cái bài toán nờ quân hậu đây chính là bạn sẽ phải nhiệm vụ của bạn sẽ phải set n quân hậu vào 1 cái bàn cờ vua mà có cỡ là nở như nở ôm sao cho không có 2 cái quân hậu nào nó ăn nhau ok vậy thì các bạn biết cờ vua rồi đúng không? quân hậu thì nó có thể ăn theo chiều ngang, chiều dọc, hoặc là đường chéo nó rất là mạnh và nhiệm vụ của bạn là người ta sẽ cho mình 1 cái bàn cờ vua và nhiệm vụ của bạn phải set"
+  },
+  {
+    "chunk_id": "chunk_3242_3306",
+    "start_sec": 3242,
+    "end_sec": 3306,
+    "start_label": "54:02",
+    "end_label": "55:06",
+    "raw_text": "sao cho không có 2 cái quân hậu nào nó ăn nhau ok vậy thì các bạn biết cờ vua rồi đúng không? quân hậu thì nó có thể ăn theo chiều ngang, chiều dọc, hoặc là đường chéo nó rất là mạnh và nhiệm vụ của bạn là người ta sẽ cho mình 1 cái bàn cờ vua và nhiệm vụ của bạn phải set đặt n quân hậu vào cái bàn cờ vua có cỡ là nở như nở đấy sao cho không có 2 cái quân hậu nào ăn nhau Vậy thì mình thấy là gì nhỉ? Vì con hậu nó ăn theo trường dọc chiều ngang được Thành ra là khi đó nờ quân hậu đúng không? Bạn phải set, bạn phải set mỗi cái quân hậu trên một hàng khác nhau Ví dụ như con hậu ở hàng thứ nhất nằm ở vị trí này, thì bạn không thể đặt một cái con hậu nào ở một hàng một này nữa Đúng nhỉ? Vậy thì đầu tiên mình thấy là mình sẽ phải đặt mỗi con hậu trên một hàng Ok, hoặc là cái bài toán này cũng có thể phát biểu để chính là gì nhỉ? Mình tìm cái số cách mà xếp, hoặc là tìm cách xếp cũng được, nờ quân hậu trên hàng của cái bản cờ buồn có cỡ nờ nhưng sao cho không có cái hai cuối quân hậu nào ăn nhau."
+  },
+  {
+    "chunk_id": "chunk_3289_3354",
+    "start_sec": 3289,
+    "end_sec": 3354,
+    "start_label": "54:49",
+    "end_label": "55:54",
+    "raw_text": "Ok, hoặc là cái bài toán này cũng có thể phát biểu để chính là gì nhỉ? Mình tìm cái số cách mà xếp, hoặc là tìm cách xếp cũng được, nờ quân hậu trên hàng của cái bản cờ buồn có cỡ nờ nhưng sao cho không có cái hai cuối quân hậu nào ăn nhau. Ok, đó, vậy thì để giải quyết cái bài toán nờ quân hậu này này. Bạn cần phải làm một cái thao tác tương tự như cái thật quán quay lùi sinh, quán vị này này. Để chỉ là bạn phải đánh dấu. Bài toán này mình sẽ cố gắng làm như sau nhé Mình sẽ xây dựng cái cấu hình là từ x1 cho tới xn Là một nghiệm của bài toán Trong đó, xe bằng z Tức là cái phần tử thứ y của cái cấu hình x này nè, mà bằng z thì có nghĩa là Bạn sẽ xếp cái quân hậu ở hàng thứ y nằm ở cột z Ví dụ như bạn có cái cấu hình là x1, x1 bằng 5 và x2 bằng 4 thì có nghĩa là, cái hàng đầu tiên của bạn ấy, bạn sẽ xếp cái quân hậu ở cột thứ 5,"
+  },
+  {
+    "chunk_id": "chunk_3335_3397",
+    "start_sec": 3335,
+    "end_sec": 3397,
+    "start_label": "55:35",
+    "end_label": "56:37",
+    "raw_text": "Bạn sẽ xếp cái quân hậu ở hàng thứ y nằm ở cột z Ví dụ như bạn có cái cấu hình là x1, x1 bằng 5 và x2 bằng 4 thì có nghĩa là, cái hàng đầu tiên của bạn ấy, bạn sẽ xếp cái quân hậu ở cột thứ 5, chứ là 1, 2, 3, 4, 5 và x2 bằng 4, có nghĩa là bạn sẽ xếp cái quân hậu ở hàng thứ 2, nằm ở cột 4, là như thế này này đấy, rõ ràng như thế nhá, ok, vậy thì ở đây xe bằng d, có nghĩa là mình sẽ xếp cái quân hậu ở hàng thứ y, nằm ở cột d ok không nhỉ, rồi, vậy thì để làm cái bài toán này này Các bạn phải biết là vì nhé, vì các bạn đã xây dựng là mỗi con hậu nằm ở trên một hàng rồi Thành ra là các bạn sẽ không phải check xem là các cái hàng này có con hậu chung nhau hay không Mà mình chỉ cần check xem là các cái cột ít có con hậu nào nói chung nhau hay không Hay là các cái đường chéo Ở đây thì nó có 2 loại đường chéo, một là đường chéo theo chiều"
+  },
+  {
+    "chunk_id": "chunk_3375_3437",
+    "start_sec": 3375,
+    "end_sec": 3437,
+    "start_label": "56:15",
+    "end_label": "57:17",
+    "raw_text": "Các bạn phải biết là vì nhé, vì các bạn đã xây dựng là mỗi con hậu nằm ở trên một hàng rồi Thành ra là các bạn sẽ không phải check xem là các cái hàng này có con hậu chung nhau hay không Mà mình chỉ cần check xem là các cái cột ít có con hậu nào nói chung nhau hay không Hay là các cái đường chéo Ở đây thì nó có 2 loại đường chéo, một là đường chéo theo chiều Ở đây mình trả rõ là cái hướng Mình hay gọi đường chéo xui và đường chéo ngược như thế này Ok, bởi vì khi mà bạn đặt 1 con hậu ở trong 1 cái bàn cớ, thì nó có thể ăn theo đường chéo xui và ăn theo đường chéo ngược được, đúng không? Ví dụ như cái bàn cớ như thế này Đấy, bạn mà đặt con hậu ở đây thì nó có thể ăn cái đường chéo này này Đúng không? Hoặc là nó cũng có thể có ăn cái đường chéo này Thành ra là khi mà bạn đã xếp 1 cái con hậu nằm ở cái ô nào đó ấy, thì bạn phải xác lị được là gì? Cái con hậu đấy nó nằm ở cái cột nào Thì khi đó nhá, tất cả những cái phần tử ở trên cái cột đấy, bạn sẽ không được phép vi phạm nữa Đúng nhạc, ví dụ như cái con hậu nó nằm ở đây, thì khi đó, các cái cột này sẽ không được sử dụng nữa"
+  },
+  {
+    "chunk_id": "chunk_3418_3482",
+    "start_sec": 3418,
+    "end_sec": 3482,
+    "start_label": "56:58",
+    "end_label": "58:02",
+    "raw_text": "Thành ra là khi mà bạn đã xếp 1 cái con hậu nằm ở cái ô nào đó ấy, thì bạn phải xác lị được là gì? Cái con hậu đấy nó nằm ở cái cột nào Thì khi đó nhá, tất cả những cái phần tử ở trên cái cột đấy, bạn sẽ không được phép vi phạm nữa Đúng nhạc, ví dụ như cái con hậu nó nằm ở đây, thì khi đó, các cái cột này sẽ không được sử dụng nữa Tương tự như vậy, bạn sẽ phải xác định được xem là cái đường chéo suôi này này, đường chéo suôi như thế này này, con hậu nó quản lý là cái đường chéo thứ bao nhiêu, cái đường chéo này này Thì bạn cũng không được đặt các cái con hậu vào ô này nữa, cái đường nằm trên cái đường chéo này nữa, và cái đường chéo ngược này này cũng thế Vậy thì khi mà bạn xây dựng được cái cấu hình là xe bằng di ấy, thì bạn phải xác định cho mình được là Cái con hậu nó quản lý cái cột nào Cái con hậu nó có thể quản lý cái đường cháo xui là số bao nhiêu và đường cháo ngược là số bao nhiêu Đối với cái bàn có cỡ là nò nhưng nò này thì nó có tất cả là 2 nò chí 1 đường cháo nhá Bởi vì nó có 1 cái đường cháo ở chửa giữa chung nhau mà Thành ra là đường cháo xui của mình mình sẽ đánh dấu các cái thứ tự đường cháo của mình sẽ là"
+  },
+  {
+    "chunk_id": "chunk_3464_3547",
+    "start_sec": 3464,
+    "end_sec": 3547,
+    "start_label": "57:44",
+    "end_label": "59:07",
+    "raw_text": "Cái con hậu nó có thể quản lý cái đường cháo xui là số bao nhiêu và đường cháo ngược là số bao nhiêu Đối với cái bàn có cỡ là nò nhưng nò này thì nó có tất cả là 2 nò chí 1 đường cháo nhá Bởi vì nó có 1 cái đường cháo ở chửa giữa chung nhau mà Thành ra là đường cháo xui của mình mình sẽ đánh dấu các cái thứ tự đường cháo của mình sẽ là 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 Nó sẽ có 15 đường cháo xúi và 15 đường cháo ngược Đường cháo xúi đó đây chính là đường cháo 1, đường cháo 2, đây nó chính là như thế này Đường cháo 1 này, đúng không? đường cháo 2 này, đường cháo 3 này, đường cháo 4 này Đường cháo 5 này, đường cháo 6 này Tôi tự nhiên bại đường cháo 7, cháo 8 và cháo 9 Đường cháo bí dụ như cháo 12 này, thì đường cháo 12 của các bạn đây Tương tự như vậy bên ảnh, đừng chão ngược thì mình cũng sẽ đánh dấu đừng chão uh"
+  },
+  {
+    "chunk_id": "chunk_3518_3579",
+    "start_sec": 3518,
+    "end_sec": 3579,
+    "start_label": "58:38",
+    "end_label": "59:39",
+    "raw_text": "Tương tự như vậy bên ảnh, đừng chão ngược thì mình cũng sẽ đánh dấu đừng chão uh Bạn phải xác định được xem là con hậu này í, ít i bằng dì, tức là bạn đặt con hậu ở hàng thứ i và cột dì đúng không? Có đúng thế không? ít i bằng dì. Thì khi đó bạn phải xác định xem là cái đường chéo xuôi á, mà con hậu này nó quản lý là đường chéo số bao nhiêu? Thì đây chính là cái công thức mà bạn có thể xác định được cái đường chéo xuôi mà cái con hậu nằm ở ôi dì nó quản lý. Nó chính là i chứ dì cộng nò. Ví dụ nhá, bạn đặt với con hậu ở đây này. Thì khi đó con hậu này nó sẽ quản lý cái cột là gì nhỉ? con hậu này có nằm ở vị trí là bao nhiêu? 1, 2, 3, 4, 5"
+  },
+  {
+    "chunk_id": "chunk_3560_3623",
+    "start_sec": 3560,
+    "end_sec": 3623,
+    "start_label": "59:20",
+    "end_label": "60:23",
+    "raw_text": "Thì đây chính là cái công thức mà bạn có thể xác định được cái đường chéo xuôi mà cái con hậu nằm ở ôi dì nó quản lý. Nó chính là i chứ dì cộng nò. Ví dụ nhá, bạn đặt với con hậu ở đây này. Thì khi đó con hậu này nó sẽ quản lý cái cột là gì nhỉ? con hậu này có nằm ở vị trí là bao nhiêu? 1, 2, 3, 4, 5 hàm năng vào cột ba đúng không? khi đó nó sẽ quản lý cái cột ba là cái chắc chắn rồi hàng thì mình không cần phải set nha bởi vì mỗi con hậu trên một hàng rồi thứ 2, đừng chéo xui mà nó quản lý đừng chéo xui của nó chính là i chứ di cộng nò đúng không? tức là 5 chứ đi ba, cộng với 8 ở đây cái bàn cầu của mình là cỡ 8 x8 nhé khi đó 5 chứ ba là 2 đúng không? cộng 18 là mươi, thì bạn thấy nè, nó chính là đường chéo này, nó quản lý nè nè, cái con hậu này, nó chính là quản lý đường chéo xua nè đấy, đường chéo thứ mươi nè, ok chưa? ok, tương tự như vậy, khi mà nó nằm ở cái hàng y của dì nè"
+  },
+  {
+    "chunk_id": "chunk_3602_3665",
+    "start_sec": 3602,
+    "end_sec": 3665,
+    "start_label": "60:02",
+    "end_label": "61:05",
+    "raw_text": "khi đó 5 chứ ba là 2 đúng không? cộng 18 là mươi, thì bạn thấy nè, nó chính là đường chéo này, nó quản lý nè nè, cái con hậu này, nó chính là quản lý đường chéo xua nè đấy, đường chéo thứ mươi nè, ok chưa? ok, tương tự như vậy, khi mà nó nằm ở cái hàng y của dì nè thì nó sẽ quản lý đường chéo ngược, có chứ tự là y cộng dì chữ 1 tức là 5 chữ 3 là, ạ, xin lỗi 5 cộng 3 là 8, 8 chữ 1 là 7, đây nè bạn thấy khi đó nó sẽ quản lý, đây cái thằng x nó nằm ở chỗ này nè Đúng không? Đấy, thì nó nằm, nó quản lý luôn cái ô, à, cái đường chéo số 7 này Ok, đấy, đường chéo quản lý này nhé Vậy thì các bạn chỉ cần nhớ cho mình đấy chính là gì nhỉ? Khi con hậu nằm ở hàng i và cột g Đấy chứ à? Thì nó sẽ quản lý cái gì? Nó sẽ quản lý, quản lý cột, cột g Đấy chứ à? Nó sẽ quản lý đường chéo xuôi Có thứ tự lá, i chữ g, cộng n và đường chéo ngược"
+  },
+  {
+    "chunk_id": "chunk_3647_3708",
+    "start_sec": 3647,
+    "end_sec": 3708,
+    "start_label": "60:47",
+    "end_label": "61:48",
+    "raw_text": "Khi con hậu nằm ở hàng i và cột g Đấy chứ à? Thì nó sẽ quản lý cái gì? Nó sẽ quản lý, quản lý cột, cột g Đấy chứ à? Nó sẽ quản lý đường chéo xuôi Có thứ tự lá, i chữ g, cộng n và đường chéo ngược Có thứ tự lá, i cộng g chữ 1 thế đó được OK, nhá Vậy thì bây giờ cái mã giả của cái thật toán quay lùi này nó như sau này, vector nó như sau này Nó tương tự như 3 cái thật toán mà mình muốn dẫn Nhưng ở đây mình sẽ sử dụng thêm 3 cái mảng nữa Đối với cái bài toán mà quay lùi hắn bị bạn chỉ cần 1 cái sử dụng 1 cái mảng để đánh dấu là 1 phần tử đã được sử dụng hay chưa đúng không Nhưng với cái bài toán nở quyn này này Thì mỗi khi bạn chuẩn bị mà bạn set cho cái phần tử hàng ía, cái phần tử íc ía Thì bạn phải set được các cái giá trị cột Đấy, các cái giá trị đường chéo xui, mình đặt ra đê 1 và các đường giá trị của đường chéo ngược là đê 2 Bạn phải đảm báo được rằng là gì?"
+  },
+  {
+    "chunk_id": "chunk_3691_3754",
+    "start_sec": 3691,
+    "end_sec": 3754,
+    "start_label": "61:31",
+    "end_label": "62:34",
+    "raw_text": "Thì mỗi khi bạn chuẩn bị mà bạn set cho cái phần tử hàng ía, cái phần tử íc ía Thì bạn phải set được các cái giá trị cột Đấy, các cái giá trị đường chéo xui, mình đặt ra đê 1 và các đường giá trị của đường chéo ngược là đê 2 Bạn phải đảm báo được rằng là gì? Khi mà bạn chuẩn bị set xe bằng dì đó, bình thường là mình không cần phải kiểm tra điều kiện gì mình chỉ cần Khi mà xây dựng cái phần từ xe thì mình chỉ cần duyện từ dì bằng 1, cho tới dì bằng 2, sau đó mình gán xe bằng dì thôi đúng không? Nhưng mà trong trường hợp này, khi mà bạn chuẩn bị gán xe bằng dì, bạn phải đảm báo được là gì? Bạn phải đám báo được là cái cột di nó còn chống Ok, và đây mình sẽ đặt là 1, tức là chưa được sử dụng Và cái thứ 2, là cái đường chéo mà mình mà cái phần tử hàng i cột di cái con hậu này này, nó chuẩn bị nằm vào Nó chính là đường chéo xuyên, nó chính là i chứ di cộng nờ, đúng không? Đức là đường chéo d1, nó có giá trị là i chứ di cộng nói Ok, trước đầu chỗ này của mình là d1 của i chứ di cộng nờ"
+  },
+  {
+    "chunk_id": "chunk_3734_3795",
+    "start_sec": 3734,
+    "end_sec": 3795,
+    "start_label": "62:14",
+    "end_label": "63:15",
+    "raw_text": "Và cái thứ 2, là cái đường chéo mà mình mà cái phần tử hàng i cột di cái con hậu này này, nó chuẩn bị nằm vào Nó chính là đường chéo xuyên, nó chính là i chứ di cộng nờ, đúng không? Đức là đường chéo d1, nó có giá trị là i chứ di cộng nói Ok, trước đầu chỗ này của mình là d1 của i chứ di cộng nờ đường chéo 2 là... y, con g, chứ 1 char OOP Thì khi bạn chuẩn bị setting y, bạn phải đảm báo được là cột y còn chấm này Cái đường chéo y chứ y, cộng nò, đứng là đường chéo xuôi, cũng còn chấm và đường chéo ngược, có giá trị là y Có thứ tự là y, cộng g chứ 1 cũng phải chấm Nếu mà thỏa mạn cả 3 điều kiện này tức là cái cột y chưa bị con hậu nào chiếm Cái đường chéo y chứ y cộng nờ cũng chưa bị con nào chiếm Và cái đường chéo y cộng dì chứ 1 cũng chưa có con hậu nào đã xây dựng trước nó chiếm Thì bạn mới gán được, ok, bạn mới gán được chỗ này là xin lỗi nhé"
+  },
+  {
+    "chunk_id": "chunk_3779_3843",
+    "start_sec": 3779,
+    "end_sec": 3843,
+    "start_label": "62:59",
+    "end_label": "64:03",
+    "raw_text": "Nếu mà thỏa mạn cả 3 điều kiện này tức là cái cột y chưa bị con hậu nào chiếm Cái đường chéo y chứ y cộng nờ cũng chưa bị con nào chiếm Và cái đường chéo y cộng dì chứ 1 cũng chưa có con hậu nào đã xây dựng trước nó chiếm Thì bạn mới gán được, ok, bạn mới gán được chỗ này là xin lỗi nhé Đi đây của y chứ y cộng nờ, và chỗ này là d2 của y cộng dì chứ 1 Đấy, ok, chỗ này nó chặt chẽ như thế Đấy chính là khi mà định gán xy bằng dì muốn đặt cái con hậu hàng thứ y vào cột dì thì bạn phải đảm báo được ca 3 điều kiện này, nếu mà thỏa mạn ca 3 điều kiện này thì bạn mới đọc được con hậu thứ y vào hàng cột di thì khi đó bạn cũng làm tương tự thôi, nhưng mà sau khi mà bạn đã gán con hậu ở hàng thứ y vào cột di rồi nhá thì tương tự như bài toàn quay hoàn lưu hán vị ý, bạn phải đánh dấu 3 cái giá trị, đấy chính là cái cột di, cái đường chéo xuôi và cái đường chéo ngược mà cái con hậu mà bạn vừa bắt đập và bạn cờ ấy nó quản lý, bạn phải cho tất cả các cái cột và cái đường chéo xuôi và đường chéo ngược đấy bằng không hết"
+  },
+  {
+    "chunk_id": "chunk_3827_3890",
+    "start_sec": 3827,
+    "end_sec": 3890,
+    "start_label": "63:47",
+    "end_label": "64:50",
+    "raw_text": "thì tương tự như bài toàn quay hoàn lưu hán vị ý, bạn phải đánh dấu 3 cái giá trị, đấy chính là cái cột di, cái đường chéo xuôi và cái đường chéo ngược mà cái con hậu mà bạn vừa bắt đập và bạn cờ ấy nó quản lý, bạn phải cho tất cả các cái cột và cái đường chéo xuôi và đường chéo ngược đấy bằng không hết Để đánh dấu là gì? Con hậu đã quản lý đường cháu xui, đường cháu ngược và cột đấy rồi Lời gọi để quý tiếp theo, các bạn sẽ không được xét các cột và các đường cháu xui, đường cháu ngược đấy nữa Ok, bởi vì các lời gọi quay lưu tiếp theo, bạn lại xét các đường cháu xui, đường cháu ngược đấy mà Ok, và tương tự như vậy, bạn gán xe bằng di Bạn kiểm tra nếu bạn xây dựng đến hàng cuối cùng rồi, bạn sẽ in ra kết quả Hoàn không thì mình sẽ gọi đến y cộng 1 và tất nhiên là nó sẽ có 1 bước bắt chắc Ở trên này bạn đã gán xe bằng ghi rồi đúng không? Thứ là bạn sẽ cho con hậu hàng thứ y nằm ở cột ghi rồi đúng không? Thì bạn sẽ bịt 3 cái giá trị là cột ghi đừng chéo xuôi và đừng chéo ngược mà nó quản lý lại đúng không? Nhưng mà sau khi mà chạy xong cái mình, sau khi mà bạn đã gán xe bằng ghi rồi đúng không? Bạn thử các trường hợp khác ấy. Thứ là cái con hậu hàng thứ y nó không còn ở cột ghi nữa."
+  },
+  {
+    "chunk_id": "chunk_3869_3937",
+    "start_sec": 3869,
+    "end_sec": 3937,
+    "start_label": "64:29",
+    "end_label": "65:37",
+    "raw_text": "Ở trên này bạn đã gán xe bằng ghi rồi đúng không? Thứ là bạn sẽ cho con hậu hàng thứ y nằm ở cột ghi rồi đúng không? Thì bạn sẽ bịt 3 cái giá trị là cột ghi đừng chéo xuôi và đừng chéo ngược mà nó quản lý lại đúng không? Nhưng mà sau khi mà chạy xong cái mình, sau khi mà bạn đã gán xe bằng ghi rồi đúng không? Bạn thử các trường hợp khác ấy. Thứ là cái con hậu hàng thứ y nó không còn ở cột ghi nữa. Thì bạn phải trái lại 3 cái cột, cái đừng chéo xuôi và cái đừng chéo ngược mà nó quản lý lúc nãy. Phải trái lại cái giá trị ban đầu cho nó. ok, chú ý như thế nhé, đấy chỗ này nó có bước bách chắc như thế và để mà code cái thằng này thì mình sẽ sử dụng 3 cái mạng, đấy là mạng, mạng gì nhé, mạng cột nhé mạng đường chéo xuôi nhé, mình đặt là d1 và đường chéo ngược, mình đặt là d1, 2d2 ok, ban đầu mình sẽ khởi tạo tất cả các cái giá trị cột này, d1 và d2 bằng 1 hết Bây giờ mình sẽ in ra kết quả, thì mình sẽ in ra là gì nhỉ? CL, con hậu ở hàng thứ i, 5 cột xe nhé"
+  },
+  {
+    "chunk_id": "chunk_3918_3982",
+    "start_sec": 3918,
+    "end_sec": 3982,
+    "start_label": "65:18",
+    "end_label": "66:22",
+    "raw_text": "ok, ban đầu mình sẽ khởi tạo tất cả các cái giá trị cột này, d1 và d2 bằng 1 hết Bây giờ mình sẽ in ra kết quả, thì mình sẽ in ra là gì nhỉ? CL, con hậu ở hàng thứ i, 5 cột xe nhé Rồi, bây giờ mình sẽ viết thủ tục bay lui này như sau này Bây giờ mình sẽ diệt tất cả các khả năng mà xe có thể nhận được đúng không? Bạn biết rồi đấy, khi mà bạn xét 1 con hậu ở hàng thứ y thì bạn có thể đặt nó ở 1 cái cột ghi bất kỳ từ 1 cho tới n, thì mình sẽ dùng 1 cái vòng 4 chạy từ 1 cho tới ghi nhỏ bằng ghi cộng cộng, và bạn sẽ gán là, ở đây này, khi mà chuẩn bị, chuẩn bị, gán, xy bằng ghi, tức là bạn muốn đặt con hậu ở hàng thứ y và cột ghi bạn phải kiếm tra cho mình là, thứ nhất, đấy chính là cột ghi, nó bằng 1, tức là cột ghi chưa bị chiếm, chưa bị đánh nhỏ,"
+  },
+  {
+    "chunk_id": "chunk_3950_4010",
+    "start_sec": 3950,
+    "end_sec": 4010,
+    "start_label": "65:50",
+    "end_label": "66:50",
+    "raw_text": "Bạn biết rồi đấy, khi mà bạn xét 1 con hậu ở hàng thứ y thì bạn có thể đặt nó ở 1 cái cột ghi bất kỳ từ 1 cho tới n, thì mình sẽ dùng 1 cái vòng 4 chạy từ 1 cho tới ghi nhỏ bằng ghi cộng cộng, và bạn sẽ gán là, ở đây này, khi mà chuẩn bị, chuẩn bị, gán, xy bằng ghi, tức là bạn muốn đặt con hậu ở hàng thứ y và cột ghi bạn phải kiếm tra cho mình là, thứ nhất, đấy chính là cột ghi, nó bằng 1, tức là cột ghi chưa bị chiếm, chưa bị đánh nhỏ, 2 là đường chéo xui mà nó quản lý, đó chính là đêm 1 của i, chi, chi, cộng nò, đúng chứ? đúng chứ? và đường chéo ngược, đấy là i, cộng chi, chi 1 nếu mà cả 3 cái giá trị này nó đều bằng 1 hết ấy, thì có nghĩa là gì nhỉ? cái vị trí cột chi mà bạn chuẩn bị đặt con hậu này vào ấy, nó chưa bị chiếm"
+  },
+  {
+    "chunk_id": "chunk_3995_4056",
+    "start_sec": 3995,
+    "end_sec": 4056,
+    "start_label": "66:35",
+    "end_label": "67:36",
+    "raw_text": "nếu mà cả 3 cái giá trị này nó đều bằng 1 hết ấy, thì có nghĩa là gì nhỉ? cái vị trí cột chi mà bạn chuẩn bị đặt con hậu này vào ấy, nó chưa bị chiếm thì nó không bị con khác nó ăn và cái đường chéo xui mà bạn chuẩn bị đặt con hậu này vào thì cái đường chéo xui mà con hậu nó nằm này cũng chưa bị chiếm và cái đường chéo ngược mà con hậu này nó nằm cũng chưa bị chiếm thì nếu mà thỏa bản cả ba điều kiện đó thì bạn có thể đặt con hậu xe này con hậu thứ hàng thứ y vào cột y một cách an toàn và không bị con khác nó ăn đấy, thì bạn sẽ gán xe bằng xe sau đó bạn làm sao? bạn phải cho 3 cái giá trị này này bằng không hết chưa? bởi vì sau khi bạn gán íc í bằng dì, bạn đã đặt con hậu và hàng thứ y vào cột dì rồi thì khi đó con hậu này nó sẽ quản lý cột dì, nó sẽ quản lý cột dì nó sẽ quản lý cả đường chéo xui có giá trị là y chứ y cộng nò và đường chéo ngược có giá trị là y cộng dì chứ 1 mình sẽ cho nó bằng không hết để làm gì"
+  },
+  {
+    "chunk_id": "chunk_4040_4105",
+    "start_sec": 4040,
+    "end_sec": 4105,
+    "start_label": "67:20",
+    "end_label": "68:25",
+    "raw_text": "thì khi đó con hậu này nó sẽ quản lý cột dì, nó sẽ quản lý cột dì nó sẽ quản lý cả đường chéo xui có giá trị là y chứ y cộng nò và đường chéo ngược có giá trị là y cộng dì chứ 1 mình sẽ cho nó bằng không hết để làm gì để khi bạn xây dựng cái trái, bạn gọi đến trái của y cộng 1 tức là bạn xây dựng cái con hậu ở hàng tiếp theo, hàng y cộng 1 Vì khi đó, cột d này, cái đường chéo này, và cái đường chéo này, bị quản lý hết rồi Nói, bạn sẽ không được đặt vào các cái đường chéo này nữa, thì nó sẽ đảm bảo là không bị ăn Ok, nhưng tự nhiên vậy, bạn kiểm tra nếu mà im mà bằng nò, tức là bạn xây dựng đến cái hàng cuối cùng rồi, thì bạn sẽ im kết quả Còn không ấy? Thì bạn sẽ gọi cho mình đến trial của... ... y cộng 1 Mà sau đó nhé Sau khi mà... Chỗ này backtrack này Chỗ này backtrack này trả lại cho mình cái giá trị của cột g cột g này, rồi là đường chéo đêm 1, đường chéo đêm 2 bằng 1"
+  },
+  {
+    "chunk_id": "chunk_4088_4149",
+    "start_sec": 4088,
+    "end_sec": 4149,
+    "start_label": "68:08",
+    "end_label": "69:09",
+    "raw_text": "Mà sau đó nhé Sau khi mà... Chỗ này backtrack này Chỗ này backtrack này trả lại cho mình cái giá trị của cột g cột g này, rồi là đường chéo đêm 1, đường chéo đêm 2 bằng 1 để cái nhánh quay lùi tiếp theo nó có thể sử dụng các cột g và đường chéo xui đường chéo ngược này nếu mà bạn không có cái bắt chách này thì như lúc nãy mình nói tương tự như cái bài sinh hoán vị các đường chéo, các cột g này, các đường chéo đêm 1, i trời g cộng nò và đường chéo đêm 2 lại, i cộng d trường 1 sẽ không bao giờ được sử dụng lại nữa ok chứ nhỉ, và đây chính là cái code của BytoianSync cách xếp n ở quân hậu này ở đây mình sẽ xét cho 3 cái giá trịn các bạn đặt code d0d1 bằng giá trị bằng không cho nó tiện thì đỡ phải xét nhé mình sẽ dựa từ 1 cho tới n đi cộng cộng và mình sẽ cho code i này bằng d1 của i"
+  },
+  {
+    "chunk_id": "chunk_4134_4196",
+    "start_sec": 4134,
+    "end_sec": 4196,
+    "start_label": "68:54",
+    "end_label": "69:56",
+    "raw_text": "các bạn đặt code d0d1 bằng giá trị bằng không cho nó tiện thì đỡ phải xét nhé mình sẽ dựa từ 1 cho tới n đi cộng cộng và mình sẽ cho code i này bằng d1 của i mình dựa đến 100 cho thoải mái nhé bằng d2 của i vào bằng 1 mắt đầu mình sẽ khởi tạo rất tất cả các giá trị của đêm 1 và đêm 2 bằng 1 hết sau đó mình sẽ gọi đến try của 1 ok để mình xây dựng cái con hậu ở hàng đầu tiên và khi đó nó xây dựng đến cái con hậu ở hàng cuối cùng thì nó sẽ in kiên sức quá ở đây mình sẽ xây dựng với cái bàn cờ là cỡ là 8 nhá y chứ gì ở chỗ này mình chuyển thành là nấu hoen chỗ này là nấu hoen ok đối với cái bài tóa này thì người ta hay yêu cầu bạn đến sẽ có bao nhiêu cách xếp 1, 2, 3"
+  },
+  {
+    "chunk_id": "chunk_4180_4243",
+    "start_sec": 4180,
+    "end_sec": 4243,
+    "start_label": "69:40",
+    "end_label": "70:43",
+    "raw_text": "chỗ này là nấu hoen ok đối với cái bài tóa này thì người ta hay yêu cầu bạn đến sẽ có bao nhiêu cách xếp 1, 2, 3 견 hợp d2ule 100, được, cảm ơn anh. được, các cách xếp này hơi khó nhỉ. từ nhé, để mình làm cho các bạn nhìn thấy cái bản nó dễ hơn nhé. về chỗ evening kết quả này các bạn mình sẽ được, iter tế đi"
+  },
+  {
+    "chunk_id": "chunk_4226_4294",
+    "start_sec": 4226,
+    "end_sec": 4294,
+    "start_label": "70:26",
+    "end_label": "71:34",
+    "raw_text": "về chỗ evening kết quả này các bạn mình sẽ được, iter tế đi và giờ mình sẽ diệt từ cái hàn for iter tế Vì dõi mình ít cộng cộng, sau đó mình íp xe mà gòng 1 Xe lỗi mình sẽ cho là xe của A của gì nhỉ? A của y và xe bằng 1 Thôi đó mình sẽ im ra cái mạng 2 chiều này để các bạn nhìn thấy nó rõ hơn Là cái cách xếp như thế này Thì còn để im ra như kia thì rất là khó nhìn đúng không?"
+  },
+  {
+    "chunk_id": "chunk_4268_4329",
+    "start_sec": 4268,
+    "end_sec": 4329,
+    "start_label": "71:08",
+    "end_label": "72:09",
+    "raw_text": "Là cái cách xếp như thế này Thì còn để im ra như kia thì rất là khó nhìn đúng không? Đây, cách xếp này này dụ như cách xếp này là con hậu ở hàng thứ nhất nè, nó nằm ở cột một nè đúng rồi, con hậu thứ hai nó nằm ở cột năm nè con hậu thứ ba nó nằm ở cột tám nè con hậu thứ tư nó nằm ở cột sáu nè con hậu ở hàng thứ năm thì nó nằm ở cột ba nè cột bẫy nè, cột hai nè, và cột bốn bạn thấy là mỗi con hậu nó sẽ nằm trên một hàng và mỗi và một cột và bạn thấy là các con hậu này nó sẽ không ăn nhau bạn có thể tự tiết nhé và nó sẽ xinh ra được tất cả những câu hình như thế này ở đây chủ nào có số 1 thì có nghĩa là đặt côn hậu nhé còn chủ không thì là ưu trống và đây là cái bàn cờ 8x8"
+  },
+  {
+    "chunk_id": "chunk_4311_4375",
+    "start_sec": 4311,
+    "end_sec": 4375,
+    "start_label": "71:51",
+    "end_label": "72:55",
+    "raw_text": "bạn thấy là mỗi con hậu nó sẽ nằm trên một hàng và mỗi và một cột và bạn thấy là các con hậu này nó sẽ không ăn nhau bạn có thể tự tiết nhé và nó sẽ xinh ra được tất cả những câu hình như thế này ở đây chủ nào có số 1 thì có nghĩa là đặt côn hậu nhé còn chủ không thì là ưu trống và đây là cái bàn cờ 8x8 cái bài toán này thường là nó yêu cầu bạn đếm xem là có bao nhiêu cấu hình thỏa mã này để bạn có thể dùng biến cao và chỗ in kết quả này thay biệt biến kết quả thì bạn có thể dựng biến cao sau dưới này bạn see out cái biến cao để xem là nó có bao nhiêu cấu hình ok đối với cái bàn cờ 8x8 thì nó có 92 cấu hình tất cả có thể Bạn có thể có 92 cách đặt 8 quân hậu trên bàn cờ 8x8 mà không có quân hậu nào nó ăn nhau Ok, hóa, thì đây chính là cái bài toán về n ở quân hậu nhé Cái bài toán ở quân hậu này thì các bạn chỉ cần nhớ cho mình được là khi mà bạn đặt cái quân hậu ở hàng thứ y vào cột z thì nó quản lý xem là nó quản lý cái cột nào"
+  },
+  {
+    "chunk_id": "chunk_4355_4415",
+    "start_sec": 4355,
+    "end_sec": 4415,
+    "start_label": "72:35",
+    "end_label": "73:35",
+    "raw_text": "Bạn có thể có 92 cách đặt 8 quân hậu trên bàn cờ 8x8 mà không có quân hậu nào nó ăn nhau Ok, hóa, thì đây chính là cái bài toán về n ở quân hậu nhé Cái bài toán ở quân hậu này thì các bạn chỉ cần nhớ cho mình được là khi mà bạn đặt cái quân hậu ở hàng thứ y vào cột z thì nó quản lý xem là nó quản lý cái cột nào Nó quản lý cái đường chéo xui nào và quản lý đường chéo ngược nào Ok, và nhớ bách trách lại ở chỗ đấy là được Cái phần quay lui này thì ở bản thân các bạn cũng cần phải có một cái kỹ thuật lập trình nó tương đối, ok một chút, bạn phải hiểu được cái quay lui đệ quy một chút Chứ còn nếu mà bạn không hiểu đệ quy thì gần như là bạn không thể hiểu được cái cốt này nó chạy như thế nào Và mình đã cố gắng rất cố gắng để giải thích được cái cốt này nó chạy như thế nào Nhưng mà những cái phần này thì đôi khi các bạn cũng phải tự vỡ ra nữa Mình giải thích ở các phần lần trước Còn cái bài toán NL quân hậu này thì cái tư tưởng nó không có gì khác với bài trước Các bạn có thể chạy tay thử xem nó chạy tay như thế nào nhé"
+  },
+  {
+    "chunk_id": "chunk_4399_4449",
+    "start_sec": 4399,
+    "end_sec": 4449,
+    "start_label": "73:19",
+    "end_label": "74:09",
+    "raw_text": "Và mình đã cố gắng rất cố gắng để giải thích được cái cốt này nó chạy như thế nào Nhưng mà những cái phần này thì đôi khi các bạn cũng phải tự vỡ ra nữa Mình giải thích ở các phần lần trước Còn cái bài toán NL quân hậu này thì cái tư tưởng nó không có gì khác với bài trước Các bạn có thể chạy tay thử xem nó chạy tay như thế nào nhé Thường thì chạy tay mấy cái bài này nó tương đấu nạng một chút nhưng mà các bạn có thể hiểu rõ ràng được hơn cái cái cái tư tưởng của quay lưu để mình có thể áp dụng nó vào những cái bài toán khác Ok, chứ không đơn thuần là chỉ học mấy cái bài toán này thì còn sau này học các cái bài toán quay lưu khác thì không biết làm ok, ở dưới này mình sẽ để các phần bài tập về phần quay lui này các bạn có thể cốt thử nhá ok, các bạn có thể cốt thử xem là có cốt được hay không đúng không, đều là những cái bài tòan quay lui nó khó hơn 1 tý thôi, ok"
+  }
+]

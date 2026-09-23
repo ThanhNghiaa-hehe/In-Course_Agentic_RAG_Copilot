@@ -1,0 +1,6892 @@
+[
+  {
+    "start": 0.46,
+    "end": 4.38,
+    "text": "Cái video này mình sẽ dẫn các bạn một câu chúc dữ liệu là danh xét lên kết."
+  },
+  {
+    "start": 4.38,
+    "end": 9.62,
+    "text": "Danh xét lên kết thì thường được học ở Tramon Kỹ thuật lập trình, hoặc là Tramon Cấu chúc dữ liệu và giải quật."
+  },
+  {
+    "start": 9.62,
+    "end": 16.66,
+    "text": "Có danh xét lên kết, thì danh xét lên kết đơn, hoặc là danh xét lên kết đôi, hoặc là danh xét lên kết vòng."
+  },
+  {
+    "start": 16.66,
+    "end": 20.06,
+    "text": "Mình sẽ làm quen với danh xét lên kết đơn trước nhé."
+  },
+  {
+    "start": 20.06,
+    "end": 26.98,
+    "text": "Để mà học được cái phần này thì các bạn cần một chút kiến thức về câu chúc và kiến thức về con chỏ."
+  },
+  {
+    "start": 26.98,
+    "end": 31.29,
+    "text": "thì mình sẽ định nghĩa trước thằng danh xanh liên kết này nhé"
+  },
+  {
+    "start": 31.29,
+    "end": 36.6,
+    "text": "thằng danh xanh liên kết này thì nó hơi khác với mạng một chút"
+  },
+  {
+    "start": 36.6,
+    "end": 41.88,
+    "text": "mạng của mình thì nó yêu cầu ká kê ô nhớ trong các phần cửa trong mạc của mình sẽ phải liên tiếp, đúng không?"
+  },
+  {
+    "start": 41.88,
+    "end": 46.92,
+    "text": "nhưng mà thằng danh xanh liên kết này thì các phần cửa trong gây xanh liên kết của mình nó gọi là một nốt"
+  },
+  {
+    "start": 46.92,
+    "end": 49.08,
+    "text": "ok? thì nó có thể nằm giải giáp"
+  },
+  {
+    "start": 49.08,
+    "end": 55.0,
+    "text": "ok? không nhất thiết là phải ká kê ô nhớ liên kế nhau và mỗi phần cửa của danh xanh liên kết của mình sẽ được cấp phát động"
+  },
+  {
+    "start": 55.0,
+    "end": 58.52,
+    "text": "Thành ra là nó cũng sẽ có ưu điểm và nó cũng sẽ có nhật điểm"
+  },
+  {
+    "start": 58.52,
+    "end": 67.8,
+    "text": "Và cái danh sách niềm kết này thì người ta định nghĩa nó chính là mình định nghĩa mỗi phần tử của danh sách niềm kết nhé"
+  },
+  {
+    "start": 67.8,
+    "end": 71.8,
+    "text": "Thì nó có gồm 2 phần chính, phần thứ nhất đấy chính là phần dự liệu"
+  },
+  {
+    "start": 71.8,
+    "end": 75.0,
+    "text": "Thường là 1 số hoặc là 1 thông tin của 1 cái đối tượng nào đó"
+  },
+  {
+    "start": 75.0,
+    "end": 78.76,
+    "text": "Và cái thứ 2 nó quan trọng đấy chính là có 1 cái time chill"
+  },
+  {
+    "start": 78.76,
+    "end": 83.0,
+    "text": "Tức là nó lưu thêm cái địa chỉ của phần tử đứng sau nó trong cái danh sách niềm kết"
+  },
+  {
+    "start": 83.0,
+    "end": 94.26,
+    "text": "Các bạn có thể nhìn hình ở dưới này, dành xét liên kết của các bạn, nó sẽ có 2 phần này, mỗi nốt của nó sẽ có 2 phần, phần thứ 1 là data, phần thứ 2 là phần đách"
+  },
+  {
+    "start": 94.26,
+    "end": 101.26,
+    "text": "data này chính là dữ liệu của nó, thì còn phần đách này này, chính là phần mà nó lưu với địa chỉ của cái nốt tiếp theo trong dành xét liên kết của nó"
+  },
+  {
+    "start": 101.26,
+    "end": 106.26,
+    "text": "Thành ra là để một quản lý cái dành xét liên kết của bạn này, bạn chỉ cần biết cái nốt đầu tiên nhưng lại xét liên kết thôi"
+  },
+  {
+    "start": 106.26,
+    "end": 109.26,
+    "text": "là các bạn có thể quản lý được tất cả các nốt ở trong dành xét liên kết"
+  },
+  {
+    "start": 109.26,
+    "end": 115.02,
+    "text": "Thằng này cái việc mà chèn hay là xóa thì tương đối đó đơn giản"
+  },
+  {
+    "start": 115.02,
+    "end": 124.7,
+    "text": "Nhật điểm của danh sách liên kết, so với mạng thì chắc là do mình sẽ không thể truy cập được một cách thông qua chỉ số như là mạng"
+  },
+  {
+    "start": 124.7,
+    "end": 129.5,
+    "text": "Mạng thì mình muốn truy cập vào phần tử nào, mình chỉ cần thông qua chỉ số của nó chỉ mất ôm một thôi, đúng không?"
+  },
+  {
+    "start": 129.5,
+    "end": 136.38,
+    "text": "Nhưng mà đối với cái danh sách liên kết này, vì là nó lưu các phần tử, nó không phải nằm các ưu nhớ liên kê nhau ấy"
+  },
+  {
+    "start": 136.38,
+    "end": 139.0,
+    "text": "Nhưng ra nó không thể truy cập trực tiếp và thông qua chỉ số đâu"
+  },
+  {
+    "start": 139.0,
+    "end": 143.12,
+    "text": "Mà nó phải truy cập tuyên tính, tức là nó phải duyệt từng thằng 1, từng thằng 1, từng thằng 1"
+  },
+  {
+    "start": 143.12,
+    "end": 147.84,
+    "text": "Ok, bởi vì là có thông tin thằng đứng trước thì mình sẽ có thông tin thằng đứng sau"
+  },
+  {
+    "start": 147.84,
+    "end": 153.4,
+    "text": "Hình ra là mình sẽ lần từ thằng đứng trước, sau đó thì mình sẽ tìm đến cái vị trí mà mình cần duyệt"
+  },
+  {
+    "start": 153.4,
+    "end": 156.56,
+    "text": "Ok, thì đấy chính là cái nhật điểm của dành xách nhiên kết so với mạng nhé"
+  },
+  {
+    "start": 156.56,
+    "end": 160.06,
+    "text": "Để chỉ làm khi mà mình muốn in một phần tử nào đó"
+  },
+  {
+    "start": 160.06,
+    "end": 163.16,
+    "text": "Ok, thì nó sẽ tương đối ra lâu"
+  },
+  {
+    "start": 163.16,
+    "end": 165.48,
+    "text": "Ok, nó mất thời gian là tuyên tính"
+  },
+  {
+    "start": 165.48,
+    "end": 169.52,
+    "text": "Thế còn ưu điểm sau với mảng thì chính này có thể mở rộng hoặc thu nhỏ"
+  },
+  {
+    "start": 169.52,
+    "end": 175.36,
+    "text": "Bởi vì mỗi node ở trong với dành xét liên kết của mình sẽ được cấp phát động"
+  },
+  {
+    "start": 175.36,
+    "end": 180.64,
+    "text": "Thành ra là các bạn có thể khai báo một cái dành xét liên kết mà nó không bị dưới hạ bộ nhớ"
+  },
+  {
+    "start": 180.64,
+    "end": 183.24,
+    "text": "Các bạn có thể khai báo đến bao giờ hết bộ nhớ ran thì thôi"
+  },
+  {
+    "start": 183.24,
+    "end": 184.68,
+    "text": "Ok"
+  },
+  {
+    "start": 184.68,
+    "end": 191.83,
+    "text": "Và để mà xây dựng cái 1 cái node ở trong dành xét liên kết thì người ta sẽ sử dụng 1 cái struct của là 1 cái class cũng được"
+  },
+  {
+    "start": 191.83,
+    "end": 194.47,
+    "text": "Ok, dù ở đây mình xây dựng một struct node nè"
+  },
+  {
+    "start": 194.47,
+    "end": 196.59,
+    "text": "tức là một cái node ở trong dành xe linh kết ý"
+  },
+  {
+    "start": 196.59,
+    "end": 197.59,
+    "text": "thì nó có hai phần"
+  },
+  {
+    "start": 197.59,
+    "end": 201.11,
+    "text": "Phần thứ nhất là một cái dự liệu ở đây mình sẽ đặt là một số nguyên cho đơn giản nhé"
+  },
+  {
+    "start": 201.11,
+    "end": 204.07,
+    "text": "Phần thứ hai, các bạn nhìn thấy nó hơi lạ một chút, đúng không?"
+  },
+  {
+    "start": 204.07,
+    "end": 206.07,
+    "text": "Nó là node soundnake"
+  },
+  {
+    "start": 206.07,
+    "end": 208.84,
+    "text": "Mình chơi hoặc là đây đủ thì là struct node soundnake"
+  },
+  {
+    "start": 208.84,
+    "end": 211.22,
+    "text": "Trong siệm cộng thì các bạn không thể struct"
+  },
+  {
+    "start": 211.22,
+    "end": 216.82,
+    "text": "struct node soundnake, tức là nó cũng là một cái con trỏ đúng không?"
+  },
+  {
+    "start": 216.82,
+    "end": 219.14,
+    "text": "kiểu node, có tên là next"
+  },
+  {
+    "start": 219.14,
+    "end": 224.34,
+    "text": "Thì cái phần này nè, nó chính là cái phần time chill, tức là nó sẽ lưu cái địa chỉ của một cái node tiếp theo"
+  },
+  {
+    "start": 224.34,
+    "end": 229.34,
+    "text": "ở trong dân xe link kết, ok, thằng ra là nó sẽ sử dụng một cái con trỏ nách ở đây"
+  },
+  {
+    "start": 229.34,
+    "end": 232.94,
+    "text": "Nó không thể là node nách được nhé, nó phải là sound nách"
+  },
+  {
+    "start": 232.94,
+    "end": 235.74,
+    "text": "bởi vì nó lưu cái địa chỉ của phần tử đứng sau mà, ok"
+  },
+  {
+    "start": 235.74,
+    "end": 240.54,
+    "text": "Nếu mà bạn đọc là nách thì cái biến nách này nó sẽ không thể lưu được cái địa chỉ của phần tử đứng sau"
+  },
+  {
+    "start": 240.54,
+    "end": 245.14,
+    "text": "Mình phải dùng con trỏ để mình lưu được cái địa chỉ của phần tử đứng sau, thằng ra nó sẽ là sound nách"
+  },
+  {
+    "start": 245.14,
+    "end": 251.19,
+    "text": "Ok, và chú ý này, để là mỗi cái node ở trong danh xét liên kết của mình, nó sẽ được cấp pháp động"
+  },
+  {
+    "start": 251.19,
+    "end": 255.51,
+    "text": "Thành ra nó sẽ là một cái con trỏ kiểu node, nó sẽ là một con trỏ kiểu node"
+  },
+  {
+    "start": 255.51,
+    "end": 259.75,
+    "text": "Vì vậy, các bạn nên tai đếp cái struct node sao này này"
+  },
+  {
+    "start": 259.75,
+    "end": 262.55,
+    "text": "Tức là một cái con trỏ kiểu node này, tên là list node"
+  },
+  {
+    "start": 262.55,
+    "end": 267.43,
+    "text": "Thì khi đó, mỗi lần bạn khai báo một cái node ở trong danh xét liên kết thì mình chỉ cần dùng list node thôi"
+  },
+  {
+    "start": 267.43,
+    "end": 269.75,
+    "text": "Chứ bạn không cần phải khai báo là node sao nữa"
+  },
+  {
+    "start": 269.75,
+    "end": 274.63,
+    "text": "Được không nhờ? Để hạn chế cái việc đấy, các bạn sẽ tai đếp cái node sao"
+  },
+  {
+    "start": 274.63,
+    "end": 276.63,
+    "text": "Điều là con trỏ kiểu nốt đấy, thành list nốt"
+  },
+  {
+    "start": 276.63,
+    "end": 280.79,
+    "text": "Và khi đó, mỗi list nốt này, nó sẽ là 1 cái nốt ở trong cái xe liên kết của mình"
+  },
+  {
+    "start": 280.79,
+    "end": 285.43,
+    "text": "Ok, các bạn có thể coi nó là 1 nốt, nhưng mà thực ra nó là 1 cái con trỏ đấy"
+  },
+  {
+    "start": 285.43,
+    "end": 287.99,
+    "text": "Ok, nó sẽ là 1 con trỏ, bởi vì nó sẽ được cấp phát động mà"
+  },
+  {
+    "start": 287.99,
+    "end": 293.67,
+    "text": "Từng nốt sẽ được cấp phát động, mỗi khi mà mình muốn thêm 1 cái phần tử trong cái xe liên kết thì mình sẽ cấp phát động cái nốt đấy"
+  },
+  {
+    "start": 293.67,
+    "end": 295.67,
+    "text": "Sau đó thì gán nó vào trong cái xe liên kết"
+  },
+  {
+    "start": 295.67,
+    "end": 301.89,
+    "text": "Xe liên kết của mình thì thường là nó sẽ có 1 cái con trỏ đầu tiên, 1 cái nốt đầu tiên"
+  },
+  {
+    "start": 301.89,
+    "end": 303.89,
+    "text": "ok, người ta 2 đặt là hết và cái gì đó"
+  },
+  {
+    "start": 303.89,
+    "end": 307.39,
+    "text": "ok, và cái nốt cuối cùng ấy, thì bao giờ nó cũng chỏ vào nôn"
+  },
+  {
+    "start": 307.39,
+    "end": 310.39,
+    "text": "cái phần tham chiếu của cái nốt cuối cùng cho mình xem liên kết của bạn này này"
+  },
+  {
+    "start": 310.39,
+    "end": 311.89,
+    "text": "bao giờ nó cũng chỏ vào nôn"
+  },
+  {
+    "start": 311.89,
+    "end": 315.89,
+    "text": "ok, thì chỉ cần biết 2 cái này thôi là các bạn có thể thao tác với xét liên kết rồi"
+  },
+  {
+    "start": 315.89,
+    "end": 322.31,
+    "text": "mình thấy là nhiều người hướng dẫn là xây dựng 1 cái danh xét liên kết để sau đó tai điếp 1 cái struct nữa"
+  },
+  {
+    "start": 322.31,
+    "end": 325.81,
+    "text": "tên là danh xét liên kết và chứa 2 cái nốt đầu và nốt cuối của xét liên kết"
+  },
+  {
+    "start": 325.81,
+    "end": 329.31,
+    "text": "nhưng cái cài đặt đấy thì nó sẽ dễ hơn với cái trường hợp đấy chính là"
+  },
+  {
+    "start": 329.31,
+    "end": 333.19,
+    "text": "Bạn quản lý cái danh xe liên kết của mình chỉ với 1 node đầu tiên, ok?"
+  },
+  {
+    "start": 333.19,
+    "end": 335.75,
+    "text": "Thế là bạn sẽ quản lý danh xe của mình với 1 node đầu tiên thôi."
+  },
+  {
+    "start": 335.75,
+    "end": 338.23,
+    "text": "Và mình thấy là nhiều người thì lại hay..."
+  },
+  {
+    "start": 338.23,
+    "end": 343.23,
+    "text": "Thấy là phải tập trên trường hay gì đó thì các thầy lại hay..."
+  },
+  {
+    "start": 343.23,
+    "end": 350.56,
+    "text": "Thương dẫn đây chính là các bạn sẽ xây dựng 1 cái danh xe liên kết mà quản lý danh xe liên kết đấy bằng 1 cái node đầu tiên, ok?"
+  },
+  {
+    "start": 350.56,
+    "end": 354.92,
+    "text": "Thì mình nghĩ cái đấy nó sẽ hợp lý hơn so với việc là bạn xây dựng 1 cái danh xe liên kết, sau đó là bạn"
+  },
+  {
+    "start": 354.92,
+    "end": 357.92,
+    "text": "2 bám 1 cái lít, 1 cái node đầu, node cuối, ok?"
+  },
+  {
+    "start": 357.92,
+    "end": 360.4,
+    "text": "Để quản lý danh xe linh kết đấy, cái đấy thì nó sẽ dễ hơn"
+  },
+  {
+    "start": 360.4,
+    "end": 361.4,
+    "text": "Ok"
+  },
+  {
+    "start": 361.4,
+    "end": 365.8,
+    "text": "Thế còn nếu mà bạn quản lý danh xách của linh kết của mình thì chỉ bằng 1 nút, 1 cái nốt đầu tiên rồi này"
+  },
+  {
+    "start": 365.8,
+    "end": 368.2,
+    "text": "Thì nó yêu cầu các bạn phải xử lý rất là chắc chắn"
+  },
+  {
+    "start": 368.2,
+    "end": 373.65,
+    "text": "Nó mới, nó mới bị cài đặt cái phần danh xe linh kết này là mình đúng được"
+  },
+  {
+    "start": 373.65,
+    "end": 376.65,
+    "text": "Đấy xe linh kết này, cài đặt nó rất là dễ vị sẽ sai nhá"
+  },
+  {
+    "start": 376.65,
+    "end": 380.49,
+    "text": "Nhưng mà không vấn đề gì các bạn cứ cài đặt sai sau đó thì mình dụt kinh nghiệm dần, ok?"
+  },
+  {
+    "start": 380.49,
+    "end": 381.75,
+    "text": "Đó"
+  },
+  {
+    "start": 381.75,
+    "end": 389.11,
+    "text": "Nói chung là học phần danh xét niêm kết các này, các bạn chỉ cần hiểu cái bản chất, các cái thao tác của nó, thì mình có thể cài đặt nó một cách dễ dàng, chỉ cũng không cần phải học thùa"
+  },
+  {
+    "start": 389.11,
+    "end": 390.71,
+    "text": "Ok, mình hiểu bản chất của nó"
+  },
+  {
+    "start": 390.71,
+    "end": 396.31,
+    "text": "Vậy thì, bây giờ mình sẽ hướng dẫn các bạn một cái danh xét niêm kết, sau đó thì xây dựng các cái thao tác của nó nhá"
+  },
+  {
+    "start": 396.31,
+    "end": 400.95,
+    "text": "Và các bạn có thể áp dụng cái các cái thao tác này để mình làm với các cái danh xét niêm kết khác"
+  },
+  {
+    "start": 400.95,
+    "end": 404.23,
+    "text": "Ok, khi mà nó lưu những cái thông tin mà nó phức tạp hơn"
+  },
+  {
+    "start": 404.23,
+    "end": 406.79,
+    "text": "Ở đây thì mình chỉ lưu thông tin, đấy là một số nguyên thôi"
+  },
+  {
+    "start": 406.79,
+    "end": 413.38,
+    "text": "Ok, vậy thì để xây dựng một cái struct thì mình sẽ khai báo một cái node như sao, struct node"
+  },
+  {
+    "start": 413.38,
+    "end": 417.43,
+    "text": "Ở trong này thì mình sẽ có một cái data và một cái"
+  },
+  {
+    "start": 417.43,
+    "end": 422.95,
+    "text": "một cái time chill đến cái phần cửa tiếp theo đúng không, rất là node, sound, next"
+  },
+  {
+    "start": 422.95,
+    "end": 427.17,
+    "text": "Ok, node, sau đó mình sẽ tai đẹp"
+  },
+  {
+    "start": 427.17,
+    "end": 432.72,
+    "text": "tai đẹp, struct, node, sound"
+  },
+  {
+    "start": 432.72,
+    "end": 435.44,
+    "text": "Mình đặt tên là node, ok"
+  },
+  {
+    "start": 435.44,
+    "end": 440.56,
+    "text": "Thì bây giờ khi mà mỗi lần mà bạn xin cấp pháp một cái node thì bạn không phải nói là node, khi là node sao nữa"
+  },
+  {
+    "start": 440.56,
+    "end": 444.88,
+    "text": "ok, sáu new, đúng không? để cấp phát động mà bạn chỉ cần dùng node, sáu new là được"
+  },
+  {
+    "start": 444.88,
+    "end": 452.28,
+    "text": "cái, cái, mình sẽ CL ra sai op của cái thằng node này nhá, sai op của node"
+  },
+  {
+    "start": 452.28,
+    "end": 461.71,
+    "text": "cái sai op của node này chắc là bằng chỗ này là 8 đúng không? 8, cộng với 8, 16by, tidy up struct"
+  },
+  {
+    "start": 461.71,
+    "end": 468.76,
+    "text": "cho bạn nào mà chưa biết cái cách mà xay định cái, cái, cái, kích thước theo by của một cái struct nhá"
+  },
+  {
+    "start": 468.76,
+    "end": 473.32,
+    "text": "thì đối với cái, mything của mình là mything 64bit, ok"
+  },
+  {
+    "start": 473.32,
+    "end": 485.0,
+    "text": "hệ đô hành mình chạy 64 bits thì khi đó cái con trỏ ấy, không cần biết là con trỏ kiểu gì nhé, con trỏ kiểu in, kiểu long long hay là kiểu struct nào đó thì nó đều có kích thức là 8 bytes"
+  },
+  {
+    "start": 485.0,
+    "end": 492.92,
+    "text": "được không nhờ? Thành ra cái phần này này nó sẽ là 8 bytes này, thế còn cái thằng inrt data này là 4 bytes đúng không, inrt mà nó nghĩa là 8, 42 đúng không"
+  },
+  {
+    "start": 492.92,
+    "end": 498.38,
+    "text": "C, cộng cộng với C, nó đọc dữ liệu theo từng 8b, 1, 8b, 1"
+  },
+  {
+    "start": 498.38,
+    "end": 500.7,
+    "text": "Thành ra nó có một cái gọi là structure batting"
+  },
+  {
+    "start": 500.7,
+    "end": 504.22,
+    "text": "Để nó thêm làm sao cho cái phần data này nè"
+  },
+  {
+    "start": 504.22,
+    "end": 506.06,
+    "text": "Nó đang là 4b, nó phải đủ 8b"
+  },
+  {
+    "start": 506.06,
+    "end": 510.0,
+    "text": "Thành ra là cái phần int data này thêm batting nữa thì nó thêm là 8b"
+  },
+  {
+    "start": 510.0,
+    "end": 513.92,
+    "text": "Tám cộng với cái phần con trỏ này nữa là 8b thì nó có là 16b"
+  },
+  {
+    "start": 513.92,
+    "end": 518.48,
+    "text": "Hay là cái chỗ này bạn để ra chair, int, chair data thì chair data mới ra 1b đúng không?"
+  },
+  {
+    "start": 518.48,
+    "end": 521.1,
+    "text": "Nhưng nó batting thêm 7b nữa thì nó để đủ 8b"
+  },
+  {
+    "start": 521.1,
+    "end": 523.68,
+    "text": "và khi đó, stock node của mình, nó cũng vẫn là 16.3"
+  },
+  {
+    "start": 523.68,
+    "end": 525.98,
+    "text": "OK, hoặc là bạn để ra long long thì nó vẫn"
+  },
+  {
+    "start": 525.98,
+    "end": 529.48,
+    "text": "long long thì nó đủ rồi, long long thì nó đủ 1 cái"
+  },
+  {
+    "start": 529.48,
+    "end": 532.78,
+    "text": "cụm 8.3 để đập kỳ rồi, thì nó không cần cái bat ding nữa"
+  },
+  {
+    "start": 532.78,
+    "end": 535.58,
+    "text": "khi đó, kích thước của node này mình vẫn là 16.3"
+  },
+  {
+    "start": 535.58,
+    "end": 536.38,
+    "text": "OK"
+  },
+  {
+    "start": 536.38,
+    "end": 538.38,
+    "text": "Vậy thì cho bạn nào mà chưa biết thì"
+  },
+  {
+    "start": 538.38,
+    "end": 542.54,
+    "text": "cái kích thước của 1 cái Ctrl bao giờ cũng là 8.3 nhé, trong hệ điều hành, tuy hệ điều hành"
+  },
+  {
+    "start": 542.54,
+    "end": 547.02,
+    "text": "nếu mà hệ điều hành của mình 64 bits thì nó sẽ là 8.3, còn 32 bits thì nó sẽ là 4.3"
+  },
+  {
+    "start": 547.02,
+    "end": 547.52,
+    "text": "OK"
+  },
+  {
+    "start": 547.52,
+    "end": 548.22,
+    "text": "Rồi"
+  },
+  {
+    "start": 548.22,
+    "end": 554.04,
+    "text": "Thế nhé, ok, thì đây chính là 1 cấu trúc để bạn xây dựng 1 cái node này"
+  },
+  {
+    "start": 554.04,
+    "end": 557.56,
+    "text": "Nó có 2 phần, thứ 1 là phần data và thứ 2 là phần tham chiếu"
+  },
+  {
+    "start": 557.56,
+    "end": 560.04,
+    "text": "Ok, nhưng mà nhớ phần tham chiếu này phải là con trỏ, ok"
+  },
+  {
+    "start": 560.04,
+    "end": 562.68,
+    "text": "Thì ra là người ta gọi là 1 cái cấu trúc tự trỏ, bởi vì sao?"
+  },
+  {
+    "start": 562.68,
+    "end": 564.68,
+    "text": "Bởi vì cái định nghĩa của nó hơi đệ quy 1 chút"
+  },
+  {
+    "start": 564.68,
+    "end": 567.4,
+    "text": "Chính là trong cái node này lại có 1 cái node khác, đúng nhỉ?"
+  },
+  {
+    "start": 567.4,
+    "end": 571.56,
+    "text": "Định nghĩa của nó hơi đệ quy 1 chút, người ta gọi cái thằng này là cấu trúc tự trỏ"
+  },
+  {
+    "start": 571.56,
+    "end": 573.96,
+    "text": "Thế là nó sẽ trỏ vào 1 cái phần tử giống y hiệp nó"
+  },
+  {
+    "start": 573.96,
+    "end": 580.96,
+    "text": "Ok, nhớ nhá, cái phần này chỉ là cái phần mà nó lưu cái địa chỉ của cái phần từ tiếp theo của nó trong lành xét liên kết, như dụ như ông này này"
+  },
+  {
+    "start": 580.96,
+    "end": 586.96,
+    "text": "Cái phần nách của ông này thì sẽ lưu cái địa chỉ của cái nô tiếp theo này, tương tự như vậy thần nách của này sẽ lưu địa chỉ tiếp theo của này này"
+  },
+  {
+    "start": 586.96,
+    "end": 590.96,
+    "text": "Thế còn thằng nách của thằng cuối cùng thì nó sẽ trỏ vào luôn, ok?"
+  },
+  {
+    "start": 590.96,
+    "end": 602.57,
+    "text": "Vậy thì khi mà xây dựng xây liên kết nó sẽ có nhiều hàm, hàm thê thường là chèn này, sau đó thì chèn rồi là xóa, ok?"
+  },
+  {
+    "start": 602.57,
+    "end": 606.69,
+    "text": "hoặc là sub-save, ở đây mình sẽ xây dựng các cái hàm ở đây đủ một chút nhé"
+  },
+  {
+    "start": 606.69,
+    "end": 610.57,
+    "text": "đầu tiên mình sẽ xây dựng một cái hàm để tạo một cái nốt mới ở trong gian xét link-ed"
+  },
+  {
+    "start": 610.57,
+    "end": 615.37,
+    "text": "mỗi khi mà các bạn muốn tạo một cái gian xét nhịp, một cái nốt mới trong gian xét link-ed, bạn phải cấp phát động, ok?"
+  },
+  {
+    "start": 615.37,
+    "end": 620.17,
+    "text": "thế sao làm việc mình viết hàm một cái hàm để mà tạo một thông tin cho một gian xét link-ed mới từ một số nguyên ích"
+  },
+  {
+    "start": 620.17,
+    "end": 626.25,
+    "text": "mình sẽ đặt là node, make node nhé, ok, 1 nở tí, cái hàm này có nhiệm vụ là gì?"
+  },
+  {
+    "start": 626.25,
+    "end": 631.0,
+    "text": "đây chính là nó sẽ cấp phát động một nốt mới, ok?"
+  },
+  {
+    "start": 631.0,
+    "end": 633.94,
+    "text": "Với dữ liệu, là xuống nguyên ích"
+  },
+  {
+    "start": 633.94,
+    "end": 639.54,
+    "text": "Thì các bạn sẽ khai báo cho mình như sau để là node, tem bằng new node"
+  },
+  {
+    "start": 639.54,
+    "end": 647.06,
+    "text": "Sau đó bạn cho tem, mũi tên, data, bằng x, sau đó bạn cho tem, mũi tên, make, bằng new"
+  },
+  {
+    "start": 647.06,
+    "end": 649.94,
+    "text": "Và bạn sẽ gán, bạn sẽ return được cái tem này"
+  },
+  {
+    "start": 649.94,
+    "end": 652.84,
+    "text": "Có một vài điều chủ ý khi mà bạn có pháp động"
+  },
+  {
+    "start": 652.84,
+    "end": 656.52,
+    "text": "Thứ nhất là, như mình nói ở trên đấy, bạn đã khai báo node sao"
+  },
+  {
+    "start": 656.52,
+    "end": 658.12,
+    "text": "Tay đép node sao là node rồi"
+  },
+  {
+    "start": 658.12,
+    "end": 663.08,
+    "text": "dưới này khi mà xây dựng 1 con trỏ nốt, kiểu nốt thì bạn chỉ cần khai báo nốt như thế này thôi"
+  },
+  {
+    "start": 663.08,
+    "end": 666.6,
+    "text": "còn nếu bạn không tai đép thì bạn phải khai báo nốt sao tem như thế này nó dài"
+  },
+  {
+    "start": 666.6,
+    "end": 670.34,
+    "text": "ok, nốt sao tem như thế này"
+  },
+  {
+    "start": 670.34,
+    "end": 673.3,
+    "text": "ok chứ nhỉ, còn không thì mình chỉ cần nốt sao tem"
+  },
+  {
+    "start": 673.3,
+    "end": 676.1,
+    "text": "nhưng mà chỗ này nhớ là new nốt này nhé, nốt ban đầu này này"
+  },
+  {
+    "start": 676.1,
+    "end": 680.82,
+    "text": "ok, sau đó thì mình, vì cái thằng tem này nó đang là 1 con trỏ đấy nhé"
+  },
+  {
+    "start": 680.82,
+    "end": 686.9,
+    "text": "ok, con trỏ thình ra để truy cập vào phần data vào phần nách của nó thì bạn sẽ phải dự dụng mũi tên chứ bạn không dùng dấu chấm được đâu"
+  },
+  {
+    "start": 686.9,
+    "end": 688.9,
+    "text": "ok, ta sẽ phải dùng mũi tên nhá"
+  },
+  {
+    "start": 688.9,
+    "end": 689.9,
+    "text": "ok"
+  },
+  {
+    "start": 689.9,
+    "end": 692.9,
+    "text": "nhìn nó là không, nhìn cái biến tiêm này, nó là cái biến nốt như này"
+  },
+  {
+    "start": 692.9,
+    "end": 694.9,
+    "text": "nhìn thì không phải là con trỏ vì không có dấu xa đúng không"
+  },
+  {
+    "start": 694.9,
+    "end": 697.9,
+    "text": "nhưng mà thực chất ở trên mình đã thay đếp cái nốt xa"
+  },
+  {
+    "start": 697.9,
+    "end": 699.9,
+    "text": "tức là con trỏ kiểu nốt thành nốt rồi"
+  },
+  {
+    "start": 699.9,
+    "end": 704.9,
+    "text": "mình ra bạn dùng nốt này thì cái biến tiêm này nó sẽ là con trỏ và nó sẽ quản lý 1 cái nốt mà mình sẽ níu ra đây"
+  },
+  {
+    "start": 704.9,
+    "end": 705.9,
+    "text": "mình cấp phát động ở đây"
+  },
+  {
+    "start": 705.9,
+    "end": 708.9,
+    "text": "thì hai phần data của nó sẽ là ích và cái phần đích của nó sẽ là nôn nhá"
+  },
+  {
+    "start": 708.9,
+    "end": 711.9,
+    "text": "mỗi khi mà mình cấp phát 1 cái nốt mới ở trong sên kết thì"
+  },
+  {
+    "start": 711.9,
+    "end": 713.9,
+    "text": "cái phần đích của nó bao giờ cũng trỏ vào nôn"
+  },
+  {
+    "start": 713.9,
+    "end": 718.9,
+    "text": "Ok, các bạn chú ý điều đó nhé, đây nè. Thành ra là mình sẽ cho phần đách của nó sẽ trò vào nôn"
+  },
+  {
+    "start": 718.9,
+    "end": 724.06,
+    "text": "Các bạn có thể viết là nôn hoa, viết hoa như thế này hoặc là cọc, bạn có thể viết là nôn Paterer cũng được"
+  },
+  {
+    "start": 724.06,
+    "end": 729.06,
+    "text": "Ok, từ C++ bởi 1 thì nó sẽ có nôn thứ thêm cái thằng nôn Paterer này để thay cho con trò nôn này"
+  },
+  {
+    "start": 729.06,
+    "end": 731.06,
+    "text": "Các bạn dùng 2 cái này cái nào cũng được"
+  },
+  {
+    "start": 731.06,
+    "end": 736.06,
+    "text": "Rồi, vậy là mình đã xong 1 cái ham để cấp pháp 1 node từ 1 cái thông tin đấy là x, đúng nhỉ?"
+  },
+  {
+    "start": 736.06,
+    "end": 741.32,
+    "text": "Bây giờ mình sẽ viết 1 cái ham để chỉnh là kiểm tra xem cái node này có rộng hay không?"
+  },
+  {
+    "start": 741.32,
+    "end": 748.38,
+    "text": "Mình sẽ dọng nhé, mình sẽ đặt lắm buôn, mt"
+  },
+  {
+    "start": 748.38,
+    "end": 753.38,
+    "text": "Nhớ này, để mà quản lý 1 gianh xét liên kết, các bạn chỉ cần 1 cái node đầu tiên thôi"
+  },
+  {
+    "start": 753.38,
+    "end": 756.38,
+    "text": "Hình ra là ở đây mình sẽ có 1 cái tham số đấy là node A"
+  },
+  {
+    "start": 756.38,
+    "end": 759.38,
+    "text": "Cái ông A này chính là cái node đầu tiên ở trong gianh xét liên kết của mình"
+  },
+  {
+    "start": 759.38,
+    "end": 760.38,
+    "text": "Được không?"
+  },
+  {
+    "start": 760.38,
+    "end": 765.38,
+    "text": "Và ban đầu nhé, ban đầu của các bạn ấy, khi mà cái gianh xét liên kết của các bạn nó chưa có cái phần từ nào ấy"
+  },
+  {
+    "start": 765.38,
+    "end": 770.38,
+    "text": "nốt đầu tiên trong gianh xe liếc kết của bạn sẽ là con tròn nôn"
+  },
+  {
+    "start": 770.38,
+    "end": 774.38,
+    "text": "cái thằng A nó sẽ là con tròn nôn"
+  },
+  {
+    "start": 774.38,
+    "end": 776.38,
+    "text": "vậy thì để kiểm tra rộng thì bạn chỉ cần kiểm tra là"
+  },
+  {
+    "start": 776.38,
+    "end": 780.38,
+    "text": "nếu mà A mà bằng nôn, A là con tròn nôn thì khi đó"
+  },
+  {
+    "start": 780.38,
+    "end": 783.38,
+    "text": "có nghĩa là cái phần tử đầu tiên trong gianh xe liếc kết của bạn nó không có"
+  },
+  {
+    "start": 783.38,
+    "end": 785.38,
+    "text": "thì mình sẽ return true"
+  },
+  {
+    "start": 785.38,
+    "end": 788.38,
+    "text": "và đây chính cách mà kiểm tra 1 con"
+  },
+  {
+    "start": 788.38,
+    "end": 789.38,
+    "text": "1 gianh xe liếc kết là rộng"
+  },
+  {
+    "start": 789.38,
+    "end": 792.38,
+    "text": "tức là khi mình xây dựng 1 gianh xe liếc kết mới"
+  },
+  {
+    "start": 792.38,
+    "end": 794.38,
+    "text": "thì mình sẽ cho nó bằng nôn"
+  },
+  {
+    "start": 794.38,
+    "end": 801.38,
+    "text": "nếu mình khai báo một gianh xe lên kết, mình chỉ cần khai báo cái nốt đầu tiên của nó thôi"
+  },
+  {
+    "start": 801.38,
+    "end": 808.5,
+    "text": "để cái nốt đầu tiên này nó sẽ quản lý nhé, mình sẽ khai báo là nốt hết bằng nun"
+  },
+  {
+    "start": 808.5,
+    "end": 813.5,
+    "text": "để chỉ ra rằng là gì, cái nốt đầu tiên ở trong gianh xe lên kết của mình nó đang là nun"
+  },
+  {
+    "start": 813.5,
+    "end": 817.5,
+    "text": "nó đang là một Ctrl nun thì khi đó, cái gianh xe lên kết của mình nó sẽ giấm"
+  },
+  {
+    "start": 817.5,
+    "end": 821.5,
+    "text": "đây chính là cách mình bạn khởi tạo một cái nốt đầu tiên trong gianh xe lên kết"
+  },
+  {
+    "start": 821.5,
+    "end": 830.98,
+    "text": "tương tự như vậy nha, bây giờ mình sẽ làm thêm 1 cái hàm nữa để đếm xem là trong cái xen lên kết này có bao nhiêu phần tử mình đặt là cái hàm xa"
+  },
+  {
+    "start": 830.98,
+    "end": 834.62,
+    "text": "có tham số là 1 cái nốt đầu tiên trong cái xen lên kết"
+  },
+  {
+    "start": 834.62,
+    "end": 840.22,
+    "text": "thì để mà đếm xem là cái xen lên kết này có bao nhiêu phần tử thì rất là đơn giản thôi"
+  },
+  {
+    "start": 840.22,
+    "end": 842.84,
+    "text": "các bạn làm cho mình như thế này"
+  },
+  {
+    "start": 842.84,
+    "end": 846.82,
+    "text": "bạn có 1 cái xen lên kết như thế này"
+  },
+  {
+    "start": 846.82,
+    "end": 860.71,
+    "text": "thì cái xen lên kết của mình hiện tại bây giờ nó đang có 3 phần tử đúng không"
+  },
+  {
+    "start": 860.71,
+    "end": 864.87,
+    "text": "và cái thằng, cái thằng node đầu tiên trong set-lên kết của mình nè, tên là het, ok?"
+  },
+  {
+    "start": 864.87,
+    "end": 869.17,
+    "text": "Vậy thì, và mình đang có thằng này nhé, mình đang biết thằng này nhé, ok?"
+  },
+  {
+    "start": 869.17,
+    "end": 871.69,
+    "text": "Thì để đếm xem là cái dành set-lên kết này có bao nhiêu phần tử ấy?"
+  },
+  {
+    "start": 871.69,
+    "end": 878.09,
+    "text": "Thì bạn chỉ cần duyệt từ đầu, ok? duyệt từ đầu, bạn tạo một cái, cho cái node het của mình ấy, ok?"
+  },
+  {
+    "start": 878.09,
+    "end": 884.29,
+    "text": "Mà di chuyển qua từng phần tử 1, đến khi nào mà cái node het của bạn ấy, nó chạy về đến nu, có nghĩa là khi đó nó cũng đã duyệt qua cái"
+  },
+  {
+    "start": 884.29,
+    "end": 889.41,
+    "text": "tất cả các phần tử trong cái set của mình, liên kết của mình, mỗi lần mình duyệt qua thì mình sẽ tạm biên đếm lên một lần, ok?"
+  },
+  {
+    "start": 889.41,
+    "end": 891.41,
+    "text": "Đấy mình sẽ dùng 1 cái biến cao của tàu bằng cơm"
+  },
+  {
+    "start": 892.47,
+    "end": 896.47,
+    "text": "Sau bạn để cho mình cái điều kiện lập là Y, A khác nôn"
+  },
+  {
+    "start": 896.47,
+    "end": 902.47,
+    "text": "Rất chừng nào là cái nốt của bạn ấy nó vẫn chưa phải là cái thằng sau cái phần tử cuối cùng này"
+  },
+  {
+    "start": 902.47,
+    "end": 907.47,
+    "text": "Bởi vì nếu mà bạn cái nốt của bạn ấy từ phần tử này này nó chạy đến cái phần tử nôn này"
+  },
+  {
+    "start": 907.47,
+    "end": 911.47,
+    "text": "Sau cái thằng cuối cùng này thì khi đó mình cũng đã đến xong được danh xe liên kết của mình rồi"
+  },
+  {
+    "start": 911.47,
+    "end": 914.47,
+    "text": "Thì ở trong này nó có 1 cái câu lệnh rất là quan trọng ở trong phần danh xe liên kết"
+  },
+  {
+    "start": 914.47,
+    "end": 917.47,
+    "text": "Nó chính là A bằng A mũi tên nách"
+  },
+  {
+    "start": 917.47,
+    "end": 922.7,
+    "text": "A bằng a mũi tên ếch, ví dụ, đây là thằng A, đúng không?"
+  },
+  {
+    "start": 922.7,
+    "end": 929.18,
+    "text": "Ok, khi có câu lệnh a bằng a mũi tên ếch, các bạn biết a mũi tên ếch chính là gì nhỉ?"
+  },
+  {
+    "start": 929.18,
+    "end": 932.94,
+    "text": "Nó chính là địa chỉ của node đứng đằng sau thằng A này."
+  },
+  {
+    "start": 932.94,
+    "end": 936.9,
+    "text": "Thì việc mà bạn gán địa chỉ của node đằng sau này này, cho thằng A này,"
+  },
+  {
+    "start": 936.9,
+    "end": 942.22,
+    "text": "thì khi đó thằng A này của bạn ấy, nó sẽ là một con trỏ, nó quản lý cái node thứ 2 trong gian xe lít của mình."
+  },
+  {
+    "start": 942.22,
+    "end": 943.9,
+    "text": "Và khi đó thằng A nó sẽ nhảy ra đây này."
+  },
+  {
+    "start": 943.9,
+    "end": 951.1,
+    "text": "sau tí nữa bạn lại cho a bằng a nách thì khi đó nó lại lấy cái phần a nách, là cái phần địa chỉ của cái thằng thứ 3 này nó gán cho thằng a"
+  },
+  {
+    "start": 951.1,
+    "end": 955.42,
+    "text": "thì khi đó thằng a của bạn nó không còn quản lý cái nốt thứ 2 này nữa mà nó sẽ nhảy sang cái nốt thứ 3 này"
+  },
+  {
+    "start": 955.42,
+    "end": 959.66,
+    "text": "ok, và sau cái nốt thứ 3 này nhá thì cái câu lại a bằng a mũi tên nách này này"
+  },
+  {
+    "start": 959.66,
+    "end": 963.13,
+    "text": "thì nó sẽ gán cái phần nách của cái nốt cuối cùng này cho thằng a"
+  },
+  {
+    "start": 963.13,
+    "end": 966.97,
+    "text": "mà cái phần nách của cái thằng nốt cuối cùng người trong gần xét liên kết bao giờ đụng trò vào nôn"
+  },
+  {
+    "start": 966.97,
+    "end": 970.09,
+    "text": "ok, vậy thì khi đó cái a của mình nó sẽ bằng nôn, đúng không?"
+  },
+  {
+    "start": 970.09,
+    "end": 973.11,
+    "text": "A bằng nôn thì cái vòng lập qua của mình sẽ kết thúc"
+  },
+  {
+    "start": 973.11,
+    "end": 977.49,
+    "text": "Vậy thì khi đó mình cũng đã đến được xem là cái gianh xét liên kết này có bao nhiêu phần tử rồi"
+  },
+  {
+    "start": 977.49,
+    "end": 979.61,
+    "text": "OK, và dưới này thì bạn chỉ cần cái tên nhật cao"
+  },
+  {
+    "start": 979.61,
+    "end": 982.17,
+    "text": "Thì ở đây nó có 1 cái câu lệnh rất là quan trọng ở cái chỗ này nè"
+  },
+  {
+    "start": 982.17,
+    "end": 983.93,
+    "text": "Đấy chính là A bằng A mũi tên đất"
+  },
+  {
+    "start": 983.93,
+    "end": 986.61,
+    "text": "Nó chính là gì nhỉ? Đây chính là gán"
+  },
+  {
+    "start": 986.61,
+    "end": 989.23,
+    "text": "Địa chỉ của nốt"
+  },
+  {
+    "start": 989.23,
+    "end": 992.33,
+    "text": "Tiếp theo, OK, cho nốt hiện tại"
+  },
+  {
+    "start": 992.33,
+    "end": 995.53,
+    "text": "Thì khi đó cái nốt hiện tại nó sẽ nhảy sang nốt tiếp theo, nhá"
+  },
+  {
+    "start": 995.53,
+    "end": 999.37,
+    "text": "OK, các bạn phải luôn nhớ rằng đấy chính là mỗi nốt ở trong 1 cái gianh xét liên kết của mình"
+  },
+  {
+    "start": 999.37,
+    "end": 1002.61,
+    "text": "mình coi nó là một nốt nhưng mà thật ra nó là một con trỏ trọa"
+  },
+  {
+    "start": 1002.61,
+    "end": 1004.87,
+    "text": "quản lý một cái cấu trúc nốt như thế này"
+  },
+  {
+    "start": 1004.87,
+    "end": 1009.15,
+    "text": "ok, thành ra cái việc mà bạn A cho A bằng đất thì nó cũng như là cái việc mà mình"
+  },
+  {
+    "start": 1009.15,
+    "end": 1012.25,
+    "text": "tăng y cộng cộng khi mình mua dùi một cái vòng phô ở trong màng ấy"
+  },
+  {
+    "start": 1012.25,
+    "end": 1015.43,
+    "text": "ok, có nghĩa là mình sẽ cho cái phần tử nó nhảy sang phần tử đứng sau"
+  },
+  {
+    "start": 1015.43,
+    "end": 1017.31,
+    "text": "ok, đây chính là cho phần tử"
+  },
+  {
+    "start": 1017.31,
+    "end": 1018.81,
+    "text": "cho nốt hiện tại"
+  },
+  {
+    "start": 1018.81,
+    "end": 1021.19,
+    "text": "nhảy sang phần tử sang nốt tiếp theo"
+  },
+  {
+    "start": 1021.19,
+    "end": 1024.36,
+    "text": "ok, nốt ở đằng sau nó"
+  },
+  {
+    "start": 1024.36,
+    "end": 1026.28,
+    "text": "và khi nào mà cái nốt này nó nhảy bên nôn ấy"
+  },
+  {
+    "start": 1026.28,
+    "end": 1029.6,
+    "text": "thì có nghĩa là nó đã nhảy sang đến cái phần tử sau, phần tử cuối cùng rồi"
+  },
+  {
+    "start": 1029.6,
+    "end": 1031.6,
+    "text": "thì khi đó cái biến cao của bạn nó sẽ đến mức 3"
+  },
+  {
+    "start": 1031.6,
+    "end": 1036.6,
+    "text": "ok không nhỉ? thì đấy chính là cái câu lệnh mà mình thấy là nó quan trọng nhất ở cái phần dân xanh liên kết này"
+  },
+  {
+    "start": 1036.6,
+    "end": 1038.6,
+    "text": "để chính là a bằng a mũi tên nách"
+  },
+  {
+    "start": 1038.6,
+    "end": 1040.6,
+    "text": "ok, a này, a mũi tên nách đây đúng không?"
+  },
+  {
+    "start": 1040.6,
+    "end": 1044.6,
+    "text": "bởi thì gán a mũi tên nách cho a thì a nó sẽ nhảy thiệt vào này, nhảy sang phần đứng năng sau nó"
+  },
+  {
+    "start": 1044.6,
+    "end": 1045.6,
+    "text": "ok không nhỉ?"
+  },
+  {
+    "start": 1045.6,
+    "end": 1046.6,
+    "text": "đó"
+  },
+  {
+    "start": 1046.6,
+    "end": 1050.6,
+    "text": "rồi thì đấy chính là cái cách mà mình duyệt qua tất cả các phần tử trong dân xanh liên kết nhé"
+  },
+  {
+    "start": 1050.6,
+    "end": 1052.6,
+    "text": "đây, các bạn làm như thế này, thì đấy là các bạn duyệt rồi"
+  },
+  {
+    "start": 1052.6,
+    "end": 1053.6,
+    "text": "ok"
+  },
+  {
+    "start": 1053.6,
+    "end": 1058.88,
+    "text": "Bây giờ mình sẽ xam 1 cái hàm nữa để chính là hàm thêm 1 cái phần tử vào đầu danh xe lên kết"
+  },
+  {
+    "start": 1058.88,
+    "end": 1063.58,
+    "text": "Ok, thêm 1 phần tử vào đầu danh xe lên kết"
+  },
+  {
+    "start": 1063.58,
+    "end": 1069.73,
+    "text": "Ok, mình đặt là void insert nha, insert first đi, ok"
+  },
+  {
+    "start": 1069.73,
+    "end": 1076.21,
+    "text": "Ơ, hoặc là các bạn đặt tên là gì thêm đầu hay chèm đầu cũng được nhé, ok"
+  },
+  {
+    "start": 1076.21,
+    "end": 1081.01,
+    "text": "Thì, chú ý này, ở đây mình sẽ cần 1 cái node A vào 1 cái x"
+  },
+  {
+    "start": 1081.01,
+    "end": 1086.95,
+    "text": "tức là mình sẽ thêm phần tử có giá trị, một cái node có data là x vào trong cái đầu dân sinh liên kết này"
+  },
+  {
+    "start": 1086.95,
+    "end": 1092.83,
+    "text": "nhưng các bạn biết rồi đấy, nếu mà cái ham insert first của mình này này, mà mình chuyển cái kiểu là kiểu tham trị như thế này này"
+  },
+  {
+    "start": 1092.83,
+    "end": 1098.74,
+    "text": "chuyển giá trị như thế này này, thì sau khi cái ham insert first này nó thực hiện xong ấy"
+  },
+  {
+    "start": 1098.74,
+    "end": 1101.6,
+    "text": "thì cái giá trị của cái con trỏ dân sinh liên kết A này này"
+  },
+  {
+    "start": 1101.6,
+    "end": 1106.28,
+    "text": "xin lỗi cái dân sinh liên kết A mà được bản lý bởi con trò A này nó sẽ không bị thay đổi"
+  },
+  {
+    "start": 1106.28,
+    "end": 1109.88,
+    "text": "được không nhỉ? mặc dù nó đang là con trò rồi nhé, ok"
+  },
+  {
+    "start": 1109.88,
+    "end": 1116.52,
+    "text": "Nhưng mà bây giờ bạn phải, nếu mà bạn muốn cái con trỏ an nó thay đổi sau cái ham insert first này"
+  },
+  {
+    "start": 1116.52,
+    "end": 1121.32,
+    "text": "Nó thực hiện thì cái node này bạn phải truyền thêm 1 cái dấu và bà đây nữa, là mình sẽ truyền tham chiếu"
+  },
+  {
+    "start": 1121.32,
+    "end": 1125.16,
+    "text": "Còn nếu bạn nào cốt trong C thì bạn phải sử dụng thêm 1 cái dấu sao như thế này này"
+  },
+  {
+    "start": 1125.16,
+    "end": 1127.32,
+    "text": "Tức là 1 con trỏ trỏ đến 1 con trỏ luôn ấy"
+  },
+  {
+    "start": 1127.32,
+    "end": 1130.92,
+    "text": "Ok, còn không là nó sẽ không bị thay đổi đâu nhé, nếu mà bạn khai báo như thế này"
+  },
+  {
+    "start": 1130.92,
+    "end": 1137.8,
+    "text": "Rồi ở đây đơn giản nhất thì bạn sẽ dùng cho mình tham chiếu để thay đổi cái giá trị của cái node đầu tiên ở trong dòng xách lên kết"
+  },
+  {
+    "start": 1137.8,
+    "end": 1139.8,
+    "text": "sau khi mà cái hàm insert-first này nó thay hổi"
+  },
+  {
+    "start": 1139.8,
+    "end": 1141.8,
+    "text": "ok, nói lại nhá"
+  },
+  {
+    "start": 1141.8,
+    "end": 1143.8,
+    "text": "nếu mà bạn"
+  },
+  {
+    "start": 1143.8,
+    "end": 1145.8,
+    "text": "tai đép ở chỗ này là"
+  },
+  {
+    "start": 1145.8,
+    "end": 1147.8,
+    "text": "node sao thành node rồi, thì ở chỗ này bạn chỉ cần"
+  },
+  {
+    "start": 1147.8,
+    "end": 1149.8,
+    "text": "node và a là được, ok"
+  },
+  {
+    "start": 1149.8,
+    "end": 1152.8,
+    "text": "thì còn nếu mà bạn không tai đép ấy, thì ở chỗ này nó sẽ rất là phức tạp"
+  },
+  {
+    "start": 1152.8,
+    "end": 1154.8,
+    "text": "bạn sẽ phải khai báo là"
+  },
+  {
+    "start": 1154.8,
+    "end": 1157.8,
+    "text": "hàm như thế này này, đấy là void, tính hợp mình sẽ viết lại cái đấy"
+  },
+  {
+    "start": 1157.8,
+    "end": 1159.8,
+    "text": "nếu mà bạn trong trường hợp bạn không tai đép nhá"
+  },
+  {
+    "start": 1159.8,
+    "end": 1162.24,
+    "text": "thì còn trong trường hợp insert-first"
+  },
+  {
+    "start": 1162.24,
+    "end": 1164.24,
+    "text": "thì cái danh xét liên kết của bạn nó đang như thế này"
+  },
+  {
+    "start": 1164.24,
+    "end": 1167.24,
+    "text": "đúng không? bây giờ bạn muốn thêm 1 cái phần tử ở trong"
+  },
+  {
+    "start": 1167.24,
+    "end": 1169.24,
+    "text": "Đầu trong danh sách liên kết, rất đơn giản"
+  },
+  {
+    "start": 1169.24,
+    "end": 1171.24,
+    "text": "Nó có 2 trường hợp"
+  },
+  {
+    "start": 1171.24,
+    "end": 1175.4,
+    "text": "Bây giờ bạn sẽ xin cấp phát 1 con trò mới tên là tem ở đây"
+  },
+  {
+    "start": 1175.4,
+    "end": 1178.4,
+    "text": "Đây, mình sẽ cấp phát 1 con trò mới tên là tem ở đây"
+  },
+  {
+    "start": 1178.4,
+    "end": 1181.4,
+    "text": "Con trò mới thì nó sẽ trò bắn nôn, được không?"
+  },
+  {
+    "start": 1181.4,
+    "end": 1183.4,
+    "text": "Phần trò của nó sẽ trò bắn nôn"
+  },
+  {
+    "start": 1183.4,
+    "end": 1186.4,
+    "text": "Và phần data của nó sẽ là biến ích mà mình vừa cấp phát cho nó"
+  },
+  {
+    "start": 1186.4,
+    "end": 1188.4,
+    "text": "Đây, nó là biến tem đây"
+  },
+  {
+    "start": 1188.4,
+    "end": 1193.4,
+    "text": "Bây giờ ý, nhận vụ của mình phải đưa con thằng tem này vào trong phần đầu danh sách liên kết này này"
+  },
+  {
+    "start": 1193.4,
+    "end": 1195.4,
+    "text": "Ok, nó có 2 trường hợp"
+  },
+  {
+    "start": 1195.4,
+    "end": 1200.0,
+    "text": "Thứ nhất tịn, nếu mà cái danh xách liên kết của bạn mà rộng ấy, mà chỉ cần gán ngay thằng A bằng cái nốt này luôn"
+  },
+  {
+    "start": 1200.0,
+    "end": 1202.3,
+    "text": "Bởi vì danh xách liên kết của mình đang rộng đúng không?"
+  },
+  {
+    "start": 1202.3,
+    "end": 1209.1,
+    "text": "Mà bạn cho thêm 1 cái phần tử vào đầu ấy thì chính xác là khi đó bạn sẽ cho cái con trỏ đầu tiền trong cái xen lý kết của mình ấy"
+  },
+  {
+    "start": 1209.1,
+    "end": 1213.2,
+    "text": "Xe lỗi cái nốt đầu tiên nhưng mà xe lý kết của mình, nó quản lý luôn cái nốt mà bạn hừa thêm vào"
+  },
+  {
+    "start": 1213.2,
+    "end": 1215.8,
+    "text": "Ok, đó, đây chính là cái trường hợp mà"
+  },
+  {
+    "start": 1215.8,
+    "end": 1221.4,
+    "text": "Ở đây mình sẽ tạo 1 cái nốt mới nhé, đây chính là mình sẽ dùng nốt, tem bằng make note"
+  },
+  {
+    "start": 1221.4,
+    "end": 1223.9,
+    "text": "cho mình chuyển ít vào, để xin cấp phát 1 cái nốt mới"
+  },
+  {
+    "start": 1223.9,
+    "end": 1225.84,
+    "text": "sau mình kiểm tra nếu mà a mà bằng nu nít"
+  },
+  {
+    "start": 1225.84,
+    "end": 1227.84,
+    "text": "tức là bây giờ cái danh xe liên kết của mình rộng ấy"
+  },
+  {
+    "start": 1227.84,
+    "end": 1231.8,
+    "text": "thì bạn chỉ cần gắn ngay cái nốt mà bạn định thêm vào cho thằng a này luôn, ok?"
+  },
+  {
+    "start": 1231.8,
+    "end": 1234.88,
+    "text": "bởi vì thằng a luôn là cái nốt đầu tiên ở trong danh xe liên kết mà"
+  },
+  {
+    "start": 1234.88,
+    "end": 1238.66,
+    "text": "ok, còn trong trường hợp mà cái thằng a này nó không phải là con trò nu nít"
+  },
+  {
+    "start": 1238.66,
+    "end": 1242.32,
+    "text": "tức là cái danh xe liên kết của bạn nó đang kiểu như thế này này, nó có thể có nhiều phần thứ được sau ấy"
+  },
+  {
+    "start": 1242.32,
+    "end": 1245.72,
+    "text": "thì để mà cho cái thằng tem này này, nó vào cái vị trí đầu tiên này này"
+  },
+  {
+    "start": 1245.72,
+    "end": 1249.4,
+    "text": "thì đầu tiên nhé, bạn phải cho cái phần nách của thằng thèm này nè"
+  },
+  {
+    "start": 1249.4,
+    "end": 1253.48,
+    "text": "phần nách của thằng thèm này, nó trỏ vào thằng A, ok, tức là như thế này"
+  },
+  {
+    "start": 1253.48,
+    "end": 1258.68,
+    "text": "đấy, bạn phải làm cái bước này đầu tiên, đấy, để làm gì? để cái thằng thèm này nè"
+  },
+  {
+    "start": 1258.68,
+    "end": 1263.08,
+    "text": "nó sẽ an lưu cái địa chỉ của cái phần tử đầu tiên ở trong gánh xác liên kết ở thời điểm hiện tạng"
+  },
+  {
+    "start": 1263.08,
+    "end": 1267.32,
+    "text": "ok, sau đó nhé, sau khi mà mình đã cho thằng thèm này nó trỏ vào cái phần tử đấy rồi"
+  },
+  {
+    "start": 1267.32,
+    "end": 1270.52,
+    "text": "thì khi đó thằng thèm này nó sẽ có những cái liên kết đến những cái phần tử đúng sao nó"
+  },
+  {
+    "start": 1270.52,
+    "end": 1274.2,
+    "text": "thì khi đó bạn sẽ cập nhật lại thằng A này chính là thằng thèm, thế là thằng A không còn ở đây nữa"
+  },
+  {
+    "start": 1274.2,
+    "end": 1276.2,
+    "text": "và thằng A nó sẽ nhảy xuống đây này"
+  },
+  {
+    "start": 1276.2,
+    "end": 1278.2,
+    "text": "Thằng A bây giờ mình sẽ liên kết"
+  },
+  {
+    "start": 1278.2,
+    "end": 1280.2,
+    "text": "và thằng phần tử đầu tiên cho mình sẽ liên kết của mình không là thằng A"
+  },
+  {
+    "start": 1280.2,
+    "end": 1284.2,
+    "text": "Ok, thì khi đó thằng A này lại phải là phần tử đầu tiên cho mình sẽ liên kết"
+  },
+  {
+    "start": 1284.2,
+    "end": 1286.2,
+    "text": "và nó chính là cái phần tử mà bạn vừa thêm vào đầu ấy"
+  },
+  {
+    "start": 1286.2,
+    "end": 1290.2,
+    "text": "Ok, cái này các bạn phải thực hiện một cách quần tự nhá"
+  },
+  {
+    "start": 1290.2,
+    "end": 1292.2,
+    "text": "bạn nào mà làm theo kiểu như thế này là sẽ bị sai này"
+  },
+  {
+    "start": 1292.2,
+    "end": 1294.46,
+    "text": "Đấy, nếu mà bạn làm như thế này"
+  },
+  {
+    "start": 1294.46,
+    "end": 1296.46,
+    "text": "đây chính là bạn gán A bằng tem"
+  },
+  {
+    "start": 1296.46,
+    "end": 1300.46,
+    "text": "tức là bạn gán cái nốt đầu tiên này cho thằng A này này"
+  },
+  {
+    "start": 1300.46,
+    "end": 1304.58,
+    "text": "Thì khi đó nhé, cái danh xách liên kết của bạn, khi đó nó chỉ có duy nhất một thằng an này thôi"
+  },
+  {
+    "start": 1304.58,
+    "end": 1309.82,
+    "text": "Bởi vì cái phần nách của cái thằng thèm khi đó, hay là phần nách của thằng tè A khi đó, nó trỏ vào nôn"
+  },
+  {
+    "start": 1309.82,
+    "end": 1314.3,
+    "text": "Chứ nó không trỏ vào các phần tử đã có trong thằng xách liên kết, thì nó sẽ mất hết kết nối"
+  },
+  {
+    "start": 1314.3,
+    "end": 1319.82,
+    "text": "Đúng nhỉ? Ok, thằng ra là các bạn phải làm đầu tiên là gì, bạn phải cho cái thằng an này, thằng thèm này nó trỏ vào đây đã"
+  },
+  {
+    "start": 1319.82,
+    "end": 1322.18,
+    "text": "Để mình giữ lại những cái kết nối đúng là làm sao nữa"
+  },
+  {
+    "start": 1322.18,
+    "end": 1324.62,
+    "text": "Sau đó thì mình mới cật nhập an bạn thằng thèm này"
+  },
+  {
+    "start": 1324.62,
+    "end": 1328.74,
+    "text": "Còn nếu bạn làm thư tự không đúng thì nó sẽ mất hết kết nối ở đằng sau đấy nhé"
+  },
+  {
+    "start": 1328.74,
+    "end": 1333.3,
+    "text": "Ok, v ở chỗ này mình sẽ cho tem, mũi tên nick, nó sẽ bằng a"
+  },
+  {
+    "start": 1333.3,
+    "end": 1338.26,
+    "text": "Nó để cho cái phần nick của thằng tem, trỏ vào cái phần vị trí phần từ đầu tiên trong các xếch niên kết hiện tạ"
+  },
+  {
+    "start": 1338.26,
+    "end": 1343.02,
+    "text": "Và sau khi mà đã như thế rồi thì mình sẽ cập nhật cái node đầu tiên trong các xếch niên kết của mình, nó chính là cái thằng tem"
+  },
+  {
+    "start": 1343.02,
+    "end": 1345.94,
+    "text": "Thấy, thế cái phần insert first này rất là dễ thôi"
+  },
+  {
+    "start": 1345.94,
+    "end": 1351.94,
+    "text": "Ok, nhưng mà hai cái câu lệnh này các bạn phải đúng thử thư tự nhé, bạn nào mà đảo cái thư tự câu lệnh 41 42 thì nó sẽ bị sai"
+  },
+  {
+    "start": 1351.94,
+    "end": 1359.16,
+    "text": "Vậy thì nếu mà trong trường hợp mà bạn không tai đép note sau là note thì mình giết cái hàm insert first nó rất là phức tạc như thế này"
+  },
+  {
+    "start": 1359.16,
+    "end": 1367.99,
+    "text": "Đấy chính là bạn sẽ phải khai báo một cái note sound như thế này, note này sound này"
+  },
+  {
+    "start": 1367.99,
+    "end": 1369.99,
+    "text": "A như thế này, ok"
+  },
+  {
+    "start": 1369.99,
+    "end": 1375.15,
+    "text": "Thì cái cách này là cái cách mà chuyển con trỏ đúng không, chuyển con trỏ cho hàm"
+  },
+  {
+    "start": 1375.15,
+    "end": 1378.15,
+    "text": "Ok, nhưng mà cái phần chuyển con trỏ cho hàm này thì tương đối là phức tạc"
+  },
+  {
+    "start": 1378.15,
+    "end": 1381.15,
+    "text": "Ok, đó là bạn sẽ phải cũng làm như thế này thôi"
+  },
+  {
+    "start": 1381.15,
+    "end": 1386.31,
+    "text": "Các bạn sẽ phải note thêm bằng make note, sau đó thì bạn sẽ kiểm tra nếu mà sao a bằng nun nhé"
+  },
+  {
+    "start": 1386.31,
+    "end": 1392.31,
+    "text": "Ok, ở đây mình sẽ phải dự dụng tóa tử giải tham chiếu để mình check xem là cái con trỏ"
+  },
+  {
+    "start": 1392.31,
+    "end": 1395.75,
+    "text": "Nó đang trỏ đến cái note đầu tiên trong cái sên lý kết của mình có phải là nun hay không"
+  },
+  {
+    "start": 1395.75,
+    "end": 1402.59,
+    "text": "Ok, thì mình sẽ gán là sao a bằng thêm, nếu mà cho nên cái dẫm, còn không thì bạn sẽ cho thêm nũi tên nickname"
+  },
+  {
+    "start": 1402.59,
+    "end": 1406.59,
+    "text": "Nó bằng sao a, sau đó là bạn sẽ cho sao a bằng thêm"
+  },
+  {
+    "start": 1406.59,
+    "end": 1410.59,
+    "text": "Đấy, nó rất là phức tạp, đúng không? Nếu mà mình sử dụng con trỏ"
+  },
+  {
+    "start": 1410.59,
+    "end": 1415.39,
+    "text": "Còn nếu mà bạn sử dụng tham chiếu thì nó chỉ cần như thế này thôi, mình có thể sử dụng vương thằng A đấy"
+  },
+  {
+    "start": 1415.39,
+    "end": 1418.99,
+    "text": "Nếu mà mình truyền tham chiếu thì các bạn có thể một trong hai cách cốt này nhá"
+  },
+  {
+    "start": 1418.99,
+    "end": 1423.19,
+    "text": "OK, cách cốt mà một trong hai cách cốt này, cái này thì mà thấy hợp lý hơn thì bạn làm"
+  },
+  {
+    "start": 1423.19,
+    "end": 1425.99,
+    "text": "Mình thấy cái này nó sẽ dễ hơn, OK"
+  },
+  {
+    "start": 1425.99,
+    "end": 1430.31,
+    "text": "Chú ý nhá, cái chỗ này nó là con trỏ kiểu nốt, đúng không?"
+  },
+  {
+    "start": 1430.31,
+    "end": 1433.51,
+    "text": "Thế còn cái chỗ này nó chính là cái giá trị của con trỏ kiểu nốt đấy nhá"
+  },
+  {
+    "start": 1433.51,
+    "end": 1436.51,
+    "text": "2 cái này khác nhau nhé, phần con trò mình đã dẫn dồ"
+  },
+  {
+    "start": 1436.51,
+    "end": 1439.57,
+    "text": "Vậy thì các bạn có thể cốt nhờ hầm dưới cũng được"
+  },
+  {
+    "start": 1439.57,
+    "end": 1442.57,
+    "text": "Thế là xong cái phần đầu tiên nhé, để là thêm 1 phần tử vào đầu yên sách"
+  },
+  {
+    "start": 1442.57,
+    "end": 1443.57,
+    "text": "Hàm là gì rất là dễ"
+  },
+  {
+    "start": 1443.57,
+    "end": 1446.57,
+    "text": "Bây giờ mình sẽ sang cái phần tử là thêm 1 phần tử vào cuối"
+  },
+  {
+    "start": 1446.57,
+    "end": 1449.83,
+    "text": "Thêm 1 phần tử vào cuối dành sách"
+  },
+  {
+    "start": 1449.83,
+    "end": 1452.83,
+    "text": "Ok, mình sẽ đặt là void, insert, lattice"
+  },
+  {
+    "start": 1452.83,
+    "end": 1455.83,
+    "text": "Ok, node và a, inner tx"
+  },
+  {
+    "start": 1455.83,
+    "end": 1460.83,
+    "text": "Ok, những cái hàm nào của bạn ấy mà bạn thay đổi cái giá trị của cái node đầu tiên trong gần xe lên kết"
+  },
+  {
+    "start": 1460.83,
+    "end": 1464.27,
+    "text": "cái khác là chèm, thêm, sửa xóa, vân vân"
+  },
+  {
+    "start": 1464.27,
+    "end": 1465.87,
+    "text": "thì mình sẽ phải truyền tham chiếu vào"
+  },
+  {
+    "start": 1465.87,
+    "end": 1468.91,
+    "text": "còn những hàm kiểm tra giấm này hay là hàm"
+  },
+  {
+    "start": 1468.91,
+    "end": 1470.27,
+    "text": "đếm suốt lượng phần tử trong node"
+  },
+  {
+    "start": 1470.27,
+    "end": 1472.11,
+    "text": "trong xe linh kết này, nếu nó không ảnh hưởng gì"
+  },
+  {
+    "start": 1472.11,
+    "end": 1475.59,
+    "text": "thì cái xe linh kết bàn đầu của mình thì có bạn thôi chỉ truyền tham trị như thế này"
+  },
+  {
+    "start": 1475.59,
+    "end": 1476.59,
+    "text": "ok"
+  },
+  {
+    "start": 1477.15,
+    "end": 1479.71,
+    "text": "rồi, ở đây mình sẽ là insert last như sau"
+  },
+  {
+    "start": 1479.71,
+    "end": 1481.71,
+    "text": "thì mình cũng sẽ tạo 1 node mới thôi"
+  },
+  {
+    "start": 1481.71,
+    "end": 1484.92,
+    "text": "tèm bằng baked node"
+  },
+  {
+    "start": 1484.92,
+    "end": 1486.92,
+    "text": "ok, bây giờ thì nó lại khác"
+  },
+  {
+    "start": 1486.92,
+    "end": 1489.08,
+    "text": "bây giờ bạn xin ra 1 thằng tèm này đúng không?"
+  },
+  {
+    "start": 1489.08,
+    "end": 1491.4,
+    "text": "nhưng mà bây giờ bạn phải cho nó vào cuối cơ"
+  },
+  {
+    "start": 1491.4,
+    "end": 1494.92,
+    "text": "Đấy, bạn phải cho nó vào cuối, thằng A nó vẫn là thằng đầu tiên, nhưng nó sẽ lên kết nhá"
+  },
+  {
+    "start": 1494.92,
+    "end": 1497.16,
+    "text": "Bây giờ bạn phải cho thằng TEM này vào cuối này này"
+  },
+  {
+    "start": 1497.16,
+    "end": 1499.88,
+    "text": "Thì cái cách mà cho thằng TEM này vào cuối"
+  },
+  {
+    "start": 1499.88,
+    "end": 1504.28,
+    "text": "Thì là cái node mà hiện tại bây giờ đang là node cuối cùng, nhưng nó sẽ lên kết ấy, nó chính là thằng này này"
+  },
+  {
+    "start": 1504.28,
+    "end": 1507.24,
+    "text": "Nó sẽ không trỏ vào NUN nữa, mà nó phải trỏ vào thằng TEM này"
+  },
+  {
+    "start": 1507.24,
+    "end": 1508.68,
+    "text": "Đây này, chỗ này này"
+  },
+  {
+    "start": 1508.68,
+    "end": 1512.68,
+    "text": "Ok, nó không phải trỏ vào NUN nữa mà nó sẽ phải trỏ vào TEM"
+  },
+  {
+    "start": 1512.68,
+    "end": 1513.8,
+    "text": "Đấy"
+  },
+  {
+    "start": 1513.8,
+    "end": 1515.1,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 1515.1,
+    "end": 1519.34,
+    "text": "Vậy thì khi đó có phải thằng TEM này, nó chính là bây giờ nó lại thành cái thằng thằng này sẽ lên kết đâu"
+  },
+  {
+    "start": 1519.34,
+    "end": 1521.34,
+    "text": "Thằng thằng cuối cùng thì nó sẽ lên kết không?"
+  },
+  {
+    "start": 1521.34,
+    "end": 1526.5,
+    "text": "Đó. Vậy thì đầu tiên bạn kiểm tra nếu mà ai mà bằng ngu này, tức là gianh xe liên kết cười mình rỗng ạ"
+  },
+  {
+    "start": 1526.5,
+    "end": 1530.14,
+    "text": "thì cái việc mà bạn thêm vào đầu hay thêm vào cuối thì nó như nhau, hình da bạn chỉ cần gắn ai màng tèm"
+  },
+  {
+    "start": 1530.14,
+    "end": 1533.94,
+    "text": "Ok. Thế còn trong trường hợp mà cái gianh xe liên kết của mình nó không rỗng ạ"
+  },
+  {
+    "start": 1533.94,
+    "end": 1538.84,
+    "text": "thì bây giờ bạn phải làm một cái công việc, đấy chính là bạn phải duyệt cho mình đến được cái nốt này"
+  },
+  {
+    "start": 1538.84,
+    "end": 1542.84,
+    "text": "bạn phải tìm ra được cái nốt cuối cùng ở cái gianh xe liên kết hiện tại"
+  },
+  {
+    "start": 1542.84,
+    "end": 1545.94,
+    "text": "Ok. Để làm gì để mình cho cái phần nách của nó trỏ qua thằng tèm"
+  },
+  {
+    "start": 1545.94,
+    "end": 1549.58,
+    "text": "thì khi đó thằng TEM sẽ lại thành thằng cuối cùng nhóm ngay xe liên kết"
+  },
+  {
+    "start": 1550.53,
+    "end": 1559.15,
+    "text": "Mấu chút việc thêm một phần tử vào cuối xe liên kết, để chính là mình phải đi được cái node mà nó đoạn là cái node cuối"
+  },
+  {
+    "start": 1559.15,
+    "end": 1562.43,
+    "text": "và cho cái phần nách của nó trỏ vào cái node mới, thì nó xong"
+  },
+  {
+    "start": 1562.43,
+    "end": 1568.35,
+    "text": "Ok, rồi, vậy thì các bạn làm cho mình một cái node, node mình đặt là P để nó duyệt"
+  },
+  {
+    "start": 1568.35,
+    "end": 1575.79,
+    "text": "Ok, mình khởi tạm nó bằng A sau đó mình đềm điều kiện lập để chính là Y, P, mũ tên nách, khác, nôn"
+  },
+  {
+    "start": 1575.79,
+    "end": 1579.07,
+    "text": "ok, thì mình sẽ cho P bằng P mũ tên đách"
+  },
+  {
+    "start": 1579.07,
+    "end": 1585.44,
+    "text": "ở đây có 2 điều chú ý, thứ nhất là điều kiện lập y nó không phải là P khác nôn như ở trên này nữa"
+  },
+  {
+    "start": 1585.44,
+    "end": 1591.72,
+    "text": "ok, bởi vì nếu mà P đã khác nôn rồi, thì điều kiện vòng lập y nó dừng khi mà cái nút P của các bạn ấy"
+  },
+  {
+    "start": 1591.72,
+    "end": 1594.68,
+    "text": "nó sẽ là sau cái node cuối cùng này rồi, đúng không?"
+  },
+  {
+    "start": 1594.68,
+    "end": 1598.12,
+    "text": "bây giờ bạn phải để điều kiện lập lập yP mũ tên đách khác nôn"
+  },
+  {
+    "start": 1598.12,
+    "end": 1603.12,
+    "text": "để khi mà thằng P nó chạy đến đây, thì khi đó P mũ tên đách của nó bằng nôn"
+  },
+  {
+    "start": 1603.12,
+    "end": 1607.56,
+    "text": "nhưng dạ sướng khi mà mình chưa nối thì khi đó nó mới thằng P nó sẽ là cái phần từ cuối cùng"
+  },
+  {
+    "start": 1607.56,
+    "end": 1613.16,
+    "text": "còn nếu mà bạn để cái điều cận kiện lập là YP khác nu nãy thì khi đó thằng P nó không còn phải thằng là thằng cuối cùng nữa đâu"
+  },
+  {
+    "start": 1613.16,
+    "end": 1616.6,
+    "text": "mà nó là cái node nun đằng sau phần từ cuối cùng ấy, ok con trỏ nun"
+  },
+  {
+    "start": 1616.6,
+    "end": 1620.56,
+    "text": "vậy thì sau vòng lập Y này thì cái thằng P của bạn ấy nó sẽ nằm ở đây rồi"
+  },
+  {
+    "start": 1620.56,
+    "end": 1626.92,
+    "text": "thì cái công việc rất là đơn giản đấy là bạn chỉ cần cho cái phần nách của thằng P này nó trỏ đến cái nút mới, cái nút tem mà bạn vừa xin có phát đây này"
+  },
+  {
+    "start": 1626.92,
+    "end": 1632.04,
+    "text": "ok, đây chính là bạn chỉ cần cho P mũi tên, nách bằng tem thế là xong"
+  },
+  {
+    "start": 1632.04,
+    "end": 1635.48,
+    "text": "Ok, vậy thì thêm 1 phần tử bò cuối danh sách cũng rất là dễ"
+  },
+  {
+    "start": 1635.48,
+    "end": 1638.56,
+    "text": "Để chính là bạn phải tìm ra là cái node ở cuối danh sách hiện tạm"
+  },
+  {
+    "start": 1638.56,
+    "end": 1641.08,
+    "text": "Và mình cho cái node đấy trỏ vào cái node mới"
+  },
+  {
+    "start": 1641.08,
+    "end": 1642.8,
+    "text": "Thì khi nó cái node mới nó sẽ thành node cuối"
+  },
+  {
+    "start": 1642.8,
+    "end": 1645.2,
+    "text": "Và thằng cuối đấy chắc chắn nó cũng sẽ trỏ vào node nhá"
+  },
+  {
+    "start": 1645.2,
+    "end": 1647.52,
+    "text": "Bởi vì ban đầu khi mà mình xin cấp phát 1 cái node ấy này"
+  },
+  {
+    "start": 1647.52,
+    "end": 1650.16,
+    "text": "Thì mình luôn cho cái phần đích của cái node mới lên bằng node mà"
+  },
+  {
+    "start": 1650.16,
+    "end": 1654.75,
+    "text": "Ok, ở đây nhá, các bạn không được dùng a để duyệt"
+  },
+  {
+    "start": 1654.75,
+    "end": 1658.67,
+    "text": "Nếu mà bạn duyệt là yam mũi tên đích khác node như thế này nhá"
+  },
+  {
+    "start": 1658.67,
+    "end": 1662.72,
+    "text": "Nếu mà bạn duyệt là yam mũi tên đích khác node như thế này"
+  },
+  {
+    "start": 1662.72,
+    "end": 1667.0,
+    "text": "Đó dưới này bạn cho là A bằng 1 tiền tách thì nó sẽ bị sai"
+  },
+  {
+    "start": 1667.0,
+    "end": 1671.4,
+    "text": "bởi vì khi đó cái thằng A của mình nó sẽ rượt từ đây này, nó sẽ nhảy sang đây, nhảy sang đây, nhảy sang đây"
+  },
+  {
+    "start": 1671.4,
+    "end": 1673.48,
+    "text": "Thế là cái đó cái thằng A của bạn nó là như thế này"
+  },
+  {
+    "start": 1673.48,
+    "end": 1678.96,
+    "text": "Với thì vô tình như đó, khi đó bạn đã biến đổi cái danh sách lên kết của mình, nó bất mất đi tất cả những phần tử đứng lên trước này"
+  },
+  {
+    "start": 1678.96,
+    "end": 1683.8,
+    "text": "Bởi vì khi đó cái nốt hết, cái nốt danh sách lên kết, đầu tiên trong danh sách lên kết của bạn là nốt A"
+  },
+  {
+    "start": 1683.8,
+    "end": 1685.56,
+    "text": "Nó lại là thằng này cái mà, đúng không?"
+  },
+  {
+    "start": 1685.56,
+    "end": 1690.48,
+    "text": "mình không được đổi, thay đổi cái danh xét lên cái nốt đầu tiên trong danh xét lên kết của này nhá, kệ nó là A thôi đúng hông?"
+  },
+  {
+    "start": 1690.48,
+    "end": 1694.84,
+    "text": "Ok, thằng ra là ở chỗ này bạn không được dùng A để duyệt, bạn dùng A để duyệt nó mất hết đấy nhé"
+  },
+  {
+    "start": 1694.84,
+    "end": 1698.8,
+    "text": "Ok, mình phải dùng một cái nốt khác, khởi tạo nó bằng A sau đó là mình cho nó chạy"
+  },
+  {
+    "start": 1698.8,
+    "end": 1703.76,
+    "text": "và mình thay đổi trên cái nốt mà, nốt cuối cùng này, cho phần đách của nó trò vào cái nốt mới"
+  },
+  {
+    "start": 1703.76,
+    "end": 1709.15,
+    "text": "còn nếu mà bạn thay đổi cái nốt A cho A duyệt thì nó mất hết rồi gần đó, mất hết nốt đứng trước này rồi đúng hông?"
+  },
+  {
+    "start": 1709.15,
+    "end": 1711.15,
+    "text": "Thế thì chú ý nhé"
+  },
+  {
+    "start": 1711.15,
+    "end": 1713.15,
+    "text": "Có 2 chú ý khi mà thêm 1 phần tử vào cuối dân xe lên kết"
+  },
+  {
+    "start": 1713.15,
+    "end": 1715.15,
+    "text": "Bây giờ mình sẽ thêm 1 phần tử vào giữa"
+  },
+  {
+    "start": 1715.15,
+    "end": 1717.15,
+    "text": "Đúng không? Thêm 1 phần tử vào giữa"
+  },
+  {
+    "start": 1717.15,
+    "end": 1724.44,
+    "text": "Thêm 1 phần tử vào giữa thì ở đây mình sẽ dùng thứ tự từ 1 cho tới n, nhé"
+  },
+  {
+    "start": 1724.44,
+    "end": 1728.51,
+    "text": "Với n là số liệu phần tử trong dân xe lên kết"
+  },
+  {
+    "start": 1728.51,
+    "end": 1730.51,
+    "text": "Mình đặt là void là insert, middle"
+  },
+  {
+    "start": 1730.51,
+    "end": 1732.57,
+    "text": "Ok, node và a"
+  },
+  {
+    "start": 1732.57,
+    "end": 1736.57,
+    "text": "Sau đó mình sẽ dùng 1 biến x và 1 biến pos"
+  },
+  {
+    "start": 1736.57,
+    "end": 1740.57,
+    "text": "Mình sẽ chèn cái thằng x vào vị trí pos của dân xe lên kết này"
+  },
+  {
+    "start": 1740.57,
+    "end": 1742.57,
+    "text": "bây giờ mình sẽ đánh bắt đầu từ 1 nhé"
+  },
+  {
+    "start": 1742.57,
+    "end": 1744.57,
+    "text": "ok từ 1 cho tới n ok không nhờ"
+  },
+  {
+    "start": 1744.57,
+    "end": 1749.28,
+    "text": "vậy thì giả sử như cái gianh xanh liên kết của bạn đang có 3 phần tử như thế này đúng không?"
+  },
+  {
+    "start": 1749.28,
+    "end": 1753.28,
+    "text": "ok bây giờ bạn muốn tạo 1 cái phần tử"
+  },
+  {
+    "start": 1753.28,
+    "end": 1755.28,
+    "text": "đây mình cũng sẽ xin cấp pháp 1 cái node mới"
+  },
+  {
+    "start": 1755.28,
+    "end": 1757.28,
+    "text": "và lưu cái giá trị là giá trị x này này"
+  },
+  {
+    "start": 1757.28,
+    "end": 1759.28,
+    "text": "của cái node mà"
+  },
+  {
+    "start": 1759.28,
+    "end": 1761.28,
+    "text": "xin lỗi giá trị x mà"
+  },
+  {
+    "start": 1761.28,
+    "end": 1763.28,
+    "text": "người ta yêu cầu cấp pháp đấy"
+  },
+  {
+    "start": 1763.28,
+    "end": 1765.28,
+    "text": "sau đó mình sẽ nhét nó vào 1 cái vị trí P"
+  },
+  {
+    "start": 1765.28,
+    "end": 1767.28,
+    "text": "cho vị trí POS"
+  },
+  {
+    "start": 1767.28,
+    "end": 1769.28,
+    "text": "vị trí POS ở đây thì vị trí hợp lệ của mình"
+  },
+  {
+    "start": 1769.28,
+    "end": 1771.28,
+    "text": "1 cho tới n cộng 1 nhé"
+  },
+  {
+    "start": 1771.28,
+    "end": 1774.48,
+    "text": "với số lượng phần tử trong danh xét liên kết của mình, nó sẽ là n cộng 1"
+  },
+  {
+    "start": 1774.48,
+    "end": 1777.28,
+    "text": "ở đây mình sẽ dùng 1 cái đến n nó sẽ bằng sai của a"
+  },
+  {
+    "start": 1777.28,
+    "end": 1779.28,
+    "text": "đây chính là cái số lượng phần tử trong danh xét liên kết"
+  },
+  {
+    "start": 1779.28,
+    "end": 1783.28,
+    "text": "thì nếu mà cái vị trí mà họ bắt chén ấy mà nó nhỏ hơn hoặc bằng không"
+  },
+  {
+    "start": 1783.28,
+    "end": 1787.28,
+    "text": "ok, hoặc là cái vị trí họ bắt chén ấy nó lớn hơn"
+  },
+  {
+    "start": 1787.28,
+    "end": 1789.28,
+    "text": "nó lớn hơn n cộng 1"
+  },
+  {
+    "start": 1789.28,
+    "end": 1793.26,
+    "text": "thì mình sẽ in ra 1 cái câu đấy chính là"
+  },
+  {
+    "start": 1793.26,
+    "end": 1795.26,
+    "text": "hoặc là các bạn return luôn cũng được nhé"
+  },
+  {
+    "start": 1795.26,
+    "end": 1797.26,
+    "text": "đây chính là cái vị trí chén không hợp lệ"
+  },
+  {
+    "start": 1797.26,
+    "end": 1800.48,
+    "text": "được không nhỉ, đó"
+  },
+  {
+    "start": 1800.48,
+    "end": 1805.48,
+    "text": "Ví dụ nè, cái danh xét lên kết của bạn hiện tại đang có 3 phần tử như thế này đúng không?"
+  },
+  {
+    "start": 1805.48,
+    "end": 1807.48,
+    "text": "Cái bạn có thể chén 1 phần tử vào đầu như thế này"
+  },
+  {
+    "start": 1807.48,
+    "end": 1810.48,
+    "text": "Hoặc là vị trí thứ 2, hoặc là vị trí thứ 3, hoặc là vị trí thứ 4"
+  },
+  {
+    "start": 1810.48,
+    "end": 1814.48,
+    "text": "Còn nếu mà bạn chén vào vị trí 0, hoặc là vị trí 5 thì không được nhé"
+  },
+  {
+    "start": 1814.48,
+    "end": 1818.48,
+    "text": "Ở đây mình sẽ vị trí là 1, 2, 3, thì bạn có thể chén vào 1, 2, 3"
+  },
+  {
+    "start": 1818.48,
+    "end": 1822.48,
+    "text": "Hoặc vị trí đứng sau thằng ba này là vị trí 4, thì khi đó mình sẽ thêm 1 cái nốt vào cuối như thế này"
+  },
+  {
+    "start": 1822.48,
+    "end": 1825.48,
+    "text": "Ok, ví dụ như bạn có danh xét lên kết là 1, 2, 3, 4 chẳng ạ"
+  },
+  {
+    "start": 1825.48,
+    "end": 1829.68,
+    "text": "Bây giờ bạn chen 1 phần tử là có giá trị là không và vị trí 2 chẳng ạ"
+  },
+  {
+    "start": 1829.68,
+    "end": 1833.88,
+    "text": "Thì khi đó cái gianh sinh list của mình, cái phần tử ở vị trí 2, nó sẽ có giá trị là không"
+  },
+  {
+    "start": 1833.88,
+    "end": 1839.08,
+    "text": "Còn thằng 2, thằng 3, thằng 4 sẽ rực dịch sang bên phải, nó sẽ thành là 1, 0, 2, 3, 4, ok"
+  },
+  {
+    "start": 1839.08,
+    "end": 1845.53,
+    "text": "Còn nếu mà bạn chen 1 phần tử vào vị trí thứ 1, dạc xíu như bạn chen 1 phần tử là giá trị không"
+  },
+  {
+    "start": 1845.53,
+    "end": 1848.53,
+    "text": "Và vị trí thứ 1 thì khi đó cái thằng không nó sẽ đứng vào vị trí thứ 1"
+  },
+  {
+    "start": 1848.53,
+    "end": 1851.33,
+    "text": "Còn những cái thằng 1, 2, 3, 4 này sẽ được rực ra, ok"
+  },
+  {
+    "start": 1851.33,
+    "end": 1858.49,
+    "text": "Còn nếu bạn chen thằng không vào vị trí thứ 5, gianh sinh list của bạn sẽ thành 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 1858.49,
+    "end": 1862.29,
+    "text": "Ok không nhỉ? Vậy thì chú ý nhé, vị trí chen ở đây của mình bắt đầu từ 1"
+  },
+  {
+    "start": 1862.29,
+    "end": 1866.61,
+    "text": "Và khi bạn chen 1 cái phần tử 1 cái nốt có giá trị x và vị trí POT"
+  },
+  {
+    "start": 1866.61,
+    "end": 1872.33,
+    "text": "thì khi đó cái giá trị POT này sẽ được thay cái nốt ở vị trí POT sẽ được thành bờ mới bằng cái 1 cái nốt có giá trị là x"
+  },
+  {
+    "start": 1872.33,
+    "end": 1877.57,
+    "text": "Còn tất cả những cái nốt mà tính từ vị trí POT ở gianh sinh linked ban đầu ấy"
+  },
+  {
+    "start": 1877.57,
+    "end": 1881.01,
+    "text": "trò về sau nó sẽ được dịch xem bên phải, như kiểu là mình insert ở trong cách tư ấy"
+  },
+  {
+    "start": 1881.01,
+    "end": 1886.2,
+    "text": "Vậy đây là những vị trí mà nó không hợp lệ nhé, cho nên là cộng 1"
+  },
+  {
+    "start": 1886.2,
+    "end": 1894.68,
+    "text": "Còn trong trường hợp if nò bằng 1, tuy là mình thêm vào đầu thì mình gọi luôn cái ham insert first ở trên mà mình đã xây dựng"
+  },
+  {
+    "start": 1894.68,
+    "end": 1897.68,
+    "text": "Ok, đó, rồi mình return"
+  },
+  {
+    "start": 1897.68,
+    "end": 1903.45,
+    "text": "Ok, thế nhé, nếu mà nó là vị trí đầu tiên thì mình gọi luôn cái ham insert first"
+  },
+  {
+    "start": 1903.45,
+    "end": 1911.45,
+    "text": "Còn nếu mà nó bằng post cộng 1 thì nó chính là thêm vào cuối đấy, mình chỉ cần gọi cái ham insert last mà mình đã xây dựng ở trên"
+  },
+  {
+    "start": 1911.45,
+    "end": 1923.05,
+    "text": "ok, cái còn sau đó mình huy tên này, sớt lát đúng không? rồi, cái còn trăm trừng hợp mà nó không phải thêm vào đầu và nó cũng không phải thêm vào cuối á, thì các bạn làm đi thế này"
+  },
+  {
+    "start": 1923.05,
+    "end": 1931.23,
+    "text": "đây chính là các bạn ở đây phải vẽ ra một cái hình nó to một chút, mình sẽ xói hết cái phần này đi nhé, nhìn nó rõ hơn"
+  },
+  {
+    "start": 1931.23,
+    "end": 1949.68,
+    "text": "đây là một nốt này, 2 này, 3 này, 4 này"
+  },
+  {
+    "start": 1949.68,
+    "end": 1956.82,
+    "text": "ok, giả sử cái gây xe lê kết của bạn nó đang có, nó có 4 phần tử, ok"
+  },
+  {
+    "start": 1956.82,
+    "end": 1959.68,
+    "text": "đây là con trò nun của anh nhé"
+  },
+  {
+    "start": 1959.68,
+    "end": 1962.18,
+    "text": "rồi, vậy thì như thế này"
+  },
+  {
+    "start": 1962.18,
+    "end": 1965.68,
+    "text": "đây là cái thằng A này, cái nốt đầu tiên trong gây xe lê kết của bạn này, mình hãy đọc tên là A"
+  },
+  {
+    "start": 1965.68,
+    "end": 1967.97,
+    "text": "và bạn đọc tên là Hết cũng được"
+  },
+  {
+    "start": 1967.97,
+    "end": 1972.07,
+    "text": "bây giờ giả sử như mình muốn chèm 1 cái phần tử vào vị trí, vị trí thứ 3 này này"
+  },
+  {
+    "start": 1972.07,
+    "end": 1974.07,
+    "text": "ok, pos của mình nó sẽ bằng 3"
+  },
+  {
+    "start": 1974.07,
+    "end": 1978.07,
+    "text": "ok, vậy thì đầu tiên mình cũng xin cấp phát 1 cái con trò tem đúng không"
+  },
+  {
+    "start": 1978.07,
+    "end": 1981.3,
+    "text": "ok, đây là thằng tem này"
+  },
+  {
+    "start": 1981.3,
+    "end": 1984.36,
+    "text": "Thái sẽ trỏ vào nôn nhé"
+  },
+  {
+    "start": 1984.36,
+    "end": 1987.82,
+    "text": "Đây chính là cái con trỏ tem mà mình xin cấp phát và nó có giá trị là íc"
+  },
+  {
+    "start": 1987.82,
+    "end": 1990.72,
+    "text": "Vậy thì bây giờ mình chiền thằng íc vào vị trí này đúng không?"
+  },
+  {
+    "start": 1990.72,
+    "end": 1992.16,
+    "text": "Vậy thì cái thằng này này"
+  },
+  {
+    "start": 1992.16,
+    "end": 1993.84,
+    "text": "Cái thằng ở vị trí port chứ 1 ấy"
+  },
+  {
+    "start": 1993.84,
+    "end": 1997.32,
+    "text": "Nó sẽ có nhiệm vụ để chính là nó các bạn làm cho từng bước như này cho mình này"
+  },
+  {
+    "start": 1997.32,
+    "end": 2001.96,
+    "text": "Đấy chính là cái phần, cái thằng vị trí ở port chứ 1, cái phần đấy của nó nó trỏ vào thằng tem"
+  },
+  {
+    "start": 2001.96,
+    "end": 2003.44,
+    "text": "OK, đó"
+  },
+  {
+    "start": 2003.44,
+    "end": 2007.08,
+    "text": "Nhưng mà nếu mà bạn làm đi thế thì nó sẽ bị mất dấu cái thằng đứng sau thằng"
+  },
+  {
+    "start": 2007.08,
+    "end": 2009.08,
+    "text": "thằng port chứ 2, 1 này đấy nhé"
+  },
+  {
+    "start": 2009.08,
+    "end": 2011.8,
+    "text": "Vậy thì cái bước làm đúng thì phải nói phải như này này"
+  },
+  {
+    "start": 2011.8,
+    "end": 2018.53,
+    "text": "Đấy là đầu tiên, bạn sẽ cho cái phần nách của con trỏ tem ấy, con trỏ mới ấy, nó trỏ vào cái vị trí POT hiện tạng"
+  },
+  {
+    "start": 2018.53,
+    "end": 2022.33,
+    "text": "Đấy, đây là vị trí POT là vàng ba đúng không, bạn trần cân tràn đúng không?"
+  },
+  {
+    "start": 2022.33,
+    "end": 2024.73,
+    "text": "Thì bây giờ bạn cho cái phần nách của thằng tem này nó trỏ vào đây"
+  },
+  {
+    "start": 2024.73,
+    "end": 2028.73,
+    "text": "Sau đó cái phần nách của cái thằng vị trí ở POT chứa 1 ấy, bạn trỏ vào thằng tem này"
+  },
+  {
+    "start": 2028.73,
+    "end": 2032.33,
+    "text": "Đấy, chỗ này nó không trỏ vào thằng này nữa, mà nó trỏ vào đây"
+  },
+  {
+    "start": 2032.33,
+    "end": 2033.93,
+    "text": "Đấy, nó trỏ như thế này"
+  },
+  {
+    "start": 2033.93,
+    "end": 2038.75,
+    "text": "Đấy, ok, vậy khi đó có phải bạn thấy thằng tem nó sẽ rơi vào vị trí thứ ba đúng không?"
+  },
+  {
+    "start": 2038.75,
+    "end": 2042.75,
+    "text": "Còn cái thằng ở vị trí 3 lúc nãy thì nó cứ dịch dịch sang, tất cả mọi thằng sẽ bị dịch sang"
+  },
+  {
+    "start": 2042.75,
+    "end": 2044.75,
+    "text": "Vậy thì nó có 2 bước chính như thế nhé"
+  },
+  {
+    "start": 2044.75,
+    "end": 2050.75,
+    "text": "Bước đầu tiên là bạn sẽ phải cho cái phần trò của con, phần nách của con trò tem này nó trò vào cái nốt POS"
+  },
+  {
+    "start": 2050.75,
+    "end": 2054.75,
+    "text": "Sau đó thì cái phần trò của cái nốt POS chứ 1 ấy"
+  },
+  {
+    "start": 2054.75,
+    "end": 2058.75,
+    "text": "Bây giờ nó không trò vào POS nữa, mà nó trò vào cái con trò mới của các bạn, thế là sao"
+  },
+  {
+    "start": 2058.75,
+    "end": 2060.75,
+    "text": "Ok, nhưng mà phải đúng thứ tự nhé"
+  },
+  {
+    "start": 2060.75,
+    "end": 2064.75,
+    "text": "Bạn làm gược lại là làm bất hết ấy"
+  },
+  {
+    "start": 2064.75,
+    "end": 2066.75,
+    "text": "Vậy thì các bạn làm như thế này"
+  },
+  {
+    "start": 2066.75,
+    "end": 2070.23,
+    "text": "Đấy, bạn phải duyệt cho mình được đến cái vị trí port chứ 1 nhé"
+  },
+  {
+    "start": 2070.23,
+    "end": 2073.07,
+    "text": "Bạn phải chạy được đến cái vị trí port chứ 1"
+  },
+  {
+    "start": 2073.07,
+    "end": 2079.78,
+    "text": "Ok, vậy thì ở đây nhé, mình chỉ cần duyệt, mình dùng một cái con trỏ P"
+  },
+  {
+    "start": 2079.78,
+    "end": 2085.78,
+    "text": "Ok, con trỏ P, node, P nó bằng E, sau đó mình sử dụng một cái vòng qua chạy từ 1 cho tới nhỏ hơn port chứ 1"
+  },
+  {
+    "start": 2085.78,
+    "end": 2092.1,
+    "text": "Ok, chú ý nhé, để chạy đến cái vị trí port chứ 1 thì bạn chỉ cần chạy port chứ 1 lần thôi"
+  },
+  {
+    "start": 2092.1,
+    "end": 2096.58,
+    "text": "Ok, lập port chứ 1 lần và bạn sẽ cho 1 cái câu lệnh đấy là P, vàng P mũi tên next"
+  },
+  {
+    "start": 2096.58,
+    "end": 2099.54,
+    "text": "Ví dụ như trong trường hợp này, POS bằng 3 đúng không?"
+  },
+  {
+    "start": 2099.54,
+    "end": 2103.74,
+    "text": "Thì bạn chỉ cần khởi tạo con trỏ P ở đây nè, bằng thằng A này thì sao bạn nách 1 lần phát"
+  },
+  {
+    "start": 2103.74,
+    "end": 2105.94,
+    "text": "là nó sẽ nhảy ra đến cái vị trí POS chứ 1"
+  },
+  {
+    "start": 2105.94,
+    "end": 2111.02,
+    "text": "Thành ra ở đây, cái số vọng lập của mình ý, thì chính là POS chứ, POS chứ 2 lần"
+  },
+  {
+    "start": 2111.02,
+    "end": 2113.3,
+    "text": "OK, POS chứ 2 lần, hóa"
+  },
+  {
+    "start": 2113.3,
+    "end": 2121.12,
+    "text": "Ví dụ như là bạn muốn nhảy đến cái vị trí POS chứ 1 thì mới POS vòng 3 thì bạn chỉ cần lập 1 lần thôi"
+  },
+  {
+    "start": 2121.12,
+    "end": 2124.04,
+    "text": "cho thằng P bằng P, mũ tên nách thì thằng P nó sẽ nhảy ra đây nè"
+  },
+  {
+    "start": 2124.04,
+    "end": 2132.36,
+    "text": "Vậy thì sau cái bòng 4 này này, thằng P của bạn ấy, nó đang nằm ở vị trí POT chứ 1 rồi"
+  },
+  {
+    "start": 2132.36,
+    "end": 2136.04,
+    "text": "Thì các bạn làm công việc như lúc nãy mình hướng dẫn thôi"
+  },
+  {
+    "start": 2136.04,
+    "end": 2138.84,
+    "text": "Đây chính là các bạn chỉ cần khai báo 1 cái node mới ra đây"
+  },
+  {
+    "start": 2138.84,
+    "end": 2144.04,
+    "text": "Đặt là node này, tem này, nó sẽ bằng make node và mình truyền thằng ít vào"
+  },
+  {
+    "start": 2144.04,
+    "end": 2148.04,
+    "text": "Sau đó bạn làm gì đầu tiên nhỉ, bạn sẽ phải cho cái phần nách của con trò tem này này"
+  },
+  {
+    "start": 2148.04,
+    "end": 2151.8,
+    "text": "Nói trò vào cái phần tử ở vị trí POT, nó chính là gì nhỉ"
+  },
+  {
+    "start": 2151.8,
+    "end": 2156.24,
+    "text": "têm, mũ tên ếch, têm, mũ tên ếch"
+  },
+  {
+    "start": 2156.24,
+    "end": 2158.44,
+    "text": "ok"
+  },
+  {
+    "start": 2158.44,
+    "end": 2163.06,
+    "text": "têm, bây giờ nó đang là cái node ở vị trí port chứ 1"
+  },
+  {
+    "start": 2163.06,
+    "end": 2166.2,
+    "text": "được không nhỉ, vậy thì thằng mà têm mũ tên ếch"
+  },
+  {
+    "start": 2166.2,
+    "end": 2169.76,
+    "text": "được không, nó chính là cái phần tử của cái node ở vị trí port"
+  },
+  {
+    "start": 2169.76,
+    "end": 2172.36,
+    "text": "thành ra ở đây mình có 1 câu lệnh đây chính là"
+  },
+  {
+    "start": 2172.36,
+    "end": 2174.44,
+    "text": "têm mũ tên ếch"
+  },
+  {
+    "start": 2174.44,
+    "end": 2176.12,
+    "text": "được chứ, nó chính là"
+  },
+  {
+    "start": 2176.12,
+    "end": 2177.76,
+    "text": "cái phần tử ở vị trí port đấy"
+  },
+  {
+    "start": 2177.76,
+    "end": 2179.88,
+    "text": "để chứ mình gán nó cho bằng têm mũ tên ếch"
+  },
+  {
+    "start": 2179.88,
+    "end": 2182.68,
+    "text": "hay nói cái khác đấy, chính là mình sẽ cho phần trỏ của phần têm này này"
+  },
+  {
+    "start": 2182.68,
+    "end": 2184.68,
+    "text": "trỏ vào nốt ở vị trí POS"
+  },
+  {
+    "start": 2184.68,
+    "end": 2187.67,
+    "text": "Đấy, chính là bước này"
+  },
+  {
+    "start": 2187.67,
+    "end": 2191.51,
+    "text": "sau đó làm ra bạn cho phần nách của con trỏ P hiện tại bây giờ"
+  },
+  {
+    "start": 2191.51,
+    "end": 2193.11,
+    "text": "nó trỏ vào nốt mới"
+  },
+  {
+    "start": 2193.11,
+    "end": 2196.07,
+    "text": "2 cái bước này bạn phải làm đúng thứ tự"
+  },
+  {
+    "start": 2196.07,
+    "end": 2198.23,
+    "text": "bạn làm ngược lại sẽ bị sai, đúng không?"
+  },
+  {
+    "start": 2198.23,
+    "end": 2204.63,
+    "text": "Bởi vì nếu bạn làm ngược lại, bạn cho phần nách của con trỏ P này nó trỏ vào thằng TEM trước"
+  },
+  {
+    "start": 2204.63,
+    "end": 2208.39,
+    "text": "khi đó nó sẽ mất hết các dấu từ vị trí POS cho về cuối"
+  },
+  {
+    "start": 2208.39,
+    "end": 2211.95,
+    "text": "đây mình sẽ cho sau khi mà làm xong cái bước kính nhất rồi thì mình sẽ cho là gì nhỉ?"
+  },
+  {
+    "start": 2211.95,
+    "end": 2215.11,
+    "text": "P mũi tên lách, nó sẽ bằng tèm, thế là sao?"
+  },
+  {
+    "start": 2215.11,
+    "end": 2217.63,
+    "text": "thế là xong cái ham thêm vào giữa"
+  },
+  {
+    "start": 2217.63,
+    "end": 2220.23,
+    "text": "đấy, ok, cũng không có gì khó khăn đúng không?"
+  },
+  {
+    "start": 2220.23,
+    "end": 2224.71,
+    "text": "rồi, mình sẽ xem cái ham tiếp theo, đây chỉ là mình cần xóa 1 phần tửa đầu, ok"
+  },
+  {
+    "start": 2224.71,
+    "end": 2226.99,
+    "text": "mình đặt là xóa phần tửa đầu nhé"
+  },
+  {
+    "start": 2226.99,
+    "end": 2230.77,
+    "text": "void, mình đặt là delete, first"
+  },
+  {
+    "start": 2230.77,
+    "end": 2234.29,
+    "text": "ok, mình cũng cần 1 con trỏ ở đầu gian xét liên kết"
+  },
+  {
+    "start": 2234.29,
+    "end": 2238.05,
+    "text": "thì trong trường hợp mà ránh xét liên kết này rộng thì mình không làm gì cả nhé"
+  },
+  {
+    "start": 2238.05,
+    "end": 2241.37,
+    "text": "Mình kiểm tra nếu mà em mà bằng lùn thì mình return, mình không xóa gì cả"
+  },
+  {
+    "start": 2241.37,
+    "end": 2244.87,
+    "text": "Nếu còn trong trường cơ hợp danh xác niên kết của mình, nó không rộng ấy"
+  },
+  {
+    "start": 2244.87,
+    "end": 2247.31,
+    "text": "Thì việc mà xóa 1 phần tử rất là đơn giản"
+  },
+  {
+    "start": 2247.31,
+    "end": 2249.47,
+    "text": "Xin lỗi xóa 1 phần tử ở đầu rất là đơn giản"
+  },
+  {
+    "start": 2249.47,
+    "end": 2250.47,
+    "text": "Ok"
+  },
+  {
+    "start": 2250.47,
+    "end": 2253.27,
+    "text": "Đây, ban đầu bạn có 1 cái danh xác niên kết như thế này, đúng không?"
+  },
+  {
+    "start": 2253.27,
+    "end": 2256.15,
+    "text": "Bây giờ bạn muốn xóa cái phần tử ở đầu này nè"
+  },
+  {
+    "start": 2256.15,
+    "end": 2258.03,
+    "text": "Tức là mất 1 xóa thằng này đi đúng không?"
+  },
+  {
+    "start": 2258.03,
+    "end": 2259.07,
+    "text": "Thì đơn giản thôi"
+  },
+  {
+    "start": 2259.07,
+    "end": 2263.35,
+    "text": "Bạn cho cái thằng A là cái thằng ở đầu danh xác niên kết của bạn hiện tại nó nhảy cho thằng này là sao"
+  },
+  {
+    "start": 2263.35,
+    "end": 2266.31,
+    "text": "Ok, khi đó tự nhất, thằng này nó sẽ mất, đúng không?"
+  },
+  {
+    "start": 2266.31,
+    "end": 2269.19,
+    "text": "Và cái danh xét lên kết của bạn bây giờ nó bắt đầu từ cái thằng thứ 2 này này"
+  },
+  {
+    "start": 2269.19,
+    "end": 2271.99,
+    "text": "Thế thôi, vậy thì bạn chỉ cần một cái câu lệnh đấy chính là"
+  },
+  {
+    "start": 2271.99,
+    "end": 2275.89,
+    "text": "A bằng A mũ tên lách, đấy, tức là cán cái phần thứ thứ 2"
+  },
+  {
+    "start": 2275.89,
+    "end": 2278.6,
+    "text": "Hiểu nôm nay, đây chính là mình sẽ cho cái node"
+  },
+  {
+    "start": 2278.6,
+    "end": 2281.72,
+    "text": "thứ 2 của danh xét lên kết hiện tại bây giờ, nó chính là thằng A"
+  },
+  {
+    "start": 2281.72,
+    "end": 2285.16,
+    "text": "Ok, mà A là cái node đầu tiên trong danh xét lên kết, đúng không?"
+  },
+  {
+    "start": 2285.16,
+    "end": 2288.34,
+    "text": "Vậy thì sau cái câu lệnh này trở đi, cái node đầu tiên trong danh xét lên"
+  },
+  {
+    "start": 2288.34,
+    "end": 2289.56,
+    "text": "Của các bạn, nó sẽ là thằng này"
+  },
+  {
+    "start": 2289.56,
+    "end": 2293.08,
+    "text": "và bạn sẽ rượt, nếu bạn rượt từ đầu lên xách thì sẽ rượt từ thằng này trở đi"
+  },
+  {
+    "start": 2293.08,
+    "end": 2295.21,
+    "text": "vậy thì khi đó thằng này nó sẽ bị mất"
+  },
+  {
+    "start": 2295.21,
+    "end": 2299.21,
+    "text": "ok, ở đây chỉ là xóa 1 phần tửa đầu, mình sẽ lên kết nhá"
+  },
+  {
+    "start": 2299.21,
+    "end": 2306.46,
+    "text": "ok, các bạn có thể, xóa phần tửa đầu thì rất là đơn giản thôi, các bạn có thể giải phóng cũng được"
+  },
+  {
+    "start": 2306.46,
+    "end": 2310.46,
+    "text": "mà không cần giải phóng cũng được, ok, giải phóng cái phần cấp phát của thằng này này"
+  },
+  {
+    "start": 2310.46,
+    "end": 2315.34,
+    "text": "ok, ở đây mình sẽ biết thêm 1 cái ham nữa, đấy là ham xóa ở cuối"
+  },
+  {
+    "start": 2315.34,
+    "end": 2320.66,
+    "text": "xóa đầu thì dễ nhưng mà xóa cuối thì nó cũng hơi khó hơn 1 tí xóa phần tửa ở cuối"
+  },
+  {
+    "start": 2320.66,
+    "end": 2329.35,
+    "text": "void, delete, last, node, ngược lại một chút"
+  },
+  {
+    "start": 2329.35,
+    "end": 2333.27,
+    "text": "Bây giờ, phần tử mà bạn muốn xóa ở khỏi danh sinh liên kết, nó chính là thằng này"
+  },
+  {
+    "start": 2333.27,
+    "end": 2336.63,
+    "text": "Được không? Thì để mà xóa cái thằng cuối cùng này thì rất là đơn giản"
+  },
+  {
+    "start": 2336.63,
+    "end": 2339.43,
+    "text": "Đấy chính là bạn phải duyệt đến cái thằng trước cái phần tử cuối cùng này này"
+  },
+  {
+    "start": 2339.43,
+    "end": 2342.71,
+    "text": "Và bạn cho cái phần lách của thằng này này, nó đừng trò vào nôn nữa"
+  },
+  {
+    "start": 2342.71,
+    "end": 2345.27,
+    "text": "Nó đừng trò cái phần tử cuối cùng này nữa"
+  },
+  {
+    "start": 2345.27,
+    "end": 2352.95,
+    "text": "Mà cái phần lách của ông này này, bán tìm từ phần tử xát, phần tử cuối cùng rồi, bạn chỉ cần cho nó trò vào nụn cái, tự nhiên thì cái thằng cuối nó sẽ bị mất"
+  },
+  {
+    "start": 2352.95,
+    "end": 2355.75,
+    "text": "Ok, cái cuối này nó sẽ không quan nạm trong gian xe liên kết nữa"
+  },
+  {
+    "start": 2355.75,
+    "end": 2357.95,
+    "text": "Ok không nhỉ? Vậy thì đấy chính là cái tư tưởng"
+  },
+  {
+    "start": 2357.95,
+    "end": 2362.03,
+    "text": "Nhưng mà ở đây mình kiểm tra nếu mà a mà bằng nụn ấy, thì mình sẽ return"
+  },
+  {
+    "start": 2362.03,
+    "end": 2369.98,
+    "text": "Ok, bởi vì nếu mà trong gian xe liên kết của mình không có nụt nào thì tốt nhất là mình không làm gì kẻ"
+  },
+  {
+    "start": 2369.98,
+    "end": 2371.54,
+    "text": "Nếu mà gian xe liên kết nó rõm"
+  },
+  {
+    "start": 2371.54,
+    "end": 2375.06,
+    "text": "Thế còn không nhé, bạn sẽ khởi tạ cho mình một cái node"
+  },
+  {
+    "start": 2375.06,
+    "end": 2377.42,
+    "text": "Mình đặt là node trước, bằng nôn đi"
+  },
+  {
+    "start": 2377.42,
+    "end": 2381.22,
+    "text": "Và một cái node sau, bằng e, ok, ná"
+  },
+  {
+    "start": 2381.22,
+    "end": 2389.6,
+    "text": "Và mình lập với cái điều kiện đấy chính là y, sau, mũi tên nick, khác nôn"
+  },
+  {
+    "start": 2389.6,
+    "end": 2395.66,
+    "text": "Ok, tại sao mình lại dùng hai con trỏ trước và sau"
+  },
+  {
+    "start": 2395.66,
+    "end": 2398.26,
+    "text": "Để làm gì? Để khi mà con trỏ sau nó ở đây này"
+  },
+  {
+    "start": 2398.26,
+    "end": 2401.66,
+    "text": "Ở đây mình để kiểu lại điều kiện lập là y, sau, mũi tên nick khác nôn đúng không?"
+  },
+  {
+    "start": 2401.66,
+    "end": 2403.18,
+    "text": "Vậy thì sau vòng lập qua này này"
+  },
+  {
+    "start": 2403.18,
+    "end": 2406.38,
+    "text": "node sau của mình, node sau của mình sẽ là node cuối cùng"
+  },
+  {
+    "start": 2406.38,
+    "end": 2408.3,
+    "text": "bởi vì phần nách của sau nó sẽ là nôn"
+  },
+  {
+    "start": 2408.3,
+    "end": 2411.66,
+    "text": "hay khác là khi thằng sau của mình sẽ chạy đến node cuối cùng"
+  },
+  {
+    "start": 2411.66,
+    "end": 2413.1,
+    "text": "đây, nó chạy đến cuối cùng"
+  },
+  {
+    "start": 2413.1,
+    "end": 2417.02,
+    "text": "và mình có thêm 1 thằng trước nữa, mình sẽ cho trước bằng sau"
+  },
+  {
+    "start": 2417.02,
+    "end": 2420.5,
+    "text": "và sau bằng sau nách"
+  },
+  {
+    "start": 2420.5,
+    "end": 2421.94,
+    "text": "để làm gì?"
+  },
+  {
+    "start": 2421.94,
+    "end": 2424.98,
+    "text": "để khi thằng sau của các bạn, nó bằng sau nách"
+  },
+  {
+    "start": 2424.98,
+    "end": 2428.1,
+    "text": "thì nó sẽ nhảy đến phần tử cuối cùng"
+  },
+  {
+    "start": 2428.1,
+    "end": 2432.66,
+    "text": "khi đó thằng trước của bạn, mình cho câu lệnh trước bằng sau trước"
+  },
+  {
+    "start": 2432.66,
+    "end": 2433.94,
+    "text": "câu lệnh 9.3 này trước"
+  },
+  {
+    "start": 2433.94,
+    "end": 2437.1,
+    "text": "Thì khi đó, cái node sau của bạn ở đây thì node trước của bạn là mới năm ở đây"
+  },
+  {
+    "start": 2437.1,
+    "end": 2441.42,
+    "text": "Hay nói cách khác là khi đó, cái node trước của bạn sẽ là cái node set, cái node cuối cùng"
+  },
+  {
+    "start": 2441.42,
+    "end": 2447.4,
+    "text": "Ok không nhỉ? Thì đây chính là mình sẽ dùng 1 con trò chạy trước, 1 con trò chạy trước, 1 con trò chạy sau"
+  },
+  {
+    "start": 2447.4,
+    "end": 2452.64,
+    "text": "Thì cái node chạy trước khi mà nó đến cái node cuối cùng rồi thì cái node chạy sau nó sẽ là cái node set phần từ cuối cùng"
+  },
+  {
+    "start": 2452.64,
+    "end": 2455.52,
+    "text": "Ok, vậy thì sau vòng lập qua mình đã có hướng đấy"
+  },
+  {
+    "start": 2455.52,
+    "end": 2458.32,
+    "text": "Nhưng mà mình nhớ kiểm tra nhé, nếu mà trước mà bằng nôn"
+  },
+  {
+    "start": 2458.32,
+    "end": 2462.05,
+    "text": "Đây là cái gianh xanh liên kết của bạn nó có mỗi 1 phần tử ấy"
+  },
+  {
+    "start": 2462.05,
+    "end": 2470.59,
+    "text": "Ok, bởi vì nếu mà trước bằng nôn thì khi đó xong, mũi tên nick bằng nôn nó sẽ dừng ngay vào lập ngoài hay nó khác khác là dân xe link kết của bạn nó có đúng 1 phần tử ấy"
+  },
+  {
+    "start": 2470.59,
+    "end": 2473.59,
+    "text": "Thì bạn chỉ cần cho a bằng nôn để bạn xóa cái phần tử đấy đi là xong"
+  },
+  {
+    "start": 2473.59,
+    "end": 2480.31,
+    "text": "Ok, bởi vì dân xe link kết của mình có 1 phần tử mà bạn xóa ở cuối thì hay nó khác là xóa luôn cả dân xe link kết đúng không?"
+  },
+  {
+    "start": 2480.31,
+    "end": 2482.91,
+    "text": "Thì mình chỉ cần gán cái con trò a của bạn bằng nôn nào được"
+  },
+  {
+    "start": 2482.91,
+    "end": 2488.87,
+    "text": "Thế còn trong trường hợp mà dân xe link kết của bạn nó có từ 2 phần tử trở lên nhá, thì các bạn làm tương tự như vậy"
+  },
+  {
+    "start": 2488.87,
+    "end": 2493.47,
+    "text": "Đấy chính là mình sẽ cho phần nách của con trỏ trước, trỏ vào nôn, đừng cho nó trỏ vào con trỏ sau nữa"
+  },
+  {
+    "start": 2493.47,
+    "end": 2496.47,
+    "text": "Ok, bởi vì con trỏ sau là cái phần từ cuối cùng mà mình muốn loại đi"
+  },
+  {
+    "start": 2496.47,
+    "end": 2498.67,
+    "text": "Ở đây bạn chỉ cần 1 câu lệnh để chính là"
+  },
+  {
+    "start": 2498.67,
+    "end": 2502.47,
+    "text": "Trước mũ tên nách cho nó trỏ vào nôn, ok?"
+  },
+  {
+    "start": 2502.47,
+    "end": 2505.67,
+    "text": "Bây giờ nó trỏ vào nôn rồi, đúng không? Nó không còn thằng này nữa và thằng này"
+  },
+  {
+    "start": 2505.67,
+    "end": 2509.27,
+    "text": "Khi mà bạn duyệt tại danh xanh liên kết thì nó chỉ có duyệt từ đây, đây, đây"
+  },
+  {
+    "start": 2509.27,
+    "end": 2512.27,
+    "text": "Đến đây thì nó biết là nôn thì nó sẽ không duyệt nữa"
+  },
+  {
+    "start": 2512.27,
+    "end": 2516.47,
+    "text": "Không phải là không duyệt nữa mà nó đã kết thúc với cái danh xanh liên kết của mình rồi, ok?"
+  },
+  {
+    "start": 2516.47,
+    "end": 2519.67,
+    "text": "Vậy thì đấy chính là cái việc mà xóa của ấy nhé"
+  },
+  {
+    "start": 2519.67,
+    "end": 2524.57,
+    "text": "Thế còn cái tiếp theo đấy chính là mình xóa vào dựa, xóa 1 cái vị trí nào đó, xóa vào dựa"
+  },
+  {
+    "start": 2524.57,
+    "end": 2529.67,
+    "text": "Được, ok, mình đặt là void, delete, middle đi, ok"
+  },
+  {
+    "start": 2529.67,
+    "end": 2532.77,
+    "text": "Mình có 1 cái node và 1 cái vị trí cần xóa"
+  },
+  {
+    "start": 2532.77,
+    "end": 2536.37,
+    "text": "Ở đây mình kiểm tra nếu mà cái vị trí cần xóa mà không hợp lệ thì mình cũng vùi tơn nhé"
+  },
+  {
+    "start": 2536.37,
+    "end": 2542.67,
+    "text": "Nếu mà vị trí mà xóa mà nhỏ hơn mà không, hoặc là cái vị trí xóa nó lớn hơn cái số lượng phần tử ở trong dân xanh lên kết"
+  },
+  {
+    "start": 2542.67,
+    "end": 2546.17,
+    "text": "thì mình sẽ vùi tơn, mình không làm gì kẻ hoặc là các bạn có thể in da cái gì đó"
+  },
+  {
+    "start": 2546.17,
+    "end": 2548.79,
+    "text": "ví dụ như là vị trí xóa không hợp lệ vân vân"
+  },
+  {
+    "start": 2548.79,
+    "end": 2552.31,
+    "text": "OK, còn không thì các bạn làm tương tự như vậy nhá, xóa ở giữa"
+  },
+  {
+    "start": 2552.31,
+    "end": 2559.35,
+    "text": "Mình... mình làm dùng một cái... cũng làm một cái node này trước này"
+  },
+  {
+    "start": 2559.35,
+    "end": 2566.35,
+    "text": "bằng nôn nhá, và một cái node sau thì bằng A, sau đó mình dùng một cái vòng port chạy từ không cho tới... chạy từ 1 đi"
+  },
+  {
+    "start": 2566.35,
+    "end": 2567.65,
+    "text": "cho tới port"
+  },
+  {
+    "start": 2567.65,
+    "end": 2572.13,
+    "text": "Bây giờ để xóa một cái phần tử ở vị trí port ấy"
+  },
+  {
+    "start": 2572.13,
+    "end": 2575.63,
+    "text": "OK, ví dụ như dành xây lên cái của bạn nó đang có 4 phần tử như thế này đúng không?"
+  },
+  {
+    "start": 2575.63,
+    "end": 2577.63,
+    "text": "Đang có 4 phần tử như thế này"
+  },
+  {
+    "start": 2577.63,
+    "end": 2580.79,
+    "text": "Bây giờ bạn muốn xoá 1 phần tửa ở vị trí thứ 3"
+  },
+  {
+    "start": 2580.79,
+    "end": 2582.59,
+    "text": "xoá thằng ba này"
+  },
+  {
+    "start": 2582.59,
+    "end": 2586.44,
+    "text": "Thì khi đó rất là đơn giản thôi"
+  },
+  {
+    "start": 2586.44,
+    "end": 2589.76,
+    "text": "bạn phải biết được vị trí nốt ở vị trí port chứ 1"
+  },
+  {
+    "start": 2589.76,
+    "end": 2594.64,
+    "text": "Thì khi đó mình dùng 2 con trò 1 con trò trước và 1 con trò sau"
+  },
+  {
+    "start": 2594.64,
+    "end": 2596.32,
+    "text": "con trò trước nó sẽ chạy đến đây"
+  },
+  {
+    "start": 2596.32,
+    "end": 2599.6,
+    "text": "Con trò sau thì nó sẽ chạy đến đây"
+  },
+  {
+    "start": 2599.6,
+    "end": 2603.68,
+    "text": "Sau đó mình làm cái gì? Mình cho phần nách của con trò trước này"
+  },
+  {
+    "start": 2603.68,
+    "end": 2608.2,
+    "text": "Nó không trỏ vào thằng sau nữa, mà nó trỏ vào phần sau nách"
+  },
+  {
+    "start": 2608.2,
+    "end": 2609.72,
+    "text": "Nó phải trỏ như thế này nè"
+  },
+  {
+    "start": 2611.0,
+    "end": 2613.48,
+    "text": "Ok, nó trỏ vào sau nách như thế này"
+  },
+  {
+    "start": 2613.48,
+    "end": 2616.92,
+    "text": "Ok, thì khi đó cái thằng này nó sẽ không còn nằm trong danh sinh liên kết nữa"
+  },
+  {
+    "start": 2616.92,
+    "end": 2619.64,
+    "text": "Ok, sau nách thì nó chính là cái nốt này đúng không?"
+  },
+  {
+    "start": 2619.64,
+    "end": 2623.48,
+    "text": "Vậy thì mình sẽ trỏ phần trước, mũ tên nách sẽ trỏ vào phần sau nách"
+  },
+  {
+    "start": 2623.48,
+    "end": 2626.76,
+    "text": "hay là cách khác là cho cái nốt ở vị trí port chứ 1 ấy"
+  },
+  {
+    "start": 2626.76,
+    "end": 2628.76,
+    "text": "Nó sẽ trỏ vào cái nốt post cộng 1"
+  },
+  {
+    "start": 2628.76,
+    "end": 2631.56,
+    "text": "thì khi đó cái nốt ở vị trí post của mình này thì nó sẽ bị mất đi"
+  },
+  {
+    "start": 2631.56,
+    "end": 2636.94,
+    "text": "Ok. Vậy thì ở đây mình dùng 1 cái vòng 4 chạy từ y bằng không cho tới y nhỏ hơn pot y cộng cộng nhé"
+  },
+  {
+    "start": 2636.94,
+    "end": 2641.84,
+    "text": "và mình sẽ cho trước bằng sau và sau bằng sau nách, nha"
+  },
+  {
+    "start": 2641.84,
+    "end": 2645.04,
+    "text": "1 con trò trước, 1 con trò chạy trước, 1 con trò chạy sau"
+  },
+  {
+    "start": 2645.04,
+    "end": 2650.28,
+    "text": "thì sau pot chứ 1 vòng lạp ấy, thì khi đó cái biến sau của bạn nó sẽ nằm ở vị trí pot"
+  },
+  {
+    "start": 2650.28,
+    "end": 2652.92,
+    "text": "thì còn cái biến trước của bạn nó vẫn nằm ở vị trí pot chứ 1"
+  },
+  {
+    "start": 2652.92,
+    "end": 2657.44,
+    "text": "và khi đó thì bạn chỉ cần làm 1 cái câu lệnh để chính là mình sẽ kiểm tra nếu mà trước mà vòng luôn nhé"
+  },
+  {
+    "start": 2657.44,
+    "end": 2691.76,
+    "text": "dành xanh liên kết của bạn mà nó có mỗi phần tử ấy, thì bạn chỉ cần, ờ, xin lỗi, gì nhá, nếu trước bằng nôn thì bằng xứa liên kết của mình, thì bạn sẽ cho bằng annex, a bằng annex cũng được, ok, thế là khi mà bạn xóa cái phần tử ở vị trí đầu tiên ấy, thì mình sẽ cho a bằng annex là xong, nó tương tự như cái phần delete first này, thế còn trong trường hợp mà trước của bạn nó khác nôn ấy, tức là cái dành xanh liên kết của bạn nó đã tìm"
+  },
+  {
+    "start": 2691.76,
+    "end": 2695.88,
+    "text": "tìm được phần vị trí ở POD này, và vị trí POD chứa 1 rồi này, đúng không?"
+  },
+  {
+    "start": 2695.88,
+    "end": 2699.38,
+    "text": "POD chứa 1 đây và POD đây, thì mình làm cái công việc, như mình nói đến chính là gì nhỉ?"
+  },
+  {
+    "start": 2699.38,
+    "end": 2705.2,
+    "text": "Mình sẽ cho cái phần nách của con trỏ trước ấy, chứ là trước, mũ tên nách, nó sẽ trỏ vào đâu?"
+  },
+  {
+    "start": 2705.2,
+    "end": 2708.72,
+    "text": "Nó sẽ trỏ vào cái nốt đằng sau, cái nốt sau, đúng không?"
+  },
+  {
+    "start": 2708.72,
+    "end": 2716.65,
+    "text": "Đây là sau, mũ tên nách, ở đây sau mũ tên nách, nó chính là cái nốt này này, nốt này này, ok?"
+  },
+  {
+    "start": 2716.65,
+    "end": 2720.49,
+    "text": "Và mình gán là trước nách, bằng sau nách thì khi đó, cái phần nó chính là câu lệ này."
+  },
+  {
+    "start": 2720.49,
+    "end": 2723.53,
+    "text": "Nó sẽ cho phần đích của thằng trước, nó chọa vào thằng này"
+  },
+  {
+    "start": 2723.53,
+    "end": 2725.53,
+    "text": "Thằng này nó chính là thằng sau đích đấy"
+  },
+  {
+    "start": 2725.53,
+    "end": 2726.53,
+    "text": "Ok"
+  },
+  {
+    "start": 2726.53,
+    "end": 2732.2,
+    "text": "Vậy thì đây chính là cái cách mà bạn xóa một phần cửa vị trí ở giữa là đó, vị trí port là đó nhé"
+  },
+  {
+    "start": 2732.2,
+    "end": 2735.98,
+    "text": "Ok, bây giờ mình sẽ viết một cái ham để in"
+  },
+  {
+    "start": 2735.98,
+    "end": 2737.48,
+    "text": "Ok, in dành sách chẳng ạ"
+  },
+  {
+    "start": 2737.48,
+    "end": 2738.98,
+    "text": "Mình sẽ in một cái node"
+  },
+  {
+    "start": 2738.98,
+    "end": 2741.98,
+    "text": "Một cái in thì mình không cần chuyển tham chiếu nhé"
+  },
+  {
+    "start": 2741.98,
+    "end": 2744.98,
+    "text": "Ok, thì để in thì các bạn chỉ cần in ra cho mình như thế này"
+  },
+  {
+    "start": 2744.98,
+    "end": 2747.48,
+    "text": "Một cái dòng như thế này"
+  },
+  {
+    "start": 2747.48,
+    "end": 2752.63,
+    "text": "Mình sẽ lập với điều kiện lập là y a khác luôn"
+  },
+  {
+    "start": 2752.63,
+    "end": 2756.63,
+    "text": "ok, thì mình sẽ CL ra A, mũi tên, data, ok"
+  },
+  {
+    "start": 2756.63,
+    "end": 2759.63,
+    "text": "chính là giá trị của cái nốt đấy, sau đó mình cho A bằng A mũi tên nách"
+  },
+  {
+    "start": 2759.63,
+    "end": 2764.63,
+    "text": "ok, thì đây chính là cái cách mà duyệt qua tất cả các cái nốt nhé, bạn chỉ cần lập qua A khác luôn"
+  },
+  {
+    "start": 2764.63,
+    "end": 2768.63,
+    "text": "sau đó trong đó thì bạn xử lý với cái data của cái nốt đấy"
+  },
+  {
+    "start": 2768.63,
+    "end": 2773.63,
+    "text": "và mình sẽ cho một câu lệnh là A bằng A mũi tên nách để nó nhảy ra cái nốt tiếp theo ở trong trên xe liên kết"
+  },
+  {
+    "start": 2773.63,
+    "end": 2776.63,
+    "text": "ok, thì khi nào mà nó nhảy đến cái nốt cuối cùng ấy"
+  },
+  {
+    "start": 2776.63,
+    "end": 2780.63,
+    "text": "xin lỗi, sau cái nốt cuối cùng thì đó thằng A nó sẽ bằng luôn và nó sẽ kết thúc"
+  },
+  {
+    "start": 2780.63,
+    "end": 2784.43,
+    "text": "đây thì các bạn có thể dùng a để duyệt được nhé, bởi vì mình chuyển tham trị mà"
+  },
+  {
+    "start": 2784.43,
+    "end": 2787.15,
+    "text": "chuyển giá trị mà thành ra cái node của a nó không bị thay đổi"
+  },
+  {
+    "start": 2787.15,
+    "end": 2792.45,
+    "text": "còn những cái mà sử dụng dầu và như thế này thì bắt buộc là bạn sẽ phải sử dụng 1 cái con trỏ P khác để mình duyệt"
+  },
+  {
+    "start": 2792.45,
+    "end": 2796.85,
+    "text": "ok và mình sẽ thay đổi trên thằng P đấy, chứ mình không thay đổi trên thằng a, ăn đầu"
+  },
+  {
+    "start": 2796.85,
+    "end": 2805.49,
+    "text": "thì đây chính là cái phần mà in ra danh sách của 1 cái in ra cách phần tử trong danh sách liên kết nhé"
+  },
+  {
+    "start": 2805.49,
+    "end": 2809.29,
+    "text": "bây giờ mình thử cốt đã, không có gì mà cái hàng này chưa chết được, đúng sai"
+  },
+  {
+    "start": 2809.29,
+    "end": 2812.39,
+    "text": "ở đây mình sẽ tạo 1 menu, ok, y, 1, ok"
+  },
+  {
+    "start": 2812.39,
+    "end": 2818.23,
+    "text": "mình sẽ cl ra là 1 là, thêm 1 phần tử bờ đầu nhé, chém 1 phần tử bờ đầu"
+  },
+  {
+    "start": 2818.23,
+    "end": 2830.64,
+    "text": "2 thì là chém 1 phần tử vào cuối nhé, phần tử vào cuối, cuối dân sách"
+  },
+  {
+    "start": 2830.64,
+    "end": 2838.97,
+    "text": "3 thì mình sẽ y ra là chém 1 phần tử vào vị trí dưỡi nhé, chém phần tử vào dưỡi dân sách"
+  },
+  {
+    "start": 2838.97,
+    "end": 2848.14,
+    "text": "4 thì là xóa phần tử đầu, 5 thì là xóa phần tửa cuối nha"
+  },
+  {
+    "start": 2848.14,
+    "end": 2856.06,
+    "text": "xóa phần tửa cuối, 6 thì là xóa một phần tửa vị trí bất kì xóa phần tửa giữa"
+  },
+  {
+    "start": 2856.06,
+    "end": 2862.47,
+    "text": "ok, 7 thì là mình sẽ cho là rượt thanh sách nhé, ok, rượt thanh sách"
+  },
+  {
+    "start": 2862.47,
+    "end": 2868.72,
+    "text": "và ở đây mình sẽ ra một câu lệnh đấy là yêu cầu người dùng nhập lựa chọn"
+  },
+  {
+    "start": 2868.72,
+    "end": 2880.65,
+    "text": "mình cho thêm cái trên này để nó bao cái phần này lại"
+  },
+  {
+    "start": 2880.65,
+    "end": 2883.63,
+    "text": "Ok, bây giờ mình sẽ yêu cầu người dùng nhập lựa chọn nhé"
+  },
+  {
+    "start": 2883.63,
+    "end": 2886.13,
+    "text": "CL là nhập lựa chọn"
+  },
+  {
+    "start": 2886.13,
+    "end": 2888.63,
+    "text": "sau đó mình C in cho một cái biến nào đó"
+  },
+  {
+    "start": 2888.63,
+    "end": 2891.76,
+    "text": "mình đặt là lựa chọn, C in cho lựa chọn"
+  },
+  {
+    "start": 2891.76,
+    "end": 2894.26,
+    "text": "Thôi mình check thôi, nếu mà lựa chọn vào bằng 1"
+  },
+  {
+    "start": 2894.26,
+    "end": 2896.26,
+    "text": "Thế là mình sẽ chèm một phần tử vào đầu danh sách đúng không?"
+  },
+  {
+    "start": 2896.26,
+    "end": 2899.76,
+    "text": "Thì mình sẽ dùng một cái biến x và yêu cầu người dùng nhập cái giá trị của biến x đấy"
+  },
+  {
+    "start": 2899.76,
+    "end": 2901.76,
+    "text": "nhập giá trị con chèm"
+  },
+  {
+    "start": 2901.76,
+    "end": 2904.21,
+    "text": "sau đó mình sẽ C in cho x"
+  },
+  {
+    "start": 2904.21,
+    "end": 2907.5,
+    "text": "và mình sẽ gọi cái ham là insert first"
+  },
+  {
+    "start": 2907.5,
+    "end": 2910.5,
+    "text": "mình chuyển cái note half và cái giá trị của x vào"
+  },
+  {
+    "start": 2910.5,
+    "end": 2918.5,
+    "text": "tương tự như vậy, lựa chọn vào bằng 2 thì mình sẽ yêu cầu người dùng nhập cái giá trị cần chen vào vị trí cuối, sau đó mình gọi ham insert last"
+  },
+  {
+    "start": 2918.5,
+    "end": 2931.57,
+    "text": "tương tự như vậy, ok, nếu mà lựa chọn vào bằng 3, ok, thì mình sẽ nhập giá trị cần chen nhé"
+  },
+  {
+    "start": 2931.57,
+    "end": 2935.57,
+    "text": "sau đó mình sẽ phải yêu cầu người dùng đấy là một chiếm biến POS nữa"
+  },
+  {
+    "start": 2935.57,
+    "end": 2938.57,
+    "text": "yêu cầu người dùng nhập cái giá trị à, vị trí cần chen, ok"
+  },
+  {
+    "start": 2938.57,
+    "end": 2944.06,
+    "text": "certainly in the amount of the input point"
+  },
+  {
+    "start": 2944.06,
+    "end": 2948.08,
+    "text": "Inferch the position of position"
+  },
+  {
+    "start": 2948.08,
+    "end": 2955.53,
+    "text": "Insert nid到"
+  },
+  {
+    "start": 2955.53,
+    "end": 2957.37,
+    "text": "..."
+  },
+  {
+    "start": 2957.37,
+    "end": 2962.87,
+    "text": "OK, tương tự như vậy, nếu mà LF lựa trọn bằng 4"
+  },
+  {
+    "start": 2962.87,
+    "end": 2965.85,
+    "text": "chứa điểm lòng 3"
+  },
+  {
+    "start": 2965.85,
+    "end": 2968.11,
+    "text": "mình sẽ gọi cái ham là delift"
+  },
+  {
+    "start": 2968.11,
+    "end": 2988.88,
+    "text": "cout, first, eoif, lựa chọn bằng 5, gọi ham, delete, last, eoif, lựa chọn bằng 6, gọi ham là sáu phân tửa cuối, dùng xóa nhật, giá trị, vị trí mà cần xóa"
+  },
+  {
+    "start": 2988.88,
+    "end": 3009.17,
+    "text": "Hp, Hp, Hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp, hp"
+  },
+  {
+    "start": 3009.17,
+    "end": 3016.31,
+    "text": "Rồi, thử tếp về chương trình này nhé, nó đã có 3 thao tác xoá, có 3 thao tác xoá cũng như là các thao tác"
+  },
+  {
+    "start": 3016.31,
+    "end": 3021.03,
+    "text": "Để tạo 1 cái node mới hay là kiểm tra dỗng hay là lấy về cái số lượng phản thử trong danh sách liên kết"
+  },
+  {
+    "start": 3021.03,
+    "end": 3024.39,
+    "text": "Bây giờ mình sẽ tép các cái hàng này xem là có hạt động ok không nhá"
+  },
+  {
+    "start": 3024.39,
+    "end": 3034.98,
+    "text": "Được, ok, đầu tiên mình sẽ thử mình chèn vào cuối nhá, chèn vào cuối danh sách nhá"
+  },
+  {
+    "start": 3034.98,
+    "end": 3039.45,
+    "text": "Mình chèn là 1, sau đó mình lại chèn vào cuối danh sách này, mình chèn 2 này"
+  },
+  {
+    "start": 3039.45,
+    "end": 3044.17,
+    "text": "Mình lại chèn vào cuối danh sách này, mình chèn 3 này, vậy thì danh sách liên kết của mình bây giờ nó đang là 1, 2, 3 đúng không?"
+  },
+  {
+    "start": 3044.17,
+    "end": 3046.65,
+    "text": "Mình thử duyệt danh sách liên kết bằng kênh chức năng 7 nhá"
+  },
+  {
+    "start": 3046.65,
+    "end": 3049.16,
+    "text": "Thì nó sẽ là 1, 2, 3"
+  },
+  {
+    "start": 3049.16,
+    "end": 3051.16,
+    "text": "Mình chết rồi nó in ra thử ở sau này"
+  },
+  {
+    "start": 3051.16,
+    "end": 3055.77,
+    "text": "Sau đó thì bây giờ mình thử thêm 1 phần tử vào đầu ghen sách nhé"
+  },
+  {
+    "start": 3055.77,
+    "end": 3057.77,
+    "text": "Mình thử 1 chen số 0 vào đầu ghen sách kết"
+  },
+  {
+    "start": 3057.77,
+    "end": 3059.77,
+    "text": "Bây giờ nó phải là 0, 1, 2, 3 đúng không?"
+  },
+  {
+    "start": 3059.77,
+    "end": 3062.57,
+    "text": "7 nè"
+  },
+  {
+    "start": 3062.57,
+    "end": 3064.57,
+    "text": "Ê nó sẽ thành 0, 1, 2, 3 rồi đúng không?"
+  },
+  {
+    "start": 3064.57,
+    "end": 3066.57,
+    "text": "Bây giờ mình chen 1 phần tử vào giữa dành sách nhé"
+  },
+  {
+    "start": 3066.57,
+    "end": 3068.57,
+    "text": "Mình chọn cái chức năng là 3 này"
+  },
+  {
+    "start": 3068.57,
+    "end": 3070.57,
+    "text": "Thì họ yêu cầu mình nhập giá trị cần chen"
+  },
+  {
+    "start": 3070.57,
+    "end": 3072.57,
+    "text": "Ví dụ mình chen số 4"
+  },
+  {
+    "start": 3072.57,
+    "end": 3074.57,
+    "text": "Và mình chen vào vị trí thứ 2"
+  },
+  {
+    "start": 3074.57,
+    "end": 3076.57,
+    "text": "Thì cái đó cái số của mình nó sẽ thành 0, 4, 1, 2, 3 đúng không?"
+  },
+  {
+    "start": 3076.57,
+    "end": 3079.57,
+    "text": "1, 1, 1, 1, 2, 3, đúng không? Bây giờ mình sẽ yêu cầu in ra 7 nè"
+  },
+  {
+    "start": 3079.57,
+    "end": 3083.6,
+    "text": "Thì nó sẽ thành 0, 1, 1, 2, 3 bạn vừa chén cái số 4 vào vị trí thứ 2 rồi nè"
+  },
+  {
+    "start": 3083.6,
+    "end": 3085.6,
+    "text": "Bây giờ ráng sách liên kết của mình nó có 5 phần tử đúng không?"
+  },
+  {
+    "start": 3085.6,
+    "end": 3088.6,
+    "text": "Thì bây giờ sửa mình chén nó vào vị trí thứ 5 nhé"
+  },
+  {
+    "start": 3088.6,
+    "end": 3093.6,
+    "text": "Mình chén vào vị trí thứ, giá trị cần chén mình chén 100, và mình chén vào 5"
+  },
+  {
+    "start": 3093.6,
+    "end": 3099.6,
+    "text": "Thì bây giờ ráng sách liên kết của mình nó sẽ thành là gì nhỉ? 0, 1, 1, 2, 100 vào 3 đúng không?"
+  },
+  {
+    "start": 3099.6,
+    "end": 3101.82,
+    "text": "Mình sẽ in 7 nè"
+  },
+  {
+    "start": 3101.82,
+    "end": 3103.82,
+    "text": "Rồi ok, vậy thì phía chức năng chén vào giữa là ok rồi đấy"
+  },
+  {
+    "start": 3103.82,
+    "end": 3106.84,
+    "text": "ok rồi đấy, hoặc là mình có thể chèn vào sau cái phần tử cuối cùng này nhé"
+  },
+  {
+    "start": 3106.84,
+    "end": 3109.84,
+    "text": "mình từ chèn vào giữa này, mình chèn là số 200"
+  },
+  {
+    "start": 3109.84,
+    "end": 3116.34,
+    "text": "bây giờ ráng xanh link kết của mình đang có 1, 2, 3, 4, 5, 6 vậy thì mình chèn vào vị trí 7"
+  },
+  {
+    "start": 3116.34,
+    "end": 3119.34,
+    "text": "thì khi đó nó sẽ chèn cái số 200 này đằng sau thằng ba nhé"
+  },
+  {
+    "start": 3119.34,
+    "end": 3122.34,
+    "text": "mình chèn vị trí thằng 7, in ra này"
+  },
+  {
+    "start": 3122.34,
+    "end": 3127.08,
+    "text": "rồi thì nó sẽ chèn thằng trang 200 vào đằng sau thằng ba này, được không nhỉ?"
+  },
+  {
+    "start": 3127.08,
+    "end": 3131.08,
+    "text": "ok vậy thì các cái chức năng, 3 cái chức năng chèn của mình là ok rồi đúng không?"
+  },
+  {
+    "start": 3131.08,
+    "end": 3134.52,
+    "text": "bây giờ mình thử xóa 1 phần tửa đầu nha, mình gọi chức năng 4"
+  },
+  {
+    "start": 3134.52,
+    "end": 3138.68,
+    "text": "bây giờ nó sẽ xóa số 0 này đây đấy, nếu mà đúng mình sẽ in ra số 7 nè"
+  },
+  {
+    "start": 3138.68,
+    "end": 3143.34,
+    "text": "hả, thì nó sẽ xóa số 0, bây giờ mình xóa tiếp 1 cái số ở đầu nữa nha, 4 nè"
+  },
+  {
+    "start": 3143.34,
+    "end": 3147.18,
+    "text": "rồi mình lại in ra này thì nó mất số 4 này đi nha"
+  },
+  {
+    "start": 3147.18,
+    "end": 3151.58,
+    "text": "thì nó còn 1, 2, 1, 103, 200, bây giờ mình xóa cái phần tửa cuối nha, 200 nha"
+  },
+  {
+    "start": 3151.58,
+    "end": 3153.74,
+    "text": "bằng chức thứ 5 nha, nó chính làng 5 nha"
+  },
+  {
+    "start": 3153.74,
+    "end": 3156.78,
+    "text": "rồi ok, bây giờ thì nó sẽ xóa cái thằng 200 đi, ok"
+  },
+  {
+    "start": 3156.78,
+    "end": 3162.78,
+    "text": "bây giờ mình thử xóa 1 phần tửa rửa nhé, dụ mình muốn số 300 xóa 300 này thì thằng này 300 này là vị trí số 3 đúng không"
+  },
+  {
+    "start": 3162.78,
+    "end": 3165.78,
+    "text": "thì mình gọi cái chức năng 6 là xóa phần tửa rửa này"
+  },
+  {
+    "start": 3165.78,
+    "end": 3167.78,
+    "text": "sau đó mình nhập vị trí cần xóa là 3 này"
+  },
+  {
+    "start": 3167.78,
+    "end": 3172.78,
+    "text": "ok, bây giờ nếu mà đúng thì nó sẽ chỉ còn lại 1, 2 và 3 thôi, nó xóa mất là 100 này đi"
+  },
+  {
+    "start": 3172.78,
+    "end": 3175.78,
+    "text": "bởi thì mình gọi cái chức năng là 7, duyệt sinh xét mình kết"
+  },
+  {
+    "start": 3175.78,
+    "end": 3179.78,
+    "text": "thì nó sẽ xóa cho bạn cái số là số 100 đúng không"
+  },
+  {
+    "start": 3179.78,
+    "end": 3182.78,
+    "text": "ok, vậy thì các cái chức năng chiền rồi xóa rồi là"
+  },
+  {
+    "start": 3182.78,
+    "end": 3185.78,
+    "text": "3 chức năng chiền và 3 chức năng xóa là ok rồi đúng không"
+  },
+  {
+    "start": 3185.78,
+    "end": 3195.78,
+    "text": "Bộ xung thêm một số chức năng như là tìm kiếm, tìm kiếm thì dễ, còn sắp xếp thì mình có thể hướng dẫn thêm các bạn một chút"
+  },
+  {
+    "start": 3195.78,
+    "end": 3201.18,
+    "text": "Hướng dẫn thêm một chức năng nữa để mình sẽ xóa nhá"
+  },
+  {
+    "start": 3201.18,
+    "end": 3203.18,
+    "text": "Ok, cái hạm ít này mình cho một chức năng dòng đi"
+  },
+  {
+    "start": 3203.18,
+    "end": 3212.24,
+    "text": "Cái chức năng ít này này, đây là chức năng, đây là chức năng, đây là chức năng, đây là chức năng, đây là chức năng"
+  },
+  {
+    "start": 3212.24,
+    "end": 3219.24,
+    "text": "rồi, bây giờ mình thêm các chức năng này, chức năng, bạn có thể tìm kiếm nhé, ok, mình thêm một chức năng này chính là sub-save"
+  },
+  {
+    "start": 3219.24,
+    "end": 3228.23,
+    "text": "sub-tap, phần thử trong cái xe liên kết, theo thứ tăng dần hoặc giảm dần nhé, ok, ở đây mình sẽ sub-save, tăng dần"
+  },
+  {
+    "start": 3228.23,
+    "end": 3235.62,
+    "text": "thì như thế này, một khi mà bạn đã biết duyệt đây này, đây là cái duyệt đúng không, duyệt đánh xe liên kết đúng không"
+  },
+  {
+    "start": 3235.62,
+    "end": 3242.62,
+    "text": "thì bạn có thể làm được các chức năng như là tìm kiếm hay tìm số lớn nhất, tìm số nhỏ nhất, cái đấy là thuộc về kỹ thuật lập trình phong dẫn đấy nhé, vì nó rất là đơn giản"
+  },
+  {
+    "start": 3242.62,
+    "end": 3249.62,
+    "text": "bây giờ mình chỉ dẫn node cái chức năng để chính là sắp xếp các phần tửa trong danh xếp niên kết thôi"
+  },
+  {
+    "start": 3249.62,
+    "end": 3255.62,
+    "text": "rồi thì ở đây mình sẽ có một cái hàm sắp xếp danh xếp niên kết, nó cũng như là sắp xếp mảng thôi mà"
+  },
+  {
+    "start": 3255.62,
+    "end": 3260.62,
+    "text": "mình đặt là sắp xếp, một cái danh xếp niên kết, có node đầu và node a"
+  },
+  {
+    "start": 3260.62,
+    "end": 3266.16,
+    "text": "thì bình thường khi mà bạn sắp xếp mảng thì mình dùng 2 vòng follow nhau đúng không?"
+  },
+  {
+    "start": 3266.16,
+    "end": 3271.16,
+    "text": "nhưng mà khi đó mình duyệt bằng chỉ số, thì còn ở đây mình sẽ duyệt bằng các cái node thôi, đúng không?"
+  },
+  {
+    "start": 3271.16,
+    "end": 3273.52,
+    "text": "Mình sẽ dùng thật toán gì nhỉ?"
+  },
+  {
+    "start": 3273.52,
+    "end": 3279.62,
+    "text": "Mình sẽ thường thật toán insert-sensort nhé"
+  },
+  {
+    "start": 3279.62,
+    "end": 3281.34,
+    "text": "Xin lỗi, select-sensort nhé"
+  },
+  {
+    "start": 3281.34,
+    "end": 3282.38,
+    "text": "Ok cho nó dễ"
+  },
+  {
+    "start": 3282.38,
+    "end": 3287.3,
+    "text": "Mình sẽ dùng for, node, P, bang, A, sau đó là P, khắc nuôi"
+  },
+  {
+    "start": 3287.3,
+    "end": 3289.82,
+    "text": "Điều kiện dừng là P khắc nuôi, sau đó là P bằng PnX"
+  },
+  {
+    "start": 3289.82,
+    "end": 3294.98,
+    "text": "Bình thường bạn dùng phong for là for in ở TI bằng không, y nhỏ hơn là y cộng cộng nữa"
+  },
+  {
+    "start": 3294.98,
+    "end": 3299.43,
+    "text": "Trong trường hợp này thì chủ này phải là P mũi TnX"
+  },
+  {
+    "start": 3299.43,
+    "end": 3301.63,
+    "text": "Thực ra là bạn để là P khắc nuôi cũng được"
+  },
+  {
+    "start": 3301.63,
+    "end": 3302.83,
+    "text": "mua bin, ya, Mства B nửa tuần n вр vinden, muscle b никогда nhé"
+  },
+  {
+    "start": 3302.83,
+    "end": 3318.96,
+    "text": "-\"ta-gaan olan plugged in-n"
+  },
+  {
+    "start": 3318.96,
+    "end": 3331.96,
+    "text": "-\"ta-gaanусforelar"
+  },
+  {
+    "start": 3331.96,
+    "end": 3334.48,
+    "text": "mình sẽ đặt một cái gọi là list node, đúng không?"
+  },
+  {
+    "start": 3335.67,
+    "end": 3339.75,
+    "text": "Mình đặt là cái node, mình đặt là min, nó bằng cái node hiện tại là node P, đúng không?"
+  },
+  {
+    "start": 3339.75,
+    "end": 3341.47,
+    "text": "Sao đó bạn rượt các cái node từ gì nhỉ?"
+  },
+  {
+    "start": 3341.47,
+    "end": 3347.47,
+    "text": "Node từ P, bình thường là foa, cái vòng foa ở trong, bạn sẽ rượt từ chỉ số, là i cộng 1, đúng không?"
+  },
+  {
+    "start": 3347.47,
+    "end": 3352.03,
+    "text": "G bằng i cộng 1, đúng không? Vậy thì ở đây mình sẽ dùng một cái node quy, bằng P mũi tên nách."
+  },
+  {
+    "start": 3352.03,
+    "end": 3357.28,
+    "text": "Nó tương tự như là foa i nổi tê ghi bằng i cộng 1 ở trong thật án selection sort ấy."
+  },
+  {
+    "start": 3357.28,
+    "end": 3362.04,
+    "text": "các bạn cũng để điều kiện là vp, xy lỗi, quy, mũi tên, xy lỗi, quy khác luôn"
+  },
+  {
+    "start": 3362.04,
+    "end": 3365.04,
+    "text": "ok, quy bằng quy nách"
+  },
+  {
+    "start": 3365.04,
+    "end": 3369.54,
+    "text": "rồi ok, trong này thì bạn sẽ kiểm tra đúng không?"
+  },
+  {
+    "start": 3369.54,
+    "end": 3374.3,
+    "text": "nếu gì nhỉ? nếu mà cái dữ liệu của cái node quy, quy, mũi tên, data đúng không?"
+  },
+  {
+    "start": 3374.3,
+    "end": 3378.46,
+    "text": "nó lớn hơn, dữ liệu của cái node min, mũi tên, data nhỉ?"
+  },
+  {
+    "start": 3378.46,
+    "end": 3384.12,
+    "text": "thì bạn sẽ cập nhật, nhỏ hơn hay lớn hơn nè, nhỏ hơn đúng không?"
+  },
+  {
+    "start": 3384.12,
+    "end": 3386.52,
+    "text": "thì bạn sẽ cập nhật min bằng quy"
+  },
+  {
+    "start": 3386.52,
+    "end": 3392.31,
+    "text": "ok, sau đó thì sau vòng lập qua này, các bạn đừng có hoán vị hai cái note nhé"
+  },
+  {
+    "start": 3392.31,
+    "end": 3395.51,
+    "text": "bạn chỉ hoán vị hai cái giá trị của hai cái note đấy thôi"
+  },
+  {
+    "start": 3395.51,
+    "end": 3399.27,
+    "text": "chứ bạn mà hoán vị note là vị sai đấy nhé, mình sẽ hoán vị cái giá trị của nó thôi,"
+  },
+  {
+    "start": 3399.27,
+    "end": 3402.47,
+    "text": "thế còn cái tham chiếu của nó thì mình đừng thay đổi, đúng không?"
+  },
+  {
+    "start": 3402.47,
+    "end": 3407.71,
+    "text": "thực ra thì hoán vị hai cái note ở trong danh sách liên kết thì thực chất mình chỉ cần hoán vị hai cái giá trị của nó thôi"
+  },
+  {
+    "start": 3407.71,
+    "end": 3409.79,
+    "text": "chứ đừng hoán vị cái tham chiếu của nó nhé"
+  },
+  {
+    "start": 3409.79,
+    "end": 3412.59,
+    "text": "đây mình sẽ dùng một cái biến tạm ở dưới này thì nó sẽ bằng"
+  },
+  {
+    "start": 3412.59,
+    "end": 3417.63,
+    "text": "và sẽ bằng cái dữ liệu của cái ông min, mũi tên, data, đó"
+  },
+  {
+    "start": 3417.63,
+    "end": 3421.68,
+    "text": "sau mình sẽ cho min, mũi tên, data"
+  },
+  {
+    "start": 3421.68,
+    "end": 3427.18,
+    "text": "bằng p, mũi tên, data, đúng không? sau đó là mình cho p, mũi tên, data, chính bằng miền tèm"
+  },
+  {
+    "start": 3427.18,
+    "end": 3431.74,
+    "text": "ok, đó, bạn nào mà chưa biết thật tán sắp xếp thì phải học sắp xếp trước nhá"
+  },
+  {
+    "start": 3431.74,
+    "end": 3434.84,
+    "text": "ở đây mình không lưng dẫn lại thật tán sắp xếp nữa, đơn giản"
+  },
+  {
+    "start": 3434.84,
+    "end": 3437.78,
+    "text": "bởi vì ở trong chức này mình có một cái chức năng là chức năng thực tám nữa"
+  },
+  {
+    "start": 3437.78,
+    "end": 3442.08,
+    "text": "elif, lựa chọn mà bằng tám thì mình sẽ gọi cái hàm sắp xếp"
+  },
+  {
+    "start": 3442.08,
+    "end": 3447.84,
+    "text": "và mình truyền cái nốt hét vào, còn nếu mà chức năng mà người ta lựa chọn là không thì mình sẽ break"
+  },
+  {
+    "start": 3447.84,
+    "end": 3450.84,
+    "text": "ok, đây mình sẽ có một cái chức năng là không để thoát"
+  },
+  {
+    "start": 3450.84,
+    "end": 3452.61,
+    "text": "thoát"
+  },
+  {
+    "start": 3452.61,
+    "end": 3456.31,
+    "text": "rồi"
+  },
+  {
+    "start": 3456.31,
+    "end": 3458.31,
+    "text": "bây giờ mình sẽ chạy lại cái chương trình mình nhá"
+  },
+  {
+    "start": 3458.31,
+    "end": 3473.14,
+    "text": "mình sẽ chèn các cái phần tử thôi, mình sẽ chèn vào cuối này, 1 này, 2 này, 2 này, 3 này, 2 này, 4 này, 2 này, 10 này, 2 này, 5 này, 2 này, 8 này, 2 này, 6 này, 2 này, 7 này"
+  },
+  {
+    "start": 3473.14,
+    "end": 3476.18,
+    "text": "OK, thử Injalaxsac lên kết của mình, xem nó bây giờ nó như thế nào nhá"
+  },
+  {
+    "start": 3476.18,
+    "end": 3477.68,
+    "text": "Mình thử Injala7 này"
+  },
+  {
+    "start": 3477.68,
+    "end": 3485.58,
+    "text": "Thì nó đang làm 1, 2, 3, 4, 10, 5, 8, 6, 7, bây giờ mình thêm 1 thằng nữa, thằng vào đầu đi"
+  },
+  {
+    "start": 3485.58,
+    "end": 3488.06,
+    "text": "Mình chuyển 1 thằng 100 đi"
+  },
+  {
+    "start": 3488.06,
+    "end": 3490.06,
+    "text": "OK, vậy thì Injalaxsac lên kết của bạn đây"
+  },
+  {
+    "start": 3490.06,
+    "end": 3492.56,
+    "text": "100, 1, 2, 3, 4, 10, 5, 8, 6, 7, đúng không?"
+  },
+  {
+    "start": 3492.56,
+    "end": 3495.76,
+    "text": "Bây giờ mình thử sắp xếp các phần thử trong Injalaxsac lên kết bằng chức năng thứ 8 này nhá"
+  },
+  {
+    "start": 3495.76,
+    "end": 3496.76,
+    "text": "Mình sẽ chọn 8"
+  },
+  {
+    "start": 3496.76,
+    "end": 3500.76,
+    "text": "OK, sau đó mình gọi lại 7 để Injalaxsac xem nó có được sắp xếp hay không"
+  },
+  {
+    "start": 3500.76,
+    "end": 3504.1,
+    "text": "ồ, sao nó lại bằng 100 thế này?"
+  },
+  {
+    "start": 3504.1,
+    "end": 3507.22,
+    "text": "Để mình xem lại cái chức năng thứ 7 đấy nhé, hả chức năng sắp xét vào nhé"
+  },
+  {
+    "start": 3507.22,
+    "end": 3510.69,
+    "text": "P bằng A đúng không? P bằng P mũi tiên đất"
+  },
+  {
+    "start": 3510.69,
+    "end": 3517.91,
+    "text": "à, trời ơi đúng không? Quy, node bằng P này"
+  },
+  {
+    "start": 3517.91,
+    "end": 3522.71,
+    "text": "Nhưng mà Quy mũi tiên data nó nhỏ hơn min mũi tiên data"
+  },
+  {
+    "start": 3522.71,
+    "end": 3525.73,
+    "text": "thì min bằng Quy đúng không?"
+  },
+  {
+    "start": 3525.73,
+    "end": 3527.96,
+    "text": "Rồi mình sẽ dùng một cái biến tem"
+  },
+  {
+    "start": 3527.96,
+    "end": 3533.76,
+    "text": "tem bằng min mũi tiên data"
+  },
+  {
+    "start": 3533.76,
+    "end": 3536.88,
+    "text": "sau đó là min mũi tiên data bằng P mũi tiên data đúng không?"
+  },
+  {
+    "start": 3536.88,
+    "end": 3539.62,
+    "text": "mũi tên ra têm, xàiuu, nè"
+  },
+  {
+    "start": 3548.59,
+    "end": 3552.25,
+    "text": "p oper here, mũi tên ra khắc nún"
+  },
+  {
+    "start": 3552.25,
+    "end": 3554.03,
+    "text": "chỗ này khắc nún nhé"
+  },
+  {
+    "start": 3554.03,
+    "end": 3556.78,
+    "text": "nè, rồi mình cứ chạy lại nè"
+  },
+  {
+    "start": 3556.78,
+    "end": 3560.72,
+    "text": "tắt cái này đi đã"
+  },
+  {
+    "start": 3560.72,
+    "end": 3562.84,
+    "text": "chạy lại nhé"
+  },
+  {
+    "start": 3562.84,
+    "end": 3564.22,
+    "text": "bây giờ mình sẽ trèn vào cuối nhé"
+  },
+  {
+    "start": 3564.22,
+    "end": 3568.4,
+    "text": "2 này, 1 này, 2 này, 2 này, 3 này, 4 này, 2 này"
+  },
+  {
+    "start": 3568.4,
+    "end": 3572.76,
+    "text": "không này, 2 này, 5 này, 2 này, 10 này, 2 này, 9 này"
+  },
+  {
+    "start": 3572.76,
+    "end": 3575.16,
+    "text": "2 này, 8 này, 2 này, 7 này"
+  },
+  {
+    "start": 3575.16,
+    "end": 3576.32,
+    "text": "2 này, 6 này"
+  },
+  {
+    "start": 3576.32,
+    "end": 3577.9,
+    "text": "ok, thử in ra nhé"
+  },
+  {
+    "start": 3577.9,
+    "end": 3585.02,
+    "text": "Các bạn có thể nhìn thấy dành xe liên kết của mình, bây giờ nó là 1, 2, 3, 4, 0, 5, 10, 9, 8, 7, 6, bây giờ mình cứ sắp xếp nhé, gọi chức năng thứ 8"
+  },
+  {
+    "start": 3585.02,
+    "end": 3588.22,
+    "text": "sau đó mình gọi cái chức năng thứ 7 để duyệt lại dành xe liên kết"
+  },
+  {
+    "start": 3588.22,
+    "end": 3592.54,
+    "text": "Thì nó sẽ sắp xếp cho các bạn thành 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10"
+  },
+  {
+    "start": 3592.54,
+    "end": 3593.98,
+    "text": "Ok không nhỉ?"
+  },
+  {
+    "start": 3593.98,
+    "end": 3599.82,
+    "text": "Nói chung là sắp xếp thì bạn, nếu bạn biết sắp xếp thì bạn chuyển đổi nó cách mình duyệt qua dành xe liên kết"
+  },
+  {
+    "start": 3599.82,
+    "end": 3603.82,
+    "text": "Bây giờ thì mình dùng Knack thôi, P bằng P Knack, thay vì y cộng cộng hay là y cộng cộng"
+  },
+  {
+    "start": 3603.82,
+    "end": 3606.82,
+    "text": "Nếu còn các cái tư tưởng khác thì nó không có gì thay đổi cả, ok?"
+  },
+  {
+    "start": 3606.82,
+    "end": 3611.82,
+    "text": "Vậy thì mình đã cũng hướng dẫn xăm cho các bạn các cái thao tác cơ bản trên một cái danh xách liên kết"
+  },
+  {
+    "start": 3611.82,
+    "end": 3617.82,
+    "text": "Ví dụ như là 3 thao tác thêm vào đầu, thêm vào cuối, thêm vào giữa, rồi là kiểm tra rộng, lấy về số lượng phần tử trong danh xách liên kết"
+  },
+  {
+    "start": 3617.82,
+    "end": 3622.82,
+    "text": "Hay là xóa đầu xào cuối và xóa giữa, cũng như là sắp xếp danh xách liên kết"
+  },
+  {
+    "start": 3622.82,
+    "end": 3626.34,
+    "text": "Các bạn có thể bổ sung thêm các chức năng như là tìm kiếm, đúng không?"
+  },
+  {
+    "start": 3626.34,
+    "end": 3629.86,
+    "text": "Dựng như là tìm kiếm, một cái số nào đó trong danh xét liên kết chẳng hạn?"
+  },
+  {
+    "start": 3629.86,
+    "end": 3633.86,
+    "text": "Trong danh xét liên kết, hoặc là tìm phần tử lớn nhất,"
+  },
+  {
+    "start": 3633.86,
+    "end": 3639.31,
+    "text": "nhỏ nhất, hay là các phần tử là xuống nghiên tố hay cái gì đó, nó thoảm án cái tính chất gì đó."
+  },
+  {
+    "start": 3639.31,
+    "end": 3642.31,
+    "text": "Nhưng nói chung, các bạn đã biết, dượt danh xét liên kết kiểu này rồi,"
+  },
+  {
+    "start": 3642.31,
+    "end": 3645.91,
+    "text": "thì mình có thể làm các cái chức năng khác, mình kỹ thật quài đặt cơ bản thôi mà."
+  },
+  {
+    "start": 3645.91,
+    "end": 3647.51,
+    "text": "Ok, đấy."
+  },
+  {
+    "start": 3647.51,
+    "end": 3651.61,
+    "text": "phần danh xe liên kết này mình chỉ có một cái vài chú ý cho các bạn như sau"
+  },
+  {
+    "start": 3651.61,
+    "end": 3656.15,
+    "text": "thứ nhất, đây chính là mỗi node ở trong danh xe liên kết của mình"
+  },
+  {
+    "start": 3656.15,
+    "end": 3660.27,
+    "text": "mặc dù nó làm, hay quen gọi nó là node nhưng mà nhớ là nó là một cái con trỏ"
+  },
+  {
+    "start": 3660.27,
+    "end": 3664.03,
+    "text": "trỏ quản lý 1 cái node, như thế cho nó dễ hiểu, được không nhỉ?"
+  },
+  {
+    "start": 3664.03,
+    "end": 3667.55,
+    "text": "về thứ 2, đấy chính là để từ 1 cái node nó nhảy sang cái node tiếp theo"
+  },
+  {
+    "start": 3667.55,
+    "end": 3670.05,
+    "text": "đấy chính là 1 cái câu lệnh là a bằng a muối tên đích"
+  },
+  {
+    "start": 3670.05,
+    "end": 3673.65,
+    "text": "thì khi đó cái node a, hiện tại nó sẽ nhảy sang cái node tiếp theo là sau nó"
+  },
+  {
+    "start": 3673.65,
+    "end": 3675.65,
+    "text": "ok không nhỉ? ok"
+  },
+  {
+    "start": 3675.65,
+    "end": 3681.53,
+    "text": "Và nhớ nhá, khi mà các bạn thực hiện các thao tác xóa hay là thêm, hãy thực hiện làm sao cho nó đúng thứ tự"
+  },
+  {
+    "start": 3681.53,
+    "end": 3685.45,
+    "text": "Và việc mà đúng thứ tự này, các bạn chỉ cần nháp cho mình một danh xách liên kết ra giấy"
+  },
+  {
+    "start": 3685.45,
+    "end": 3692.33,
+    "text": "Sau mình tạm một cái node mới ra, sau đó bạn xem là cái thứ tự thực hiện như thế nào nó mới đúng để nó không bị mất các liên kết ở đằng sau"
+  },
+  {
+    "start": 3692.33,
+    "end": 3697.09,
+    "text": "Vậy thì khi đó, bạn thấy là cái danh xách liên kết của mình nó chỉ cần đúng một cái node là node hép này này"
+  },
+  {
+    "start": 3697.09,
+    "end": 3700.13,
+    "text": "Là nó có thiệt vào lí danh xách của mình rồi, đúng không?"
+  },
+  {
+    "start": 3700.13,
+    "end": 3704.77,
+    "text": "Các bạn có thể viết thêm các cái hàn như là hàn clear xóa bất cả các phần cửa trong danh xách"
+  },
+  {
+    "start": 3704.77,
+    "end": 3707.01,
+    "text": "hoặc là vân vân và vân vân nhá"
+  },
+  {
+    "start": 3707.01,
+    "end": 3708.65,
+    "text": "ok, nhưng mà nhìn chung thì"
+  },
+  {
+    "start": 3708.65,
+    "end": 3713.33,
+    "text": "cái thao tác chèn ở giữa với xoá ở giữa chính là 2 cái thao tác khó nhất thì các bạn sẽ nắm được"
+  },
+  {
+    "start": 3713.33,
+    "end": 3714.69,
+    "text": "phải nắm được, ok"
+  },
+  {
+    "start": 3714.69,
+    "end": 3721.13,
+    "text": "thì đây chính là cái phần đầu tiên mà mình giới thiệu cho các bạn các cái thao tác ở trong phần danh xét liên kết này"
+  },
+  {
+    "start": 3721.13,
+    "end": 3726.21,
+    "text": "ok, cho vì dù sau thì mình sẽ vướng dẫn các bạn sử dụng danh xét liên kết này để quản lý 1 cái"
+  },
+  {
+    "start": 3726.21,
+    "end": 3730.85,
+    "text": "lấy xách sinh viên nào đó, hay là cài đặt cái stack với queue bằng cái danh xét liên kết này"
+  },
+  {
+    "start": 3730.85,
+    "end": 3733.0,
+    "text": "ok"
+  },
+  {
+    "start": 3733.0,
+    "end": 3740.4,
+    "text": "Mình đã có biết các cái thao tác làm sao xử lý được danh xe liên kết, duyệt rồi là thêm rồi sửa xóa chén, vân vân đúng không?"
+  },
+  {
+    "start": 3740.4,
+    "end": 3748.0,
+    "text": "Thì các bạn có thể sử dụng cái danh xe liên kết này để mình quản lý một cái đối tượng nào đó, tức là mỗi cái node ở trong cái danh xe liên kết của mình bây giờ"
+  },
+  {
+    "start": 3748.0,
+    "end": 3754.0,
+    "text": "nó không chỉ đơn thuần làm một cái biến inner-tain như thế này nữa mà nó có thể bao gồm cá thông tin của một sinh viên khác"
+  },
+  {
+    "start": 3754.0,
+    "end": 3760.6,
+    "text": "Ok, vậy thì đây mình sẽ hướng dẫn các bạn cái cách mà tạo một cái danh xe liên kết mà nó quản lý cả một thông tin trong một sinh viên nhá"
+  },
+  {
+    "start": 3760.6,
+    "end": 3766.56,
+    "text": "Vậy thì ở cái chỗ data này này, thay vì là inner-test data thì bạn sẽ xây dựng cho mình 1 struct sinh viên ra"
+  },
+  {
+    "start": 3766.56,
+    "end": 3770.36,
+    "text": "Ok, struct sinh viên nhé, mình đặt là student"
+  },
+  {
+    "start": 3770.36,
+    "end": 3777.08,
+    "text": "Ok, trong này mình sẽ có tên và id, ok, và 1 cái biến gpa để lưu điểm"
+  },
+  {
+    "start": 3777.08,
+    "end": 3782.4,
+    "text": "Vậy thì cái phần data của thằng nốt này thì bây giờ nó không còn làm 1 cái biến inner-test nữa"
+  },
+  {
+    "start": 3782.4,
+    "end": 3784.92,
+    "text": "Mà nó là 1 cái ông student-ed, thế thôi"
+  },
+  {
+    "start": 3784.92,
+    "end": 3789.8,
+    "text": "Ok, vậy thì khi đó có phải là 1 nốt của bạn, bây giờ nó lưu được cả thông tin của 1 cái student nữa"
+  },
+  {
+    "start": 3789.8,
+    "end": 3796.92,
+    "text": "và bây giờ mình sẽ, ở đây bạn sẽ, xuống đây đặt là fv đi, ok, xuống đây là fv đi"
+  },
+  {
+    "start": 3796.92,
+    "end": 3801.56,
+    "text": "cho mình đặt là sinh viên nhỏ thôi nhé, ok, mình tai đép sinh viên sao thì sinh viên nhỏ"
+  },
+  {
+    "start": 3801.56,
+    "end": 3807.96,
+    "text": "ok, rồi, bây giờ các cái hàm khác nó, các cái hàm nó tương tự như vậy nhé, đây chính là mình sẽ tạo 1 cái hàm make note"
+  },
+  {
+    "start": 3807.96,
+    "end": 3812.08,
+    "text": "để trả về 1 cái đối tượng sinh, 1 cái note lưu thông tin cho cả 1 sinh viên, ok"
+  },
+  {
+    "start": 3812.08,
+    "end": 3818.96,
+    "text": "bây giờ mình sẽ đặt là sinh viên này, ok, nãy, ở trong này thì mình sẽ tạo 1 cái đối tượng, 1 đối tượng stilldon ra đây"
+  },
+  {
+    "start": 3818.96,
+    "end": 3822.08,
+    "text": "Std, bare, nil, new, student,"
+  },
+  {
+    "start": 3890.06,
+    "end": 3895.94,
+    "text": "GPA cho ông std app rồi, tức là mình đã có đầy đủ thông tin của 1 std lưu trong biên app rồi"
+  },
+  {
+    "start": 3895.94,
+    "end": 3900.82,
+    "text": "Thì bạn sẽ xin cấp phát 1 node fv, 1 node để lưu thông tin của sinh viên đấy"
+  },
+  {
+    "start": 3900.82,
+    "end": 3908.58,
+    "text": "Thế là mình sẽ sinh viên têm bằng new sinh viên, sau đó là mình cho têm mũ tên F bằng F"
+  },
+  {
+    "start": 3908.58,
+    "end": 3914.82,
+    "text": "Ok, têm mũ tên F ở đây nó chính là trò đến sinh viên của node fv"
+  },
+  {
+    "start": 3914.82,
+    "end": 3918.66,
+    "text": "Ok, mình sẽ gán nó bằng F của ông sinh viên này này, ông stdF này này"
+  },
+  {
+    "start": 3918.66,
+    "end": 3921.54,
+    "text": "ok, sau đó mình sẽ cho cái phần nách của cái node này"
+  },
+  {
+    "start": 3921.54,
+    "end": 3923.54,
+    "text": "nó sẽ chỏ vào nôn"
+  },
+  {
+    "start": 3923.54,
+    "end": 3927.34,
+    "text": "ok, nó sẽ chỏ vào nôn và mình sẽ return với cái ông tên này, cái là sao"
+  },
+  {
+    "start": 3927.34,
+    "end": 3932.02,
+    "text": "vậy là mình đã xin cấp phát được 1 cái node mà nó có thể lưu đầy đủ thông tin cho 1 sinh viên rồi"
+  },
+  {
+    "start": 3932.02,
+    "end": 3934.54,
+    "text": "và cái thông tin của sinh viên này sẽ được nhập cái bàn phím"
+  },
+  {
+    "start": 3934.54,
+    "end": 3937.54,
+    "text": "ok, kiểm tra rỗng thì các bạn làm tương tự như vậy nhé"
+  },
+  {
+    "start": 3937.54,
+    "end": 3941.02,
+    "text": "ở đây bạn chỉ cần kiểm tra là cái node đấy vàng nôn thì khi đó cái danh sách liên kết"
+  },
+  {
+    "start": 3941.02,
+    "end": 3942.86,
+    "text": "danh sách sinh viên của mình nó sẽ rỗng"
+  },
+  {
+    "start": 3942.86,
+    "end": 3946.62,
+    "text": "ok, ở đây thì mình sẽ biết 1 cái hàm"
+  },
+  {
+    "start": 3946.62,
+    "end": 3949.98,
+    "text": "Các bạn làm tương tự thôi, để đếm số lượng sinh viên trong sinh xét liên kết"
+  },
+  {
+    "start": 3949.98,
+    "end": 3957.12,
+    "text": "Các bạn chỉ cần bọc 1 lọc Y, chứ nào mà E nó còn khác nuôi thì mình sẽ tăng biến số lượng sinh viên lên và mình sẽ cho bằng E bằng E nách cả được"
+  },
+  {
+    "start": 3957.12,
+    "end": 3961.78,
+    "text": "Ở đây mình cũng insert first nhá, mình chỉ cần sửa cái thang này thành FV là được"
+  },
+  {
+    "start": 3961.78,
+    "end": 3969.1,
+    "text": "Và mình đối với thêm phần từ bắt đầu thì mình không cần phải nhập thông tin nữa, bởi vì cái make note của mình sẽ nhập thông tin từ bàn phím mà"
+  },
+  {
+    "start": 3969.1,
+    "end": 3974.14,
+    "text": "mình ra đây, bạn chỉ cần gọi thêm, mình xin, cấp pháp 1 cái sinh viên thêm bằng Macnode"
+  },
+  {
+    "start": 3974.14,
+    "end": 3977.74,
+    "text": "sau đó bạn làm công việc tương tự như phần lý thiết mà mình đã hướng dẫn"
+  },
+  {
+    "start": 3977.74,
+    "end": 3979.38,
+    "text": "ok, đó"
+  },
+  {
+    "start": 3979.38,
+    "end": 3983.45,
+    "text": "tương tự như vậy, thêm 1 cái phần tử vào cuối thì các bạn không cần thằng x này nữa"
+  },
+  {
+    "start": 3983.45,
+    "end": 3986.57,
+    "text": "bạn chỉ cần Macnode, sau đó là làm các thao tác tương tự thôi"
+  },
+  {
+    "start": 3986.57,
+    "end": 3989.69,
+    "text": "ok, chỗ này truyền thành sinh viên nha, không còn là node nữa"
+  },
+  {
+    "start": 3989.69,
+    "end": 3993.53,
+    "text": "thêm vào cuối ứng thế, các bạn chỉ cần, ai xin lỗi thêm bài vị G-Pod cũng thế"
+  },
+  {
+    "start": 3993.53,
+    "end": 3994.89,
+    "text": "các bạn làm tương tự như vậy"
+  },
+  {
+    "start": 3994.89,
+    "end": 3999.2,
+    "text": "ở đây, bạn chỉ cần insert first A này"
+  },
+  {
+    "start": 3999.2,
+    "end": 4005.2,
+    "text": "trộn này là insert-laptn, trộn này bản chuyển thành sv, note thì bản chuyển thành sv"
+  },
+  {
+    "start": 4005.2,
+    "end": 4007.2,
+    "text": "trộn này cũng thêm một sv"
+  },
+  {
+    "start": 4007.2,
+    "end": 4012.2,
+    "text": "và cái make note thì nó không cần tham sống, thì mình đã thêm được một cái ham để thêm một phần tử vào giữa"
+  },
+  {
+    "start": 4012.2,
+    "end": 4018.2,
+    "text": "tương tự như vậy xóa phần tử ở đầu, các bạn chuyển thành sv, xóa phần tử ở cuối bạn cũng chuyển thành sv"
+  },
+  {
+    "start": 4018.2,
+    "end": 4022.23,
+    "text": "trộn này thành sv, ok"
+  },
+  {
+    "start": 4022.23,
+    "end": 4024.23,
+    "text": "thế còn các thao tác khác thì không có vấn đề gì cả"
+  },
+  {
+    "start": 4024.23,
+    "end": 4028.23,
+    "text": "nó như nhau thôi mà, chỉ có thông tin của cái note đấy nó khác thôi"
+  },
+  {
+    "start": 4028.23,
+    "end": 4030.23,
+    "text": "rửa lại nữa ở chỗ này thành fv"
+  },
+  {
+    "start": 4035.32,
+    "end": 4039.32,
+    "text": "ở đây thì mình sẽ viết 1 cái hạm để in ra thông tin của 1 sinh viên nhé, in"
+  },
+  {
+    "start": 4039.32,
+    "end": 4045.38,
+    "text": "mình dùng 1 student, add, mình sẽ cl ra đầu tiên là id, 2."
+  },
+  {
+    "start": 4045.38,
+    "end": 4049.7,
+    "text": "sau đó mình sẽ xs, add, ok, sau đó là"
+  },
+  {
+    "start": 4049.7,
+    "end": 4055.05,
+    "text": "họ tên, mình sẽ dùng add, name"
+  },
+  {
+    "start": 4055.05,
+    "end": 4061.33,
+    "text": "cuối cùng là rpa, mình sẽ dùng 2 số ra sau dưới các phần nhé"
+  },
+  {
+    "start": 4062.33,
+    "end": 4073.03,
+    "text": "fix, setprecision, 1 truyền vào 2, sau đó mình sẽ in ra cái gpa của ông này"
+  },
+  {
+    "start": 4073.03,
+    "end": 4075.61,
+    "text": "f.gpa nhá"
+  },
+  {
+    "start": 4075.61,
+    "end": 4078.61,
+    "text": "cái hàm này, cái hàm in thông tin của 1 sinh viên thôi"
+  },
+  {
+    "start": 4078.61,
+    "end": 4081.61,
+    "text": "cái hàm này chỉ có những vụ in ra thông tin của 1 sinh viên thôi"
+  },
+  {
+    "start": 4081.61,
+    "end": 4084.5,
+    "text": "mình in cho nó"
+  },
+  {
+    "start": 4084.5,
+    "end": 4087.5,
+    "text": "ok, sau đó cái hàm in danh sách sinh viên thì các bạn gọi cái hàm này là sao"
+  },
+  {
+    "start": 4087.5,
+    "end": 4089.5,
+    "text": "ok, ở đây mình truyền thành này thành hàm in danh sách"
+  },
+  {
+    "start": 4089.5,
+    "end": 4092.5,
+    "text": "ok, chỗ này thành fven, a"
+  },
+  {
+    "start": 4092.5,
+    "end": 4095.5,
+    "text": "thì chỗ này nè, bạn sẽ đừng CL ra cái chỗ này nữa"
+  },
+  {
+    "start": 4095.5,
+    "end": 4097.5,
+    "text": "mà bạn gọi cái hàm in sau đó bạn truyền a"
+  },
+  {
+    "start": 4133.04,
+    "end": 4154.22,
+    "text": "d 숨, d cout, m hoch, retain, trang linh, cout,uits, hükm, h introduct, y, y, y, cout, fel."
+  },
+  {
+    "start": 4154.22,
+    "end": 4165.24,
+    "text": "Cout, d, cout, you, d, cout, X, y, xy, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, y, xy, y, y, y, y."
+  },
+  {
+    "start": 4165.24,
+    "end": 4173.72,
+    "text": "Đấy là cái điểm của ông sinh viên mà đang bị quản lý bởi cái node quy ấy, nó còn nhỏ hơn cái điểm của ông sinh viên min, tức là min.va"
+  },
+  {
+    "start": 4173.72,
+    "end": 4183.9,
+    "text": "Ok, thì mình sẽ đặt min bằng quy mũi tên s, mình sẽ gán cái ông sinh viên đấy, cho, ờ, tờ, tờ, mình xem nào"
+  },
+  {
+    "start": 4183.9,
+    "end": 4189.54,
+    "text": "Được không nhỉ, min mà quy mũi tên s, ờ, được đấy, ở dưới này sau đó bạn dùng hai cái std và mình hoàn vị cho nhau thôi"
+  },
+  {
+    "start": 4189.54,
+    "end": 4196.54,
+    "text": "Ok, std, mình đặt là tem, nó sẽ bằng min, sau đó mình sẽ cho min, ờ, không được, từ từ"
+  },
+  {
+    "start": 4196.54,
+    "end": 4200.21,
+    "text": "như thế này thì nó sẽ mất dấu đúng không nhỉ?"
+  },
+  {
+    "start": 4200.21,
+    "end": 4208.38,
+    "text": "Nhưng mà mình sắp xếp theo kiểu này, std, min"
+  },
+  {
+    "start": 4208.38,
+    "end": 4216.04,
+    "text": "Thôi chỗ này mình vẫn để là set sv, ok, sinh viên min thì nó sẽ bằng P"
+  },
+  {
+    "start": 4216.04,
+    "end": 4224.75,
+    "text": "sau đó thì ở chỗ này mình quy mũ tên s.gpa và chỗ này nó sẽ là min mũ tên s.gpa"
+  },
+  {
+    "start": 4224.75,
+    "end": 4230.83,
+    "text": "thì mình sẽ cập nhật quy bằng min, a min bằng quy"
+  },
+  {
+    "start": 4230.83,
+    "end": 4233.87,
+    "text": "sau đó dưới này mình sẽ hoán đổi cái giá trị của hai cái thằng này thôi nhé"
+  },
+  {
+    "start": 4233.87,
+    "end": 4236.11,
+    "text": "Crackball, $, and more"
+  },
+  {
+    "start": 4236.11,
+    "end": 4256.58,
+    "text": "iostream, After"
+  },
+  {
+    "start": 4256.58,
+    "end": 4261.86,
+    "text": "trong này mình cũng có thể làm các cái theo tác, chèn sinh viên vào đầu danh sac, chèn phần tử"
+  },
+  {
+    "start": 4261.86,
+    "end": 4272.6,
+    "text": "ok, chỗ này mình sẽ để là chèn sinh viên vào đầu danh sac, chèn sinh viên vào cuối danh sac, chèn sinh viên vào giữa danh sac"
+  },
+  {
+    "start": 4272.6,
+    "end": 4282.52,
+    "text": "ok, dựa sắp xếp các sinh viên, dựa danh sac liên kết, vân vân, ok"
+  },
+  {
+    "start": 4282.52,
+    "end": 4291.32,
+    "text": "Nhưng mà ở những cái chức năng này thì mình không cần nhập thằng ích nữa, mình chỉ cần gọi cái ham insert first, chỗ này mình chuyển thằng này thành FV nhé"
+  },
+  {
+    "start": 4291.32,
+    "end": 4298.87,
+    "text": "Đây, như thế này, mình sẽ chỉ cần insert last thôi này, chỗ này là mình sẽ chỉ cần nhập cái lựa chọn xóa thôi"
+  },
+  {
+    "start": 4298.87,
+    "end": 4303.72,
+    "text": "Lựa cần insert thôi"
+  },
+  {
+    "start": 4303.72,
+    "end": 4308.72,
+    "text": "OK, được rồi đấy, mình sẽ gọi cái ham xắp xếp chỗ này là insert nhé"
+  },
+  {
+    "start": 4308.72,
+    "end": 4313.76,
+    "text": "Rồi mình thử chạy, thì cái insert lên kết này bây giờ nó trở thành quản lý sinh viên thôi mà"
+  },
+  {
+    "start": 4313.76,
+    "end": 4320.0,
+    "text": "Nó chỉ khác cái bài mình hướng dẫn ở trước, để chính là mình sẽ thay đổi cái data của cái node đấy thôi"
+  },
+  {
+    "start": 4320.0,
+    "end": 4323.56,
+    "text": "Mình còn các cái thao tác, còn lại thì nó không có gì khác cả, nó sẽ chạy"
+  },
+  {
+    "start": 4323.56,
+    "end": 4330.01,
+    "text": "Ừm, chỗ này là fv nhá, xinh viên nhá, fv hoa nhá"
+  },
+  {
+    "start": 4330.01,
+    "end": 4333.19,
+    "text": "Còn nỗi nữa nữa không?"
+  },
+  {
+    "start": 4333.19,
+    "end": 4335.83,
+    "text": "fv tem bằng make node"
+  },
+  {
+    "start": 4335.83,
+    "end": 4339.47,
+    "text": "Make node ở chỗ này không có biển ích nữa"
+  },
+  {
+    "start": 4339.47,
+    "end": 4343.85,
+    "text": "Tất cả các thông tin của mình sẽ nhập cái bàn phí, mà chỗ này là fv nhá"
+  },
+  {
+    "start": 4343.85,
+    "end": 4348.7,
+    "text": "Này thế này, fv mình chia sở này"
+  },
+  {
+    "start": 4348.7,
+    "end": 4355.13,
+    "text": "Rồi, bây giờ mình sẽ chán thêm cái viên vào cuối danh sách nhé"
+  },
+  {
+    "start": 4355.13,
+    "end": 4361.48,
+    "text": "Mình sẽ nhập ID là 1, tên ổng viễn ban nam, điểm là 2,8 rồi nè"
+  },
+  {
+    "start": 4361.48,
+    "end": 4370.2,
+    "text": "Mình sẽ lại chán thêm ổng cuối nửa vào cuối nhé, mả là 2, ổng viễn ban mạnh, điểm là 3,4 rồi nè"
+  },
+  {
+    "start": 4370.2,
+    "end": 4374.43,
+    "text": "Ok, mình thử chán 1 ổng vào đầu nhé, bây giờ danh sách lên kết của mình đang có 2"
+  },
+  {
+    "start": 4374.43,
+    "end": 4378.88,
+    "text": "2 xanh viên đúng không, mình thử in ra đã nhé, 7 nhé"
+  },
+  {
+    "start": 4378.88,
+    "end": 4380.88,
+    "text": "Thì có 2 ổng viễn ban nam này, và ổng viễn ban mạnh này"
+  },
+  {
+    "start": 4380.88,
+    "end": 4383.88,
+    "text": "Bây giờ mình thử thêm 1 cái ổng vào đầu nhé"
+  },
+  {
+    "start": 4383.88,
+    "end": 4385.88,
+    "text": "cho 1 xanh xách sinh viên vào đầu"
+  },
+  {
+    "start": 4385.88,
+    "end": 4388.88,
+    "text": "mình sẽ nhập id của ông này là không"
+  },
+  {
+    "start": 4388.88,
+    "end": 4390.88,
+    "text": "tên là hoàng đỉnh nam"
+  },
+  {
+    "start": 4390.88,
+    "end": 4392.88,
+    "text": "ok, điểm là 2,5"
+  },
+  {
+    "start": 4392.88,
+    "end": 4395.88,
+    "text": "bây giờ xanh sinh viên kết của mình sẽ là hoàng đỉnh nam"
+  },
+  {
+    "start": 4395.88,
+    "end": 4397.88,
+    "text": "nguyễn văn nam và nguyễn văn mạnh, đúng không?"
+  },
+  {
+    "start": 4397.88,
+    "end": 4400.0,
+    "text": "mình sẽ nhập xanh xách là nguyễn kết là 7"
+  },
+  {
+    "start": 4400.0,
+    "end": 4403.0,
+    "text": "thì nó sẽ im là hoàng đỉnh nam, nguyễn văn nam và nguyễn văn mạnh"
+  },
+  {
+    "start": 4403.0,
+    "end": 4405.0,
+    "text": "vậy thì xong cái chức năng chén phân tử"
+  },
+  {
+    "start": 4405.0,
+    "end": 4408.0,
+    "text": "xanh xách sinh viên vào đầu này, vào cuối thì mình chén 1 ông vào giữa nhé"
+  },
+  {
+    "start": 4408.0,
+    "end": 4410.0,
+    "text": "mình chọn chức năng là 3"
+  },
+  {
+    "start": 4410.0,
+    "end": 4413.0,
+    "text": "sau đó nó nhập vị trí chén, bây giờ mình muốn chén vào vị trí thứ 2"
+  },
+  {
+    "start": 4414.0,
+    "end": 4418.8,
+    "text": "Thông tin của người chén vào vị trí thứ 2 thì có ai đi là Nam, tên là Nguyễn Văn Xuân"
+  },
+  {
+    "start": 4418.8,
+    "end": 4424.93,
+    "text": "3.5, ok, bây giờ danh sách liên kết của mình sẽ là Hoàng Đình Nam này, Nguyễn Văn Xuân"
+  },
+  {
+    "start": 4424.93,
+    "end": 4429.93,
+    "text": "Nguyễn Văn Nam và Nguyễn Văn Mạnh đúng không? Bởi vì mình vừa chén một cái ông Nguyễn Văn Xuân vào vị trí thứ 2"
+  },
+  {
+    "start": 4429.93,
+    "end": 4432.13,
+    "text": "Bây giờ mình sẽ ra danh sách như thế này, bệnh"
+  },
+  {
+    "start": 4432.13,
+    "end": 4435.8,
+    "text": "Thì nó sẽ là Hoàng Đình Nam, Nguyễn Văn Nam, Nguyễn Văn Mạnh"
+  },
+  {
+    "start": 4435.8,
+    "end": 4441.92,
+    "text": "Và, ồ, sao là Nguyễn Văn Xuân là chuyển vào cuối nhá, từ từ, mình xe ở trên nào"
+  },
+  {
+    "start": 4441.92,
+    "end": 4450.38,
+    "text": "trang lorie choice 3."
+  },
+  {
+    "start": 4461.94,
+    "end": 4469.0,
+    "text": "Trước năng tràn, ở sinh viên, vần dưới ngay thì sẽ xửa lại một chút"
+  },
+  {
+    "start": 4469.0,
+    "end": 4472.73,
+    "text": "Thử xóa phân thử ở đầu nha"
+  },
+  {
+    "start": 4472.73,
+    "end": 4476.01,
+    "text": "Đấy là bây giờ nó sẽ xóa ông hoàng đỉnh nam này đúng không? Chức năng từ 4 nhá"
+  },
+  {
+    "start": 4476.01,
+    "end": 4479.64,
+    "text": "Đấy thì nó sẽ xóa ông hoàng đỉnh nam ở đầu rồi này"
+  },
+  {
+    "start": 4479.64,
+    "end": 4483.88,
+    "text": "Bây giờ mình xóa ở cuối nhá, xóa ông nguyễn màn xuân này nhá"
+  },
+  {
+    "start": 4483.88,
+    "end": 4485.4,
+    "text": "Nhìn lựa chọn chức năng là 5"
+  },
+  {
+    "start": 4485.4,
+    "end": 4487.68,
+    "text": "Xóa mình chọn chức năng là 7"
+  },
+  {
+    "start": 4487.68,
+    "end": 4490.08,
+    "text": "Thì nó sẽ ông xóa ông nguyễn màn xuân rồi, ok"
+  },
+  {
+    "start": 4490.08,
+    "end": 4495.02,
+    "text": "Vậy thì bây giờ mình sẽ phải xem lại cái ham là insert myth đồ của mình"
+  },
+  {
+    "start": 4495.02,
+    "end": 4496.9,
+    "text": "sinh viên và e in a t-post"
+  },
+  {
+    "start": 4496.9,
+    "end": 4499.46,
+    "text": "hoặc là cái dưới này mình có thể nhập vị trí sai không?"
+  },
+  {
+    "start": 4499.46,
+    "end": 4501.46,
+    "text": "Nhập vị trí cần xóa"
+  },
+  {
+    "start": 4501.46,
+    "end": 4504.77,
+    "text": "iinsert"
+  },
+  {
+    "start": 4504.77,
+    "end": 4506.77,
+    "text": "vị trí cần chen đây đúng không?"
+  },
+  {
+    "start": 4506.77,
+    "end": 4509.7,
+    "text": "bây giờ mình sẽ xem lại cái hẹn insert mit-do một chút"
+  },
+  {
+    "start": 4509.7,
+    "end": 4514.7,
+    "text": "bằng nếu mypot lớn hơn sai cộng 1 thì mình bỏ qua vị trí không hợp lệ đúng không?"
+  },
+  {
+    "start": 4514.7,
+    "end": 4517.73,
+    "text": "ở chỗ này mình phải có một câu lệnh là return nữa"
+  },
+  {
+    "start": 4517.73,
+    "end": 4522.53,
+    "text": "không có nó xuống dưới này nó thay đổi này, chết dạ luôn"
+  },
+  {
+    "start": 4522.53,
+    "end": 4527.71,
+    "text": "xinh viên, make note"
+  },
+  {
+    "start": 4527.71,
+    "end": 4530.96,
+    "text": "chắc là được rồi đấy, ok mình sẽ tiết lại nhé"
+  },
+  {
+    "start": 4530.96,
+    "end": 4534.96,
+    "text": "mình không return ở trên thì nó sẽ xuống dưới nó vẫn thực hiện các câu lệnh ở dưới"
+  },
+  {
+    "start": 4534.96,
+    "end": 4552.56,
+    "text": "tràn vào cuối, 1, nguyễn văn nam, 2.8, 2, tràn vào cuối, mạc sinh viên là 2, tên là hoàng đỉnh nam, mkve là 2.9, ok, bây giờ có 2 ông đúng không, mình tràn thêm 1 ông vào cuối nữa nhé"
+  },
+  {
+    "start": 4552.56,
+    "end": 4563.77,
+    "text": "có mạc sinh viên lại đi là 3, tên là nguyễn văn xuân, nguyễn là 3.4, ok, bây giờ mình sẽ in ra đặc sách liên kết của mình bằng 27 nhé, chức năng 7"
+  },
+  {
+    "start": 4563.77,
+    "end": 4569.2,
+    "text": "Thì nó sẽ là nguyễn van nam, hoàng định nam và nguyễn van suân đúng không bây giờ mình thử chén 1 phần tử vào giữa nhá"
+  },
+  {
+    "start": 4569.2,
+    "end": 4579.36,
+    "text": "Mình sẽ chén vào ông tòa vị trí thứ 2, mình sẽ chọn cho nên là 3, vị trí cần chén là 2, id là 5, tên là nguyễn van teo cho nặng"
+  },
+  {
+    "start": 4579.36,
+    "end": 4588.12,
+    "text": "Điều là 2.2, ok, bây giờ nếu mà nó đúng thì nó phải là nguyễn van nam này, sau đó đến nguyễn van teo, sau đó đến hoàng định nam, sau đó đến nguyễn van suân đúng không"
+  },
+  {
+    "start": 4588.12,
+    "end": 4591.15,
+    "text": "chọn chức năng là 7"
+  },
+  {
+    "start": 4591.15,
+    "end": 4596.0,
+    "text": "sao nó cứ xe thêm nguyễn văn tèo vào cuối nhỉ"
+  },
+  {
+    "start": 4596.0,
+    "end": 4598.0,
+    "text": "thường mình thử vào 1 vị trí số 1 này nhé"
+  },
+  {
+    "start": 4598.0,
+    "end": 4600.24,
+    "text": "3 này, trên vào vị trí 1 này"
+  },
+  {
+    "start": 4600.24,
+    "end": 4601.76,
+    "text": "id là 0 này"
+  },
+  {
+    "start": 4601.76,
+    "end": 4603.92,
+    "text": "hoàn văn lâm"
+  },
+  {
+    "start": 4603.92,
+    "end": 4605.52,
+    "text": "2, 8"
+  },
+  {
+    "start": 4605.52,
+    "end": 4609.8,
+    "text": "chọn chức năng là 7"
+  },
+  {
+    "start": 4609.8,
+    "end": 4614.24,
+    "text": "hoàn nguyễn văn nem, hoàn văn lâm"
+  },
+  {
+    "start": 4614.24,
+    "end": 4616.2,
+    "text": "sao thế"
+  },
+  {
+    "start": 4616.2,
+    "end": 4621.47,
+    "text": "để xem lại nó pot bằng 1"
+  },
+  {
+    "start": 4621.47,
+    "end": 4622.91,
+    "text": "nếu nè bằng 1"
+  },
+  {
+    "start": 4622.91,
+    "end": 4624.75,
+    "text": "ư, chết rồi"
+  },
+  {
+    "start": 4624.75,
+    "end": 4627.61,
+    "text": "nếu nè chỗ này phải là ít pot bằng 1 chứ nhỉ"
+  },
+  {
+    "start": 4627.61,
+    "end": 4638.32,
+    "text": "Từ từ thế thì lúc nãy, lúc nãy cái phần danh xe lên kết kìa mình có chữa vị sai không nhỉ?"
+  },
+  {
+    "start": 4638.32,
+    "end": 4644.52,
+    "text": "Thế các thẻ, các bạn lúc nãy chỗ này là port bằng 1 chứ nhỉ?"
+  },
+  {
+    "start": 4644.52,
+    "end": 4652.14,
+    "text": "Không biết cái phần lúc nãy mình cốt, mình chỉ sửa cái phần này thì không biết nó có bị sai không?"
+  },
+  {
+    "start": 4652.14,
+    "end": 4662.2,
+    "text": "Nếu mà các bạn có cái phần ísert mít đồ này, sao lúc nãy mình sửa cái gì ý nhỉ?"
+  },
+  {
+    "start": 4662.2,
+    "end": 4666.67,
+    "text": "Thêm phần tự vào đầu."
+  },
+  {
+    "start": 4666.67,
+    "end": 4674.65,
+    "text": "Rồi ok, chỗ này phải là port bằng 1 nhé, tức là vị trí mặt xóa bằng 1, mình lại dùng là nò bằng 1 chỗ này cũng thế này."
+  },
+  {
+    "start": 4674.65,
+    "end": 4676.65,
+    "text": "Ip-Pos bằng nở cộng 1"
+  },
+  {
+    "start": 4676.65,
+    "end": 4679.84,
+    "text": "OK"
+  },
+  {
+    "start": 4679.84,
+    "end": 4683.84,
+    "text": "Để mình xeo lại một chút ở chỗ này mình"
+  },
+  {
+    "start": 4683.84,
+    "end": 4687.76,
+    "text": "vừa quay lên đây"
+  },
+  {
+    "start": 4687.76,
+    "end": 4689.76,
+    "text": "Ôu, chỗ này nhé, các bạn sửa"
+  },
+  {
+    "start": 4689.76,
+    "end": 4691.76,
+    "text": "một tí nữa mình sẽ nhắc ở chỗ này"
+  },
+  {
+    "start": 4691.76,
+    "end": 4693.76,
+    "text": "chỗ này phải là POS bằng 1"
+  },
+  {
+    "start": 4693.76,
+    "end": 4695.76,
+    "text": "và chỗ này là POS bằng nở cộng 1 chứ nhỉ?"
+  },
+  {
+    "start": 4695.76,
+    "end": 4698.2,
+    "text": "Chết sợ"
+  },
+  {
+    "start": 4698.2,
+    "end": 4701.74,
+    "text": "Ờ, rồi OK"
+  },
+  {
+    "start": 4701.74,
+    "end": 4703.74,
+    "text": "Vậy thì mình sẽ chạy lại cái thằng này nhé"
+  },
+  {
+    "start": 4703.74,
+    "end": 4705.74,
+    "text": "được rồi đấy"
+  },
+  {
+    "start": 4705.74,
+    "end": 4707.74,
+    "text": "Cô này thì mình bị thiếu mất một chỗ"
+  },
+  {
+    "start": 4707.74,
+    "end": 4717.74,
+    "text": "bất một chỗ, nó không bị sai do mấy cái port của mình bị chèn, nó vẫn chạy xuống cuối, nó vẫn chạy xuống mấy cái dòng cuối này, thì nó mình sẽ chú thích lại"
+  },
+  {
+    "start": 4717.74,
+    "end": 4734.95,
+    "text": "bây giờ mình sẽ chèn vào cuối nhé, 1 nè, nguyễn văn nam, 2.3 nè, chèn vào cuối nè, id là 2 nè, hoàng văn long, 3.4, chèn vào cuối nè, id là 3 nè, nguyễn văn mạnh, 2.5"
+  },
+  {
+    "start": 4734.95,
+    "end": 4740.83,
+    "text": "OK, dạy xe nền kết của bạn đây, 3 ông, Nguyễn Văn Nèm, Văn Văn Lòng và Nguyễn Văn Mạnh, bây giờ mình thử chèn vào vị trí số 2 nhé"
+  },
+  {
+    "start": 4740.83,
+    "end": 4743.83,
+    "text": "Mình sẽ gọi chức năng thứ 3 là chèn sinh viên vào giữa hay sách"
+  },
+  {
+    "start": 4743.83,
+    "end": 4748.2,
+    "text": "Dạy vị trí cần chèn, thì mình sẽ chèn vị trí số 2"
+  },
+  {
+    "start": 4748.2,
+    "end": 4754.25,
+    "text": "ID là ông, tên là 5 đi, tên là Nguyễn Văn Xuân, 2,2 OK"
+  },
+  {
+    "start": 4754.25,
+    "end": 4759.69,
+    "text": "Bây giờ nếu mà mình in ra thì nó phải đúng là Nguyễn Văn Nèm, sợ đồng Nguyễn Văn Xuân, sợ đồng Nguyễn Văn Lòng và Nguyễn Văn Mạnh quá"
+  },
+  {
+    "start": 4759.69,
+    "end": 4762.37,
+    "text": "trách năng thứ 7 là diệt sinh xác nền kết"
+  },
+  {
+    "start": 4762.37,
+    "end": 4767.89,
+    "text": "bây giờ nó mới đúng rồi đấy, mình chưa sửa cái chỗ này, mình đã biết nó thành POS"
+  },
+  {
+    "start": 4767.89,
+    "end": 4772.49,
+    "text": "nó rất là nguy hiểm đúng không? chỗ này là POS nhé, POS vòng 1 và POS vòng nờ cộng 1"
+  },
+  {
+    "start": 4772.49,
+    "end": 4779.17,
+    "text": "bây giờ, các cái trách năng chèn và trách năng, mình thử chèn vào vị trí thứ 4 nhé"
+  },
+  {
+    "start": 4779.17,
+    "end": 4782.05,
+    "text": "bây giờ sinh xác nền kết của mình đang có bốn thẳng"
+  },
+  {
+    "start": 4782.05,
+    "end": 4785.97,
+    "text": "bây giờ mình chèn vào vị trí thứ 4 thì ông Nguyễn Văn Mạn này đẩy sáng vị trí thứ 5 đúng không?"
+  },
+  {
+    "start": 4785.97,
+    "end": 4796.42,
+    "text": "Ban, vị trí thứ 4 nhé, trên ông id là 10, hoàng, thị, link, 2.6"
+  },
+  {
+    "start": 4796.42,
+    "end": 4801.58,
+    "text": "Thì bây giờ cái ông hoàng thị link này sẽ nhảy vào vị trí thứ 4 thay vì cái ông nguyên mất mạnh"
+  },
+  {
+    "start": 4801.58,
+    "end": 4806.58,
+    "text": "Rồi vậy thì là các cái chức năng chèn này, rồi là chèn và xóa thì ok rồi đúng không"
+  },
+  {
+    "start": 4806.58,
+    "end": 4813.01,
+    "text": "Để mình xem lại cái phần xóa có bấn đề gì không, sợ mình đã viết sai cái..."
+  },
+  {
+    "start": 4813.01,
+    "end": 4819.16,
+    "text": "Ok, xóa mích đồ được rồi nhé"
+  },
+  {
+    "start": 4819.16,
+    "end": 4827.8,
+    "text": "Vậy thì, thế là xong cái phần quản lý sinh viên đấy, bây giờ mình thử sắp xếp các sinh viên, xong xếp xếp kinh niên kết theo thứ tự VPE tăng dần nhá"
+  },
+  {
+    "start": 4827.8,
+    "end": 4829.8,
+    "text": "Ok, mình sẽ gọi cái chức năng là 8"
+  },
+  {
+    "start": 4829.8,
+    "end": 4834.38,
+    "text": "Sau đó mình gọi cái chức năng là 7 để xem là sinh xếp sinh viên tăng dần không?"
+  },
+  {
+    "start": 4834.38,
+    "end": 4844.98,
+    "text": "Thì bạn thấy bây giờ này, miễn Văn Xuân sẽ lên đầu vì VPE là 220, miễn Văn Nam là 24, miễn Văn Mạnh là 25, Văn Thí Linh là 26, Văn Văn Long là 34"
+  },
+  {
+    "start": 4844.98,
+    "end": 4849.94,
+    "text": "ok, và tất nhiên là cái xắp xếp này các bạn có thể xắp xếp theo nhiều tiêu chí khác nhau nhá, vần vần và vần vần"
+  },
+  {
+    "start": 4849.94,
+    "end": 4855.1,
+    "text": "ok, và là các bạn có thể làm thêm các cái chức năng như là tìm kiếm sinh viên theo tên này"
+  },
+  {
+    "start": 4855.1,
+    "end": 4864.76,
+    "text": "tìm kiếm sinh viên theo máy, theo id hay cái gì đó vần vần, nó đều là các cái chức năng"
+  },
+  {
+    "start": 4864.76,
+    "end": 4869.32,
+    "text": "nhưng nhìn chung là bạn biết duyên, cái danh xách niên kết như thế này thì bạn có thể sử lý cái logic ở bên trong"
+  },
+  {
+    "start": 4869.32,
+    "end": 4874.44,
+    "text": "ok, thì đây chính là cái bài đầu tiên mà mình hướng dẫn về phần hướng dụng của danh xách niên kết nhá"
+  },
+  {
+    "start": 4874.44,
+    "end": 4879.44,
+    "text": "Bây giờ mình sẽ hướng dẫn thêm cái ứng dụng thứ 2 để chí là bạn sẽ cài đặt cái stack bằng gánh xét liên kết"
+  },
+  {
+    "start": 4879.44,
+    "end": 4883.44,
+    "text": "Ok, stack, ngăn xếp ấy, đúng nha"
+  },
+  {
+    "start": 4889.69,
+    "end": 4896.69,
+    "text": "Thì ở đây nhé, cái stack của mình nó sẽ chỉ có thêm phần tử và xóa 1 phần tử vào đầu gánh xét thôi đúng không?"
+  },
+  {
+    "start": 4896.69,
+    "end": 4900.69,
+    "text": "Vào đầu ngăn xếp thôi đúng không? Vậy thì mình lấy luôn cái phần tử ở đầu ấy"
+  },
+  {
+    "start": 4900.69,
+    "end": 4904.69,
+    "text": "Phần tử ở đầu gánh xét liên kết nó chính là cái thằng đỉnh ngăn xếp là được"
+  },
+  {
+    "start": 4904.69,
+    "end": 4906.69,
+    "text": "ok"
+  },
+  {
+    "start": 4906.69,
+    "end": 4911.05,
+    "text": "và sự như ngăn xếp của các bạn, bây giờ nó đang có 3 phần tử đúng không?"
+  },
+  {
+    "start": 4911.05,
+    "end": 4914.53,
+    "text": "thì thêm 1 phần tử thì nó chính là bạn thêm 1 phần tử vào đầu, đúng nhỉ?"
+  },
+  {
+    "start": 4914.53,
+    "end": 4916.61,
+    "text": "thằng này nó chính là thằng tốt nè"
+  },
+  {
+    "start": 4916.61,
+    "end": 4919.49,
+    "text": "xoá 1 phần tử thì nó chính là xoá 1 phần tử vào cuối"
+  },
+  {
+    "start": 4919.49,
+    "end": 4926.88,
+    "text": "vậy thì cái thằng stack này nó dễ hơn rất nhiều so với cái stack này nó dễ hơn rất nhiều so với cái việc là"
+  },
+  {
+    "start": 4926.88,
+    "end": 4932.57,
+    "text": "cái việc mà quản lý như kiểu này"
+  },
+  {
+    "start": 4932.57,
+    "end": 4936.09,
+    "text": "bởi vì cái thao tác này còn chèn vào giữa, chèn vào cuối"
+  },
+  {
+    "start": 4936.09,
+    "end": 4939.33,
+    "text": "cái thằng stack này nó chỉ có chèn vào đầu và xoá vào đầu thôi, đúng không?"
+  },
+  {
+    "start": 4939.33,
+    "end": 4942.57,
+    "text": "mình sẽ lấy luôn thằng tốt này, thằng node đầu tiên thằng dành xét liên kết của mình"
+  },
+  {
+    "start": 4942.57,
+    "end": 4950.72,
+    "text": "làm cái thằng đỉnh ngăn xếp nhé, bởi vì các bạn sẽ cốt cho mình cái..."
+  },
+  {
+    "start": 4950.72,
+    "end": 4953.82,
+    "text": "cốt cho mình cái ấy như sau cái..."
+  },
+  {
+    "start": 4953.82,
+    "end": 4957.66,
+    "text": "dành xét liên kết mà sử dụng stack, sử dụng dành xét liên kết như sau"
+  },
+  {
+    "start": 4957.66,
+    "end": 4960.34,
+    "text": "ở đây mình sẽ dùng một cái struct node nhé, ok?"
+  },
+  {
+    "start": 4960.34,
+    "end": 4964.22,
+    "text": "đơn giản thì mình dùng một cái biến là biến data là int nhé"
+  },
+  {
+    "start": 4964.22,
+    "end": 4966.22,
+    "text": "rồi mình sẽ có node sound like đúng không?"
+  },
+  {
+    "start": 4966.22,
+    "end": 4969.72,
+    "text": "cho nên mình tai đẹp"
+  },
+  {
+    "start": 4969.72,
+    "end": 4975.26,
+    "text": "tai đẹp, struct, node sound"
+  },
+  {
+    "start": 4975.26,
+    "end": 4977.26,
+    "text": "là node, ok, rồi"
+  },
+  {
+    "start": 4977.26,
+    "end": 4981.77,
+    "text": "bây giờ mình sẽ viết đủ các hàm tương tự như là lớp stack mà các bạn hay dùng nhá"
+  },
+  {
+    "start": 4981.77,
+    "end": 4983.77,
+    "text": "để chỉ là hàm empty, để check 1 cái node có rộng hay không?"
+  },
+  {
+    "start": 4983.77,
+    "end": 4985.77,
+    "text": "node mình đặt là top"
+  },
+  {
+    "start": 4985.77,
+    "end": 4987.77,
+    "text": "thì bạn chỉ cần return về top bằng moon là được"
+  },
+  {
+    "start": 4987.77,
+    "end": 4989.77,
+    "text": "để check nó có phải là"
+  },
+  {
+    "start": 4989.77,
+    "end": 4993.08,
+    "text": "dộng hay không?"
+  },
+  {
+    "start": 4993.08,
+    "end": 4995.08,
+    "text": "thứ 2 là cái số lượng sai"
+  },
+  {
+    "start": 4995.08,
+    "end": 4998.36,
+    "text": "mình đặt là get sai"
+  },
+  {
+    "start": 4998.36,
+    "end": 5015.18,
+    "text": "node tốt signals, вик, hasta • node, report,antee."
+  },
+  {
+    "start": 5015.68,
+    "end": 5027.1,
+    "text": "makenode node, node temp, newnotes andич"
+  },
+  {
+    "start": 5027.1,
+    "end": 5035.55,
+    "text": "x, mũi tên, click, run, ok, rồi, sau đó thì bạn sẽ return cho mình cái thằng thêm này"
+  },
+  {
+    "start": 5035.55,
+    "end": 5046.84,
+    "text": "Hàm tiếp theo đây chính là hàm push, đẩy 1 phần tử vào ngăn xếp nhé, void, push, mình sẽ đặt là node và top"
+  },
+  {
+    "start": 5046.84,
+    "end": 5050.93,
+    "text": "Inner tx, nhận vụ của cái thằng này nó sẽ đẩy thằng x vào trong đỉnh ngăn xếp"
+  },
+  {
+    "start": 5050.93,
+    "end": 5057.25,
+    "text": "Nó chính là đẩy phần tử vào đầu gianh xếp niên kết thôi mà, bạn sẽ tạm 1 cái node mới, têm bằng make node"
+  },
+  {
+    "start": 5057.25,
+    "end": 5058.97,
+    "text": "Bạn truyền cho mình thẳng ích vào"
+  },
+  {
+    "start": 5058.97,
+    "end": 5062.29,
+    "text": "Và bạn sẽ cho cái phần, nếu mà tốt bằng bằng nôn nhá"
+  },
+  {
+    "start": 5062.29,
+    "end": 5064.61,
+    "text": "Tức là cái ngăn xếp của bạn đang rộng ấy"
+  },
+  {
+    "start": 5064.61,
+    "end": 5066.85,
+    "text": "Thì bạn chỉ cần gán tốt bằng tem là được"
+  },
+  {
+    "start": 5066.85,
+    "end": 5068.73,
+    "text": "Còn không thì bạn sẽ làm như thế nào nhá"
+  },
+  {
+    "start": 5068.73,
+    "end": 5076.09,
+    "text": "Để đẩy 1 cái phần từ vào đầu danh xách nhìn kết thì bạn chỉ cần, đây, thằng tem đây"
+  },
+  {
+    "start": 5076.09,
+    "end": 5077.17,
+    "text": "Thằng tem đây đúng không?"
+  },
+  {
+    "start": 5077.17,
+    "end": 5077.97,
+    "text": "Thì bạn sẽ làm gì nhá?"
+  },
+  {
+    "start": 5077.97,
+    "end": 5080.41,
+    "text": "Bạn sẽ cho tem, trỏ vào cái nốt đỉnh hiện tại đúng không?"
+  },
+  {
+    "start": 5080.41,
+    "end": 5081.6,
+    "text": "Như này"
+  },
+  {
+    "start": 5081.6,
+    "end": 5086.56,
+    "text": "Ok, bước đầu tiên bạn sẽ cho tem, mũi tín, nách, bằng, tốt"
+  },
+  {
+    "start": 5086.56,
+    "end": 5088.16,
+    "text": "Nói, sau bạn cập nhật lại"
+  },
+  {
+    "start": 5088.16,
+    "end": 5090.24,
+    "text": "Tốt bằng, tem, thế là sao?"
+  },
+  {
+    "start": 5090.8,
+    "end": 5093.68,
+    "text": "bây giờ thằng tốt nó không hoàn đỏng ở đây nữa, mà nó sẽ nhảy dùm đây"
+  },
+  {
+    "start": 5093.68,
+    "end": 5096.28,
+    "text": "vậy thì bây giờ thằng ở đầu gianh sách lin kết nó chính là thằng kèm"
+  },
+  {
+    "start": 5096.28,
+    "end": 5098.4,
+    "text": "cái thằng mà bạn vừa thêm mới vào trong xế lỗi"
+  },
+  {
+    "start": 5098.4,
+    "end": 5100.28,
+    "text": "gianh sách lin kết hay là ngăn xếp ấy"
+  },
+  {
+    "start": 5100.28,
+    "end": 5102.44,
+    "text": "tương tự như vậy có cái thao tác là thao tác pop"
+  },
+  {
+    "start": 5102.44,
+    "end": 5105.56,
+    "text": "xóa 1 phần tử khỏi đầu gianh sách lin khỏi stack đúng không?"
+  },
+  {
+    "start": 5105.56,
+    "end": 5108.24,
+    "text": "coi pop, mình sẽ đặt là node và tốt"
+  },
+  {
+    "start": 5108.24,
+    "end": 5109.24,
+    "text": "rồi"
+  },
+  {
+    "start": 5109.24,
+    "end": 5112.16,
+    "text": "thì mình kiểm tra là nếu mà tốt vào bằng nôn nhá"
+  },
+  {
+    "start": 5112.16,
+    "end": 5114.0,
+    "text": "thì mình sẽ return mình trả làm gì cả"
+  },
+  {
+    "start": 5114.0,
+    "end": 5116.6,
+    "text": "bởi vì cái gianh sạc, cái stack của bạn nó rỗng"
+  },
+  {
+    "start": 5116.6,
+    "end": 5122.92,
+    "text": "bình thường là các bạn hãy bị rối run time khi mà các bạn cố tỉnh xóa một cái node trong stack rộng đúng không?"
+  },
+  {
+    "start": 5122.92,
+    "end": 5125.81,
+    "text": "còn không thì các bạn làm gì nhỉ?"
+  },
+  {
+    "start": 5125.81,
+    "end": 5129.47,
+    "text": "để mà xóa một cái phần tử ở trong gian xét liên kết thì nó rất là đơn giản"
+  },
+  {
+    "start": 5129.47,
+    "end": 5130.97,
+    "text": "ai sẽ nỗi xóa cái phần tử ở đầu"
+  },
+  {
+    "start": 5130.97,
+    "end": 5135.48,
+    "text": "đây chính là bạn sẽ cho cái hàng tốt này nó nhảy ra thằng sau đó đúng không?"
+  },
+  {
+    "start": 5135.48,
+    "end": 5136.9,
+    "text": "đúng không?"
+  },
+  {
+    "start": 5136.9,
+    "end": 5141.69,
+    "text": "các bạn chỉ cần tốt, bằng, tốt, mũi tên nách"
+  },
+  {
+    "start": 5141.69,
+    "end": 5144.69,
+    "text": "thì khi đó cái hàng tốt của bạn sẽ nhảy ra từ thằng này nó nhảy ra đây"
+  },
+  {
+    "start": 5144.69,
+    "end": 5147.41,
+    "text": "và bây giờ cái thằng ở định gian xét liên kết của bạn nó lại là thằng này"
+  },
+  {
+    "start": 5147.41,
+    "end": 5153.77,
+    "text": "Định ngăn xếp, tốt và tốt mũi tên đất"
+  },
+  {
+    "start": 5153.77,
+    "end": 5156.67,
+    "text": "Ok, tương tự như vậy"
+  },
+  {
+    "start": 5156.67,
+    "end": 5162.65,
+    "text": "Gap tốt nữa nhỉ? Ok, gap tốt, nó là chính là hèn tốt vào trong plug stack"
+  },
+  {
+    "start": 5162.65,
+    "end": 5168.95,
+    "text": "nốt tốt thì bạn chỉ cần return về tốt mũi tên data là sao"
+  },
+  {
+    "start": 5168.95,
+    "end": 5172.95,
+    "text": "Vậy thì bạn đã có thể xây dựng được một cái stack"
+  },
+  {
+    "start": 5172.95,
+    "end": 5175.55,
+    "text": "dựa trên xe liên kết rồi, ok, rất là dễ"
+  },
+  {
+    "start": 5175.55,
+    "end": 5180.59,
+    "text": "và bạn có thể, ví dụ như mình muốn chuyển đổi số từ thập phân sang số hị phân dùng ngay cái stack này nhé"
+  },
+  {
+    "start": 5180.59,
+    "end": 5184.59,
+    "text": "ở đây mình sẽ khai bán 1 cái node là top bằng luôn, chính là cái đỉnh stack đấy"
+  },
+  {
+    "start": 5184.59,
+    "end": 5187.39,
+    "text": "rồi sau đó mình dùng cái biến nờ lòng lòng đi"
+  },
+  {
+    "start": 5187.39,
+    "end": 5194.65,
+    "text": "xe in cho nờ sau đó mình lập chừng nào mà nờ còn khác không thì mình sẽ cho gì nhỉ"
+  },
+  {
+    "start": 5194.65,
+    "end": 5197.77,
+    "text": "mình sẽ đẩy cái phần dư đúng không á, rờ bằng nờ phần 102"
+  },
+  {
+    "start": 5197.77,
+    "end": 5205.32,
+    "text": "sau đó bạn cho 1 cái hand đây là push, top và rờ sau đó cho nờ trên là 2"
+  },
+  {
+    "start": 5205.32,
+    "end": 5208.12,
+    "text": "sau dưới này bạn sẽ pop từng phần tứa trong stack ra đúng không?"
+  },
+  {
+    "start": 5208.12,
+    "end": 5213.6,
+    "text": "mình sẽ lập trường nào mà not, mt, ok, mình sẽ chuyển nốt vào, tốt vào, xin lỗi"
+  },
+  {
+    "start": 5213.6,
+    "end": 5218.14,
+    "text": "ta mình sẽ CL ra, get tốt, mình chuyển tốt vào"
+  },
+  {
+    "start": 5218.14,
+    "end": 5222.34,
+    "text": "sau đó thì mình sẽ pop mình đi, ok, pop, thế là sao"
+  },
+  {
+    "start": 5222.34,
+    "end": 5229.3,
+    "text": "khi đó nó sẽ chuyển 1 cái số ở hệ thập phân, sang, hệ dị phân, chạy nhá"
+  },
+  {
+    "start": 5229.3,
+    "end": 5235.4,
+    "text": "dụ số 15 thì là 4 số 1 đúng không, ok, hoặc là số dài hơn 1 nửa đi"
+  },
+  {
+    "start": 5235.4,
+    "end": 5238.3,
+    "text": "thì đây chính là cái dạng dị phân của nó, ok"
+  },
+  {
+    "start": 5238.3,
+    "end": 5242.3,
+    "text": "hoặc là các bạn cũng có thể đảo các từ trong một câu dùng stack"
+  },
+  {
+    "start": 5242.3,
+    "end": 5245.8,
+    "text": "Ok, vì khi đó, ví dụ như là bạn có 10 câu là"
+  },
+  {
+    "start": 5245.8,
+    "end": 5248.06,
+    "text": "I love this game chảy nào"
+  },
+  {
+    "start": 5248.06,
+    "end": 5255.98,
+    "text": "Thì nó sẽ in ra là game, exist, love, ai đúng không? Ok"
+  },
+  {
+    "start": 5255.98,
+    "end": 5258.48,
+    "text": "Thì bây giờ bạn chuyển cái data của cái node của mình"
+  },
+  {
+    "start": 5258.48,
+    "end": 5260.48,
+    "text": "tức là bây giờ cái stack của bạn mỗi node"
+  },
+  {
+    "start": 5260.48,
+    "end": 5262.98,
+    "text": "stack của bạn mỗi phần tử nó sẽ lưu một cái chuỗi"
+  },
+  {
+    "start": 5262.98,
+    "end": 5265.48,
+    "text": "Ok, cho nên mình làm"
+  },
+  {
+    "start": 5265.48,
+    "end": 5268.88,
+    "text": "cho nên là string nhá"
+  },
+  {
+    "start": 5268.88,
+    "end": 5270.94,
+    "text": "Cpage"
+  },
+  {
+    "start": 5270.94,
+    "end": 5274.86,
+    "text": ".stringx"
+  },
+  {
+    "start": 5274.86,
+    "end": 5277.48,
+    "text": "String"
+  },
+  {
+    "start": 5277.48,
+    "end": 5287.54,
+    "text": ".string"
+  },
+  {
+    "start": 5287.54,
+    "end": 5291.74,
+    "text": "Bây giờ các bạn thử làm cái... mình sẽ sử dụng một cái string-app này"
+  },
+  {
+    "start": 5291.74,
+    "end": 5294.24,
+    "text": "Hãy gát live cho tác hành app này"
+  },
+  {
+    "start": 5294.24,
+    "end": 5296.12,
+    "text": "Th 되면 mình dùng string-stream"
+  },
+  {
+    "start": 5296.12,
+    "end": 5297.84,
+    "text": "RISHWIM Thankyou"
+  },
+  {
+    "start": 5297.84,
+    "end": 5299.3,
+    "text": "ồn Soaking"
+  },
+  {
+    "start": 5299.3,
+    "end": 5300.98,
+    "text": "ồn Soaking"
+  },
+  {
+    "start": 5300.98,
+    "end": 5302.46,
+    "text": "ồn Soaking"
+  },
+  {
+    "start": 5302.46,
+    "end": 5302.88,
+    "text": "In case"
+  },
+  {
+    "start": 5302.88,
+    "end": 5303.92,
+    "text": "ồn Soaking"
+  },
+  {
+    "start": 5303.92,
+    "end": 5327.25,
+    "text": "c Craition, type, washe, c Mat following, also until update, upgrade, c2nbget"
+  },
+  {
+    "start": 5327.25,
+    "end": 5334.42,
+    "text": "Mình dụ mình nhập là, I love this game"
+  },
+  {
+    "start": 5334.42,
+    "end": 5339.21,
+    "text": "Có một dấu cách là chữ này nhé"
+  },
+  {
+    "start": 5339.21,
+    "end": 5343.21,
+    "text": "Ok, thì đấy là cái cách mà bạn xây dựng một cái stack bằng, dành xe lên kết"
+  },
+  {
+    "start": 5343.21,
+    "end": 5345.71,
+    "text": "I love this game"
+  },
+  {
+    "start": 5345.71,
+    "end": 5346.71,
+    "text": "Trên nhỏ"
+  },
+  {
+    "start": 5346.71,
+    "end": 5350.71,
+    "text": "Rồi, mình sẽ xây dựng node cho các bạn một cái thằng tương tự như stack đấy chính là queue nhé"
+  },
+  {
+    "start": 5350.71,
+    "end": 5356.44,
+    "text": "Ok"
+  },
+  {
+    "start": 5356.44,
+    "end": 5357.83,
+    "text": "No"
+  },
+  {
+    "start": 5357.83,
+    "end": 5359.33,
+    "text": "Đặt là không một"
+  },
+  {
+    "start": 5359.33,
+    "end": 5361.75,
+    "text": "Rồi, ok"
+  },
+  {
+    "start": 5361.75,
+    "end": 5365.75,
+    "text": "Bây giờ nhận vụ của bạn sẽ là xây dựng một cái queue đúng không, một cái hàng đợi"
+  },
+  {
+    "start": 5365.75,
+    "end": 5369.0,
+    "text": "Mình sẽ xóa cái phần này đi nhé"
+  },
+  {
+    "start": 5369.0,
+    "end": 5372.0,
+    "text": "Đầu tiên mình sẽ xây dựng một cái struct node"
+  },
+  {
+    "start": 5372.0,
+    "end": 5374.0,
+    "text": "Ở đây nó sẽ lưu thông tin của một số thôi"
+  },
+  {
+    "start": 5376.0,
+    "end": 5379.0,
+    "text": "Sau đó mình sẽ xây dựng các cái hàm đầy đủ như là hàm..."
+  },
+  {
+    "start": 5379.0,
+    "end": 5382.0,
+    "text": "như là lớp mà hàng đợi mình các bạn hãy sử dụng nhá"
+  },
+  {
+    "start": 5382.0,
+    "end": 5385.85,
+    "text": "Tài đẹp đi"
+  },
+  {
+    "start": 5391.74,
+    "end": 5394.74,
+    "text": "Rồi ok, bây giờ mình sẽ viết một cái hàm là mt"
+  },
+  {
+    "start": 5394.74,
+    "end": 5398.74,
+    "text": "Ok, boon, mt, node, top"
+  },
+  {
+    "start": 5398.74,
+    "end": 5401.38,
+    "text": "Từ từ, thằng hàng đợi này thì có một cái chú ý như sao"
+  },
+  {
+    "start": 5401.38,
+    "end": 5404.92,
+    "text": "Đây chính là mình sẽ lưu nhá"
+  },
+  {
+    "start": 5404.92,
+    "end": 5408.72,
+    "text": "Cái thằng đỉnh hàng đợi, ờ xin lỗi cái thằng ở cuối hàng đợi được chứ ạ?"
+  },
+  {
+    "start": 5408.72,
+    "end": 5409.64,
+    "text": "Chú ý này"
+  },
+  {
+    "start": 5409.64,
+    "end": 5412.92,
+    "text": "Mình sẽ lưu cái thằng ở cuối hàng đợi, mình đặt là thằng này là thằng En"
+  },
+  {
+    "start": 5412.92,
+    "end": 5416.8,
+    "text": "Cái đầu cuối khi mà bạn put một phần tử vào trong hàng đợi thì là nó đưa vào cuối đúng không?"
+  },
+  {
+    "start": 5416.8,
+    "end": 5421.32,
+    "text": "Thế còn thằng cuối danh sách liên kết của bạn này thì nó sẽ là, thằng này nó chỉ là En nhá"
+  },
+  {
+    "start": 5421.32,
+    "end": 5424.52,
+    "text": "Con thằng này, En thì không dùng lắm, nó là Back"
+  },
+  {
+    "start": 5424.52,
+    "end": 5426.56,
+    "text": "Con thằng này là Front"
+  },
+  {
+    "start": 5426.56,
+    "end": 5430.78,
+    "text": "Thằng ở đầu hàng đợi, chính là phần tử cuối cùng trong giang xét linkết"
+  },
+  {
+    "start": 5430.78,
+    "end": 5434.06,
+    "text": "Còn thằng ở cuối hàng đợi, chính là phần tử đầu tiên trong giang xét linkết"
+  },
+  {
+    "start": 5434.06,
+    "end": 5439.72,
+    "text": "Bởi vì khi mà bạn push một phần tử vào đợi, tôi chỉ cần thêm một phần tử vào đầu giang xét linkết"
+  },
+  {
+    "start": 5439.72,
+    "end": 5445.38,
+    "text": "Vậy thì ở đây, phần tử ở đầu giang xét linkết, mình sẽ gọi là phần tử cuối trong hàng đợi"
+  },
+  {
+    "start": 5445.38,
+    "end": 5447.18,
+    "text": "Ok, chú ý nhá"
+  },
+  {
+    "start": 5447.18,
+    "end": 5451.4,
+    "text": "Còn cái phần tử cuối cùng trong giang xét linkết của mình, chính là phần tử đầu tiên trong hàng đợi"
+  },
+  {
+    "start": 5451.4,
+    "end": 5461.38,
+    "text": "để mà nó có 2 thao tác chính đúng không, thao tác push và thao tác pop, push thì nó sẽ đẩy 1 phần tử vào cuối"
+  },
+  {
+    "start": 5461.38,
+    "end": 5463.88,
+    "text": "còn pop thì nó sẽ xóa 1 phần tử ở đầu"
+  },
+  {
+    "start": 5463.88,
+    "end": 5470.28,
+    "text": "ok, rồi thì các bạn chú ý như thế nhé, để chính là mình sẽ lưu cái node cuối ở trong hãng lợi của mình"
+  },
+  {
+    "start": 5470.28,
+    "end": 5472.48,
+    "text": "nó chính là cái node đầu tiên ở trong danh xe kinh kết"
+  },
+  {
+    "start": 5472.48,
+    "end": 5477.52,
+    "text": "mình đặt lại n hoặc là back gì đó"
+  },
+  {
+    "start": 5477.52,
+    "end": 5478.52,
+    "text": "ok"
+  },
+  {
+    "start": 5478.52,
+    "end": 5491.2,
+    "text": "RETURN THE BACK bằng bằng nuôi"
+  },
+  {
+    "start": 5491.2,
+    "end": 5493.2,
+    "text": "Chết giống như vậy, get side cũng thế nhé"
+  },
+  {
+    "start": 5493.2,
+    "end": 5500.44,
+    "text": "Mình có thể lấy về cái side của hàng đợi này, int, get side, note back"
+  },
+  {
+    "start": 5500.44,
+    "end": 5503.44,
+    "text": "Thì mình sẽ dùng một cái đến cao mà không nữa, sau đó hoài"
+  },
+  {
+    "start": 5503.44,
+    "end": 5507.44,
+    "text": "Back, hack nuôi thì mình sẽ làm 2 việc, mình sẽ tăng cao"
+  },
+  {
+    "start": 5507.44,
+    "end": 5514.41,
+    "text": "Mình sẽ cho back bằng back, muộn tiền đấy"
+  },
+  {
+    "start": 5514.41,
+    "end": 5518.35,
+    "text": "Now, do the program to the end of directory"
+  },
+  {
+    "start": 5518.35,
+    "end": 5522.87,
+    "text": "now, the initial process"
+  },
+  {
+    "start": 5522.93,
+    "end": 5527.53,
+    "text": "create a new node on the end of file"
+  },
+  {
+    "start": 5527.53,
+    "end": 5532.21,
+    "text": "without using makenode"
+  },
+  {
+    "start": 5532.21,
+    "end": 5535.37,
+    "text": "type Voi event"
+  },
+  {
+    "start": 5535.37,
+    "end": 5538.05,
+    "text": "create a new node"
+  },
+  {
+    "start": 5538.05,
+    "end": 5561.32,
+    "text": "let me email my"
+  },
+  {
+    "start": 5561.32,
+    "end": 5566.4,
+    "text": "boot"
+  },
+  {
+    "start": 5566.4,
+    "end": 5578.76,
+    "text": "cmd, omg,GreatEra, LostCetheria,"
+  },
+  {
+    "start": 5615.64,
+    "end": 5642.06,
+    "text": "Vszyst grammatical area,"
+  },
+  {
+    "start": 5642.06,
+    "end": 5646.54,
+    "text": "hãy nói chính là phần tử ở đầu của hàng đợi"
+  },
+  {
+    "start": 5646.54,
+    "end": 5650.38,
+    "text": "ở đây mình sẽ mỗi hãng pop, node và back"
+  },
+  {
+    "start": 5650.38,
+    "end": 5654.42,
+    "text": "bạn lập thôi, bạn lập cho mình đến nốt này nè"
+  },
+  {
+    "start": 5654.42,
+    "end": 5659.9,
+    "text": "nhớ đến nốt này hơn nha, thì bạn sẽ có điều kiện lập đây chính là, đi nhỉ"
+  },
+  {
+    "start": 5659.9,
+    "end": 5669.39,
+    "text": "pop, chắc phải trước sau gì đây đúng không, mình sẽ phải có 1 nốt trước bằng nôn"
+  },
+  {
+    "start": 5669.39,
+    "end": 5672.37,
+    "text": "và 1 nốt sau thì bằng back"
+  },
+  {
+    "start": 5672.37,
+    "end": 5676.01,
+    "text": "lập, điều kiện lập là y, sau, khắc nôn"
+  },
+  {
+    "start": 5676.01,
+    "end": 5679.31,
+    "text": "xeo, sau, mối tên neck, khắc nôn"
+  },
+  {
+    "start": 5679.31,
+    "end": 5683.19,
+    "text": "thì khi đó cái thằng sau của mình sẽ chạy đến cái node cuối cùng ở trong"
+  },
+  {
+    "start": 5683.19,
+    "end": 5684.53,
+    "text": "nó chạy đến hằng này nè"
+  },
+  {
+    "start": 5684.53,
+    "end": 5686.31,
+    "text": "thì căng thằng trước của mình nó đang ở đây"
+  },
+  {
+    "start": 5686.31,
+    "end": 5688.81,
+    "text": "có 1 câu lệnh ở đây là trước, bằng sau"
+  },
+  {
+    "start": 5688.81,
+    "end": 5690.87,
+    "text": "sau, bằng sau, neck"
+  },
+  {
+    "start": 5690.87,
+    "end": 5695.31,
+    "text": "ok, đây là mình đã có"
+  },
+  {
+    "start": 5695.31,
+    "end": 5699.62,
+    "text": "cái node trước và node sau rồi mình kiểm tra nếu mà trước mà bằng nôn"
+  },
+  {
+    "start": 5699.62,
+    "end": 5704.39,
+    "text": "tức là cái dành xanh này, cái hàng đợi của bạn nói chỉ có mỗi 1 phần tử thôi"
+  },
+  {
+    "start": 5704.39,
+    "end": 5707.83,
+    "text": "Thì khi đó bạn chỉ cần cho cái node back của bạn mà nun được được"
+  },
+  {
+    "start": 5707.83,
+    "end": 5709.99,
+    "text": "Thì khi đó tự khắc là xóa cái phần tử ở đầu"
+  },
+  {
+    "start": 5709.99,
+    "end": 5711.67,
+    "text": "Thằng không thì mình sẽ làm cái gì nhỉ?"
+  },
+  {
+    "start": 5711.67,
+    "end": 5715.27,
+    "text": "Mình sẽ cho cái nodes trước ấy, nó cho vào nun, cái phần nách của node trước ấy"
+  },
+  {
+    "start": 5715.27,
+    "end": 5720.39,
+    "text": "Thế là mình sẽ cho trước mũi tên nách, bằng nun thế ra sao?"
+  },
+  {
+    "start": 5720.39,
+    "end": 5722.39,
+    "text": "Ok, đây là thao tác pop nhá"
+  },
+  {
+    "start": 5722.39,
+    "end": 5724.39,
+    "text": "Còn thao tác mà lấy phần tử ở đầu này"
+  },
+  {
+    "start": 5724.39,
+    "end": 5727.91,
+    "text": "Tức là get front ấy, front ở trong cái lớp hàng đợi ấy"
+  },
+  {
+    "start": 5727.91,
+    "end": 5732.07,
+    "text": "Mình đặt là int get, front hoặc là front cũng được nhá"
+  },
+  {
+    "start": 5732.07,
+    "end": 5734.07,
+    "text": "Đặt là front đi, ok"
+  },
+  {
+    "start": 5735.1,
+    "end": 5741.62,
+    "text": "tên giống nốt back, mình sẽ phải lấy ra phần tửa cuối, nên ra là mình phải duyệt"
+  },
+  {
+    "start": 5741.62,
+    "end": 5751.42,
+    "text": "mình sẽ phải lập y, back, nick, khắc nuôi"
+  },
+  {
+    "start": 5751.42,
+    "end": 5757.54,
+    "text": "khi đó, back, ngủ tên nick"
+  },
+  {
+    "start": 5757.54,
+    "end": 5762.26,
+    "text": "khi mà sau bằng qua này, nốt back sẽ chạy với nốt cuối cùng"
+  },
+  {
+    "start": 5762.26,
+    "end": 5766.38,
+    "text": "và chính là cái node đầu tiên ở trong, node ở đầu của phần hàng đợi đấy"
+  },
+  {
+    "start": 5766.38,
+    "end": 5769.88,
+    "text": "thì mình sẽ return với cái data này thôi, 3, nụ tên data là được"
+  },
+  {
+    "start": 5769.88,
+    "end": 5773.06,
+    "text": "ok, thế là xong các cái ham rồi nhỉ"
+  },
+  {
+    "start": 5773.06,
+    "end": 5778.0,
+    "text": "push, pull, fron, sci, mt và fron, ok"
+  },
+  {
+    "start": 5778.0,
+    "end": 5782.92,
+    "text": "ví dụ nhé, mình sẽ sinh ra các cái số lộc phát, các cái số 68 mà có"
+  },
+  {
+    "start": 5782.92,
+    "end": 5786.6,
+    "text": "nhỏ hơn 9 trị số chẳng hạn, được không?"
+  },
+  {
+    "start": 5786.6,
+    "end": 5792.64,
+    "text": "ví dụ như là 6 này, 8 này, 66 này, 68 này, 86 này, 88 này, rồi là 666 này"
+  },
+  {
+    "start": 5792.64,
+    "end": 5799.33,
+    "text": "6668, 686, 688, mân vật, ok, đến cách chứ số có 9 trị số nhé"
+  },
+  {
+    "start": 5799.33,
+    "end": 5804.33,
+    "text": "Mình sẽ khai báo 1 cái node đầu tiên trong cái hàng đợi này để quản lý cái danh sách này"
+  },
+  {
+    "start": 5804.33,
+    "end": 5812.39,
+    "text": "Mình sẽ dùng là 1 node bằng bác, bằng nôn nhé, rồi sau đó là mình đẩy 2 cái số đầu tiên là số 6 với số 8 vào trong hàng đợi"
+  },
+  {
+    "start": 5812.39,
+    "end": 5818.39,
+    "text": "Mình sẽ cho push, bác vào 6 và push, bác vào 8"
+  },
+  {
+    "start": 5818.39,
+    "end": 5827.3,
+    "text": "ok, sau đó ở đây mình sẽ dùng 1 cái vòng lọc y, truly, y1 nhé"
+  },
+  {
+    "start": 5827.3,
+    "end": 5833.3,
+    "text": "thì mình sẽ lấy ra cái phần từ ở đầu hàng đợi nhé, mình đặt lại int, top, nó sẽ bằng thoan của bé"
+  },
+  {
+    "start": 5833.3,
+    "end": 5837.3,
+    "text": "và mình kiểm tra nếu mà nó có 9 trị số thì mình, có 10 trị số thì mình sẽ dừng nhé"
+  },
+  {
+    "start": 5837.3,
+    "end": 5845.3,
+    "text": "mình dùng 1 string F, bằng 2 string của top và mình kiểm tra ít, F, sai mà bằng người thì mình sẽ break"
+  },
+  {
+    "start": 5845.3,
+    "end": 5850.97,
+    "text": "còn không thì ở đây mình sẽ tạo 1 cái vector để lưu các cái số lông fat này"
+  },
+  {
+    "start": 5850.97,
+    "end": 5857.93,
+    "text": "lcfat, logfat.bus.bat"
+  },
+  {
+    "start": 5857.93,
+    "end": 5861.93,
+    "text": "mỗi khi mình lấy ra được 1 số ở đầu hàng đợi thì bạn sẽ..."
+  },
+  {
+    "start": 5861.93,
+    "end": 5863.93,
+    "text": "ví dụ như số 6 này thì bạn sẽ..."
+  },
+  {
+    "start": 5863.93,
+    "end": 5867.93,
+    "text": "làm như thế này, đấy là bạn sẽ cho số 6 này, bạn sẽ nối số 6 đằng sau thằng này"
+  },
+  {
+    "start": 5867.93,
+    "end": 5871.93,
+    "text": "và nối số 8 đằng sau thằng này, sẽ bạn đẩy ngược lại vào trong hàng đợi"
+  },
+  {
+    "start": 5871.93,
+    "end": 5875.93,
+    "text": "thế là bạn sẽ cho... ở đây bạn phải có 1 cái hàng pop này nhá, ở chỗ này này"
+  },
+  {
+    "start": 5875.93,
+    "end": 5877.93,
+    "text": "pop, back"
+  },
+  {
+    "start": 5877.93,
+    "end": 5879.93,
+    "text": "rồi, ở dưới này bạn sẽ cho push"
+  },
+  {
+    "start": 5879.93,
+    "end": 5896.97,
+    "text": "ideia được bonito lao-1 để tật ph rever"
+  },
+  {
+    "start": 5896.97,
+    "end": 5904.87,
+    "text": "Ngồi và materials you have created, we show the scamp of the picture."
+  },
+  {
+    "start": 5904.87,
+    "end": 5925.87,
+    "text": "We call it этой as vide notifications, it shows the lahGülme."
+  },
+  {
+    "start": 5925.87,
+    "end": 5934.58,
+    "text": "size 9, ok, có thể nó bị chán số ở cuối"
+  },
+  {
+    "start": 5934.58,
+    "end": 5943.5,
+    "text": "Thì bạn có thể sinh ra được tất cả các số lục pháp mà mà có từ 1 đến 8 trị số mà bao gồm 2 số là số 6 và số 8"
+  },
+  {
+    "start": 5943.5,
+    "end": 5951.49,
+    "text": "Ok, v mình cũng đã hướng dẫn các bạn xong cái cách xây dựng một cái hạng đợi bằng xây liên kết nhé"
+  },
+  {
+    "start": 5951.49,
+    "end": 5955.89,
+    "text": "Các bạn có thể xây dựng các cấu trúc dữ liệu khác như là hạng đợi hay đầu hay gì đó bằng xây liên kết"
+  },
+  {
+    "start": 5955.89,
+    "end": 5965.71,
+    "text": "Thông qua 3 tí dụ này thì các bạn có thể hiểu rõ hơn được cách xây dựng một danh xách link kết để cài đặt các câu chúc dữ liệu mình muốn"
+  }
+]

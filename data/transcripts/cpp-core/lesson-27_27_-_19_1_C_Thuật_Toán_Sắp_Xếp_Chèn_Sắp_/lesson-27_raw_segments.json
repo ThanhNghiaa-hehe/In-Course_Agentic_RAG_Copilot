@@ -1,0 +1,3817 @@
+[
+  {
+    "start": 0.08,
+    "end": 4.08,
+    "text": "Trong video này mình sẽ hướng dẫn các bạn một thuật toán sắp xếp, là thuật toán sắp xếp chọn."
+  },
+  {
+    "start": 4.08,
+    "end": 7.08,
+    "text": "Mình sẽ hướng dẫn thuật toán này đầu tiên trong các thuật toán sắp xếp."
+  },
+  {
+    "start": 7.08,
+    "end": 10.08,
+    "text": "Mình thấy nó rất là dễ cay đặc và dễ hiểu."
+  },
+  {
+    "start": 10.08,
+    "end": 14.08,
+    "text": "Tức tưởng của thuật toán sắp xếp chọn ấy, thì của nó là mỗi bước ấy."
+  },
+  {
+    "start": 14.08,
+    "end": 18.08,
+    "text": "Nó sẽ cố gắng đưa phần tử nhỏ nhất về với đầu dãy."
+  },
+  {
+    "start": 18.08,
+    "end": 24.75,
+    "text": "Và để mặt sắp xếp được một cái dãy mà gọi N là phần tử, thì thuật toán sắp xếp chọn này nó sẽ cần N là chiều một bước."
+  },
+  {
+    "start": 24.75,
+    "end": 28.75,
+    "text": "Độ phức tạp của thằng này sẽ là ONB."
+  },
+  {
+    "start": 28.75,
+    "end": 38.5,
+    "text": "Các bạn có thể xem cái mạng già của nó ấy, thì nhìn chung là ở mỗi bước ấy, nó sẽ cố gắng đưa cái phần tử nhỏ nhất về đầu dẫy, ok?"
+  },
+  {
+    "start": 38.5,
+    "end": 43.06,
+    "text": "Phần tử, đưa cái phần tử nhỏ nhất mà chưa được sắp xếp ấy về đầu dẫy, ok?"
+  },
+  {
+    "start": 43.06,
+    "end": 50.38,
+    "text": "Ví dụ bạn có một cái mảng như thế này nhé, đây là 8 này, 2 này, 1 này, 9, 7, 3, 6, 5, ok?"
+  },
+  {
+    "start": 50.38,
+    "end": 57.14,
+    "text": "Bây giờ để mà sắp xếp cái mảng này này, thì nó sẽ diệt các cái chỉ số từ ông 8 này này, ok? đến ông 6 này."
+  },
+  {
+    "start": 57.14,
+    "end": 61.66,
+    "text": "Bước đầu tiên thì nó sẽ xét qua chỉ số của 8, là cái chỉ số y vào không"
+  },
+  {
+    "start": 61.66,
+    "end": 65.24,
+    "text": "và nó coi là gì? Nó coi thằng 8 này là thằng nhỏ nhất, được chứ à?"
+  },
+  {
+    "start": 65.24,
+    "end": 70.14,
+    "text": "Thì khi đó nó sẽ cập nhật 1 biến min rồi đó, ok, bằng cái chỉ số của thằng 8 này, tức là không"
+  },
+  {
+    "start": 70.14,
+    "end": 74.04,
+    "text": "Tức là hiện thời bây giờ nó đang coi cái thằng 8 là thằng nhỏ nhất trong mạng, ok"
+  },
+  {
+    "start": 74.04,
+    "end": 79.2,
+    "text": "Không phải là cho nhỏ nhất trong mạng, xin lỗi, mà là nhỏ nhất tính từ 8 cho các đoạn đứng sang sau đó"
+  },
+  {
+    "start": 79.2,
+    "end": 83.14,
+    "text": "Sau đó thì nó sẽ tiến hành duyệt từng phần tử đằng sau thằng 8 này nhé"
+  },
+  {
+    "start": 83.14,
+    "end": 87.9,
+    "text": "và nếu mà cái phần tử nào mà đứng sau 8 mà nhỏ hơn 8 thì nó sẽ cập nhật cái chỉ số min này nè"
+  },
+  {
+    "start": 87.9,
+    "end": 91.1,
+    "text": "đấy, khi mà duyệt qua 2 nhé, thì nó thấy là gì?"
+  },
+  {
+    "start": 91.1,
+    "end": 92.94,
+    "text": "cái thằng nhỏ nhất bây giờ là 8 đúng không?"
+  },
+  {
+    "start": 92.94,
+    "end": 94.26,
+    "text": "còn lớn hơn thằng 2 này"
+  },
+  {
+    "start": 94.26,
+    "end": 99.86,
+    "text": "thằng ra cái chỉ số min khi đó nó không còn là chỉ số của ông 8 này nữa mà nó sang chỉ số của 2, tức là 1"
+  },
+  {
+    "start": 99.86,
+    "end": 100.94,
+    "text": "đúng không?"
+  },
+  {
+    "start": 100.94,
+    "end": 102.5,
+    "text": "tương tự như vậy duyệt qua 1 í"
+  },
+  {
+    "start": 102.5,
+    "end": 105.98,
+    "text": "thì nó thấy là 1 còn nhỏ hơn cái thằng mà được coi là nhỏ nhất hiện tại là thằng 2 này"
+  },
+  {
+    "start": 105.98,
+    "end": 107.46,
+    "text": "đang ở chỉ số 1 í"
+  },
+  {
+    "start": 107.46,
+    "end": 111.06,
+    "text": "thì nó sẽ lại cập nhật cái chỉ số min ấy thành chỉ số của ông 1 này"
+  },
+  {
+    "start": 111.06,
+    "end": 112.59,
+    "text": "tức là 2"
+  },
+  {
+    "start": 112.59,
+    "end": 120.59,
+    "text": "Rồi có 9 thì thấy 9 lớn hơn thằng 1 này thì bỏ qua này, 7 lớn hơn 1 bỏ qua, 3 lớn hơn 1 bỏ qua, 6 lớn 1 bỏ qua và 5 lớn hơn 1 bỏ qua"
+  },
+  {
+    "start": 120.59,
+    "end": 129.59,
+    "text": "Vậy thì sau khi mà đã diệt tất cả các phần tử đứng sau hướng 8 này thì nó tìm được cái phần tử mà nhỏ nhất đứng sau 8, tính từ 8 trở về cuối, nó chính là chỉ số 2 này"
+  },
+  {
+    "start": 129.59,
+    "end": 132.59,
+    "text": "Thì khi đó nó sẽ tiến hành hóán vị 2 thằng này với nhau"
+  },
+  {
+    "start": 132.59,
+    "end": 134.59,
+    "text": "Ok, nó sẽ hóa kiến hành hóán vị 2 thằng này với nhau này"
+  },
+  {
+    "start": 134.59,
+    "end": 137.47,
+    "text": "và bạn chỉ cần một phép hoán vị thôi, ok"
+  },
+  {
+    "start": 137.47,
+    "end": 139.41,
+    "text": "Đấy chính là mình sẽ swap cái thẳng"
+  },
+  {
+    "start": 139.41,
+    "end": 142.64,
+    "text": "cái thẳng amin, với cái thẳng ai"
+  },
+  {
+    "start": 142.64,
+    "end": 147.88,
+    "text": "trong đó i ở đây là không, còn min là hai, thì mình sẽ swap a0 và a2, tức là mình sẽ swap 81"
+  },
+  {
+    "start": 147.88,
+    "end": 150.64,
+    "text": "đấy thì chỗ này nó sẽ thành 8, còn chỗ này thì nó sẽ thành 1"
+  },
+  {
+    "start": 150.64,
+    "end": 153.36,
+    "text": "ok, đây, đây là 1, và thằng này là 8"
+  },
+  {
+    "start": 153.36,
+    "end": 155.64,
+    "text": "và như thế, sau một bước nhé, sau cái bước thứ nhất đấy"
+  },
+  {
+    "start": 155.64,
+    "end": 158.08,
+    "text": "thì cái mạng của bạn ấy đã có một phần tử được sắp xếp rồi"
+  },
+  {
+    "start": 158.08,
+    "end": 159.68,
+    "text": "và chính là một này được sắp xếp"
+  },
+  {
+    "start": 159.68,
+    "end": 161.72,
+    "text": "ok, thì nó sẽ nhảy sang bước thứ hai"
+  },
+  {
+    "start": 161.72,
+    "end": 166.68,
+    "text": "tương tự như vậy, bước thứ 2 của mình thì nó sẽ xét từ cái ông 2 này, ok"
+  },
+  {
+    "start": 166.68,
+    "end": 168.68,
+    "text": "thì khi đó cái i của mình nó là 1 đúng không?"
+  },
+  {
+    "start": 168.68,
+    "end": 173.18,
+    "text": "thì bây giờ nó sẽ cập nhật cái chỉ số min của mình ấy, nó sẽ là chỉ số của 8"
+  },
+  {
+    "start": 173.18,
+    "end": 177.08,
+    "text": "là cái lỗi của 2, tức là bằng 1 đúng không? chỉ số của 2 là 1 mà"
+  },
+  {
+    "start": 177.08,
+    "end": 180.92,
+    "text": "sau đó nó cũng tiến hành duyệt cắt thần tử đứng sau từ 8, 9, 7, 6, 3, 5"
+  },
+  {
+    "start": 180.92,
+    "end": 185.56,
+    "text": "nhưng mà duyệt có 8, có 9, có 7, có 6, có 3, có 3, 6 năm này"
+  },
+  {
+    "start": 185.56,
+    "end": 188.06,
+    "text": "không có phần tử nào nhỏ hơn cái thằng 2 này"
+  },
+  {
+    "start": 188.06,
+    "end": 190.4,
+    "text": "thì khi đó cái chỉ số min của mình nó vẫn là 1"
+  },
+  {
+    "start": 190.4,
+    "end": 192.88,
+    "text": "và khi đó bạn sẽ swap thằng này với chính nó"
+  },
+  {
+    "start": 192.88,
+    "end": 193.88,
+    "text": "ok"
+  },
+  {
+    "start": 193.88,
+    "end": 197.5,
+    "text": "tức là mình sẽ swap cái gì nhau, mình sẽ swap ai"
+  },
+  {
+    "start": 197.5,
+    "end": 200.02,
+    "text": "tức là cái phần tử hiện tại ở cái bước mình đang xét"
+  },
+  {
+    "start": 200.02,
+    "end": 201.94,
+    "text": "cái bước thường thường thường thật toán đấy"
+  },
+  {
+    "start": 201.94,
+    "end": 205.56,
+    "text": "và cái thằng là thằng Amin, là cái thằng mà nhỏ nhất"
+  },
+  {
+    "start": 205.56,
+    "end": 208.98,
+    "text": "ok, tính từ cái chỉ số i hiện tại trở về cuối dẫy"
+  },
+  {
+    "start": 208.98,
+    "end": 210.8,
+    "text": "tức là các phần tử mà chưa được sắp xếp"
+  },
+  {
+    "start": 210.8,
+    "end": 212.04,
+    "text": "thì trong trường hợp này"
+  },
+  {
+    "start": 212.04,
+    "end": 215.52,
+    "text": "việc mà mình hoán vị nó với chính nó không ảnh hưởng gì cả"
+  },
+  {
+    "start": 215.52,
+    "end": 219.12,
+    "text": "ok, bởi vì bạn hoán vị A1 với A1 thì nó vẫn là thằng 2 thôi mà"
+  },
+  {
+    "start": 219.12,
+    "end": 219.88,
+    "text": "ok"
+  },
+  {
+    "start": 219.88,
+    "end": 229.35,
+    "text": "Tiếp theo, bước tiếp theo, tương tự như vậy nó sẽ diệt qua thằng 8 và mình sẽ cập nhật cái chỉ số min là min của... là chỉ số của 8, rất là 2 đúng không, không 1, 2"
+  },
+  {
+    "start": 229.35,
+    "end": 233.48,
+    "text": "Ê, thì chỉ số nhỏ nhất của mình bây giờ là 2"
+  },
+  {
+    "start": 233.48,
+    "end": 238.76,
+    "text": "Duyệt qua 9 này, thì thấy 9 lớn hơn cái thằng mà đang được coi là nhỏ nhất là 8 như bỏ qua"
+  },
+  {
+    "start": 238.76,
+    "end": 243.88,
+    "text": "7 thì nhỏ hơn 8 đúng không, vậy khi đó cái chỉ số min này nó không còn là 2 nữa mà nó chuyển thành chỉ số của 7"
+  },
+  {
+    "start": 243.88,
+    "end": 247.4,
+    "text": "trở thành 0, 1, 2, 3, 4, đúng không?"
+  },
+  {
+    "start": 247.4,
+    "end": 252.52,
+    "text": "hấy, sau đó dù có 3 thì lại gần thấy là cần 3 còn nhỏ hơn cái thằng được con là nhỏ nhất hiện tại là 7 này"
+  },
+  {
+    "start": 252.52,
+    "end": 259.0,
+    "text": "ok, nó đang nằm ở chỉ số 4 nhá, thì nó sẽ cập nhật cái chỉ số nhỏ nhất, nó chỉ xuất nhật vào 3, tức là 5 đấy, ok"
+  },
+  {
+    "start": 259.0,
+    "end": 261.0,
+    "text": "thì nó sẽ chuyển thế chỉ số min thành 5"
+  },
+  {
+    "start": 261.0,
+    "end": 266.52,
+    "text": "tương tự như vậy dù có 6 thì 6 lớn hơn 3 thì bỏ qua, dù có 5 năm lớn hơn 3 thì bỏ qua"
+  },
+  {
+    "start": 266.52,
+    "end": 271.96,
+    "text": "vậy thì bây giờ nó đã tìm được cái vị trí của cái phần tử mà nhỏ nhất tính từ 8 trở về cuối dẫy"
+  },
+  {
+    "start": 271.96,
+    "end": 276.5,
+    "text": "Nó chính là 5, thì nó sẽ tiến hành swap cái thằng 8 này với thằng 3 này với nhau"
+  },
+  {
+    "start": 276.5,
+    "end": 279.5,
+    "text": "Ok, thì khi đó cái mạng của bạn nó sẽ thành trộn hình 3 này"
+  },
+  {
+    "start": 279.5,
+    "end": 282.43,
+    "text": "Còn chỗ này thì thành 8"
+  },
+  {
+    "start": 282.43,
+    "end": 284.93,
+    "text": "3 này, 8, ok"
+  },
+  {
+    "start": 284.93,
+    "end": 290.27,
+    "text": "Thì bạn thấy là sau 3 bước mà mình vừa xét thì cái mạng của bạn nó sẽ đưa được 3 cái thằng nhỏ nhất về đầu dãy"
+  },
+  {
+    "start": 290.27,
+    "end": 294.37,
+    "text": "Hay nói cái khác là nó đã sắp xét được 3 thằng rồi và cái bước tiếp theo thì các bạn làm dương tự như vậy"
+  },
+  {
+    "start": 294.37,
+    "end": 295.87,
+    "text": "Ok, mấu trốt là gì nhỉ?"
+  },
+  {
+    "start": 295.87,
+    "end": 301.79,
+    "text": "Ở mỗi bước ở chỉ số thứ y thì nó sẽ dùng 1 cái biến để lưu cái chỉ số của cái phần thứ nhỏ nhất"
+  },
+  {
+    "start": 301.79,
+    "end": 304.83,
+    "text": "và thường nó sẽ khởi tạo luôn bằng cái thằng i đấy, ok?"
+  },
+  {
+    "start": 304.83,
+    "end": 308.67,
+    "text": "sau đó nó mới tiến hành diệt các phần tử đứng sau, xem thằng nào có nhỏ hơn thằng"
+  },
+  {
+    "start": 308.67,
+    "end": 311.39,
+    "text": "được coi là nhỏ nhất hay không thì nó sẽ cập nhật chỉ số nhé"
+  },
+  {
+    "start": 311.39,
+    "end": 314.83,
+    "text": "ở đây mình sẽ cập nhật chỉ số cho mình không cập nhật giá trị nhé"
+  },
+  {
+    "start": 314.83,
+    "end": 317.07,
+    "text": "ok? mình không tìm cái giá trị nhỏ nhất"
+  },
+  {
+    "start": 317.07,
+    "end": 322.83,
+    "text": "đứng từ chỉ số i cho về quý dẫy mà mình sẽ tìm cái vị trí của phần tử nhỏ nhất, ok?"
+  },
+  {
+    "start": 322.83,
+    "end": 326.11,
+    "text": "vậy thì các bạn có thể xem cái animation của nó như thế này"
+  },
+  {
+    "start": 326.11,
+    "end": 327.79,
+    "text": "ví dụ cái mạng của mình như thế này đúng không?"
+  },
+  {
+    "start": 327.79,
+    "end": 330.43,
+    "text": "thì cái bước đầu tiên thì nó sẽ xé từ ông Ba này này"
+  },
+  {
+    "start": 330.43,
+    "end": 336.11,
+    "text": "Nó sẽ tiến hành tìm kiếm xem là đoạn đứng sau này này, thằng nào là thằng nhỏ nhất để nó hoán vị với thằng ba này, ok?"
+  },
+  {
+    "start": 336.11,
+    "end": 344.68,
+    "text": "Các bạn thấy nó, chế đồ mình phải cho cái này nhỏ lại thì, nãy nó đang đi tìm xem thằng nào là thằng nhỏ nhất ấy, ok?"
+  },
+  {
+    "start": 344.68,
+    "end": 352.0,
+    "text": "Và nó tìm được thằng hai này, thì nó sẽ hoán vị hai về ba, ạ, tiếp tiếp theo ổng thế, nó đang đi tìm thằng nhỏ nhất ấy, ok?"
+  },
+  {
+    "start": 352.0,
+    "end": 356.15,
+    "text": "Nó đang cập nhật thằng nhỏ nhất là thằng năm này, như giờ nó thành ba này, ok?"
+  },
+  {
+    "start": 356.15,
+    "end": 359.67,
+    "text": "sau đó tiến hành hoán vị 44,3, thế như thế"
+  },
+  {
+    "start": 359.67,
+    "end": 364.47,
+    "text": "mỗi bước nó chỉ làm công việc nghỉ thế thôi, tìm phần tử nhỏ nhất tính từ chỉ số y hiện tại"
+  },
+  {
+    "start": 364.47,
+    "end": 367.99,
+    "text": "cho tới cuối dãy sau đó hoán vị phần tử đó với phần tử ở vị trị y"
+  },
+  {
+    "start": 367.99,
+    "end": 371.43,
+    "text": "ok, và sau nr chứ 1 bước thì cái mạng của bạn nó sẽ được sắp xếp"
+  },
+  {
+    "start": 371.43,
+    "end": 375.83,
+    "text": "ok, bởi vì sau nr chứ 1 bước thì nr chứ 1 phần tử nhỏ nhất nó sẽ về đầu dãy mà"
+  },
+  {
+    "start": 375.83,
+    "end": 378.39,
+    "text": "thì cái phần tử cuối cùng tự khắc nó sẽ được sắp xếp"
+  },
+  {
+    "start": 378.39,
+    "end": 382.47,
+    "text": "ok, bây giờ nó sẽ hoán vị 47,15 đúng không?"
+  },
+  {
+    "start": 382.47,
+    "end": 384.55,
+    "text": "trong trời hợp này nó sẽ hoán vị 47,19"
+  },
+  {
+    "start": 384.55,
+    "end": 387.67,
+    "text": "bởi vì thầm 19 là cái thằng nhỏ nhất tính từ 4 7 chờ về cuối dẫy mà"
+  },
+  {
+    "start": 387.67,
+    "end": 388.17,
+    "text": "ok"
+  },
+  {
+    "start": 389.25,
+    "end": 391.25,
+    "text": "đó, các bạn có thể khe xem là"
+  },
+  {
+    "start": 391.25,
+    "end": 393.75,
+    "text": "một lúc nữa thôi là nó sẽ được sắp xếp tăng dài"
+  },
+  {
+    "start": 393.75,
+    "end": 395.75,
+    "text": "hóa vào các cái thuật toán của mình nó sẽ"
+  },
+  {
+    "start": 395.75,
+    "end": 397.25,
+    "text": "chạy tương tự như vậy"
+  },
+  {
+    "start": 397.25,
+    "end": 399.78,
+    "text": "thuật toán này thì nó hơi tệ một chút, đúng nhỉ"
+  },
+  {
+    "start": 399.78,
+    "end": 400.78,
+    "text": "ok"
+  },
+  {
+    "start": 400.78,
+    "end": 403.55,
+    "text": "bởi vì kiểu gì nó cũng thực hiện"
+  },
+  {
+    "start": 403.55,
+    "end": 405.55,
+    "text": "các cái phép so sánh"
+  },
+  {
+    "start": 405.55,
+    "end": 408.98,
+    "text": "để tìm ra cái phần tử nhỏ nhất ở mỗi bước"
+  },
+  {
+    "start": 408.98,
+    "end": 410.98,
+    "text": "phép so sánh của nó tương đối là nhiều"
+  },
+  {
+    "start": 410.98,
+    "end": 415.26,
+    "text": "vòng thứ nhất thì nó n là chữ 1, phép so sánh đúng không"
+  },
+  {
+    "start": 415.26,
+    "end": 418.22,
+    "text": "nr2, nr2, nr3, nr4, nguân văn"
+  },
+  {
+    "start": 418.22,
+    "end": 422.4,
+    "text": "Thế nghĩa là nó có tầm nr1 chia cho 2 đúng không?"
+  },
+  {
+    "start": 422.4,
+    "end": 425.4,
+    "text": "Phép so sánh gì đó, tầm nó, ít độ phức tạp của nó ra ô nơi bình"
+  },
+  {
+    "start": 425.4,
+    "end": 428.1,
+    "text": "Mà cái mạng của bạn nó sẽ được sắp xếp, ok?"
+  },
+  {
+    "start": 428.1,
+    "end": 430.4,
+    "text": "Cái đặt thuật toán này thì tương đối là dễ, ok?"
+  },
+  {
+    "start": 430.4,
+    "end": 433.4,
+    "text": "Các bạn cứ hiểu tư tưởng của nó, sau đó mình cài đặt thì rất là dễ"
+  },
+  {
+    "start": 433.4,
+    "end": 439.98,
+    "text": "Đây, các bạn có thể cài đặt nó như sau, mình đặt là, void, select, sum, sort"
+  },
+  {
+    "start": 439.98,
+    "end": 442.67,
+    "text": "Ok, một cái mạng A có nr phần tỉ nhé"
+  },
+  {
+    "start": 442.67,
+    "end": 444.67,
+    "text": "Rồi, mình sẽ thực hiện nr1 bước"
+  },
+  {
+    "start": 444.67,
+    "end": 448.19,
+    "text": "Bạn sẽ rượt cho mình từ chỉ số y bằng không cho tới chỉ số n là chứ 2 nhé"
+  },
+  {
+    "start": 448.19,
+    "end": 452.19,
+    "text": "Tức là mình sẽ rượt từ void, int bằng không, int nhỏ hằng là chứ 1, ok"
+  },
+  {
+    "start": 452.19,
+    "end": 457.76,
+    "text": "Thực ra thì các bạn rượt từ y bằng không cho tới y nhỏ hơn là được"
+  },
+  {
+    "start": 457.76,
+    "end": 460.26,
+    "text": "Tức là mình thực hiện n là bước được, nó không ảnh hưởng gì, ok"
+  },
+  {
+    "start": 460.26,
+    "end": 463.26,
+    "text": "Nhưng mà chính xác ra thì nó chỉ thực hiện n là chứ 1 bước thôi"
+  },
+  {
+    "start": 463.26,
+    "end": 467.26,
+    "text": "Thực ra là mình sẽ rượt từ chỉ số 0 cho tới chỉ số n là chứ 2, tức là n là chứ 1 bước rồi mà"
+  },
+  {
+    "start": 467.26,
+    "end": 469.26,
+    "text": "Ok, thì ở mỗi bước ấy mình sẽ làm gì nhỉ?"
+  },
+  {
+    "start": 469.26,
+    "end": 471.26,
+    "text": "Mình sẽ dùng 1 cái chỉ số đúng không?"
+  },
+  {
+    "start": 471.26,
+    "end": 479.54,
+    "text": "bây giờ một biến để lưu chỉ số của phần tử nhỏ nhất"
+  },
+  {
+    "start": 479.54,
+    "end": 484.34,
+    "text": "bắt đầu mình sẽ khởi tại nó là thằng i luôn, mình sẽ dùng một biến là min, vàng i"
+  },
+  {
+    "start": 484.34,
+    "end": 488.34,
+    "text": "là min boss, cho nó rõ ràng"
+  },
+  {
+    "start": 488.34,
+    "end": 493.34,
+    "text": "sau đó nó sẽ làm sao, nó sẽ tiến hành duyệt tất cả phần tử đứng sau, phần tử hiện tạng"
+  },
+  {
+    "start": 493.34,
+    "end": 499.5,
+    "text": "duyệt tất cả phần tử đứng sau, phần tử hiện tạng"
+  },
+  {
+    "start": 499.5,
+    "end": 504.66,
+    "text": "và cập nhật, ok, chỉ số của phần tử nhỏ nhất"
+  },
+  {
+    "start": 504.66,
+    "end": 510.89,
+    "text": "Thì nó sẽ dùng một cái vòng for chạy từ zi bằng e cộng 1 cho tới zi nhỏ nhất"
+  },
+  {
+    "start": 510.89,
+    "end": 517.56,
+    "text": "Rồi, sau đó thì nó kiểm tra là gì? Nếu mà a zi là cái phần tử mà bạn đang set này này"
+  },
+  {
+    "start": 517.56,
+    "end": 523.56,
+    "text": "Nó còn nhỏ hơn cái phần tử mà được coi, đang coi là nhỏ nhất ấy"
+  },
+  {
+    "start": 523.56,
+    "end": 526.56,
+    "text": "Tức là cái phần tử mà nó nằm ở cái vị trí là min pos, ok"
+  },
+  {
+    "start": 526.56,
+    "end": 534.58,
+    "text": "A của Z còn nhỏ hơn A của minposs, mình sẽ cập nhật minposs bằng Z"
+  },
+  {
+    "start": 534.58,
+    "end": 535.58,
+    "text": "Ok chưa?"
+  },
+  {
+    "start": 535.58,
+    "end": 541.58,
+    "text": "Vậy thì sau cái mòng lập xo này nó đã tìm thấy được cái phần tử mà có giá trị nhỏ nhất rồi"
+  },
+  {
+    "start": 541.58,
+    "end": 543.58,
+    "text": "nó tìm được cái vị trí của cái phần tử đấy rồi"
+  },
+  {
+    "start": 543.58,
+    "end": 546.08,
+    "text": "thì chắc chắn cái phần tử đấy phải đưa về đầu dẫy đúng không?"
+  },
+  {
+    "start": 546.08,
+    "end": 548.48,
+    "text": "Đưa về cái vị trí E hiện tại, chứ chưa?"
+  },
+  {
+    "start": 548.48,
+    "end": 551.94,
+    "text": "Chú ý nhé, tất cả các phần tử đứng trước chỉ số E là các phần tử mà đã được sắp xếp rồi"
+  },
+  {
+    "start": 551.94,
+    "end": 552.94,
+    "text": "đúng không đấy, mình hướng dẫn đấy"
+  },
+  {
+    "start": 552.94,
+    "end": 555.94,
+    "text": "thì ví dụ sau 3 bước đầu tiên thì 3 của nó đã được sắp xếp rồi mà"
+  },
+  {
+    "start": 555.94,
+    "end": 562.94,
+    "text": "Bước tiếp theo thì bạn chỉ cần tìm cái phần tử nhỏ nhất để bạn hoàn vị V9 thôi, chứ còn 3 là nhỏ nhất rồi mà"
+  },
+  {
+    "start": 562.94,
+    "end": 567.54,
+    "text": "Ở chỗ này, sau khi mà tìm được rồi thì bạn chỉ cần swap 2 thằng thôi"
+  },
+  {
+    "start": 567.54,
+    "end": 571.22,
+    "text": "Đấy là cái thằng chỉ số bước hiện tại, nó chính là ai"
+  },
+  {
+    "start": 571.22,
+    "end": 576.74,
+    "text": "Và cái thằng được coi là cái thằng nhỏ nhất trong đoạn từ i cho tới về cuối dẫy, nó chính là a của minposs"
+  },
+  {
+    "start": 576.74,
+    "end": 579.54,
+    "text": "Thế là cái mạng của mình nó đã sắp xếp"
+  },
+  {
+    "start": 579.54,
+    "end": 582.56,
+    "text": "đây mình sẽ dùng một cái nạn A có từ nhìn đi"
+  },
+  {
+    "start": 582.56,
+    "end": 591.05,
+    "text": "sau đó là mình sẽ dựa từ phó, int, int, con, int, ok, mình xin cho ai"
+  },
+  {
+    "start": 591.05,
+    "end": 598.16,
+    "text": "sau đó thì mình sẽ dùng ham, ham, select, sum, sort"
+  },
+  {
+    "start": 598.16,
+    "end": 607.14,
+    "text": "sau đó mình sẽ in là cái nạn này"
+  },
+  {
+    "start": 607.14,
+    "end": 610.82,
+    "text": "ok, cái bản của mình nó sẽ được sắp xếp, rất là dễ đúng không?"
+  },
+  {
+    "start": 610.82,
+    "end": 612.32,
+    "text": "nồi, sẽ chạy nhé"
+  },
+  {
+    "start": 612.32,
+    "end": 628.56,
+    "text": "mình dụ mình nhập cái bản có 10 phần tử nhé, 11, 7, 8, 9, 2, 3, 6, 5, 4, 10, đúng không nhé, đúng không?"
+  },
+  {
+    "start": 628.56,
+    "end": 630.56,
+    "text": "nơi, bones"
+  },
+  {
+    "start": 630.56,
+    "end": 634.06,
+    "text": "rồi, thì nó sẽ sắp xếp cho mình thành 1, 2, 4, 5, 6, 7, 8, 9, 9, 10"
+  },
+  {
+    "start": 634.06,
+    "end": 639.06,
+    "text": "ok, họ, thì đây chính là cái cách mà bạn sử dụng hạt thở toán Slash & Sort để sắp 1 cái mặt tăng dần"
+  },
+  {
+    "start": 639.06,
+    "end": 643.06,
+    "text": "còn nếu mà bạn muốn sắp xếp dằm dần thì bạn chỉ cần chuyển cái dấu này thành dấu lớn hơn nữa"
+  },
+  {
+    "start": 643.06,
+    "end": 648.06,
+    "text": "mà mình tìm cái vị trí mắc boss, ok, cái vị trí của phần tướng lớn nhất và mình đưa về đầu dãy"
+  },
+  {
+    "start": 648.06,
+    "end": 651.06,
+    "text": "đây, các bạn chỉ cần chuyển 2 cái hình lớn hơn nữa"
+  },
+  {
+    "start": 651.06,
+    "end": 655.06,
+    "text": "ok, mình để cái thằng minpot nhé, mình đỡ sửa nhé, thì khi đó cái mạng của mình nó sẽ sắp dần dần dần"
+  },
+  {
+    "start": 655.06,
+    "end": 669.76,
+    "text": "dụ như là 10, 9, 8, 1, 2, 6, 5, 3, 4, 5, 6, 8, 10, ồ, đúng không? 2, 4, 6, 8, 10, ồ, thì nó sẽ sắp xếp cái bàn của mình thành giám dần"
+  },
+  {
+    "start": 669.76,
+    "end": 674.76,
+    "text": "ok, và thất nhiên là thằng này thì chạy hơi lâu một chút, độ phương tạch của nó là ON ở bình"
+  },
+  {
+    "start": 674.76,
+    "end": 680.88,
+    "text": "ok, rồi, thì đấy là thật toán sắp xếp đầu tiên nhá, selection sort, mình nghĩ cái này là dễ nhất"
+  },
+  {
+    "start": 680.88,
+    "end": 689.68,
+    "text": "Xem thật toán sắp xếp thứ 2, nếu chính là thật toán sắp xếp nổi bọt, thà này cũng dễ và tư tưởng của nó cũng dễ hiểu"
+  },
+  {
+    "start": 689.68,
+    "end": 700.52,
+    "text": "Tư tưởng của nó sẽ so sánh 2 phần tử liên kê với nhau, và nếu 2 phần tử liên kê với nhau là 1 cặp nịch thế, phần tử đứng trước"
+  },
+  {
+    "start": 700.52,
+    "end": 706.61,
+    "text": "Nó lại lớn hơn phần tử đứng sau thì nó sẽ xung gác 2 phần tử đó và nó đưa về cuối dậy luôn"
+  },
+  {
+    "start": 706.61,
+    "end": 710.25,
+    "text": "Độ phức tạp của thằng bút bùa sọt này cũng là oen ở bình nhé"
+  },
+  {
+    "start": 710.25,
+    "end": 712.65,
+    "text": "Ok, các bạn có thể xem cái nã giả của nó đi"
+  },
+  {
+    "start": 712.65,
+    "end": 713.65,
+    "text": "Ok"
+  },
+  {
+    "start": 713.65,
+    "end": 719.79,
+    "text": "Nó sẽ duyệt từ cái chỉ số y bằng 1 cho tới cái chỉ số cuối cùng mà chưa được sắp xếp"
+  },
+  {
+    "start": 719.79,
+    "end": 722.43,
+    "text": "Ok, nhớ là chỉ số cuối cùng mà chưa được sắp xếp nhé"
+  },
+  {
+    "start": 722.43,
+    "end": 726.79,
+    "text": "Sau đó nó kiểm tra là nếu mà cái thằng bên trái mà nó lại lớn hơn cái thằng bên phải"
+  },
+  {
+    "start": 726.79,
+    "end": 728.83,
+    "text": "Thằng bên trái đáng nghĩa phải nhỏ hơn đúng không?"
+  },
+  {
+    "start": 728.83,
+    "end": 733.51,
+    "text": "Nhưng bây giờ thằng bên trái nó lại lớn hơn cái thằng bên phải thì nó sẽ tiến này nó swap 2 thằng đấy luôn"
+  },
+  {
+    "start": 733.51,
+    "end": 736.47,
+    "text": "Ok, nó thì đấy chính là thuật toán bút bùa sọt"
+  },
+  {
+    "start": 736.47,
+    "end": 744.36,
+    "text": "Các bạn có thể xem animation của bộ xoạt này nhé?"
+  },
+  {
+    "start": 744.36,
+    "end": 756.01,
+    "text": "Ở mỗi bước thì nó cứ so sánh hai thằng liền kể nhau, sau đó nếu mà cái thằng đứng trước mà nhỏ hơn, xin lỗi thằng đứng trước mà lớn thì sao nó swap luôn"
+  },
+  {
+    "start": 756.01,
+    "end": 759.01,
+    "text": "Thì ở mỗi bước thì nó sẽ luôn đưa một cái thằng lớn nhất về đầu dẫy"
+  },
+  {
+    "start": 759.01,
+    "end": 765.24,
+    "text": "Thì bây giờ thằng 50 sẽ là về đầu dẫy nó chuyển thành màu cam, thằng này sẽ không được set nữa nhé"
+  },
+  {
+    "start": 765.24,
+    "end": 768.72,
+    "text": "bước tiếp theo nó chỉ duyệt đến thằng 47 thôi, ok"
+  },
+  {
+    "start": 768.72,
+    "end": 770.28,
+    "text": "để nó xem thằng nào là lớn nhất"
+  },
+  {
+    "start": 770.28,
+    "end": 772.28,
+    "text": "ok, chứ nó không duyệt đến 48 nữa"
+  },
+  {
+    "start": 772.28,
+    "end": 774.72,
+    "text": "rồi bước thứ 2, tương tự như vậy, bây giờ của mình"
+  },
+  {
+    "start": 774.72,
+    "end": 778.28,
+    "text": "nó cũng đưa nổi được 2 cái phần tử đấy là 40, 50 và cuối dãy rồi đúng không?"
+  },
+  {
+    "start": 778.28,
+    "end": 781.6,
+    "text": "bước tiếp theo thì nó cứ cố gắng nó nổi cái thằng lớn nhất về cuối dãy"
+  },
+  {
+    "start": 781.6,
+    "end": 785.52,
+    "text": "và ở mỗi bước thì nó lại tăng thêm 1 cái phần tử được sắp xếp vào cuối dãy"
+  },
+  {
+    "start": 785.52,
+    "end": 787.4,
+    "text": "tương tự như là thật toán selection sort đấy"
+  },
+  {
+    "start": 787.4,
+    "end": 790.16,
+    "text": "cứ sau 1 bước thì bạn lại có thêm 1 cái phần tử đúng không ở đầu dãy đúng không?"
+  },
+  {
+    "start": 790.16,
+    "end": 793.08,
+    "text": "đã được sắp xếp thì bút màu sọt cũng vậy ở mỗi bước"
+  },
+  {
+    "start": 793.08,
+    "end": 797.08,
+    "text": "Nó sẽ có thêm 1 phần tử nữa được sắp xếp và đưa về cuối dãi"
+  },
+  {
+    "start": 797.08,
+    "end": 804.92,
+    "text": "Và thật toán của mình cứ chạy như thế"
+  },
+  {
+    "start": 804.92,
+    "end": 809.92,
+    "text": "Đây nó cũng duyệt từ 1 này cho tới trị số của phần tử mà chưa được sắp xếp chứ 1"
+  },
+  {
+    "start": 809.92,
+    "end": 814.92,
+    "text": "Đúng nha, bởi vì cái phần tử sắp xếp chưa được sắp xếp chứ 1 thôi đúng không?"
+  },
+  {
+    "start": 814.92,
+    "end": 820.92,
+    "text": "Bởi vì nếu mà khi mà duyệt đến cái trị số của phần tử chưa được sắp xếp chứ 1 thì nó sẽ so sánh với cái thằng đứng sau nó"
+  },
+  {
+    "start": 820.92,
+    "end": 823.92,
+    "text": "thì nó sẽ ra được cái trị số của phần tử đã được sắp xếp"
+  },
+  {
+    "start": 823.92,
+    "end": 826.1,
+    "text": "ai sẽ lỗi phần tử cuối cùng chưa được sắp xếp"
+  },
+  {
+    "start": 826.1,
+    "end": 831.52,
+    "text": "ra họ chỉ rượt đến chỉ số của phần tử mà chưa được sắp xếp chưa đi 1 thôi"
+  },
+  {
+    "start": 831.52,
+    "end": 835.4,
+    "text": "ok, bí dụ nhé, các bạn có 1 cái máy như thế này"
+  },
+  {
+    "start": 835.4,
+    "end": 838.39,
+    "text": "đấy là 8 này"
+  },
+  {
+    "start": 838.39,
+    "end": 842.51,
+    "text": "8 này, 2 này, 3 này, 9, 7, 1, 4"
+  },
+  {
+    "start": 842.51,
+    "end": 845.03,
+    "text": "ok, mình chỉ thực hiện 1 bước rồi nhé"
+  },
+  {
+    "start": 845.03,
+    "end": 847.43,
+    "text": "thì bước đầu tiên nó sẽ rượt từ ông 8 này này"
+  },
+  {
+    "start": 847.43,
+    "end": 849.67,
+    "text": "sau đó nó sẽ xòa xanh 8 với 2"
+  },
+  {
+    "start": 849.67,
+    "end": 854.27,
+    "text": "thì nó thấy là gì nhỉ, nó thấy 8 với 2 là 2 cái thằng gọi là cặp nghỉ thế đấy"
+  },
+  {
+    "start": 854.27,
+    "end": 856.95,
+    "text": "Thì khi đó cái mạng của bạn nó sẽ swap 82 luôn"
+  },
+  {
+    "start": 856.95,
+    "end": 862.83,
+    "text": "Ok, nó sẽ swap 82 và cái mạng của bạn nó sẽ thành 28, 39, 71, 4"
+  },
+  {
+    "start": 862.83,
+    "end": 866.87,
+    "text": "Bước tiếp theo thì nó lại so sánh 8 với thằng đứng sau nó, ok"
+  },
+  {
+    "start": 866.87,
+    "end": 870.71,
+    "text": "8 với 3 thì cũng lại là một cặp mình thế thì nó sẽ tiến hành swap luôn"
+  },
+  {
+    "start": 870.71,
+    "end": 875.03,
+    "text": "Nó sẽ chuyển thành 23, 8, 9, 7, 1, 4"
+  },
+  {
+    "start": 875.03,
+    "end": 875.99,
+    "text": "Ok, không nhờ"
+  },
+  {
+    "start": 875.99,
+    "end": 881.03,
+    "text": "Bước tiếp theo ấy, nó sẽ tiến hành nó so sánh thằng 80, thằng 9"
+  },
+  {
+    "start": 881.03,
+    "end": 884.15,
+    "text": "Thì thấy 8 nhỏ hơn 9 là đúng thứ tự rồi, nó không swap"
+  },
+  {
+    "start": 884.15,
+    "end": 888.35,
+    "text": "Bước tiếp theo thì nó so sánh 9 với 7, thì thế đây là 1 cặp nghị thế"
+  },
+  {
+    "start": 888.35,
+    "end": 891.11,
+    "text": "Nó sẽ swap 7 với 9 luôn, ok?"
+  },
+  {
+    "start": 891.11,
+    "end": 893.43,
+    "text": "Ông này thì thành 7, còn ông này thì thành 9 này"
+  },
+  {
+    "start": 893.43,
+    "end": 900.1,
+    "text": "Ok, bước tiếp theo 9 với 1, cũng lại là 1 cặp nghị thế thì nó sẽ swap luôn 2 thằng này"
+  },
+  {
+    "start": 900.1,
+    "end": 904.1,
+    "text": "9 với 1, thì ông này trở thành 1, còn ông này trở thành 9"
+  },
+  {
+    "start": 904.1,
+    "end": 907.7,
+    "text": "Bước cuối cùng 9 với 4, cũng là 1 cặp nghị thế thì nó sẽ tiến hành hoán vị 2 thằng này"
+  },
+  {
+    "start": 907.7,
+    "end": 910.9,
+    "text": "Thì ông này thành 4, còn ông này thì thành 9, ok, chỗ này 4 nhé"
+  },
+  {
+    "start": 910.9,
+    "end": 914.36,
+    "text": "Vậy thì sau cái bước đầu tiên, bạn thấy là gì nhỉ?"
+  },
+  {
+    "start": 914.36,
+    "end": 916.66,
+    "text": "Nó đã đưa được cái phần tử lớn nhất về cuối dẫy rồi"
+  },
+  {
+    "start": 916.66,
+    "end": 922.56,
+    "text": "Thì cái bước tiếp theo của bạn ấy, nó chỉ duyệt qua các cái chỉ số thằng này, thằng này, thằng này, thằng này và thằng này thôi"
+  },
+  {
+    "start": 922.56,
+    "end": 926.06,
+    "text": "Để nó so sánh là liệu rằng cái thằng AI là thằng đứng trước ấy"
+  },
+  {
+    "start": 926.06,
+    "end": 930.1,
+    "text": "Nó có lớn hơn thằng AI cộng 1 hay không để nó swap 2 thằng này với nhau"
+  },
+  {
+    "start": 930.1,
+    "end": 933.58,
+    "text": "Ok, đúng không nhỉ? Thành ra nó chỉ cần duyệt đến đây thôi đúng không?"
+  },
+  {
+    "start": 933.58,
+    "end": 936.58,
+    "text": "Bởi vì nếu mà nó duyệt đến thằng 1 này thì nó có thể so sánh"
+  },
+  {
+    "start": 936.58,
+    "end": 941.1,
+    "text": "Thằng vị trí số 1 này với thằng đứng sau nó chính là phần tử mà cuối cùng chưa được sắp xếp"
+  },
+  {
+    "start": 941.1,
+    "end": 950.18,
+    "text": "Thành ra đây các bạn thấy là cái pseudocode của nó chỉ duyệt đến cái trí số trước cái trí số của phần tử mà chưa được sắp xếp thôi"
+  },
+  {
+    "start": 950.18,
+    "end": 953.34,
+    "text": "Chứ nó không duyệt đến tận cái phần tử mà cuối cùng chưa được sắp xếp"
+  },
+  {
+    "start": 953.34,
+    "end": 959.18,
+    "text": "Chỉ số của phần tử chưa được sắp xếp, chưa đi một"
+  },
+  {
+    "start": 959.18,
+    "end": 962.93,
+    "text": "Phần tử cuối cùng chưa được sắp xếp, chưa đi một"
+  },
+  {
+    "start": 962.93,
+    "end": 968.25,
+    "text": "Thành ra là cái bước tiếp theo của mình thì nó cũng thực hiện tương tự như vậy"
+  },
+  {
+    "start": 968.25,
+    "end": 973.57,
+    "text": "Đấy là nó diệt từ 2,3 đúng không? 2,3 đúng, đúng, thứ tự rồi đúng không?"
+  },
+  {
+    "start": 973.57,
+    "end": 976.77,
+    "text": "Thành ra nó không hán vị, 3,8 cũng đúng, thứ tự rồi không hán vị"
+  },
+  {
+    "start": 976.77,
+    "end": 980.61,
+    "text": "8 với 7, người thế đúng không? 8 với 7 thì thế, thì nó sẽ tiến hành"
+  },
+  {
+    "start": 980.61,
+    "end": 983.41,
+    "text": "Hán vị 8 với 7, thì ông này thành 7, ông này thì thành 8"
+  },
+  {
+    "start": 983.41,
+    "end": 985.81,
+    "text": "Này, ông này thành 7, ông này thành 8"
+  },
+  {
+    "start": 985.81,
+    "end": 990.13,
+    "text": "Giết theo 8 với 1 cũng là cặp người thế thì nó cũng làng hán vị 8 với 1"
+  },
+  {
+    "start": 990.13,
+    "end": 993.91,
+    "text": "ok, chỗ này thành 1, chỗ này thành 8"
+  },
+  {
+    "start": 993.91,
+    "end": 1000.92,
+    "text": "cuối cùng thì cái phép xo sánh nó sẽ là 8 với 4, cũng là 1 cặp mình thế thì nó sẽ hoán vị, thằng này 4 là 8"
+  },
+  {
+    "start": 1000.92,
+    "end": 1007.08,
+    "text": "ok, và bây giờ có thêm 1 phần tử nữa đã được sắp xếp sau khi mà cái bước thứ 2 của thuật án được sắp xếp đây chính là hằng 8"
+  },
+  {
+    "start": 1007.08,
+    "end": 1010.68,
+    "text": "cái 2 thằng này cũng không được xếp, không được xếp nữa nhá"
+  },
+  {
+    "start": 1010.68,
+    "end": 1015.32,
+    "text": "thì cái bước thứ 3 của bạn ấy, bạn chỉ cần duyệt từ chỉ số này, chỉ số này, chỉ số này thôi"
+  },
+  {
+    "start": 1015.32,
+    "end": 1017.8,
+    "text": "ok, không nhất thiết phải duyệt thằng 4 đâu, ok"
+  },
+  {
+    "start": 1017.8,
+    "end": 1021.68,
+    "text": "bởi vì kiểu gì nếu mà bạn so sánh bốn với cái thằng đứng sau nó thì bốn này sẽ nhỏ hơn"
+  },
+  {
+    "start": 1021.68,
+    "end": 1023.84,
+    "text": "thỉnh ra là người ta chỉ diệt đến thằng 1 cái thôi"
+  },
+  {
+    "start": 1023.84,
+    "end": 1029.08,
+    "text": "ok, thì đây chính là tư tưởng và cách tật toán boobbo sort nó hoạt động"
+  },
+  {
+    "start": 1029.08,
+    "end": 1033.8,
+    "text": "nếu còn cài đặt thì nó hơi vướng một chút, nó khó hơn than boobbo selection sort này một chí"
+  },
+  {
+    "start": 1033.8,
+    "end": 1040.82,
+    "text": "ok, the sort màng A có nở phần tử nhá"
+  },
+  {
+    "start": 1040.82,
+    "end": 1045.99,
+    "text": "rồi, thì bây giờ ý, vòng 4 bên ngoài của các bạn ý"
+  },
+  {
+    "start": 1045.99,
+    "end": 1050.51,
+    "text": "các bạn không được diệt từ 4 in or tê, vòng không cho tôi y nhỏ hơn í, nói chỉ 1 nữa"
+  },
+  {
+    "start": 1050.51,
+    "end": 1054.27,
+    "text": "Mà mình diệt từ đâu nhỉ?"
+  },
+  {
+    "start": 1054.27,
+    "end": 1058.27,
+    "text": "Mình sẽ diệt từ for, in, tt, y bằng 0"
+  },
+  {
+    "start": 1058.27,
+    "end": 1062.84,
+    "text": "Từ từ để mình xem mã giải của nó một chút"
+  },
+  {
+    "start": 1062.84,
+    "end": 1068.01,
+    "text": "Như nào nhớ, for, in, tt, y bằng 0"
+  },
+  {
+    "start": 1068.01,
+    "end": 1077.61,
+    "text": "y nhỏ hơn là chiếm 1, ok, y cộng cộng"
+  },
+  {
+    "start": 1077.61,
+    "end": 1083.54,
+    "text": "Sau điều đó thì, cái thằng này thì nó thực hiện là chiếm 1 bước đúng không ra?"
+  },
+  {
+    "start": 1083.54,
+    "end": 1088.54,
+    "text": "Sau đó thì nó sẽ tiến hành diệt từ đầu dãy, ok, nó diệt từ đầu dãy cho cái chỉ số mà cuối cùng"
+  },
+  {
+    "start": 1088.54,
+    "end": 1097.69,
+    "text": "Chỉ số chưa được sắp xếp cuối cùng chứ đi 1, tức là mình sẽ riệt từ for, in, tê, zi bằng không, zi nhỏ hơn gì nhỉ"
+  },
+  {
+    "start": 1097.69,
+    "end": 1104.69,
+    "text": "Nó phải là nhỏ hơn nói chứ y, chứ y chứ 1 đúng không? Ok"
+  },
+  {
+    "start": 1104.69,
+    "end": 1110.43,
+    "text": "Thì cái y của bạn cứ tăng lên í, ví dụ cái y bằng không đúng không? y bằng không í"
+  },
+  {
+    "start": 1110.43,
+    "end": 1113.43,
+    "text": "Trong trường hợp mà cái bước đầu tiên là cái bước y bằng không í"
+  },
+  {
+    "start": 1113.43,
+    "end": 1118.85,
+    "text": "Thì bạn sẽ duyệt từ cái chỉ số của bạn từ ghi bằng không cho tới ghi bằng"
+  },
+  {
+    "start": 1118.85,
+    "end": 1125.97,
+    "text": "nò chữ y chữ 1, tức là n, nò chữ 1, nhỏ hơn nò chữ 1, tức là mình sẽ duyệt đến nò chữ 2 thôi đúng không?"
+  },
+  {
+    "start": 1125.97,
+    "end": 1129.72,
+    "text": "Ok, mình chỉ cần duyệt đến nò chữ 2 thôi, hả?"
+  },
+  {
+    "start": 1129.72,
+    "end": 1134.08,
+    "text": "Bởi vì khi mà bạn duyệt đến cái chỉ số ghi bằng nò chữ 2, ok?"
+  },
+  {
+    "start": 1134.08,
+    "end": 1140.72,
+    "text": "Thì bạn sẽ có một cái phép so sánh là if az nó lớn hơn az cộng 1 thì mình sẽ swap 2 thằng này."
+  },
+  {
+    "start": 1140.72,
+    "end": 1144.84,
+    "text": "Hình ra là khi đó, nếu mà cái g của bạn chỉ số cuối cùng lại n là chứ 2"
+  },
+  {
+    "start": 1144.84,
+    "end": 1149.28,
+    "text": "thì cái việc mà nó có thể so sánh với cái thằng đứng sau nó là phần tử cuối cùng trong màng đấy là"
+  },
+  {
+    "start": 1149.28,
+    "end": 1151.48,
+    "text": "az cộng 1, ok"
+  },
+  {
+    "start": 1151.48,
+    "end": 1155.03,
+    "text": "Thì ở chỗ này nè, các bạn chỉ cần kiểm tra cho mình là"
+  },
+  {
+    "start": 1155.03,
+    "end": 1161.07,
+    "text": "if az là cái thằng bên trái, nó chờ nó lại lớn hơn cái thằng đứng sau nó là az cộng 1"
+  },
+  {
+    "start": 1161.07,
+    "end": 1165.39,
+    "text": "thì nó sẽ tiến hành nó swap luôn, ok nó sẽ hoán vị 2 thằng này"
+  },
+  {
+    "start": 1165.39,
+    "end": 1170.12,
+    "text": "nó sẽ swap az với az cộng 1, ok"
+  },
+  {
+    "start": 1170.12,
+    "end": 1173.48,
+    "text": "Thì đây chính là thật toán boopershot, nó cũng không có gì khó khăn đúng không?"
+  },
+  {
+    "start": 1173.48,
+    "end": 1176.36,
+    "text": "Nó chỉ có vướng hơi vướng ở chỗ này này, đúng nhờ?"
+  },
+  {
+    "start": 1176.36,
+    "end": 1182.16,
+    "text": "Đấy chính là, bạn sẽ duyệt từ ghi bằng không cho tới ghi nhỏ hơn nr chữ i chữ 1 trong đó ấy,"
+  },
+  {
+    "start": 1182.16,
+    "end": 1191.66,
+    "text": "nr chữ i chữ 1 thì nó chính là cái chỉ số mà đã được sắp xếp, sẽ lỗi chưa được sắp xếp cuối cùng đấy, ok?"
+  },
+  {
+    "start": 1191.66,
+    "end": 1195.3,
+    "text": "Ở bước thứ i, nhưng mà mình thấy là gì nhờ?"
+  },
+  {
+    "start": 1195.3,
+    "end": 1199.35,
+    "text": "Mình chỉ cần xét đến cái chỉ số trước, cái chỉ số đấy thôi,"
+  },
+  {
+    "start": 1199.35,
+    "end": 1201.63,
+    "text": "Thành ra là mình dùng dấu nhỏ hơn, ok?"
+  },
+  {
+    "start": 1202.63,
+    "end": 1204.83,
+    "text": "Thì mình ở dưới này mình có thể dùng book bồ sort"
+  },
+  {
+    "start": 1206.31,
+    "end": 1208.43,
+    "text": "để mình sub-shape cái mạng này theo thứ tự tăng rời"
+  },
+  {
+    "start": 1210.14,
+    "end": 1214.35,
+    "text": "Nguyên dụ mình sub-shape 10 phần tử nhé"
+  },
+  {
+    "start": 1215.11,
+    "end": 1219.91,
+    "text": "1, 78, 6, 5, 2, 3, 4, 9, 10, 19"
+  },
+  {
+    "start": 1220.83,
+    "end": 1225.43,
+    "text": "Thì nó sẽ sub-shape cái mạng của bạn thành tăng rời 1, 2, 3, 4, 5, 6, 7, 8, 9, 10"
+  },
+  {
+    "start": 1225.63,
+    "end": 1229.19,
+    "text": "Ok, thằng này thì nó không như là selection sort nữa"
+  },
+  {
+    "start": 1229.19,
+    "end": 1236.67,
+    "text": "SetsLessonsSorty, ở mỗi bước phải tìm được cái thằng nhỏ nhất, sau đó nó mixwap, cái thằng nhỏ nhất với thằng AI"
+  },
+  {
+    "start": 1236.67,
+    "end": 1241.43,
+    "text": "Thế còn BookBallSorty ở mỗi bước nó sẽ cố gắng nó đưa cái phần tử lớn nhất về cuối dãy, đúng nhỉ?"
+  },
+  {
+    "start": 1241.43,
+    "end": 1249.19,
+    "text": "Ok, thằng ra là mình sẽ thực hiện nở chứ 1 bước, và mỗi bước thì mình sẽ đưa cái phần tử nhỏ nhất về cái vị trí cuối dãy"
+  },
+  {
+    "start": 1249.19,
+    "end": 1254.74,
+    "text": "Không phải là về vị trí cuối dãy mà là về cái vị trí mà, cái gì nhỉ?"
+  },
+  {
+    "start": 1254.74,
+    "end": 1258.44,
+    "text": "Chưa được sắp xếp ấy, cuối cùng ấy, ok?"
+  },
+  {
+    "start": 1258.44,
+    "end": 1262.81,
+    "text": "ok thì thế là xong hai cái thuật toàn sắp xếp đầu tiên nha ok"
+  },
+  {
+    "start": 1262.81,
+    "end": 1268.01,
+    "text": "không có gì khó khăn với hai thằng này đúng không? tư tưởng của nó dễ và cài đặt của nó cũng có dễ"
+  },
+  {
+    "start": 1268.01,
+    "end": 1271.01,
+    "text": "mình sẽ sang cái thuật toàn thứ ba nha ok"
+  },
+  {
+    "start": 1271.01,
+    "end": 1275.46,
+    "text": "thuật toàn sắp xếp thứ ba này là thuật toàn sắp xếp chèn ok"
+  },
+  {
+    "start": 1275.46,
+    "end": 1279.74,
+    "text": "thằng này thì hơi khó cài đặt một chút và nó chỉ hơi khó cài đặt thôi"
+  },
+  {
+    "start": 1279.74,
+    "end": 1283.74,
+    "text": "thế còn tư tưởng của nó thì không có gì khó ok"
+  },
+  {
+    "start": 1283.74,
+    "end": 1290.79,
+    "text": "tư tưởng của thuật toàn sắp xếp chèn này thì mỗi bước của nó nó sẽ cố gắng đưa cái phần từ"
+  },
+  {
+    "start": 1290.79,
+    "end": 1294.03,
+    "text": "ở vị trí hiện tại, về đúng vị trí"
+  },
+  {
+    "start": 1294.03,
+    "end": 1298.55,
+    "text": "OK, trong đó các phần tử đứng trước, phần tử hiện tại này nó đã đề rượt sắp xếp rồi"
+  },
+  {
+    "start": 1298.55,
+    "end": 1303.79,
+    "text": "OK, và nó sẽ cố gắng nó chèm phần tử hiện tại làm sao cho phần tử hiện tại này"
+  },
+  {
+    "start": 1303.79,
+    "end": 1307.03,
+    "text": "với cái đoạn đứng trước nó sẽ tạo phải một cái dễ tăng dần, OK"
+  },
+  {
+    "start": 1307.03,
+    "end": 1312.14,
+    "text": "Thằng này thì nó hơi khó ca đập hơn một chút so với hai cái thật toán người dồ, OK"
+  },
+  {
+    "start": 1312.14,
+    "end": 1317.5,
+    "text": "Mý dụ nhé, mình thực hiện một cái tham tác chèm của nó ở một bước cho các bạn xem nhé"
+  },
+  {
+    "start": 1317.5,
+    "end": 1332.11,
+    "text": "dụng mình có một cái bản như thế này, đấy là giả sử 1, 2, 3, 1, 2, 5, 8, 9, 4, ok, 10"
+  },
+  {
+    "start": 1332.11,
+    "end": 1338.43,
+    "text": "giả sử như cái bản của bạn ấy nó đã được thực hiện một số bước và cái bước của bạn nó đã được thăm dần như thế này rồi đấy"
+  },
+  {
+    "start": 1338.43,
+    "end": 1342.91,
+    "text": "tức là sau 5 cái bước đầu tiên của bạn ấy, cái bản của bạn nó sẽ là 1, 2, 5, 8, 9"
+  },
+  {
+    "start": 1342.91,
+    "end": 1346.11,
+    "text": "thì bây giờ cái bước thật toàn nó sẽ set đến cái vị trí của 4 này"
+  },
+  {
+    "start": 1346.11,
+    "end": 1348.55,
+    "text": "và thuật toán chén của mình, nó sẽ thực hiện là"
+  },
+  {
+    "start": 1348.55,
+    "end": 1352.55,
+    "text": "nó sẽ đi tìm cái vị trí của thằng bốn này này, trong cái đoạn đứng trước nó"
+  },
+  {
+    "start": 1352.55,
+    "end": 1356.79,
+    "text": "bởi vì thuật toán chén này này, ở mỗi bước thì các phần tử đứng trước, phần tử hiện tại"
+  },
+  {
+    "start": 1356.79,
+    "end": 1358.99,
+    "text": "nó đã được sắp xếp rồi, ok?"
+  },
+  {
+    "start": 1358.99,
+    "end": 1362.55,
+    "text": "và công việc của mình, đấy là mình sẽ phải chén thằng bốn này vào trong cái đoạn dãy này"
+  },
+  {
+    "start": 1362.55,
+    "end": 1365.87,
+    "text": "làm sao cho cái thứ tự của nó vẫn còn tạo thành một cái dãy thằng dần"
+  },
+  {
+    "start": 1365.87,
+    "end": 1367.95,
+    "text": "thì trong trường hợp thì nó sẽ chén vào đây này, đấy"
+  },
+  {
+    "start": 1367.95,
+    "end": 1373.03,
+    "text": "để nó tạo thành một cái dãy là 1, 2, 4, 5, 8, 9, đấy"
+  },
+  {
+    "start": 1373.03,
+    "end": 1378.79,
+    "text": "Vậy thì việc mình tìm vị trí cho 4 này, các bạn thấy là các phần tử mà lớn hơn 4"
+  },
+  {
+    "start": 1378.79,
+    "end": 1385.03,
+    "text": "Nó đều bị dịch sang bên phải 1 bước, 1 1 vị trí, 5 dịch sang đây, 8 dịch sang đây, 9 dịch sang đây"
+  },
+  {
+    "start": 1385.03,
+    "end": 1389.03,
+    "text": "Sau đó thì mình tìm được vị trí hợp lý cho 4 rồi mình sẽ đưa 4 vào vị trí đó"
+  },
+  {
+    "start": 1389.03,
+    "end": 1393.3,
+    "text": "Ok, cái thuật toán này thì nó cũng thực hiện n chữ 1 bước nha"
+  },
+  {
+    "start": 1393.3,
+    "end": 1396.74,
+    "text": "Ok, bởi vì phần tử, ví dụ cái mạng của bạn nó như thế này này"
+  },
+  {
+    "start": 1396.74,
+    "end": 1400.65,
+    "text": "8, 2, 3, 9, 4, 7"
+  },
+  {
+    "start": 1400.65,
+    "end": 1406.8,
+    "text": "Thằng đầu tiên, người ta không bao giờ chén, bởi vì có mỗi một mình nó đứng trước, nó không có phần tử nào"
+  },
+  {
+    "start": 1406.8,
+    "end": 1411.2,
+    "text": "Khi mà người ta xếp thằng 8 thì người ta coi như nó đã được xắp xếp rồi"
+  },
+  {
+    "start": 1411.2,
+    "end": 1415.96,
+    "text": "Người ta sẽ bỏ qua cái bước khi mình xếp thằng 8, và người ta chỉ duyệt từ chỉ số y bằng 1 thôi"
+  },
+  {
+    "start": 1415.96,
+    "end": 1420.8,
+    "text": "Bởi vì khi mà chỉ số y bằng 1 thì mới có một thằng đứng trước mà chén chứ, đúng không?"
+  },
+  {
+    "start": 1420.8,
+    "end": 1423.2,
+    "text": "Nhưng thằng 8 này thì không có thằng nào đứng trước để chén cả"
+  },
+  {
+    "start": 1423.2,
+    "end": 1424.6,
+    "text": "Ok?"
+  },
+  {
+    "start": 1424.6,
+    "end": 1428.28,
+    "text": "Thì mỗi bước nó cứ như thế nhé, nó sẽ cố gắng nó chén cái thằng 2"
+  },
+  {
+    "start": 1428.28,
+    "end": 1431.72,
+    "text": "Ví dụ như trong trường hợp này thì 2 đứng trước nó có mỗi 8 đúng không?"
+  },
+  {
+    "start": 1431.72,
+    "end": 1437.48,
+    "text": "Thì nó sẽ chén 2 vào 8 và cái vị trí đứng trước nó bằng cách là cho 8 xang bên phải, ok?"
+  },
+  {
+    "start": 1437.48,
+    "end": 1469.24,
+    "text": "Các bạn có thể nhìn như này, biorc 1, ceur, ceur, dạ, cơ, trì sau đó thì nó sẽ thành như này, cái bước đầu tiên nó sẽ cho 8 sang bên phải, nó sẽ thành là 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 7 này này, sau đó thì nó thấy cái vị trí hợp lý rồi nó sẽ đưa thằng 2 về vị trí của 8 lúc nữaì cái chỗ này không còn là 8 nữa mà nó thành 2, ngủ. Nhìn chung là mỗi bước nó sẽ rực các cái phần tử mà lớn hơn cái phần tử bị chian ấy sang bên phải để tìm cái chỗ hợp l"
+  },
+  {
+    "start": 1469.24,
+    "end": 1499.24,
+    "text": "Mình gọi là ki, cái gì đó, thì các bạn nhận vụ của nó, nó sẽ phải chén tháng 5 và các bạn đứng trước nó, đứng trước nó có mỗi 1 thằng 9, đúng nhờ, thì trong trời hợp này nó thấy thằng 5 này lớn hơn thằng 9, nhỏ hơn thằng 9, thì khi đó thằng 5 sẽ phải đứng trước thằng 9, đúng không, vậy thì mà để giữ chỗ cho ông 5 này, đứng trước thằng 9, thì nó làm một cái bước để nó thằng dịch thằng 9, từ cái vị trí y hiện tại nhảy sang vị trí bên phại, đây bạn thấy nè, cái vị trí y hiện tại nhảy sang vị trí bên phại,"
+  },
+  {
+    "start": 1499.24,
+    "end": 1504.12,
+    "text": "Nó sẽ cho thằng 9 này, đang ở ôn này đúng không? nhảy sang ôn bên cạnh"
+  },
+  {
+    "start": 1504.12,
+    "end": 1508.68,
+    "text": "Ok, sao đó gì? Nó sẽ đưa vị trí 5 vào vị trí của 9 hiện tại"
+  },
+  {
+    "start": 1508.68,
+    "end": 1511.88,
+    "text": "Ok, nó sẽ đưa 5 vào vị trí 9 của 9 hiện tại"
+  },
+  {
+    "start": 1511.88,
+    "end": 1514.84,
+    "text": "Bởi vì 9, 10 thì dịch sang bên phải để nhường chỗ cho 5 rồi mà"
+  },
+  {
+    "start": 1514.84,
+    "end": 1517.32,
+    "text": "Ok, thì đấy là bước đầu tiên"
+  },
+  {
+    "start": 1517.32,
+    "end": 1522.6,
+    "text": "Bước thứ 2 của các bạn thì khi đó nó đã có 2 phần thứ được sắp xếp rồi, đấy là 5 và 9"
+  },
+  {
+    "start": 1522.6,
+    "end": 1527.8,
+    "text": "Ok, bước thứ 2 của mình thì đã có 2 phần thứ được sắp xếp rồi, đấy là 5 và 9, đúng không?"
+  },
+  {
+    "start": 1527.8,
+    "end": 1531.56,
+    "text": "kì của mình bây giờ là 1, tức là cái thẳng mà đem ra để chén ấy, bây giờ là sẽ là 1"
+  },
+  {
+    "start": 1531.56,
+    "end": 1535.0,
+    "text": "thì đầu tiên nó sẽ so sánh 1 với cái thẳng đứng ngay trước nó"
+  },
+  {
+    "start": 1535.0,
+    "end": 1538.28,
+    "text": "xem liệu rằng là nếu mà thẳng 1 có thể chén vào đây được hay không"
+  },
+  {
+    "start": 1538.28,
+    "end": 1540.44,
+    "text": "thì nó thấy là 1 nhỏ hơn 9 nữa"
+  },
+  {
+    "start": 1540.44,
+    "end": 1542.6,
+    "text": "thì khi đó 9 thì phải dịch sang bên phải"
+  },
+  {
+    "start": 1542.6,
+    "end": 1545.88,
+    "text": "ok, để tin nữa mà 1 còn có chỗ được để chén vào đúng không"
+  },
+  {
+    "start": 1545.88,
+    "end": 1547.64,
+    "text": "thì nó sẽ cho 9 dịch sang bên phải"
+  },
+  {
+    "start": 1547.64,
+    "end": 1551.72,
+    "text": "bạn thấy là nó sẽ quáp pi nội dung của oaE này này, sang oaE cộng 1"
+  },
+  {
+    "start": 1551.72,
+    "end": 1552.92,
+    "text": "xa bên này"
+  },
+  {
+    "start": 1552.92,
+    "end": 1557.24,
+    "text": "ok, sau đó tiếp tục này, nó lại so sánh cái thẳng 1 này này, với cái thẳng 5 này này"
+  },
+  {
+    "start": 1557.24,
+    "end": 1562.72,
+    "text": "1 con nhỏ hơn 5, khi đó 1 phải đứng trước 5 đúng không?"
+  },
+  {
+    "start": 1562.72,
+    "end": 1568.6,
+    "text": "mà để mà 1 đứng trước 5 được, khi đó 5 cũng phải được dịch sang bên phạ, thì người ta cũng sẽ dịch cái giá trị của thằng 5 sang bên phạ"
+  },
+  {
+    "start": 1568.6,
+    "end": 1576.88,
+    "text": "ok, là cái O mà lúc nãy 9 chiếm chỗ ấy, và cuối cùng thì người ta sẽ chian được cái vị trí của 1 đứng trước 5 và 9"
+  },
+  {
+    "start": 1576.88,
+    "end": 1580.96,
+    "text": "ok ông nhỏ, cái bước thứ 3 thì các bạn sẽ thấy nó rõ hơn cái tư tưởng chian"
+  },
+  {
+    "start": 1580.96,
+    "end": 1586.01,
+    "text": "Khi bước thứ 3 thì cái giấy của mình đã có 3 phần tử được sắp xếp rồi, đến là 1, 5 và 9"
+  },
+  {
+    "start": 1586.01,
+    "end": 1587.71,
+    "text": "phần tử sắp xếp của mình kia là 4"
+  },
+  {
+    "start": 1587.71,
+    "end": 1591.41,
+    "text": "thì đầu tiên nó sẽ so sánh với thằng phần tử bứng trước nó là 9, đúng không?"
+  },
+  {
+    "start": 1591.41,
+    "end": 1595.21,
+    "text": "Nếu mà 4 và lớn hơn 9 phát thì nó sẽ không cần phải chuyển 9 sang bên phạm"
+  },
+  {
+    "start": 1595.21,
+    "end": 1600.11,
+    "text": "Ok, nhưng mà trong trường hợp này, 4 nhỏ hơn 9 thì 9 phải dịch sang bên phạm để tín ức có chỗ cho 4 trẻn bà, đúng không?"
+  },
+  {
+    "start": 1600.11,
+    "end": 1602.4,
+    "text": "Đây, 9 được dịch sang bên phạm"
+  },
+  {
+    "start": 1602.4,
+    "end": 1606.9,
+    "text": "Sau đó nó so sánh 4 với 5 thì thấy là 4 cũng nhỏ hơn 5, thì 5 cũng lại phải dịch sang bên phạm"
+  },
+  {
+    "start": 1606.9,
+    "end": 1608.7,
+    "text": "Đây, 5 sẽ được dịch sang bên phạm"
+  },
+  {
+    "start": 1608.7,
+    "end": 1609.7,
+    "text": "Ok hông nhỉ?"
+  },
+  {
+    "start": 1609.7,
+    "end": 1613.38,
+    "text": "Và cuối cùng nó so sánh 41 thì nó thấy là 4 lớn hơn 1"
+  },
+  {
+    "start": 1613.38,
+    "end": 1615.74,
+    "text": "Có nghĩa là 4 sẽ đứng trước, đứng đằng sau 1 đúng không?"
+  },
+  {
+    "start": 1615.74,
+    "end": 1618.9,
+    "text": "Thì khi đó, 4 sẽ được đưa vào cái vị trí mà 5 vừa dịch sang ấy"
+  },
+  {
+    "start": 1618.9,
+    "end": 1624.7,
+    "text": "Thực ra thì cái giá trị ở cái O này nó vẫn là 5 và mình chỉ cần gán nó bằng cái giá trị mà bạn đang chiàn là key là 4 là được"
+  },
+  {
+    "start": 1624.7,
+    "end": 1630.7,
+    "text": "Ok, và khi đó cái mạng của bạn ấy sau 3 bước sắp xếp nó đã có 4, chẳng thể là sắp xếp để là 1 năm, 1, 4, 5, 9"
+  },
+  {
+    "start": 1630.7,
+    "end": 1636.3,
+    "text": "Và khi đó thì cái bước cuối cùng thì nó sẽ đưa, nó chiàn 3 vào vị trí hợp lý thôi đúng không?"
+  },
+  {
+    "start": 1636.3,
+    "end": 1640.9,
+    "text": "trong trường hợp này nó sẽ xảynh 9 nè, về 3 thì thấy 3 nhỏ hơn 9, 9 sẽ được dịch sang bên phải"
+  },
+  {
+    "start": 1640.9,
+    "end": 1645.4,
+    "text": "theo 3 xò xảynh bên 5, 5 lớn hơn 3, 5 sẽ được dịch sang bên phải"
+  },
+  {
+    "start": 1645.4,
+    "end": 1648.2,
+    "text": "3 xò xảynh với 4, 4 cũng sẽ được dịch sang bên phải"
+  },
+  {
+    "start": 1648.2,
+    "end": 1654.1,
+    "text": "ok, 3 xò xảynh với 1, thấy 3 lớn hơn 1 thì khi đó 3 sẽ nhảy vào vị trí mà 4 vừa được dịch sang bên phải đấy"
+  },
+  {
+    "start": 1654.1,
+    "end": 1656.6,
+    "text": "cái vị trí của 4 lúc nãy, tức là cái vị trí này này"
+  },
+  {
+    "start": 1656.6,
+    "end": 1659.0,
+    "text": "thì khi đó nó sẽ nhét cái thằng kỳ vào vị trí này"
+  },
+  {
+    "start": 1659.0,
+    "end": 1663.4,
+    "text": "và cái mạng của bạn nó sẽ được sắp xếp thành 1, 3, 4, 5, 9 như thế này"
+  },
+  {
+    "start": 1663.4,
+    "end": 1665.4,
+    "text": "ok, đó"
+  },
+  {
+    "start": 1665.4,
+    "end": 1667.76,
+    "text": "nhưng mà thật toán này này cài đặt thì nó hơi khó một chút"
+  },
+  {
+    "start": 1667.76,
+    "end": 1670.0,
+    "text": "các bạn có thể xem qua cái thư tưởng của nó trước nhé"
+  },
+  {
+    "start": 1670.0,
+    "end": 1671.84,
+    "text": "đây, là thật toán sắp xếp chèn này"
+  },
+  {
+    "start": 1671.84,
+    "end": 1677.0,
+    "text": "thì nó sẽ xét từ thằng 44 để trở đi thôi nhé"
+  },
+  {
+    "start": 1677.0,
+    "end": 1680.56,
+    "text": "đấy, đầu tiên này, nó cứ để nó dài một chút đấy nhé"
+  },
+  {
+    "start": 1680.56,
+    "end": 1685.61,
+    "text": "để mình nói cho nó dễ"
+  },
+  {
+    "start": 1685.61,
+    "end": 1687.93,
+    "text": "thằng 47, đây, ví dụ thằng 15 này nhé"
+  },
+  {
+    "start": 1687.93,
+    "end": 1691.53,
+    "text": "bây giờ cái dãy đứng trước thằng 15 này là 3, 5, 3, 4, 4, 5, 7"
+  },
+  {
+    "start": 1691.53,
+    "end": 1693.41,
+    "text": "đều là các số đã được sắp xếp rồi"
+  },
+  {
+    "start": 1693.41,
+    "end": 1695.37,
+    "text": "bây giờ nó sẽ tiến hành nó chèn vào cái thằng"
+  },
+  {
+    "start": 1695.37,
+    "end": 1697.53,
+    "text": "thằng 15 này vào vị trí thằng trước như thế này này"
+  },
+  {
+    "start": 1697.53,
+    "end": 1699.73,
+    "text": "là nó sẽ lấy thằng 15 ra, ok?"
+  },
+  {
+    "start": 1699.73,
+    "end": 1705.39,
+    "text": "đây nó lấy 15 ra, sau đó nó so sánh 15 với cái giá trị của phần tử đứng ngay trước nó thôi, là thằng 47"
+  },
+  {
+    "start": 1705.39,
+    "end": 1711.34,
+    "text": "nếu mà 47 lớn hơn 15 thì nó sẽ đưa 47 nhảy dịch sang bên phải, ok?"
+  },
+  {
+    "start": 1711.34,
+    "end": 1713.6,
+    "text": "đấy, dịch sang bên phải, sau đó tiếp tục"
+  },
+  {
+    "start": 1713.6,
+    "end": 1718.0,
+    "text": "nó lại so sánh 15 với 44, nếu mà 15 mà lớn hơn 44 nhá"
+  },
+  {
+    "start": 1718.0,
+    "end": 1722.56,
+    "text": "thì khi đó 15 sẽ được đưa ngay vào cái vị trí mà 47 vừa dịch sang bên phải, cái vị trí này này"
+  },
+  {
+    "start": 1722.56,
+    "end": 1726.2,
+    "text": "cái vị trí lúc nãy của 47, nhưng mà trong trường hợp này 15 nó nhỏ hơn 44"
+  },
+  {
+    "start": 1726.2,
+    "end": 1729.84,
+    "text": "Thành ra là 4 4 lại phải dịch sang biên phạm, 4 4 sẽ nhảy vào cái o của 4 7 lúc trước"
+  },
+  {
+    "start": 1730.86,
+    "end": 1735.1,
+    "text": "Đấy, ok, tiếp tục này, lại so sánh 15 với 3 8, thấy 15"
+  },
+  {
+    "start": 1735.81,
+    "end": 1737.97,
+    "text": "Nhỏ hơn 3 8 thì 3 8 lại phải dịch sang biên phạm"
+  },
+  {
+    "start": 1739.45,
+    "end": 1745.29,
+    "text": "Ok, đến đây nó so sánh 15 với 5, thì nó so sánh nó thấy 15 lớn hơn 5, thì khi đó 15 nó sẽ được chiàn vào đây"
+  },
+  {
+    "start": 1745.69,
+    "end": 1749.57,
+    "text": "Ok, và cái vị trí của 3 8 lúc nãy, và nó sẽ đúng vị trí sắp xếp"
+  },
+  {
+    "start": 1750.23,
+    "end": 1753.11,
+    "text": "Ok, thì đây chính là 1 cái bước của thuật toàn sắp xếp, chiàn"
+  },
+  {
+    "start": 1753.43,
+    "end": 1756.91,
+    "text": "Ok, rồi mình sẽ cài đặt nhé, sau đó mình sẽ giải thích cái code này cho các bạn"
+  },
+  {
+    "start": 1758.06,
+    "end": 1760.06,
+    "text": "Thần này nó là chen"
+  },
+  {
+    "start": 1760.06,
+    "end": 1765.82,
+    "text": "1 cái mạng a có n là phần tử"
+  },
+  {
+    "start": 1765.82,
+    "end": 1768.82,
+    "text": "Đầu tiên nó sẽ dựa từ chỉ số y bằng 1"
+  },
+  {
+    "start": 1768.82,
+    "end": 1769.82,
+    "text": "cho từ y nhỏ n"
+  },
+  {
+    "start": 1769.82,
+    "end": 1771.82,
+    "text": "Nó cũng thực hiện n là chờ 1 bước nhé"
+  },
+  {
+    "start": 1771.82,
+    "end": 1773.82,
+    "text": "Nhưng mà các bạn thấy là gì nhỉ?"
+  },
+  {
+    "start": 1773.82,
+    "end": 1777.72,
+    "text": "Nó bị nói cái gì nhỉ?"
+  },
+  {
+    "start": 1777.72,
+    "end": 1780.72,
+    "text": "Cái phần tử đầu tiên nó đã được sắp xếp rồi"
+  },
+  {
+    "start": 1780.72,
+    "end": 1782.72,
+    "text": "Nó có mỗi mình nói, người ta không chiên"
+  },
+  {
+    "start": 1782.72,
+    "end": 1784.72,
+    "text": "Rồi đến đây này, người ta sẽ làm gì?"
+  },
+  {
+    "start": 1784.72,
+    "end": 1787.72,
+    "text": "Người ta sẽ lấy ra phần tử x nhé"
+  },
+  {
+    "start": 1787.72,
+    "end": 1791.72,
+    "text": "lấy ra phần tử, chỉ số y"
+  },
+  {
+    "start": 1791.72,
+    "end": 1796.72,
+    "text": "mình sẽ dùng 1 biến x, nó sẽ bằng ai"
+  },
+  {
+    "start": 1796.72,
+    "end": 1800.88,
+    "text": "và người ta phải dùng thêm 1 biến nữa là biến vị trí, mình hay đặt là pos"
+  },
+  {
+    "start": 1800.88,
+    "end": 1802.88,
+    "text": "bằng y chữ 1"
+  },
+  {
+    "start": 1802.88,
+    "end": 1806.88,
+    "text": "cái biến pos này làm gì? cái biến pos này nó chính là cái chỉ số"
+  },
+  {
+    "start": 1806.88,
+    "end": 1809.88,
+    "text": "mình sẽ đi tìm cái vị trí hợp lý cho thằng x"
+  },
+  {
+    "start": 1809.88,
+    "end": 1812.88,
+    "text": "để chain thằng x vào cái vị trí pos này"
+  },
+  {
+    "start": 1812.88,
+    "end": 1816.88,
+    "text": "thành ra là cái vị trí mà tiềm năng đầu tiên để có thể chain x vào"
+  },
+  {
+    "start": 1816.88,
+    "end": 1819.32,
+    "text": "chan x vào, nó chính là vị trí y trừ 1"
+  },
+  {
+    "start": 1819.32,
+    "end": 1821.48,
+    "text": "ví dụ như bạn xét cái thằng 36 này này"
+  },
+  {
+    "start": 1821.48,
+    "end": 1823.76,
+    "text": "bạn lấy thằng x là 36 này ra đúng không?"
+  },
+  {
+    "start": 1823.76,
+    "end": 1826.8,
+    "text": "và khi đó bạn cũng sẽ lấy 1 biến pause bằng y trừ 1"
+  },
+  {
+    "start": 1826.8,
+    "end": 1828.72,
+    "text": "đây là cái chỉ số của cái ông 47 này này"
+  },
+  {
+    "start": 1828.72,
+    "end": 1833.04,
+    "text": "đấy, bởi vì rất có thể thằng 36 này sẽ được chan vào vị trí của 47 đúng không?"
+  },
+  {
+    "start": 1833.04,
+    "end": 1835.44,
+    "text": "ok, để ra cái vị trí đầu tiên mà mình sẽ xét đấy"
+  },
+  {
+    "start": 1835.44,
+    "end": 1838.0,
+    "text": "đấy chính là cái vị trí trước cái phần tử hiện tại"
+  },
+  {
+    "start": 1838.0,
+    "end": 1839.88,
+    "text": "đây là chỉ số y trừ 1 đấy"
+  },
+  {
+    "start": 1839.88,
+    "end": 1842.16,
+    "text": "sau đó bạn lập cho mình 1 cái điều kiện lập như sao?"
+  },
+  {
+    "start": 1842.16,
+    "end": 1843.99,
+    "text": "đây chính là y"
+  },
+  {
+    "start": 1843.99,
+    "end": 1845.91,
+    "text": "pause còn lớn hơn là bằng 0"
+  },
+  {
+    "start": 1845.91,
+    "end": 1849.35,
+    "text": "và ít còn lớn hơn appos"
+  },
+  {
+    "start": 1849.35,
+    "end": 1855.59,
+    "text": "mình sẽ cho appos, cộng 1, bằng appos"
+  },
+  {
+    "start": 1855.59,
+    "end": 1858.31,
+    "text": "cái vòng lập ngoan này có nghĩa là gì?"
+  },
+  {
+    "start": 1858.31,
+    "end": 1861.43,
+    "text": "cái vòng lập ngoan này có 2 điều kiện để chính là appos lớn hơn ở bằng không"
+  },
+  {
+    "start": 1861.43,
+    "end": 1866.07,
+    "text": "để mình chặn trường hợp là bạn sẽ không diệt cái chỉ số bot ra bên ngoài mạng"
+  },
+  {
+    "start": 1866.07,
+    "end": 1870.95,
+    "text": "ok, mình sẽ luôn chỉ set các cái chỉ số ở bên trong mạng thôi"
+  },
+  {
+    "start": 1870.95,
+    "end": 1872.47,
+    "text": "tức là chỉ số từ không cho đi thôi"
+  },
+  {
+    "start": 1872.47,
+    "end": 1877.19,
+    "text": "thế ra mình có 1 điều kiện chặn đấy là appos lớn hơn ở bằng không"
+  },
+  {
+    "start": 1877.19,
+    "end": 1880.17,
+    "text": "ok, ở dưới này là POS, trừ trừ POS"
+  },
+  {
+    "start": 1883.32,
+    "end": 1885.64,
+    "text": "và cái điều kiện lập tiếp theo ấy"
+  },
+  {
+    "start": 1885.64,
+    "end": 1887.66,
+    "text": "đấy chính là ạch ích có lớn hơn iPOS"
+  },
+  {
+    "start": 1887.66,
+    "end": 1889.76,
+    "text": "tức là cái giá trị của cái phần tử hiện tại"
+  },
+  {
+    "start": 1889.76,
+    "end": 1892.9,
+    "text": "nó còn lớn hơn cái phần tử mà mình đang xét"
+  },
+  {
+    "start": 1892.9,
+    "end": 1894.7,
+    "text": "thì khi đó ấy, cái phần tử"
+  },
+  {
+    "start": 1894.7,
+    "end": 1896.7,
+    "text": "à xin lỗi, nhỏ hơn chứ nhỉ?"
+  },
+  {
+    "start": 1896.7,
+    "end": 1898.14,
+    "text": "thì khi đó có nghĩa là gì nhỉ?"
+  },
+  {
+    "start": 1898.14,
+    "end": 1901.02,
+    "text": "cái phần tử ở vị trí POS ấy, nó sẽ phải được dịch sang bên phại đúng không?"
+  },
+  {
+    "start": 1901.02,
+    "end": 1902.02,
+    "text": "ok"
+  },
+  {
+    "start": 1902.02,
+    "end": 1907.46,
+    "text": "nhìn chung cái điều kiện này có nghĩa là trừng nào mà cái vị trí bạn đang tìm kiếm để nhét thằng ích vào ấy"
+  },
+  {
+    "start": 1907.46,
+    "end": 1910.16,
+    "text": "tràn thằng ít vào, nó vẫn còn nằm trong mạng, đúng không?"
+  },
+  {
+    "start": 1910.16,
+    "end": 1913.26,
+    "text": "Và cái phần tử mà bạn đang xét nó còn nhỏ hơn,"
+  },
+  {
+    "start": 1913.26,
+    "end": 1916.06,
+    "text": "cái thằng mà mình tràn nó còn nhỏ hơn cái phần tử đang xét,"
+  },
+  {
+    "start": 1916.06,
+    "end": 1918.76,
+    "text": "thì mình sẽ dịch cái phần tử hiện tại sang bên phải."
+  },
+  {
+    "start": 1918.76,
+    "end": 1920.26,
+    "text": "Ví dụ như trong trường hợp này này,"
+  },
+  {
+    "start": 1920.26,
+    "end": 1922.56,
+    "text": "ví dụ như thằng 36 này nó chính là thằng ít đấy."
+  },
+  {
+    "start": 1922.56,
+    "end": 1923.96,
+    "text": "Và cái thằng A-Pos,"
+  },
+  {
+    "start": 1923.96,
+    "end": 1927.36,
+    "text": "được chứ? A-Pos nó chính là cái thằng 47 này này."
+  },
+  {
+    "start": 1927.36,
+    "end": 1929.76,
+    "text": "Thì nếu mà cái thằng 36 này mà nó nhỏ hơn 47,"
+  },
+  {
+    "start": 1929.76,
+    "end": 1931.76,
+    "text": "thì có nghĩa là mình chưa tìm được vị trí tràn,"
+  },
+  {
+    "start": 1931.76,
+    "end": 1935.06,
+    "text": "thì bạn sẽ thực hiện một câu lệnh đấy chính là A-Pos, cộng 1 bằng A-Pos."
+  },
+  {
+    "start": 1935.06,
+    "end": 1938.18,
+    "text": "Thì khi đó, cái thằng 47 này nó sẽ dịch sang bên phải, đúng không?"
+  },
+  {
+    "start": 1938.18,
+    "end": 1944.17,
+    "text": "Ok, tương tự như thế, sau đó thì sau khi mà bạn trèn thằng 47 và sang bên phải rồi"
+  },
+  {
+    "start": 1944.17,
+    "end": 1946.65,
+    "text": "thì bạn sẽ giảm cái vị trí của cái biến POT đi"
+  },
+  {
+    "start": 1946.65,
+    "end": 1948.57,
+    "text": "để nó xét cái vị trí của ông 44 này này"
+  },
+  {
+    "start": 1948.57,
+    "end": 1951.21,
+    "text": "và nếu mà tiếp tục như vậy, cái vàng lập Y nó sẽ thực hiện"
+  },
+  {
+    "start": 1951.21,
+    "end": 1953.93,
+    "text": "nếu mà cái biến X này này nó vẫn còn nhỏ hơn 44"
+  },
+  {
+    "start": 1953.93,
+    "end": 1958.33,
+    "text": "thì thằng 44 sẽ được dịch sang bên phải bằng câu lệnh lá A++, cộng 1 bằng A++"
+  },
+  {
+    "start": 1958.33,
+    "end": 1962.17,
+    "text": "Cái câu lệnh này thực chất đây chính là dịch cái phần tự vị trí POT xang bên phải"
+  },
+  {
+    "start": 1962.17,
+    "end": 1970.31,
+    "text": "OK, sau vòng lập y này nhé, OK, sau vòng lập y này, đây ví dụ như bạn chạy này, nó, thằng boss nó đang giảm"
+  },
+  {
+    "start": 1970.31,
+    "end": 1974.91,
+    "text": "thì sau cái vòng lập y này này, cái vị trí boss của các bạn ấy, nó có 2 trường hợp"
+  },
+  {
+    "start": 1974.91,
+    "end": 1978.31,
+    "text": "OK, trường hợp thứ nhất í, cái biến boss, boss của bạn nó bằng chứ 1"
+  },
+  {
+    "start": 1978.31,
+    "end": 1982.84,
+    "text": "OK, bởi vì là khi đó cái phần tử x mà bạn đem ra chèn ấy, nó quá nhỏ"
+  },
+  {
+    "start": 1982.84,
+    "end": 1987.84,
+    "text": "nó nhỏ hơn tất cả các phần tử đứng trước ở trước nó, thì khi đó cái vị trí, cái giá trị boss nó sẽ bằng chứ 1"
+  },
+  {
+    "start": 1987.84,
+    "end": 1994.48,
+    "text": "Thế còn trong trường hợp mà, cái điều kiện vòng lập y này nó dừng khi mà x nó lớn hơn hoặc bằng Apple, ok?"
+  },
+  {
+    "start": 1994.48,
+    "end": 2002.08,
+    "text": "Nó dừng bởi cái điều kiện thứ 2 này này, thì có nghĩa là cái phần tửa ở vị trí pause của các bạn ấy, bây giờ nó đang là thầm 15 này này, ok?"
+  },
+  {
+    "start": 2002.08,
+    "end": 2008.08,
+    "text": "Mình không được chèn vào vị trí của 15, mà mình sẽ phải chèn vào cái vị trí đăng sau của thầm 15 này, ok?"
+  },
+  {
+    "start": 2008.08,
+    "end": 2012.88,
+    "text": "Thì đó vào sau vào lập y này này, bạn sẽ có một câu lệnh đấy là A của pause cộng 1, nhá?"
+  },
+  {
+    "start": 2012.88,
+    "end": 2015.2,
+    "text": "Bạn không được đe chén vào vị trí của thầm 15 kia đâu"
+  },
+  {
+    "start": 2015.2,
+    "end": 2017.36,
+    "text": "Bạn phải chén vào vị trí đứng đằng sau nó"
+  },
+  {
+    "start": 2017.36,
+    "end": 2019.2,
+    "text": "Bạn sẽ cho nó bằng ích"
+  },
+  {
+    "start": 2019.2,
+    "end": 2021.36,
+    "text": "Thế là xăm thuật toán insert-syn-sol"
+  },
+  {
+    "start": 2021.36,
+    "end": 2023.36,
+    "text": "Ok, hả?"
+  },
+  {
+    "start": 2023.36,
+    "end": 2026.88,
+    "text": "Phần thuật toán này nó khó cay đặt ở chỗ này thôi, và nó hơi khó hiểu một chút"
+  },
+  {
+    "start": 2026.88,
+    "end": 2032.14,
+    "text": "Ở dưới này thì bạn có thể sử dụng thuật toán chỗ này là insert-syn-sol"
+  },
+  {
+    "start": 2032.14,
+    "end": 2034.54,
+    "text": "Ok, để sắp xếp cái mạng này theo thứ tự tăng dần"
+  },
+  {
+    "start": 2034.54,
+    "end": 2036.62,
+    "text": "Như dụng mình sắp xếp một cái mạng"
+  },
+  {
+    "start": 2036.62,
+    "end": 2037.66,
+    "text": "Như sau này"
+  },
+  {
+    "start": 2037.66,
+    "end": 2041.82,
+    "text": "10, 9, 8, 1, 6, 7, 2, 3, 5, 4, 5, 6, 10"
+  },
+  {
+    "start": 2041.82,
+    "end": 2045.26,
+    "text": "Thì nó sẽ sắp xếp cái mạng của mình thành 1.2.190"
+  },
+  {
+    "start": 2045.26,
+    "end": 2048.54,
+    "text": "Ok, thế là chỉ khó ở cái chỗ này thôi này"
+  },
+  {
+    "start": 2048.54,
+    "end": 2049.9,
+    "text": "Khó ở chỗ này"
+  },
+  {
+    "start": 2049.9,
+    "end": 2054.7,
+    "text": "Thì mình sẽ hướng dẫn các bạn một lần xem nó chạy như thế nào khi mà cái cốt này nhá"
+  },
+  {
+    "start": 2054.7,
+    "end": 2058.46,
+    "text": "Ví dụ này, ví dụ cái mạng của bạn mà..."
+  },
+  {
+    "start": 2058.46,
+    "end": 2062.06,
+    "text": "Dạ sứ cái mạng của bạn nó đang sắp xếp thành cái đoạn như thế này rồi nhá"
+  },
+  {
+    "start": 2062.06,
+    "end": 2066.78,
+    "text": "Đấy là 1, 2, 5, 8, 10"
+  },
+  {
+    "start": 2066.78,
+    "end": 2069.66,
+    "text": "Và bây giờ bạn 4 và 9"
+  },
+  {
+    "start": 2069.66,
+    "end": 2070.62,
+    "text": "Ok"
+  },
+  {
+    "start": 2070.62,
+    "end": 2078.13,
+    "text": "bây giờ giả sử như sau 5 bước đầu tiên nhé, sau 5 bước rồi nhé, cái mạng của bạn đang sắp xếp cái đoạn 5 phần tử đầu tiên như thế này rồi"
+  },
+  {
+    "start": 2078.13,
+    "end": 2084.77,
+    "text": "và bây giờ cái vòng 4 của bạn sẽ xét cái phần tử này, tức là cái phần chữ số y bằng 0, 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 2084.77,
+    "end": 2092.05,
+    "text": "nhận vụ của nó bây giờ ấy, nó sẽ chèn thằng 4 này này, vào cái đoạn đứng trước nó xa cho cái mạng của bạn nó vẫn sắp xếp tăng dần"
+  },
+  {
+    "start": 2092.05,
+    "end": 2098.01,
+    "text": "thì đầu tiên ấy, nó sẽ lấy ra cái thằng x nó bằng ai, nó chính là thằng 4 này đúng không? x của bạn sẽ bằng 4"
+  },
+  {
+    "start": 2098.01,
+    "end": 2107.61,
+    "text": "ok, và cái biến POS, cái vị trí chen của các bạn ấy, nó sẽ bắt đầu từ i chữ 1, tức là thầm 10 này này, đúng không? tức là vị trí nó là bằng 4"
+  },
+  {
+    "start": 2107.61,
+    "end": 2112.41,
+    "text": "thì trong vào lập pie này nó sẽ kiểm tra là gì? POT lớn hoặc bằng 0, đúng không?"
+  },
+  {
+    "start": 2112.41,
+    "end": 2117.69,
+    "text": "và ít nhỏ hơn A POT, cái điều này có đúng không nhỉ? ít lớn bằng... à, sẽ lỗi POT lớn hơn bằng 0 này, đúng không?"
+  },
+  {
+    "start": 2117.69,
+    "end": 2122.49,
+    "text": "và ít là bằng 4, có nhỏ hơn A POT không? có nhỏ hơn A4 không? đây, A4 là 10"
+  },
+  {
+    "start": 2122.49,
+    "end": 2125.61,
+    "text": "thì khi đó của mình ấy ít là 4, nó nhỏ hơn A POT"
+  },
+  {
+    "start": 2125.61,
+    "end": 2128.76,
+    "text": "Ok, thì khi đó làm sao?"
+  },
+  {
+    "start": 2128.76,
+    "end": 2135.76,
+    "text": "Bạn phải cho airport cộng 1, tức là, mình sẽ phải cho airport cộng 1, tức là a5 đấy, nó bằng, nó bằng a4"
+  },
+  {
+    "start": 2135.76,
+    "end": 2143.82,
+    "text": "Airport cộng 1 bằng a4 mà, có nghĩa là a5 bằng a4, thì a5 của các bạn bây giờ nó đang là 4 thì nó sẽ được thay thế vào 10"
+  },
+  {
+    "start": 2143.82,
+    "end": 2147.82,
+    "text": "Ok, nó sẽ được thay thế vào 10, lại không còn là 4 nữa và nó sẽ thành 10 đấy"
+  },
+  {
+    "start": 2147.82,
+    "end": 2154.66,
+    "text": "Đấy là bước đầu tiên của vòng là poi đấy, sau đó thì nó sẽ giảm cái miếng post đi thành 3"
+  },
+  {
+    "start": 2154.66,
+    "end": 2156.96,
+    "text": "tế là cái phần tử mà bây giờ bạn đang xét nó là 8 nè"
+  },
+  {
+    "start": 2156.96,
+    "end": 2159.76,
+    "text": "thì nó lại tiếp tục xo sánh xem là ích còn nhỏ hơn a-pot hay không?"
+  },
+  {
+    "start": 2159.76,
+    "end": 2162.66,
+    "text": "thì ích vẫn nhỏ hơn a-pot đúng không? ích là 4 mà"
+  },
+  {
+    "start": 2162.66,
+    "end": 2165.96,
+    "text": "thì khi đó nó lại có 1 câu lệnh đấy là a-pot cộng 1 bằng a-pot"
+  },
+  {
+    "start": 2165.96,
+    "end": 2169.66,
+    "text": "thì khi đó nó chính là câu lệnh a4 bằng a3"
+  },
+  {
+    "start": 2169.66,
+    "end": 2172.16,
+    "text": "a4 bằng a3, cho nên là 4 nè"
+  },
+  {
+    "start": 2172.16,
+    "end": 2173.16,
+    "text": "bằng 3"
+  },
+  {
+    "start": 2173.16,
+    "end": 2174.66,
+    "text": "thì đây a4 của bạn đang là 10 nè"
+  },
+  {
+    "start": 2174.66,
+    "end": 2177.66,
+    "text": "bây giờ nó sẽ bằng cái nội dung của cái thằng đứng trước nó là 8"
+  },
+  {
+    "start": 2177.66,
+    "end": 2179.86,
+    "text": "thì thằng này không còn thằng 10 nữa"
+  },
+  {
+    "start": 2179.86,
+    "end": 2181.56,
+    "text": "mà nó thành 8"
+  },
+  {
+    "start": 2181.56,
+    "end": 2183.52,
+    "text": "ok nó sẽ thành 8"
+  },
+  {
+    "start": 2183.52,
+    "end": 2188.86,
+    "text": "và tiếp tục nó lại giảm POST đi một lần nữa, ok, giảm POST"
+  },
+  {
+    "start": 2188.86,
+    "end": 2191.7,
+    "text": "thì bây giờ cái giá trị của POST của bạn nó sẽ trở thành 2"
+  },
+  {
+    "start": 2191.7,
+    "end": 2195.38,
+    "text": "và nó lại so sánh x với A POST, đây, vòng lập qua này nó vẫn lập này"
+  },
+  {
+    "start": 2195.38,
+    "end": 2197.62,
+    "text": "bởi vì x vẫn còn nhỏ hơn A POST, đúng không?"
+  },
+  {
+    "start": 2197.62,
+    "end": 2201.22,
+    "text": "thì trong trường hợp này nó lại thực hiện câu lệnh đấy, đây là A POST cộng 1 mà A POST"
+  },
+  {
+    "start": 2201.22,
+    "end": 2205.58,
+    "text": "thì khi đó A POST cộng 1, bằng A POST nó chính là câu lệnh AB bằng A2"
+  },
+  {
+    "start": 2205.58,
+    "end": 2207.82,
+    "text": "đây là cái O8 này không còn là 8 nữa mà là 5"
+  },
+  {
+    "start": 2207.82,
+    "end": 2210.3,
+    "text": "đấy, nó đang đi tìm cái vị trí cho 4 mà"
+  },
+  {
+    "start": 2210.3,
+    "end": 2213.38,
+    "text": "đúng không? bằng cách là dịch các thần tử lớn hơn 4 ra làng sau thôi"
+  },
+  {
+    "start": 2213.38,
+    "end": 2218.47,
+    "text": "và tiếp tục nó giảm pos, đi một lần nữa thì giảm pos, bây giờ của bạn nó sẽ thành 1"
+  },
+  {
+    "start": 2218.47,
+    "end": 2223.79,
+    "text": "tức là ông này này, thì nó thấy là sao, nó thấy là x là bằng 4 này nè"
+  },
+  {
+    "start": 2223.79,
+    "end": 2226.79,
+    "text": "nó lớn hơn aPos thì khi đó cái vòng lập y này của bạn nó sẽ kết thúc"
+  },
+  {
+    "start": 2226.79,
+    "end": 2230.79,
+    "text": "bởi vì cái điều kiện x nhỏ hơn aPos nó không còn đúng nữa, đúng không?"
+  },
+  {
+    "start": 2230.79,
+    "end": 2232.79,
+    "text": "ok, nó thì vòng lập y này nó sẽ kết thúc"
+  },
+  {
+    "start": 2232.79,
+    "end": 2235.79,
+    "text": "và bạn sẽ phải nhảy vào câu lệnh đấy là aPos cộng 1 bằng x"
+  },
+  {
+    "start": 2235.79,
+    "end": 2238.79,
+    "text": "thì khi đó aPos cộng 1 đấy, pos của mình nó đang lại 1"
+  },
+  {
+    "start": 2238.79,
+    "end": 2242.79,
+    "text": "thì khi đó aPos cộng 1 nó chính là a2 bằng x tức là bằng 4, đúng không?"
+  },
+  {
+    "start": 2242.79,
+    "end": 2245.67,
+    "text": "Đúng không? Thế là bạn không được chén vào cái vị trí POS"
+  },
+  {
+    "start": 2245.67,
+    "end": 2248.23,
+    "text": "mà bạn phải chén vào cái vị trí đứng sau vị trí POS"
+  },
+  {
+    "start": 2248.23,
+    "end": 2249.67,
+    "text": "và chính là vị trí của ông này này"
+  },
+  {
+    "start": 2249.67,
+    "end": 2254.15,
+    "text": "Thì bây giờ cái vị trí như thế này nó được gán bằng cái giá trị của X thôi, là thành 4"
+  },
+  {
+    "start": 2254.15,
+    "end": 2261.1,
+    "text": "và bạn thấy là bạn đã chén được thông bốn vào cái vị trí đứng trước nó, thành 1 cái dãy là 1, 2, 3, 4, 5, 8, 10"
+  },
+  {
+    "start": 2261.1,
+    "end": 2263.98,
+    "text": "Ok, thì đấy là cái trường hợp cứu nhất nhé"
+  },
+  {
+    "start": 2263.98,
+    "end": 2269.18,
+    "text": "Đấy là cái trường hợp mà cái vòng lập qua này nó kết thúc khi mà cái điều kiện thứ 2 này nó bị vi phạm"
+  },
+  {
+    "start": 2269.18,
+    "end": 2274.51,
+    "text": "tức là ích nó lớn hơn vị trí A++ thì mình sẽ dừng"
+  },
+  {
+    "start": 2274.51,
+    "end": 2277.51,
+    "text": "ok, mình sẽ chèn ngay đằng sau vị trí POS, ok nhở"
+  },
+  {
+    "start": 2277.51,
+    "end": 2280.31,
+    "text": "thì còn trường hợp thứ 2, ví dụ cái mảng của bạn nó như thế này này"
+  },
+  {
+    "start": 2280.31,
+    "end": 2288.11,
+    "text": "sau khi mà bạn thực hiện một số của thuật toán sắp xếp chèn, cái mảng của bạn nó sẽ thành là 2, 3, 4, 1, 8, 9 nhở ra"
+  },
+  {
+    "start": 2288.11,
+    "end": 2291.95,
+    "text": "và sự sau 3 bước đầu tiên, cái mảng của bạn nó sẽ sắp xếp được 3 phần từ là 2, 3, 4 ý"
+  },
+  {
+    "start": 2291.95,
+    "end": 2294.11,
+    "text": "và bạn đang đi chèn cái tằng này này"
+  },
+  {
+    "start": 2294.11,
+    "end": 2296.88,
+    "text": "thì khi đó cái tằng ích của mình nó sẽ bằng 1 đúng không?"
+  },
+  {
+    "start": 2296.88,
+    "end": 2301.8,
+    "text": "và thầm POS của mình nó sẽ bằng, bằng 2, nó là bằng 4 này này"
+  },
+  {
+    "start": 2301.8,
+    "end": 2303.24,
+    "text": "thì nó sau sánh là gì nhờ?"
+  },
+  {
+    "start": 2303.24,
+    "end": 2307.78,
+    "text": "4 nó lớn hơn ích đúng không? thì nó sẽ dịch thằng 4 ra bên phải"
+  },
+  {
+    "start": 2307.78,
+    "end": 2310.35,
+    "text": "hấy, thằng 4 nó sẽ dịch ra bên phải"
+  },
+  {
+    "start": 2310.35,
+    "end": 2314.03,
+    "text": "ok, thằng nó dịch nó giảm cái vị giá trị của POS đi thành ba"
+  },
+  {
+    "start": 2314.03,
+    "end": 2316.87,
+    "text": "thì ba vẫn lớn hơn ích này, thành ra là x sẽ"
+  },
+  {
+    "start": 2316.87,
+    "end": 2320.31,
+    "text": "ah POS sẽ giảm đi 1 lần nữa thành 1, đúng không?"
+  },
+  {
+    "start": 2320.31,
+    "end": 2322.47,
+    "text": "à, sẽ nói POS vừa giảm lúc lại sang 1 rồi này"
+  },
+  {
+    "start": 2322.47,
+    "end": 2325.47,
+    "text": "thì thằng ba này vẫn lớn hơn thằng ích thì POS lại giảm 1 lần nữa về không"
+  },
+  {
+    "start": 2325.47,
+    "end": 2326.67,
+    "text": "tức là ông này"
+  },
+  {
+    "start": 2326.67,
+    "end": 2329.47,
+    "text": "Thì bây giờ cái thằng 2 này nó vẫn lớn hơn thằng Ích, nhá"
+  },
+  {
+    "start": 2329.47,
+    "end": 2332.07,
+    "text": "Thì khi đó cái POST của bạn ấy nó sẽ giảm về chữ 1"
+  },
+  {
+    "start": 2332.07,
+    "end": 2333.07,
+    "text": "Nói"
+  },
+  {
+    "start": 2333.07,
+    "end": 2335.07,
+    "text": "Thì khi đó cái bòng lọc Y của mình ấy"
+  },
+  {
+    "start": 2335.07,
+    "end": 2338.67,
+    "text": "Nó bị dừng khi mà cái điều bị kiện đấy chính là POST lớn hơn mà không"
+  },
+  {
+    "start": 2338.67,
+    "end": 2343.47,
+    "text": "Vì vì POST của bạn nó mang chữ 1 ấy, thì cái điều kiện của vòng Y nó kết nó sai thì ra nó cũng kết thúc"
+  },
+  {
+    "start": 2343.47,
+    "end": 2350.07,
+    "text": "Nhưng mà khi đó ấy, thì vòng Y này nó kết thúc theo cái kiểu đây chính là tất cả các phần tử đứng trước cái phần tử hiện tại"
+  },
+  {
+    "start": 2350.07,
+    "end": 2351.27,
+    "text": "Nó chỉ là thằng Ích này này"
+  },
+  {
+    "start": 2351.27,
+    "end": 2355.47,
+    "text": "Đúng chưa, nó đều lớn hơn thằng Ích và Ích sẽ phải đưa về tận cái vị trí cuối đầu tiên"
+  },
+  {
+    "start": 2355.47,
+    "end": 2359.11,
+    "text": "Ok, thì khi đó, port của mình bằng chư 1 đúng không?"
+  },
+  {
+    "start": 2359.11,
+    "end": 2363.95,
+    "text": "thì cái câu lệnh A port cộng 1 bằng x thì nó chính là A0 bằng x"
+  },
+  {
+    "start": 2363.95,
+    "end": 2368.42,
+    "text": "Ok, tức là khi đó nó sẽ đưa cái phần tử mà"
+  },
+  {
+    "start": 2368.42,
+    "end": 2371.82,
+    "text": "lúc nãy nó có một mấy cái bước mà đưa thằng 3 sang đây nhé"
+  },
+  {
+    "start": 2371.82,
+    "end": 2380.65,
+    "text": "Ok, đưa thằng 3 sang đây, đưa thằng 2 sang đây, đưa thằng 2 sang đây"
+  },
+  {
+    "start": 2380.65,
+    "end": 2386.51,
+    "text": "Họ, và khi đó cái câu lệnh A0 bằng x của mình thì nó sẽ đưa 1 về vị trí đầu tiên này trong mạng"
+  },
+  {
+    "start": 2386.51,
+    "end": 2390.03,
+    "text": "Bằng qua nó có 2 trường hợp như thế nhé"
+  },
+  {
+    "start": 2390.03,
+    "end": 2392.19,
+    "text": "Trường hợp cứ nhất nó kết thúc khi mà"
+  },
+  {
+    "start": 2392.19,
+    "end": 2395.23,
+    "text": "nó tìm được 1 vị trí nào đó mà"
+  },
+  {
+    "start": 2395.23,
+    "end": 2400.19,
+    "text": "x nó lớn hơn appos, thì nó sẽ đưa phần tử x vào đứng nằm sau nè vị trí bot"
+  },
+  {
+    "start": 2400.19,
+    "end": 2404.91,
+    "text": "Còn ở trường hợp thứ 2, tất cả các phần tử đứng trước, phần tử x ấy"
+  },
+  {
+    "start": 2404.91,
+    "end": 2408.11,
+    "text": "Nó đều như lớn hơn x thì khi đó x sẽ được đưa về tận đầu dãy"
+  },
+  {
+    "start": 2408.11,
+    "end": 2412.83,
+    "text": "Ok không nhỉ? Thật toàn insert sonshot này chỉ khó ở phần này thôi"
+  },
+  {
+    "start": 2412.83,
+    "end": 2415.06,
+    "text": "ok"
+  },
+  {
+    "start": 2415.06,
+    "end": 2420.46,
+    "text": "tư tưởng của nó thì không khó nhưng mà khi mà cài đặt thì nó hơi khó hiểu một chút ở cái vòng lập của ai này"
+  },
+  {
+    "start": 2420.46,
+    "end": 2422.46,
+    "text": "thì các bạn cố gắng hiểu cái chỗ này nhé"
+  },
+  {
+    "start": 2422.46,
+    "end": 2424.39,
+    "text": "ok"
+  },
+  {
+    "start": 2424.39,
+    "end": 2428.12,
+    "text": "đây mình đợi một chút để cho thằng 2 này, các bạn sẽ thấy là nó..."
+  },
+  {
+    "start": 2428.12,
+    "end": 2432.16,
+    "text": "để mình rẫn cái chỗ thằng 2 kìa"
+  },
+  {
+    "start": 2432.16,
+    "end": 2434.06,
+    "text": "khi mà thằng 2 nó là thằng nhỏ nhất đấy"
+  },
+  {
+    "start": 2434.06,
+    "end": 2438.76,
+    "text": "tính từ nó trở về cuối dẫy thì khi đó bạn sẽ phải chia nó về tận vị trí đầu tiên đấy"
+  },
+  {
+    "start": 2438.76,
+    "end": 2440.76,
+    "text": "đầu tiên nó sẽ so sánh 2 với 47"
+  },
+  {
+    "start": 2440.76,
+    "end": 2446.76,
+    "text": "47 lớn hơn, 47 dịch sang phạ này, 48 dịch sang phạ này, 48, 38, 36, 27"
+  },
+  {
+    "start": 2446.76,
+    "end": 2452.76,
+    "text": "và đến tất cái thằng cuối cùng, nó còn lớn hơn 2, thì khi đó thằng 2 này nó sẽ được chiên vào đầu dẫy"
+  },
+  {
+    "start": 2452.76,
+    "end": 2456.76,
+    "text": "khi đó cái vòng lập qua này của các bạn này kết thúc khi mà BOSS nó bằng chữ 1"
+  },
+  {
+    "start": 2456.76,
+    "end": 2461.76,
+    "text": "ok không nhỉ? thì đấy chính là cái thuật toán sắp xếp trèm, ok?"
+  },
+  {
+    "start": 2461.76,
+    "end": 2469.36,
+    "text": "thì mình có 3 thuật toán sắp xếp ăn cơ bản như vậy nhé, ok?"
+  },
+  {
+    "start": 2469.36,
+    "end": 2473.08,
+    "text": "Mình còn một thuật toán sắp xếp nữa, và mình cũng sẽ nói luôn, bởi vì thằng này cũng dễ"
+  },
+  {
+    "start": 2473.08,
+    "end": 2475.96,
+    "text": "Mình sẽ nói luôn vào thuật toán 3 thằng này"
+  },
+  {
+    "start": 2475.96,
+    "end": 2478.56,
+    "text": "Thì 3 thằng này đều có độ phức tạp là ONR bình nữa"
+  },
+  {
+    "start": 2478.56,
+    "end": 2481.04,
+    "text": "Ok, 3 thằng này đều có phức tạp là ONR bình nhé"
+  },
+  {
+    "start": 2481.04,
+    "end": 2482.72,
+    "text": "3 thằng mà mình mới hướng dẫn nè"
+  },
+  {
+    "start": 2482.72,
+    "end": 2486.64,
+    "text": "Đấy là sắp xếp chọn, sắp xếp nổi bọt, và sắp xếp chèn"
+  },
+  {
+    "start": 2486.64,
+    "end": 2489.68,
+    "text": "Mình có một thuật toán sắp xếp nữa, đấy chính là thuật toán cao tinh xọt"
+  },
+  {
+    "start": 2489.68,
+    "end": 2492.44,
+    "text": "Ok, sử dụng đến phân phố để sắp xếp một cái mạng"
+  },
+  {
+    "start": 2492.44,
+    "end": 2498.67,
+    "text": "Thằng cao tinh xót này có một vài hạn chế"
+  },
+  {
+    "start": 2498.67,
+    "end": 2502.77,
+    "text": "Các bạn có thể xem thằng cao tinh xót này"
+  },
+  {
+    "start": 2502.77,
+    "end": 2510.68,
+    "text": "Thằng cao tinh xót này đầu tiên tư tưởng của nó sẽ đếm xem mỗi phần tử trong bản sắp xếp"
+  },
+  {
+    "start": 2510.68,
+    "end": 2513.64,
+    "text": "trong bản sắp xuất hiện bao nhiêu lần"
+  },
+  {
+    "start": 2513.64,
+    "end": 2517.24,
+    "text": "sau đó nó sẽ duyệt từ phần tử nhỏ nhất, cho tới phần tử lớn nhất"
+  },
+  {
+    "start": 2517.24,
+    "end": 2520.88,
+    "text": "và thông qua mỗi phần tử, nó biết là mỗi phần tử xuất hiện bao nhiêu lần rồi, đúng không?"
+  },
+  {
+    "start": 2520.88,
+    "end": 2523.72,
+    "text": "Thì nó sẽ in ra số lần xuất hiện của phần tử đó"
+  },
+  {
+    "start": 2523.72,
+    "end": 2530.12,
+    "text": "Ví dụ như cái mảng của các bạn nó như thế này này, đấy là 2, 8, 3, 1, 4, 2, chảy ạ"
+  },
+  {
+    "start": 2530.12,
+    "end": 2534.54,
+    "text": "Thì nó sẽ đếm được xem là mỗi phần tử trong cái mảng này có các bạn xác xếp bao nhiêu lần"
+  },
+  {
+    "start": 2534.54,
+    "end": 2540.24,
+    "text": "Số thiện bao nhiêu lần, thằng 1 thì 1 đúng không? Thằng 2 thì 2 đúng không? Thằng 3 thì 1 đúng không?"
+  },
+  {
+    "start": 2540.24,
+    "end": 2544.9,
+    "text": "Thật sự mình có thằng 4 nữa đây nữa, thằng 4 thì 2 đúng không? Và thằng 8 thì 1 đúng không?"
+  },
+  {
+    "start": 2544.9,
+    "end": 2549.96,
+    "text": "Ê, sau khi mà nó đếm được mỗi phần tử xứ thiện bao nhiêu lần rồi thì nó chỉ cần xét từ cái thằng bé đến thằng lớn không?"
+  },
+  {
+    "start": 2549.96,
+    "end": 2552.6,
+    "text": "Đấy là duyệt từ 1, 2, 3, 4, 5, 6, 7, 8"
+  },
+  {
+    "start": 2552.6,
+    "end": 2555.48,
+    "text": "Duyệt qua một phần tử nào, mà cái phần tử đấy xuất hiện ấy"
+  },
+  {
+    "start": 2555.48,
+    "end": 2558.52,
+    "text": "Ví dụ như dưới có 1 thì thấy 1 xuất hiện 1 lần nguốc thì nó sẽ in ra số 1"
+  },
+  {
+    "start": 2558.52,
+    "end": 2562.12,
+    "text": "Duyệt có 2 thì hãy xuất hiện 2 lần nguốc thì bạn sẽ phải in ra 2 số 2"
+  },
+  {
+    "start": 2562.12,
+    "end": 2565.24,
+    "text": "Duyệt có 3 thì thấy xuất hiện 1 lần nguốc, in ra 1"
+  },
+  {
+    "start": 2565.24,
+    "end": 2567.88,
+    "text": "Duyệt có 4 thì xuất hiện 2 lần nguốc, in ra 2 số 4"
+  },
+  {
+    "start": 2567.88,
+    "end": 2569.56,
+    "text": "Chụ này sẽ không phải là 1, phải là 3"
+  },
+  {
+    "start": 2569.56,
+    "end": 2573.3,
+    "text": "Chụ này là 3"
+  },
+  {
+    "start": 2573.3,
+    "end": 2574.5,
+    "text": "4 xuất hiện 2 lần"
+  },
+  {
+    "start": 2574.5,
+    "end": 2576.34,
+    "text": "và 8 xuất hiện 1 lần"
+  },
+  {
+    "start": 2576.34,
+    "end": 2579.3,
+    "text": "Vậy thì bạn thấy là cái mạng của mình nó sẽ được tăng dần như thế này"
+  },
+  {
+    "start": 2579.3,
+    "end": 2581.06,
+    "text": "Tư tưởng của nó như thế, ok"
+  },
+  {
+    "start": 2581.06,
+    "end": 2583.34,
+    "text": "Đếm tận xót xuất hiện của các phần tử trong mạng"
+  },
+  {
+    "start": 2583.34,
+    "end": 2586.02,
+    "text": "Sau đó thì mình đã biết mỗi phần tử xuất hiện bao nhiêu lần rồi"
+  },
+  {
+    "start": 2586.02,
+    "end": 2588.94,
+    "text": "Cứ duyệt qua phần tử nào từ nhỏ đến lớn nhé"
+  },
+  {
+    "start": 2588.94,
+    "end": 2593.18,
+    "text": "Mình biết tận xót rồi thì mình sẽ lập từng đấy tận xót lần và mình in ra cái phần tử hiện tạng"
+  },
+  {
+    "start": 2593.18,
+    "end": 2595.78,
+    "text": "Các bạn có thể xem cái cách nó chạy"
+  },
+  {
+    "start": 2595.78,
+    "end": 2602.21,
+    "text": "Đấy nó đang đếm phần phối đấy, nó đang đếm xem là mỗi phần tử xuất hiện bao nhiêu lần đấy"
+  },
+  {
+    "start": 2602.21,
+    "end": 2603.85,
+    "text": "Các cái số từ 1 cho tới 9"
+  },
+  {
+    "start": 2603.85,
+    "end": 2606.05,
+    "text": "9 là cái giá trị lớn nhất ở trong mạng đúng không?"
+  },
+  {
+    "start": 2606.05,
+    "end": 2608.25,
+    "text": "Thì nó đang đếm xem là mỗi phần tử xuất hiện bao nhiêu lần"
+  },
+  {
+    "start": 2608.25,
+    "end": 2609.81,
+    "text": "Đây và nó đã đếm xong rồi này"
+  },
+  {
+    "start": 2609.81,
+    "end": 2616.43,
+    "text": "ok, nó đếm được là số 0 xuất hiện 2 lần, số 2 thì, số 2 xuất hiện 7 lần kìa, ok"
+  },
+  {
+    "start": 2616.43,
+    "end": 2622.43,
+    "text": "số 3 xuất hiện 2 lần, số 4 xuất hiện 2 lần, thì khi mà nó diệt qua 2 ấy, nó thấy 2 xuất hiện 7 lần thì nó sẽ in ra 7 số 2"
+  },
+  {
+    "start": 2622.43,
+    "end": 2626.89,
+    "text": "1 này, 2 này, 3 này, 4 này, 5 này, 6 này, 7 này"
+  },
+  {
+    "start": 2626.89,
+    "end": 2631.19,
+    "text": "tương tự như vậy rồi có 3 thấy xuất hiện 3, 3 xuất hiện 2 lần thì nó sẽ in ra 2 số 3"
+  },
+  {
+    "start": 2631.19,
+    "end": 2636.99,
+    "text": "4 này, đấy, cứ như thế đúng không, vậy thì bạn thấy là gì nhỉ, nó đều xét từ cái số bé, từ bé đến lớn"
+  },
+  {
+    "start": 2636.99,
+    "end": 2642.43,
+    "text": "và mỗi số thì nó đều biết tần xuất rồi, thì nó chỉ cần in ra các số đấy theo tần xuất thôi, đúng không?"
+  },
+  {
+    "start": 2642.43,
+    "end": 2644.51,
+    "text": "Nhưng mà nó có một nhật điểm để chữ loại gì nhỉ?"
+  },
+  {
+    "start": 2644.51,
+    "end": 2648.67,
+    "text": "Các bạn không thể sắp xếp cái mạng của mình nếu mà cái mạng của mình có các phần tử âm"
+  },
+  {
+    "start": 2648.67,
+    "end": 2653.55,
+    "text": "hoặc là các phần tử của mình nó quá lớn, bởi vì nó sử dụng một cái mạng để nó đến phân phối, đúng không?"
+  },
+  {
+    "start": 2653.55,
+    "end": 2654.43,
+    "text": "Ok?"
+  },
+  {
+    "start": 2654.43,
+    "end": 2662.44,
+    "text": "Thì khi đó, cái mạng của mình nó lớn quá, cái giá trị trong phần tử của mình nó lớn quá, ví dụ 10 mũ 9 nhỉ?"
+  },
+  {
+    "start": 2662.44,
+    "end": 2670.48,
+    "text": "Thì khi đó để mà đếm tận xuất của thằng 10 mũ 9 này, bạn cần phải khai báo được một cái mạng A có 10 mũ 9 cộng 1 phần tử, thì điều này là không được, đúng không?"
+  },
+  {
+    "start": 2670.48,
+    "end": 2675.48,
+    "text": "Thông thường thì thật toán cao tin xọt này, nó chỉ áp dụng được trong trường hợp như thế này."
+  },
+  {
+    "start": 2675.48,
+    "end": 2680.2,
+    "text": "Đấy chính là các phần tử ở trong mạng của mình, nó đều là số không âm, nó phải lớn hơn là không."
+  },
+  {
+    "start": 2680.2,
+    "end": 2685.8,
+    "text": "Và cái thứ 2, đấy là phần tử lớn nhất ở trong mạng của các bạn, nó chỉ rơi vào khoảng 10 mũ 7 thôi."
+  },
+  {
+    "start": 2685.8,
+    "end": 2687.8,
+    "text": "OK, mấy mũ bảy đồ xuống thôi"
+  },
+  {
+    "start": 2687.8,
+    "end": 2691.4,
+    "text": "bởi vì để mà đếm được phân phối thì mình sẽ phải đếm được một cái mạng ấy"
+  },
+  {
+    "start": 2691.4,
+    "end": 2692.52,
+    "text": "nó có cỡ là gì?"
+  },
+  {
+    "start": 2692.52,
+    "end": 2695.16,
+    "text": "nó có cỡ là... mình hay gọi là màng cao đúng không?"
+  },
+  {
+    "start": 2695.16,
+    "end": 2697.36,
+    "text": "nó có cỡ là mắt cộng 1"
+  },
+  {
+    "start": 2697.36,
+    "end": 2700.72,
+    "text": "đúng không? trong đó mắt nó chính là cái giá trị lớn nhất ở trong mạng"
+  },
+  {
+    "start": 2700.72,
+    "end": 2704.96,
+    "text": "OK, vậy thì cái giá trị lớn nhất trong mạng của bạn nó chỉ rơi vào khoảng tầm 10 mũ bảy là OK"
+  },
+  {
+    "start": 2704.96,
+    "end": 2709.2,
+    "text": "thì khi đó bạn mới khai báo được một cái mạng là in, ta là 10 mũ bảy cộng 1"
+  },
+  {
+    "start": 2709.2,
+    "end": 2712.03,
+    "text": "văn tử, đúng không?"
+  },
+  {
+    "start": 2712.03,
+    "end": 2716.67,
+    "text": "Còn nếu mà nó quá lớn thì bạn không khai báo được cái mạng, nó sẽ bị tràn bộ nhớ stack, ok?"
+  },
+  {
+    "start": 2716.67,
+    "end": 2722.19,
+    "text": "Còn là kể cả bạn khai báo ở bên ngoài hằm bên thì nó cũng sẽ bị tràn bộ nhớ"
+  },
+  {
+    "start": 2722.19,
+    "end": 2725.31,
+    "text": "Thành ra là nó có một cái, tất nhiên là nó sẽ rất là nhanh, đúng không?"
+  },
+  {
+    "start": 2725.31,
+    "end": 2728.03,
+    "text": "Độ phức tạp của thằng này nó chỉ là ON, cộng với mắt thôi"
+  },
+  {
+    "start": 2728.03,
+    "end": 2732.27,
+    "text": "Trong đó là số lượng phần tử của mạng và mắt là cái giá trị lớn nhất ở trong mạng"
+  },
+  {
+    "start": 2732.27,
+    "end": 2733.79,
+    "text": "Ok, nó sẽ rất là nhanh"
+  },
+  {
+    "start": 2733.79,
+    "end": 2740.11,
+    "text": "Nhưng mà nó cũng có một cái nược điểm để chính là nó không thể áp dụng cho mọi cái mạng, đúng không?"
+  },
+  {
+    "start": 2740.11,
+    "end": 2745.71,
+    "text": "3 cái thuật toán này thì nó là ONR bình, nhưng mà bạn có thể áp dụng nó với bất kỳ 1 cái màng nè"
+  },
+  {
+    "start": 2745.71,
+    "end": 2750.15,
+    "text": "Ok, giá trị trong màng không quan trọng, nhưng mà thằng cao tinh sọt này thì bắt buộc là"
+  },
+  {
+    "start": 2750.15,
+    "end": 2755.07,
+    "text": "nó phải thoảm ảnh cái điều địa kiện đấy, chính là các cái phần tử trong màng nó chỉ nằm cho cái đoạn từ không"
+  },
+  {
+    "start": 2755.07,
+    "end": 2761.35,
+    "text": "cho tới 10 mũ 7, tầm 10 mũ 7, ok, hả, nhớ nhá, không có là"
+  },
+  {
+    "start": 2761.35,
+    "end": 2767.01,
+    "text": "bài nào cũng áp dụng cao tinh sọt là không được, ok, độ phức tạp của nó sẽ là tuyên tính nhưng mà"
+  },
+  {
+    "start": 2767.01,
+    "end": 2769.81,
+    "text": "Rõ ra là các phần tử ở trong màng nó sẽ có điều kiện"
+  },
+  {
+    "start": 2769.81,
+    "end": 2772.51,
+    "text": "có điều kiện rõ ra"
+  },
+  {
+    "start": 2772.51,
+    "end": 2774.61,
+    "text": "Vậy thì để mà sắp xếp cái"
+  },
+  {
+    "start": 2774.61,
+    "end": 2777.71,
+    "text": "để làm cái thằng này thì đầu tiên các bạn cứ tìm cho mình thằng mắc ở trong màng"
+  },
+  {
+    "start": 2777.71,
+    "end": 2780.51,
+    "text": "sau đó bạn coi vào một cái mảng cao có mắc cộng một phần tử"
+  },
+  {
+    "start": 2780.51,
+    "end": 2781.51,
+    "text": "nhá"
+  },
+  {
+    "start": 2781.51,
+    "end": 2783.01,
+    "text": "OK"
+  },
+  {
+    "start": 2783.01,
+    "end": 2789.56,
+    "text": "Ở đây mình sẽ dùng một cái mảng, đấy là một cái mảng là"
+  },
+  {
+    "start": 2789.56,
+    "end": 2795.55,
+    "text": "có tố đa là 17, một phần tử đi, cao đi OK"
+  },
+  {
+    "start": 2795.55,
+    "end": 2798.35,
+    "text": "Rồi, sau đó thì"
+  },
+  {
+    "start": 2798.35,
+    "end": 2804.06,
+    "text": "khi mà ở đây mình dùng thêm 1 cái biến map nữa nhé, mình khởi tạm nó bằng in atm, ok"
+  },
+  {
+    "start": 2804.06,
+    "end": 2809.45,
+    "text": "và khi mà bạn nhập vào cái 1 cái mạng a thì bạn sẽ cập nhật đấy là map bằng"
+  },
+  {
+    "start": 2809.45,
+    "end": 2819.92,
+    "text": "này mình đặt là em mờ đi, mờ nó sẽ bằng map của chính nó và cái thằng ai để mình tìm được cái phần tử lớn nhất ở trong mạng ấy"
+  },
+  {
+    "start": 2819.92,
+    "end": 2826.42,
+    "text": "sau đó thì sao? sau đó thì mình sẽ tiến hành duyệt qua các phần tử ở trong mạng và mình đếm tận sốt xuất hiện của nó"
+  },
+  {
+    "start": 2826.42,
+    "end": 2828.92,
+    "text": "thực ra các bạn có thể đếm luôn ở đây cũng được, ok"
+  },
+  {
+    "start": 2828.92,
+    "end": 2833.52,
+    "text": "Thế là khi mà bạn nhập vào ai thì bạn sẽ cho cao của ai cộng cộng"
+  },
+  {
+    "start": 2833.52,
+    "end": 2836.12,
+    "text": "để tăng tàn xuất xuất hiện của các phần tử trong máng lên"
+  },
+  {
+    "start": 2836.12,
+    "end": 2837.12,
+    "text": "Được không nhỏ?"
+  },
+  {
+    "start": 2837.12,
+    "end": 2841.32,
+    "text": "Sau khi mà mình đã có tàn xuất xuất hiện của các phần tử trong máng rồi"
+  },
+  {
+    "start": 2841.32,
+    "end": 2844.92,
+    "text": "thì các bạn chỉ cần duyệt từ phần tử nhỏ nhất cho tới phần tử lớn nhất"
+  },
+  {
+    "start": 2844.92,
+    "end": 2847.52,
+    "text": "Thì mình duyệt từ không được cho tới phần tử lớn nhất"
+  },
+  {
+    "start": 2847.52,
+    "end": 2848.62,
+    "text": "Ok"
+  },
+  {
+    "start": 2848.62,
+    "end": 2855.02,
+    "text": "Thế là mình sẽ duyệt từ 4, in, i, 0, i nhỏ hơn hoặc bán mò i cộng cộng"
+  },
+  {
+    "start": 2855.02,
+    "end": 2857.02,
+    "text": "Và mình sẽ kiểm tra là gì?"
+  },
+  {
+    "start": 2857.02,
+    "end": 2862.3,
+    "text": "nếu mà cao của i, mà khác không, tức là cái số i nó xuất hiện trong mạng"
+  },
+  {
+    "start": 2862.3,
+    "end": 2863.9,
+    "text": "thì khi đó cao của i nó mới khác không, đúng không?"
+  },
+  {
+    "start": 2863.9,
+    "end": 2866.3,
+    "text": "Đức là tấn sót xuất hiện của số i trong mạng nó khác không ý?"
+  },
+  {
+    "start": 2866.3,
+    "end": 2870.14,
+    "text": "Cái bạn chỉ cần lập từng này vòng lập thôi, tức là bệnh dựa từ 4d.com"
+  },
+  {
+    "start": 2870.14,
+    "end": 2874.46,
+    "text": "dì nhỏ hơn cao của i, và bạn in ra cho mình số i là được"
+  },
+  {
+    "start": 2874.46,
+    "end": 2878.46,
+    "text": "OK, như thế này nè, thế thôi, thấy chưa?"
+  },
+  {
+    "start": 2878.46,
+    "end": 2882.86,
+    "text": "Đây chính là cái cách mà sử dụng counting sort được đếm tấn sót xuất hiện vào phần tử trong mạng"
+  },
+  {
+    "start": 2882.86,
+    "end": 2885.74,
+    "text": "Mình sẽ có một cái bước để đếm tấn sót xuất hiện vào phần tử trong mạng"
+  },
+  {
+    "start": 2885.74,
+    "end": 2889.1,
+    "text": "sau đó mình sẽ duệt tử phần tử nhỏ nhất, cho tử phần tử lớn nhất là trong bản"
+  },
+  {
+    "start": 2889.1,
+    "end": 2892.7,
+    "text": "ok, và xem là cái phần tử nào có số lần xuất hiện, hát không vậy?"
+  },
+  {
+    "start": 2892.7,
+    "end": 2896.54,
+    "text": "thì mình sẽ dựa vào cái tần xuất xuất hiện của nó và mình in ra từng đấy số đồ luôn"
+  },
+  {
+    "start": 2896.54,
+    "end": 2898.86,
+    "text": "ok, ví dụ cái mạng của bạn nó như này"
+  },
+  {
+    "start": 2898.86,
+    "end": 2902.06,
+    "text": "cái mạng của bạn nó là 8 này"
+  },
+  {
+    "start": 2902.06,
+    "end": 2905.34,
+    "text": "2, 2, 1, 1, 8, 3"
+  },
+  {
+    "start": 2905.34,
+    "end": 2908.14,
+    "text": "ok, thì khi đó mình sẽ có 1 cái mảng cao đúng không?"
+  },
+  {
+    "start": 2908.14,
+    "end": 2911.18,
+    "text": "duệt qua 8 thì bạn sẽ cho cao của 8 bằng 1"
+  },
+  {
+    "start": 2911.18,
+    "end": 2917.82,
+    "text": "duệt qua 2 thì bạn sẽ cho cao của 2 bằng 1"
+  },
+  {
+    "start": 2917.82,
+    "end": 2924.42,
+    "text": "dưới qua hai thì bạn sẽ cho cao của hai thành hai, dưới có một thì bạn sẽ cho cao của một bằng một, đúng không?"
+  },
+  {
+    "start": 2924.42,
+    "end": 2935.0,
+    "text": "dưới có một này thì bạn lại tiếp tục cho cao của một thành hai, dưới có tám thì bạn tăng cao của tám lên thành hai, dưới có ba thì bạn cho cao của ba bằng một, đó"
+  },
+  {
+    "start": 2935.0,
+    "end": 2940.36,
+    "text": "và bạn cũng cập nhật luôn cho mình cái giá trị của mới, tức là cái giá trị lớn nhất là trong màng của mình là tám"
+  },
+  {
+    "start": 2940.36,
+    "end": 2945.44,
+    "text": "sau đó bạn chỉ cần dưới cho mình từ số không như tới số tám thôi, dưới qua không thì bạn thấy cao không bằng không"
+  },
+  {
+    "start": 2945.44,
+    "end": 2950.66,
+    "text": "Vwidge 1 thì bạn thấy ước 1 màng 2, có nghĩa là trong màng của mình, nó có 2 số 1"
+  },
+  {
+    "start": 2950.66,
+    "end": 2952.32,
+    "text": "thì mình sẽ in ra 2 số 1"
+  },
+  {
+    "start": 2952.34,
+    "end": 2954.72,
+    "text": "Read"
+  },
+  {
+    "start": 2954.88,
+    "end": 2957.24,
+    "text": "vặn quا dit"
+  },
+  {
+    "start": 2957.24,
+    "end": 2961.74,
+    "text": "Ans kart"
+  },
+  {
+    "start": 2961.74,
+    "end": 2964.42,
+    "text": "dịch có cao 4 thì không thể xuất hiện, bỏ"
+  },
+  {
+    "start": 2964.42,
+    "end": 2968.02,
+    "text": "cao 5 cũng không xuất hiện, cao 6 cũng không xuất hiện, cao 7 cũng không xuất hiện"
+  },
+  {
+    "start": 2968.02,
+    "end": 2971.26,
+    "text": "đến cao 8 thì xuất hiện 2 lần, tức là 8 xuất hiện 2 lần trong mạng"
+  },
+  {
+    "start": 2971.26,
+    "end": 2972.86,
+    "text": "thì mình sẽ in ra 2 xô 8"
+  },
+  {
+    "start": 2972.86,
+    "end": 2975.54,
+    "text": "v khi đó cái mạng của bạn sẽ được xắp xế tăng ra như thế này"
+  },
+  {
+    "start": 2975.54,
+    "end": 2977.22,
+    "text": "rất là hay đúng không? OK"
+  },
+  {
+    "start": 2977.22,
+    "end": 2981.58,
+    "text": "cái việc mà bạn sử dụng một cái mạng này đến tận xót xuất hiện của các phần tử trong mạng thì mình sẽ gặp rất là nhiều rồi"
+  },
+  {
+    "start": 2981.58,
+    "end": 2985.17,
+    "text": "đúng nha, ạ, thì đây chỉ là cao tinh xọt"
+  },
+  {
+    "start": 2985.17,
+    "end": 2988.88,
+    "text": "ví dụ mình sẽ xắp xế cái mạng này luôn nhá"
+  },
+  {
+    "start": 2988.88,
+    "end": 2991.96,
+    "text": "đây là cái mạng có đôi 467 phân tử"
+  },
+  {
+    "start": 2991.96,
+    "end": 2995.16,
+    "text": "8, 22, 1, 1, 8, 3"
+  },
+  {
+    "start": 2995.16,
+    "end": 2999.56,
+    "text": "Thì nó sẽ sắp xếp cái màn của mình thành 1, 1, 22, 3, 8"
+  },
+  {
+    "start": 2999.56,
+    "end": 3000.68,
+    "text": "Ok"
+  },
+  {
+    "start": 3000.68,
+    "end": 3003.4,
+    "text": "Thì các bạn có thể sử dụng cao tinh xót trong trường hợp mà"
+  },
+  {
+    "start": 3003.4,
+    "end": 3007.96,
+    "text": "Nó có một điều kiện như thế, đấy là các phần tửa trong màn của mình nó nằm trong khoảng từ 0 đến 10 mũ 7"
+  },
+  {
+    "start": 3007.96,
+    "end": 3009.75,
+    "text": "Ok"
+  },
+  {
+    "start": 3009.75,
+    "end": 3014.23,
+    "text": "Bởi vì mình thông qua cái chỉ số của cái màn cao đấy để mình đếm tầm suốt xuất hiện của màn mà"
+  },
+  {
+    "start": 3014.23,
+    "end": 3015.51,
+    "text": "Các phần tửa trong màn mà"
+  },
+  {
+    "start": 3015.51,
+    "end": 3016.23,
+    "text": "Ok"
+  },
+  {
+    "start": 3016.23,
+    "end": 3020.39,
+    "text": "Thì đây chỉ là 4 thật toán sắp xếp mà mình nghĩ là nó đơn giản hơn cả"
+  },
+  {
+    "start": 3020.39,
+    "end": 3025.19,
+    "text": "thì mình sẽ gục chung nó luôn vào một cái để cho các bạn học luôn cả bốn thật toàn sắp xếp này, ok?"
+  },
+  {
+    "start": 3025.19,
+    "end": 3030.99,
+    "text": "Trong video sau thì mình sẽ vấn dẫn các bạn cái thật toàn nó khó hơn, cái là thật toàn sắp xếp trộn, ok?"
+  }
+]

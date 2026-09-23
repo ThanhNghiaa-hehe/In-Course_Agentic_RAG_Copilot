@@ -1,0 +1,874 @@
+[
+  {
+    "chunk_id": "chunk_0_64",
+    "start_sec": 0,
+    "end_sec": 64,
+    "start_label": "00:00",
+    "end_label": "01:04",
+    "raw_text": "Giữ dẫn các bạn kiến thức về lập trình hướng đối tượng nha. Lập trình siệm cộng rất là hay. Thế nhất là bạn có thể sử dụng nó để cốt cô chúc dữ liệu và giải thuật. Vì nó hỗ trợ thư vệ, thư vệ rất là mạnh. Thứ 2 nữa, nó cũng là một nữ lập trình hướng đối tượng. Để cho các bạn có thể tiếp cận với cách lập trình hướng đối tượng. Sau này mình có thể an dụng những kiến thức của mình đã học vào trong mô C++ này. Để mình có thể cốt những nữ lập trình thuần hướng đối tượng, ví dụ như G3. Ok, các cái khái niệm rồi là các cái tính chất của lập trình hương đối tượng thì nó sẽ giống nhau ở các cái hương đối tượng thôi Ok, nó là một cái phương pháp lập trình mà, chứ nó không phải là chỉ là một hương đối tượng Thì trước giờ mình hay lập trình theo kiểu hướng hàm đúng không? và hướng thủ tục ấy Nhưng mà lập trình hướng đối tượng ấy, OOP ấy, nó viết tắt của tui object-oriented programming này Thì nó là một cái phương pháp lập trình ấy mà nó sẽ cố gắng nó xoay quanh các cái đối tượng và các cái dữ liệu bởi vì xoay quanh các hàm và các thụt thuộc mà mình vẫn hay lập trình thế trước đến giờ"
+  },
+  {
+    "chunk_id": "chunk_45_113",
+    "start_sec": 45,
+    "end_sec": 113,
+    "start_label": "00:45",
+    "end_label": "01:53",
+    "raw_text": "Nhưng mà lập trình hướng đối tượng ấy, OOP ấy, nó viết tắt của tui object-oriented programming này Thì nó là một cái phương pháp lập trình ấy mà nó sẽ cố gắng nó xoay quanh các cái đối tượng và các cái dữ liệu bởi vì xoay quanh các hàm và các thụt thuộc mà mình vẫn hay lập trình thế trước đến giờ ok, và người ta sẽ cố gắng mô phẩm các đối tượng trong thực tế, thành các đối tượng trong một nữ lập trình của mình thông qua 2 cái, thứ nhất là Datafill, là các trường dữ liệu, và thứ 2 đây chính là các thụt tính xin lỗi, bây giờ là các cái hành động Ví dụ như là con người thì người ta có thể có cách thuộc tính, ví dụ như là tên, tuổi, địa chỉ, ok, hoặc là có các hành động, ví dụ như đi, đứng, rồi là hợp tập vân vân, thì người ta sẽ mô phỏng, cố gắng mô phỏng các cái đối tượng ở trong thực tế đấy, và trong ngu nữ đập trình của mình thông qua 2 cái, đấy chính là thuộc tính và hành động, ok, attribute là thuộc tính, còn behavior thì là hành động hay là phương thức, ok,"
+  },
+  {
+    "chunk_id": "chunk_86_153",
+    "start_sec": 86,
+    "end_sec": 153,
+    "start_label": "01:26",
+    "end_label": "02:33",
+    "raw_text": "Ví dụ như là con người thì người ta có thể có cách thuộc tính, ví dụ như là tên, tuổi, địa chỉ, ok, hoặc là có các hành động, ví dụ như đi, đứng, rồi là hợp tập vân vân, thì người ta sẽ mô phỏng, cố gắng mô phỏng các cái đối tượng ở trong thực tế đấy, và trong ngu nữ đập trình của mình thông qua 2 cái, đấy chính là thuộc tính và hành động, ok, attribute là thuộc tính, còn behavior thì là hành động hay là phương thức, ok, thì ở đây người ta giới thiệu OOP nó tập trung vào đối tượng, object, ok nói chung là người ta sẽ tập trung vào hướng đối tượng thay vì tập trung vào các logic, ok và cái lập trình hướng đối tượng này thì nó sẽ phù hợp với cái chương trình mà, cái chương trình của mình mà nó lớn, phức tạp và nó có thể cần active update hoặc là đảo trì vấn văn, đúng không? sau đó thì, ở đây người ta nêu lên một vài cái điểm mạnh của OOP để chính là cái khả năng tái sử dụng lại cốt"
+  },
+  {
+    "chunk_id": "chunk_137_200",
+    "start_sec": 137,
+    "end_sec": 200,
+    "start_label": "02:17",
+    "end_label": "03:20",
+    "raw_text": "và nó có thể cần active update hoặc là đảo trì vấn văn, đúng không? sau đó thì, ở đây người ta nêu lên một vài cái điểm mạnh của OOP để chính là cái khả năng tái sử dụng lại cốt khả năng mở rộng và nó hiệu quả, ok vậy thì mình sẽ bắt đầu nằm quen với hương nối tượng trong hương trí xịm cộng nhá vậy thì khái niệm đầu tiên về lập trình hương nối tượng ấy, nó chính là cái khái niệm về class, ok, nó chính là lớp class này các bạn đã từng làm việc rồi đấy, ví dụ là class string, string mà các bạn hay sử dụng ý nó xây dựng các cái hàm có sẵn rồi các cái toán tử cộng rồi khác rồi là... các toán tử cộng với khác ở trong class string ý, thì nó đều là một cái lớp đã được xây dựng sẵn rồi hoặc chứa các cái hàm và các cái operator đã được... đã được nạp trồng sẵn rồi các bạn chỉ cần sử dụng thôi, hay là class selector của mình nhé, thì nó đều là các cái class"
+  },
+  {
+    "chunk_id": "chunk_184_246",
+    "start_sec": 184,
+    "end_sec": 246,
+    "start_label": "03:04",
+    "end_label": "04:06",
+    "raw_text": "các toán tử cộng với khác ở trong class string ý, thì nó đều là một cái lớp đã được xây dựng sẵn rồi hoặc chứa các cái hàm và các cái operator đã được... đã được nạp trồng sẵn rồi các bạn chỉ cần sử dụng thôi, hay là class selector của mình nhé, thì nó đều là các cái class rồi đã xây dựng sẵn rồi, ok, và các bạn chỉ cần xử dụng thôi và bây giờ thì mình sẽ tự đi xây dựng class của mình 1 class thì nó sẽ có 2 phần thứ nhất, đây chính là cái thuộc tính, ok hay, đúng nghĩa là attribute đấy, ok, attribute thứ 2 đây chính là các phương thức method, hoặc là behavior class thì là lớp nha lớp thì nó sẽ chưa 2 phần, 1 là thuộc tính, 2 là phương thức các bạn có thể hiểu đơn giản nó chính là các trường dữ liệu cái thuộc tính này nó chính là cái trường dữ liệu để mô tả cái lớp đấy và cái thứ 2 là cái phương thức của đấy chính là các hành động của cái lớp đấy ví dụ như là lớp quanh gời trải hạn thì nó có thuộc tính là tên, tuổi, địa chỉ, nhảy sinh, nguyên vân"
+  },
+  {
+    "chunk_id": "chunk_228_309",
+    "start_sec": 228,
+    "end_sec": 309,
+    "start_label": "03:48",
+    "end_label": "05:09",
+    "raw_text": "lớp thì nó sẽ chưa 2 phần, 1 là thuộc tính, 2 là phương thức các bạn có thể hiểu đơn giản nó chính là các trường dữ liệu cái thuộc tính này nó chính là cái trường dữ liệu để mô tả cái lớp đấy và cái thứ 2 là cái phương thức của đấy chính là các hành động của cái lớp đấy ví dụ như là lớp quanh gời trải hạn thì nó có thuộc tính là tên, tuổi, địa chỉ, nhảy sinh, nguyên vân và các thuộc tính, các phương thức ví dụ như là đi lại ăn của nguyên vân thì mỗi class thì các bạn sẽ định nghĩa hai cái phần đấy cho cái class, đây là thuộc tính và phương thức nhá đấy các bạn thấy nó tương tự như phần struct đúng không? OK khai nhiệmkles, attribute Raw, object, object 你说 object là một thực th safegesture C++, icon, class, content,"
+  },
+  {
+    "chunk_id": "chunk_286_347",
+    "start_sec": 286,
+    "end_sec": 347,
+    "start_label": "04:46",
+    "end_label": "05:47",
+    "raw_text": "C++, icon, class, content, sau đó thì đóng vào, ok, nhớ chỗ này có dấu trong phải nhé ở bên trong này các bạn sẽ định nghĩa, các bạn sẽ định nghĩa các cái thuộc tính và các cái phương thức của nó các thuộc tính và phương thức bạn sẽ định nghĩa trong này và nó có 1 cái, rất là hay, đấy chính là, 1 cái gọi là cái thuộc, 1 cái tính chất của OOP 1 tính chất của lập trình hôn đối tượng đấy chính là Đồng gói, ok, tính chất đầu tiên của lập trình hương lưu tượng là Ấm gói, encapsulation Đồng gói"
+  },
+  {
+    "chunk_id": "chunk_324_390",
+    "start_sec": 324,
+    "end_sec": 390,
+    "start_label": "05:24",
+    "end_label": "06:30",
+    "raw_text": "và nó có 1 cái, rất là hay, đấy chính là, 1 cái gọi là cái thuộc, 1 cái tính chất của OOP 1 tính chất của lập trình hôn đối tượng đấy chính là Đồng gói, ok, tính chất đầu tiên của lập trình hương lưu tượng là Ấm gói, encapsulation Đồng gói Tức là sao? Tức là các thuộc tính của cái một class Nó sẽ chỉ được truy cập ở bên trong class đấy thôi, và bên ngoài class thì các bạn sẽ không truy cập được Hay ngay cách khác, và bạn chỉ có thể thao tác các cái thuộc tính của một lớp nào đó Ngay ở bên trong cái lớp đấy, còn bên ra một cái ra bên ngoài lớp thì bạn sẽ không thể thao tác với các cái thuộc tính đấy được Vậy thì cái tính chất đầu tiên của OOP nó chính là đồng gói Thành ra là nó liên quan đến một cái gọi là phạm V của thuật tính Hay người ta còn gọi là Assets, Modifier,或者 Assets gì đó"
+  },
+  {
+    "chunk_id": "chunk_373_436",
+    "start_sec": 373,
+    "end_sec": 436,
+    "start_label": "06:13",
+    "end_label": "07:16",
+    "raw_text": "Thành ra là nó liên quan đến một cái gọi là phạm V của thuật tính Hay người ta còn gọi là Assets, Modifier,或者 Assets gì đó Nói chung là nó mô tải cái phạm V của một cái thuật tính nào đó ở trong lớp Accept1.defile, có 3 thằng, thứ nhất là private, thằng thứ 2 là thằng public, thằng thứ 3 là thằng protected các thuộc tính và các phương thức của 1 class của các bạn thì nó có thể thuộc 1 trong 3 thằng này Để là private, public và protected, nó là 3 cái access modifier Để nó định nghĩa cái phạm V truy cập đến các biến hoặc là các thuộc tính hoặc là các phương thức ở trong class của các bạn thôi mà Thành ra là cái tính chất đầu tiên của OOP, nó chính là emcapsulation nóng gói"
+  },
+  {
+    "chunk_id": "chunk_418_479",
+    "start_sec": 418,
+    "end_sec": 479,
+    "start_label": "06:58",
+    "end_label": "07:59",
+    "raw_text": "Để nó định nghĩa cái phạm V truy cập đến các biến hoặc là các thuộc tính hoặc là các phương thức ở trong class của các bạn thôi mà Thành ra là cái tính chất đầu tiên của OOP, nó chính là emcapsulation nóng gói Thành ra là khi mà các bạn lật trình hương đối tượng ấy, bạn đã xây dựng lớp ấy Thì các cái thuộc tính của lớp đấy sẽ thường được và để private Ok, tức là bạn chỉ có thể thao tác với các thuộc tính ở ngay ở bên trong lớp thôi, ra bên ngoài bạn sẽ không được thao tác Thì còn các phương thức của mình thì thường để là public Ok, để còn thầm protected này thì các bạn cứ để lại nhá, nó liên quan đến một tính chất thứ 2 là kế thừa trong OOP, mình sẽ nói sao Hiện tại thì các bạn chỉ cần nhớ đến 2 thằng là private Thằng thuộc tính sẽ để private, ok, và thằng phương thức sẽ để public Chơi nhỉ, đó, để đảm vào cái tính chất đây chính là tính chất đóng gói người ta sẽ dấu cái data của một cái class nào đó ra"
+  },
+  {
+    "chunk_id": "chunk_462_524",
+    "start_sec": 462,
+    "end_sec": 524,
+    "start_label": "07:42",
+    "end_label": "08:44",
+    "raw_text": "Hiện tại thì các bạn chỉ cần nhớ đến 2 thằng là private Thằng thuộc tính sẽ để private, ok, và thằng phương thức sẽ để public Chơi nhỉ, đó, để đảm vào cái tính chất đây chính là tính chất đóng gói người ta sẽ dấu cái data của một cái class nào đó ra người ta sẽ dấu dấu cái data của một cái class nào đó đi ok, không cho các phương thức ở bên ngoài class đây nó có thể thào tác trực tiếp với các thục tính của các class đấy ví dụ nhé, mình xây dựng một cái class là class sinh viên sinh viên thì có tên, tuổi, địa chỉ và điểm gta, đúng không? thì khi đó nhé, bạn sẽ khai báo thục tính ở đây và trước khi mà khai báo thuộc tính thì các bạn sẽ để cho mình Asset modifier lên trước mình sẽ để là Private, 2 chấm sau đó bạn liệt cái các thuộc tính mà nó sẽ private ở đây đây mình sẽ khai báo là string id, tên này, và tuổi các bạn có thể khai báo string id, string tên, string tuổi cũng được nhé"
+  },
+  {
+    "chunk_id": "chunk_506_567",
+    "start_sec": 506,
+    "end_sec": 567,
+    "start_label": "08:26",
+    "end_label": "09:27",
+    "raw_text": "và trước khi mà khai báo thuộc tính thì các bạn sẽ để cho mình Asset modifier lên trước mình sẽ để là Private, 2 chấm sau đó bạn liệt cái các thuộc tính mà nó sẽ private ở đây đây mình sẽ khai báo là string id, tên này, và tuổi các bạn có thể khai báo string id, string tên, string tuổi cũng được nhé ok, string rồi là id tên rồi là ngay sinh nhé, ok và thứ 2 là rpe, đấy Thì khi đó, mình đã khai báo 1, 2, 3, 4 thuộc tính cho cái class sinh viên này Đấy là id, tên và ngay sinh và điểm gpa và mình để private hết Ok, private 2 chấm sau đó mình liệt kết các thuộc tính của nó nhé Đây chính là các cái thuộc tính của cái class này Nhớ là sẽ để private nhé Vậy chưa? để đảm bảo cái tính chất lại encapsulation của OOP Còn nếu mà bạn không chỉ định cái ACM modifier cho cái các cái thuộc tính này Mặc định là private Khi bạn khai báo là string id, tên, ngay sinh, double, PA, các thứ gì thì"
+  },
+  {
+    "chunk_id": "chunk_549_613",
+    "start_sec": 549,
+    "end_sec": 613,
+    "start_label": "09:09",
+    "end_label": "10:13",
+    "raw_text": "Vậy chưa? để đảm bảo cái tính chất lại encapsulation của OOP Còn nếu mà bạn không chỉ định cái ACM modifier cho cái các cái thuộc tính này Mặc định là private Khi bạn khai báo là string id, tên, ngay sinh, double, PA, các thứ gì thì Nếu mà bạn không chỉ định Asset Modifier thì nó tự, nó mặc định là private Rồi, sau đó sau khi mình xây dựng các thuộc tính xong, mình sẽ xây dựng đến các phương thức Đây mình sẽ để các phương thức này là public Ví dụ như là bạn có thể khai báo một cái ham sinh viên này có thể nói hay cái gì đó, ví dụ như mình viên một cái ham là ham sinh chào rồi nè Thì các bạn sinh viên này có thể nói sinh chào, ok? Hoặc là đi học chả nè Thì đây chính là các cái phương thức của cái class sinh viên này và mình sẽ để là public ok, ở đây thì mình sẽ khai báo các cái lớp đấy trong các cái phương thức ở đây nhé"
+  },
+  {
+    "chunk_id": "chunk_594_654",
+    "start_sec": 594,
+    "end_sec": 654,
+    "start_label": "09:54",
+    "end_label": "10:54",
+    "raw_text": "Thì các bạn sinh viên này có thể nói sinh chào, ok? Hoặc là đi học chả nè Thì đây chính là các cái phương thức của cái class sinh viên này và mình sẽ để là public ok, ở đây thì mình sẽ khai báo các cái lớp đấy trong các cái phương thức ở đây nhé Thế còn xây dựng thì các bạn xây dựng ở ngoài Thực ra là các bạn cũng có thể xây dựng luôn ở trong này như thế này cũng được Thế dựng như bạn CL cái gì ở trong này, chẳng hạn CL, hello chẳng này cũng được Họ là các bạn xây dựng ở bên ngoài cũng được nhé Thông thường thì người ta sẽ hay xây dựng ở bên ngoài hơn như thế này này Ở đây mình sẽ là Impliment ok Ở đây thì mình sẽ xây dựng nó ở bên ngoài như thế này Các bạn có thể xây dựng ở bên ngoài, có thể xây dựng ở bên ngoài Ví dụ, mình muốn xây dựng phương thức sinh chào của lớp sinh viên này, thì mình sẽ viết là void, nhưng mà bạn phải truyền tuấn tử phạm V vào nhé"
+  },
+  {
+    "chunk_id": "chunk_638_699",
+    "start_sec": 638,
+    "end_sec": 699,
+    "start_label": "10:38",
+    "end_label": "11:39",
+    "raw_text": "Các bạn có thể xây dựng ở bên ngoài, có thể xây dựng ở bên ngoài Ví dụ, mình muốn xây dựng phương thức sinh chào của lớp sinh viên này, thì mình sẽ viết là void, nhưng mà bạn phải truyền tuấn tử phạm V vào nhé Tức là sinh viên 2.2.sinhchà Để chỉ ra rằng bạn đang xây dựng phương thức là sinh chào của lớp sinh viên Ví dụ, nhờ đây mình siêu ra là Hello tương tự như vậy, cái ham đi học thì bạn cũng có thể xây dựng ở bên ngoài này cũng được đi học còn lại là bạn sẽ xây dựng ra là đi học chẳng ạ ok, ạ thì bây giờ cái class sinh viên của mình nó có 4 thuộc tính và nó có 2 phương thức, ta xin chào vào đi học đúng không? để khai báo 1 cái sinh viên thì các bạn khai báo như 1 cái biến thông thường, ví dụ như sinh viên tên là x chẳng ạ ok thì bây giờ bạn có thể truy cập vào các cái phương thức hoặc là các thuộc tính public của thằng sinh viên ích này"
+  },
+  {
+    "chunk_id": "chunk_680_740",
+    "start_sec": 680,
+    "end_sec": 740,
+    "start_label": "11:20",
+    "end_label": "12:20",
+    "raw_text": "thì bây giờ cái class sinh viên của mình nó có 4 thuộc tính và nó có 2 phương thức, ta xin chào vào đi học đúng không? để khai báo 1 cái sinh viên thì các bạn khai báo như 1 cái biến thông thường, ví dụ như sinh viên tên là x chẳng ạ ok thì bây giờ bạn có thể truy cập vào các cái phương thức hoặc là các thuộc tính public của thằng sinh viên ích này Thế là bạn có thể sử dụng muốn gọi cái ham đi học thì bạn sẽ sử dụng ích, đi học hoặc là bạn muốn sử dụng cái ham sinh chào thì bạn có thể ích, sinh chào Ok, thì nó sẽ im ra là hello và đi học, đúng nhờ? Thế, thì đây chính là 1 ví dụ về 1 xây dựng 1 cái lớp nhé Ok, nhưng mà các bạn không thể truy cập được vào các thuộc tính như id, tên, ngay, single, pa đâu bởi vì những cái thằng này nó sẽ là private, ví dụ nhé mình muốn in ra xem là cái ông ích này này ông ấy có id là gì? thì mình sẽ see out ra ích chấm id như thế này đúng không? không được bởi vì cái thằng id này nó là private tức là da bên ngoài lớp ạ da ngoài cái phạm vi class này này đấy"
+  },
+  {
+    "chunk_id": "chunk_724_785",
+    "start_sec": 724,
+    "end_sec": 785,
+    "start_label": "12:04",
+    "end_label": "13:05",
+    "raw_text": "bởi vì những cái thằng này nó sẽ là private, ví dụ nhé mình muốn in ra xem là cái ông ích này này ông ấy có id là gì? thì mình sẽ see out ra ích chấm id như thế này đúng không? không được bởi vì cái thằng id này nó là private tức là da bên ngoài lớp ạ da ngoài cái phạm vi class này này đấy thì bạn sẽ không thể truy cập vào các cái thuộc tính này nhá nhiều bạn đã bảo ơ thế sao những cái hèm như là sin chào hay là đi học này thì là da bên ngoài class rồi mà nó vẫn có thể truy cập thực ra thì nó vẫn ở bên trong class bởi vì mình có chỉ ra được phạm vi của cái ham đấy mà là nó thuộc cái lớp sinh viên này này Thành ra là mình không thể truy cập vào được bởi vì cái thuộc tính id của mình là private Đấy Ok, nó bảo là thuộc tính id của sinh viên là private, ông không thể truy cập được Nếu còn hai cái thuộc tính, hai cái phương thức là sinh chào và đi học này thì có thể truy cập một cách thoải mái Ok nhỉ, ví dụ bạn ở chỗ này để pháp vích nhé Thì bây giờ bạn lại truy cập một cách thoải mái Thường thì nếu mà nó là sâu thì nó sẽ là rộng Thì bạn lại truy cập một cách thoải mái, bây giờ cái sâu id của mình nó đang là một sâu rộng như thế này"
+  },
+  {
+    "chunk_id": "chunk_766_831",
+    "start_sec": 766,
+    "end_sec": 831,
+    "start_label": "12:46",
+    "end_label": "13:51",
+    "raw_text": "Nếu còn hai cái thuộc tính, hai cái phương thức là sinh chào và đi học này thì có thể truy cập một cách thoải mái Ok nhỉ, ví dụ bạn ở chỗ này để pháp vích nhé Thì bây giờ bạn lại truy cập một cách thoải mái Thường thì nếu mà nó là sâu thì nó sẽ là rộng Thì bạn lại truy cập một cách thoải mái, bây giờ cái sâu id của mình nó đang là một sâu rộng như thế này Thế nhỉ? Học là gope thì thường nó là sâu không dụng như Michelle.x.gope Đấy là mình để public nhé Public thì bạn truy cập một cách thoải mái luôn Đã ra một cái số như thế này Vậy thì ở chỗ này mình để private Ok, thì các bạn sẽ không thể truy cập được nữa đâu Và các bạn phải để các cái thuộc tính là private nhé Đừng để public Rồi, sau khi mà mình nói đến các thuộc tính và các phương thức rồi đúng không? Thì trong một cái class nó có một cái phương thức rất là đặc biệt đấy, người ta gọi là cái hàm tạo constructor, ok? Tức là một cái hàm sẽ được khởi tạo mỗi khi mà bạn khai bão một cái ông sinh viên mới, ok?"
+  },
+  {
+    "chunk_id": "chunk_814_875",
+    "start_sec": 814,
+    "end_sec": 875,
+    "start_label": "13:34",
+    "end_label": "14:35",
+    "raw_text": "Thì trong một cái class nó có một cái phương thức rất là đặc biệt đấy, người ta gọi là cái hàm tạo constructor, ok? Tức là một cái hàm sẽ được khởi tạo mỗi khi mà bạn khai bão một cái ông sinh viên mới, ok? Cái hàm này nó có một cái điều đặc biệt đấy, chính là nó có cùng tên với class, cùng tên với tên class và nó không có kiểu trả về, ok? Ok, nó có cú pháp như thế này này, đấy là sinh viên này như thế này này, ok? đây là con struct hàm khởi tạo sẽ luôn được gọi khi khai báo mới 1 ông sinh viên ví dụ nhé ở đây mình xây dựng con struct sinh viên này sinh viên, 2.2. sinh viên nhớ cái hàm này không có kiểu trả về đâu nhé và nó có tên chung với tên class luôn nó tên là sinh viên ví dụ nhờ đây mình xe ao ra là hàm khởi tạo được gọi ok trong hạm men của mình, mình khai bám 1 cái ông sinh viên ít nhé"
+  },
+  {
+    "chunk_id": "chunk_857_921",
+    "start_sec": 857,
+    "end_sec": 921,
+    "start_label": "14:17",
+    "end_label": "15:21",
+    "raw_text": "sinh viên, 2.2. sinh viên nhớ cái hàm này không có kiểu trả về đâu nhé và nó có tên chung với tên class luôn nó tên là sinh viên ví dụ nhờ đây mình xe ao ra là hàm khởi tạo được gọi ok trong hạm men của mình, mình khai bám 1 cái ông sinh viên ít nhé sau đó mình chuyên cập đến 2 hạm để đi học với sinh chào nhé thì trong trường hợp này ấy, nó sẽ in ra là cái chỗ cái câu lệnh 49 này này, nó sẽ gọi cái hạm constructor đấy nó sẽ gọi 1 cái hạm tạng chính là cái hạm sinh viên này và nó in ra là hạm tạng hạm khởi tạng được gọi còn nếu bạn không xây dựng thì nó vẫn có nhé cơ là bạn không xây dựng cái hạm constructor này thì mặc bị nó vẫn có sẵn mà Đúng nhỉ, mỗi khi mà bạn tạo 1 cái ông sinh viên này thì nó sẽ có sẵn luôn bạn không xây dựng cũng được, hoặc có bạn có thể tự xây dựng cho mình Đấy, ví dụ như ở đây là 1 cái constructor và mình in ra là hàm khởi tạo được gọi đúng không? Bạn cũng có thể nạp chồng cái constructor này Đấy, ví dụ bây giờ mình không muốn 1 cái constructor mà nó không có tham số là sinh viên như thế kia"
+  },
+  {
+    "chunk_id": "chunk_906_966",
+    "start_sec": 906,
+    "end_sec": 966,
+    "start_label": "15:06",
+    "end_label": "16:06",
+    "raw_text": "Đấy, ví dụ như ở đây là 1 cái constructor và mình in ra là hàm khởi tạo được gọi đúng không? Bạn cũng có thể nạp chồng cái constructor này Đấy, ví dụ bây giờ mình không muốn 1 cái constructor mà nó không có tham số là sinh viên như thế kia mà mình muốn 1 constructor mà nó có thể nhận vào 4 cái tham số là id tên ngày sinh bởi gò VA cơ example string, string, string, double thang này nó cũng là con struct. nhưng con struct có t hoarder 4 để mình gái từng tham số 1 cho 4 tham số của class string bí vụ, có đi mình sẽ dựng là string, string, string này và mình sẽ string là mã này string name, string ngay sinh, tư là điểm, để mình gán từng thuộc tính của class sinh viên bằng 104 thằng trong dân xét tham xấu"
+  },
+  {
+    "chunk_id": "chunk_950_1014",
+    "start_sec": 950,
+    "end_sec": 1014,
+    "start_label": "15:50",
+    "end_label": "16:54",
+    "raw_text": "và mình sẽ string là mã này string name, string ngay sinh, tư là điểm, để mình gán từng thuộc tính của class sinh viên bằng 104 thằng trong dân xét tham xấu mình sẽ gán id bằng mẽ, tên bằng name, birth, ngay sinh bằng birth, vga bằng điểm ok, thì bây giờ nhé, mình ở đây xeo ra 1 câu lệnh để chính là, ham, khởi, tạ, ộ, có, tham số, được gọi, ok dụ ở trong này mình gọi thằng sinh viên ích nhé, nếu mà bạn gọi sinh viên ích ích, tức là gọi 1 sinh viên nhưng mà không có tham số ích thì tự khắc nó gọi 1 mặt tịnh cái ham sinh viên mà nó không có tham số này, cái constructor mà không có tham số này còn nếu mà bạn chuyển 4 cái tham số này vào nhé, thì khi đó nó lại gọi cái constructor này tụi mình có thể nạp trong các con structure khác nhau ở đây mình sẽ chuyển vào đây là, cái ông đầu tiên là 1-2-3 nhé, tên là nguyễn bản A"
+  },
+  {
+    "chunk_id": "chunk_996_1058",
+    "start_sec": 996,
+    "end_sec": 1058,
+    "start_label": "16:36",
+    "end_label": "17:38",
+    "raw_text": "thì tự khắc nó gọi 1 mặt tịnh cái ham sinh viên mà nó không có tham số này, cái constructor mà không có tham số này còn nếu mà bạn chuyển 4 cái tham số này vào nhé, thì khi đó nó lại gọi cái constructor này tụi mình có thể nạp trong các con structure khác nhau ở đây mình sẽ chuyển vào đây là, cái ông đầu tiên là 1-2-3 nhé, tên là nguyễn bản A R-Bus là 23 tháng 12-203 trả nạn và điểm thì là bằng 3.14 trả nạn ok, thì bây giờ nó lại gọi cái ham là cái ham này, cái constructor này, chứ nó không gọi cái constructor này nữa nhé ok, tuy vào cái bạn chuyển tham số cho nên nó nói như thế nào, thì nó sẽ tự gấp nó gọi cái ham phù hợp đúng không? OOP, OOP, OOP, OOP. Bây giờ nó lại gọi hàm là hàm khởi tạo có tham số, và bây giờ các cái thông tin của mình nó sẽ đưa gán lần lượt để chính là mã thì nó gán 1,2,3 này. Nó sẽ thực hiện các câu lệnh ở trong con shocker này thôi mà. Thông thường con shocker mà nó không có tham số thì bạn thường gán các cái giá trị cho thuộc tính nghĩa nó là rộng hoặc là số không"
+  },
+  {
+    "chunk_id": "chunk_1042_1107",
+    "start_sec": 1042,
+    "end_sec": 1107,
+    "start_label": "17:22",
+    "end_label": "18:27",
+    "raw_text": "và bây giờ các cái thông tin của mình nó sẽ đưa gán lần lượt để chính là mã thì nó gán 1,2,3 này. Nó sẽ thực hiện các câu lệnh ở trong con shocker này thôi mà. Thông thường con shocker mà nó không có tham số thì bạn thường gán các cái giá trị cho thuộc tính nghĩa nó là rộng hoặc là số không ví dụ như, nếu mà string thì mình hay gán nó bằng rộng như này, và điểm thì mình hay gán nó bằng không. nếu mà con structure có đầy đủ tham số như thế này thì mình sẽ gắn lần lượt các giá trị trong tham số cho các thuộc tính của lớp và chú ý này, nếu mà bạn không xây dựng con structure này, tức là bạn không có một con structure mà không có tham số trong hàm main bạn gọi sinh viên x như thế này được, nhưng nếu mà bạn khai báo là sinh viên x như thế này này Thế là mình muốn khai báo 1 cái sinh viên mà không có tham số, ok? Thì nó sẽ bao lỗi, bởi vì khi đó nhé, cái 2 cái class sinh viên của bạn nó chỉ có 1 constructor là cái constructor mà nó đầy đủ 4 tham số như thế này thôi, ok?"
+  },
+  {
+    "chunk_id": "chunk_1087_1148",
+    "start_sec": 1087,
+    "end_sec": 1148,
+    "start_label": "18:07",
+    "end_label": "19:08",
+    "raw_text": "trong hàm main bạn gọi sinh viên x như thế này được, nhưng nếu mà bạn khai báo là sinh viên x như thế này này Thế là mình muốn khai báo 1 cái sinh viên mà không có tham số, ok? Thì nó sẽ bao lỗi, bởi vì khi đó nhé, cái 2 cái class sinh viên của bạn nó chỉ có 1 constructor là cái constructor mà nó đầy đủ 4 tham số như thế này thôi, ok? Nó không còn cái constructor mà nó không có tham số như này nữa, thì trong trường hợp này nếu mà bạn cố tỉnh gọi như thế này nó sẽ bao lỗi, được chứ? Đúng nhờ, ok nhé, vậy thì nếu mà các bạn vẫn muốn khai báo 1 cái sinh viên mà nó không có tham số thì mình sẽ để lại cái constructor mà nó không có tham số như thế này Ví dụ về constructor, chú ý là constructor luôn được tạo khi mà hai bão mới 1 xinh viên, hoặc là 1 cái đối tượng nào đó Kể cả bạn không xây dựng cái constructor đấy thì nó vẫn có 1 cái constructor mặc định như thế OK, rồi, tương tự với constructor thì nó có 1 cái khái niệm đấy là"
+  },
+  {
+    "chunk_id": "chunk_1126_1188",
+    "start_sec": 1126,
+    "end_sec": 1188,
+    "start_label": "18:46",
+    "end_label": "19:48",
+    "raw_text": "Ví dụ về constructor, chú ý là constructor luôn được tạo khi mà hai bão mới 1 xinh viên, hoặc là 1 cái đối tượng nào đó Kể cả bạn không xây dựng cái constructor đấy thì nó vẫn có 1 cái constructor mặc định như thế OK, rồi, tương tự với constructor thì nó có 1 cái khái niệm đấy là Deathstrucker, hàm hủy, deathstrucker, hàm hủy, ok Nó ngược với hàm tạo, chính là nó sẽ hủy đi một cái đối tượng Thì cái hàm hủy này thì nó không thể ghi đeo được Và nó cũng có một cái kiểu, nó cũng rất là đặc biệt, đấy thế nhất là nó cũng không có kiểu trà về Cái thứ 2 ấy, đấy chính là nó cũng có tên chung với tên class Nhưng mà nó có thêm cái dấu ngã làng trước, ví dụ như thế này này Thì đây chính là hàm hủy Cái hàm hủy này sẽ được gọi khi mà cái đối tượng của bạn nó được kết thúc Ví dụ như là bạn chạy hết chương trình"
+  },
+  {
+    "chunk_id": "chunk_1170_1233",
+    "start_sec": 1170,
+    "end_sec": 1233,
+    "start_label": "19:30",
+    "end_label": "20:33",
+    "raw_text": "Cái thứ 2 ấy, đấy chính là nó cũng có tên chung với tên class Nhưng mà nó có thêm cái dấu ngã làng trước, ví dụ như thế này này Thì đây chính là hàm hủy Cái hàm hủy này sẽ được gọi khi mà cái đối tượng của bạn nó được kết thúc Ví dụ như là bạn chạy hết chương trình Hoặc là bạn có một cái hàm nào đó, bạn xây dựng một cái đối tượng sinh viên ở trong cái hàm đấy Mà cái hàm đấy kết thúc Hoặc là một cái enclosing scope, một cái phạm vi đóng vào ngọt nhọn nào đó Mà một cái đối tượng được khai vào trong cái enclosing scope đấy Thì hết cái enclosing scope đấy nó cũng sẽ gọi hàm hủy Ví dụ nhé ở đây cái mình sẽ implement cái ham hủy nhé, đây là sinh viên này, 2.2.synh viên mình sẽ 2 bá ham hủy xia vào 1 cái câu lệnh đấy chính là đối tượng được hủy tại đây, ok để xia là khi nào thì nó được hủy, nếu mà hủy thì nó sẽ in ra cái câu này đúng không, rồi ví dụ nhé"
+  },
+  {
+    "chunk_id": "chunk_1205_1266",
+    "start_sec": 1205,
+    "end_sec": 1266,
+    "start_label": "20:05",
+    "end_label": "21:06",
+    "raw_text": "ở đây cái mình sẽ implement cái ham hủy nhé, đây là sinh viên này, 2.2.synh viên mình sẽ 2 bá ham hủy xia vào 1 cái câu lệnh đấy chính là đối tượng được hủy tại đây, ok để xia là khi nào thì nó được hủy, nếu mà hủy thì nó sẽ in ra cái câu này đúng không, rồi ví dụ nhé k 진, cout, winbox, culinj scuff srxhe, adaptive Mỗi lần mà bạn khai bám 1 cái ống sinh viên x này thì nó sẽ gọi hàm tạo, đúng không? Đấy chưa? Và cái đối tượng sinh viên x của các bạn ấy được khai báo trong 1 cái n coloring scope như thế này Thì hết cái n coloring scope này thì cái đối tượng sinh viên này cũng sẽ bị hủy"
+  },
+  {
+    "chunk_id": "chunk_1240_1303",
+    "start_sec": 1240,
+    "end_sec": 1303,
+    "start_label": "20:40",
+    "end_label": "21:43",
+    "raw_text": "srxhe, adaptive Mỗi lần mà bạn khai bám 1 cái ống sinh viên x này thì nó sẽ gọi hàm tạo, đúng không? Đấy chưa? Và cái đối tượng sinh viên x của các bạn ấy được khai báo trong 1 cái n coloring scope như thế này Thì hết cái n coloring scope này thì cái đối tượng sinh viên này cũng sẽ bị hủy Đây, bạn thấy là, đầu tiên nó sẽ in ra sinh chào đúng không? Sau đó là nó sẽ gọi hàm tạo để tạo sinh viên x, sau đó thì hết cái đóng hoặc ngọt này thì nó hủy cái sinh viên x cái đi Thành ra là nó sẽ gọi cái hàm hủy và các hàm hủy của mình sẽ in ra câu lệnh là đối tượng được hủy tại đây mà đúng không? Thì khi đó mình biết là nó đã gọi hàm hủy rồi. Ok, sau đó mình in ra là hello, hoặc là một hàm ví dụ như void, abc chẳng hạn cho là đạn khai vào một cái ông sinh viên x chẳng hạn. Và bạn gọi cái hàm abc này. Thì khi mà kết húc hàm abc này, cái ông sinh viên x kìa cũng sẽ bị hủy. Tất nhiên là ông sẽ được tạo nha. Ok, ông sẽ được tạo."
+  },
+  {
+    "chunk_id": "chunk_1285_1348",
+    "start_sec": 1285,
+    "end_sec": 1348,
+    "start_label": "21:25",
+    "end_label": "22:28",
+    "raw_text": "Ok, sau đó mình in ra là hello, hoặc là một hàm ví dụ như void, abc chẳng hạn cho là đạn khai vào một cái ông sinh viên x chẳng hạn. Và bạn gọi cái hàm abc này. Thì khi mà kết húc hàm abc này, cái ông sinh viên x kìa cũng sẽ bị hủy. Tất nhiên là ông sẽ được tạo nha. Ok, ông sẽ được tạo. Đấy, ví dụ như ở trong cái hàm sinh viên này mình yên ra một câu lệnh là Đối tượng mặc định được tạo ở đây Ok, thì bây giờ mỗi lần mà bạn khai bám một cái ông sinh viên ấy Thì ông ấy sẽ gọi hàm hủy hàm tạo và khi mà kết thúc ấy thì ông ấy sẽ được gọi hàm hủy Thành ra là khi mà mình gọi hàm ABC thì nó có một câu lệnh là sinh viên x đúng không? Thì nó sẽ gọi cái hàm tạo này, đấy chưa? Hàm tạo mặc định này Hết hàm abc, đối tượng sinh viên x sẽ được hủy Tương tự như vậy, sinh viên x trong n-colosing scope sẽ được tạo mới khi bạn khai vào sinh viên x và cũng được hủy khi phạm vi của sinh viên x hủy hết, hoặc là kết thúc chương trình cũng thế"
+  },
+  {
+    "chunk_id": "chunk_1332_1398",
+    "start_sec": 1332,
+    "end_sec": 1398,
+    "start_label": "22:12",
+    "end_label": "23:18",
+    "raw_text": "Hết hàm abc, đối tượng sinh viên x sẽ được hủy Tương tự như vậy, sinh viên x trong n-colosing scope sẽ được tạo mới khi bạn khai vào sinh viên x và cũng được hủy khi phạm vi của sinh viên x hủy hết, hoặc là kết thúc chương trình cũng thế Đấy là hàm tạo và hàm hủy dưới trong một nữ đập trình xìm cậu constructer, destructer, sum, khái niệm cơ bản của 1 class thông thường các bạn sẽ xây dựng các hàm, ví dụ như ông sinh viên này, bạn sẽ xây dựng hàm in thông tin, nhập thông tin ví dụ như mình xây dựng cho 2 hàm, nhập thông tin của 1 sinh viên và 1 hàm để in thông tin cho 1 sinh viên Ok Ví dụ ở đây, mình khai báo 1 cái phương thức, đây chính là void, nhập, chẳng hạn Ok, và 1 void là in chẳng hạn, đó Thì đây là 2 cái hàm nhá thuộc cái class sinh viên, và hàm nhập thì có nhiệm vụ là nhập thông tin cho sinh viên và hàm in thì có cái in trong sinh viên của sinh viên"
+  },
+  {
+    "chunk_id": "chunk_1381_1442",
+    "start_sec": 1381,
+    "end_sec": 1442,
+    "start_label": "23:01",
+    "end_label": "24:02",
+    "raw_text": "Ví dụ ở đây, mình khai báo 1 cái phương thức, đây chính là void, nhập, chẳng hạn Ok, và 1 void là in chẳng hạn, đó Thì đây là 2 cái hàm nhá thuộc cái class sinh viên, và hàm nhập thì có nhiệm vụ là nhập thông tin cho sinh viên và hàm in thì có cái in trong sinh viên của sinh viên Ví dụ ở đây mình xây dựng này, void, nhớ truyền toán tựu hàm vi vào nhá, sinh viên 2.2. nhập Ở trong này mình sẽ yêu cầu người dùng nhập thông tin cho 1 sinh viên, ok, ví dụ như iostream is a女 form, where she entered"
+  },
+  {
+    "chunk_id": "chunk_1410_1471",
+    "start_sec": 1410,
+    "end_sec": 1471,
+    "start_label": "23:30",
+    "end_label": "24:31",
+    "raw_text": "iostream is a女 form, where she entered Mình in ra các thông tin của ông này thôi Ví dụ mình cl ra là id này Ví dụ cách này sau đến tên này Sau đó ví dụ cách này sau đến hài sinh Đó là điểm với 2 số sau dụ tập phần này Vì vậy, ok Đây là 1 cái ví dụ mà bạn xây dựng cái hàm xuất Thì ở trong hôm hàm main nhé Bạn khai báo 1 cái ông sinh viên ích nha"
+  },
+  {
+    "chunk_id": "chunk_1453_1514",
+    "start_sec": 1453,
+    "end_sec": 1514,
+    "start_label": "24:13",
+    "end_label": "25:14",
+    "raw_text": "Đó là điểm với 2 số sau dụ tập phần này Vì vậy, ok Đây là 1 cái ví dụ mà bạn xây dựng cái hàm xuất Thì ở trong hôm hàm main nhé Bạn khai báo 1 cái ông sinh viên ích nha Thì bạn có thể gọi ích.in để nó nhập thông tin cho ông này Và bạn có thể dùng ích.in để in ra cái thông tin mà ông vừa nhập Đấy, nó cũng tương tự như struct đúng không? OK, rồi chạy nhé Ví dụ như mình nhập cho id cho cái ông sinh viên ít này là 123, tên là nguyễn văn E này Nhập ngày sinh, tên thì phải là getline đúng không? Đấy, các bạn muốn nhập cái gì thì các bạn nhập tên thuộc tính đấy nhé Ví dụ nhập id là 123, tên là nguyễn văn E này string 23.12.2003, 1.3.8"
+  },
+  {
+    "chunk_id": "chunk_1490_1558",
+    "start_sec": 1490,
+    "end_sec": 1558,
+    "start_label": "24:50",
+    "end_label": "25:58",
+    "raw_text": "Nhập ngày sinh, tên thì phải là getline đúng không? Đấy, các bạn muốn nhập cái gì thì các bạn nhập tên thuộc tính đấy nhé Ví dụ nhập id là 123, tên là nguyễn văn E này string 23.12.2003, 1.3.8 ok, thì nó sẽ có một cái đối tượng có đầy đủ thông tin mà do bạn đuổi nhập ok, các bạn nên xây dựng các cái hàm nhập sốt như thế này cho nó tiện nha ok, rồi, vậy thì ở trong cái class sinh viên này nó có một cái người ta gọi là con trò zits ok, cái con trò zits này bạn dùng cũng được mà không dùng cũng được nhưng mà mình nghĩ là dùng thì nó sẽ tốt hơn ví dụ như trong cái hàm khởi tạo con structure mà có 4 tham số này này các tham số có tên trùng với tên thuộc tính của lớp, ví dụ như string id, string tên, string ngay sinh, WGPA"
+  },
+  {
+    "chunk_id": "chunk_1538_1601",
+    "start_sec": 1538,
+    "end_sec": 1601,
+    "start_label": "25:38",
+    "end_label": "26:41",
+    "raw_text": "các tham số có tên trùng với tên thuộc tính của lớp, ví dụ như string id, string tên, string ngay sinh, WGPA Thì nếu mà ở trong này bạn gắn id bằng id đúng không? Rồi là tên bằng tên, rồi là ngày sinh bằng ngày sinh, rồi vpa, rồi vpa thì nó Nó hơi khó phân biệt mà dù nó biết là cái bạn đang cố gắng gắn các thục tính ở trong là sẽ đổi các danh xét các tham số này cho các thục tính của lớp là id tên nghe sinh của vpa đúng không? Hoặc bạn cũng có thể chỉ rõ ra cái id này là của cái lớp này bằng cách là sử dụng control zis, ok? Ví dụ như bạn muốn truy cập vào các thuộc tính của cái đối tượng của class hiện tại thì mình có thể sử dụng con trỏ zith, ok, vô phát như thế này, đấy chính là zith id, mũ tên id, bằng id, zith, tên, bằng tên, rồi là zith, ngay sinh, bằng ngay sinh và zith"
+  },
+  {
+    "chunk_id": "chunk_1584_1646",
+    "start_sec": 1584,
+    "end_sec": 1646,
+    "start_label": "26:24",
+    "end_label": "27:26",
+    "raw_text": "Ví dụ như bạn muốn truy cập vào các thuộc tính của cái đối tượng của class hiện tại thì mình có thể sử dụng con trỏ zith, ok, vô phát như thế này, đấy chính là zith id, mũ tên id, bằng id, zith, tên, bằng tên, rồi là zith, ngay sinh, bằng ngay sinh và zith vrfe, bằng vrfe, đấy Cái chỗ nạnh thế này, cái chỗ mà bạn nhập những các thứ này, bạn cũng có thể truyền mỗi tên của thuộc tính được Các bạn có thể đầy đủ hơn bạn truyền cho mình gist, và để chỉ rõ ra là các cái thuộc tính này nó thuộc cái lớp này, ok gist là hiện tại cái gist thì nó như kiểu là cái class, cái đối tượng này đúng không? Đối tượng hiện tại mà mình đang tham tác này này, đánh ra là bạn có thể truyền các cái gist, đấy Mình ta gọi là con cho gist, trước tên các cái thuộc tính, ok, gist mũ tên nhá, hả, như thế này còn không thì bạn bỏ cũng được, không sao nhưng mà nó tiện trong cái trường hợp ví dụ như thế này, đúng không nhỉ?"
+  },
+  {
+    "chunk_id": "chunk_1626_1688",
+    "start_sec": 1626,
+    "end_sec": 1688,
+    "start_label": "27:06",
+    "end_label": "28:08",
+    "raw_text": "Đối tượng hiện tại mà mình đang tham tác này này, đánh ra là bạn có thể truyền các cái gist, đấy Mình ta gọi là con cho gist, trước tên các cái thuộc tính, ok, gist mũ tên nhá, hả, như thế này còn không thì bạn bỏ cũng được, không sao nhưng mà nó tiện trong cái trường hợp ví dụ như thế này, đúng không nhỉ? ví dụ như là cái danh xét tham số của bạn có tên nó chung với tên của các thuộc tính trong cái class của mình thì mình sẽ cho con cho zith để phân biệt đây là cái thuộc tính của lớp sinh viên đúng không? còn đây là cái id ở trong tham số ok, không có gì khác nhau nhé chỗ này bạn cũng có thể chuyến zith cho đây dù là zith ở trên nhỉ đây là zith ở chỗ này cũng là ziz rồi mình sẽ chạy nhé thì mình lại nhờ không tin như mình thường thôi, không có đề gì 23.12.2003 đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1673_1755",
+    "start_sec": 1673,
+    "end_sec": 1755,
+    "start_label": "27:53",
+    "end_label": "29:15",
+    "raw_text": "rồi mình sẽ chạy nhé thì mình lại nhờ không tin như mình thường thôi, không có đề gì 23.12.2003 đúng không? ok, hóa, thế chú ý về con trỏ ziz nhé vậy thì có một cái thằng nữa đấy ra ziz, pointer, chưa, con trỏ ziz các bạn có thể khai bão một biến sinh viên như thế này hoặc các bạn có thể khai bão một màn các sinh viên cũng được Một bản các sinh viên cũng được Ví dụ, sinh viên A100, bây giờ bạn có một gianh sách 100 sinh viên và bạn thao tác của nó như là một đối tượng thông thường Ok, ví dụ mình nhập số lượng sinh viên nha Sau đó là mình khai bán một cái bản sinh viên Cotuda 100 hoặc 1000 tuy vào đầu bài nha Sau đó bạn có thể nhập thông tin cho từng sinh viên ở trong cái gianh sách này or, popped door, morning, internet home, ign,"
+  },
+  {
+    "chunk_id": "chunk_1732_1793",
+    "start_sec": 1732,
+    "end_sec": 1793,
+    "start_label": "28:52",
+    "end_label": "29:53",
+    "raw_text": "or, popped door, morning, internet home, ign, bây giờ mình nhập 3 nhé, cái ông đầu tiên là 1-2-3 này, nguyễn văn hè này 23-12-203.2.8, 1-2-4 này, nguyễn văn kèo, 27-11-202.3.15, 1-2-5 này, nguyễn tịnh dùng, 28-9-202.2.9 2.18"
+  },
+  {
+    "chunk_id": "chunk_1766_1832",
+    "start_sec": 1766,
+    "end_sec": 1832,
+    "start_label": "29:26",
+    "end_label": "30:32",
+    "raw_text": "23-12-203.2.8, 1-2-4 này, nguyễn văn kèo, 27-11-202.3.15, 1-2-5 này, nguyễn tịnh dùng, 28-9-202.2.9 2.18 Đang xách sinh viên của các bạn sẽ có 3 ông như thế này tiện đúng không? Tất nhiên bạn cũng có thể sắp xếp tìm kiếm vân vân như là phần struct ví dụ bạn muốn sắp xếp các sinh viên này theo điểm gpa tăng dần trên hạng thì mình cũng có thể viết 1 comparator ở đây, boon, comparator sinh viên A sinh viên B đúng không? sau đó bạn sẽ lấy ra cái gpa của ông A và ông B này để mình so sánh nữa không? nhưng có 1 điều đặc biệt là 2 cái ông sinh viên A và sinh viên B này, mình muốn truy cập vào gpa của nó mình không truy cập được, bởi vì gpa của ông A và ông B này, nó là private, mình không thể truy cập bên ngoài class được"
+  },
+  {
+    "chunk_id": "chunk_1817_1883",
+    "start_sec": 1817,
+    "end_sec": 1883,
+    "start_label": "30:17",
+    "end_label": "31:23",
+    "raw_text": "nhưng có 1 điều đặc biệt là 2 cái ông sinh viên A và sinh viên B này, mình muốn truy cập vào gpa của nó mình không truy cập được, bởi vì gpa của ông A và ông B này, nó là private, mình không thể truy cập bên ngoài class được cái ham comparator này, nó là 1 cái phương thức nó không phải của class sinh viên, nó không như những mấy cái thằng này nó không như mấy cái phương thức mà bạn đã xây dựng ở đây, nó đều là các phương thức của class sinh viên thật ra nó truy cập vào gpa một cách thoải mái ở đây bạn không thể return về a.gpa, lớn hôn b.gpa để sắp xem gpa theo cứu tự giảm dần được, đúng không? và như thế thì nó sẽ phát sinh ra các trường hợp đề chính là khi mà bạn muốn sử dụng các cái thuộc tính bạn muốn thay đổi hoặc bạn muốn sử dụng các cái thuộc tính của các cái sinh viên ấy thì mình không trực tiếp thay đổi bằng tay được, đúng không? mình không thể truy cập trực tiếp vào cái cái các cái thuộc tính được thì mình sẽ thông qua các cái hàm Mình có thể thay đổi với các cái thuộc tình đấy, và mình cũng có thể lấy về các cái thuộc tình đấy người ta gọi là cái interface hoặc là các cái setter-getter"
+  },
+  {
+    "chunk_id": "chunk_1867_1930",
+    "start_sec": 1867,
+    "end_sec": 1930,
+    "start_label": "31:07",
+    "end_label": "32:10",
+    "raw_text": "thì mình không trực tiếp thay đổi bằng tay được, đúng không? mình không thể truy cập trực tiếp vào cái cái các cái thuộc tính được thì mình sẽ thông qua các cái hàm Mình có thể thay đổi với các cái thuộc tình đấy, và mình cũng có thể lấy về các cái thuộc tình đấy người ta gọi là cái interface hoặc là các cái setter-getter Ok, setter-getter, vết này hình đúng nhỉ? Tức là ví dụ như bạn muốn lấy về gpa thì bạn sẽ phải xây dựng một cái hàm mà nó trả về, gọi là getter Nó trả về cái gpa cho bạn, ví dụ như bạn muốn một cái hàm để lấy về gpa đúng không? oken, etc. cho vpa cho mcht 123 nếu heraus tông thu忍chivering, Juven event, vpgr scratching, Collab ytl icon, g backingachHby, gb theme. Vậy thì bây giờ mình có một cái hàm để chuyên có nhiệm vụ là lấy về gpa rồi đúng không? Thì rõ ràng là cái mình lấy có thể lấy được gpa mà mình không chỉ cập trực tiếp vào cái thuộc tính gpa của cái lớp này đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1910_1975",
+    "start_sec": 1910,
+    "end_sec": 1975,
+    "start_label": "31:50",
+    "end_label": "32:55",
+    "raw_text": "gb theme. Vậy thì bây giờ mình có một cái hàm để chuyên có nhiệm vụ là lấy về gpa rồi đúng không? Thì rõ ràng là cái mình lấy có thể lấy được gpa mà mình không chỉ cập trực tiếp vào cái thuộc tính gpa của cái lớp này đúng không? Thì ở chỗ này nè, thay vì bạn chỉ cập trực tiếp vào gpa như này là không được gpa, thì mình thông qua cái gp từ đấy để mình lấy về cái gpa để mình sử dụng đúng không? Ở đây mình sẽ ra gpa, và chỗ này mình sẽ ra gpa, thế là xong đúng không? như thế nhé, bạn muốn lấy thông tin gì thì bạn sẽ um, viết những cái khinh ghép tơ để trả về cái thuộc tính đấy ở đây mình sẽ sort nhé, sort này, a, a, cộng nò này và mình sẽ truyền cái comparator kia vào để nó xắp xếp các cái ôm sinh viên này theo thiếu tự điểm và bia giảm giảm trảy nhé, gì đấy, quên cái thang này nó có kiểu trả về là dắt bồ"
+  },
+  {
+    "chunk_id": "chunk_1957_2018",
+    "start_sec": 1957,
+    "end_sec": 2018,
+    "start_label": "32:37",
+    "end_label": "33:38",
+    "raw_text": "và mình sẽ truyền cái comparator kia vào để nó xắp xếp các cái ôm sinh viên này theo thiếu tự điểm và bia giảm giảm trảy nhé, gì đấy, quên cái thang này nó có kiểu trả về là dắt bồ dụng mình sẽ nhập 3 ôm sinh viên nhé, ông thứ nhất là id là 1, mình tên là nguyễn văn N này 23-12-2003, ông thứ hợp trong này là 3.1 ông thứ 2 là miễn ban b này, 27-11-2002 điểm là cao 1 tí 3.4 đi, ông thứ 3 là a, miễn kèo, 28-29-2002 điểm là 2.8 đi, đấy, thì bây giờ bạn thấy là các xinh viên của các bạn này sắp xếp 3.4, 3.1, 2.8 tất nhiên bạn có thể xếp theo tên, tướng tựa abc, các thứ vân vân"
+  },
+  {
+    "chunk_id": "chunk_1992_2052",
+    "start_sec": 1992,
+    "end_sec": 2052,
+    "start_label": "33:12",
+    "end_label": "34:12",
+    "raw_text": "điểm là cao 1 tí 3.4 đi, ông thứ 3 là a, miễn kèo, 28-29-2002 điểm là 2.8 đi, đấy, thì bây giờ bạn thấy là các xinh viên của các bạn này sắp xếp 3.4, 3.1, 2.8 tất nhiên bạn có thể xếp theo tên, tướng tựa abc, các thứ vân vân nếu chưa bạn muốn xây dựng như thế này thì mình có thể sử dụng comparator để mình xếp và tất nhiên nếu bạn muốn lấy về các string, tên và ngày xinh thì mình có thể làm các hàm gép tơ tương tự như vậy nha, ví dụ như đặc vồ gép id chả nạn thì bạn sẽ return về id đúng không, từ chỗ này là string cout, gait, name, string, gait, string, ạ các hàm gait tư này có thể trả về cho bạn Đúng không? Đây là một cách mà mình có thể lấy ra được các thường tính nhưng không truy cập chữ tiếp vào các thường tính"
+  },
+  {
+    "chunk_id": "chunk_2036_2101",
+    "start_sec": 2036,
+    "end_sec": 2101,
+    "start_label": "33:56",
+    "end_label": "35:01",
+    "raw_text": "cout, gait, name, string, gait, string, ạ các hàm gait tư này có thể trả về cho bạn Đúng không? Đây là một cách mà mình có thể lấy ra được các thường tính nhưng không truy cập chữ tiếp vào các thường tính để mình đảm bảo kây tính chất là đâm gói của hòa triển khẩn nối tượng hoặc là bạn cũng có thể sử dụng các cái hàm để, người ta gọi là hàm xét tư tức là các cái hàm để gán giá trị cho các cái thường tính này này Đôi khi mình muốn gán lại một cái thuộc tính nào đó bằng một cái giá trị khác thì mình sẽ sử dụng hàm cái F4 nhé Ví dụ như bạn set gpa chẳng hạn Ở đây mình sẽ truyền một cái tham số ra double Ví dụ như mình sẽ xây dựng khe hàm void, string, vn, 2, 2, set gpa nhé Và double điểm chẳng hạn Thì cái hàm này có nhiệm vụ là mình sẽ gán gpa của cái đối tượng này bằng một cái tham số gpa mới Cho hàm main mình khai bám một cái ông sinh viên x ra đây Ví dụ như là mình muốn gán gpa cho ông này thì mình không thể dùng là gì nhỉ?"
+  },
+  {
+    "chunk_id": "chunk_2084_2149",
+    "start_sec": 2084,
+    "end_sec": 2149,
+    "start_label": "34:44",
+    "end_label": "35:49",
+    "raw_text": "Thì cái hàm này có nhiệm vụ là mình sẽ gán gpa của cái đối tượng này bằng một cái tham số gpa mới Cho hàm main mình khai bám một cái ông sinh viên x ra đây Ví dụ như là mình muốn gán gpa cho ông này thì mình không thể dùng là gì nhỉ? x.gpa bằng 2.18 cho được, đúng không? Mà bạn sẽ phải sử dụng cái ham set tôi kìa. Tức là mình sẽ cho at x.gpa và mình chuyển 2.18 và như thế thì nó mới gán được cái giá trị cho cái ông gpa của ông x này nhé. Đúng không? Chứ mình không truy cập trực tiếp vào được gpa mà. Nói chung là bạn muốn sử dụng các hàm ghét tơ và hàm xét tơ như thế Nếu mà mình muốn lấy về các thuộc tính thì mình dùng ghét Nếu còn mình muốn chỉnh sửa các thuộc tính thì mình dùng xét Rồi và chú thật có thêm 1 cái chú ý nữa, đây chính là bạn có thể gán 2 sinh viên cho nhau Ví dụ như sinh viên x này, mình chuyển các cái thông tin đấy là Thật ra mình cho nhập nhá, ok Sau khi mà nhập xong thì mình cho 1 cái ông sinh viên y bằng x"
+  },
+  {
+    "chunk_id": "chunk_2134_2198",
+    "start_sec": 2134,
+    "end_sec": 2198,
+    "start_label": "35:34",
+    "end_label": "36:38",
+    "raw_text": "Rồi và chú thật có thêm 1 cái chú ý nữa, đây chính là bạn có thể gán 2 sinh viên cho nhau Ví dụ như sinh viên x này, mình chuyển các cái thông tin đấy là Thật ra mình cho nhập nhá, ok Sau khi mà nhập xong thì mình cho 1 cái ông sinh viên y bằng x Sau đó mình cho y, ok Rồi mình thường nhập cho thông tin cho ông xinh viên ích nhé ID là 1, 23 này Đây là nguyễn 1a, ok xinh 23, tháng 12, năm 2003 điểm là 2,18 Ê Thì bạn thấy là khi mà bạn gán xinh viên y bằng ích ấy thì cái ông xinh viên y cũng có 1 cái thông tin giống y hệt như là cái ông a này Đúng không? Vậy thì chứng tỏ là khi mà bạn gán 2 cái đối tượng cho nhau ấy, như thế này này thì có nghĩa là nó sẽ copy từng cái thuộc tính 1 của cái ông x này này cho từng thuộc tính 1 của ông xinh viên y nhé Đấy là chú ý về cái gán dấu bằng nhá Đúng nhờ, ok, nó sẽ gán từng thuộc tính 1 của 2 thằng đấy cho nhau Vậy là bạn đã xong được các cái khái niệm cơ bản ở trong một nữ lực trình hương đối tượng rồi đấy"
+  },
+  {
+    "chunk_id": "chunk_2180_2244",
+    "start_sec": 2180,
+    "end_sec": 2244,
+    "start_label": "36:20",
+    "end_label": "37:24",
+    "raw_text": "thì có nghĩa là nó sẽ copy từng cái thuộc tính 1 của cái ông x này này cho từng thuộc tính 1 của ông xinh viên y nhé Đấy là chú ý về cái gán dấu bằng nhá Đúng nhờ, ok, nó sẽ gán từng thuộc tính 1 của 2 thằng đấy cho nhau Vậy là bạn đã xong được các cái khái niệm cơ bản ở trong một nữ lực trình hương đối tượng rồi đấy bao gồm có class này, đúng không? lớp, đúng không? lớp thì có thuộc tính và phương thức hay tảm gọi là các cái data đấy các data, các cái dự liệu và các cái phương ham gọi đơn giản thì nó là các cái ham ok, và chú ý là một cái class thì nó luôn có ham tạo và ham hủy được gọi một cách mặc định, đúng không? hoặc bạn cũng có thể xây dựng, bạn cũng có thể xây dựng hàm tạo và hàm hủy cho riêng mình, đúng không nhỉ? Và chủ ý về gist pointer nhé, đây là con trò gist để mình có thể truy cập vào từng cái thành phần, thành phần thuộc tính của 1 cái đối tượng, à, 1 của 1 cái class, ok? Và chủ ý là các cái thuộc tính của lớp sẽ được khai bảo là private nhé, SF modifier này có 3 thằng là private, public, protected, public"
+  },
+  {
+    "chunk_id": "chunk_2223_2285",
+    "start_sec": 2223,
+    "end_sec": 2285,
+    "start_label": "37:03",
+    "end_label": "38:05",
+    "raw_text": "Và chủ ý về gist pointer nhé, đây là con trò gist để mình có thể truy cập vào từng cái thành phần, thành phần thuộc tính của 1 cái đối tượng, à, 1 của 1 cái class, ok? Và chủ ý là các cái thuộc tính của lớp sẽ được khai bảo là private nhé, SF modifier này có 3 thằng là private, public, protected, public thì có thể truy cập ở bên trong lớp và cũng có thể truy cập ở bên ngoài lớp nhưng mà private thì chỉ có thể truy cập ở bên trong cái phạm v class, đấy thôi ra bên ngoài thì nó sẽ không biết các cái thuộc tính mà private đâu, ok? Những cái thằng như là nhập rồi là suất rồi là in như thế này đều là các cái các cái phương thức của các cái thuộc tính nó là public Bên ngoài phạm vì class, sinh viên bạn vẫn có thể sử dụng nhập và in như một cách thông thường Ok, thì đấy chính là một cái ví dụ về class nha Rồi, sau khi mà bạn đã đã làm quen xong với các khái niệm cơ bản và cách sử dụng một cái class rồi"
+  },
+  {
+    "chunk_id": "chunk_2269_2335",
+    "start_sec": 2269,
+    "end_sec": 2335,
+    "start_label": "37:49",
+    "end_label": "38:55",
+    "raw_text": "Ok, thì đấy chính là một cái ví dụ về class nha Rồi, sau khi mà bạn đã đã làm quen xong với các khái niệm cơ bản và cách sử dụng một cái class rồi thì mình sẽ nói đến một cái đấy chính là cái kiến thức về một cái biến gọi là biến static 90.02, 90.03, 90.03 OK, hãy là 0.01 đi Đấy, và không có quá 1.0999 sinh viên đúng không? Ê, thì nó tự động gán id cho cái ông sinh viên như thế này nhá Ê, thì mình sẽ làm như thế nào? Thằng biến Static này có 1 điều đặc biệt, đấy chính là bạn không thể khỏi tạo nó OK, không thể gán luôn là đến mà không như thế này đâu nhá OK, bạn sẽ phải khai báo nó 1 cái giá trị như thế này nrt, sinvn, 2.2.dm, gán cho nó bằng 0 bằng 1, bắt vào từ 1 tuy ví dụ nhé, cái hàm của các bạn, bạn có 1 cái hàm"
+  },
+  {
+    "chunk_id": "chunk_2319_2380",
+    "start_sec": 2319,
+    "end_sec": 2380,
+    "start_label": "38:39",
+    "end_label": "39:40",
+    "raw_text": "nrt, sinvn, 2.2.dm, gán cho nó bằng 0 bằng 1, bắt vào từ 1 tuy ví dụ nhé, cái hàm của các bạn, bạn có 1 cái hàm cho nên mình tạo thời bỏ những thằng này đi nhé mình có 1 cái hàm để chính là hàm tăng, tăng đếm cho lại ok, mình sẽ implement cái hàm tăng đếm này, void, sinvn, 2.2.tang đếm Mình sẽ cho cộng cộng đếm để tăng cái biến statics lên một đơn vị nhé Thì ở trong hàm main này, bạn khai báo cho mình có ông cái sinh viên x Sao bạn dùng cái, ở đây mình viết thêm 1 cái hàm nữa, đây là hàm Inertey, ghét đếm chẳng hạn, mình sẽ return về đếm Ok, bạn sẽ dựng luôn ở trong lãng được nhé, thêm viết ở ngoài này Inertey này sinh viên 2.2.ghét đếm"
+  },
+  {
+    "chunk_id": "chunk_2361_2431",
+    "start_sec": 2361,
+    "end_sec": 2431,
+    "start_label": "39:21",
+    "end_label": "40:31",
+    "raw_text": "Sao bạn dùng cái, ở đây mình viết thêm 1 cái hàm nữa, đây là hàm Inertey, ghét đếm chẳng hạn, mình sẽ return về đếm Ok, bạn sẽ dựng luôn ở trong lãng được nhé, thêm viết ở ngoài này Inertey này sinh viên 2.2.ghét đếm và mình sẽ return về đếm ok, rồi ở trong hàm main mình sẽ khai bám 1 cái ông sinh viên x rồi đó mình gọi hàm là x,tang đếm ok, ở kia nhờ rồi đó mình khai, mình lại cho x,tang đếm 1 lần nữa tức là cái biến đếm bây giờ của bạn nó đoàn 2 đúng không? Ấy xin lỗi cái bạn ở biến đếm của bạn nó đoàn 2 đúng không? bây giờ mình khai bám 1 cái ông sinh viên y nhá cũng là 1 cái đối tượng thuộc cái lớp sinh viên đúng không? và mình sẽ CL, giờ đấy là y, đếm add, type, name, ID, zsqrahah, yain, fase 1, bör chung, child, memorabilia, icon, zoom, join, slot, icon, icon, min hypocritics, bog, visionary,"
+  },
+  {
+    "chunk_id": "chunk_2409_2469",
+    "start_sec": 2409,
+    "end_sec": 2469,
+    "start_label": "40:09",
+    "end_label": "41:09",
+    "raw_text": "add, type, name, ID, zsqrahah, yain, fase 1, bör chung, child, memorabilia, icon, zoom, join, slot, icon, icon, min hypocritics, bog, visionary, iostream,��,kon, cập vào cái biến đếm đấy, thì cái biến đếm đấy nó cũng là chung luôn cho cả thằng i luôn thằng ít thằng i này thì là chung biến static để luôn, thành ra là bạn ít dạy trên đêm cho này nó sẽ ít ra là 2 ở trước này mình xóa cái hàm dextractor đi nhé mấy cái hàm gvxgvm, 10xgv, tận thời bỏ đi đã cái thì bạn thấy nó là 2 và nếm ạ bạn cho i.tang.đếm này, xóa bạn khai báo 1 cái ống z vào đây"
+  },
+  {
+    "chunk_id": "chunk_2452_2513",
+    "start_sec": 2452,
+    "end_sec": 2513,
+    "start_label": "40:52",
+    "end_label": "41:53",
+    "raw_text": "mấy cái hàm gvxgvm, 10xgv, tận thời bỏ đi đã cái thì bạn thấy nó là 2 và nếm ạ bạn cho i.tang.đếm này, xóa bạn khai báo 1 cái ống z vào đây Thì khi đó, cái ông z này và ông x này, ông i này, mình xe ra nhá Mình đúng là mình xe ra x,gith, đếm này, rồi là i,gith, đếm này và kể cả z,gith, đếm Thì nó đều có chung 1 cái giá trị cả Bởi vì 3 cái thằng x, i, x, z này nó thuộc cùng 1 class, nó là sinh viên Và nó chia sẻ cho nhau cái biến static, nó dùng chung cho cả class luôn đúng không? Thành ra là việc mà bạn thay đổi cái biến static này ở 1 cái đối tượng nào đó thì nó cũng sẽ làm thay đổi cái biến static này ở các, toàn bộ các đối tượng trong class này luôn nó dùng chung mà, ok, do khi đó nó sẽ là ba ba ba, rồi đấy vậy thì quay lại trở lại bạch toàn lúc nãy dạ sứ bây giờ nhé, người ta nhập sinh viên một cách thoải mái đi"
+  },
+  {
+    "chunk_id": "chunk_2497_2558",
+    "start_sec": 2497,
+    "end_sec": 2558,
+    "start_label": "41:37",
+    "end_label": "42:38",
+    "raw_text": "thì nó cũng sẽ làm thay đổi cái biến static này ở các, toàn bộ các đối tượng trong class này luôn nó dùng chung mà, ok, do khi đó nó sẽ là ba ba ba, rồi đấy vậy thì quay lại trở lại bạch toàn lúc nãy dạ sứ bây giờ nhé, người ta nhập sinh viên một cách thoải mái đi và cái, người ta sẽ không nhập ID nữa mà người ta chỉ nhập có, tên, ngay sinh và gpa thôi đúng không? và nhiệm vụ của bạn là cứ mỗi lần mà bạn nhập một sinh viên ấy thì mình sẽ păng id của ông ấy lên từ sinh viên 0.01, cho đến sinh viên 0.02, sinh viên 0.03 thì mình cũng có thể xong qua thằng Static đấy để mình làm nhé ở chỗ này bạn không nhập id nữa này chỗ này có cần sinh cho ít no ở chỗ này nhé để lần mà nhập sinh viên sau ấy thì nó không bị chôi lại, chôi lại kết line này này ok, rồi ví dụ nhé, mình khai báo một cái ông sinh viên ít này vậy thì cái ham nhập này ở chỗ này của các bạn ấy mỗi lần mà bạn gọi ham nhập này đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2541_2617",
+    "start_sec": 2541,
+    "end_sec": 2617,
+    "start_label": "42:21",
+    "end_label": "43:37",
+    "raw_text": "để lần mà nhập sinh viên sau ấy thì nó không bị chôi lại, chôi lại kết line này này ok, rồi ví dụ nhé, mình khai báo một cái ông sinh viên ít này vậy thì cái ham nhập này ở chỗ này của các bạn ấy mỗi lần mà bạn gọi ham nhập này đúng không? thì nó sẽ có nhiệm vụ đến là nó tăng cái biến đếm lên một đơn vị đúng nhỉ? đây, chỗ này mình sẽ tăng cái biến đếm lên nhé ok, bắt đầu mình khởi tạo cái biến đếm này bằng không đúng không? vậy thì cái ông sinh viên mà gọi hàm nhập đầu tiên ấy ông sẽ có mã là 1 đúng không? thì mình sẽ tăng cái biến đếm lên thì đếm nó sẽ thành 1 ok, bây giờ mình sẽ gán cái ID cho cái ông sinh viên này bằng cái mã là sinh viên 001 đúng không? tức là... zis, mũi tên ID thì nó sẽ bằng cái gì nhỉ? Trăm trường hợp mà nó không đầy đủ số 0 lần trước thì bạn trèn cho mình số 0 vào lần trước nhá Mình có thể sử dụng luôn nguy hiểm tool string, nó sẽ bằng string này Ba, từ từng, nó phải có một cái từ là từ sv, cộng với tool string này Ba chứ đi tool string của đếm và ký tự không, sau đó đã bạn cộng với tool string của đếm"
+  },
+  {
+    "chunk_id": "chunk_2600_2664",
+    "start_sec": 2600,
+    "end_sec": 2664,
+    "start_label": "43:20",
+    "end_label": "44:24",
+    "raw_text": "Ba chứ đi tool string của đếm và ký tự không, sau đó đã bạn cộng với tool string của đếm ok, có nghĩa như thế nào, ví dụ như bạn có đếm hằng 1 nhé thì khi đó 2 string của đếm ấy thì nó sẽ thành cái chuỗi 1 đúng không? ok, nhưng mà trước này bạn phải điền thêm các cái số 0 và nó cho thành 0.1, 0.2, hoặc là 0.12, 0.18 gì đấy vân vân đúng không? thì khi đó bạn truyền cho mình thêm các cái số 0 ở đằng trước và đây mình khởi tạo 1 constructor string thế là mình sẽ tạo 1 cái string có độ dài là 3 to this 2 string của đếm trấm len tức là mình sẽ xem là cái sâu này có bao nhiêu ký tự rồi thì mình lấy 3 chứa đi số ký tự đấy được kìa và mình chian thêm từng đấy số 0 vào đằng trước ấy, ok? sau đó mình cộng thêm cái từ Sv vào, thì khi đó cái biến đêm của mình là 1 thì mình sẽ có cái mã sinh viên đấy là sinh viên 001, ok?"
+  },
+  {
+    "chunk_id": "chunk_2644_2708",
+    "start_sec": 2644,
+    "end_sec": 2708,
+    "start_label": "44:04",
+    "end_label": "45:08",
+    "raw_text": "tức là mình sẽ xem là cái sâu này có bao nhiêu ký tự rồi thì mình lấy 3 chứa đi số ký tự đấy được kìa và mình chian thêm từng đấy số 0 vào đằng trước ấy, ok? sau đó mình cộng thêm cái từ Sv vào, thì khi đó cái biến đêm của mình là 1 thì mình sẽ có cái mã sinh viên đấy là sinh viên 001, ok? hoặc là bạn sử dụng vòng qua bạn cứ chan số 0 vào đằng đầu cũng được thì bây giờ nhé, mình khai bám cái ông sinh viên này x sau đó mình ít chấm nhập, đấy Thì cái ông sinh viên này nó sẽ có mã là sinh viên 0.1, ví dụ ní xia, ah, x.in nhé Ví dụ ở đây mình sẽ nhập tên này Nguyễn Vanae Ngày sinh là 23-203-2018 Thì ông xia có mã sinh viên là 0.1, sv0.1 đúng không? Và bây giờ nếu mà bạn nhập thêm 1 cái ông sinh viên nữa nhé, sinh viên e chả nè Bạn cho e chấm nhập Bí biến đếm, static cho lớp sinh viên này, nó đã là một rồi"
+  },
+  {
+    "chunk_id": "chunk_2690_2752",
+    "start_sec": 2690,
+    "end_sec": 2752,
+    "start_label": "44:50",
+    "end_label": "45:52",
+    "raw_text": "Thì ông xia có mã sinh viên là 0.1, sv0.1 đúng không? Và bây giờ nếu mà bạn nhập thêm 1 cái ông sinh viên nữa nhé, sinh viên e chả nè Bạn cho e chấm nhập Bí biến đếm, static cho lớp sinh viên này, nó đã là một rồi và bạn lại gọi cái i, nhập thì khi đó nó sẽ tăng đếm lên hai sau đó bắt đầu mình cán id cho cái ông in này, đúng không? Thì ở trong này bạn sẽ in chấm in thì nó cũng sẽ in ra cái ông sinh viên này có mẽ là 002 Ok, nguyễn văn E này Ngày sinh là 23-12-2003, 2.18 Ông thứ hai là nguyễn văn B Sinh ngày 27, tháng 11, năm 2002, 3.4 Thì bạn thấy là cái ông thứ 2 này nhập thứ 2 này có sẽ có mã sinh viên là 0,0,2 OK, còn tuy vào bài tòan nhá, được không? Tuy vào bài tòan thì bạn sẽ xác định sẽ là mình nên tăng cái biến static này ở trong hàm nhập"
+  },
+  {
+    "chunk_id": "chunk_2731_2795",
+    "start_sec": 2731,
+    "end_sec": 2795,
+    "start_label": "45:31",
+    "end_label": "46:35",
+    "raw_text": "Sinh ngày 27, tháng 11, năm 2002, 3.4 Thì bạn thấy là cái ông thứ 2 này nhập thứ 2 này có sẽ có mã sinh viên là 0,0,2 OK, còn tuy vào bài tòan nhá, được không? Tuy vào bài tòan thì bạn sẽ xác định sẽ là mình nên tăng cái biến static này ở trong hàm nhập hay là trong contractor, có thể là trong contractor, được không? có thể là con trong contractor, bởi vì khi mình khởi tạo một sinh viên mới, không phải nhập từ bàn phím, mà là từ con contractor như thế này thì khi đó bạn phải khéo léo, tăng biến đếm ở đâu nha tức là mỗi khi bạn tạo ra một cái đối tượng sinh viên mới, mình muốn tăng số lượng sinh viên đếm lên đúng không? Thì khi đó các bạn sẽ đưa câu lệnh mà thay đổi cái biến đếm đấy vào trong con trót tơ hoặc là 1 hàm nhập tuy Ở trong trường hợp này, mỗi đàn mình nhập 1 thông tin của 1 sinh viên thì mình sẽ tăng số sinh viên lên đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2774_2839",
+    "start_sec": 2774,
+    "end_sec": 2839,
+    "start_label": "46:14",
+    "end_label": "47:19",
+    "raw_text": "tức là mỗi khi bạn tạo ra một cái đối tượng sinh viên mới, mình muốn tăng số lượng sinh viên đếm lên đúng không? Thì khi đó các bạn sẽ đưa câu lệnh mà thay đổi cái biến đếm đấy vào trong con trót tơ hoặc là 1 hàm nhập tuy Ở trong trường hợp này, mỗi đàn mình nhập 1 thông tin của 1 sinh viên thì mình sẽ tăng số sinh viên lên đúng không? Thành ra mình sẽ tăng cái biến đếm ở trong cái hàm nhập đấy Thế còn nếu mà bạn không có cái hàm nhập này mà bạn lại muốn mỗi sinh viên có thứ tự tăng dần lên ấy Bằng cách là mình sử dụng con trót tơ cũng được thì khi đó mình sẽ tăng cái biến đếm ở trong con trót tơ mặc định hoặc là con trót tơ đầy đủ tham số như thế này tuy các bạn Ok, thì các bạn phải tự quyết định Đó, thì đấy là một cái ví dụ về biến Static và ứng dụng của nó nhé Nhớ là biến Static nó sẽ dùng chung cho tất cả các object thuộc cùng một class, ok? Và chú ý là cái cách khai báo nó là bạn phải khai báo bên ngoài như thế này nhé Sao không được gán từ đầu đâu? Đúng nhỉ? Vậy, và nhớ sử dụng cái toán từ phạm V để mà chỉ rõ cái biến Static đấy nó thuộc cái class nào nhé"
+  },
+  {
+    "chunk_id": "chunk_2824_2886",
+    "start_sec": 2824,
+    "end_sec": 2886,
+    "start_label": "47:04",
+    "end_label": "48:06",
+    "raw_text": "Và chú ý là cái cách khai báo nó là bạn phải khai báo bên ngoài như thế này nhé Sao không được gán từ đầu đâu? Đúng nhỉ? Vậy, và nhớ sử dụng cái toán từ phạm V để mà chỉ rõ cái biến Static đấy nó thuộc cái class nào nhé ok, rồi sau khi sang cái khái niệm tiếp theo là khái niệm về static rồi đúng không? ah, static rồi, mình sẽ sang một cái khái niệm tiếp theo đấy chính là khái niệm về hàm bạn ok, khái niệm về hàm bạn friend function hoặc là friend class thế trong một lớp trình sinh cậu các bạn thấy là gì nhỉ? các cái hàm như là hàm nhập này, hàm in rồi những cái hàm get set như lúc đấy mình khai báo trong cái lớp sinh viên này ấy nó làm sao? Nó đều là các member của class sinh viên này, nó đều thuộc lớp sinh viên này nên là nó có thể truy cập vào các thuộc tính như là id, tên, ngay sinh, gpa, đếm, cái thỏa nái, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2869_2930",
+    "start_sec": 2869,
+    "end_sec": 2930,
+    "start_label": "47:49",
+    "end_label": "48:50",
+    "raw_text": "những cái hàm get set như lúc đấy mình khai báo trong cái lớp sinh viên này ấy nó làm sao? Nó đều là các member của class sinh viên này, nó đều thuộc lớp sinh viên này nên là nó có thể truy cập vào các thuộc tính như là id, tên, ngay sinh, gpa, đếm, cái thỏa nái, đúng không? Nhưng mà đôi khi nhé, bạn lại muốn là gì? Nó có những cái hèm mà nó không phải cái lớp sinh viên này nhưng nó vẫn có thể truy cập vào các cái thuộc tính của cái thằng sinh viên này Đấy, nhớ không nhờ? Ok, thì mình làm như thế nào? Thì khi đó mình sẽ gặp 1 cái khái niệm, đây chính là khái niệm Friend Function, tức là 1 cái hàm bạn Tức là 1 cái hàm không phải là member của class sinh viên này, nhưng nó vẫn có thể truy cập vào các thuộc tính private của lớp sinh viên này Bình thường 1 cái hàm nó không thể truy cập vào các thuộc tính private đâu nhé, ví dụ nhé, mình có 1 cái hàm là hàm void, int thông tin chẳng ạ có 1 cái tham số là sinVnA chả nè"
+  },
+  {
+    "chunk_id": "chunk_2910_2971",
+    "start_sec": 2910,
+    "end_sec": 2971,
+    "start_label": "48:30",
+    "end_label": "49:31",
+    "raw_text": "Tức là 1 cái hàm không phải là member của class sinh viên này, nhưng nó vẫn có thể truy cập vào các thuộc tính private của lớp sinh viên này Bình thường 1 cái hàm nó không thể truy cập vào các thuộc tính private đâu nhé, ví dụ nhé, mình có 1 cái hàm là hàm void, int thông tin chẳng ạ có 1 cái tham số là sinVnA chả nè Ở đây, cái hàm int tin này bạn không thể cl ra a.id đâu OK, hay là a.name, a. gì đấy đâu, nhé bởi vì cái này nó là 1 cái hàm nó không phải memory của cái class sinVn nó không thể truy cập vào được cách thực tính của lớp sinVn này đâu dụ, mình khai báo 1 cái ống sinVnX này và đó là mình hỏi cái hàm là intTin, mình chuyển x vào ấy nè, nó không chạy được đâu, bởi vì là cái hàm intTin này nó Nó đã cố gắng truy cập vào các thành phần private của ông sinh viên E này Đúng nhỉ? Bạn xây dựng cái hàm in thông tin này là memory của class sinh viên thì bạn mới truy cập được đến những hằng này Ok? Nhưng mà đôi khi mình muốn cái hàm in thông tin này, nói lại là nó có thể truy cập vào cái thuộc tính này cơ?"
+  },
+  {
+    "chunk_id": "chunk_2955_3017",
+    "start_sec": 2955,
+    "end_sec": 3017,
+    "start_label": "49:15",
+    "end_label": "50:17",
+    "raw_text": "Nó đã cố gắng truy cập vào các thành phần private của ông sinh viên E này Đúng nhỉ? Bạn xây dựng cái hàm in thông tin này là memory của class sinh viên thì bạn mới truy cập được đến những hằng này Ok? Nhưng mà đôi khi mình muốn cái hàm in thông tin này, nói lại là nó có thể truy cập vào cái thuộc tính này cơ? Thì khi đó bạn sẽ khai báo ở trong này ấy Cái hàm in thông tin này nó là hàm bạn của lớp sinh viên này bằng cử khóa lớp friend In thông tin, void, in thông tin Có một cái tham số là sinh viên E và bên ngoài này thì bạn sẽ xây dựng cái hàm bạn in thông tin đấy thì bây giờ mới thỏa mái nhé, ở chỗ này mình cho ở đây là x chấm nhập này rồi bây giờ mình sẽ chạy, thì nó sẽ không bao lỗi nữa bởi vì là mình đã bát khai báo cái hàm in thông tin này này nó là một cái hàm bạn của cái lớp sinh viên này thành ra là bạn có thể truy cập vào id và tên là các cái thuộc tính private của cái lớp sinh viên này một cách thỏa mái Ok, dụ nhập tên là nguyễn này, ngày xin là 23 tháng 12 năm 2020 bạn, 3.18"
+  },
+  {
+    "chunk_id": "chunk_3000_3063",
+    "start_sec": 3000,
+    "end_sec": 3063,
+    "start_label": "50:00",
+    "end_label": "51:03",
+    "raw_text": "nó là một cái hàm bạn của cái lớp sinh viên này thành ra là bạn có thể truy cập vào id và tên là các cái thuộc tính private của cái lớp sinh viên này một cách thỏa mái Ok, dụ nhập tên là nguyễn này, ngày xin là 23 tháng 12 năm 2020 bạn, 3.18 Ok, đó, thì bạn thấy nó có thể truy cập vào mạng sinh viên này, và nó cũng có thể truy cập vào tên Nó chính là cái hàm ín thông tin này này, đấy, đấy chính là một cái khá niệm về hàm bạn nhé Vậy thì hàm bạn là gì nhỉ? Hàm bạn là một cái hàm không phải là một cái mêm bơ, không phải là một cái hàm của lớp sinh hiện tạng nhưng nó có thể truy cập có các thục tính, private, hay là các phương thức private của lớp sinh viên đấy Ok, ví dụ như là người ta yêu cầu mình là mỗi khi mà bạn nhập tên cho một sinh viên này thì sinh viên này sẽ phải chuẩn hóa tên, ví dụ là nguyễn văn A A như thế này thì bạn phải chuyển thành nguyễn văn A như thế này Thì bạn cũng có thể xây dựng một hàm bạn có nhiệm vụ là chuyên có chuẩn hóa tên cho cái ông này"
+  },
+  {
+    "chunk_id": "chunk_3048_3110",
+    "start_sec": 3048,
+    "end_sec": 3110,
+    "start_label": "50:48",
+    "end_label": "51:50",
+    "raw_text": "thì sinh viên này sẽ phải chuẩn hóa tên, ví dụ là nguyễn văn A A như thế này thì bạn phải chuyển thành nguyễn văn A như thế này Thì bạn cũng có thể xây dựng một hàm bạn có nhiệm vụ là chuyên có chuẩn hóa tên cho cái ông này Được không? Ok, mý dụ nhé Mình viết 1 cái hàm là hàm friend, void, chuẩn hóa chẳng hạn Đấy, và mình có 1 cái tham số là sinh viên Nhưng mà nhớ cái tham số sinh viên này phải có dấu vài nhá Bởi vì bạn muốn thay đổi cái thuộc tính của nó sau khi hàm chuẩn hóa này kết thúc đúng không Thì mình sẽ phải truyền tham chiếu đúng nhỉ Đấy, và dưới này bạn có thể xây dựng cái hàm chuẩn hóa này bằng cách mình sẽ viết hoa từ cái đầu của cái tên sinh viên đấy Mình viết là void, chuẩn hóa này, sinh viên ạ và a nhé nói chung là các cái hàng nào mà nó thay đổi cái giá trị, bạn muốn thay đổi cái giá trị của cái tham số thì bạn phải truyền tham số, tham chiếu vào đúng không? cái ông a này phải truyền tham chiếu chứ ở trong này mình sẽ làm cái gì nhé? viết hoa trị cái đầu đúng không? mình sẽ khải tạo một cái string address bằng một cái sâu dọng"
+  },
+  {
+    "chunk_id": "chunk_3094_3155",
+    "start_sec": 3094,
+    "end_sec": 3155,
+    "start_label": "51:34",
+    "end_label": "52:35",
+    "raw_text": "và a nhé nói chung là các cái hàng nào mà nó thay đổi cái giá trị, bạn muốn thay đổi cái giá trị của cái tham số thì bạn phải truyền tham số, tham chiếu vào đúng không? cái ông a này phải truyền tham chiếu chứ ở trong này mình sẽ làm cái gì nhé? viết hoa trị cái đầu đúng không? mình sẽ khải tạo một cái string address bằng một cái sâu dọng sau đó mình dùng một cái stream-stream này thì đơn giản rồi ss mà mình cho a chấm bạn có thể truy cập trực tiếp và a chấm tên luôn đúng không? sau đó là y, string token đi oi, eds, token, cho res, cộng bằng tu apple ký tự đầu tiên tu apple của token, ký tự không, từ ký tự 1 trở đi cho tới ký tự cuối cùng cho res, cộng bằng tu lau của token i cứ hết 1 từ, sẽ cộng dầu cách sau tự cuối cùng, sẽ thừa dầu cách REST.Erase, REST.Lang, chứ 1"
+  },
+  {
+    "chunk_id": "chunk_3139_3201",
+    "start_sec": 3139,
+    "end_sec": 3201,
+    "start_label": "52:19",
+    "end_label": "53:21",
+    "raw_text": "cho res, cộng bằng tu lau của token i cứ hết 1 từ, sẽ cộng dầu cách sau tự cuối cùng, sẽ thừa dầu cách REST.Erase, REST.Lang, chứ 1 Mình sẽ xóa cái kí tựa chỉ số REST.Chứ 1 nó chính là dấu cách cuối cùng đấy Và mình sẽ gán là A chấm tên bằng REST Vậy thì bây giờ mình có 1 cái ham friend đúng không? Là ham chuẩn hóa tên Nó có thể thay đổi tên của 1 cái ông sinh viên nào đó Bằng cách là truy cập trực tiếp ở tên của ông đấy luôn Đây này OK, ở dưới này ví dụ, ở chỗ này mình ích chấm nhập nhé Sau đó là mình gọi cái ham là ham chuẩn hóa cho này Rồi sau đó thì mình ít chấm in, đúng không? Thực ra thì bạn cũng có thể xây dựng cái hàm chuẩn hóa này, nó là một cái hàm thuộc cái class sinh viên này được, nhá Nhưng mà mình dùng friend cho nó tiện cũng được Chuẩn hóa, cho này theo chữ hên nờ nếu"
+  },
+  {
+    "chunk_id": "chunk_3180_3242",
+    "start_sec": 3180,
+    "end_sec": 3242,
+    "start_label": "53:00",
+    "end_label": "54:02",
+    "raw_text": "Rồi sau đó thì mình ít chấm in, đúng không? Thực ra thì bạn cũng có thể xây dựng cái hàm chuẩn hóa này, nó là một cái hàm thuộc cái class sinh viên này được, nhá Nhưng mà mình dùng friend cho nó tiện cũng được Chuẩn hóa, cho này theo chữ hên nờ nếu Ví dụ mình nhập 1 cái tên nó không chuẩn, ví dụ là nguyễn này, văn này, lông này Ngày sinh 23 tháng 12 năm 2003, điểm là 318 Thì bạn thấy là nó sẽ chuẩn hóa cái tên của ông Nguyễn Văn Long kia thành viết hoa cường trí cây đầu Bạn cũng có thể viết các cái hàm như là chuẩn hóa, Ngày sinh hay cái gì đó, vân vân Ok, đấy, thì đấy là một cái bí dụ về cái hàm của là hàm bạn nhé, friend, function Ở trong một nữ lớp chính xuyện cậu Chú ý là friend function làm một cái hàm không phải member của cái class hiện tại"
+  },
+  {
+    "chunk_id": "chunk_3224_3286",
+    "start_sec": 3224,
+    "end_sec": 3286,
+    "start_label": "53:44",
+    "end_label": "54:46",
+    "raw_text": "Bạn cũng có thể viết các cái hàm như là chuẩn hóa, Ngày sinh hay cái gì đó, vân vân Ok, đấy, thì đấy là một cái bí dụ về cái hàm của là hàm bạn nhé, friend, function Ở trong một nữ lớp chính xuyện cậu Chú ý là friend function làm một cái hàm không phải member của cái class hiện tại nhưng có thể truy cập vào các thuộc tính, cũng như các phương thức, kể cả là private của một lớp nào đó Bác lích thì chắc chắn là ham nào cũng có thể truy cập vào được rồi, đúng không? Nhưng mà private nó có thể truy cập được mà các bạn chỉ cần khai báo thêm cái từ hóa friend trước cái ham đấy ra được Ok, các cái chỗ này thì mình chỉ khai báo nguyên mẫu ham thôi nhé Thế còn ở bên ngoài này mình implement deal, mình sẽ dựng luôn và bên ngoài như thế này cũng được Thực ra bạn có thể xây dựng ngay ở trong đấy cũng được nhưng mà xây dựng ở bên ngoài này thì nó sẽ dễ bảo trì và dễ xửa lỗ hơn ok, đấy là 1 cái ví dụ về frame function nhá rồi, nó còn 1 cái thằng nữa đấy chính là frame class, tức là 1 cái lớp bạn kìa"
+  },
+  {
+    "chunk_id": "chunk_3265_3325",
+    "start_sec": 3265,
+    "end_sec": 3325,
+    "start_label": "54:25",
+    "end_label": "55:25",
+    "raw_text": "Thực ra bạn có thể xây dựng ngay ở trong đấy cũng được nhưng mà xây dựng ở bên ngoài này thì nó sẽ dễ bảo trì và dễ xửa lỗ hơn ok, đấy là 1 cái ví dụ về frame function nhá rồi, nó còn 1 cái thằng nữa đấy chính là frame class, tức là 1 cái lớp bạn kìa tức là 1 cái lớp nó có thể có 1 cái lớp khác là lớp bạn kìa, ví dụ nhá mình có 1 cái lớp là class là giáo viên chả hả ở đây mình sẽ có private string, qua chả hả chào mông để qua này, focus rồi hả Vì dụ void cấp nhật điểm, update, string, vn, vn"
+  },
+  {
+    "chunk_id": "chunk_3303_3364",
+    "start_sec": 3303,
+    "end_sec": 3364,
+    "start_label": "55:03",
+    "end_label": "56:04",
+    "raw_text": "Vì dụ void cấp nhật điểm, update, string, vn, vn Ở đây mình sẽ khai báo cái, người ta gọi là for work, for work, for work, declare, declare, declare như thế nào nhỉ? Clare như thế nào Ok, thế là khai báo trước Mình sẽ khai báo 1 cái class là class dạo viên rồi ra Và class là 1 class là sinh viên ở đây Để cho mình khai báo sinh viên hay dạo viên trước thì nó đều được ok Thì bạn thấy nè, cái ở đây nó có 1 cái class là class dạo viên đúng không? Nó có 1 cái ham là ham update với 1 tham số là sinh viên Đúng nhỉ? Thì như mình nói lúc trước ấy, nếu mà cái ham update của cái lớp dạo viên này"
+  },
+  {
+    "chunk_id": "chunk_3345_3409",
+    "start_sec": 3345,
+    "end_sec": 3409,
+    "start_label": "55:45",
+    "end_label": "56:49",
+    "raw_text": "Để cho mình khai báo sinh viên hay dạo viên trước thì nó đều được ok Thì bạn thấy nè, cái ở đây nó có 1 cái class là class dạo viên đúng không? Nó có 1 cái ham là ham update với 1 tham số là sinh viên Đúng nhỉ? Thì như mình nói lúc trước ấy, nếu mà cái ham update của cái lớp dạo viên này hàm áp đêm của lớp dạo viên này, nó không thể truy cập trực tiếp vào các thuộc tính của cái đối tượng sinh viên kia đâu đúng không? Thành ra là bạn cũng có thể khai báo một cái lớp dạo viên nó là bạn của cái lớp sinh viên, cú pháp như thế nào nhỉ? Thì như là friend, class, dạo viên chẳng phải, như thế này. Thì để nói rằng là gì nhỉ, cái lớp dạo viên nó là bạn của lớp sinh viên, thì khi đó tất cả các phương thức của cái lớp dạo viên này nhé, nó có thể truy cập trực tiếp vào các thuộc tính của lớp sinh viên tức là cái hàm update này này, nó là một hàm của lớp dao viên đúng không? ừ, mà lớp dao viên nó lại là lớp bạn của lớp sinh viên đúng không? thì cái hàm update này này, nó có thể truy cập vào các thuộc tính private của ông sinh viên này"
+  },
+  {
+    "chunk_id": "chunk_3393_3477",
+    "start_sec": 3393,
+    "end_sec": 3477,
+    "start_label": "56:33",
+    "end_label": "57:57",
+    "raw_text": "nó có thể truy cập trực tiếp vào các thuộc tính của lớp sinh viên tức là cái hàm update này này, nó là một hàm của lớp dao viên đúng không? ừ, mà lớp dao viên nó lại là lớp bạn của lớp sinh viên đúng không? thì cái hàm update này này, nó có thể truy cập vào các thuộc tính private của ông sinh viên này mấy dụ như ở đây mình sẽ dựng update sinh viên và itch chẳng ạ mình sẽ cho x,gpa, ok, trong này nhé, cho hàm bên nhé, mình khai bám 1 cái ông sinh viên ích này, sau đó mình nhập này, sau đó là mình khai bám 1 cái ông giáo viên y ở đây và thông qua ông y này mình có thể cập nhật điểm cho ông x, bằng cách là gọi hàm update và mình chuyển x vào nhé, xem là thông tin của thằng x có bị thay đổi không nhé void, invalid, color, type, string, vn, class, string, collapse, cell, vn,"
+  },
+  {
+    "chunk_id": "chunk_3441_3508",
+    "start_sec": 3441,
+    "end_sec": 3508,
+    "start_label": "57:21",
+    "end_label": "58:28",
+    "raw_text": "void, invalid, color, type, string, vn, class, string, collapse, cell, vn, ví dụ mình nhật tên là nguyễn, vn, edge, ngay sinh là 23 tháng 12 năm 2003, mình để là 2.18 ok, thì bạn thấy là cái ông xinh viên, cái ông giáo viên nào đó ấy, ông có thể đặt điểm cho cái anh xinh viên này thành 320, đúng nhỉ? Đấy, mặc dù cái hàm update điểm này đấy, cái hàm update điểm của cái ông giáo viên này này Nó là một member của cái ông lớp giáo viên này, bình thường là nó không thể truy cập vào được đâu, bình thường là nó không thể truy cập vào được"
+  },
+  {
+    "chunk_id": "chunk_3488_3566",
+    "start_sec": 3488,
+    "end_sec": 3566,
+    "start_label": "58:08",
+    "end_label": "59:26",
+    "raw_text": "ok, thì bạn thấy là cái ông xinh viên, cái ông giáo viên nào đó ấy, ông có thể đặt điểm cho cái anh xinh viên này thành 320, đúng nhỉ? Đấy, mặc dù cái hàm update điểm này đấy, cái hàm update điểm của cái ông giáo viên này này Nó là một member của cái ông lớp giáo viên này, bình thường là nó không thể truy cập vào được đâu, bình thường là nó không thể truy cập vào được các cái thuộc tính ích chấm GPA này như thế này đâu, bởi vì cái GPA này nói là private, private của ông xinh viên mà, đúng không? nhưng do cái ông giáo viên này là ông làm một cái lớp giáo viên đó là một cái lớp bạn của lớp sinh viên Thì ra tất cả các member function của cái lớp giáo viên này nó có thể truy cập vào các thực thuộc tính private của cái lớp sinh viên này một cách thoải mái Đúng nhờ? Nó rất là tiện, thành ra là bây giờ mình sẽ hướng dẫn các bạn overload 2 cái toán tử đấy đã trước hay nhá Tháng tử nhập sốt ấy, ok? Cái cú pháp của nó như sau, nhưng mà chú ý là riêng đối với 2 cái toán tử nhập sốt ấy insertion, insertion, instruction,"
+  },
+  {
+    "chunk_id": "chunk_3542_3606",
+    "start_sec": 3542,
+    "end_sec": 3606,
+    "start_label": "59:02",
+    "end_label": "60:06",
+    "raw_text": "insertion, insertion, instruction, Class, oastream, justin, is the IP address inistream 5. When we double tap on to add this name on thatóle, that's the address inistream OOP từ khóa là operator OOP này là nhập đúng không? 2 cái mũ tên sang phải và nó sẽ có 2 tham số, tham số thứ nhất, đây chính là đối tượng của thằng iostream"
+  },
+  {
+    "chunk_id": "chunk_3573_3652",
+    "start_sec": 3573,
+    "end_sec": 3652,
+    "start_label": "59:33",
+    "end_label": "60:52",
+    "raw_text": "5. When we double tap on to add this name on thatóle, that's the address inistream OOP từ khóa là operator OOP này là nhập đúng không? 2 cái mũ tên sang phải và nó sẽ có 2 tham số, tham số thứ nhất, đây chính là đối tượng của thằng iostream , đặt lập và in và thứ 2 đây chính là 1 cái sinh viên nào đó để bạn nhập thông tin nhưng mà nhớ cái ông sinh viên này muốn nhập thông tin thì bạn sẽ phải truyền tham chiều trở emp energia, inco, ..."
+  },
+  {
+    "chunk_id": "chunk_3650_3716",
+    "start_sec": 3650,
+    "end_sec": 3716,
+    "start_label": "60:50",
+    "end_label": "61:56",
+    "raw_text": "trở emp energia, inco, ... Cảm ơn các bạn tạm lieber Cảm ơn các bạn Frozen Cảm ơn các bạn video mình Franklin 14k a.id ok rồi là bạn ở CL ra là nhập tên cho nè chỗ này bạn ghét like nhé cin.mignor nhé sau đó mình có ghét like in nhé, thay về cin thì chỗ này bạn dùng in này in.mignor và chỗ này ghét like in và a.t sau đó bạn tương tự bạn sẽ CL cho asin in chứ sẽ lỗi, không phải là cin đây là in nhé ok int cho a..vsync và a.gpa, then write return return về thằng im cho mình, được chạm? ok, thì đấy là bạn đã nạp chầm xong với toàn tử nhập cho đối tượng sinh viên"
+  },
+  {
+    "chunk_id": "chunk_3700_3762",
+    "start_sec": 3700,
+    "end_sec": 3762,
+    "start_label": "61:40",
+    "end_label": "62:42",
+    "raw_text": "đây là in nhé ok int cho a..vsync và a.gpa, then write return return về thằng im cho mình, được chạm? ok, thì đấy là bạn đã nạp chầm xong với toàn tử nhập cho đối tượng sinh viên tương tự như vậy, toàn tử ostream, operator, ostream, ao, giống vài bạn để chỗ ao cũng được mà để chỗ ostream được nhé, sinh viên a thì mình sẽ cl ra a.id, a.name, a.assign và cuối cùng là fixsetreseason hai, ok, sau đó mình cl ra a.gpa, đó rồi ok, thì trong hàng men nhá, thay vì mình sử dụng hàm nhập hàm suốt đấy, thì bạn có thể c in cho x và c a cho x để nhập hông tin và suất hông tin cho ống x này Mình dụ như CIN nhé"
+  },
+  {
+    "chunk_id": "chunk_3744_3814",
+    "start_sec": 3744,
+    "end_sec": 3814,
+    "start_label": "62:24",
+    "end_label": "63:34",
+    "raw_text": "hai, ok, sau đó mình cl ra a.gpa, đó rồi ok, thì trong hàng men nhá, thay vì mình sử dụng hàm nhập hàm suốt đấy, thì bạn có thể c in cho x và c a cho x để nhập hông tin và suất hông tin cho ống x này Mình dụ như CIN nhé Mình quên mình chưa định nghĩa con trọc tơ sinh viên này, xoả nó đi nhé Các bạn tự định nghĩa ứng được mà không định nghĩa ứng được Rồi, bây giờ nó sẽ nhập ID này, 1, 2, 3 này, tên là Nguyễn Banan này Cái gì nữa nhỉ? Ngày sinh đúng không? 23 tháng 12 năm 2003 Ok, thì khi đó bạn CIN thì nó sẽ nhập thông tin cho sinh viên đúng không? Hoàn sĩ L thì nó in cho tất cả thông tin cà thông tin, nói chung là chỗ này mình thiếu mất quỷ tuấn EO này ok, chỗ này mình in ra cho đầy đuối đấy nhá, đây là nhập này sinh sẽ đón mình sinh cho a.in, sinh ổng là sinh, a.in, mình sẽ ra là nhập wrape, điểm"
+  },
+  {
+    "chunk_id": "chunk_3795_3856",
+    "start_sec": 3795,
+    "end_sec": 3856,
+    "start_label": "63:15",
+    "end_label": "64:16",
+    "raw_text": "ok, chỗ này mình in ra cho đầy đuối đấy nhá, đây là nhập này sinh sẽ đón mình sinh cho a.in, sinh ổng là sinh, a.in, mình sẽ ra là nhập wrape, điểm thì mình sẽ in cho, in cho, a.wpe, đấy, ok thì bạn thấy bây giờ bạn chỉ cần dùng sinh x, nó sẽ yêu cầu, nó sẽ thực hiện các câu lệnh ở trong cái toàn tử mà mình đã nạp trồng ở trên này và nó nhập thông tin cho một sinh viên an đó đó nhưng mà nhớ chuyển tham chiếu nhé để còn in ra thì không cần đúng không? bây giờ nó rất là tiện mình có thể dùng sinh xìa ao để nhập thông tin cho cả một sinh viên mà cách nạp trồng hai cái toàn tử đấy 1,2,3 này, 1,2,3 này, 2,3 này, 2,18 này thì bạn có thể nhập cho cả thông tin cho một sinh viên đúng không? hoặc là in ra cả một thông tin cho một sinh viên"
+  },
+  {
+    "chunk_id": "chunk_3834_3897",
+    "start_sec": 3834,
+    "end_sec": 3897,
+    "start_label": "63:54",
+    "end_label": "64:57",
+    "raw_text": "để còn in ra thì không cần đúng không? bây giờ nó rất là tiện mình có thể dùng sinh xìa ao để nhập thông tin cho cả một sinh viên mà cách nạp trồng hai cái toàn tử đấy 1,2,3 này, 1,2,3 này, 2,3 này, 2,18 này thì bạn có thể nhập cho cả thông tin cho một sinh viên đúng không? hoặc là in ra cả một thông tin cho một sinh viên bởi vì mình đã nạp trồng hai cái toàn tử đấy rồi mà tất nhiên bạn cũng có thể nạp trong các toàn tử khác nhé nhưng mà nhớ là 2 cái toàn tử in thông tin với nhập thông tin này này là bạn phải khai báo 2 cái toàn tử đấy là frame nó sẽ có danh sách tham số là 2 như thế này 1 là 2 cái đối tượng iostream ở ostream tương ứng với nhập và suất 2 là 2 cái đối tượng sinh viên hoặc là cái đối tượng của class nào đó bạn muốn nhập thông tin có thể là nhân viên hoặc là số phức phân số gì đó vân vân ngoài ra mình cũng có thể nạp chồng các toán tử như là cộng chú nhân chia hay là khác nhau, bằng nhau, lớn hơn, nhỏ hơn, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_3881_3943",
+    "start_sec": 3881,
+    "end_sec": 3943,
+    "start_label": "64:41",
+    "end_label": "65:43",
+    "raw_text": "hoặc là cái đối tượng của class nào đó bạn muốn nhập thông tin có thể là nhân viên hoặc là số phức phân số gì đó vân vân ngoài ra mình cũng có thể nạp chồng các toán tử như là cộng chú nhân chia hay là khác nhau, bằng nhau, lớn hơn, nhỏ hơn, đúng không? Ok, ví dụ nhé, bây giờ mình muốn nạp chồng cái toán tử để so sánh hai sinh viên này xem ông nào là nhỏ hơn nhé thì mình có thể xây dựng cái, mình overload cái operator nhỏ hơn ấy khi mà overload operator nhỏ hơn này này, thì bạn có 2 cách, 1 là bạn sẽ overload operator đấy, nó thả làm 1 member của lớp sinh viên này 2 là nó cũng làm 1 hàm bạn như là 2 thằng này cũng được nhé cách thứ nhất như sau, đây chính là, cú pháp nó sẽ là gì nhở kiểu trà về đúng không? trên 2 thằng này nó là iostream và oostream thì còn cái dấu nhỏ hơn ấy thì nó sẽ có cái trà về là đúng hoặc sai đúng không? OOP, operator, nhỏ hơn, ok và trong này bạn sẽ có sinh xét tham số là sinh viên e"
+  },
+  {
+    "chunk_id": "chunk_3928_3989",
+    "start_sec": 3928,
+    "end_sec": 3989,
+    "start_label": "65:28",
+    "end_label": "66:29",
+    "raw_text": "trên 2 thằng này nó là iostream và oostream thì còn cái dấu nhỏ hơn ấy thì nó sẽ có cái trà về là đúng hoặc sai đúng không? OOP, operator, nhỏ hơn, ok và trong này bạn sẽ có sinh xét tham số là sinh viên e ok, thế đây chính là một cách để bạn nạt trồng cái toán tử nhỏ hơn dưới này thì các bạn xây dựng nó nhé, sinh viên 2.2.opr, nhỏ hơn có một sinh xét tham số là sinh viên e, ok thì mình coi hai ông sinh viên này là ông thứ nhất nhỏ hơn, ông thứ hai nếu mà gpe của ông thứ nhất nhỏ hơn nhé Cái là mình chỉ cần return về zis.rpa, nhỏ hơn a.rpa. Đấy Ok, và khi đó bạn có thể sử dụng 2 sinh viên bà bạn so sánh ông nào nhỏ hơn và ông nào lớn hơn rồi Ví dụ, bạn có ông sinh viên x này, i này, và đó bạn nhập sinh cho x và sinh cho y để nhập thông tin này Và bạn kiểm tra là x nhỏ hơn y, mình sẽ cl là iostream, còn l mình sẽ cl là no"
+  },
+  {
+    "chunk_id": "chunk_3971_4037",
+    "start_sec": 3971,
+    "end_sec": 4037,
+    "start_label": "66:11",
+    "end_label": "67:17",
+    "raw_text": "Ok, và khi đó bạn có thể sử dụng 2 sinh viên bà bạn so sánh ông nào nhỏ hơn và ông nào lớn hơn rồi Ví dụ, bạn có ông sinh viên x này, i này, và đó bạn nhập sinh cho x và sinh cho y để nhập thông tin này Và bạn kiểm tra là x nhỏ hơn y, mình sẽ cl là iostream, còn l mình sẽ cl là no Ok, mình dụ nhé, mình sẽ nhập 2 sinh viên, đây là 1, 2, 3 này, viễn vào này, điểm ông này là 2, 3, 12, năm 2020, điểm hôm nay là 3,18 nhé Mình sẽ nhập cái ông thứ 2 có điểm cao hơn ông này để mình so sánh xem có phải lông A nhỏ hơn ông B không? Ok, mình viễn vào B nhé 27, nó lại bị nhập tên, mình chưa có sin cho x no đúng không? nhập id, ơ, hay là mình nhập nhập cho nào nhỉ, in cho x no cho này rồi mà, ờ, đừng chạy lại nhé"
+  },
+  {
+    "chunk_id": "chunk_4014_4076",
+    "start_sec": 4014,
+    "end_sec": 4076,
+    "start_label": "66:54",
+    "end_label": "67:56",
+    "raw_text": "27, nó lại bị nhập tên, mình chưa có sin cho x no đúng không? nhập id, ơ, hay là mình nhập nhập cho nào nhỉ, in cho x no cho này rồi mà, ờ, đừng chạy lại nhé 1, 2, 3, nè, tên ngu âm nè, iosync là 23 tháng 122002, điểm tra 18, 124, nguyễn 5c hành sinh là 27 tháng 11 năm 2002 bây giờ mình sẽ nhập điểm cho cao hơn ông A nhé, để nó biết là ông A nhỏ hơn ông B nhé, nhá, đa, trình tư, nè, cin, yes, ok, hả? các bạn có thể so sánh hai thêm ông sinh viên này rồi đấy, bằng cách là mình nạp trồng của tán tử nhỏ hơn này đây, đây, cái cách này ấy, đây chính là bạn xây dựng cái operator này nó là một member của các last sinh viên, đúng không? nếu không xây dựng như thế cũng được, mình có thể xây dựng operator nhỏ hơn này, nó là một cái hét này"
+  },
+  {
+    "chunk_id": "chunk_4060_4121",
+    "start_sec": 4060,
+    "end_sec": 4121,
+    "start_label": "67:40",
+    "end_label": "68:41",
+    "raw_text": "các bạn có thể so sánh hai thêm ông sinh viên này rồi đấy, bằng cách là mình nạp trồng của tán tử nhỏ hơn này đây, đây, cái cách này ấy, đây chính là bạn xây dựng cái operator này nó là một member của các last sinh viên, đúng không? nếu không xây dựng như thế cũng được, mình có thể xây dựng operator nhỏ hơn này, nó là một cái hét này Đấy chính là mình sẽ xây dựng operator này, nó là một member của sinh viên đúng không? Hoặc bạn cũng có thể xây dựng friend cũng được, ok? Trong trường học mà bạn xây dựng operator nhỏ hơn này, nó là một member của lớp sinh viên này Thì nó chỉ có một cái tham số là một cái sinh viên anazer, sinh viên khác thôi, đúng không? Vì dựng sinh viên này mình đặt anazer Thứ là mình sẽ so sánh cái sinh viên hiện tại, sinh viên disk với cái sinh viên anazer đúng không? Vì còn nếu bạn xây dựng cái operator nhỏ hơn này là một cái ham frame cũng được Thì khi đó mình lại xoánh 2 ưu sinh viên với nhau thôi frame, boon, operator, nhỏ hơn, nhưng mình sẽ có 2 thăm số là sinh viên A và sinh viên B thôi, nó cũng trẻ khác gì, tuy có bạn lựa chọn nhé Được không? Nhưng mà nhớ 2 cái ham yes, 2 cái operator nhập sốt này là phải sử dụng frame đấy"
+  },
+  {
+    "chunk_id": "chunk_4105_4175",
+    "start_sec": 4105,
+    "end_sec": 4175,
+    "start_label": "68:25",
+    "end_label": "69:35",
+    "raw_text": "frame, boon, operator, nhỏ hơn, nhưng mình sẽ có 2 thăm số là sinh viên A và sinh viên B thôi, nó cũng trẻ khác gì, tuy có bạn lựa chọn nhé Được không? Nhưng mà nhớ 2 cái ham yes, 2 cái operator nhập sốt này là phải sử dụng frame đấy đây, trong này mình sẽ xây dựng hàm boon operator, nhỏ hơn rồi là 2 thăm số là xinh yên a, xinh yên b này thì bạn chỉ cần vui tơn v e.gpa, nhỏ hơn b.gpa là được ok, thế nhé, được không nhỉ, tùy các bạn lựa chọn nhé 1 là xây dựng cái nạp trong cái operator đấy, nó là 1 member của class luôn 2 là bạn sẽ xây dựng nó là 1 cái hàm bạn, được không? C++, include, mind,"
+  },
+  {
+    "chunk_id": "chunk_4150_4214",
+    "start_sec": 4150,
+    "end_sec": 4214,
+    "start_label": "69:10",
+    "end_label": "70:14",
+    "raw_text": "C++, include, mind, xinh viên A này khác nhau hay là nhỏ hơn, hay gì đó vân vân, đúng không? Và có 1 cái chú ý, nếu mà bạn đã overload cái toàn tử nhỏ hơn này rồi nhá, thì khi bạn xót ấy, khi bạn xắp xếp các cái xinh viên này, thì nó mặc định nó xắp xếp theo cái dấu nhỏ hơn này. Thức là nó sẽ, khi mà bạn xắp xếp ấy, xinh viên thì nó sẽ dựa vào cái logic mà bạn đã nạp chồng cho con toàn tử nhỏ hơn này để nó xắp xếp thành xếp xinh viên của mình. Ví dụ, mình có 1 cái biến nò này, để nhập số lượng xinh viên này. sau đó mình khai bão 1 cái mạng sinh viên A, còn nào vẫn tự hỏi 1 cái vết tợ nè sau đó mình sẽ AC in cho AI nha, sau đó mình sort, ok, sort, A và A cũng bình thường ấy"
+  },
+  {
+    "chunk_id": "chunk_4195_4259",
+    "start_sec": 4195,
+    "end_sec": 4259,
+    "start_label": "69:55",
+    "end_label": "70:59",
+    "raw_text": "để nó xắp xếp thành xếp xinh viên của mình. Ví dụ, mình có 1 cái biến nò này, để nhập số lượng xinh viên này. sau đó mình khai bão 1 cái mạng sinh viên A, còn nào vẫn tự hỏi 1 cái vết tợ nè sau đó mình sẽ AC in cho AI nha, sau đó mình sort, ok, sort, A và A cũng bình thường ấy thì khi mà muốn sắp xếp sinh viên theo 1 cái tiêu trí nào đó thì các bạn sẽ phải sử dụng comparator đúng không thì còn nếu mà bạn là nạp trong cái toàn tử nhỏ hơn ấy thì tự khắc khi đó ấy, nó sẽ sắp xếp sinh viên của mình theo cái thứ tự của giống nhỏ hơn đấy thế là sẽ cái thứ tự của ông sinh viên ở đây mình coi ông con nào có VA nhỏ hơn để ông ấy nhỏ hơn đúng không Cout, Cout, Cout, Cout, Cout, Cout,"
+  },
+  {
+    "chunk_id": "chunk_4242_4304",
+    "start_sec": 4242,
+    "end_sec": 4304,
+    "start_label": "70:42",
+    "end_label": "71:44",
+    "raw_text": "Cout, Cout, Cout, Cout, V-1, INET1N, 23.12.203, 3.18 Miras sake I民 7, 21.0002 Miras sake Miras sake Mình sẽ cho pace 1ager Miras sake Thì bây giờ bạn thấy là cái ông C này sẽ lên đầu Cái ông C này sẽ lên đầu này, ông có điểm là 2.18 này Sau đến ông từ 2 là 2.7 này và ông từ 3 là 3.18"
+  },
+  {
+    "chunk_id": "chunk_4287_4350",
+    "start_sec": 4287,
+    "end_sec": 4350,
+    "start_label": "71:27",
+    "end_label": "72:30",
+    "raw_text": "Miras sake Thì bây giờ bạn thấy là cái ông C này sẽ lên đầu Cái ông C này sẽ lên đầu này, ông có điểm là 2.18 này Sau đến ông từ 2 là 2.7 này và ông từ 3 là 3.18 Ok, chú ý như thế nhá Về cái phần nạp trồng toán tử này thì mình làm thêm cho các bạn một cái ví dụ nữa nhá Ví dụ như là bạn sẽ dựng cái class số phức và bạn có thể nạp trồng các cái toán tử nhập suất rồi là cộng chữ nhân chia hay là lớn hơn hoặc bằng, nhỏ hơn hoặc bằng hay là khác nhau, vân vân và vân vân void, số phức, mình có 2 tham số, 1, ờ, xin lỗi, class, số phức, mình sẽ có void, 2 cuộc tính để thực và ẻo ok, rồi, public bây giờ mình sẽ nạp trồng các tán tử cho thằng này nhé, ví dụ như nạp trồng tán tử nhập này frame, ồ, nhập đúng không? iostream"
+  },
+  {
+    "chunk_id": "chunk_4327_4408",
+    "start_sec": 4327,
+    "end_sec": 4408,
+    "start_label": "72:07",
+    "end_label": "73:28",
+    "raw_text": "void, số phức, mình có 2 tham số, 1, ờ, xin lỗi, class, số phức, mình sẽ có void, 2 cuộc tính để thực và ẻo ok, rồi, public bây giờ mình sẽ nạp trồng các tán tử cho thằng này nhé, ví dụ như nạp trồng tán tử nhập này frame, ồ, nhập đúng không? iostream Operator, iostream, in, sofa x4 trộm"
+  },
+  {
+    "chunk_id": "chunk_4382_4443",
+    "start_sec": 4382,
+    "end_sec": 4443,
+    "start_label": "73:02",
+    "end_label": "74:03",
+    "raw_text": "trộm courageous to have the cộng số phức Anazer với số phức hiện tại và return với tổng tương tự như vậy, operator trừ kia sẽ cộng số phức hiện tại với anazer và return với hiệu ok, các bạn phải để kiểu trà về của operator này là số phức nha rồi bây giờ mình sẽ xây dựng 2 thằng đầu tiên là iostream"
+  },
+  {
+    "chunk_id": "chunk_4424_4485",
+    "start_sec": 4424,
+    "end_sec": 4485,
+    "start_label": "73:44",
+    "end_label": "74:45",
+    "raw_text": "cộng số phức Anazer với số phức hiện tại và return với tổng tương tự như vậy, operator trừ kia sẽ cộng số phức hiện tại với anazer và return với hiệu ok, các bạn phải để kiểu trà về của operator này là số phức nha rồi bây giờ mình sẽ xây dựng 2 thằng đầu tiên là iostream copy thằng này xuống dưới cho nó nhanh đây thì mình sẽ yêu cầu nhập vào phần thức vào phần áo thôi e.tools.in, e.tools.out, e.tools.in fake in, e.tools.out e.tools.out, e.tools.in fake in, e.tools.out Rồi, bây giờ mình sẽ dựng hai membo operator này của thằng Sofus tất nhiên là bạn cũng có thể xây dựng friend nhé"
+  },
+  {
+    "chunk_id": "chunk_4469_4532",
+    "start_sec": 4469,
+    "end_sec": 4532,
+    "start_label": "74:29",
+    "end_label": "75:32",
+    "raw_text": "e.tools.out, e.tools.in fake in, e.tools.out Rồi, bây giờ mình sẽ dựng hai membo operator này của thằng Sofus tất nhiên là bạn cũng có thể xây dựng friend nhé ở đây mình sẽ dùng void as a lỗ số phức số phức 2.operator, cộng, số phức nether thì ở đây bạn thay báo cho mình số phức tổng ở đây ok, nhớ là nhiệm vụ của operator cộng này nó sẽ cộng số phức nether trong thăm số này với số phức hiện tại tức là mình sẽ cho tổng trấm thực, nó sẽ bằng zip trấm thực tức là cái phần thực của cái số phức hiện tại, cộng với anazer trấm thực ok, tương tự như cái phần ảo đúng không? tổng trấm ảo thì nó cho bằng zip trấm ảo, cộng với anazer trấm ảo và bạn huy tên với cho mình cái tổng đấy, tương tự như vậy dấu trừ cũng thế nhé tất nhiên là dấu nhân dấu chia các bạn làm thương tự nhé, nhưng mà dài thì mình ngại viết rồi đây mình được chuyển thành dấu trừ này"
+  },
+  {
+    "chunk_id": "chunk_4515_4582",
+    "start_sec": 4515,
+    "end_sec": 4582,
+    "start_label": "75:15",
+    "end_label": "76:22",
+    "raw_text": "ok, tương tự như cái phần ảo đúng không? tổng trấm ảo thì nó cho bằng zip trấm ảo, cộng với anazer trấm ảo và bạn huy tên với cho mình cái tổng đấy, tương tự như vậy dấu trừ cũng thế nhé tất nhiên là dấu nhân dấu chia các bạn làm thương tự nhé, nhưng mà dài thì mình ngại viết rồi đây mình được chuyển thành dấu trừ này Đấy, ok, vậy là bạn có thể nhập xuất bọn thằng số phức này, rồi là cộng chữ nó như là những biến thông thường đúng không? Khi dụ như mình có một cái ông số phức a và b, sau đó mình xi in cho a và xi in cho b, sau đó mình dùng cái số phức tỏng, bằng a cộng về b và một cái số phức hiệu thì bằng a chứ đi b đúng không? sau đó mình CL ra tỏng, sau đó mình CL ra hiệu ok, các bạn sẽ thấy là nó có thể cộng chữ 2 cái số phức ví dụ như số thứ nhất là 3, bụt cộng 4, 2 là 2, cộng 15, khi đó tỏng của 2 số phức thì nó sẽ là 5, cộng của 9, hiệu của 2 số phức thì nó sẽ là 1 chứ đi 1, chứ đi 1,"
+  },
+  {
+    "chunk_id": "chunk_4562_4624",
+    "start_sec": 4562,
+    "end_sec": 4624,
+    "start_label": "76:02",
+    "end_label": "77:04",
+    "raw_text": "ok, các bạn sẽ thấy là nó có thể cộng chữ 2 cái số phức ví dụ như số thứ nhất là 3, bụt cộng 4, 2 là 2, cộng 15, khi đó tỏng của 2 số phức thì nó sẽ là 5, cộng của 9, hiệu của 2 số phức thì nó sẽ là 1 chứ đi 1, chứ đi 1, ok, đấy, được không nhờ? thế thôi Tất nhiên bạn cũng có thể nặp trong các tòa tử, tòa tử như là xót sánh lớn hơn, nhỏ hơn, hoặc bằng, hoặc khác nhau vân vân 2 operator cộng trừ này là 2 member của xăng số phức Còn nếu bạn khai báo nó là friend thì cũng được, nhưng mà khi đó bạn phải xây dựng là friend số phức, operator số phức A và số phức B Để nó tính tỏng của 2 số phức và nó return với số phức nếu mà bạn chỉ chuyển một tham số thì không tính được đâu nhé Nó không như trong trường hợp mà operator cộng là member của tham số phức thì mình sẽ mặc định tính toàn với cái số phức hiện tại, trong tham số"
+  },
+  {
+    "chunk_id": "chunk_4607_4670",
+    "start_sec": 4607,
+    "end_sec": 4670,
+    "start_label": "76:47",
+    "end_label": "77:50",
+    "raw_text": "Để nó tính tỏng của 2 số phức và nó return với số phức nếu mà bạn chỉ chuyển một tham số thì không tính được đâu nhé Nó không như trong trường hợp mà operator cộng là member của tham số phức thì mình sẽ mặc định tính toàn với cái số phức hiện tại, trong tham số còn trong trường hợp mà nó là bạn khai báo friend như thế này thì khi đó mình sẽ phải có 2 cái tham số ok, số phức thứ nhất là số phức thứ 2 để tính tỏng, return hoặc tính hiệu rồi return ok, thì có 2 cách xây dựng như thế các bạn chú ý nhé 1 là xây dựng operator, là member của 1 class, 2 là xây dựng nó là 1 frame function Nhưng mà chú ý là 2 cái thằng operator nhập suất này là bác buồn là phải là frame, ok? Không có là cố gắng nhập suất mà không xây dựng frame là không được đâu Rồi, còn cái gì nữa không nhỉ? Phần frame Mình thêm 1 cái ví dụ nữa nhé, mình có thể so sánh 2 số phức với nhau ấy Ví dụ như bạn muốn so sánh 2 số phức có bằng nhau hay không?"
+  },
+  {
+    "chunk_id": "chunk_4652_4713",
+    "start_sec": 4652,
+    "end_sec": 4713,
+    "start_label": "77:32",
+    "end_label": "78:33",
+    "raw_text": "Không có là cố gắng nhập suất mà không xây dựng frame là không được đâu Rồi, còn cái gì nữa không nhỉ? Phần frame Mình thêm 1 cái ví dụ nữa nhé, mình có thể so sánh 2 số phức với nhau ấy Ví dụ như bạn muốn so sánh 2 số phức có bằng nhau hay không? Bún, Operator, cú pháp là kiểu trả về, operator Từ khóa operator sau đó là tóán tử mà bạn muốn nạp chồng Bún, operator, hai dấu bằng nhé, mình sẽ là sổ phức another Ok, thì bạn cũng có thể nạp chồng hai cái tóán tử này Tóán tử dấu bằng này để xóa sánh hai cái sổ phức xem nó có bằng nhau hay không Nó khác nhau hay không, vân, tuy, nhá Ở đây mình sẽ dùng là boon, số phức để toàn thức phạm V, operator, số bằng, số phức another"
+  },
+  {
+    "chunk_id": "chunk_4696_4758",
+    "start_sec": 4696,
+    "end_sec": 4758,
+    "start_label": "78:16",
+    "end_label": "79:18",
+    "raw_text": "Tóán tử dấu bằng này để xóa sánh hai cái sổ phức xem nó có bằng nhau hay không Nó khác nhau hay không, vân, tuy, nhá Ở đây mình sẽ dùng là boon, số phức để toàn thức phạm V, operator, số bằng, số phức another Ở đây mình quy định 2 số phức giống nhau nếu mà phần thức và phần ảo của nó giống nhau nhá Mình sẽ return về zis, bằng another chân thức và zis ảo Tức là phần ảo của cái số phức này này, nó cũng phải bằng phần ảo của cái số phức mà tôi đem ra so sánh là another Ok, thì khi đó 2 số phức này có thể so sánh với nhau, có bằng nhau hay không? Ví dụ ở đây mình so sánh là, if a mà bằng b, thì mình sẽ cl là yes, không thì mình sẽ cl là là, no, ok, rồi, ví dụ mình sẽ nhập 2 số phức, đây là 2,13g và 2,13g thì nó ingest, đúng không? Các con nên mình nhập 2,13g với 2,14g thì nó sẽ ingest ở đâu?"
+  },
+  {
+    "chunk_id": "chunk_4741_4804",
+    "start_sec": 4741,
+    "end_sec": 4804,
+    "start_label": "79:01",
+    "end_label": "80:04",
+    "raw_text": "không thì mình sẽ cl là là, no, ok, rồi, ví dụ mình sẽ nhập 2 số phức, đây là 2,13g và 2,13g thì nó ingest, đúng không? Các con nên mình nhập 2,13g với 2,14g thì nó sẽ ingest ở đâu? Nói chung là cái logic ở bên trong các operator này, khi bạn xoay sánh nó lớn hơn, nhóng hơn hoặc bằng thì theo một cái tiêu trí nào đó thì tuyệt các bạn nhé Ok, thì đấy chính là cái cách nạp trầm, được chứ? Nói chung là các bạn đã biết được các khái niệm cơ bản trong lớp của một cái lập trình hướng đối tượng rồi, đúng không? Rồi là class này, rồi là nó chỉ có một vài cái khái niệm cơ bản thôi, được chứ? và các assets modifier bạn phải biết private, public và project, project là mình sẽ nói sao tại thời chiều bọc, mình cứ tạm thở bọc qua đã OK trên nhỏ, và nhớ là mình có thể sử dụng một biến static để dùng chung cho các class nhá"
+  },
+  {
+    "chunk_id": "chunk_4786_4847",
+    "start_sec": 4786,
+    "end_sec": 4847,
+    "start_label": "79:46",
+    "end_label": "80:47",
+    "raw_text": "và các assets modifier bạn phải biết private, public và project, project là mình sẽ nói sao tại thời chiều bọc, mình cứ tạm thở bọc qua đã OK trên nhỏ, và nhớ là mình có thể sử dụng một biến static để dùng chung cho các class nhá OK, cũng như là các khái niệm về friend function và friend class 2 thằng này thì ít dùng, nhưng mà nói chung là thằng xị ổng cộng vào phần thường đối tượng và nói thì hơi phức tảm một bí sau với các ngôn lập trình sau này mà thuần hướng lưỡi tượng và cái 2 nhất đấy, để chính là bạn phải biết được cách nạp chồng các cái toàn tử đặc biệt là toàn tử nhập xuất, hay là toàn tử so sánh các thứ vân vân ok, thế đấy là 1 cái khái niệm ở đầu về lập trình hướng lưỡi tượng bạn đã học được 1 cái tính chất đầu tiên của lập trình hướng lưỡi tượng, đây chính là Encapsulation rất là đầm gói rồi, đúng không? Mình sẽ còn 2 cái thuộc tính, 2 cái tính chất nữa của hướng núi tượng, để chính là kế thừa và đa hình"
+  },
+  {
+    "chunk_id": "chunk_4829_4890",
+    "start_sec": 4829,
+    "end_sec": 4890,
+    "start_label": "80:29",
+    "end_label": "81:30",
+    "raw_text": "ok, thế đấy là 1 cái khái niệm ở đầu về lập trình hướng lưỡi tượng bạn đã học được 1 cái tính chất đầu tiên của lập trình hướng lưỡi tượng, đây chính là Encapsulation rất là đầm gói rồi, đúng không? Mình sẽ còn 2 cái thuộc tính, 2 cái tính chất nữa của hướng núi tượng, để chính là kế thừa và đa hình Ok, mình sẽ nói cái đế sau nhá Nhưng mà, hiện tại nếu mà nắm được hết những phần này thì mình cũng đã làm được khá bài cập rồi Ok, và chủ ý cho mình đấy là khi mà xây dựng lớp là các cái thuộc tính là phải để private nhá Dù các cái phương thức thì sẽ để là public Thông thường thì khi mà xây dựng lớp thì người ta hay để các cái thuộc tính private ở dưới cơ Chứ không để trên như thế này đâu Nhưng mà nói chung là... nọng chưa cần thiết lắm nhé Ok, các bạn khai vào private ở trên và public ở dưới cũng được Ok Ừm... còn gì nữa không nhỉ? Để fun class này Ok, tạm thời thể đại nhé"
+  },
+  {
+    "chunk_id": "chunk_4874_4890",
+    "start_sec": 4874,
+    "end_sec": 4890,
+    "start_label": "81:14",
+    "end_label": "81:30",
+    "raw_text": "Ok, các bạn khai vào private ở trên và public ở dưới cũng được Ok Ừm... còn gì nữa không nhỉ? Để fun class này Ok, tạm thời thể đại nhé"
+  }
+]

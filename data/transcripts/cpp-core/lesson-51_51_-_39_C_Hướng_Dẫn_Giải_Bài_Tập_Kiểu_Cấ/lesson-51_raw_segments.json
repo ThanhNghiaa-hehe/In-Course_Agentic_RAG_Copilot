@@ -1,0 +1,2912 @@
+[
+  {
+    "start": 0.18,
+    "end": 4.62,
+    "text": "Hôm nay mình dẫn các bạn kiến thức về bài tập, ok?"
+  },
+  {
+    "start": 4.62,
+    "end": 7.82,
+    "text": "Nó sẽ có một số bài tập để liện tập với phần struct."
+  },
+  {
+    "start": 7.82,
+    "end": 10.62,
+    "text": "Thông thường thì các phần bài tập về struct thì nó sẽ là..."
+  },
+  {
+    "start": 10.62,
+    "end": 17.66,
+    "text": "có thể là chuẩn hóa, rồi là nhập suất, rồi là tìm kiếm, một là sắp xếp theo một cái tiêu chí nào đó."
+  },
+  {
+    "start": 17.66,
+    "end": 19.82,
+    "text": "Thường thì nó sẽ là sắp xếp, ok?"
+  },
+  {
+    "start": 19.82,
+    "end": 24.02,
+    "text": "Nên là bạn nếu mà thành thạo phần sắp xếp thì phần bài tập này rất là đơn giản, ok?"
+  },
+  {
+    "start": 24.02,
+    "end": 26.02,
+    "text": "Nó chỉ cốt hơi dài một tý thôi."
+  },
+  {
+    "start": 26.02,
+    "end": 28.65,
+    "text": "Mình sẽ bắt đầu với bài đầu tiên, đến là bài phân số nhé."
+  },
+  {
+    "start": 28.65,
+    "end": 33.81,
+    "text": "người ta cho mình viết chương trình xây dựng 1 cấu trúc phân số, gồm 2 phân số là tử và mẫu"
+  },
+  {
+    "start": 33.81,
+    "end": 36.89,
+    "text": "sau đó thì các giá trự đều là nguyên dương mà không quả 18 trị số"
+  },
+  {
+    "start": 36.89,
+    "end": 40.53,
+    "text": "yêu cầu mình nhập 2 phân số đó và in ra phân số hội dạng tối dạng"
+  },
+  {
+    "start": 40.53,
+    "end": 44.25,
+    "text": "thì khi mà các bạn thập cấp 2 rồi đúng không?"
+  },
+  {
+    "start": 44.25,
+    "end": 46.89,
+    "text": "đây chính là khi mà mình muốn tối dạng lớp 4 chứ nhỉ?"
+  },
+  {
+    "start": 46.89,
+    "end": 52.17,
+    "text": "mình muốn tới tối dạng 2 phân số thì mình sẽ phải tìm được ước chung lớn nhất của tử và mẫu đúng không?"
+  },
+  {
+    "start": 52.17,
+    "end": 56.89,
+    "text": "bởi dụ như là 12 phần 20 thì mình sẽ tìm ước chung lớn nhất của 12 với 20 là 4 đúng không?"
+  },
+  {
+    "start": 56.89,
+    "end": 63.65,
+    "text": "và mình chia cả tử cho mẫu, thì là 12 chia cho 4, chia cho 20 chia cho 4, thì nó bằng 3 phần 5 đúng không?"
+  },
+  {
+    "start": 63.65,
+    "end": 66.11,
+    "text": "Thì đấy chính là cái cách mà mình tối dạng một phân số"
+  },
+  {
+    "start": 66.11,
+    "end": 69.17,
+    "text": "Nhưng ra đây bài này rất là dễ mình chỉ dẫn nó thôi nhá"
+  },
+  {
+    "start": 69.17,
+    "end": 73.47,
+    "text": "Ở đây thì nó có một điều đặc biệt, đấy chính là nó yêu cầu mình sử dụng một cái hàm mên có sẵn"
+  },
+  {
+    "start": 73.47,
+    "end": 78.98,
+    "text": "Đấy, tức là khi mà trong hàm mên của bạn bạn sẽ phải xây dựng cái hàm mên tương tự như thế này này"
+  },
+  {
+    "start": 78.98,
+    "end": 81.14,
+    "text": "Tức là khi đó bạn sẽ phải có một cái hàm nhập này"
+  },
+  {
+    "start": 81.14,
+    "end": 83.5,
+    "text": "và có thàm số là thằng phân số đây"
+  },
+  {
+    "start": 83.5,
+    "end": 88.82,
+    "text": "1 cái hàm giút gọn này, và 1 cái hàm in, rất là dài dòng đúng không?"
+  },
+  {
+    "start": 88.82,
+    "end": 92.02,
+    "text": "Ok, vậy thì mình sẽ phải xây dựng 3 cái hàm là nhập giút gọn và in"
+  },
+  {
+    "start": 92.02,
+    "end": 95.62,
+    "text": "Thì đây mình sẽ định nghĩa 1 cái cấu trúc phân số nhé"
+  },
+  {
+    "start": 95.62,
+    "end": 98.5,
+    "text": "Có 2 thành phần đấy chính là long long từ và mẫu"
+  },
+  {
+    "start": 98.5,
+    "end": 102.02,
+    "text": "Mình xây dựng 1 cái hàm nhập, có tham số là P"
+  },
+  {
+    "start": 102.02,
+    "end": 105.46,
+    "text": "Nhưng mà các bạn nhớ, khi mà nhập thì mình sẽ phải truyền tham chiếu vào"
+  },
+  {
+    "start": 105.46,
+    "end": 106.38,
+    "text": "Thôi không nhờ?"
+  },
+  {
+    "start": 106.38,
+    "end": 109.02,
+    "text": "Không truyền tham chiếu là cái giá trị của P, nó sẽ không được nhận đâu"
+  },
+  {
+    "start": 109.02,
+    "end": 111.18,
+    "text": "Nó sẽ không bị thay đổi sau cái hàm đấy đâu"
+  },
+  {
+    "start": 111.18,
+    "end": 117.1,
+    "text": "dài là cái ham phân nhập này mình sẽ truyền thêm một cái tham số P nó có tham chiếu nhá"
+  },
+  {
+    "start": 117.1,
+    "end": 119.1,
+    "text": "ở đây thì mình chỉ cần nhập vào từ và mẫu thôi"
+  },
+  {
+    "start": 119.1,
+    "end": 121.1,
+    "text": "chứ còn cái phần giút gọn đúng không?"
+  },
+  {
+    "start": 121.1,
+    "end": 123.1,
+    "text": "giút gọn thì các bạn cũng phải..."
+  },
+  {
+    "start": 123.1,
+    "end": 126.86,
+    "text": "các bạn phải để ý xem là cái ham này nó có được định nghĩa như thế nào nhá"
+  },
+  {
+    "start": 126.86,
+    "end": 129.26,
+    "text": "ok, cái ham nhập và ham giút gọn và ham in này này"
+  },
+  {
+    "start": 129.26,
+    "end": 130.7,
+    "text": "nó đều là ham void hết"
+  },
+  {
+    "start": 130.7,
+    "end": 131.42,
+    "text": "đúng không?"
+  },
+  {
+    "start": 131.42,
+    "end": 135.9,
+    "text": "mà 2 cái ham và ham nhập và ham giút gọn này thì nó thay đổi giá trị của cái biến phân số P"
+  },
+  {
+    "start": 135.9,
+    "end": 140.3,
+    "text": "thành ra là các bạn sẽ cũng phải xây dựng 2 cái ham nhập và ham giút gọn này có kiểu là void"
+  },
+  {
+    "start": 140.3,
+    "end": 145.52,
+    "text": "Rút gọn như là mình vừa nói thôi, mình sẽ tìm ước chung lớn nhất của tử và mẫu"
+  },
+  {
+    "start": 145.52,
+    "end": 148.84,
+    "text": "Cái hàm GCD này là tử tìm ước chung lớn nhất nhé"
+  },
+  {
+    "start": 148.84,
+    "end": 153.84,
+    "text": "Sau đó mình lấy tử, chia cho ước chung, và mình lấy mẫu, chia cho ước chung, thế là xam"
+  },
+  {
+    "start": 153.84,
+    "end": 159.91,
+    "text": "Nếu còn cái hàm in phân số thì mình chỉ cần in ra P, tử, sau đó là lấu, chèo và P, mẫu thôi"
+  },
+  {
+    "start": 159.91,
+    "end": 162.91,
+    "text": "Trong hàm main thì mình sẽ xây dựng cái hàm main đúng như là đầu bài yêu cầu"
+  },
+  {
+    "start": 162.91,
+    "end": 167.41,
+    "text": "Đấy là khai bám 1 struct này, sau đó là nhập này, rút gọn, bị in, sau đó return không"
+  },
+  {
+    "start": 167.41,
+    "end": 170.01,
+    "text": "ok, và đầu tiên thì rất là đơn giản nhá, ok"
+  },
+  {
+    "start": 170.01,
+    "end": 175.43,
+    "text": "xam bài số 2 nhá, nó yêu cầu mình tính tỏng 2 phần số, nó sẽ cho mình 2 phần số"
+  },
+  {
+    "start": 175.43,
+    "end": 180.31,
+    "text": "các cái giá trị của tử bộ mẫu đều là nguyên dương mà không có cái chính trị số sau đó thì"
+  },
+  {
+    "start": 180.31,
+    "end": 185.71,
+    "text": "yêu cầu mình nhập 2 phần số này và tính tỏng 2 phần số đó và sử dụng theo 1 cái hàm mên của sẵn"
+  },
+  {
+    "start": 185.71,
+    "end": 190.75,
+    "text": "thì ở đây cái hàm mên của mình nó sẽ hay khai báo 2 phần số P và quy và nó cũng sẽ có hàm nhập"
+  },
+  {
+    "start": 190.75,
+    "end": 195.79,
+    "text": "vậy thì chắc chắn bạn sẽ phải sử dụng 1 cái hàm nhập để nhập thông tin cho 1 cái phần số nào đó đúng không"
+  },
+  {
+    "start": 195.79,
+    "end": 200.15,
+    "text": "Nhưng mà nhớ là nó sẽ in ra cái tổng của 2 phần số t và quy ở dạng tối dạng nhá"
+  },
+  {
+    "start": 200.15,
+    "end": 203.91,
+    "text": "Và nó có 1 cái hàm đấy là hàm phân số, hàm tổng đây này"
+  },
+  {
+    "start": 203.91,
+    "end": 206.55,
+    "text": "Đây, thì bạn phải nhìn xem cái hàm nó xây dựng như thế nào"
+  },
+  {
+    "start": 206.55,
+    "end": 213.55,
+    "text": "Thì cái hàm tổng này, người ta thấy bạn, bạn thấy người ta gán 1 cái hàm tổng đấy trong 1 cái miến phân số t, đúng không?"
+  },
+  {
+    "start": 213.55,
+    "end": 221.51,
+    "text": "Vậy thì chắc chắn cái hàm tổng này là cái hàm, có 2 tham số là 2 số phân số và mình sẽ phải return về tổng của 2 cái phân số đó"
+  },
+  {
+    "start": 221.51,
+    "end": 222.71,
+    "text": "ở dạng tối dạng"
+  },
+  {
+    "start": 222.71,
+    "end": 225.59,
+    "text": "Thành ra là bạn sẽ dựng cho mình hàm nhập này"
+  },
+  {
+    "start": 225.59,
+    "end": 229.83,
+    "text": "1 hàm tính tỏng của 2 phân số với tham số lập 2 phân số"
+  },
+  {
+    "start": 229.83,
+    "end": 232.59,
+    "text": "và return với phân số ở dạng tối dạng"
+  },
+  {
+    "start": 232.59,
+    "end": 236.47,
+    "text": "và viết thêm 1 hàm in nữa, nó tương tự như bài trước không?"
+  },
+  {
+    "start": 236.47,
+    "end": 238.94,
+    "text": "Đây, mình có cốt"
+  },
+  {
+    "start": 238.94,
+    "end": 241.84,
+    "text": "Bạn này dễ thôi, mình chỉ giải thích cốt thôi nhé"
+  },
+  {
+    "start": 241.84,
+    "end": 244.28,
+    "text": "Mình cũng sẽ dựng 1 stock phân số như thế này"
+  },
+  {
+    "start": 244.28,
+    "end": 247.0,
+    "text": "Sau đó thì nhập thì là nhập cho tử vào mẫu này"
+  },
+  {
+    "start": 247.0,
+    "end": 248.64,
+    "text": "Thế còn dút gọn"
+  },
+  {
+    "start": 248.64,
+    "end": 252.0,
+    "text": "Thực ra thì cái này dút gọn bạn có thể viết vào hàm tỏng này cũng được"
+  },
+  {
+    "start": 252.0,
+    "end": 255.0,
+    "text": "nhưng mà mình viết hàm dư gọn này trên này rồi thì mình xử lý luôn"
+  },
+  {
+    "start": 255.0,
+    "end": 258.0,
+    "text": "Hàm dư gọn này tương tự như bài trước, nó sẽ giúp gọn phân số P"
+  },
+  {
+    "start": 258.0,
+    "end": 260.0,
+    "text": "con phân in thì không có gì này"
+  },
+  {
+    "start": 260.0,
+    "end": 265.0,
+    "text": "Hàm tỏng này nhé, khi mà tính tỏng 2 phân số A và B thì bạn sẽ phải tính mẫu chung đúng không"
+  },
+  {
+    "start": 265.0,
+    "end": 272.06,
+    "text": "mẫu chung của 2 cái số đấy thì nó sẽ là bộ chung nhỏ nhất của 2 cái mẫu đúng không"
+  },
+  {
+    "start": 272.06,
+    "end": 278.06,
+    "text": "mình sẽ tìm mẫu chung, nó sẽ là bộ chung nhỏ nhất của A chấm mẫu và B chấm mẫu"
+  },
+  {
+    "start": 278.06,
+    "end": 283.66,
+    "text": "sau đó, a, tử sẽ bán mẫu chung, chia cho a, mẫu, sau đó nhân với a, tử, đúng không?"
+  },
+  {
+    "start": 283.66,
+    "end": 295.81,
+    "text": "OK, đó, thế còn tử của phân số b thì nó sẽ bán mẫu chung, chia cho mẫu của thằng b, sau đó nhân với thằng tử của thằng b, cái này là phép toán cơ bảm rồi, đúng không?"
+  },
+  {
+    "start": 295.81,
+    "end": 306.25,
+    "text": "Thế còn, sau đó thì mình cho a, tử, cộng bằng b, tử, tức là ở đây mình sẽ cho cái phân số tỏng, nó chính là phân số a luôn ấy, mình cộng rồn thằng b vào a"
+  },
+  {
+    "start": 306.25,
+    "end": 313.77,
+    "text": "mình dạ khi đó cái tử của A, B nó sẽ có được bằng cách là mình dùng cái A, tử cộng B, tử"
+  },
+  {
+    "start": 313.77,
+    "end": 318.91,
+    "text": "thì còn A chấm mẫu thì nó chính là mẫu chung luôn, mình lấy A cộng B sao mình lưu vào A luôn"
+  },
+  {
+    "start": 318.91,
+    "end": 321.61,
+    "text": "hoặc là bạn khai báo một cái phân số tỏng cũng được nha"
+  },
+  {
+    "start": 321.61,
+    "end": 325.13,
+    "text": "sau đó thì mình gọi cái hàm rút gọn của A và return về"
+  },
+  {
+    "start": 325.13,
+    "end": 327.47,
+    "text": "trước khi mà mình return thì mình sẽ rút gọn"
+  },
+  {
+    "start": 327.47,
+    "end": 330.63,
+    "text": "và trong hàm main thì mình sẽ xây dựng đúng như là cái đầu và yêu cầu"
+  },
+  {
+    "start": 330.63,
+    "end": 334.33,
+    "text": "đấy là mình sẽ khai báo 2 cái phân số tê và quy, sau đó là gọi hàm nhập"
+  },
+  {
+    "start": 334.33,
+    "end": 339.57,
+    "text": "Khoai bám 1 phân số bằng tầm của pvq và inner phân số này"
+  },
+  {
+    "start": 339.57,
+    "end": 341.66,
+    "text": "Ok, dễ đúng không?"
+  },
+  {
+    "start": 341.66,
+    "end": 348.39,
+    "text": "Tiếp theo cũng rất dễ để chỉnh là người ta cho mình 1 cấu trúc điểm cho không gian tỏa độ 2 chiều"
+  },
+  {
+    "start": 348.39,
+    "end": 350.39,
+    "text": "O, xe đúng không?"
+  },
+  {
+    "start": 350.39,
+    "end": 358.47,
+    "text": "Với struct kia là point, có 2 cái điểm, đây là 2 cái tỏa độ xe là double x và y"
+  },
+  {
+    "start": 358.47,
+    "end": 359.67,
+    "text": "Đây còn thiếu trữ lờ này"
+  },
+  {
+    "start": 359.67,
+    "end": 366.07,
+    "text": "ok, sau đó yêu cầu mình nhập vào 2 cái điểm AB và tính khoảng cách AB với độ chính xác, 4 chữ số so dậu phẩy"
+  },
+  {
+    "start": 366.07,
+    "end": 370.97,
+    "text": "quá dâng rẻ đúng không, do đầu tiên sẽ là xíu lượng bộ tét, sau đó là nó sẽ nhập vào 2 cái phần số đấy"
+  },
+  {
+    "start": 370.97,
+    "end": 377.77,
+    "text": "sẽ lỗi 2 cái điểm đấy, và yêu cầu mình tính khoảng cách giữa 2 cái điểm đấy, thì bạn tính khoảng cách ở clip thôi đúng không"
+  },
+  {
+    "start": 377.77,
+    "end": 384.99,
+    "text": "khoảng căn và 2 của x chữ y tất cả bình cộng với, sẽ lỗi x 1 chữ x 2 tất cả bình cộng, y 1 chữ y 2 tất cả bình đúng không"
+  },
+  {
+    "start": 384.99,
+    "end": 388.63,
+    "text": "và người ta cũng yêu cầu mình xây dựng theo một cái hàm main có sẵn"
+  },
+  {
+    "start": 388.63,
+    "end": 394.51,
+    "text": "người ta sẽ có 2 báo struct, ab, sau đó nhập số tiết cây, mỗi tiết cây thì nó có một cái hàm input"
+  },
+  {
+    "start": 394.51,
+    "end": 399.07,
+    "text": "tức là cái hàm input này sẽ là cái hàm nhập thông tin cho một point, đúng không?"
+  },
+  {
+    "start": 399.07,
+    "end": 404.83,
+    "text": "hình ra là các bạn cũng xây dựng cho mình một cái hàm input có tham số là point"
+  },
+  {
+    "start": 404.83,
+    "end": 410.65,
+    "text": "nhớ nhập thì phải có vài làng trước tên biến nhé"
+  },
+  {
+    "start": 410.65,
+    "end": 415.41,
+    "text": "Thế còn mình sử dụng thêm 1 cái hạm nữa là hạm distance để tính khoảng cách giữa 2 cái point là F và B"
+  },
+  {
+    "start": 415.41,
+    "end": 425.69,
+    "text": "Thế bạn sử dụng công thức là tan vật 2 của 2 tọa độ x chứa cho nhau đúng không? Sao đó bình phường này rồi là 2 tọa độ của i chứa cho nhau, sao đó bình phường nữa"
+  },
+  {
+    "start": 425.69,
+    "end": 435.19,
+    "text": "Ê, trong hạm bên thì mình chỉ cần nhập đúng như những người ta yêu cầu, nhập số tiết cây, nhập vào point A, nhập vào point B, sau đó là in ra"
+  },
+  {
+    "start": 435.19,
+    "end": 438.21,
+    "text": "với độ chính xác là 4 số sau dấu thập phân đúng không?"
+  },
+  {
+    "start": 438.21,
+    "end": 443.21,
+    "text": "mình sẽ gọi cái ham distance mà mình chuyển vào 2 kê point là A và B để nổi tính khoảng cách giữa 2 đàn đấy"
+  },
+  {
+    "start": 443.21,
+    "end": 444.21,
+    "text": "ok"
+  },
+  {
+    "start": 444.21,
+    "end": 454.43,
+    "text": "và tiếp theo nhé, đây là bài cấu trúc điểm, người ta cho mình 1 cái cấu trúc thí sinh bao gồm có họ tên 1, 1, 1, 2, 1, 3 và tổng điểm"
+  },
+  {
+    "start": 454.43,
+    "end": 461.15,
+    "text": "yêu cầu mình đọc thông tin từ 1 thí sinh từ bàn phím và injaba thông tin đấy là họ tên ngay sinh 1 tổng điểm"
+  },
+  {
+    "start": 461.15,
+    "end": 466.47,
+    "text": "ok, thực ra thì cái struct này bạn có thể khai báo tổng điểm được mà không khai báo tổng điểm được"
+  },
+  {
+    "start": 466.47,
+    "end": 471.71,
+    "text": "ok, thế là bạn có thể xây dựng cái struct thí sinh này nó có 4 hoặc là 5 thành phần"
+  },
+  {
+    "start": 471.71,
+    "end": 475.59,
+    "text": "ok, tuy cái tổng điểm này các bạn có khai báo cũng được là không khai báo cũng được"
+  },
+  {
+    "start": 475.59,
+    "end": 482.62,
+    "text": "sau đó thì input của mình sẽ gồm 5 dòng nhé, dòng đầu tiên là họ tên này, ngay sinh điểm 1, 1, 1, 2, 4, 3, sau đó thì"
+  },
+  {
+    "start": 482.62,
+    "end": 490.14,
+    "text": "yêu cầu mình in ra cái thông tin của sinh viên, tức là người ta chỉ yêu cầu mình nhập thông tin sinh viên sau đó in ra theo một cái hạm bên có sản thuật"
+  },
+  {
+    "start": 490.14,
+    "end": 495.3,
+    "text": "người ta sẽ khai báo 1 cái struct thí sinh A, sau đó anh yêu cầu mình nhập thằng A và yên thằng A"
+  },
+  {
+    "start": 495.3,
+    "end": 500.5,
+    "text": "chú ý ở đây người ta khai báo là thí sinh như thế này thì bạn cũng phải định nghĩa 1 cái struct thí sinh dũng hết như thế này nhé"
+  },
+  {
+    "start": 500.5,
+    "end": 502.1,
+    "text": "thì đơn giản thôi"
+  },
+  {
+    "start": 502.1,
+    "end": 506.99,
+    "text": "nhiều bạn làm bài này thì lại phức tạp hóa cái vấn đề lên, đây chính là các bạn thấy là"
+  },
+  {
+    "start": 506.99,
+    "end": 511.79,
+    "text": "lúc nãy khi mà mình hướng dẫn về phần lý thiết mình có nói đây chỉ là các cái struct có thể lòng nhau đúng không"
+  },
+  {
+    "start": 511.79,
+    "end": 514.11,
+    "text": "tự nhiên bạn lấy nhanh nhau chủ này mình thấy là"
+  },
+  {
+    "start": 514.11,
+    "end": 516.47,
+    "text": "à cái ông này ông có ngày sinh"
+  },
+  {
+    "start": 516.47,
+    "end": 517.75,
+    "text": "đúng không"
+  },
+  {
+    "start": 517.75,
+    "end": 519.51,
+    "text": "ông này ông có ngày sinh"
+  },
+  {
+    "start": 519.51,
+    "end": 524.31,
+    "text": "Thế mình thấy là bạn đã nghĩ là ngày sinh thì có ngày tháng 5 thì bạn mới lại bảo"
+  },
+  {
+    "start": 524.31,
+    "end": 529.31,
+    "text": "Bạn lại nguy hiểm, bạn lại bảo ok, tôi sẽ xây dựng một cái struct ngày sinh để lưu ngày sinh cho ông này đúng không?"
+  },
+  {
+    "start": 529.31,
+    "end": 533.11,
+    "text": "Thì thế rất là... tức là nó không cần thiết, đúng không?"
+  },
+  {
+    "start": 533.11,
+    "end": 536.11,
+    "text": "Bởi vì thằng thứ nhất, thằng ngày sinh này nó là một cái sâu thôi mà"
+  },
+  {
+    "start": 536.11,
+    "end": 537.71,
+    "text": "Đúng không? Nó chỉ là một cái sâu"
+  },
+  {
+    "start": 537.71,
+    "end": 542.21,
+    "text": "Nếu mà bạn cố tỉnh đi xây dựng một cái struct con để lưu cái thông tin của một cái..."
+  },
+  {
+    "start": 542.21,
+    "end": 546.21,
+    "text": "Ngày sinh của ông đấy thì khi đó các bạn khác người ta đã làm xong rồi"
+  },
+  {
+    "start": 546.21,
+    "end": 551.77,
+    "text": "ok, thằng ra đây mình sẽ xây dựng cái struct sinh viên đấy như sau, đấy là nó chỉ có tên thôi"
+  },
+  {
+    "start": 551.77,
+    "end": 557.09,
+    "text": "ngày sinh mình để lấy chuỗi nhé, đừng cố gắng tách nó ra sau đó lưu vào số cho nó vất bài làm gì, ok"
+  },
+  {
+    "start": 557.09,
+    "end": 561.25,
+    "text": "lưu ngày sinh là chuỗi luôn, sau đó mình sẽ có điểm ba môn là abc"
+  },
+  {
+    "start": 561.25,
+    "end": 568.78,
+    "text": "cái nhập này thì trước khi nhập bạn sẽ get like nhé, bạn sẽ get like để nhập cho tên của cái ông thì sinh đấy"
+  },
+  {
+    "start": 568.78,
+    "end": 575.76,
+    "text": "ok, sau đó thì bạn xây in cho ngày sinh này, sau đó là xây in cho ba điểm của ba môn"
+  },
+  {
+    "start": 575.76,
+    "end": 581.4,
+    "text": "kun, whale, intout, oc r lifecycle, Site Effects."
+  },
+  {
+    "start": 581.4,
+    "end": 582.84,
+    "text": "Use Steam."
+  },
+  {
+    "start": 582.84,
+    "end": 586.96,
+    "text": "You'll need to include this in your demo, you need to include시 commission."
+  },
+  {
+    "start": 586.96,
+    "end": 589.54,
+    "text": "Go to the next calculation order in the demo and type ."
+  },
+  {
+    "start": 589.54,
+    "end": 593.74,
+    "text": "You'll need to include the imprinting in the demo and the input 읍t in the demo."
+  },
+  {
+    "start": 593.74,
+    "end": 599.8,
+    "text": "The milk quality is not really good, it's only just a few input prepared under the list of inputs."
+  },
+  {
+    "start": 599.8,
+    "end": 604.0,
+    "text": "You just need to addze a example ofsel Absentibleweird Ph cannon Node here."
+  },
+  {
+    "start": 634.0,
+    "end": 639.68,
+    "text": "trong trường hợp này mình không xin trong ignore, bởi vì trước đó nó không có dấu enter nào cả, nó chỉ nhập thông tin cho 1 sinh viên thôi"
+  },
+  {
+    "start": 639.68,
+    "end": 642.48,
+    "text": "trong trường hợp này mà bạn xin trong ignore, trong trường hợp này nhé"
+  },
+  {
+    "start": 642.48,
+    "end": 645.36,
+    "text": "thì nó lại bị mất đi cái chữ hắt, cái chữ nò đầu tiên đấy"
+  },
+  {
+    "start": 645.36,
+    "end": 648.16,
+    "text": "bởi vì nó lại bỏ đi 1 kí tự chữ nò này này"
+  },
+  {
+    "start": 648.16,
+    "end": 653.6,
+    "text": "các bạn phải rõ ràng cái vấn đề như thế thì mình sẽ không bị sai những cái lỗ lật phật"
+  },
+  {
+    "start": 653.6,
+    "end": 655.82,
+    "text": "các bạn này thì rất là đơn giản thôi"
+  },
+  {
+    "start": 655.82,
+    "end": 660.22,
+    "text": "bài tiếp theo, đây chính là bài cấu trúc sinh viên người ta yêu cầu mình"
+  },
+  {
+    "start": 660.22,
+    "end": 680.38,
+    "text": "Alice xin-in , and C brake h leaking, input will be sort 4- analyses, type name is"
+  },
+  {
+    "start": 680.38,
+    "end": 684.9,
+    "text": "Escape from the rest point to be achieved, name can berem xin 1-1"
+  },
+  {
+    "start": 684.9,
+    "end": 689.14,
+    "text": "input thì nó sẽ em gồm bốn dòng nhé, đấy là họ tên này, có dấu cách nhé"
+  },
+  {
+    "start": 689.14,
+    "end": 692.26,
+    "text": "lớp thì đúng theo định dạng của trường P"
+  },
+  {
+    "start": 692.26,
+    "end": 697.06,
+    "text": "cái điểm, ngay sinh thì đủ 3 thành phần, đấy là a, a, man, man và a, a, a, a, a, ok"
+  },
+  {
+    "start": 697.06,
+    "end": 699.94,
+    "text": "sau đó thì điểm GPE là tháng 4"
+  },
+  {
+    "start": 699.94,
+    "end": 703.86,
+    "text": "dụng người ta nhập được một miễn hòa bình này, lớp này, sinh là không 4b này"
+  },
+  {
+    "start": 703.86,
+    "end": 707.86,
+    "text": "ngay sinh là ngày 2 tháng 2 năm 2002, và GPE là 2"
+  },
+  {
+    "start": 707.86,
+    "end": 709.86,
+    "text": "thì khi đó cái ngay sinh của các bạn này"
+  },
+  {
+    "start": 709.86,
+    "end": 714.82,
+    "text": "các bạn sẽ phải chuẩn hóa thành nó phải đầy đủ cái dạng như thế này này, đấy là a, man, man như thế này này"
+  },
+  {
+    "start": 714.82,
+    "end": 718.92,
+    "text": "tức là khi đó, nếu mà cái đây và cái man của các bạn có 1 trị số bạn phải thêm số không vào đầu"
+  },
+  {
+    "start": 718.92,
+    "end": 721.42,
+    "text": "thì đây nó chỉ khó mỗi cái hàng này thôi, nhá"
+  },
+  {
+    "start": 721.42,
+    "end": 725.62,
+    "text": "nhưng cũng rất là dễ thôi, cái cách mà mình chuẩn hóa thì nó như sao?"
+  },
+  {
+    "start": 725.62,
+    "end": 733.02,
+    "text": "ví dụ nhá, bạn có 1 cái ngày sinh đã đầy đủ, ví dụ như là ngày 12, tháng 12, năm 2022, ờ, ok"
+  },
+  {
+    "start": 733.02,
+    "end": 739.35,
+    "text": "hoặc là 1 cái ngày sinh không chuẩn, ví dụ ngày 1, 2, tháng 3, năm 2002, đấy"
+  },
+  {
+    "start": 739.35,
+    "end": 744.65,
+    "text": "thì để mà check xem cái thằng này có chuẩn hay chưa ấy, nó ở dạy chuẩn hay chưa, đây đây man man gia gia chưa ấy"
+  },
+  {
+    "start": 744.65,
+    "end": 747.89,
+    "text": "Thì bạn chỉ cần check cái kí tự này nè, nếu mà ở cái dạng chuẩn nhé"
+  },
+  {
+    "start": 747.89,
+    "end": 749.89,
+    "text": "Nếu mà ở cái dạng chuẩn như thế này nè"
+  },
+  {
+    "start": 749.89,
+    "end": 751.89,
+    "text": "Thì bạn thấy là cái kí tự thứ 3 này nè"
+  },
+  {
+    "start": 751.89,
+    "end": 753.89,
+    "text": "Tức là cái chỉ số y bằng 2 ấy"
+  },
+  {
+    "start": 753.89,
+    "end": 756.57,
+    "text": "Đấy chứ à?"
+  },
+  {
+    "start": 756.57,
+    "end": 759.77,
+    "text": "Ai xin lỗi, trong trình hợp nó không ở dạng chuẩn ấy"
+  },
+  {
+    "start": 759.77,
+    "end": 761.45,
+    "text": "Thì bạn thấy là cái kí tự thứ 2 ấy"
+  },
+  {
+    "start": 761.45,
+    "end": 763.45,
+    "text": "Đây nè, nó sẽ là cái dấu xẻo"
+  },
+  {
+    "start": 763.45,
+    "end": 764.19,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 764.19,
+    "end": 767.99,
+    "text": "Thì bạn chỉ cần check cho mình là cái kí tự thứ 2 trong cái ngay sinh của các bạn ấy"
+  },
+  {
+    "start": 767.99,
+    "end": 769.15,
+    "text": "Nếu mà nó là dấu xẻo"
+  },
+  {
+    "start": 769.15,
+    "end": 769.75,
+    "text": "Ok"
+  },
+  {
+    "start": 769.75,
+    "end": 772.75,
+    "text": "Trong trình hợp này mình sẽ check là, ví dụ mình gọi cái sâu người sinh là F"
+  },
+  {
+    "start": 772.75,
+    "end": 775.51,
+    "text": "Mình check cái thằng S một í, nó là ký tự thứ hai kìa"
+  },
+  {
+    "start": 775.51,
+    "end": 777.51,
+    "text": "Nó là cái dấu xẹp đúng không?"
+  },
+  {
+    "start": 777.51,
+    "end": 782.27,
+    "text": "Thì mình sẽ cho thêm một số không ở cuối, à, đầu thôi thì mình sẽ cho S bằng"
+  },
+  {
+    "start": 782.27,
+    "end": 784.34,
+    "text": "Không còn với S"
+  },
+  {
+    "start": 784.34,
+    "end": 787.54,
+    "text": "OK, chính là cái trường hợp xử lý, thường hợp thứ nhất nhé"
+  },
+  {
+    "start": 787.54,
+    "end": 793.06,
+    "text": "OK, sau khi mà bạn cho thêm một cái ký tự không vào trong cái sâu ngày sinh nếu nó không chuẩn thì nó sẽ thành như thế này đúng không?"
+  },
+  {
+    "start": 793.06,
+    "end": 797.06,
+    "text": "Ừ, thì đến lúc đấy là bạn sẽ check xem cái ngày, cái năm ấy nó chuẩn hay chưa?"
+  },
+  {
+    "start": 797.06,
+    "end": 799.62,
+    "text": "Nếu mà nó chuẩn í thì cái ký tự thứ mấy nhỉ?"
+  },
+  {
+    "start": 799.62,
+    "end": 807.02,
+    "text": "Nếu không chuẩn, ký tự thứ 0, 1, 2, 3, 4 sẽ là giấu sổ"
+  },
+  {
+    "start": 807.02,
+    "end": 810.62,
+    "text": "Nếu mà nó là chuẩn thì nó sẽ là một số đó, đúng không?"
+  },
+  {
+    "start": 810.62,
+    "end": 814.22,
+    "text": "Thì bạn chỉ cần check cái thứ tự thứ tự thứ là cái thằng F3"
+  },
+  {
+    "start": 814.22,
+    "end": 818.83,
+    "text": "Nếu mà nó là giấu sổ như thế này"
+  },
+  {
+    "start": 818.83,
+    "end": 821.93,
+    "text": "Thì sao nhỉ? Thì mình thêm một số 0 một chút nữa thôi"
+  },
+  {
+    "start": 821.93,
+    "end": 826.33,
+    "text": "0, 1, 2, 3, đúng không? Thì mình thêm một số"
+  },
+  {
+    "start": 826.33,
+    "end": 830.33,
+    "text": "0, 1, 2, 3, 4, s4, x4 đúng không"
+  },
+  {
+    "start": 830.33,
+    "end": 832.33,
+    "text": "Đó là dấu sổ, tức là nó chưa đủ"
+  },
+  {
+    "start": 832.33,
+    "end": 835.33,
+    "text": "Thì mình insert thêm 1 cái số 0 vào đây nữa là xàm"
+  },
+  {
+    "start": 835.33,
+    "end": 838.33,
+    "text": "Đấy thôi, cái này có nhiều cách làm lắm"
+  },
+  {
+    "start": 838.33,
+    "end": 844.33,
+    "text": "Các bạn có thể làm theo cách mà mình thích, nhưng mà mình khuyên là đừng có tag từng cái số thời gian nhá"
+  },
+  {
+    "start": 844.33,
+    "end": 850.33,
+    "text": "Nhiều bạn đi, cậy mình biết string stream, sau đó mình tag các cái số này ra bằng cái dấu như thế này"
+  },
+  {
+    "start": 850.33,
+    "end": 855.33,
+    "text": "và đó lại kiểm tra xem là nó có phải là số nhỏ hơn 10 không thì cộng thêm số không ở đầu"
+  },
+  {
+    "start": 855.33,
+    "end": 858.33,
+    "text": "như thế rất là phức tản nhé, mình sẽ xử lý chuỗi đơn giản thôi"
+  },
+  {
+    "start": 858.33,
+    "end": 864.03,
+    "text": "ở đây nó cũng yêu cầu mình xây dựng 1 cái hàm nhập và hàm in có sẵn nhé"
+  },
+  {
+    "start": 864.03,
+    "end": 868.25,
+    "text": "thế đây mình cũng xây dựng cái hàm nhập và hàm in thôi"
+  },
+  {
+    "start": 868.25,
+    "end": 870.25,
+    "text": "đây thì mình sẽ viết 1 cái hàm nhập này"
+  },
+  {
+    "start": 870.25,
+    "end": 874.25,
+    "text": "nhập thì nhập thêm tên này, nhập lớp, nhập ngày sinh, nhập GPA này"
+  },
+  {
+    "start": 874.25,
+    "end": 876.25,
+    "text": "sau đó là mã thì mình gắn là mặc định"
+  },
+  {
+    "start": 876.25,
+    "end": 879.25,
+    "text": "chú ý là trong trình hợp mà ngày sinh, GPA với lớp nó không có dấu cách"
+  },
+  {
+    "start": 879.25,
+    "end": 881.25,
+    "text": "cout, ngay sinh, mình có thể dùng sinh in nhá"
+  },
+  {
+    "start": 881.25,
+    "end": 883.25,
+    "text": "rồi đến đây thì mình sẽ làm như sau"
+  },
+  {
+    "start": 883.25,
+    "end": 885.25,
+    "text": "mình chuẩn hòa cái ngay sinh nó như thế này"
+  },
+  {
+    "start": 885.25,
+    "end": 887.25,
+    "text": "thế là mình sẽ kiểm tra a.ngay sinh 1"
+  },
+  {
+    "start": 887.25,
+    "end": 889.25,
+    "text": "bằng cái dấu xẹt này này"
+  },
+  {
+    "start": 889.25,
+    "end": 892.25,
+    "text": "tức là cái cái ngay sinh cái kí tự thứ nhất của ngay sinh"
+  },
+  {
+    "start": 892.25,
+    "end": 895.25,
+    "text": "cái kí tự chỉ số 1 của ngay sinh"
+  },
+  {
+    "start": 895.25,
+    "end": 897.25,
+    "text": "nếu mà nó là dấu sổ"
+  },
+  {
+    "start": 897.25,
+    "end": 899.25,
+    "text": "tức là trước nó chỉ có 1 cái số thôi"
+  },
+  {
+    "start": 899.25,
+    "end": 901.25,
+    "text": "thế là nó chưa chuẩn thì mình cho"
+  },
+  {
+    "start": 901.25,
+    "end": 903.92,
+    "text": "mình cho a.ngay sinh bằng cái"
+  },
+  {
+    "start": 903.92,
+    "end": 905.92,
+    "text": "cái sâu không"
+  },
+  {
+    "start": 905.92,
+    "end": 908.92,
+    "text": "cộng thêm a.ngay sinh thì nó sẽ thêm ngay số không vào đằng trước"
+  },
+  {
+    "start": 908.92,
+    "end": 910.92,
+    "text": "vầy dzept cái số có một trị số đấy"
+  },
+  {
+    "start": 910.92,
+    "end": 912.2,
+    "text": "tương hợp như vậy"
+  },
+  {
+    "start": 912.2,
+    "end": 917.2,
+    "text": "nếu mình kiểm tra A. alimentos d Narrative, if ạ ddoc sổ thì nó cũng chưa chuẩn"
+  },
+  {
+    "start": 917.2,
+    "end": 922.06,
+    "text": "thì có nghĩa bạn sẽ thêm insert chaotic-in-sir"
+  },
+  {
+    "start": 922.06,
+    "end": 924.22,
+    "text": "là trị số 0, 1,2 và 3 này"
+  },
+  {
+    "start": 924.22,
+    "end": 926.76,
+    "text": "mình cho thêm một số 0 và trước như thế"
+  },
+  {
+    "start": 926.76,
+    "end": 932.68,
+    "text": "OK"
+  },
+  {
+    "start": 932.68,
+    "end": 935.52,
+    "text": "là bạn chỉ cần..."
+  },
+  {
+    "start": 935.52,
+    "end": 938.36,
+    "text": "sau khi mà bạn cho thêm số 0 và trước là nó không chuẩn nha"
+  },
+  {
+    "start": 938.36,
+    "end": 939.3,
+    "text": "0 và 2 này"
+  },
+  {
+    "start": 939.3,
+    "end": 954.5,
+    "text": "Ví dụ 3 này, 2002 này, đấy. Vạn check cho mình cái ký tự thứ ở chỉ số này này. 0, 1, 2, 3, 4, nuốc. Nó mới là dấu sổ, thì mình cho thêm 1 cái ký tự vào cái chỉ số là 0, 1, 2, 3, chỗ này. Cho thêm số 0 vào đây. Bằng ham insert nhé."
+  },
+  {
+    "start": 954.5,
+    "end": 960.38,
+    "text": "Ham insert này nó có 2 thăm số, thăm số thứ nhất là cái index mà bạn muốn chiển. Thứ 2 là cái xâu mà bạn muốn chiển."
+  },
+  {
+    "start": 960.38,
+    "end": 966.02,
+    "text": "Ở đây mình sẽ chiển số 0 vào cái index 3, thì trong trường hợp đấy nó sẽ cho thêm cái số 0 vào đằng trước như thế này."
+  },
+  {
+    "start": 966.02,
+    "end": 967.42,
+    "text": "Đấy là cái sâu của mình nó trọn"
+  },
+  {
+    "start": 967.42,
+    "end": 968.9,
+    "text": "Ok, rất dễ đúng không?"
+  },
+  {
+    "start": 968.9,
+    "end": 975.62,
+    "text": "Nói chung là cái phần về struct này nếu mà bạn xử lý sâu nó kém ấy thì nó gặp bao nhiêu bài thì các bạn sẽ hơi bị dối"
+  },
+  {
+    "start": 975.62,
+    "end": 982.02,
+    "text": "Nên là nếu mà muốn làm tốt phần này thì bạn sẽ phải xử lý sâu tương đối là ok với biết sắp xếp nữa"
+  },
+  {
+    "start": 982.02,
+    "end": 984.62,
+    "text": "Đồ, thế con hàm in thì không có gì cả"
+  },
+  {
+    "start": 984.62,
+    "end": 990.18,
+    "text": "Mà tiếp theo nhá, người ta yêu cầu mình xây dựng một cái cấu trúc nhân viên"
+  },
+  {
+    "start": 990.18,
+    "end": 992.22,
+    "text": "Có tương đối là nhiều trường đúng không?"
+  },
+  {
+    "start": 992.22,
+    "end": 997.1,
+    "text": "nhất là mẹ họ tên, mẹ nhân viên này, được cán giá trị là 0.0001"
+  },
+  {
+    "start": 997.1,
+    "end": 1002.02,
+    "text": "thứ 2 là họ tên, sau không có 40 triệu cái, thứ 3 là dời tính, rồi là ngày sinh"
+  },
+  {
+    "start": 1002.02,
+    "end": 1007.42,
+    "text": "địa chỉ mẹ sổ thuế vào ngày kí hợp đồng, yêu cầu mình nhập thông tin và in là thông tin thôi"
+  },
+  {
+    "start": 1007.42,
+    "end": 1010.53,
+    "text": "nó không có gì khó khăn cả, nhớ chưa?"
+  },
+  {
+    "start": 1010.53,
+    "end": 1015.73,
+    "text": "thì các bạn chỉ cần nhập thông tin thôi, nhưng mà nhớ là nhập tên này, mà nhập địa chỉ là phải có dấu cách"
+  },
+  {
+    "start": 1015.73,
+    "end": 1019.93,
+    "text": "nên ra là mình sẽ sử dụng ghét like, còn các những cái trường khác thì không có vấn đề gì cả"
+  },
+  {
+    "start": 1019.93,
+    "end": 1021.99,
+    "text": "Bây giờ này thì quá dễ rồi"
+  },
+  {
+    "start": 1021.99,
+    "end": 1026.07,
+    "text": "Đây bạn sẽ viết cho mình một hàm nhập nhé"
+  },
+  {
+    "start": 1026.07,
+    "end": 1029.91,
+    "text": "Tương tự như vậy, get like sau đó mình nhập tên này, sau đó nhập giới tính và nhập ngay sinh này"
+  },
+  {
+    "start": 1029.91,
+    "end": 1032.79,
+    "text": "Ok, ở đây mình khởi tạo luôn cái mẹ sinh viên"
+  },
+  {
+    "start": 1032.79,
+    "end": 1036.31,
+    "text": "Xin lỗi cái mẹ nhân viên là 00001 nhé, ok"
+  },
+  {
+    "start": 1036.31,
+    "end": 1039.67,
+    "text": "Hoặc là chỗ này nhập bạn gán sau cũng được, và bạn gán mặc định cũng được"
+  },
+  {
+    "start": 1039.67,
+    "end": 1044.87,
+    "text": "Từ C++ 11 thì bạn có thể gán giá trị mặc định cho một member nào đó của struct"
+  },
+  {
+    "start": 1044.87,
+    "end": 1046.87,
+    "text": "Là một cái giá trị khởi tạo từ đầu"
+  },
+  {
+    "start": 1046.87,
+    "end": 1052.02,
+    "text": "Và chỗ này thì bạn, trước khi mình nhập địa chỉ thì bạn sẽ see in trong ignore đi thế là sao"
+  },
+  {
+    "start": 1052.02,
+    "end": 1055.7,
+    "text": "Ok, cho hàm mê thì các bạn làm vương tự nhập, bài này dễ rồi"
+  },
+  {
+    "start": 1055.7,
+    "end": 1062.13,
+    "text": "Bài số 7, đấy là danh sách nhân viên, một nhân viên trong công ty thì nó có đầy đủ các cái trường như từ trước"
+  },
+  {
+    "start": 1062.13,
+    "end": 1065.31,
+    "text": "Đấy là mạng nhân viên họ tên dưới tính ngày xinh địa chỉ mạng sửa thuếm vào ngày ký hấp đồng"
+  },
+  {
+    "start": 1065.31,
+    "end": 1068.75,
+    "text": "Sau đó yêu cầu mình là viết trình trình nhập danh sách nhân viên"
+  },
+  {
+    "start": 1068.75,
+    "end": 1072.43,
+    "text": "Bây giờ nó sẽ cho mình nhập một danh sách nhân viên và yên ra danh sách nhân viên từng bản hình"
+  },
+  {
+    "start": 1072.43,
+    "end": 1079.75,
+    "text": "Nhưng mà nhớ là mạng nhân viên sẽ không được nhập và bạn sẽ tăng dần từ 00001"
+  },
+  {
+    "start": 1079.75,
+    "end": 1081.94,
+    "text": "như thế này"
+  },
+  {
+    "start": 1081.94,
+    "end": 1087.94,
+    "text": "thì ông thứ 2 sẽ là 00002, ông thứ 3 sẽ là 00003, vấn vân"
+  },
+  {
+    "start": 1087.94,
+    "end": 1091.94,
+    "text": "sau đó mình sẽ in ra các thông tin của nhân viên đấy, ví dụ như ở đây họ cho 3 nhân viên này"
+  },
+  {
+    "start": 1091.94,
+    "end": 1095.94,
+    "text": "ở đây ngày xinh thì chuẩn rồi đúng không? thì mình không phải chuẩn hóa nữa"
+  },
+  {
+    "start": 1095.94,
+    "end": 1100.74,
+    "text": "đây họ sẽ in ra 3 thông tin, ông thứ nhất là 00203"
+  },
+  {
+    "start": 1100.74,
+    "end": 1105.0,
+    "text": "đây là 1 cái hàm bên của sẵn, người ta sẽ khai báo cho mình 1 cái mảng nhân viên nhé"
+  },
+  {
+    "start": 1105.0,
+    "end": 1108.0,
+    "text": "sau đó là nhập số lượng phần tử nhân viên"
+  },
+  {
+    "start": 1138.03,
+    "end": 1139.41,
+    "text": "sau đó, ông thú 15 in the page, thì bạn lại là"
+  },
+  {
+    "start": 1139.41,
+    "end": 1142.11,
+    "text": "0,0,0,0,15, như thế này là chết giỡ"
+  },
+  {
+    "start": 1142.11,
+    "end": 1142.91,
+    "text": "nhül"
+  },
+  {
+    "start": 1142.91,
+    "end": 1143.41,
+    "text": "ok"
+  },
+  {
+    "start": 1143.41,
+    "end": 1145.59,
+    "text": "bởi vì cái mã của mình chỉ có 5 số thôi"
+  },
+  {
+    "start": 1145.59,
+    "end": 1147.95,
+    "text": "thì ông 15 nó sẽ là 0,0,0,15"
+  },
+  {
+    "start": 1147.95,
+    "end": 1149.71,
+    "text": "à đấy, đừng ngây thơ như thế nhá"
+  },
+  {
+    "start": 1149.71,
+    "end": 1150.21,
+    "text": "ok"
+  },
+  {
+    "start": 1150.21,
+    "end": 1151.21,
+    "text": "hành ra là"
+  },
+  {
+    "start": 1151.21,
+    "end": 1151.31,
+    "text": "cách"
+  },
+  {
+    "start": 1151.31,
+    "end": 1156.0,
+    "text": "cách hình như là nó có một cái hàm gì là hàm"
+  },
+  {
+    "start": 1156.0,
+    "end": 1159.76,
+    "text": "không nhớ lắm hàm field gì đó hàm set, VCAP gì đó mà in ra"
+  },
+  {
+    "start": 1159.76,
+    "end": 1162.28,
+    "text": "bao nhiêu số không của đằng trước 1 số nguyên ấy"
+  },
+  {
+    "start": 1162.28,
+    "end": 1163.86,
+    "text": "ví dụ như bạn in ra cái mã này này"
+  },
+  {
+    "start": 1163.86,
+    "end": 1164.6,
+    "text": "15 này này"
+  },
+  {
+    "start": 1164.6,
+    "end": 1167.86,
+    "text": "sau đó bạn thêm số không của đằng trước bằng cái hàm set VCAP gì đó"
+  },
+  {
+    "start": 1167.86,
+    "end": 1172.46,
+    "text": "Nhưng mà mình không nhớ cái hạm đấy thì ra là mình hay sử lý sâu, ok?"
+  },
+  {
+    "start": 1172.46,
+    "end": 1174.1,
+    "text": "Ồ, mình hay sử lý sâu"
+  },
+  {
+    "start": 1174.1,
+    "end": 1177.26,
+    "text": "Rồi, cái hạm này thì cái bài này cũng ra đơn giản thôi"
+  },
+  {
+    "start": 1177.26,
+    "end": 1182.99,
+    "text": "Chưa có gì là phần sắp xếp cả đúng không? Phần sắp xếp thì nó hơi khó khăn hơn 1 tý"
+  },
+  {
+    "start": 1182.99,
+    "end": 1185.99,
+    "text": "Và cái hạm phần trần hoa nó cũng hơi khó khăn 1 tý"
+  },
+  {
+    "start": 1185.99,
+    "end": 1187.99,
+    "text": "Đây, mình sẽ xây dựng 1 cái struct nhân viên nhá"
+  },
+  {
+    "start": 1187.99,
+    "end": 1194.39,
+    "text": "Khi mà làm bài, nếu mà các bạn trong trường hợp mà các bạn đi thi, thì khi mà xây dựng 1 cái struct nhá"
+  },
+  {
+    "start": 1194.39,
+    "end": 1196.15,
+    "text": "Để tránh ít dài dòng, ok?"
+  },
+  {
+    "start": 1196.15,
+    "end": 1205.19,
+    "text": "Thứ nhất, đừng có khai báo là string rồi là mạ, rồi là tên, rồi là giới tính, rồi là ngài sinh, những cái địa chỉ và mạ số thế hợp đồng này thì mình sẽ viết tắp hết cho nó lửa cốt"
+  },
+  {
+    "start": 1205.19,
+    "end": 1207.27,
+    "text": "Ok, mình ra cái hàm nhập này nè"
+  },
+  {
+    "start": 1207.27,
+    "end": 1215.72,
+    "text": "Ở đây có 2 cái cách xử lý cái mạ sinh viên, thường là mình, đây, các bạn có thể viết là y, đây, các bạn có thể làm như sau nhá"
+  },
+  {
+    "start": 1215.72,
+    "end": 1226.3,
+    "text": "Đây, cái phần xử lý mạ nhân viên, tức là sau khi mà mình nhập mạ sinh viên thì mình sẽ, mình cho là ya.mạ.side"
+  },
+  {
+    "start": 1226.3,
+    "end": 1230.5,
+    "text": "tức là cái kích thước của mã của mình còn nhỏ hơn 6 ký tự thì mình cộng thêm cách xuống không vào đầu"
+  },
+  {
+    "start": 1230.5,
+    "end": 1253.86,
+    "text": "ok, đó, đúng nhở, không nhập, tự tự, mã, tự tự mã là, mã nhân viên là có đôi, xa chỗ này mình lại là nhỏ hơn 6 nhở"
+  },
+  {
+    "start": 1253.86,
+    "end": 1260.2,
+    "text": "đây là cái nhập này của mình bị sao nhở"
+  },
+  {
+    "start": 1260.2,
+    "end": 1266.23,
+    "text": "mình sẽ nhập tên nhá, nhập rồi tính nhỉ, nhập ngày sinh rồi là nhập địa chỉ này, nhập mã số thuế và nhập hợp đồng nhá"
+  },
+  {
+    "start": 1266.23,
+    "end": 1269.95,
+    "text": "nhớ chức tên và địa chỉ có sin cho minh no"
+  },
+  {
+    "start": 1269.95,
+    "end": 1274.41,
+    "text": "à đây, mình xử lý cái phần mã nhân viên nó ở chỗ này nè"
+  },
+  {
+    "start": 1274.41,
+    "end": 1279.08,
+    "text": "đấy là sau khi mà bạn nhập mã nhân mà nó cóc cái hàm là hàm engine set đúng không?"
+  },
+  {
+    "start": 1279.08,
+    "end": 1282.27,
+    "text": "ở đây mình sẽ, khi mà in ra thì mình sẽ xử lý"
+  },
+  {
+    "start": 1282.27,
+    "end": 1286.99,
+    "text": "tức là mình sẽ dựa vào cái số thứ tự của cái nhân viên đấy ở trong cái mảng A để mình in ra cái mạc của nó thôi"
+  },
+  {
+    "start": 1286.99,
+    "end": 1291.15,
+    "text": "ở chỗ này thì mình sẽ xoay cho string S bằng 2 string, cái hàm 2 string này thì"
+  },
+  {
+    "start": 1291.15,
+    "end": 1293.47,
+    "text": "nó sẽ có nhiều vụ nào chuyển một số thành chuỗi nhé"
+  },
+  {
+    "start": 1293.47,
+    "end": 1296.03,
+    "text": "ví dụ như là cái ông sinh viên của bạn i bằng 4 đấy"
+  },
+  {
+    "start": 1296.03,
+    "end": 1301.47,
+    "text": "thì khi đó cái ông nhân viên đấy, khi đó có mẽ là 5, thì mình sẽ dùng cái số s này khi nó sẽ là 5 này"
+  },
+  {
+    "start": 1301.47,
+    "end": 1304.43,
+    "text": "sau đó là mình lặp ys.s còn nhỏ hơn 5"
+  },
+  {
+    "start": 1304.43,
+    "end": 1309.47,
+    "text": "tức là chừng nào mà cái mẽ nhân viên của bạn nó còn chưa đủ 5 ký tự như thế này này"
+  },
+  {
+    "start": 1309.47,
+    "end": 1313.31,
+    "text": "thì mình cứ cộng thêm các cái số không vào đầu, ví dụ như cái mẽ nhân viên của bạn nó là 15"
+  },
+  {
+    "start": 1313.31,
+    "end": 1316.99,
+    "text": "thì bây giờ bạn chuyển nó thành chuỗi thì mới là chuỗi 15 như thế này đúng không?"
+  },
+  {
+    "start": 1316.99,
+    "end": 1320.67,
+    "text": "thì chừng nào mà nó chưa đủ 5 chữ số thì bạn cứ thêm số không vào đầu như thế này"
+  },
+  {
+    "start": 1320.67,
+    "end": 1324.19,
+    "text": "3 ký tự rồi đúng không? thêm ký tự nữa thành 4 và thêm ký tự nữa thành 5"
+  },
+  {
+    "start": 1324.19,
+    "end": 1341.21,
+    "text": "và bạn cũng có thể xử lý như sau, đấy là bạn chỉ cần cho ép bằng string gì nhỏ 5 chứ đi ép chấm sai, ngồi ký tự không, đó, rõ cộng với ép"
+  },
+  {
+    "start": 1341.21,
+    "end": 1352.21,
+    "text": "cái hàm string và 5 chứ ép chấm sai này không, ký tự không này có nghĩa là mình sẽ khởi tạo một cái sâu mới có kích thước là 5 chứ đi ép chấm sai và được khởi tạo bằng các cái số không"
+  },
+  {
+    "start": 1352.21,
+    "end": 1354.21,
+    "text": "dụ như cái số của bạn đó là số 15 này nhé"
+  },
+  {
+    "start": 1354.21,
+    "end": 1356.69,
+    "text": "thì khi đó nhé, mình sẽ tạo 1 cái string mới"
+  },
+  {
+    "start": 1356.69,
+    "end": 1361.93,
+    "text": "nó có bao nhiêu nhờ, 5 chứ đi 2, tức là 3 ký tự và các ký tự đấy đều là số 0"
+  },
+  {
+    "start": 1361.93,
+    "end": 1367.18,
+    "text": "thì khi đó cái constructor này này, nó sẽ tạo cho mình 1 cái show string mà nó có 3 số 0"
+  },
+  {
+    "start": 1367.18,
+    "end": 1370.38,
+    "text": "đấy, sau đó mình cộng thêm cái show 15 thôi"
+  },
+  {
+    "start": 1370.38,
+    "end": 1371.74,
+    "text": "thì nó sẽ ra nhá"
+  },
+  {
+    "start": 1371.74,
+    "end": 1374.62,
+    "text": "không có gì khó khăn cả, cái này thì xử lý nhiều cách, bạn có thể tùy"
+  },
+  {
+    "start": 1374.62,
+    "end": 1378.5,
+    "text": "bạn có thể tìm hiểu cái ham set vkp luôn đấy mà mình nói nhé, để mình"
+  },
+  {
+    "start": 1378.5,
+    "end": 1385.9,
+    "text": "Chủ này bạn chỉ cần í dây í cộng mồ thôi, sau đó là bạn ít điền thêm các số không vào cụ đằng trước để xa cho chiều rộng set với cap của nó bằng năm"
+  },
+  {
+    "start": 1385.9,
+    "end": 1386.6,
+    "text": "Được"
+  },
+  {
+    "start": 1386.6,
+    "end": 1392.0,
+    "text": "Ok, còn ở đây thì mình sẽ chuyển nó thành chuỗi, sau đó thì mình cộng thêm các số không vào đầu"
+  },
+  {
+    "start": 1392.0,
+    "end": 1397.37,
+    "text": "Còn phần nhập phần ít thì không có vấn đề gì cả, chỉ có phần xử lý này là cần phải nói thôi đúng không?"
+  },
+  {
+    "start": 1397.37,
+    "end": 1406.82,
+    "text": "Rồi, bài tiếp theo nhé, đấy chính là bài số 8, người ta yêu cầu mình tính diễn tích đường hình tròn ngoại tiết tâm rác, người ta cho 3 điểm ABC rồi đúng không?"
+  },
+  {
+    "start": 1406.82,
+    "end": 1413.34,
+    "text": "và yêu cầu mình tính diện tích hình tròn ngoại tiếc tắm giác tạo bởi vài điểm trên, người ta cho mình cái công thức tính diện tích tắm giác bằng công thức hê rồng"
+  },
+  {
+    "start": 1413.34,
+    "end": 1418.02,
+    "text": "nhưng mình không quen dùng cái công thức này, thì hiện ra mình sử dụng cái công thức tính diện tích hê rồng nó bằng cái gì nhỉ?"
+  },
+  {
+    "start": 1418.02,
+    "end": 1421.38,
+    "text": "S nó sẽ bằng 1 phần 2 hay là căn vật 2 thôi nhỉ?"
+  },
+  {
+    "start": 1421.38,
+    "end": 1425.54,
+    "text": "Căn vật 2 của P, nhân vật P chứa A, nhân vật P chứa B đúng không?"
+  },
+  {
+    "start": 1425.54,
+    "end": 1429.58,
+    "text": "Nhân vật P chứa C trong đó P là nửa chú V đúng không?"
+  },
+  {
+    "start": 1429.58,
+    "end": 1433.97,
+    "text": "Trước này không biết là có chia cho 2 không nhỉ?"
+  },
+  {
+    "start": 1433.97,
+    "end": 1435.13,
+    "text": "Không nhớ lắm"
+  },
+  {
+    "start": 1435.13,
+    "end": 1436.84,
+    "text": "Đây, mình sẽ cốt như sao?"
+  },
+  {
+    "start": 1436.84,
+    "end": 1443.84,
+    "text": "Sau đó thì có được diện tích của tham giác, và diện tích tham giác abc thì bạn sẽ tính được đường tròn ngoại tiếp tham giác công thức"
+  },
+  {
+    "start": 1443.84,
+    "end": 1445.84,
+    "text": "và bằng abc chỉ cho 4 diện tích"
+  },
+  {
+    "start": 1445.84,
+    "end": 1451.84,
+    "text": "Sau khi bạn có được bán kính đường tròn ngoại tiếp tham giác rồi thì bạn sử dụng công thức kính diện tích hình tròn để tính diện tích của hình trọng này"
+  },
+  {
+    "start": 1451.84,
+    "end": 1457.54,
+    "text": "Thì đây các bạn sẽ dựng cho mình cái struct là struct y thôi để nó lưu thông tin và tỏa độ các cái điểm nha"
+  },
+  {
+    "start": 1457.54,
+    "end": 1463.54,
+    "text": "Tiếp cây thì là nó phải bắt mình check xem là cái tham giác họ cho có phù hợp hay không"
+  },
+  {
+    "start": 1463.54,
+    "end": 1466.74,
+    "text": "Để check tấm ra hậu cho thì bạn sẽ tính chiều dài của 3 cái cạnh đấy nhé"
+  },
+  {
+    "start": 1466.74,
+    "end": 1473.34,
+    "text": "Nếu mà chiều dài của 3 cái cạnh đấy đều là số dương và là tổng của 2 cạnh luôn lớn hơn cạnh thứ 3 thì khi đó nó sẽ nằm ra hợp lệ"
+  },
+  {
+    "start": 1473.34,
+    "end": 1475.74,
+    "text": "Thì mình sẽ tính diễn tích hình tròn ngoại kiếp"
+  },
+  {
+    "start": 1475.74,
+    "end": 1480.24,
+    "text": "Còn trong trường hợp mà nó không valid thì mình sẽ inner in valid"
+  },
+  {
+    "start": 1480.24,
+    "end": 1484.44,
+    "text": "Mình sẽ xây dựng 1 cái struct boi, ok"
+  },
+  {
+    "start": 1484.44,
+    "end": 1488.04,
+    "text": "Có 2 cái tọa độ là A và B, hoặc là x và y"
+  },
+  {
+    "start": 1488.04,
+    "end": 1492.64,
+    "text": "Và mình xây dựng luôn cái ham distance là cái ham mà tính khoảng cách giữa 2 cái boi"
+  },
+  {
+    "start": 1492.64,
+    "end": 1495.28,
+    "text": "Đó chính là công thức tính quảng cách ước lý ở trong này nhé"
+  },
+  {
+    "start": 1495.28,
+    "end": 1497.4,
+    "text": "Rồi, cái hàm sâu của mình thì"
+  },
+  {
+    "start": 1497.4,
+    "end": 1501.12,
+    "text": "Đầu tiên khi mà bạn có 3 cái toại độ xe và z mà họ cho á"
+  },
+  {
+    "start": 1501.12,
+    "end": 1503.4,
+    "text": "của 3 cái tâm giác này thì mình sẽ tính cái quảng cách"
+  },
+  {
+    "start": 1503.4,
+    "end": 1504.28,
+    "text": "Thứ nhất là"
+  },
+  {
+    "start": 1504.28,
+    "end": 1509.0,
+    "text": "Quảng cách x1 thì nó bằng x distant e, tức là chính là cách xe đấy"
+  },
+  {
+    "start": 1509.0,
+    "end": 1511.98,
+    "text": "OK, bấy hụa cái tâm giác như thế này"
+  },
+  {
+    "start": 1511.98,
+    "end": 1514.54,
+    "text": "Thằng này là thằng x này, thằng y này, thằng z này"
+  },
+  {
+    "start": 1514.54,
+    "end": 1518.54,
+    "text": "Thì mình sẽ tính cách xe và mình lưu vào cái cạnh là x1, đúng không?"
+  },
+  {
+    "start": 1518.54,
+    "end": 1519.78,
+    "text": "Thằng này là chính là x1 này"
+  },
+  {
+    "start": 1519.78,
+    "end": 1528.96,
+    "text": "Distance 2 thì mình sẽ cho từ x cho tới z, thì nó sẽ là x2 đây, còn đây là x3 nhé"
+  },
+  {
+    "start": 1528.96,
+    "end": 1535.96,
+    "text": "Mình xây dựng 2 Distance rồi mà, cho nó tiện nhé, chứ mỗi lần các bạn đã viết lại khoảng cách dựa 2 cái poi thì nó dài"
+  },
+  {
+    "start": 1535.96,
+    "end": 1543.96,
+    "text": "Sau đó mình check nếu mà độ dài của cái cạnh thứ nhất nhỏ hơn bằng không, hoặc độ dài cạnh thứ 2 nhỏ hơn bằng không, hoặc độ dài cạnh thứ 3 nhỏ hơn bằng không"
+  },
+  {
+    "start": 1543.96,
+    "end": 1550.96,
+    "text": "hoặc tổng của 2 cái cạnh 1 và 2 nhỏ hơn hoặc bằng cạnh 3, tương tự như vậy cạnh 2 cạnh 3 mà nhỏ hơn cạnh 1 hoặc cạnh 1 cộng của cạnh 3 nhỏ hơn cạnh 2"
+  },
+  {
+    "start": 1550.96,
+    "end": 1558.96,
+    "text": "V1&2, V006, tâm rác, valet , frame, inv, retr a virton"
+  },
+  {
+    "start": 1558.96,
+    "end": 1565.21,
+    "text": "nửa cho v, frame, component, column 3"
+  },
+  {
+    "start": 1565.21,
+    "end": 1577.21,
+    "text": "tâm rác, frame, km2"
+  },
+  {
+    "start": 1577.21,
+    "end": 1581.81,
+    "text": "sau đó mình sẽ tính đường bán kính đường tròn ngoại tiếp của hình tam giác đấy"
+  },
+  {
+    "start": 1581.81,
+    "end": 1586.01,
+    "text": "bằng cách là lấy 3 cái cạnh chia cho 4 lần diện tích của tam giác, đúng không?"
+  },
+  {
+    "start": 1586.01,
+    "end": 1588.81,
+    "text": "và cuối cùng thì mình sẽ in ra cái diện tích của cái tam giác"
+  },
+  {
+    "start": 1588.81,
+    "end": 1591.81,
+    "text": "à, cái đường tròn ngoại tiếp đấy, bằng công thức là P, L là bình, đúng không?"
+  },
+  {
+    "start": 1591.81,
+    "end": 1595.81,
+    "text": "trong đó P họ định nghĩa cho mình 1 cái độ chính xác tương đối là lớn, ok?"
+  },
+  {
+    "start": 1595.81,
+    "end": 1599.21,
+    "text": "thì bạn cũng phải định nghĩa cho thằng DeFi P này vào trong cái đấy mới nhá"
+  },
+  {
+    "start": 1599.21,
+    "end": 1601.01,
+    "text": "sau đó bạn sử dụng cái giá trị của P mà nhân"
+  },
+  {
+    "start": 1601.01,
+    "end": 1603.61,
+    "text": "bởi vì nếu mà bạn không, bạn chỉ sử dụng P"
+  },
+  {
+    "start": 1603.61,
+    "end": 1610.89,
+    "text": "P là 3.141592, thì có thể nó, cái độ chính xác ổn nó sẽ không đạt được như là đầu bài họ cho"
+  },
+  {
+    "start": 1610.89,
+    "end": 1614.89,
+    "text": "thành ra là, hứa phải cho định nghĩa cái DeFi cái P này vào cho nó đủ nha"
+  },
+  {
+    "start": 1614.89,
+    "end": 1618.69,
+    "text": "ok, thế thôi, còn không có gì khó khăn cái trong hám mê thì mình sẽ khai báo"
+  },
+  {
+    "start": 1618.69,
+    "end": 1622.29,
+    "text": "3 cái thằng point xez, sau đó mình nhập vào tỏa độ của 3 cái này"
+  },
+  {
+    "start": 1622.29,
+    "end": 1626.25,
+    "text": "các bạn có thể viết cái hàm nhập vào trên này cũng được, sau đó mình gọi hàm sâu để tính cái"
+  },
+  {
+    "start": 1626.25,
+    "end": 1630.65,
+    "text": "diện tích của cái đường tròn ngoại tiếp tấm ra cái abc, không có gì khó khăn đúng không?"
+  },
+  {
+    "start": 1630.65,
+    "end": 1634.77,
+    "text": "ok, nó hơi dài 1 tí thôi và nó hơi cuối 1 tí thôi các bạn cứ xử lý từ từ là được"
+  },
+  {
+    "start": 1634.77,
+    "end": 1646.39,
+    "text": "bài thứ 9 này, số thuận nghịch giảm dần, người ta cho mình dự liệu dạng văn bản với không quá 1.000 số nguyên dương, các số nguyên dương không có quá 50 trị số, 50 trị số"
+  },
+  {
+    "start": 1646.39,
+    "end": 1649.75,
+    "text": "hãy liệt các số thuận nghịch theo thứ tự giảm dần và số lần số hiện của chúng"
+  },
+  {
+    "start": 1649.75,
+    "end": 1656.55,
+    "text": "ở đây input luôn vào dạng văn bản với không quá 1.000 số nguyên dương không biết trước số giảm hoặc số lượng chính xác là bao nhiêu số nguyên"
+  },
+  {
+    "start": 1656.55,
+    "end": 1661.23,
+    "text": "và mình sẽ phải in ra các số thuận nghịch theo giá trị giảm dần và số lần số hiện của chúng mỗi số trên 1 giảm"
+  },
+  {
+    "start": 1661.23,
+    "end": 1663.23,
+    "text": "không tính các số có một trị số"
+  },
+  {
+    "start": 1663.23,
+    "end": 1665.23,
+    "text": "Được, vậy thì có nghĩa là"
+  },
+  {
+    "start": 1665.23,
+    "end": 1667.23,
+    "text": "cái số của mình ở đây nó phải là string"
+  },
+  {
+    "start": 1667.23,
+    "end": 1669.23,
+    "text": "bởi vì nó có 50 trị số bạn không thể dùng long long để mà lưu được"
+  },
+  {
+    "start": 1669.23,
+    "end": 1673.23,
+    "text": "do là mình sẽ đọc vào các cái số này như là các cái string"
+  },
+  {
+    "start": 1673.23,
+    "end": 1676.23,
+    "text": "và cái cách mà các bạn đọc các cái"
+  },
+  {
+    "start": 1676.23,
+    "end": 1679.23,
+    "text": "số từ luồng vào mà không biết trước"
+  },
+  {
+    "start": 1679.23,
+    "end": 1680.23,
+    "text": "rất dán thôi đúng không?"
+  },
+  {
+    "start": 1680.23,
+    "end": 1682.77,
+    "text": "Đây, các bạn làm như sao?"
+  },
+  {
+    "start": 1682.77,
+    "end": 1686.77,
+    "text": "Ở đây mình có hướng dẫn 2 cách, các bạn có thể sử dụng cách nào cũng được"
+  },
+  {
+    "start": 1686.77,
+    "end": 1687.77,
+    "text": "cái thứ nhất"
+  },
+  {
+    "start": 1687.77,
+    "end": 1691.47,
+    "text": "Cái này thì hơi khó tiếp cận hơn 1 tí, bởi vì có thể các bạn chưa biết về cái biểu thức lam đe"
+  },
+  {
+    "start": 1694.01,
+    "end": 1696.21,
+    "text": "Đây, đây chính là cái cách mà bạn đọc hết luồng vào này"
+  },
+  {
+    "start": 1696.81,
+    "end": 1699.11,
+    "text": "Đấy là YC in S như thế này"
+  },
+  {
+    "start": 1699.78,
+    "end": 1700.28,
+    "text": "Nhớ"
+  },
+  {
+    "start": 1701.01,
+    "end": 1703.31,
+    "text": "Cái này thì bạn chạy trên FC nó không được"
+  },
+  {
+    "start": 1703.81,
+    "end": 1704.31,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 1704.51,
+    "end": 1710.71,
+    "text": "Vì trong FC thì bạn cứ nhập thì nó YC in S như thế này là nó cứ đợi cho bạn nhập đến bao giờ hết cái sâu ấy thì thôi"
+  },
+  {
+    "start": 1710.71,
+    "end": 1712.51,
+    "text": "Thì các bạn không check được là đúng sai đúng không?"
+  },
+  {
+    "start": 1712.71,
+    "end": 1714.41,
+    "text": "Nên ra mình sẽ chạy cái thằng này trong sublim nhé"
+  },
+  {
+    "start": 1714.41,
+    "end": 1715.41,
+    "text": "Thì các bạn sẽ thấy là"
+  },
+  {
+    "start": 1715.81,
+    "end": 1717.51,
+    "text": "Nó sẽ đọc được hết cái luồng vào thôi mà"
+  },
+  {
+    "start": 1717.51,
+    "end": 1732.62,
+    "text": "dụng như thế này nhé"
+  },
+  {
+    "start": 1732.62,
+    "end": 1736.1,
+    "text": "đây mình sẽ copy cái số này vào"
+  },
+  {
+    "start": 1736.1,
+    "end": 1742.94,
+    "text": "thì nó sẽ check được cho các bạn cái phần mà"
+  },
+  {
+    "start": 1742.94,
+    "end": 1744.94,
+    "text": "xa thần này tự nhiên nó nhảy ra đây nhỉ"
+  },
+  {
+    "start": 1744.94,
+    "end": 1749.92,
+    "text": "chỗ này thì có một cái dấu"
+  },
+  {
+    "start": 1749.92,
+    "end": 1753.92,
+    "text": "thì khi mà các bạn muốn đọc hết các cái số này từ luồng vào nhé, từ luồng input để"
+  },
+  {
+    "start": 1753.92,
+    "end": 1757.92,
+    "text": "thì bạn sử dụng cho mình một cái string sau đó là bạn y, c in string như thế này"
+  },
+  {
+    "start": 1757.92,
+    "end": 1759.92,
+    "text": "thì bây giờ nó đọc đến cái số cuối cùng này này"
+  },
+  {
+    "start": 1759.92,
+    "end": 1761.92,
+    "text": "thì nó sẽ tự dừng nhé"
+  },
+  {
+    "start": 1761.92,
+    "end": 1789.97,
+    "text": "OK, lcoal, integrator,"
+  },
+  {
+    "start": 1789.97,
+    "end": 1794.41,
+    "text": "C++, lật ngược sâu ad, own, add to begin, add to end"
+  },
+  {
+    "start": 1794.41,
+    "end": 1799.45,
+    "text": "Lời việc dùng 2 Ctrl hay lật ngược, lật ngược luôn sâu ad"
+  },
+  {
+    "start": 1799.45,
+    "end": 1802.97,
+    "text": "và xanh nó với sâu ban đầu, giống nhau thì nó dụt thất nhịt"
+  },
+  {
+    "start": 1802.97,
+    "end": 1808.42,
+    "text": "Còn ở đây mình sẽ khai bão 1 map string, inert, để mình đếm số lượng xuất hiện"
+  },
+  {
+    "start": 1808.42,
+    "end": 1811.42,
+    "text": "Các bạn cứ tạm thời bỏ qua cái này để nhé, nếu mình giải thích cái này"
+  },
+  {
+    "start": 1811.42,
+    "end": 1816.84,
+    "text": "Sau đó là việc ở đây mấu chốt thì có thể là mình sẽ đọc hết luôn vào như thế này thôi"
+  },
+  {
+    "start": 1816.84,
+    "end": 1821.84,
+    "text": "Mỗi lần mà đọc được một số từ luôn vào thì bạn sẽ check nó có phải là số thuận nghị khai không"
+  },
+  {
+    "start": 1821.84,
+    "end": 1825.84,
+    "text": "Nếu mà nó là số thuận nghị thì bạn sẽ tăng số lần xuất hiện của nó lên ở biến map là được"
+  },
+  {
+    "start": 1825.84,
+    "end": 1832.84,
+    "text": "Ở đây thì mình sẽ đã định nghĩa cái một cái tạm gọi là Comparator ngay ở chỗ này bằng Lamda đúng không?"
+  },
+  {
+    "start": 1832.84,
+    "end": 1838.84,
+    "text": "Để mình, tuy là mình sẽ, mình đã từng hướng dẫn cái bạn cách bạn xây dựng cái constructor cho cái hàm source rồi đúng không?"
+  },
+  {
+    "start": 1838.84,
+    "end": 1843.84,
+    "text": "Thì bạn cũng có thể xây dựng cái constructor này cho, cho map cho xép cũng được nhá"
+  },
+  {
+    "start": 1843.84,
+    "end": 1846.28,
+    "text": "Thế là mình sẽ yêu cầu thông map này và thông sắp xếp này"
+  },
+  {
+    "start": 1846.28,
+    "end": 1848.66,
+    "text": "Thông map này nó sẽ xắp xếp các cái kỳ của mình"
+  },
+  {
+    "start": 1848.66,
+    "end": 1853.28,
+    "text": "Theo một cái thứ tự nào đó, trong trừ hợp này mình sẽ xắp xếp các cái kỳ theo thứ tự"
+  },
+  {
+    "start": 1853.28,
+    "end": 1858.36,
+    "text": "tăng giám dần về giá trị, ok?"
+  },
+  {
+    "start": 1858.36,
+    "end": 1862.06,
+    "text": "Có thể cái cách này sẽ dễ tiếp hợp cận hơn này"
+  },
+  {
+    "start": 1862.06,
+    "end": 1864.63,
+    "text": "Các bạn sử dụng cách này cho nó dễ nhá"
+  },
+  {
+    "start": 1864.63,
+    "end": 1866.47,
+    "text": "Nhìn chung nó lại như thế nhá"
+  },
+  {
+    "start": 1866.47,
+    "end": 1870.63,
+    "text": "Đó là các bạn sẽ nhập vào cái... đây là cái cách mà bạn nhập này"
+  },
+  {
+    "start": 1870.63,
+    "end": 1876.13,
+    "text": "mình sẽ khai báo 1 cái map, string, inr, t, mp, sau đó mình sẽ khai báo 1 cái string tạm"
+  },
+  {
+    "start": 1876.13,
+    "end": 1878.93,
+    "text": "và mình lập nhập hết tất cả các cái số từ luôn vào"
+  },
+  {
+    "start": 1878.93,
+    "end": 1882.33,
+    "text": "mỗi lần mình nhập 1 cái số ấy thì mình sẽ tăng cái số lần xuất hiện của nó lên"
+  },
+  {
+    "start": 1882.33,
+    "end": 1887.13,
+    "text": "nhưng các bạn, khi đó cái map của các bạn ấy, nếu mà bạn không tự định nghĩa cái constructor cho mình ấy"
+  },
+  {
+    "start": 1887.13,
+    "end": 1891.74,
+    "text": "thì cái map này nó sẽ lưu các cái số của bạn nó theo thứ tự từ điển tăng dần"
+  },
+  {
+    "start": 1891.74,
+    "end": 1894.44,
+    "text": "nhớ ở đây là từ điển nhá, chứ không phải là từ bé đến lớn đâu"
+  },
+  {
+    "start": 1894.44,
+    "end": 1896.44,
+    "text": "bởi vì các bạn lưu là lưu string mà"
+  },
+  {
+    "start": 1896.44,
+    "end": 1906.24,
+    "text": "Ok, thành ra là nếu mà các bạn không muốn không biết định nghĩa cái constructor ấy, thì các bạn sẽ phải lưu các cái phần tửa map, lưu các cái phần tửa map ra 1 cái vector"
+  },
+  {
+    "start": 1906.24,
+    "end": 1916.44,
+    "text": "Cái vector này thì mình sẽ sử dụng 1 cái vector pair, string, nrt, thế là mình sẽ lưu các cái cặp string và nrt, cho nó string thì nó sẽ lưu cái số, con nrt nó sẽ lưu tấn xuất"
+  },
+  {
+    "start": 1916.44,
+    "end": 1920.64,
+    "text": "Và mình sort cái vector đấy theo, theo cái giá trị của số giảm dân là được"
+  },
+  {
+    "start": 1920.64,
+    "end": 1926.48,
+    "text": "Đấy, ở đây mình sẽ sử dụng hàm sort, mình sort cái vector v này, sau đó thì mình sẽ sử dụng cái comparator này"
+  },
+  {
+    "start": 1926.48,
+    "end": 1931.6,
+    "text": "Thôi, mình duyệt con map nhá, duyệt con map và mỗi lần duyệt con map thì mình sẽ push back cái..."
+  },
+  {
+    "start": 1931.6,
+    "end": 1936.7,
+    "text": "cái... cặp key value ở trong map và trong cái vector thôi, ok?"
+  },
+  {
+    "start": 1936.7,
+    "end": 1940.7,
+    "text": "Sau đó mình sẽ sử dụng hàm xắp xếp và mình xây dựng một comparator"
+  },
+  {
+    "start": 1940.7,
+    "end": 1948.14,
+    "text": "cái comparator này nó sẽ có nhiệm vụ là nó sẽ xắp xếp các cái cặp string inner-t của các bạn theo cái string này là một cái số giảm dần"
+  },
+  {
+    "start": 1948.14,
+    "end": 1954.2,
+    "text": "Thì khi mà bạn so sánh hai số là chuỗi, đừng ngây thơ bạn return A lớn hơn B"
+  },
+  {
+    "start": 1954.2,
+    "end": 1959.2,
+    "text": "Bởi vì khi mà bạn return A lớn hơn B, ví dụ bạn có một số là số 98 xuất hiện 5 lần"
+  },
+  {
+    "start": 1959.2,
+    "end": 1962.2,
+    "text": "và cái số là số 1, 1, 2 xuất hiện 4 lần"
+  },
+  {
+    "start": 1962.2,
+    "end": 1967.2,
+    "text": "Thì nếu mà bạn return về cái thằng là thật giá trị của 98 lớn hơn 1, 1, 2"
+  },
+  {
+    "start": 1967.2,
+    "end": 1973.93,
+    "text": "thì rõ ràng là đúng, bởi vì cái số 98 này có thứ tự để lớn hơn 1, 2"
+  },
+  {
+    "start": 1973.93,
+    "end": 1977.93,
+    "text": "Thành ra là mặc dù ở đây nó là hai cái chuỗi, nhưng mà khi mà bạn so sánh nó với nhau"
+  },
+  {
+    "start": 1977.93,
+    "end": 1980.89,
+    "text": "Mình lại xoánh nó như là 2 cái số, đúng không?"
+  },
+  {
+    "start": 1980.89,
+    "end": 1983.89,
+    "text": "Nên ra là bạn sử dụng cái thứ tự tự điển trong trường hợp này là không đúng"
+  },
+  {
+    "start": 1983.89,
+    "end": 1986.89,
+    "text": "Nó chỉ đúng khi mà 2 cái số này nó có cùng chiều dài thôi"
+  },
+  {
+    "start": 1986.89,
+    "end": 1988.89,
+    "text": "Thì bạn mới xoánh theo thứ tự tự điển được"
+  },
+  {
+    "start": 1988.89,
+    "end": 1993.89,
+    "text": "Ok, vậy thì ở đây muốn xoánh 2 cái số này là khác nhau, lớn hơn, hay nhỏ hơn"
+  },
+  {
+    "start": 1993.89,
+    "end": 1995.89,
+    "text": "Mình sắp xếp theo thứ tự giảm dần đúng không?"
+  },
+  {
+    "start": 1995.89,
+    "end": 1999.89,
+    "text": "Thì đầu tiên mình kiểm tra là nếu mà cái chiều dài của cái..."
+  },
+  {
+    "start": 1999.89,
+    "end": 2002.89,
+    "text": "chỗ này là e.first nha, mình định nghĩa các cái..."
+  },
+  {
+    "start": 2002.89,
+    "end": 2007.72,
+    "text": "tai đép các cái thằng ở trên này nếu mà bạn không hiểu cái từ nào thì bạn tìm ở trên này nha"
+  },
+  {
+    "start": 2007.72,
+    "end": 2012.32,
+    "text": "ở đây mình sẽ sử dụng cái mình kiểm tra, nói chung là mình sẽ kiểm tra 2 cái sâu đấy"
+  },
+  {
+    "start": 2012.32,
+    "end": 2014.82,
+    "text": "nếu mà nó có chiều dài khác nhau"
+  },
+  {
+    "start": 2014.82,
+    "end": 2018.65,
+    "text": "tức là cái số thứ nhất nó có số chữ số nhỏ hơn cái số thứ 2"
+  },
+  {
+    "start": 2018.65,
+    "end": 2023.45,
+    "text": "thì có nghĩa là 2 cái số này có thể so sánh nó bằng số chữ số đúng không?"
+  },
+  {
+    "start": 2023.45,
+    "end": 2027.85,
+    "text": "ví dụ như trong trình hợp này số 1, 1, 2 và số 98 1 thằng có 3 chữ số, 1 thằng có 2 chữ số"
+  },
+  {
+    "start": 2027.85,
+    "end": 2029.85,
+    "text": "vậy thì chắc chắn tăng này nó sẽ lớn hơn tăng này rồi"
+  },
+  {
+    "start": 2029.85,
+    "end": 2032.65,
+    "text": "ok, thì ra là khi đó mình sẽ dựa vào cái sai"
+  },
+  {
+    "start": 2032.65,
+    "end": 2034.65,
+    "text": "cái sai của cái số đấy để mình so sánh"
+  },
+  {
+    "start": 2034.65,
+    "end": 2037.65,
+    "text": "còn không thì mình sẽ dựa vào cái thứ tự tự điển"
+  },
+  {
+    "start": 2037.65,
+    "end": 2040.53,
+    "text": "Thế là khi mà 2 cái số này có cùng số lượng trị số rồi ấy"
+  },
+  {
+    "start": 2040.53,
+    "end": 2045.25,
+    "text": "Nghi dụng như số 98 và số 88 ấy, 2 thằng này có cùng trị số rồi ấy"
+  },
+  {
+    "start": 2045.25,
+    "end": 2049.41,
+    "text": "Thì khi đó cái thứ tự tự điển ấy và chính là cái thứ tự thằng nào lớn hơn thì nó là nhỏ hơn ấy"
+  },
+  {
+    "start": 2049.41,
+    "end": 2052.53,
+    "text": "Thế còn trong trường hợp mà nó khác trị số thì thứ tự tự điển không đúng nhá"
+  },
+  {
+    "start": 2052.53,
+    "end": 2055.65,
+    "text": "Thì trong trường hợp 2 thằng nó có cùng trị số thì mình chỉ cần sử dụng là"
+  },
+  {
+    "start": 2055.65,
+    "end": 2058.69,
+    "text": "so sánh 2 thằng này lớn hơn nhau là tự khác nó sẽ sắp xếp theo"
+  },
+  {
+    "start": 2058.69,
+    "end": 2059.89,
+    "text": "thứ tự tự điển giám dần"
+  },
+  {
+    "start": 2059.89,
+    "end": 2062.29,
+    "text": "Không phải thứ tự tự điển giám dần mà là xeo giá trị giám dần"
+  },
+  {
+    "start": 2062.29,
+    "end": 2063.41,
+    "text": "Ok, nói như thế"
+  },
+  {
+    "start": 2063.41,
+    "end": 2071.29,
+    "text": "Thì cách này nó dài hơn 1 tí nhé, tức là bạn sẽ phải đến số lần xuất hiện của các cử rồi đó mình sẽ lưu các cái từ đấy vào một cái map à, cái vector"
+  },
+  {
+    "start": 2071.29,
+    "end": 2078.09,
+    "text": "Và mình sắp xếp các cái vector đấy, các phần tử trong vector đấy theo cái tiêu chí là cái giá trị của số giảm dần, thế thôi"
+  },
+  {
+    "start": 2078.09,
+    "end": 2086.65,
+    "text": "Đúng không? Còn không thì bạn sẽ xây dựng cái comparator như thế này để mình định nghĩa bắt thằng map này nó sẽ, các bạn tìm thêm về tỷ khóa"
+  },
+  {
+    "start": 2086.65,
+    "end": 2089.53,
+    "text": "lâm đa nhé, trong siệm cộng nhé, để hiểu rõ hơn ta này"
+  },
+  {
+    "start": 2089.53,
+    "end": 2096.78,
+    "text": "thì khi đó mình không cần phải sắp xếp nữa, mình chỉ cần lưu các cái từ vào trong map và mình sẽ in ra nó thôi"
+  },
+  {
+    "start": 2096.78,
+    "end": 2100.78,
+    "text": "thì cái thứ tự của nó mình đã tự định nghĩa là theo cái thứ tự số giám dần cái kỳ giám dần rồi"
+  },
+  {
+    "start": 2100.78,
+    "end": 2103.26,
+    "text": "mình sẽ không phải sắp xếp nữa, ok?"
+  },
+  {
+    "start": 2103.26,
+    "end": 2105.71,
+    "text": "ở đây nó chỉ khó cái phần này đúng không?"
+  },
+  {
+    "start": 2105.71,
+    "end": 2108.67,
+    "text": "đây là cái phần mà nhập vào, đúng nhá?"
+  },
+  {
+    "start": 2108.67,
+    "end": 2113.95,
+    "text": "à không, có thể có nhiều bạn không biết cái cách là sau khi mà các bạn nhập xong, các bạn in ra là"
+  },
+  {
+    "start": 2113.95,
+    "end": 2117.07,
+    "text": "bởi vì map nó in theo từ từ, từ điển từ bé ăn lớn mà, đúng không?"
+  },
+  {
+    "start": 2117.07,
+    "end": 2124.13,
+    "text": "Khi này bạn chạy trong sublim như thế này thì nó sẽ ok, còn bạn chạy trong dapsy thì không biết là đúng hay sai, đúng không?"
+  },
+  {
+    "start": 2124.13,
+    "end": 2127.81,
+    "text": "Thì khi nó nó sẽ in ra như thế này, đúng nhỉ?"
+  },
+  {
+    "start": 2127.81,
+    "end": 2138.15,
+    "text": "Ok, rồi, thì đây chính là cái bài số 9 nhé, bài số 10 là cái bài cuối cùng mình sẽ chữa, bởi vì"
+  },
+  {
+    "start": 2138.15,
+    "end": 2146.11,
+    "text": "Các cái bài còn lại thì nó tương đối là nó giống nhau, và nó cũng không có gì khó khăn và có sắp xếp và tìm kiếm thì mình có để cốt các bạn tham khảo nhé"
+  },
+  {
+    "start": 2146.11,
+    "end": 2148.11,
+    "text": "Những phần bài tập này thì tương đối ra đơn giản"
+  },
+  {
+    "start": 2148.11,
+    "end": 2155.55,
+    "text": "Các bạn có thể tự cốt, v có khó khăn các bạn có thể hỏi đáp vào dưới"
+  },
+  {
+    "start": 2155.55,
+    "end": 2158.43,
+    "text": "Thôi, người ta cho mình một cái bài là chiến nhất và già nhất"
+  },
+  {
+    "start": 2158.43,
+    "end": 2162.43,
+    "text": "Người ta cho một danh sách các cái tên người và có thêm tên, ngành sinh"
+  },
+  {
+    "start": 2162.43,
+    "end": 2165.31,
+    "text": "OK, và người yêu cầu mình tìm ra người chiến nhất và già nhất"
+  },
+  {
+    "start": 2165.31,
+    "end": 2171.42,
+    "text": "Dòng đầu tiên sẽ là số lượng người, mỗi dòng tiếp theo là ghi tên, không có dấu cách, ngon rồi đúng không?"
+  },
+  {
+    "start": 2171.42,
+    "end": 2180.12,
+    "text": "và sau đó là mình sẽ sử dụng 1 cái, sau đó là ngày tháng 5 sinh theo dạng chuẩn là day day man man be ye"
+  },
+  {
+    "start": 2180.12,
+    "end": 2184.12,
+    "text": "ok, sau đó người ta yêu cầu mình in ra 2 cái người là người trẻ nhất và người già nhất"
+  },
+  {
+    "start": 2184.12,
+    "end": 2187.12,
+    "text": "và dữ liệu đảm bảo không có 2 người có chung ngày sinh"
+  },
+  {
+    "start": 2187.12,
+    "end": 2192.82,
+    "text": "thì các bạn có thời so xanh cũng được nhé, các bạn có thể so xanh cũng được để giảm độ phức tạc cũng được"
+  },
+  {
+    "start": 2192.82,
+    "end": 2197.66,
+    "text": "nhưng mà trong trường hợp này nó không có 100 thì các bạn chỉ cần sắp xếp theo ngày sinh tăng dần là được"
+  },
+  {
+    "start": 2197.66,
+    "end": 2201.16,
+    "text": "thì khi đó bạn in ra cái người đầu tiên thì người ta sẽ là trẻ nhất"
+  },
+  {
+    "start": 2201.16,
+    "end": 2206.44,
+    "text": "Xin lỗi, yên người đầu tiên thì người sẽ là người già nhất, còn í da người cuối cùng thì người ta sẽ là người trẻ nhất"
+  },
+  {
+    "start": 2206.44,
+    "end": 2212.2,
+    "text": "Nói chung với cái tiêu chí subzip person ở đây, cái tiêu chí subzip người ở đây thì nó chính là cái tiêu chí về Ngày sinh"
+  },
+  {
+    "start": 2212.2,
+    "end": 2217.8,
+    "text": "Thế Ngày sinh thì nó lại cần phụ thuộc vào gì nhỉ, nó lại cần phụ thuộc vào ngày tháng 5 nữa"
+  },
+  {
+    "start": 2217.8,
+    "end": 2221.8,
+    "text": "Khi mà bạn muốn so sánh 2 cái người với nhau thì đầu tiên bạn phải so sánh 5"
+  },
+  {
+    "start": 2221.8,
+    "end": 2225.92,
+    "text": "Nếu mà 5 khác nhau thì bạn biết là ông nào lớn tuổi hơn ngay đúng không?"
+  },
+  {
+    "start": 2225.92,
+    "end": 2228.4,
+    "text": "Còn cùng 5 thì mình sẽ so sánh đến tháng"
+  },
+  {
+    "start": 2228.4,
+    "end": 2234.68,
+    "text": "nếu mà tháng khác nhau, tháng khác nhau thì bạn cũng biết ông nào lớn hơn, ông nào nhỏ hơn, đúng không?"
+  },
+  {
+    "start": 2234.68,
+    "end": 2239.16,
+    "text": "nếu còn cùng năm, cùng tháng thì bạn mới phải so sánh đến ngày, thế thôi, đấy chính là cách so sánh"
+  },
+  {
+    "start": 2239.16,
+    "end": 2240.84,
+    "text": "đừng nghĩ phức tạp quá, đúng không?"
+  },
+  {
+    "start": 2240.84,
+    "end": 2246.0,
+    "text": "thế ra ở đây, mình sẽ định nghĩa một câu chức là câu chức person, có tên và ngày sinh thôi, nhá"
+  },
+  {
+    "start": 2246.0,
+    "end": 2249.58,
+    "text": "và ngày sinh mình cũng lưu là string luôn, ok?"
+  },
+  {
+    "start": 2249.58,
+    "end": 2255.94,
+    "text": "sau đó thì mình sẽ viết một cái hàm compare, comparator để so sánh hai cái person đấy"
+  },
+  {
+    "start": 2255.94,
+    "end": 2261.82,
+    "text": "hãy xem ông nào là ông nào nhỏ hơn, ông nào dài hơn"
+  },
+  {
+    "start": 2261.82,
+    "end": 2264.82,
+    "text": "người ta cho mình 1 cấu trúc chuẩn rồi đúng không?"
+  },
+  {
+    "start": 2264.82,
+    "end": 2270.25,
+    "text": "ví dụ như là cái 22 tháng 12 năm 2012"
+  },
+  {
+    "start": 2270.25,
+    "end": 2274.21,
+    "text": "thì đầu tiên bạn tách cho mình 2 cái số đầu tiên này thì nó sẽ là ngay"
+  },
+  {
+    "start": 2274.21,
+    "end": 2276.89,
+    "text": "thì bạn chỉ cần lấy cái số 2 này này"
+  },
+  {
+    "start": 2276.89,
+    "end": 2278.17,
+    "text": "bạn nhận với 10"
+  },
+  {
+    "start": 2278.17,
+    "end": 2280.05,
+    "text": "sau đó bạn cộng 1 cái số 2 được sau"
+  },
+  {
+    "start": 2280.05,
+    "end": 2281.69,
+    "text": "nhưng mà nhớ nó đang là ký tự nhá"
+  },
+  {
+    "start": 2281.69,
+    "end": 2285.17,
+    "text": "thế nên bạn phải chuyển nó về số và cách là lấy ký tự 2, bạn chứa đi ký tự không"
+  },
+  {
+    "start": 2285.17,
+    "end": 2288.05,
+    "text": "để nó ra số 2, sau đó bạn nhận với 10 và cộng 1 ký tự 2"
+  },
+  {
+    "start": 2288.05,
+    "end": 2290.29,
+    "text": "sau đó bạn lại, thằng này nó sẽ là 0, 1"
+  },
+  {
+    "start": 2290.29,
+    "end": 2292.45,
+    "text": "2 thì thằng này là 3, 4 này"
+  },
+  {
+    "start": 2292.45,
+    "end": 2295.57,
+    "text": "đấy, từ 2 cái ký tự 0, 1 bạn sẽ text ra được ngày"
+  },
+  {
+    "start": 2295.57,
+    "end": 2299.25,
+    "text": "từ 2 cái ký tự là 3, 4 bạn có thể text được, text được tháng"
+  },
+  {
+    "start": 2299.25,
+    "end": 2302.79,
+    "text": "thế còn 4 cái ký tự cuối này thì bạn có thể text được năm"
+  },
+  {
+    "start": 2302.79,
+    "end": 2307.91,
+    "text": "bạn có thể cho là 3, 4, 5, 6, 7, 8, 9 cũng được"
+  },
+  {
+    "start": 2307.91,
+    "end": 2310.55,
+    "text": "tức là bạn sẽ lấy ký tự thứ 6 bạn nhận với 1,000 này"
+  },
+  {
+    "start": 2310.55,
+    "end": 2314.76,
+    "text": "cộng ký tự thứ 7, 1, 100, cộng ký tự thứ 8, 1, 10 và cộng ký tự thứ 9"
+  },
+  {
+    "start": 2314.76,
+    "end": 2319.08,
+    "text": "nhưng ở đây thì hơi lười mình chỉ tích ngày và tháng theo cái tư tự thôi"
+  },
+  {
+    "start": 2319.08,
+    "end": 2321.8,
+    "text": "mình sẽ tag ra cái ngày 1 nhé"
+  },
+  {
+    "start": 2321.8,
+    "end": 2324.8,
+    "text": "thì nó sẽ là F0 chứa đi kí tự 0 nhân với 10"
+  },
+  {
+    "start": 2324.8,
+    "end": 2329.2,
+    "text": "ok, F nó chính là ngày sinh của ông A, còn T là ngày sinh của ông B nhé"
+  },
+  {
+    "start": 2329.2,
+    "end": 2333.8,
+    "text": "thì còn tháng sinh của cái ông thứ nhất thì nó sẽ là cái kí tự thứ 3 nhân với 10 cộng 1 kí tự thứ 4"
+  },
+  {
+    "start": 2333.8,
+    "end": 2339.0,
+    "text": "thì còn 5 sinh của ông thứ nhất thì mình sẽ tag ra cái chuỗi bắt đầu từ kí tự 6 đến cuối"
+  },
+  {
+    "start": 2339.0,
+    "end": 2341.4,
+    "text": "cái hàm substring này mình đã hướng dẫn rồi đúng không?"
+  },
+  {
+    "start": 2341.4,
+    "end": 2371.65,
+    "text": "f.substring, 6, sẽ cách cách từ từ thứ 6 tới khi tự cuối, tức là mình sẽ cách gà 4 xuống cuối này, và mình chuyển nó thành, chuyển nó thành số integer bằng hém, f, tu, y, ok, thế thôi, cái ngày sinh của ông thứ 2 cũng thế, sau đó là mình kiểm tra nếu mà 5, 1 khác 5, 2, tức là hai ông này khác 5 sinh í, thì mình chỉ cần return 5, 1 nhỏ hơn 5, 2 thôi, đúng không, đấy, thế còn nếu mà hai ông này giống 5, thì nó sẽ nhảy xuống cái này nó xò xanh tháng, ở đây mình lại xò xanh"
+  },
+  {
+    "start": 2371.65,
+    "end": 2374.53,
+    "text": "Một tháng khác nhau thì mình sẽ return về tháng 1 và 1 tháng 2"
+  },
+  {
+    "start": 2374.53,
+    "end": 2375.53,
+    "text": "Ok"
+  },
+  {
+    "start": 2375.53,
+    "end": 2380.37,
+    "text": "Thế còn nếu mà cùng năm cùng tháng thì nó sẽ nhảy xuống câu lệnh này nó return về ngày 1 và 1, ngày 2"
+  },
+  {
+    "start": 2380.37,
+    "end": 2385.01,
+    "text": "Là bạn có thể biết được là ông nào trẻ hơn là mời gà hơn nữa"
+  },
+  {
+    "start": 2385.01,
+    "end": 2387.81,
+    "text": "Sau đó trong hàng bên thì bạn sẽ nhập một cái mạng person"
+  },
+  {
+    "start": 2387.81,
+    "end": 2392.21,
+    "text": "Mỗi mình duyệt từ 1 cho tới nờ, sau đó thì mình nhập tên và ngày sinh cho người đó"
+  },
+  {
+    "start": 2392.21,
+    "end": 2395.25,
+    "text": "Và mình hiểm short thôi và mình truyền cái comparator vào"
+  },
+  {
+    "start": 2395.25,
+    "end": 2399.25,
+    "text": "Thì khi nó sẽ tự động sắp xếp cái person này theo từ tự ngày sinh ăn dần"
+  },
+  {
+    "start": 2399.25,
+    "end": 2402.13,
+    "text": "Đầu tiên sẽ là ông dài nhất"
+  },
+  {
+    "start": 2402.13,
+    "end": 2406.16,
+    "text": "Ừ, đúng rồi, ông đầu tiên sẽ là ông dài nhất, ngày sinh nhỏ nhất mà"
+  },
+  {
+    "start": 2406.16,
+    "end": 2411.68,
+    "text": "Còn ông cuối cùng sẽ là ông ngày sinh lớn nhất, thì ông ấy sẽ là chiến nhất"
+  },
+  {
+    "start": 2411.68,
+    "end": 2417.91,
+    "text": "Các bài dưới thì nó tương tự như thế nhé, các bạn có thể tự cốt, nó không có gì khó khăn đâu"
+  },
+  {
+    "start": 2417.91,
+    "end": 2420.39,
+    "text": "Nó quanh đi quẩn lại, nó cũng chỉ là sub-set, đúng không?"
+  },
+  {
+    "start": 2420.39,
+    "end": 2424.71,
+    "text": "Mà sub-set thì mình đã hướng dẫn các bạn cách sub-set comparator rồi, đúng không?"
+  },
+  {
+    "start": 2424.71,
+    "end": 2426.91,
+    "text": "Bây giờ còn áp dụng với các struct thôi"
+  },
+  {
+    "start": 2426.91,
+    "end": 2429.91,
+    "text": "Mình muốn sắp xếp được tiêu chí gì thì mình sắp xếp được tiêu chí đấy"
+  },
+  {
+    "start": 2429.91,
+    "end": 2433.91,
+    "text": "Và cái phần bài tập này thì các bạn phải mạnh một chút về xử lý chủ ấy"
+  },
+  {
+    "start": 2433.91,
+    "end": 2437.91,
+    "text": "Xử lý chủ ấy cơ bản thôi, nó cũng chưa có gì khó khăn cả, nhưng mà đừng nghĩ phức tạp của ai đúng nhá"
+  },
+  {
+    "start": 2437.91,
+    "end": 2440.91,
+    "text": "Ok, và các bạn có thể làm được những cái bài tập này một cách dân dãn"
+  },
+  {
+    "start": 2440.91,
+    "end": 2443.91,
+    "text": "Nếu mà đi thi gọi bài này thì nó sẽ là một cái bài gỡ điểm"
+  },
+  {
+    "start": 2443.91,
+    "end": 2447.91,
+    "text": "Trong cái phần khi mà bạn thi một môn lập trình xì cũng cộng nhỉ"
+  },
+  {
+    "start": 2447.91,
+    "end": 2456.2,
+    "text": "Ờ, ok, thì đây chính là cái kiến thức về struct nhá"
+  },
+  {
+    "start": 2456.2,
+    "end": 2460.3,
+    "text": "các bài xao thì các bạn cố gắng tự cốt, nếu mà không cốt được, các bạn có thể tham khảo cốt ở dưới"
+  },
+  {
+    "start": 2462.34,
+    "end": 2463.64,
+    "text": "không có gì khó khăn đâu"
+  },
+  {
+    "start": 2465.0,
+    "end": 2469.8,
+    "text": "có chú ý về phần này thì các bạn nhất là cái phần ngày sinh với tên, các bạn cứ làm nhiều vào"
+  },
+  {
+    "start": 2469.8,
+    "end": 2472.5,
+    "text": "thì cái việc mà bạn chuẩn hóa ngày sinh với chuẩn hóa tên nó nhanh"
+  },
+  {
+    "start": 2472.5,
+    "end": 2474.9,
+    "text": "ít thì người ta sẽ có thêm các cái yêu cầu khác"
+  },
+  {
+    "start": 2474.9,
+    "end": 2477.9,
+    "text": "nhưng mà nói chung là muốn làm một cái việc gì đó nó đơn giản ấy"
+  },
+  {
+    "start": 2477.9,
+    "end": 2480.2,
+    "text": "thì các bạn phải có kỹ năng cốt, tương đối là cốt"
+  },
+  {
+    "start": 2480.6,
+    "end": 2484.0,
+    "text": "còn nếu mà các bạn cốt kém ấy, các bạn gần thi các bạn lộng vào cốt"
+  },
+  {
+    "start": 2484.0,
+    "end": 2492.96,
+    "text": "Đến đến là các bạn loai hoài, bạn không biết xử lý trong trường hợp những cái, ví dụ như là xử lý phần ngay sinh này muốn so sánh hai ông nó lớn hơn, ông là nhỏ hơn, các bạn không làm được đâu"
+  },
+  {
+    "start": 2492.96,
+    "end": 2495.64,
+    "text": "Mặc dù nó là kỹ năng cơ bản nhưng mà mình cũng cần phải liện tập"
+  },
+  {
+    "start": 2495.64,
+    "end": 2506.64,
+    "text": "Thì khi mà gặp thì mình mới áp dụng được, thế còn nếu mà bạn biết cái cách nào nhưng mà đi thì nó chỉ cần cho một cái để khác một chút thôi mà cái kỹ năng của bạn không tốt thì bạn không xử lý được đâu"
+  },
+  {
+    "start": 2506.64,
+    "end": 2510.32,
+    "text": "Ok, đây chính là cái kiến thức về bài thật về phần xe chuất nhé"
+  }
+]

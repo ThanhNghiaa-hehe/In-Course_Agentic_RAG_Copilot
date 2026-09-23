@@ -1,0 +1,4007 @@
+[
+  {
+    "start": 0.94,
+    "end": 6.94,
+    "text": "Nơi video này mình sẽ ứng dẫn các bạn một thật toán sắp xếp, thật toán sắp xếp vôn đóng, hip sort."
+  },
+  {
+    "start": 6.94,
+    "end": 10.94,
+    "text": "Thật toán sắp xếp vôn đóng này thì nó dựa trên một cái câu chúc dữ liệu, tương đối đang đặc biệt."
+  },
+  {
+    "start": 10.94,
+    "end": 12.94,
+    "text": "Thì ta gọi là câu chúc dữ liệu hip."
+  },
+  {
+    "start": 12.94,
+    "end": 14.94,
+    "text": "Các bạn đã từng sử dụng hip rồi đấy."
+  },
+  {
+    "start": 14.94,
+    "end": 18.94,
+    "text": "Đây chính là các bạn sử dụng hàng đợi ưu tiên, priority queue ở trong thư vẹn ST."
+  },
+  {
+    "start": 18.94,
+    "end": 20.94,
+    "text": "Thì đây chính là mắc hip."
+  },
+  {
+    "start": 20.94,
+    "end": 22.94,
+    "text": "Thì cứ tư tư nhé."
+  },
+  {
+    "start": 22.94,
+    "end": 26.94,
+    "text": "Trước khi mà bắt đầu với thật toán hip sort này thì mình sẽ giới thiệu một cái câu chúc dữ liệu"
+  },
+  {
+    "start": 26.94,
+    "end": 32.54,
+    "text": "Để các bạn có thể hiểu được Hipsoft là gì đã. Xin lỗi, Hip là gì đã."
+  },
+  {
+    "start": 32.54,
+    "end": 35.54,
+    "text": "Thì mình sẽ bắt đầu với cái định nghĩa về cây nhị phân nhé."
+  },
+  {
+    "start": 35.54,
+    "end": 38.54,
+    "text": "Có thể các bạn chưa học từng học cây nhị phân được không nhỉ?"
+  },
+  {
+    "start": 38.54,
+    "end": 42.34,
+    "text": "Thì các bạn vẫn có thể hiểu được bài này và cài đặt từ bài này nhé."
+  },
+  {
+    "start": 42.34,
+    "end": 48.34,
+    "text": "Chứ không nhất thiết là bạn đã phải từng học cây nhị phân hay là từng cài đặt cái câu chúc dữ liệu về cây nhị phân, hay là cây nói chung, ok?"
+  },
+  {
+    "start": 48.34,
+    "end": 55.06,
+    "text": "Thì cái cây nhị phân ấy thì nói chính là cái cây mà mỗi nốt nó sẽ có tối đa là 2 nốt con."
+  },
+  {
+    "start": 55.06,
+    "end": 57.74,
+    "text": "Ví dụ như là, bạn có một nốt là một nè"
+  },
+  {
+    "start": 58.32,
+    "end": 60.76,
+    "text": "Đúng không, bạn có một nốt một nè"
+  },
+  {
+    "start": 60.92,
+    "end": 64.16,
+    "text": "Thì cái nốt một này nè, nó chỉ được tối đen là nó có hai nốt con nữa"
+  },
+  {
+    "start": 64.16,
+    "end": 65.92,
+    "text": "Ví dụ thằng này là hai và thằng này là ba"
+  },
+  {
+    "start": 65.92,
+    "end": 68.56,
+    "text": "Ê, thì người ta gọi là cây nhị phân"
+  },
+  {
+    "start": 68.64,
+    "end": 70.76,
+    "text": "Cây nốt hai này nó cũng có thể có hai con"
+  },
+  {
+    "start": 71.0,
+    "end": 72.0,
+    "text": "Bốn nè"
+  },
+  {
+    "start": 72.47,
+    "end": 73.47,
+    "text": "Năm nè"
+  },
+  {
+    "start": 73.47,
+    "end": 75.47,
+    "text": "Thằng ba này thì cũng có thể có hai con"
+  },
+  {
+    "start": 75.47,
+    "end": 76.47,
+    "text": "Sáu nè"
+  },
+  {
+    "start": 76.47,
+    "end": 77.19,
+    "text": "Và bảy"
+  },
+  {
+    "start": 77.19,
+    "end": 80.91,
+    "text": "Ok, nhưng mà không được có ba con đúng không? Ví dụ không có được có ba con là tám như thế này"
+  },
+  {
+    "start": 80.91,
+    "end": 83.39,
+    "text": "Thì trong trường hợp này nó không phải là cây nhị phân nữa"
+  },
+  {
+    "start": 83.39,
+    "end": 84.99,
+    "text": "Nhưng mà như thế này thì là cây nhị phân này"
+  },
+  {
+    "start": 84.99,
+    "end": 87.43,
+    "text": "hoặc là nó có thể khuyết 1 node như thế nào cũng được"
+  },
+  {
+    "start": 87.43,
+    "end": 90.55,
+    "text": "thì cái thằng này nó gọi là node gốc, được chứ?"
+  },
+  {
+    "start": 90.55,
+    "end": 94.93,
+    "text": "và node mỗi node thì nó có thể có 2 node con"
+  },
+  {
+    "start": 94.93,
+    "end": 97.57,
+    "text": "là 1 node con bên trái, thằng này gọi là node con bên trái này"
+  },
+  {
+    "start": 97.57,
+    "end": 101.05,
+    "text": "2 gọi là node con bên phái này, OK, left, right, right"
+  },
+  {
+    "start": 101.05,
+    "end": 104.88,
+    "text": "OK, 2 thằng này nó sẽ lại là node tra của 2 node"
+  },
+  {
+    "start": 104.88,
+    "end": 107.56,
+    "text": "đây là node con bên trái của nó này, và node con bên phái của nó"
+  },
+  {
+    "start": 107.56,
+    "end": 108.64,
+    "text": "OK hông nhờ?"
+  },
+  {
+    "start": 108.64,
+    "end": 111.76,
+    "text": "thì đấy, nó chính là 1 cái cây đây là 1 ví dụ về cái cây nhị phân này"
+  },
+  {
+    "start": 111.76,
+    "end": 115.28,
+    "text": "các bạn có thể tưởng tượng nó cứ chẽ đôi chẽ đôi chẽ đôi ra cũng được"
+  },
+  {
+    "start": 115.28,
+    "end": 120.86,
+    "text": "sau khi mình hiểu cái cây nhị phân nó là gì rồi, thằng này được gọi là nốt gốc nhé"
+  },
+  {
+    "start": 120.86,
+    "end": 124.54,
+    "text": "thì còn những cái nốt mà nó không có con này này, thì người ta gọi là nốt lá, ok, lift"
+  },
+  {
+    "start": 124.54,
+    "end": 127.76,
+    "text": "thì là root, nốt gốc"
+  },
+  {
+    "start": 127.76,
+    "end": 134.26,
+    "text": "ở trên nhỉ, thế còn các cái nốt trung gian này thì những cái nốt trung gian như 2, 3 này thì nó có ít nhất là 1 con"
+  },
+  {
+    "start": 134.26,
+    "end": 136.7,
+    "text": "thì người ta gọi nốt trung gian, thế còn nốt gốc này"
+  },
+  {
+    "start": 136.7,
+    "end": 141.3,
+    "text": "và nốt lá thì nốt gốc thì các bạn thấy nó là nốt gốc của cái cây này rồi đúng không"
+  },
+  {
+    "start": 141.3,
+    "end": 143.46,
+    "text": "thì còn nốt lá là những cái nốt mà nó không có con ấy, đây này"
+  },
+  {
+    "start": 143.46,
+    "end": 145.3,
+    "text": "dụ như 4, 5, 6 nó không có con"
+  },
+  {
+    "start": 145.3,
+    "end": 157.02,
+    "text": "Vậy thì sau khi mình biết cái cây nhị phân nó như thế nào rồi, hay là biết một số định nghĩa của nó rồi ấy, thì mình sẽ, ở đây mình sẽ không nói rõ, mình sẽ không nói chi tiết về cây nhị phân đâu, ok?"
+  },
+  {
+    "start": 157.02,
+    "end": 167.66,
+    "text": "Nói chung là chỉ giới thiệu để cho các bạn biết cái cây nhị phân nó như thế nào, thì cái cây nhị phân hoàn chỉnh ở đây ấy, là cây nhị phân mà trong đó tất cả các level, các cái cấp của cây này này nó sẽ được lấp đầy, ok?"
+  },
+  {
+    "start": 167.66,
+    "end": 173.66,
+    "text": "và được điền từ bên trái, ví dụ như này là 1 cái cây nhị phân hoàn chỉnh này"
+  },
+  {
+    "start": 173.66,
+    "end": 178.66,
+    "text": "Cây nhị phân hoàn chỉnh, các cái level của nó ấy, đây là 1 level này"
+  },
+  {
+    "start": 178.66,
+    "end": 186.33,
+    "text": "Bạn có thể hiểu đơn giản nó có các cái tầng, từng tầng, từng tầng 1 ấy"
+  },
+  {
+    "start": 186.33,
+    "end": 191.33,
+    "text": "thì mình gọi nó là 1 cái level, ví dụ đây level này, 1 level này, 2 level này, level 3 này"
+  },
+  {
+    "start": 191.33,
+    "end": 195.33,
+    "text": "và tất nhiên nó có thể có level tiếp theo"
+  },
+  {
+    "start": 195.33,
+    "end": 198.85,
+    "text": "Thì khi đó, tất cả level nó sẽ được điền đầy"
+  },
+  {
+    "start": 198.85,
+    "end": 201.33,
+    "text": "Tức là ví dụ như level 1 này sẽ được điền đầy"
+  },
+  {
+    "start": 201.33,
+    "end": 207.52,
+    "text": "Level thứ 2 này thì tháng 2 và tháng 3 này cũng sẽ được điền đầy"
+  },
+  {
+    "start": 207.52,
+    "end": 211.72,
+    "text": "Sau đó thì bắt xuống các level tiếp theo, chứ không có chuyện đấy chính là gì"
+  },
+  {
+    "start": 211.72,
+    "end": 214.92,
+    "text": "Già sử như thế này thì không phải là một cái cây nhị phân hoàn chỉnh này"
+  },
+  {
+    "start": 214.92,
+    "end": 218.32,
+    "text": "Ví dụ mình có một cái thằng 4 này, có một thằng con là 8 cho hả?"
+  },
+  {
+    "start": 218.32,
+    "end": 222.72,
+    "text": "Ok, nhưng mà bây giờ, cái level thứ 2 này này, nó lại không có, không được điền đầy"
+  },
+  {
+    "start": 222.72,
+    "end": 226.02,
+    "text": "Cái level thứ 2 này này. Thì đây không phải là 1 cây nhị phần hoàn chỉnh"
+  },
+  {
+    "start": 226.02,
+    "end": 231.12,
+    "text": "OK Cây nhị phần hoàn chỉnh là có thể hiểu đương dản nó cứ điền đầy từng lớp, từng lớp, từng lớp"
+  },
+  {
+    "start": 231.12,
+    "end": 240.12,
+    "text": "Load Preview Cache Level� on..."
+  },
+  {
+    "start": 250.36,
+    "end": 255.36,
+    "text": "birable-level 3"
+  },
+  {
+    "start": 263.36,
+    "end": 266.6,
+    "text": "ok, đó, thì đây không phải là một cái nhị phần hoàn chỉnh"
+  },
+  {
+    "start": 266.6,
+    "end": 270.18,
+    "text": "nhưng mà nếu mà mình xóa cái thang lái đi thì nó lại được gọi là một cái nhị phần hoàn chỉnh"
+  },
+  {
+    "start": 270.18,
+    "end": 273.68,
+    "text": "thấy chưa, như này thì không là một cái nhị phần hoàn chỉnh nhá"
+  },
+  {
+    "start": 273.68,
+    "end": 280.06,
+    "text": "ok, bởi vì là, ở cái level thứ 3 này chưa được điền đầy này"
+  },
+  {
+    "start": 280.06,
+    "end": 282.06,
+    "text": "ok, giả sử như trăm trường hợp này"
+  },
+  {
+    "start": 282.06,
+    "end": 288.6,
+    "text": "nếu mà cái muốn chuyển thành cái nhị phần hoàn chỉnh nghĩa thì cái node 6 này này nó sẽ phải là con của thằng bộ 2 này"
+  },
+  {
+    "start": 288.6,
+    "end": 290.1,
+    "text": "phải là con bên phải của thằng 2 này"
+  },
+  {
+    "start": 290.1,
+    "end": 293.98,
+    "text": "ok, và của mình sẽ cố gắng là điền đầy về bên trái nhé"
+  },
+  {
+    "start": 293.98,
+    "end": 297.54,
+    "text": "ok, tức là có một cái nốt nào đó mà nó chỉ có một thằng con thôi"
+  },
+  {
+    "start": 297.54,
+    "end": 300.58,
+    "text": "ví dụ như thằng ban này này, nó là có một thằng con là thằng 6 này đúng không?"
+  },
+  {
+    "start": 300.58,
+    "end": 304.26,
+    "text": "thì khi đó thằng 6 này sẽ phải là nốt con bên trái, chứ không phải là nốt con bên phải"
+  },
+  {
+    "start": 304.26,
+    "end": 307.18,
+    "text": "nếu mà bạn vẽ nó thành nốt con bên phải như thế này"
+  },
+  {
+    "start": 307.18,
+    "end": 309.98,
+    "text": "thì đây cũng không phải là một cái nhịp phần hoàn chính"
+  },
+  {
+    "start": 309.98,
+    "end": 316.25,
+    "text": "ok, đó, mà mình sẽ phải viện như thế này"
+  },
+  {
+    "start": 316.25,
+    "end": 318.33,
+    "text": "thế đây lại là một cái nhịp phần hoàn chính"
+  },
+  {
+    "start": 318.33,
+    "end": 320.97,
+    "text": "tức là nó có một cái tính chất đấy chính là gì nhỉ?"
+  },
+  {
+    "start": 320.97,
+    "end": 323.49,
+    "text": "tất cả các phần tử lá, nó đều nhiên vì bên trái"
+  },
+  {
+    "start": 323.49,
+    "end": 327.13,
+    "text": "cái thằng ở đây các bạn có 4, 5, 6 là phần tử lá đúng không?"
+  },
+  {
+    "start": 327.13,
+    "end": 332.97,
+    "text": "4 với thằng 5 này thì nó là con của 2, không nói, nhưng mà thằng 6 này nó cũng là 1 nốt lá thì nó sẽ nhiên vì bên trái"
+  },
+  {
+    "start": 332.97,
+    "end": 334.09,
+    "text": "ok"
+  },
+  {
+    "start": 334.09,
+    "end": 340.25,
+    "text": "và thật nhiên là cái nốt lá cuối cùng thì nó có thể nó không có con, nó không có anh em của nó"
+  },
+  {
+    "start": 340.25,
+    "end": 343.09,
+    "text": "ví dụ như thằng 6 này là thằng mà nó không có anh em của nó"
+  },
+  {
+    "start": 343.09,
+    "end": 348.53,
+    "text": "đúng nhỉ? thằng 1 này là thằng cha đúng không? thằng 2 này là con bên trái và thằng 3 này là con bên phải"
+  },
+  {
+    "start": 348.53,
+    "end": 352.17,
+    "text": "Thì 2 cái node 2 và 3 nó được gọi là 2 cái node anh em, hoặc là sibling"
+  },
+  {
+    "start": 352.17,
+    "end": 358.05,
+    "text": "Ok? Thì trong trường hợp cái cái những phân hoàn chỉnh của mình, nghĩa thì tháng 6 này có thể nó không có cái thằng anh bên phạm của nó"
+  },
+  {
+    "start": 358.05,
+    "end": 360.21,
+    "text": "Ok? Không vấn đề gì nhé"
+  },
+  {
+    "start": 360.21,
+    "end": 362.61,
+    "text": "Hoặc là tháng 3 này nó không có con cũng được, nhé?"
+  },
+  {
+    "start": 362.61,
+    "end": 364.66,
+    "text": "Tháng 3 này nó không có con cũng được"
+  },
+  {
+    "start": 364.66,
+    "end": 367.14,
+    "text": "Thì nó vẫn là một cái những phân hoàn chỉnh thôi"
+  },
+  {
+    "start": 367.14,
+    "end": 369.02,
+    "text": "Ok?"
+  },
+  {
+    "start": 369.02,
+    "end": 372.46,
+    "text": "Rồi, thì đây các bạn có thể xem một cái ví dụ về cái những phân hoàn chỉnh này"
+  },
+  {
+    "start": 372.46,
+    "end": 373.26,
+    "text": "Đây"
+  },
+  {
+    "start": 373.26,
+    "end": 375.42,
+    "text": "1 này là cha của 2 này và 3 này"
+  },
+  {
+    "start": 375.42,
+    "end": 377.1,
+    "text": "2 thì là cha của 4 và 5 này"
+  },
+  {
+    "start": 377.1,
+    "end": 378.7,
+    "text": "3 thì là cha của 6 này"
+  },
+  {
+    "start": 378.7,
+    "end": 380.7,
+    "text": "và 6 nó sẽ là con bên trái của 3"
+  },
+  {
+    "start": 380.7,
+    "end": 382.7,
+    "text": "ok, cái đây là một cái ví dụ"
+  },
+  {
+    "start": 382.7,
+    "end": 384.7,
+    "text": "về kênh nhị phân hoàn chỉnh"
+  },
+  {
+    "start": 384.7,
+    "end": 389.76,
+    "text": "vậy thì mình đã có định nghĩa về cái kênh nhị phân hoàn chỉnh rồi đúng không"
+  },
+  {
+    "start": 389.76,
+    "end": 391.76,
+    "text": "mình có thể vẽ một vài cái kênh nhị phân hoàn chỉnh"
+  },
+  {
+    "start": 391.76,
+    "end": 393.76,
+    "text": "và các bạn có thể thấy nó cũng không có gì khó hiểu"
+  },
+  {
+    "start": 399.76,
+    "end": 403.79,
+    "text": "các bạn có thể xem kênh nhị phân hoàn chỉnh mà nó rất là lớn"
+  },
+  {
+    "start": 403.79,
+    "end": 415.66,
+    "text": "4, 5, 6, 7, 8, 9, 10"
+  },
+  {
+    "start": 415.66,
+    "end": 420.26,
+    "text": "đây là một cây nhị phân hoàn chỉnh đúng không? Mà thấy ở các cái mức của nó, các cái level của nó đều được điền đầy"
+  },
+  {
+    "start": 420.26,
+    "end": 424.26,
+    "text": "và những các cái nốt lá này sẽ được nguyên về bên trái, ok?"
+  },
+  {
+    "start": 424.26,
+    "end": 432.2,
+    "text": "Rồi, thì đấy là cái định nghĩa về cái cây và ví dụ về cái cây nhị phân hoàn chỉnh mà các bạn cần biết"
+  },
+  {
+    "start": 432.2,
+    "end": 435.6,
+    "text": "trước khi mà mình nói đến cây câu chức dự liệu HIP, ok?"
+  },
+  {
+    "start": 435.6,
+    "end": 443.0,
+    "text": "Và có một cái điều đặc biệt như thế này, đây là nó có một cái mối quan hệ giữa cái phần tửa trong mảng của mình với cái cây nhị phân hoàn chỉnh này"
+  },
+  {
+    "start": 443.0,
+    "end": 445.96,
+    "text": "Ví dụ mình có 1 cái mạng như sau nhé"
+  },
+  {
+    "start": 445.96,
+    "end": 454.68,
+    "text": "xa này đi"
+  },
+  {
+    "start": 454.68,
+    "end": 459.75,
+    "text": "Ví dụ mình có 1 cái mạng như này"
+  },
+  {
+    "start": 459.75,
+    "end": 461.75,
+    "text": "Ở đây mình sẽ lấy 1 cái ví dụ"
+  },
+  {
+    "start": 461.75,
+    "end": 463.75,
+    "text": "1 cái mạng là 2 này"
+  },
+  {
+    "start": 463.75,
+    "end": 467.9,
+    "text": "3 này"
+  },
+  {
+    "start": 467.9,
+    "end": 471.4,
+    "text": "7 này"
+  },
+  {
+    "start": 471.4,
+    "end": 473.65,
+    "text": "1 này"
+  },
+  {
+    "start": 473.65,
+    "end": 474.65,
+    "text": "4 này"
+  },
+  {
+    "start": 474.65,
+    "end": 476.65,
+    "text": "và 6, ok"
+  },
+  {
+    "start": 476.65,
+    "end": 478.65,
+    "text": "Và các phần tử này nó sẽ có chỉ số là 0 này"
+  },
+  {
+    "start": 478.65,
+    "end": 480.65,
+    "text": "1 này, 2 này, 3 này, 4 này"
+  },
+  {
+    "start": 480.65,
+    "end": 482.65,
+    "text": "5, ok"
+  },
+  {
+    "start": 482.65,
+    "end": 484.65,
+    "text": "Thì có 1 cái điều đặc biệt đấy chính là"
+  },
+  {
+    "start": 484.65,
+    "end": 486.65,
+    "text": "nếu cái mạng của mình này này, mình có 1 cái mạng nhé"
+  },
+  {
+    "start": 486.65,
+    "end": 490.65,
+    "text": "mình có thể xây dựng được 1 cái cây nhị phân hoàn chỉnh từ cái mạng này, thông qua cái chỉ số này nè"
+  },
+  {
+    "start": 490.65,
+    "end": 497.65,
+    "text": "Ok, tức là khi mà 1 cái node i nào đó, nó có chỉ số là i đúng không?"
+  },
+  {
+    "start": 497.65,
+    "end": 504.8,
+    "text": "Thì cái phần tử là cái node con bên trái của nó, khi mà mình xây dựng cái cây nhị phân hoàn chỉnh nó sẽ có chỉ số là 2i, 1"
+  },
+  {
+    "start": 504.8,
+    "end": 510.8,
+    "text": "Và cái thằng node con bên phải, đây là bên trái nhé, nó sẽ có chỉ số là i là 2i, 2"
+  },
+  {
+    "start": 510.8,
+    "end": 516.09,
+    "text": "Vậy thì từ cái mạng này thì mình có thể xây dựng nhìn ra nó 1 cái cây nhị phân như sau"
+  },
+  {
+    "start": 516.09,
+    "end": 519.57,
+    "text": "nốt đầu tiên là nốt 2 này, nốt gốc này này, nó có chỉ số là 0 này"
+  },
+  {
+    "start": 519.57,
+    "end": 523.05,
+    "text": "đó thì nó chính là thằng 2 này đúng không, mà chỉ số 0"
+  },
+  {
+    "start": 523.05,
+    "end": 525.05,
+    "text": "thì nó sẽ có 2 cái thằng quan bên trái"
+  },
+  {
+    "start": 525.05,
+    "end": 527.29,
+    "text": "đấy chính là cái thằng ở chỉ số 2 y cộng 1"
+  },
+  {
+    "start": 527.29,
+    "end": 528.97,
+    "text": "và thằng ở 2 y cộng 2"
+  },
+  {
+    "start": 528.97,
+    "end": 531.81,
+    "text": "tức là 2 y cộng cộng 1 là 1 và 2 y cộng 2"
+  },
+  {
+    "start": 531.81,
+    "end": 533.37,
+    "text": "dễ lỗi 2 y cộng cộng 2 là 2"
+  },
+  {
+    "start": 533.37,
+    "end": 535.77,
+    "text": "thì khi đó nó chính là thằng 3 này và thằng 7 này"
+  },
+  {
+    "start": 535.77,
+    "end": 537.45,
+    "text": "đấy thì các bạn có thể"
+  },
+  {
+    "start": 537.45,
+    "end": 538.53,
+    "text": "mình dùng nó như thế này"
+  },
+  {
+    "start": 538.53,
+    "end": 540.4,
+    "text": "đây là thằng này là thằng 3 này"
+  },
+  {
+    "start": 540.4,
+    "end": 542.72,
+    "text": "và thằng này là thằng 7 này, ok"
+  },
+  {
+    "start": 542.72,
+    "end": 545.88,
+    "text": "Thằng này thì ở chỉ số 1, và thằng này ở chỉ số 2"
+  },
+  {
+    "start": 545.88,
+    "end": 551.62,
+    "text": "Tương tự như vậy, cái thằng ba này thì nó cũng sẽ có 2 thằng con của nó"
+  },
+  {
+    "start": 551.62,
+    "end": 554.82,
+    "text": "Để chính là cái thằng ở chỉ số 2, nhân với 1, cộng với 1, đúng không?"
+  },
+  {
+    "start": 554.82,
+    "end": 556.66,
+    "text": "2i, cộng 1 mà, và 2i, cộng 2"
+  },
+  {
+    "start": 556.66,
+    "end": 559.94,
+    "text": "Vậy thì khi đó, cái thằng con bên trái của nó sẽ là 2i, cộng 1"
+  },
+  {
+    "start": 559.94,
+    "end": 561.86,
+    "text": "Tức là 2 nhân 1 là 1"
+  },
+  {
+    "start": 561.86,
+    "end": 565.1,
+    "text": "Cộng với 1 là 3 đúng không? Tức là thằng 1 này này"
+  },
+  {
+    "start": 565.1,
+    "end": 566.78,
+    "text": "Thằng này nó có chỉ số là 3"
+  },
+  {
+    "start": 566.78,
+    "end": 569.46,
+    "text": "Và cái thằng con ở bên phải của nó thì nó sẽ có chỉ số là"
+  },
+  {
+    "start": 569.46,
+    "end": 572.98,
+    "text": "2 nhân 1, cộng 2, tức là chỉ số 4"
+  },
+  {
+    "start": 572.98,
+    "end": 574.58,
+    "text": "Nó chính là ông 4 này này"
+  },
+  {
+    "start": 574.58,
+    "end": 576.58,
+    "text": "4 này có chỉ số là 4"
+  },
+  {
+    "start": 576.58,
+    "end": 578.9,
+    "text": "ok, tương tự như vậy thằng 7 này nè"
+  },
+  {
+    "start": 578.9,
+    "end": 580.9,
+    "text": "nó đang có chỉ số là 2 đúng không?"
+  },
+  {
+    "start": 580.9,
+    "end": 584.05,
+    "text": "thì khi đó cái nốt tra của nó nó sẽ có chỉ số là"
+  },
+  {
+    "start": 584.05,
+    "end": 586.05,
+    "text": "ạ, sẽ lỗi cái nốt con bên trái của nó sẽ là"
+  },
+  {
+    "start": 586.05,
+    "end": 589.2,
+    "text": "2 × 2 × 1 là 5"
+  },
+  {
+    "start": 589.2,
+    "end": 591.2,
+    "text": "ok, và nốt con bên phải của nó là"
+  },
+  {
+    "start": 591.2,
+    "end": 592.8,
+    "text": "2 × 2 × 2 là 6"
+  },
+  {
+    "start": 592.8,
+    "end": 594.32,
+    "text": "nhưng mà cái chỉ số 6 đấy"
+  },
+  {
+    "start": 594.32,
+    "end": 596.32,
+    "text": "nó vượt ra ngoài mảng rồi"
+  },
+  {
+    "start": 596.32,
+    "end": 597.28,
+    "text": "đúng không?"
+  },
+  {
+    "start": 597.28,
+    "end": 599.84,
+    "text": "thì khi đó cái cây của bạn nó đã xong rồi đấy"
+  },
+  {
+    "start": 599.84,
+    "end": 602.32,
+    "text": "thì đây chính là cái cách mà bạn chuyển từ 1 cái mảng"
+  },
+  {
+    "start": 602.32,
+    "end": 604.32,
+    "text": "xa 1 cái cây những phần hoàn trình như thế này"
+  },
+  {
+    "start": 604.32,
+    "end": 614.6,
+    "text": "Ok. Thức là mình sẽ dựa vào cái thính chất như thế này. Đấy chính là khi một cái node i nào đó ấy, thì thằng con bên trái của nó sẽ nằm ở chỉ số là 2i, 1, và thằng con bên phải nó sẽ nằm ở chỉ số 2i, 2"
+  },
+  {
+    "start": 614.6,
+    "end": 623.25,
+    "text": "Ok. Và từ một cái node i nào đó, bạn có thể tìm ngay ra chè của thằng i này. Mà công thức là i chi 1 trên 2 đúng không nhỉ?"
+  },
+  {
+    "start": 623.25,
+    "end": 632.25,
+    "text": "Ừm, i chi 1 trên 2 ngay. Ok. Ví dụ như là cái thằng 4 này nhé. Thằng 4 này này nó có chỉ số là 4 ấy. Chỉ số của nó nhé."
+  },
+  {
+    "start": 632.25,
+    "end": 637.05,
+    "text": "i là 4, thì bạn có thể tìm ngay ra ngay cái chỉ số nốt tra của 4"
+  },
+  {
+    "start": 637.05,
+    "end": 641.65,
+    "text": "khi mà mình nó tạo thành cái cây như thế này, nó chính là 4, chứ 1, chia cho 2"
+  },
+  {
+    "start": 641.65,
+    "end": 644.65,
+    "text": "là 3, chia cho 2 là bằng 1, nó chính là cái ông 3 này này"
+  },
+  {
+    "start": 644.65,
+    "end": 647.05,
+    "text": "đúng không? đây nốt tra của nó, đây có chỉ số là 1"
+  },
+  {
+    "start": 647.05,
+    "end": 651.65,
+    "text": "đấy, vậy thì các bạn thấy cái mối quan hệ giữa một cái mảng như thế này đúng không?"
+  },
+  {
+    "start": 651.65,
+    "end": 653.05,
+    "text": "mối 1 cái cây những phần hoàn chính này"
+  },
+  {
+    "start": 653.05,
+    "end": 657.65,
+    "text": "và mình sẽ làm việc trên cái mảng này luôn, chứ bạn không cần phải xây dựng cái cây này"
+  },
+  {
+    "start": 657.65,
+    "end": 660.25,
+    "text": "ok, nhưng mà mình vẫn hình dung nó như 1 cái cây như thế này nhé"
+  },
+  {
+    "start": 660.25,
+    "end": 665.21,
+    "text": "và cái mối quan hệ giữa chỉ số tre và hai cái thằng con bên trái và thằng con bên phải thì nó như thế này"
+  },
+  {
+    "start": 665.21,
+    "end": 672.41,
+    "text": "đây chính là chỉ số tre là i thì chỉ số tre, nốt con bên trái là 2y1 và nốt con bên phải là 2y2"
+  },
+  {
+    "start": 672.41,
+    "end": 677.85,
+    "text": "ok, chú ý là các bạn sẽ phải điền đầy từ từng mức 1 nhé, đúng nhỉ"
+  },
+  {
+    "start": 677.85,
+    "end": 681.29,
+    "text": "bạn xét cái thằng 0 này trước sau đó đến 1 sau đến 2"
+  },
+  {
+    "start": 681.29,
+    "end": 685.37,
+    "text": "ok, chứ bạn không xét 0, 1 sau dưới này bạn lại xét thằng 1 với thằng 4 này"
+  },
+  {
+    "start": 685.37,
+    "end": 689.37,
+    "text": "bởi vì hai cái thằng này thì nó ở mức dưới rồi, mình sẽ xét thằng 7 này trước"
+  },
+  {
+    "start": 689.37,
+    "end": 693.01,
+    "text": "Đó, thì đấy chính là cái cách mà mình diễn đổi một cái mạng này"
+  },
+  {
+    "start": 693.01,
+    "end": 694.85,
+    "text": "hình dung nó như một cái cây như thế này"
+  },
+  {
+    "start": 694.85,
+    "end": 697.97,
+    "text": "Đúng nhỉ, mình sẽ vẽ cái cây này thì nó rõ dễ hiểu hơn này"
+  },
+  {
+    "start": 697.97,
+    "end": 698.97,
+    "text": "Ok?"
+  },
+  {
+    "start": 702.7,
+    "end": 707.1,
+    "text": "Đây, người ta cũng có một cái ví dụ từ cái mạng này, sau bạn xây dựng cái cây, đúng không?"
+  },
+  {
+    "start": 707.1,
+    "end": 709.34,
+    "text": "Thằng 1 này nó sẽ là cha của 12 với 9"
+  },
+  {
+    "start": 709.34,
+    "end": 711.74,
+    "text": "12 là con bên trái và 9 là con bên phải"
+  },
+  {
+    "start": 711.74,
+    "end": 715.34,
+    "text": "Sau đó thì 12 sẽ có 2 con là 5 và 6, đúng không?"
+  },
+  {
+    "start": 715.34,
+    "end": 717.18,
+    "text": "5 sẽ là con bên trái đây"
+  },
+  {
+    "start": 717.18,
+    "end": 718.74,
+    "text": "và 6 là con bên phải"
+  },
+  {
+    "start": 718.74,
+    "end": 721.42,
+    "text": "Thế con thằng 2 này nó sẽ có mỗi 1 thằng con bên trái thôi"
+  },
+  {
+    "start": 721.42,
+    "end": 727.42,
+    "text": "Thế chính là tháng 10 này, ok, bởi vì thằng con bên phải của nó thì, nếu mà nó có con bên phải thì cái mạng này phải có thêm 1 phần tử nữa"
+  },
+  {
+    "start": 727.42,
+    "end": 733.92,
+    "text": "Nhưng mà mạng này chỉ có 6 phần tử thôi, thành ra là cái node cũng 2 này này, nó chỉ có 1 thằng con bên trái, ok"
+  },
+  {
+    "start": 733.92,
+    "end": 743.52,
+    "text": "Vậy thì nói về cái câu chúc dữ liệu HIP nhé, sau khi mà mình đã hiểu được cái cách xây dựng 1 cái mạng và hình dung nó như là 1 cái cây nhị phân hoàn chỉnh rồi"
+  },
+  {
+    "start": 743.52,
+    "end": 747.81,
+    "text": "Đúng không? Thì mình sẽ nói đến cái câu chúc dữ liệu là HIP"
+  },
+  {
+    "start": 747.81,
+    "end": 750.61,
+    "text": "HIP nó sẽ là 1 cái câu cây nhị phân hoàn chỉnh nhé"
+  },
+  {
+    "start": 750.61,
+    "end": 753.05,
+    "text": "Nhưng nó có thêm một cái thuộc tính, à, một cái tính chất nữa"
+  },
+  {
+    "start": 753.05,
+    "end": 754.89,
+    "text": "Đấy chính là cái node ở góc í"
+  },
+  {
+    "start": 754.89,
+    "end": 757.13,
+    "text": "Bây giờ nó cũng lớn hơn hai cái node"
+  },
+  {
+    "start": 757.13,
+    "end": 759.33,
+    "text": "con bên trái và node con bên phải"
+  },
+  {
+    "start": 759.33,
+    "end": 761.17,
+    "text": "Thì trong trường hợp mà cái node ở dưỡi"
+  },
+  {
+    "start": 761.17,
+    "end": 762.89,
+    "text": "node góc í, xin lỗi, node tra đấy"
+  },
+  {
+    "start": 762.89,
+    "end": 766.37,
+    "text": "Nó lớn hơn cả thằng con bên trái và thằng con bên phải thì người ta gọi là mắc heap"
+  },
+  {
+    "start": 766.37,
+    "end": 768.41,
+    "text": "Ok, ngược lại, nếu mà cái thằng con"
+  },
+  {
+    "start": 768.41,
+    "end": 771.17,
+    "text": "thằng ở node góc thì nó nhỏ hơn cả thằng bên trái và thằng bên phải của nó ấy"
+  },
+  {
+    "start": 771.17,
+    "end": 773.37,
+    "text": "con bên trái và con bên phải của nó thì người ta gọi là min heap"
+  },
+  {
+    "start": 773.37,
+    "end": 775.53,
+    "text": "Ok, các bạn có thể hình dung như thế này này"
+  },
+  {
+    "start": 775.53,
+    "end": 778.19,
+    "text": "Khi mà bạn có một cái node nhá"
+  },
+  {
+    "start": 778.19,
+    "end": 782.53,
+    "text": "Bạn có một cái node như sao?"
+  },
+  {
+    "start": 782.53,
+    "end": 784.63,
+    "text": "như thế này này"
+  },
+  {
+    "start": 784.63,
+    "end": 790.37,
+    "text": "1 này, mình nói 4 đi"
+  },
+  {
+    "start": 790.37,
+    "end": 792.79,
+    "text": "ok"
+  },
+  {
+    "start": 792.79,
+    "end": 795.68,
+    "text": "2 này, thằng này thì là 1 này"
+  },
+  {
+    "start": 795.68,
+    "end": 802.68,
+    "text": "đó, thì bạn thấy là cái nốt gốc của đây có giá trị là 4, nốt trà đây có giá trị là 4, thằng con bên trái thì có giá trị là 2 và thằng con bên trái nó có giá trị là 1"
+  },
+  {
+    "start": 802.68,
+    "end": 809.68,
+    "text": "ok, thì đây là 1 cái ví dụ mà cái nốt trái nó có giá trị lớn hơn cả 2 cái thằng con bên trái và thằng con bên trái"
+  },
+  {
+    "start": 809.68,
+    "end": 812.68,
+    "text": "ok, và nếu mà cái cây nhị phân hoàn chỉnh của các bạn ấy"
+  },
+  {
+    "start": 812.68,
+    "end": 819.28,
+    "text": "nốt nào, nó thoảm ảnh tất cả các nốt trẻ, nó đều lớn hơn, thằng con bên trái và thằng con bên phải của nó, thì nó sẽ là map hit"
+  },
+  {
+    "start": 819.28,
+    "end": 821.48,
+    "text": "ví dụ bạn có một cái map hit như thế này này"
+  },
+  {
+    "start": 821.48,
+    "end": 823.64,
+    "text": "ví dụ mình cho thằng này là 4 nhá"
+  },
+  {
+    "start": 823.64,
+    "end": 833.01,
+    "text": "ok, thằng nỗi xe xa, cho nó là 6 đi"
+  },
+  {
+    "start": 833.01,
+    "end": 835.01,
+    "text": "đây, thằng này là 6 nhá"
+  },
+  {
+    "start": 835.01,
+    "end": 838.14,
+    "text": "ok, thằng con bên trái, thằng này thì là 5"
+  },
+  {
+    "start": 838.14,
+    "end": 840.14,
+    "text": "thằng con bên phải này có giá trị là 4"
+  },
+  {
+    "start": 840.14,
+    "end": 842.74,
+    "text": "ông 5 này thì là có 2 giá trị con là 3"
+  },
+  {
+    "start": 842.74,
+    "end": 844.4,
+    "text": "và 2"
+  },
+  {
+    "start": 844.4,
+    "end": 849.32,
+    "text": "Bốn này thì có hai con vai trị là hai, ạ, xin lỗi"
+  },
+  {
+    "start": 849.32,
+    "end": 852.96,
+    "text": "Hai cũng được, nhưng mà anh để là một nha, và không"
+  },
+  {
+    "start": 852.96,
+    "end": 856.54,
+    "text": "Thì bạn thấy đây là một cái mark-hift, ok mark-hift"
+  },
+  {
+    "start": 856.54,
+    "end": 866.99,
+    "text": "Bởi vì bạn thấy này, cái thằng xáu này nó sẽ lớn hơn hai thằng con của nó, đấy là năm và bốn"
+  },
+  {
+    "start": 866.99,
+    "end": 870.23,
+    "text": "Thằng năm này cũng thế, nó sẽ lớn hơn hai thằng con của nó là ba và hai"
+  },
+  {
+    "start": 870.23,
+    "end": 873.27,
+    "text": "và thằng bốn này nó cũng sẽ lớn hơn hai thằng con của nó là một và không"
+  },
+  {
+    "start": 873.27,
+    "end": 877.23,
+    "text": "Đấy, thì bạn thấy tất cả những cái nốt mà nó không phải nốt lá, dụng như ba thằng này này"
+  },
+  {
+    "start": 877.23,
+    "end": 881.43,
+    "text": "Điều có tính chất đấy. Đấy là nó sẽ lớn hơn hai thằng con bên trái và con bên phải của nó"
+  },
+  {
+    "start": 881.43,
+    "end": 885.03,
+    "text": "Tất nhiên thằng bố này nó cũng có thể không có con hoặc là nó có một con nhé"
+  },
+  {
+    "start": 885.03,
+    "end": 887.63,
+    "text": "Hí dụ nó không có một con như này thì đây cũng vẫn là mắc hiếp"
+  },
+  {
+    "start": 887.63,
+    "end": 891.23,
+    "text": "Bởi vì đây cũng vẫn là một cái nhị phân hoàn chỉnh thẳm mạng cái tính chất mà mới nói"
+  },
+  {
+    "start": 891.23,
+    "end": 898.23,
+    "text": "Thế còn trong trường hợp mà, cái phần tửa nốt cha nó nhỏ hơn cả hai thằng con bên trái và thằng con bên phải"
+  },
+  {
+    "start": 898.23,
+    "end": 902.83,
+    "text": "Và đối với cái cây nhị phân của mình mà tất cả các cái nốt ấy không phải là nốt lá"
+  },
+  {
+    "start": 902.83,
+    "end": 905.63,
+    "text": "Nó thả mạng cái tính chất đấy thì người ta gọi là minh hit"
+  },
+  {
+    "start": 905.63,
+    "end": 909.15,
+    "text": "tức là giả sử như mình có một cái kênh nhị phần như này"
+  },
+  {
+    "start": 909.15,
+    "end": 914.72,
+    "text": "cái nốt ở góc này này, thằng này thì có giá trị là 1"
+  },
+  {
+    "start": 914.72,
+    "end": 918.32,
+    "text": "thằng con bên trái nó có giá trị là 2, thằng này thì có giá trị là 3"
+  },
+  {
+    "start": 918.32,
+    "end": 921.44,
+    "text": "thằng 2 này thì nó có 2 thằng con có giá trị là 4"
+  },
+  {
+    "start": 921.44,
+    "end": 923.92,
+    "text": "và 5 thằng 3 này thì có giá trị là 6"
+  },
+  {
+    "start": 923.92,
+    "end": 927.92,
+    "text": "thì bạn thấy là gì nhỉ, ở đây nó có 3 nốt, không phải nó nốt lái, ở đây là 1, 2 và 3"
+  },
+  {
+    "start": 927.92,
+    "end": 931.92,
+    "text": "thì bạn thấy nó đều thoảm ảnh tính chất là gì nhỉ, nó nhỏ hơn cả thằng con bên trái"
+  },
+  {
+    "start": 931.92,
+    "end": 934.88,
+    "text": "và nó nhỏ hơn cả thằng con bên phải của nó, đây này, 1 nhỏ hơn 2"
+  },
+  {
+    "start": 934.88,
+    "end": 939.32,
+    "text": "1 nhỏ hơn 3 đúng không? 2 nhỏ hơn 4, 2 nhỏ hơn 5 và 3 nhỏ hơn 6"
+  },
+  {
+    "start": 939.32,
+    "end": 941.4,
+    "text": "thì đây chính là một cái"
+  },
+  {
+    "start": 941.4,
+    "end": 945.52,
+    "text": "mark heap, ok, ảy xin lỗi min heap, ảy"
+  },
+  {
+    "start": 945.52,
+    "end": 947.2,
+    "text": "đúng nha, min heap"
+  },
+  {
+    "start": 947.2,
+    "end": 950.04,
+    "text": "ở đây thì mình sẽ sử dụng mark heap này nhiều nhá, ok"
+  },
+  {
+    "start": 950.04,
+    "end": 951.64,
+    "text": "thế còn min heap thì nó nược lại thôi"
+  },
+  {
+    "start": 951.64,
+    "end": 955.65,
+    "text": "và tất nhiên thằng thực ra thì"
+  },
+  {
+    "start": 955.65,
+    "end": 961.01,
+    "text": "cái thằng này, cái chỗ này này, ok, các bạn có thể cho thằng ba này và chỗ này cũng là ba cũng được"
+  },
+  {
+    "start": 961.01,
+    "end": 964.7,
+    "text": "tức là cái node"
+  },
+  {
+    "start": 964.7,
+    "end": 968.82,
+    "text": "nốt tra này nó cũng có thể bằng thằng nốt con của nó"
+  },
+  {
+    "start": 968.82,
+    "end": 972.38,
+    "text": "nhưng mà không được thằng nốt tra, không được lớn hơn nhé"
+  },
+  {
+    "start": 972.38,
+    "end": 976.86,
+    "text": "nốt tra nó sẽ nhỏ hơn hoặc bằng nốt con của nó, thì nó cũng được con là mean heap thôi"
+  },
+  {
+    "start": 976.86,
+    "end": 979.63,
+    "text": "chưa, ngược lại như thế nhé, thì mình có mark heap"
+  },
+  {
+    "start": 979.63,
+    "end": 982.71,
+    "text": "ở đây các bạn có thể xem 1 cái ví dụ về mean heap và mark heap này"
+  },
+  {
+    "start": 982.71,
+    "end": 983.71,
+    "text": "đây, cái mark heap này"
+  },
+  {
+    "start": 983.71,
+    "end": 987.23,
+    "text": "bạn thấy thằng 12 nó sẽ lớn hơn left side và right side của nó"
+  },
+  {
+    "start": 987.23,
+    "end": 989.47,
+    "text": "con bên trái và con bên phại, 10 cũng thế"
+  },
+  {
+    "start": 989.47,
+    "end": 990.83,
+    "text": "lớn hơn 5 và 6"
+  },
+  {
+    "start": 990.83,
+    "end": 991.95,
+    "text": "9 thì lớn hơn 1"
+  },
+  {
+    "start": 991.95,
+    "end": 993.03,
+    "text": "đây là mean heap này"
+  },
+  {
+    "start": 993.03,
+    "end": 995.95,
+    "text": "1 sẽ nhỏ hơn con bên trái là 5 và con bên phải là 9"
+  },
+  {
+    "start": 995.95,
+    "end": 999.15,
+    "text": "5 thì cũng lại nhỏ hơn 2 con bên trái của nó là 10 và 6"
+  },
+  {
+    "start": 999.15,
+    "end": 1002.63,
+    "text": "và 9 thì nó sẽ nhỏ hơn con bên trái của nó là 12"
+  },
+  {
+    "start": 1002.63,
+    "end": 1008.11,
+    "text": "tất nhiên là cái thứ tự của con bên trái và con bên phải không quan trọng"
+  },
+  {
+    "start": 1008.11,
+    "end": 1012.63,
+    "text": "tức là nhiều bạn lại tưởng là thằng con bên trái phải nhỏ hơn thằng con bên phải cái đấy là không đúng"
+  },
+  {
+    "start": 1012.63,
+    "end": 1015.51,
+    "text": "mình chỉ cần cái tính chất đấy chính là cái thằng nốt trang này nó nhỏ hơn"
+  },
+  {
+    "start": 1015.51,
+    "end": 1018.51,
+    "text": "nốt con bên trái mà nốt con bên phải thôi thì nó là mean heap"
+  },
+  {
+    "start": 1018.51,
+    "end": 1023.51,
+    "text": "Ok, còn không nhất thiết về cái thứ tự thằng con bên trái phải lớn hơn hay là nhỏ hơn đâu nha"
+  },
+  {
+    "start": 1023.51,
+    "end": 1029.01,
+    "text": "Ờ, thì đấy chính là 1 cái cấu trúc dữ liệu HIP, nó chính là cái private queue mà mình vẫn hay dùng đấy"
+  },
+  {
+    "start": 1029.01,
+    "end": 1033.4,
+    "text": "Đúng nhờ, thì nó có 2 loại là MAC HIP và MIN HIP như thế"
+  },
+  {
+    "start": 1033.4,
+    "end": 1042.4,
+    "text": "Thì sau khi mà mình biết cái cấu trúc dữ liệu HIP này, nó là 1 cái loại cây nhị phân hoàn chỉnh mà nó thỏa mạng cái tính chất này thì mình sẽ đi"
+  },
+  {
+    "start": 1042.4,
+    "end": 1056.2,
+    "text": "xây dựng một cái, một cái, mình sẽ có một cái mạng, sau đó mình sẽ xây dựng được một cái, mình sẽ áp dụng một cái thao tác, người ta gọi là thao tác, hippie-fi"
+  },
+  {
+    "start": 1056.2,
+    "end": 1065.2,
+    "text": "ok, đó, để mình xây dựng một cái mắc hippie, nhá, nó có một cái thao tác, để là thao tác hippie-fi"
+  },
+  {
+    "start": 1065.2,
+    "end": 1072.2,
+    "text": "để mình xây dựng từ một cái mạng mình có thể xây dựng được một cái mắc hippie, ok, tất nhiên ở đây mình chưa cao đặt cây gì nhé,"
+  },
+  {
+    "start": 1103.45,
+    "end": 1105.45,
+    "text": "i. there is 1."
+  },
+  {
+    "start": 1105.45,
+    "end": 1107.45,
+    "text": "i is the largest, i is the first number."
+  },
+  {
+    "start": 1107.45,
+    "end": 1108.49,
+    "text": "The first number is 2i,"
+  },
+  {
+    "start": 1108.49,
+    "end": 1110.57,
+    "text": "the fourth first number is"
+  },
+  {
+    "start": 1110.57,
+    "end": 1112.09,
+    "text": "2i, the first number,"
+  },
+  {
+    "start": 1112.09,
+    "end": 1114.09,
+    "text": "And the left one is 2i."
+  },
+  {
+    "start": 1114.09,
+    "end": 1115.77,
+    "text": "it is the number i"
+  },
+  {
+    "start": 1115.77,
+    "end": 1117.77,
+    "text": "The second number is 1i."
+  },
+  {
+    "start": 1117.77,
+    "end": 1119.77,
+    "text": "the third is 2i,"
+  },
+  {
+    "start": 1119.77,
+    "end": 1121.93,
+    "text": "2i is the largest,"
+  },
+  {
+    "start": 1121.93,
+    "end": 1123.93,
+    "text": "and 1 is the number i."
+  },
+  {
+    "start": 1123.93,
+    "end": 1126.25,
+    "text": "It will check the left and the right"
+  },
+  {
+    "start": 1126.25,
+    "end": 1128.25,
+    "text": "if it is bigger."
+  },
+  {
+    "start": 1128.25,
+    "end": 1130.17,
+    "text": "The first number is"
+  },
+  {
+    "start": 1130.17,
+    "end": 1131.85,
+    "text": "the largest,"
+  },
+  {
+    "start": 1131.85,
+    "end": 1133.85,
+    "text": "con bên trái và con bên phải"
+  },
+  {
+    "start": 1133.85,
+    "end": 1138.85,
+    "text": "và nếu mà nó kiểm tra được rằng là cái chỉ số lớn của phần tử lớn nhất trong 3 thằng đấy"
+  },
+  {
+    "start": 1138.85,
+    "end": 1141.85,
+    "text": "nó không phải là cái nút trai, nó khác thằng i này này"
+  },
+  {
+    "start": 1141.85,
+    "end": 1145.85,
+    "text": "thì nó sẽ tiến hành swap, nó sẽ hoán vị cái thằng trai với cái thằng lớn nhất đấy"
+  },
+  {
+    "start": 1145.85,
+    "end": 1149.85,
+    "text": "để cho nó đảm bảo điều kiện là gì cái thằng trai nó sẽ luôn lớn hơn 2 thằng con"
+  },
+  {
+    "start": 1149.85,
+    "end": 1154.01,
+    "text": "ok, và tiếp tục nó gọi Hippify đến cái cây con"
+  },
+  {
+    "start": 1154.01,
+    "end": 1158.01,
+    "text": "ok, cái cây con với cái gốc chỉ số là luggage"
+  },
+  {
+    "start": 1158.01,
+    "end": 1171.64,
+    "text": "Các bạn có thể hiểu đơn giản như thế này này. Chính là mình có một cái giả sử bây giờ nhé. Mình có một cái nốt gốc, nốt tra, có chỉ số là, ví dụ như thế này, có chỉ số là 2 đi."
+  },
+  {
+    "start": 1171.64,
+    "end": 1179.04,
+    "text": "Khi đó cái nốt con bên trái của nó sẽ có chỉ số là 2 nhưng 2 cộng 1 đúng không? 2 y cộng 1 là 5 đúng không?"
+  },
+  {
+    "start": 1179.04,
+    "end": 1183.08,
+    "text": "Cái con cái thằng là chỉ số con bên phải của nó sẽ có chỉ số là 6."
+  },
+  {
+    "start": 1183.08,
+    "end": 1192.0,
+    "text": "ok, giả sử như ông này này, ông có giá trị là 3, ông này có giá trị là 1, ông này có giá trị là 5"
+  },
+  {
+    "start": 1192.0,
+    "end": 1197.89,
+    "text": "bây giờ để mà tạo ra một cái mark-hip thì làm sao nhỉ? thì tất cả các cái nốt mà không phải nốt lá"
+  },
+  {
+    "start": 1197.89,
+    "end": 1202.9,
+    "text": "nó đều phải thoả mạn cái tính chất đấy chính là cái nốt ở gốc, lớn hơn 2 thằng con"
+  },
+  {
+    "start": 1202.9,
+    "end": 1209.18,
+    "text": "đấy, vậy thì người ta làm như thế này, đấy là người ta sẽ dùng 1 cái biến lag edge để lưu cái chỉ số của cái nốt gốc này này"
+  },
+  {
+    "start": 1209.18,
+    "end": 1212.66,
+    "text": "trong trường hợp này là bằng 2 đúng không?"
+  },
+  {
+    "start": 1212.66,
+    "end": 1217.38,
+    "text": "bằng hai"
+  },
+  {
+    "start": 1217.38,
+    "end": 1221.38,
+    "text": "sau đó là người ta tiến hành tiếp tục so sánh cái giá trị của cái biến"
+  },
+  {
+    "start": 1221.38,
+    "end": 1223.38,
+    "text": "nằm ở chỉ số Lagash này này, là ba này này"
+  },
+  {
+    "start": 1223.38,
+    "end": 1225.38,
+    "text": "với cái thằng con bên trái của nó"
+  },
+  {
+    "start": 1225.38,
+    "end": 1227.38,
+    "text": "là thằng một này này"
+  },
+  {
+    "start": 1227.38,
+    "end": 1231.38,
+    "text": "xem là thằng một này này, liệu dàn nó có lớn hơn cái thằng Lagash này không"
+  },
+  {
+    "start": 1231.38,
+    "end": 1233.38,
+    "text": "trong trường hợp này nó là ba đúng không, thằng một này nhỏ hơn"
+  },
+  {
+    "start": 1233.38,
+    "end": 1237.38,
+    "text": "thì khi đó cái phần tử giá trị của cái biến Lagash này nó vẫn là hai"
+  },
+  {
+    "start": 1237.38,
+    "end": 1239.6,
+    "text": "được chứ ạ?"
+  },
+  {
+    "start": 1239.6,
+    "end": 1241.6,
+    "text": "thì đấy là cái lúc mà nó so sánh cái phần tử ở gốc"
+  },
+  {
+    "start": 1241.6,
+    "end": 1244.83,
+    "text": "phần tử tra với con ở bên, thằng nốt con bên trái"
+  },
+  {
+    "start": 1244.83,
+    "end": 1247.91,
+    "text": "trái, sau đó thì nó tiếp tục nó so sánh cái nốt"
+  },
+  {
+    "start": 1247.91,
+    "end": 1254.41,
+    "text": "hiện tại bây giờ nó đang nắm cái chỉ số là lớn nhất này này, nó chính là Lagash này bằng 2 này với thằng con bên phải của nó"
+  },
+  {
+    "start": 1254.41,
+    "end": 1259.5,
+    "text": "thì thằng con bên phải của nó ở đây nó có tận có giá trị là 5 cơm, nó lớn hơn cái thằng 3 này"
+  },
+  {
+    "start": 1259.5,
+    "end": 1264.5,
+    "text": "thì khi đó cái biến Lagash của mình nó sẽ chuyển thành cái chỉ số của cái nốt con bên phải này là 6"
+  },
+  {
+    "start": 1264.5,
+    "end": 1269.29,
+    "text": "hay nhìn chung đấy chính là gì nhở, khi mà nó xét 1 cái chỉ số i nào đó á"
+  },
+  {
+    "start": 1269.29,
+    "end": 1274.5,
+    "text": "thì nó sẽ có 2 thằng con là 2i cộng 1 đúng không, và 2i cộng 2 đấy"
+  },
+  {
+    "start": 1274.5,
+    "end": 1277.14,
+    "text": "Thì nó sẽ có nhiệm vụ là gì?"
+  },
+  {
+    "start": 1277.14,
+    "end": 1282.02,
+    "text": "Nó sẽ có nhiệm vụ là tìm xem là cái thằng nào là thằng lớn nhất trong 3 thằng này, thằng tra, đúng không?"
+  },
+  {
+    "start": 1282.02,
+    "end": 1284.61,
+    "text": "Hai là thằng con bên trái, hai là thằng con bên phải"
+  },
+  {
+    "start": 1284.61,
+    "end": 1285.61,
+    "text": "Ok"
+  },
+  {
+    "start": 1285.61,
+    "end": 1291.81,
+    "text": "Sau khi mà nó tìm được cái chỉ số của thằng lớn nhất trong 3 thằng này rồi thì nó sẽ hoán vị cái thằng lớn nhất đấy với thằng ở gốc"
+  },
+  {
+    "start": 1291.81,
+    "end": 1294.31,
+    "text": "Để đảm bảo được rằng là cái thằng ở gốc cũng sẽ là thằng lớn nhất"
+  },
+  {
+    "start": 1294.31,
+    "end": 1297.45,
+    "text": "Thì trong trường hợp này, nó tìm được cái biến là gatch là 6"
+  },
+  {
+    "start": 1297.45,
+    "end": 1299.61,
+    "text": "Cái là chỉ số của cái nốt con bên phải này này"
+  },
+  {
+    "start": 1299.61,
+    "end": 1301.85,
+    "text": "Thì khi đó nó sẽ tiến hành nó hoán vị 2 thằng"
+  },
+  {
+    "start": 1301.85,
+    "end": 1303.25,
+    "text": "Đấy là thằng ở nốt gốc này này"
+  },
+  {
+    "start": 1303.25,
+    "end": 1305.25,
+    "text": "với thằng node ở bên con, bên phải"
+  },
+  {
+    "start": 1305.25,
+    "end": 1309.51,
+    "text": "trong trường hợp này, ông này sẽ thành 5 của ông là 3"
+  },
+  {
+    "start": 1309.51,
+    "end": 1311.01,
+    "text": "đấy, ông này thành 5"
+  },
+  {
+    "start": 1311.01,
+    "end": 1312.13,
+    "text": "và ông này thành 3"
+  },
+  {
+    "start": 1312.13,
+    "end": 1314.93,
+    "text": "và sau cái thao tác swap đấy, bạn thấy là gì nhỉ?"
+  },
+  {
+    "start": 1314.93,
+    "end": 1319.25,
+    "text": "nó đã đảm bảo được rằng là phần tử gốc nó sẽ lớn hơn cái thằng con bên trái và con bên phải rồi"
+  },
+  {
+    "start": 1319.25,
+    "end": 1326.46,
+    "text": "ok, sau đó thì nó tiếp tục gọi đệ quy đến cái chỉ số lag action này"
+  },
+  {
+    "start": 1326.46,
+    "end": 1333.18,
+    "text": "hay là cái khác là nó sẽ tiếp tục set cái cây con mà nó có gốc là phần tử có chỉ số là 6 này này"
+  },
+  {
+    "start": 1333.18,
+    "end": 1366.35,
+    "text": "dạ sướng như thằng ba này này, nó có 2 thằng con nữa, đúng không? 2 thằng con nữa, ví dụ ở đây thì là, 4 đi, ở đây thì là 2 đi, đó, thì tiếp tục ông 6 này, ông ba này này, nó, thằng này có chỉ số 6 đúng không vậy thì ông này có xóa là xáu là nhân 2 là 13, xáu nhân 2 là 14, đấy, thì nó lại tiếp tục như thế, nó lại tiếp tục cái theo tác đệ quy thế, để nó xây dựng cái xem là cái thằng ba này này, đã là cái thằng lớn nhất chưa,"
+  },
+  {
+    "start": 1366.35,
+    "end": 1375.58,
+    "text": "Ok, 3 này đã phải là thằng lớn nhất trong 3 thằng là nó, con bên trái và con bên phải chưa"
+  },
+  {
+    "start": 1375.58,
+    "end": 1380.28,
+    "text": "Thì trong trường hợp này chưa đúng không?"
+  },
+  {
+    "start": 1380.28,
+    "end": 1383.88,
+    "text": "Khi đó nó lại tiếp tục cập nhật thằng, nó hoán vị thằng 3 với thằng 4 thôi"
+  },
+  {
+    "start": 1383.88,
+    "end": 1393.16,
+    "text": "Thấy, mình sẽ viết thằng này thành 4 và thằng này thằng 3 để nó luôn đảm bảo được rằng là cái thằng ở nốt góc nó sẽ lớn hơn con bên trái, hơn con bên phải của nó"
+  },
+  {
+    "start": 1393.16,
+    "end": 1395.8,
+    "text": "Các bạn có thể xem cái ví dụ nhé, ở đây này"
+  },
+  {
+    "start": 1395.8,
+    "end": 1398.94,
+    "text": "mình có 1 cái mạng như thế này. Cái là 392145"
+  },
+  {
+    "start": 1398.94,
+    "end": 1400.94,
+    "text": "392145"
+  },
+  {
+    "start": 1400.94,
+    "end": 1410.45,
+    "text": "3 này, 9 này, 2 này, 1 này, 4 này, 5"
+  },
+  {
+    "start": 1410.45,
+    "end": 1414.13,
+    "text": "đây chính là cái nhị phân biểu diện cái mạng của mình, đúng không?"
+  },
+  {
+    "start": 1414.13,
+    "end": 1423.55,
+    "text": "Cái nhị phân hoàn chỉnh, đây là trị số 0 này, trị số 1 này, trị số 2 này, trị số 3 này, trị số 4 và trị số 5"
+  },
+  {
+    "start": 1423.55,
+    "end": 1431.25,
+    "text": "ok, sau đó thì giả sử như bây giờ mình sẽ thực hiện cái thao tác gọi thao tác hitify"
+  },
+  {
+    "start": 1431.25,
+    "end": 1436.25,
+    "text": "ở cái chỉ số của tháng 2 này, được chứ? Thì bạn thấy là gì nhỉ?"
+  },
+  {
+    "start": 1436.25,
+    "end": 1443.85,
+    "text": "Ở đây mình chỉ, mình không hướng dẫn kị nữa nhé, tháng 2 này này, tháng 2 này này"
+  },
+  {
+    "start": 1443.85,
+    "end": 1446.85,
+    "text": "nó sẽ so sánh nó với cái thằng 2 thằng con của nó đúng không?"
+  },
+  {
+    "start": 1446.85,
+    "end": 1449.85,
+    "text": "Đấy là thằng con bên trái nhé, mà thằng con bên phải trong trường hợp nàn không có con bên phải"
+  },
+  {
+    "start": 1449.85,
+    "end": 1452.85,
+    "text": "thì nó chỉ so sánh nó với thằng con bên trái này thôi"
+  },
+  {
+    "start": 1452.85,
+    "end": 1460.33,
+    "text": "Các bạn thấy là thằng con, thằng nói, thằng hai này nè, nó nhỏ hơn thằng con bên trái của nó thì nó sẽ tiến hành swap hai thằng này với nhau"
+  },
+  {
+    "start": 1460.33,
+    "end": 1463.33,
+    "text": "Tức là thằng này sẽ thằng năm và thằng này sẽ thằng hai đấy, ok?"
+  },
+  {
+    "start": 1463.33,
+    "end": 1468.33,
+    "text": "Đây, thằng này thằng năm và thằng này thằng hai, thì đấy chính là cái thao tác hippify ở cái chỉ số hai này"
+  },
+  {
+    "start": 1468.33,
+    "end": 1470.31,
+    "text": "Vậy chứ?"
+  },
+  {
+    "start": 1470.31,
+    "end": 1478.63,
+    "text": "Đó, đây, các bạn thấy nè, nó xây dựng cái mảng của mình 392 đúng không?"
+  },
+  {
+    "start": 1478.63,
+    "end": 1485.63,
+    "text": "3, 9, 2, 1, 4, 5, như mình đúng không, sau đó thì nó sẽ hippify ở cái nốt này, nốt 2 này"
+  },
+  {
+    "start": 1485.63,
+    "end": 1490.63,
+    "text": "thì nó sẽ thấy là thằng con bên trái của nó là 5, lớn hơn nó thì nó sẽ hoán vị hai thằng này với nhau"
+  },
+  {
+    "start": 1490.63,
+    "end": 1498.94,
+    "text": "và khi đó thì nó sẽ tạo ra một cái cây như thế này, được chứ?"
+  },
+  {
+    "start": 1498.94,
+    "end": 1503.94,
+    "text": "và tiếp tục nhé, tiếp tục nó sẽ gọi đệ quy đến cái nốt con bên trái này này"
+  },
+  {
+    "start": 1503.94,
+    "end": 1506.94,
+    "text": "để tiếp tục nó hippify từ cái nốt này xuống các cây con gốc của hai này"
+  },
+  {
+    "start": 1506.94,
+    "end": 1514.82,
+    "text": "và, trong trình hợp này, thằng hại này, nó không có con, mình ra là thao tác всеpify, ở nốt 2 đã dừng rồi"
+  },
+  {
+    "start": 1514.82,
+    "end": 1518.56,
+    "text": "đây chính là thao tác heapify nha."
+  },
+  {
+    "start": 1518.56,
+    "end": 1534.62,
+    "text": "ở đây thì có thể thao tác the, the heapify để quay thằng ra là các bạn , mình sẽ cho bây giờ vinh dụ nó dài hơi 1 tí nhé"
+  },
+  {
+    "start": 1534.62,
+    "end": 1557.64,
+    "text": "Quý vị-jож mình có ở đây là 4, 3, 5, 4, 3, 2, 1, 2, 1, 2, 1."
+  },
+  {
+    "start": 1557.88,
+    "end": 1570.71,
+    "text": "Thưa thưa mình biết lại, hơi nhỏ kây này."
+  },
+  {
+    "start": 1571.55,
+    "end": 1591.29,
+    "text": "Sự bạn có 1 cái kây như thế này, đúng không?"
+  },
+  {
+    "start": 1591.29,
+    "end": 1593.37,
+    "text": "Và mình sẽ điền nó như sau này."
+  },
+  {
+    "start": 1593.37,
+    "end": 1608.74,
+    "text": "1, 2, 3, ch climat này là 8, 9, 7 nhau."
+  },
+  {
+    "start": 1608.74,
+    "end": 1641.64,
+    "text": "8, 9, 10, 12, 8, 6, 9, 4, 3, 7"
+  },
+  {
+    "start": 1641.64,
+    "end": 1647.64,
+    "text": "ok, xử bạn có 1 cái cây nhị phân như thế này và bạn gọi thà tác hippie5 từ cái nốt này"
+  },
+  {
+    "start": 1647.64,
+    "end": 1656.12,
+    "text": "hít write to,�� Avant boomb분, name hít write"
+  },
+  {
+    "start": 1656.12,
+    "end": 1668.06,
+    "text": "hít write to, y, founded, and again whiteளc"
+  },
+  {
+    "start": 1668.06,
+    "end": 1672.44,
+    "text": "hít write to"
+  },
+  {
+    "start": 1709.35,
+    "end": 1711.54,
+    "text": "bây giờ giả sử như thế này"
+  },
+  {
+    "start": 1711.54,
+    "end": 1715.54,
+    "text": "bây giờ giả sử mình gọi hippify từ node i vào không này nhé"
+  },
+  {
+    "start": 1715.54,
+    "end": 1717.54,
+    "text": "thì nó sẽ tiến hành tìm cái thằng lớn nhất trong 2 thằng đúng không?"
+  },
+  {
+    "start": 1717.54,
+    "end": 1719.6,
+    "text": "thằng con bên cháu, con bên phải của nó"
+  },
+  {
+    "start": 1719.6,
+    "end": 1722.6,
+    "text": "thì nó thấy là gì nhỉ? cái thằng node qua bên cháu này nè"
+  },
+  {
+    "start": 1722.6,
+    "end": 1725.6,
+    "text": "nó lớn hơn cái thằng node ở gốc, node tre"
+  },
+  {
+    "start": 1725.6,
+    "end": 1727.6,
+    "text": "thì nó sẽ tiến hành swap 2 thằng này với nhau"
+  },
+  {
+    "start": 1727.6,
+    "end": 1729.6,
+    "text": "ở đây mình chỉ nói với thao tác swap này nhé"
+  },
+  {
+    "start": 1729.6,
+    "end": 1732.6,
+    "text": "thì thằng này sẽ thành 8"
+  },
+  {
+    "start": 1732.6,
+    "end": 1734.6,
+    "text": "con thằng này sẽ là thành 12"
+  },
+  {
+    "start": 1734.6,
+    "end": 1736.6,
+    "text": "sau đó là gì? nó vừa biết là cái gì?"
+  },
+  {
+    "start": 1736.6,
+    "end": 1738.6,
+    "text": "trong 3 thằng, thằng i này"
+  },
+  {
+    "start": 1738.6,
+    "end": 1742.3,
+    "text": "cộng 1 vào tháng 2i, cộng 2 thì tháng 2i, cộng 1 này là cái thằng lớn nhất"
+  },
+  {
+    "start": 1742.3,
+    "end": 1744.9,
+    "text": "tức là cái nốt con bên trái này là nốt con lớn nhất"
+  },
+  {
+    "start": 1744.9,
+    "end": 1748.2,
+    "text": "thì tiếp tục nó sẽ gọi, tiếp tục nó gọi hippie5 đến cái nốt này"
+  },
+  {
+    "start": 1748.2,
+    "end": 1750.4,
+    "text": "lúc nãy mình hippie5 nốt này đúng không?"
+  },
+  {
+    "start": 1750.4,
+    "end": 1753.5,
+    "text": "thì bây giờ nó tiếp tục hippie5 đến cái nốt này"
+  },
+  {
+    "start": 1753.5,
+    "end": 1757.2,
+    "text": "thì bây giờ cái nốt mà được hippie5 nói chính là nốt i bằng tỷ số 1"
+  },
+  {
+    "start": 1757.2,
+    "end": 1761.7,
+    "text": "thì nó lại tiếp tục nó sẽ xét 2 thằng con bên trái và bên phải của nó, đây là thằng 6 và thằng 9 này"
+  },
+  {
+    "start": 1761.7,
+    "end": 1764.8,
+    "text": "và nó tìm ra là thằng 9 này là cái thằng lớn nhất trong 3 thằng"
+  },
+  {
+    "start": 1764.8,
+    "end": 1767.7,
+    "text": "thì nó sẽ tiến hành, nó sẽ hoán vị 2 thằng này với nhau"
+  },
+  {
+    "start": 1767.7,
+    "end": 1769.7,
+    "text": "Để cho cái nốt trang nó sẽ lớn nhất"
+  },
+  {
+    "start": 1769.7,
+    "end": 1775.74,
+    "text": "Đấy, ok không nhỉ?"
+  },
+  {
+    "start": 1775.74,
+    "end": 1778.74,
+    "text": "Thôi này phải lèm 1 cái số nhỏ hơn 1 tý"
+  },
+  {
+    "start": 1778.74,
+    "end": 1782.44,
+    "text": "5 đi"
+  },
+  {
+    "start": 1782.44,
+    "end": 1787.21,
+    "text": "Và tiếp tục như thế, bây giờ cái nốt mà được hitbify nó chính là cái nốt này"
+  },
+  {
+    "start": 1787.21,
+    "end": 1790.21,
+    "text": "Và thằng này thì nó lại tìm 2 thằng con bên trái và 2 con thằng con bên phải thôi"
+  },
+  {
+    "start": 1790.21,
+    "end": 1793.21,
+    "text": "Trong trường hợp này nó chỉ còn có, thằng con bên trái là 4 đó"
+  },
+  {
+    "start": 1793.21,
+    "end": 1796.21,
+    "text": "Đúng không? Và thằng 4 này nó đã nhỏ hơn thằng 8 rồi"
+  },
+  {
+    "start": 1796.21,
+    "end": 1799.21,
+    "text": "Thì khi đó mình sẽ dừng khi thào tá hitbify ở đây được"
+  },
+  {
+    "start": 1799.21,
+    "end": 1802.21,
+    "text": "Ok, thế còn cái thằng 4 này này, mà nó lớn hơn thằng 8 này nhé"
+  },
+  {
+    "start": 1802.21,
+    "end": 1805.89,
+    "text": "Thì nó lại tiếp tục nó hoán vị hai thằng này với nhau và nó tiếp tục nó gọi hipify đến cái nốt này"
+  },
+  {
+    "start": 1805.89,
+    "end": 1809.97,
+    "text": "Đây, các bạn có thể nhìn cái theo tác của nó này, đúng không?"
+  },
+  {
+    "start": 1809.97,
+    "end": 1815.17,
+    "text": "Khởi tạo ba cái trị số của nốt tra này, nốt con bên trái và nốt con bên phải"
+  },
+  {
+    "start": 1815.17,
+    "end": 1820.85,
+    "text": "Sau đó thì nếu mà cái thằng là bên trái lớn hơn cái thằng lớn nhất thì mình sẽ cập nhật cái trị số lớn nhất là thằng bên trái"
+  },
+  {
+    "start": 1820.85,
+    "end": 1826.53,
+    "text": "Còn nếu mà thằng bên phải nó còn lớn hơn cái thằng lớn nhất thì mình lại cập nhật cái trị số lớn nhất là thằng con bên phải"
+  },
+  {
+    "start": 1826.53,
+    "end": 1831.25,
+    "text": "Và nếu mà cái trị số lớn nhất đấy nó không phải là cái nốt gốc, nó không phải là nốt tra"
+  },
+  {
+    "start": 1831.25,
+    "end": 1835.13,
+    "text": "thì nó sẽ swap hai cái thằng đấy, thằng là nốt chè với cái thằng lớn nhất đấy"
+  },
+  {
+    "start": 1835.13,
+    "end": 1838.53,
+    "text": "sau đó nó tiếp tục ngõ gọi hippie5 đến cái chỉ số lớn nhất đấy"
+  },
+  {
+    "start": 1838.53,
+    "end": 1841.69,
+    "text": "để nó tiếp tục có hippie5 cái cây con mà nó có gốc là"
+  },
+  {
+    "start": 1841.69,
+    "end": 1846.63,
+    "text": "thằng con bên trái hoặc là thằng con bên phải tuy, thằng nào là thằng lớn nhất thì nó sẽ hippie5 đến cái chỉ số đó"
+  },
+  {
+    "start": 1846.63,
+    "end": 1848.14,
+    "text": "ok không nhỉ?"
+  },
+  {
+    "start": 1848.14,
+    "end": 1850.3,
+    "text": "thì đấy chính là cái thao tác hippie5 nhé"
+  },
+  {
+    "start": 1850.3,
+    "end": 1852.32,
+    "text": "và để mà xây dựng được một cái markh hipp ấy"
+  },
+  {
+    "start": 1852.32,
+    "end": 1855.24,
+    "text": "khi mà mình cài đặt thực tuấn híp xó cái nó cần một cái thao tác đấy"
+  },
+  {
+    "start": 1855.24,
+    "end": 1859.08,
+    "text": "chính là mình sẽ phải xây dựng được một cái markh hipp từ cái mảng ban đầu"
+  },
+  {
+    "start": 1859.08,
+    "end": 1861.08,
+    "text": "Lúc nãy mình đã nói về cái mắc hip rồi đúng không?"
+  },
+  {
+    "start": 1861.08,
+    "end": 1864.76,
+    "text": "Thì bây giờ để mà xây dựng được cái mắc hip từ cái nảng ban đầu đấy"
+  },
+  {
+    "start": 1864.76,
+    "end": 1868.92,
+    "text": "thì nó sẽ phải dựa tất cả các cái chỉ số không phải là nốt lá"
+  },
+  {
+    "start": 1868.92,
+    "end": 1872.37,
+    "text": "và nó gọi hippify đến các cái nốt không phải nốt lá đấy"
+  },
+  {
+    "start": 1872.37,
+    "end": 1877.89,
+    "text": "và nó sẽ xây dựng từ cái nốt mà không phải nốt lá mà nó có level bên dưới"
+  },
+  {
+    "start": 1877.89,
+    "end": 1879.25,
+    "text": "OK, level bên dưới"
+  },
+  {
+    "start": 1879.25,
+    "end": 1885.48,
+    "text": "Ví dụ như bạn có một cái mảng thế này mà bạn muốn xây dựng nó là một cái tạo thành nó một cái hippify"
+  },
+  {
+    "start": 1885.48,
+    "end": 1889.08,
+    "text": "Ví dụ như mình lấy luôn cái mảng này nhé, 129,560"
+  },
+  {
+    "start": 1889.08,
+    "end": 1912.23,
+    "text": "Cái mạng của mình là 1, 12, 9, 5, 6, 10"
+  },
+  {
+    "start": 1912.23,
+    "end": 1915.23,
+    "text": "Đây có thêm 1 thằng nữa là thằng 10 ở cuối đây, ok?"
+  },
+  {
+    "start": 1915.23,
+    "end": 1919.23,
+    "text": "Thằng này có chi số là 0 này, 1 này, 2 này, 3 này, 4 này, 5"
+  },
+  {
+    "start": 1919.23,
+    "end": 1923.23,
+    "text": "Thì bạn có thể hình dung cái cây nhị phân hoàn chỉnh từ cái mạng này, nó chính là gì nào?"
+  },
+  {
+    "start": 1923.23,
+    "end": 1925.23,
+    "text": "Nó chính là 1 này, đúng không?"
+  },
+  {
+    "start": 1925.23,
+    "end": 1932.56,
+    "text": "Thằng qua bên trái là 12 này, 12 này, 2 này thì là 9 này"
+  },
+  {
+    "start": 1932.56,
+    "end": 1936.76,
+    "text": "Thằng bên này thì là 5 này, còn thằng này bên này thì là 6 này, ok?"
+  },
+  {
+    "start": 1936.76,
+    "end": 1946.61,
+    "text": "Thần này thì nó có con 50, đấy, ok hông nhỏ? Đây là 0, đây là 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 1946.61,
+    "end": 1951.82,
+    "text": "Thì đây chính là cái nhị phân hoàn chính tại diện cho cái mảng này"
+  },
+  {
+    "start": 1951.82,
+    "end": 1957.32,
+    "text": "Bây giờ để mà thao tác xây dựng cái mắc hip, tức là từ cái mảng này biến đổi thành mắc hip"
+  },
+  {
+    "start": 1957.32,
+    "end": 1961.62,
+    "text": "Thì bạn sẽ phải set tất cả những cái nốt không phải là nốt lá, đúng không?"
+  },
+  {
+    "start": 1961.62,
+    "end": 1965.42,
+    "text": "Trong trường hợp này có 3 nốt không phải là nốt lá, đây chính là nốt 0, nốt 1 và nốt 2 này này"
+  },
+  {
+    "start": 1965.42,
+    "end": 1971.42,
+    "text": "còn 3 node lá này vì mình không cần thể xếp, ok? bởi vì nó có con đâu, không cần thể xếp"
+  },
+  {
+    "start": 1971.42,
+    "end": 1979.38,
+    "text": "bởi vì cái tháp tác heapify của mình để chính là luôn cố gắng đưa cái thằng, đưa cái thằng node chá là cái thằng lớn nhất trong 3 thằng"
+  },
+  {
+    "start": 1979.38,
+    "end": 1982.38,
+    "text": "con bên trái, con bên phải và chính nó, đúng không?"
+  },
+  {
+    "start": 1982.38,
+    "end": 1985.51,
+    "text": "v cái node đầu tiên mà đều heapify nó chính là cái node này"
+  },
+  {
+    "start": 1985.51,
+    "end": 1989.51,
+    "text": "đấy, ông 9 này này, đúng không? thì ở đây mình sẽ hắn vị luôn nhé đúng không?"
+  },
+  {
+    "start": 1989.51,
+    "end": 1994.51,
+    "text": "bởi vì thằng 9 này nó nhỏ hơn thằng con của nó là 10 thì nó sẽ tiến hành hắn vị 2 cái này với nhau"
+  },
+  {
+    "start": 1994.51,
+    "end": 1997.69,
+    "text": "load hítViswhy build VM"
+  },
+  {
+    "start": 1997.69,
+    "end": 1999.69,
+    "text": "actual파mumbling"
+  },
+  {
+    "start": 1999.69,
+    "end": 2001.77,
+    "text": "load hítViswhy"
+  },
+  {
+    "start": 2001.77,
+    "end": 2003.47,
+    "text": "loadGeek"
+  },
+  {
+    "start": 2003.47,
+    "end": 2015.45,
+    "text": "loadIt всё"
+  },
+  {
+    "start": 2015.45,
+    "end": 2021.45,
+    "text": "af"
+  },
+  {
+    "start": 2021.45,
+    "end": 2023.79,
+    "text": "load it"
+  },
+  {
+    "start": 2085.68,
+    "end": 2089.2,
+    "text": "khi mà mình heapify đến một cái node mà nó không có con bên trái hoặc"
+  },
+  {
+    "start": 2089.2,
+    "end": 2092.16,
+    "text": "nếu xin lỗi nó không có con ấy, thì nó cũng sẽ dừng"
+  },
+  {
+    "start": 2092.16,
+    "end": 2097.16,
+    "text": "bao giờ một cái node con, node hiện tại, node y hiện tại nó có ít nhất một thằng con ấy"
+  },
+  {
+    "start": 2097.16,
+    "end": 2099.16,
+    "text": "đấy, có ít nhất một thằng con"
+  },
+  {
+    "start": 2099.16,
+    "end": 2101.66,
+    "text": "và nó không phải là cái thằng lớn nhất"
+  },
+  {
+    "start": 2101.66,
+    "end": 2103.66,
+    "text": "thằng node ở tre không phải là thằng lớn nhất"
+  },
+  {
+    "start": 2103.66,
+    "end": 2107.5,
+    "text": "thì khi đó cái thật tác heapify nó mới được cõi đệ quy đến các cái cây con bên dưới"
+  },
+  {
+    "start": 2107.5,
+    "end": 2109.0,
+    "text": "đúng nhỉ, thì đấy"
+  },
+  {
+    "start": 2109.0,
+    "end": 2111.2,
+    "text": "và sau khi mà bạn xây dựng cái heapify của mình ấy"
+  },
+  {
+    "start": 2111.2,
+    "end": 2113.7,
+    "text": "sau khi mình heapify cải cái mạng này này"
+  },
+  {
+    "start": 2113.7,
+    "end": 2115.5,
+    "text": "thì mình sẽ được một cái map heap như thế này"
+  },
+  {
+    "start": 2115.5,
+    "end": 2151.42,
+    "text": "12, 6, 10, 5, 5, 1, 9. Bạn thấy là cái nút cha bao giờ cũng lớn hơn 2 cái nút con của nó, 12 với 60 này, 6 với 5, 1 này, 10 với 9, thì đây đã tạo thành một cái mắc hít rồi, và khi đó cái mảng của bạn nó không còn như thế này nữa đâu mà nó sẽ thành một cái mảng như thế này này, nó sẽ tạo thành một cái mắc hít như thế này này, 1, 2, 3, thằng đầu tiên nó sẽ là 12, ok, thằng thứ 2 nó sẽ là 6, thằng thứ 3 nó sẽ là 10, thằng thứ 4 nó sẽ là 5,"
+  },
+  {
+    "start": 2151.42,
+    "end": 2153.72,
+    "text": "1, 9, nấy"
+  },
+  {
+    "start": 2154.41,
+    "end": 2159.61,
+    "text": "OK, thì đấy chính là một cái khi mà bạn xây dựng xong cái mắc híp ấy, thì cái mạng của bạn nó thành như thế này này"
+  },
+  {
+    "start": 2159.61,
+    "end": 2169.61,
+    "text": "Đấy, mình không cần phải xây dựng cái cây này, đúng không? Mình chỉ hình dùng nó thôi và mình sẽ lưu luôn, mình sẽ thay đổi các cái vị trí của các phần tứa trong mạng này để nó trở thành cái mắc híp"
+  },
+  {
+    "start": 2169.61,
+    "end": 2175.61,
+    "text": "OK, thì đấy chính là cái thao tác xây mắc híp, một cái thao tác rất là quan trọng cho thuật toán 1 xò"
+  },
+  {
+    "start": 2175.61,
+    "end": 2182.17,
+    "text": "sau khi bạn xây dựng được xâm mắc híp rồi thì mình mới nói đến cái việc chạy thật toán híp xò"
+  },
+  {
+    "start": 2182.43,
+    "end": 2185.37,
+    "text": "ở đây thì"
+  },
+  {
+    "start": 2185.89,
+    "end": 2193.05,
+    "text": "ai xây lỗi mình chưa nói nhé, đây chính là cái nốt đầu tiên mà không phải là nốt lá, nó chính là cái chỉ số lá n, chia cho 2 chứ 1, đúng nhỉ?"
+  },
+  {
+    "start": 2193.05,
+    "end": 2195.09,
+    "text": "ví dụ như trong trường hợp này là 6 đúng không?"
+  },
+  {
+    "start": 2195.09,
+    "end": 2201.25,
+    "text": "vậy thì cái nốt lá đầu tiên nó sẽ là 6 chia cho 2 chứ đi 1, là bằng 2, nó chính là cái nốt này này"
+  },
+  {
+    "start": 2201.25,
+    "end": 2202.27,
+    "text": "đấy"
+  },
+  {
+    "start": 2202.27,
+    "end": 2204.05,
+    "text": "nó chính là cái nốt lá đầu tiên"
+  },
+  {
+    "start": 2204.05,
+    "end": 2216.57,
+    "text": "Ok, hãy xử lỗi, nốt không phải nốt lá, đầu tiên, và tất cả những cái chỉ số từ chỉ số nò chi cho 2 chiều 1 này này, trở về với không, đều là các cái nốt, không phải nốt lá, và mình sẽ hippify đến các cái nốt đấy"
+  },
+  {
+    "start": 2216.57,
+    "end": 2226.89,
+    "text": "Cái còn những cái chỉ số mà từ nòi trên 2 chiều 1 này này, lớn hơn nòi trên 2 chiều 1 đồ về cuối, đều là các cái nốt lá, ví dụ trong cái hợp này này, 3 này là nốt lá, còn 3 khả này không phải nốt lá"
+  },
+  {
+    "start": 2226.89,
+    "end": 2230.65,
+    "text": "Và mình chỉ cần hippify đến 3 cái nốt không phải nốt lá này thôi, ok?"
+  },
+  {
+    "start": 2230.65,
+    "end": 2236.68,
+    "text": "đây thì các bạn có thể xem lại cái cách mà nó hít be fine"
+  },
+  {
+    "start": 2236.68,
+    "end": 2238.96,
+    "text": "ok"
+  },
+  {
+    "start": 2238.96,
+    "end": 2245.96,
+    "text": "đầu tiên cái mạng của mình là một cái xây dựng cái mạng 1, 12, 9, 5, 6, 10 thành một cái cây những phân hoàn chính như thế này đúng không"
+  },
+  {
+    "start": 2245.96,
+    "end": 2248.96,
+    "text": "1, 12, 9, 5, 6, 10"
+  },
+  {
+    "start": 2248.96,
+    "end": 2252.96,
+    "text": "sau đó nó sẽ hit be fine từ cái nốt đầu tiên không phải nốt lá, nó chính là âm mùa trị số 2 này"
+  },
+  {
+    "start": 2252.96,
+    "end": 2255.96,
+    "text": "thằng này là chín đúng không, con của nó là 10 thì nó sẽ sửa 2 thằng này với nhau"
+  },
+  {
+    "start": 2255.96,
+    "end": 2256.96,
+    "text": "ok"
+  },
+  {
+    "start": 2256.96,
+    "end": 2259.96,
+    "text": "thì khi đó cái mạng của bạn nó cũng sẽ bị thay đổi theo nhé"
+  },
+  {
+    "start": 2259.96,
+    "end": 2265.16,
+    "text": "Cái màn của bạn này, cái phần tựa chỉ số 2 này, nó sẽ không còn là 9 nữa mà nó là 10"
+  },
+  {
+    "start": 2265.16,
+    "end": 2268.56,
+    "text": "Cái phần tựa chỉ số 5 này, nó không còn là 10 nữa mà nó là 9"
+  },
+  {
+    "start": 2268.56,
+    "end": 2271.76,
+    "text": "Chỉ số 2 bây giờ thành 10 này, còn chỉ số 5 bây giờ nó thành 9"
+  },
+  {
+    "start": 2271.76,
+    "end": 2275.96,
+    "text": "Thì đấy, đấy chính là cái thao tác khi mà mình Hippify cái thằng là chỉ số 2"
+  },
+  {
+    "start": 2275.96,
+    "end": 2282.41,
+    "text": "Tiếp tục nó lại, sau khi mà nó Hippify đến cái chỉ số 2 này thì nó sẽ nhảy sang cái Hippify chỉ số 1 này"
+  },
+  {
+    "start": 2282.41,
+    "end": 2289.57,
+    "text": "Thì thằng 1 này thì 12 với 56 thì nó đã được, nó đã được Hippify rồi"
+  },
+  {
+    "start": 2289.57,
+    "end": 2294.95,
+    "text": "Ok, bởi vì cái thằng 12 này nó lớn hơn 2 thằng trai, 2 thằng con bên trái với con bên phải của nó"
+  },
+  {
+    "start": 2295.45,
+    "end": 2297.77,
+    "text": "Nên là nó không có cái theo tác gì hoán vị ở đây kìa"
+  },
+  {
+    "start": 2298.01,
+    "end": 2302.11,
+    "text": "Đúng chưa? Thì cái bản của mình nó vẫn thế, nó vẫn là 1, 12, 15, 6, 9"
+  },
+  {
+    "start": 2302.37,
+    "end": 2305.95,
+    "text": "Người ta đã bỏ tạm thời, người ta bỏ cái thằng, ừ, đúng rồi"
+  },
+  {
+    "start": 2307.14,
+    "end": 2310.46,
+    "text": "Đây, 12 này, 3 cái thằng màu xanh này, nó chính là"
+  },
+  {
+    "start": 2310.72,
+    "end": 2312.78,
+    "text": "thằng trai này, thằng con bên trái, thằng con bên phải"
+  },
+  {
+    "start": 2312.78,
+    "end": 2313.54,
+    "text": "Ok"
+  },
+  {
+    "start": 2313.8,
+    "end": 2315.08,
+    "text": "Thì trong trường hợp mà"
+  },
+  {
+    "start": 2315.58,
+    "end": 2319.18,
+    "text": "thằng trai đã lớn hơn con bên trái và con bên phải rồi thì nó đã được xong rồi nhé"
+  },
+  {
+    "start": 2319.18,
+    "end": 2326.18,
+    "text": "Ok, nó không cần phải thực hiện các thao tác hoán vị hay là gọi Hippify đến các cây con bên dưới nữa"
+  },
+  {
+    "start": 2326.18,
+    "end": 2329.72,
+    "text": "Hề cuối cùng thôi, mình sẽ Hippify đến thằng này"
+  },
+  {
+    "start": 2329.72,
+    "end": 2335.88,
+    "text": "Thằng Hippify này thì nó hơi dài một chút bởi vì nó sẽ có cái thao tác gọi Hippify đến các cây con bên dưới của nó"
+  },
+  {
+    "start": 2335.88,
+    "end": 2339.88,
+    "text": "Ok, bởi vì mỗi cái thao tác bạn Hippify nó làm thay đổi, đúng nhỉ"
+  },
+  {
+    "start": 2339.88,
+    "end": 2343.88,
+    "text": "Bạn hoán vị, cái thằng nốt cha với cái thằng con bên trái hoặc thằng con bên phải của nó"
+  },
+  {
+    "start": 2343.88,
+    "end": 2348.88,
+    "text": "Thì khi đó các cây con mà nó có gốc là thằng con bên trái hoặc thằng con bên phải nó cũng bị thay đổi theo"
+  },
+  {
+    "start": 2348.88,
+    "end": 2354.88,
+    "text": "Đúng không? Ví dụ như trong trường hợp này, 1 này với 12 với 10 thì thằng lớn nhất trong 3 thằng đấy chính là 12, nó sẽ hoán vị"
+  },
+  {
+    "start": 2354.88,
+    "end": 2360.88,
+    "text": "Thằng này thành 12 và thằng này thành 1, đúng không? Vậy thì khi đó cái phần tửa chỉ số 0 này này, nó sẽ thành 12, đây này"
+  },
+  {
+    "start": 2360.88,
+    "end": 2365.88,
+    "text": "Đây, không nó sẽ thành 12, cái con phần tửa chỉ số 1 này nó sẽ thành 1, đấy, ok"
+  },
+  {
+    "start": 2365.88,
+    "end": 2371.88,
+    "text": "Và khi mà bạn đã hoán vị 2 thằng đấy với nhau ấy, thì cái cây con ở bên trái, ờ xin lỗi cái nốt con bên trái này này"
+  },
+  {
+    "start": 2371.88,
+    "end": 2375.88,
+    "text": "Cây con của nó, cái cây con gốc của nó ấy, nó cũng sẽ bị thay đổi theo"
+  },
+  {
+    "start": 2375.88,
+    "end": 2377.88,
+    "text": "HIPPIFI đến cái thằng này thôi"
+  },
+  {
+    "start": 2377.88,
+    "end": 2379.88,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 2379.88,
+    "end": 2381.88,
+    "text": "Thì tiếp tục nó gọi HIPPIFI đến cái thằng này thôi"
+  },
+  {
+    "start": 2381.88,
+    "end": 2383.88,
+    "text": "Đúng nhạc, đây, các bạn thấy này"
+  },
+  {
+    "start": 2383.88,
+    "end": 2385.88,
+    "text": "Sau khi mà bạn hoán vị 1 với 12 thì nó cái mạng của mình nó ra như thế này"
+  },
+  {
+    "start": 2385.88,
+    "end": 2387.88,
+    "text": "Thì tiếp tục nó HIPPIFI đến cái node 1 này"
+  },
+  {
+    "start": 2387.88,
+    "end": 2389.88,
+    "text": "Thì nó cập nhật xuống cái cây con bên dưới, cái con bên dưới"
+  },
+  {
+    "start": 2389.88,
+    "end": 2391.88,
+    "text": "Còn nếu mà mình chỉ có hoán vị thằng 1 với 12 này"
+  },
+  {
+    "start": 2391.88,
+    "end": 2393.88,
+    "text": "Không thì chưa xong đâu"
+  },
+  {
+    "start": 2393.88,
+    "end": 2395.88,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 2395.88,
+    "end": 2397.88,
+    "text": "Bởi vì như thế, rất có thể các cây con bên dưới này nó đã bị mất hết thứ tự rồi"
+  },
+  {
+    "start": 2397.88,
+    "end": 2399.88,
+    "text": "Nó không còn là mắc HIP nữa"
+  },
+  {
+    "start": 2399.88,
+    "end": 2401.88,
+    "text": "Thì trong trường hợp này thì nó lại HIPPIFI đến cái node này thôi"
+  },
+  {
+    "start": 2401.88,
+    "end": 2403.88,
+    "text": "HIPPFI đến nốt này thôi"
+  },
+  {
+    "start": 2403.88,
+    "end": 2405.88,
+    "text": "1, 5, 6, 6 là lớn nhất đúng không?"
+  },
+  {
+    "start": 2405.88,
+    "end": 2406.88,
+    "text": "Hán vị 2 thằng này với nhau"
+  },
+  {
+    "start": 2406.88,
+    "end": 2409.88,
+    "text": "Thì khi đó, phần tửa chỉ số 1 sẽ thành 6"
+  },
+  {
+    "start": 2409.88,
+    "end": 2411.88,
+    "text": "Còn phần tửa chỉ số 4 sẽ thành 1"
+  },
+  {
+    "start": 2411.88,
+    "end": 2417.0,
+    "text": "Đây này, 4 sẽ thành 1, chỉ số 4 thành 1, còn chỉ số 1 thành 6"
+  },
+  {
+    "start": 2417.0,
+    "end": 2420.0,
+    "text": "OK, đây, và khi đó cây của bạn là thành như thế này"
+  },
+  {
+    "start": 2420.0,
+    "end": 2423.1,
+    "text": "Đúng nhau, sau đó lại, tiếp tục có HIPPFI đến nốt 1 này này"
+  },
+  {
+    "start": 2423.1,
+    "end": 2425.1,
+    "text": "Nhưng mà cái nốt 1 này thì..."
+  },
+  {
+    "start": 2425.1,
+    "end": 2427.1,
+    "text": "Thật tá HIPPFI của nó sẽ bị dừng, bởi vì là..."
+  },
+  {
+    "start": 2427.1,
+    "end": 2429.1,
+    "text": "Nó không có con, đúng không?"
+  },
+  {
+    "start": 2429.1,
+    "end": 2432.1,
+    "text": "OK, không có con bên trái đâu, không có con bên phải"
+  },
+  {
+    "start": 2432.1,
+    "end": 2437.22,
+    "text": "và khi đó cái mạng của bạn nó sẽ hipify thành một cái mắc hip như thế này, đúng không?"
+  },
+  {
+    "start": 2437.22,
+    "end": 2441.72,
+    "text": "nó chính là 12, 6, 10, 5, 1, 9, như mình hướng dẫn bên này"
+  },
+  {
+    "start": 2441.72,
+    "end": 2447.06,
+    "text": "ok, đấy, vậy thì đấy chính là cái thao tác đầu tiên khi mà bạn muốn cà đặt thật toán hip sọc"
+  },
+  {
+    "start": 2447.06,
+    "end": 2451.06,
+    "text": "đây chính là mình sẽ xây dựng một cái mắc hip từ cái mạng ban đầu người ta cho"
+  },
+  {
+    "start": 2451.06,
+    "end": 2454.06,
+    "text": "sau khi mà mình xây dựng được cái mắc hip nhé, ok"
+  },
+  {
+    "start": 2454.06,
+    "end": 2455.06,
+    "text": "thì bạn thấy là gì?"
+  },
+  {
+    "start": 2455.06,
+    "end": 2460.46,
+    "text": "khi đó cái thằng là phần tử đầu tiên ấy, thằng là chỉ số không ấy, bao giờ nó cũng là thằng lớn nhất, thằng là nốt gốc ấy, đây này"
+  },
+  {
+    "start": 2460.46,
+    "end": 2462.04,
+    "text": "đúng không?"
+  },
+  {
+    "start": 2462.04,
+    "end": 2467.42,
+    "text": "Khiều gì nó cũng phải là thằng lớn nhất, thì cái tư tưởng của thuật toán hit xo ấy, đây chính là sau khi mà bạn đã"
+  },
+  {
+    "start": 2467.95,
+    "end": 2473.33,
+    "text": "bạn đã xây dựng được 1 cái mắc hit từ cái mảng đầu vào ấy, thì cái phần tử đầu tiên nó sẽ luôn là cái phần tử lớn nhất"
+  },
+  {
+    "start": 2473.59,
+    "end": 2479.73,
+    "text": "Đúng không? Thì nó sẽ tiến hành nó hoán vị, cái phần tử lớn nhất đấy, với cái phần tử nằm ở chỉ số cuối cùng trong mảng của mình"
+  },
+  {
+    "start": 2479.99,
+    "end": 2486.13,
+    "text": "Đấy, tức là trăm trừng hợp này này, đây cái mắc hit của các bạn sau khi mà bạn xây dựng xong cái mắc hit thì nó như thế nào nhỉ?"
+  },
+  {
+    "start": 2486.65,
+    "end": 2490.49,
+    "text": "Ờ gì nhỉ? 12, 60, 5, 9 đúng không? 12, 60"
+  },
+  {
+    "start": 2490.49,
+    "end": 2502.76,
+    "text": "12, 6, 10, 5, 1, 9"
+  },
+  {
+    "start": 2502.76,
+    "end": 2511.26,
+    "text": "sau khi bạn xây dựng cái mắc híp từ mạng ban đầu thì nó thay thành 1 cái mắc híp như thế này"
+  },
+  {
+    "start": 2511.26,
+    "end": 2515.73,
+    "text": "cái tư tưởng của thuật toán híp xóa"
+  },
+  {
+    "start": 2515.73,
+    "end": 2522.5,
+    "text": "khi mà mắc híp mình đã được xây dựng xong thì phần tử ở nốt góc này, ở chỉ số 0"
+  },
+  {
+    "start": 2522.5,
+    "end": 2525.66,
+    "text": "nó luôn là thằng lớn nhất"
+  },
+  {
+    "start": 2525.66,
+    "end": 2531.2,
+    "text": "Thì người ta sẽ hoán vị nó với thằng nốt, thằng là chỉ số cuối cùng"
+  },
+  {
+    "start": 2531.2,
+    "end": 2537.54,
+    "text": "Đây này, nó chính là thằng 9 này này. Thế là bây giờ ông này thằng 9 và ông này thằng 12"
+  },
+  {
+    "start": 2537.54,
+    "end": 2545.97,
+    "text": "Thì bạn thấy là khi đó làm sao? Khi đó phần tử lớn nhất trong mạng của mình, nó đã về chỉ số cuối cùng rồi"
+  },
+  {
+    "start": 2545.97,
+    "end": 2549.32,
+    "text": "Ok, nó sẽ về chỉ số cuối cùng rồi"
+  },
+  {
+    "start": 2549.32,
+    "end": 2558.21,
+    "text": "Và tiếp theo cái thao tác của mình, sau khi mà mình hoán vị thằng 9 với thằng 12 này này"
+  },
+  {
+    "start": 2558.21,
+    "end": 2562.21,
+    "text": "Thì bạn tiếp tục hippify từ nốt gốc này"
+  },
+  {
+    "start": 2562.21,
+    "end": 2568.4,
+    "text": "Để nó lại xây dựng lại cái mắc hipp từ cái bảng"
+  },
+  {
+    "start": 2568.4,
+    "end": 2570.4,
+    "text": "Mà bạn loại bỏ đi cái phần từ cuối cùng này"
+  },
+  {
+    "start": 2570.4,
+    "end": 2574.4,
+    "text": "Để nó luôn đảm bảo được cái thằng ở đầu này nó sẽ là nốt lớn nhất này"
+  },
+  {
+    "start": 2574.4,
+    "end": 2576.4,
+    "text": "Thì khi đó nó hippify từ cái thằng này này"
+  },
+  {
+    "start": 2576.4,
+    "end": 2581.56,
+    "text": "À chú ý nhá, sau khi mà bạn đã hoán vị thằng ở nốt gốc của rồi là 12 với 9 này"
+  },
+  {
+    "start": 2581.56,
+    "end": 2583.56,
+    "text": "Người ta sẽ tạm thời bỏ cái nốt này đi"
+  },
+  {
+    "start": 2583.56,
+    "end": 2586.04,
+    "text": "Tức là người ta sẽ không xét thằng này nữa"
+  },
+  {
+    "start": 2586.04,
+    "end": 2588.04,
+    "text": "Bởi vì nó đã là cái thằng lớn nhất rồi đúng không?"
+  },
+  {
+    "start": 2588.04,
+    "end": 2592.48,
+    "text": "Mình sẽ không hiepify, sẽ không xây dựng mắc hiep từ phần 12 này nữa"
+  },
+  {
+    "start": 2592.48,
+    "end": 2594.92,
+    "text": "bởi vì nó đã là phần tử cuối cùng sắp xếp rồi"
+  },
+  {
+    "start": 2594.92,
+    "end": 2598.08,
+    "text": "Thì bây giờ cái thao tác hiepify của mình nó chỉ áp dụng với thằng này này"
+  },
+  {
+    "start": 2598.08,
+    "end": 2600.44,
+    "text": "Thằng này, thằng này, thằng này, thằng này thôi"
+  },
+  {
+    "start": 2600.44,
+    "end": 2605.04,
+    "text": "Trong trường hợp này 9 với 10 thì phần hiepify thì thằng này thành 10 và thằng này thành 9 luôn á"
+  },
+  {
+    "start": 2605.04,
+    "end": 2609.34,
+    "text": "Vậy thì nên sao? Bây giờ phần tử lớn nhất"
+  },
+  {
+    "start": 2609.34,
+    "end": 2611.7,
+    "text": "sau khi mà phần hiepify cái nốt gốc này này"
+  },
+  {
+    "start": 2611.7,
+    "end": 2613.5,
+    "text": "cái thằng lớn nhất lại là thằng 10"
+  },
+  {
+    "start": 2613.5,
+    "end": 2615.22,
+    "text": "Đúng không? Thì nó làm sao?"
+  },
+  {
+    "start": 2615.22,
+    "end": 2620.22,
+    "text": "Nó lại hoán vị thằng 10 đấy với cái node cuối cùng, cái thần tử cuối cùng trong cái cây của bạn bây giờ"
+  },
+  {
+    "start": 2620.22,
+    "end": 2622.22,
+    "text": "Nó chính là cái thằng ở chỉ số 4 này"
+  },
+  {
+    "start": 2622.22,
+    "end": 2624.22,
+    "text": "Thì bây giờ ông này thành 1, đúng không?"
+  },
+  {
+    "start": 2624.22,
+    "end": 2626.22,
+    "text": "Con ông này thành 10, đây là 1 đi"
+  },
+  {
+    "start": 2626.22,
+    "end": 2628.22,
+    "text": "Con ông này thành 10"
+  },
+  {
+    "start": 2628.22,
+    "end": 2632.22,
+    "text": "Và sau khi mà ông hoán vị xong thì nó cũng tạm thời bỏ cái node này đi"
+  },
+  {
+    "start": 2632.22,
+    "end": 2633.22,
+    "text": "Bỏ cái node này đi"
+  },
+  {
+    "start": 2633.22,
+    "end": 2634.22,
+    "text": "Không xép nữa"
+  },
+  {
+    "start": 2634.22,
+    "end": 2635.22,
+    "text": "Ok"
+  },
+  {
+    "start": 2635.22,
+    "end": 2639.22,
+    "text": "Thì bạn thấy là khi đó cái mạng của mình ấy, nó đã có 2 cái phần tử được sắp xếp rồi đấy"
+  },
+  {
+    "start": 2639.22,
+    "end": 2646.26,
+    "text": "Chính là cái thằng 12 và thằng 10 là 2 cái thằng lớn nhất"
+  },
+  {
+    "start": 2646.26,
+    "end": 2649.26,
+    "text": "đây, thằng này thì là thằng 12, thằng này là 10"
+  },
+  {
+    "start": 2649.26,
+    "end": 2652.02,
+    "text": "sau đó tiếp tục nó hippify từ cái nốt gốc này"
+  },
+  {
+    "start": 2652.02,
+    "end": 2657.1,
+    "text": "nhưng mà bây giờ cái cây của bạn nó chỉ có 1, 5, 1, 6, 9 và 5 thôi"
+  },
+  {
+    "start": 2657.1,
+    "end": 2659.1,
+    "text": "ok, 1, 6, 9 và 5 thôi"
+  },
+  {
+    "start": 2659.1,
+    "end": 2661.98,
+    "text": "thì cái thảo tác hippify nó sẽ cập nhật như thế nào nhỉ?"
+  },
+  {
+    "start": 2661.98,
+    "end": 2663.74,
+    "text": "đấy là 9 với 1 đúng không?"
+  },
+  {
+    "start": 2663.74,
+    "end": 2668.5,
+    "text": "thay đổi thằng 1, 9, 9 và 1"
+  },
+  {
+    "start": 2668.5,
+    "end": 2670.98,
+    "text": "thì thằng ở gốc bây giờ lại là thằng lớn nhất"
+  },
+  {
+    "start": 2670.98,
+    "end": 2674.66,
+    "text": "thì nó lại swap thằng 9 này với cái thằng nốt cuối cùng này, là 5"
+  },
+  {
+    "start": 2674.66,
+    "end": 2675.5,
+    "text": "đúng không?"
+  },
+  {
+    "start": 2675.5,
+    "end": 2703.91,
+    "text": "and"
+  },
+  {
+    "start": 2703.91,
+    "end": 2706.55,
+    "text": "phần tử lớn nhất trong cái mạng khi đó"
+  },
+  {
+    "start": 2706.55,
+    "end": 2710.24,
+    "text": "và sau khi mình biết được phần tử ở góc là phần tử lớn nhất rồi"
+  },
+  {
+    "start": 2710.24,
+    "end": 2717.58,
+    "text": "thì mình sẽ swap phần tử lớn nhất đấy, phần tử ở góc đấy với phần tử cuối cùng trong cây, đúng không, hiện tại"
+  },
+  {
+    "start": 2717.58,
+    "end": 2721.13,
+    "text": "để cho phần tử lớn nhất đấy nó trở về cuối"
+  },
+  {
+    "start": 2721.13,
+    "end": 2724.13,
+    "text": "mà người ta sẽ cắt cái nốt đấy đi, cắt cái nốt đấy đi"
+  },
+  {
+    "start": 2724.13,
+    "end": 2728.63,
+    "text": "thực ra thì ở đây chả có cắt gì đâu, mình trở nên thật là mình không xét trên cái chỉ số đây nữa là được"
+  },
+  {
+    "start": 2728.63,
+    "end": 2731.63,
+    "text": "ok, đấy, thì cứ mỗi bước như thế"
+  },
+  {
+    "start": 2731.63,
+    "end": 2741.56,
+    "text": "sau khi bạn đã swap phần tử ở góc với phần tử cuối cùng, thì thằng cuối cùng về vị trí sẽ trở thành cái nốt lớn nhất trong mẻ"
+  },
+  {
+    "start": 2741.56,
+    "end": 2747.4,
+    "text": "thì người ta lại hippify từ cái nốt góc đấy để người ta xây dựng lại mắc hipp từ cái nốt góc đấy"
+  },
+  {
+    "start": 2747.4,
+    "end": 2752.56,
+    "text": "để nó cập nhật lại là cái phần tử lớn nhất, lớn nhất lại là cái thằng góc đấy, và cứ thế"
+  },
+  {
+    "start": 2752.56,
+    "end": 2757.12,
+    "text": "mỗi lần thì tôi lại lấy ra thằng góc, tôi hoán vị với thằng cuối, còn tôi hippify lại, đúng không?"
+  },
+  {
+    "start": 2757.12,
+    "end": 2762.28,
+    "text": "Đây chính là thao tác tư tửa tửa của thật tán HipSort"
+  },
+  {
+    "start": 2762.28,
+    "end": 2765.58,
+    "text": "Đầu tiên bạn phải xây dựng được cho mình 1 cái MacHip"
+  },
+  {
+    "start": 2765.58,
+    "end": 2767.88,
+    "text": "Ok, MacHip thì mình vừa dẫn xây dựng rồi"
+  },
+  {
+    "start": 2767.88,
+    "end": 2772.86,
+    "text": "Đây, các bạn có thể xem qua cái giải thoát HipSort"
+  },
+  {
+    "start": 2772.86,
+    "end": 2776.42,
+    "text": "Đây chính là đầu tiên mình sẽ phải xây dựng 1 cái MacHip"
+  },
+  {
+    "start": 2776.42,
+    "end": 2780.64,
+    "text": "Thì xây dựng MacHip bằng cách là gì nhỉ?"
+  },
+  {
+    "start": 2780.64,
+    "end": 2782.66,
+    "text": "Xét tất cả các cái nốt không phải nốt lá đúng không?"
+  },
+  {
+    "start": 2782.66,
+    "end": 2785.44,
+    "text": "Bắt đầu từ chỉ số nơi chi 2 chi 1 về không"
+  },
+  {
+    "start": 2785.44,
+    "end": 2788.0,
+    "text": "Sau đó mình sẽ gọi Hippify đến các cái nốt đấy"
+  },
+  {
+    "start": 2788.0,
+    "end": 2795.07,
+    "text": "sau khi mình có bug heap rồi thì mình sẽ suy huyệt từ chỉ số cuối cùng cho tới chỉ số đầu tiên của mạng"
+  },
+  {
+    "start": 2795.07,
+    "end": 2801.39,
+    "text": "Ở mỗi bước, hiện tại cái mạng của bạn, hay là cái mạng của bạn đang là một cái bug heap rồi"
+  },
+  {
+    "start": 2801.39,
+    "end": 2809.69,
+    "text": "thì nó sẽ swap cái thằng A0, nó chính là cái thằng node gốc, với cái thằng Ae, nó chính là cái node cuối cùng"
+  },
+  {
+    "start": 2809.69,
+    "end": 2815.85,
+    "text": "Ok, trong cái heap của bạn, hay nó khác là một phần tử ở chỉ số cuối cùng mà chưa được sắp xếp"
+  },
+  {
+    "start": 2815.85,
+    "end": 2820.73,
+    "text": "Để cho phần tử lớn nhất ở nốt góc là error 0 kì kìa, nó sẽ về cuối bản"
+  },
+  {
+    "start": 2820.73,
+    "end": 2821.73,
+    "text": "ok"
+  },
+  {
+    "start": 2821.73,
+    "end": 2825.71,
+    "text": "Sau đó nó tiếp tục gọi đến hippify của ae0"
+  },
+  {
+    "start": 2825.71,
+    "end": 2828.55,
+    "text": "Tức là nó sẽ gọi hippify đến nốt góc i này này"
+  },
+  {
+    "start": 2828.55,
+    "end": 2832.23,
+    "text": "với số lượng phần tử ở mạng của mình khi đó nó là i thôi"
+  },
+  {
+    "start": 2832.23,
+    "end": 2834.23,
+    "text": "bởi vì nó sẽ bị giảm đi 1 phần tử mà"
+  },
+  {
+    "start": 2834.23,
+    "end": 2838.87,
+    "text": "ok, đó bạn có thể xem hoạt động của nó như sau nhá"
+  },
+  {
+    "start": 2838.87,
+    "end": 2846.0,
+    "text": "Đây cái mạng của mình là 12, 6, 10, 5, 1, 9 này này"
+  },
+  {
+    "start": 2846.0,
+    "end": 2848.92,
+    "text": "Thì sau khi mà xây dựng được cái markhip thì nó sẽ thành như thế này đúng không?"
+  },
+  {
+    "start": 2848.92,
+    "end": 2858.4,
+    "text": "12, 6, 10, 5, 9, ok, đây là cái mắc híp của bạn, sau khi mình xây dựng mắc híp xong rồi nhé"
+  },
+  {
+    "start": 2858.4,
+    "end": 2867.08,
+    "text": "thì khi đó làm sao? Nó sẽ swap cái thằng nút lớp, đây là 12 này, với cái nút cuối cùng, trong cái mảng hiện tạc, nó chính là thằng 9 này"
+  },
+  {
+    "start": 2867.08,
+    "end": 2876.6,
+    "text": "thì khi đó thằng này thì thành 12 còn thành 9, đây, sau khi mình hoán vị thằng 12 về cuối, nó nằm ở cái chỉ số 5 của mảng này"
+  },
+  {
+    "start": 2876.6,
+    "end": 2881.92,
+    "text": "Thì khi đó nó sẽ cắt cái... mình tưởng tượng đến là nó cắt cái nốt đấy đi, cắt cái nốt ấn nhận này đi"
+  },
+  {
+    "start": 2881.92,
+    "end": 2886.64,
+    "text": "hay cái khác là khi đó các cái thao tác hippify của bạn vì sau nó sẽ không xét cái nốt này nữa"
+  },
+  {
+    "start": 2886.64,
+    "end": 2891.72,
+    "text": "Thì thương giảng thôi, bạn chỉ cần giảm cái chỉ số mạng này, sẽ lỗi giảm số lượng phần tử của mạng của mình đi 1 là được"
+  },
+  {
+    "start": 2891.72,
+    "end": 2894.72,
+    "text": "thì nó sẽ không xét đến cái chỉ số này nữa đâu, ok?"
+  },
+  {
+    "start": 2894.72,
+    "end": 2899.48,
+    "text": "Thì khi đó cái hip, mắc hip của bạn nó trở thành như thế này, nó đã loại bỏ cái nốt cuối cùng là 12 rồi"
+  },
+  {
+    "start": 2899.48,
+    "end": 2902.48,
+    "text": "Thì bây giờ nó hippify lại từ cái nốt gốc này, 9 đây này"
+  },
+  {
+    "start": 2902.48,
+    "end": 2904.48,
+    "text": "thì nó sẽ hoán vị 9.10 đó, đây"
+  },
+  {
+    "start": 2904.48,
+    "end": 2909.48,
+    "text": "10v9, phần tử lớn nhất sau khi hippie5 nốt góc, nó lại là 10"
+  },
+  {
+    "start": 2909.48,
+    "end": 2913.48,
+    "text": "nó đã swap 10 với nốt cuối cùng trong mạng của mình như là hôm 4"
+  },
+  {
+    "start": 2913.48,
+    "end": 2919.99,
+    "text": "khi đó, a4 của mình thành 1, thì còn a, ạ, xin lỗi, a4 của mình thành 10 đúng không?"
+  },
+  {
+    "start": 2919.99,
+    "end": 2927.08,
+    "text": "còn a0 của mình thành 1, ạ, bạn thấy là 10 này nó sẽ về đến chỉ số cuối cùng"
+  },
+  {
+    "start": 2927.08,
+    "end": 2931.08,
+    "text": "là 4, đúng không nhỉ? thì người ta tiếp tục lại cắt 10 đi"
+  },
+  {
+    "start": 2931.08,
+    "end": 2935.08,
+    "text": "và người ta hippie5 lại từ nốt góc, hippie5 là nốt góc 1 này"
+  },
+  {
+    "start": 2935.08,
+    "end": 2938.72,
+    "text": "Thì đó nó sẽ hoán vị thằng 1 với thằng 9 này thôi"
+  },
+  {
+    "start": 2938.72,
+    "end": 2946.32,
+    "text": "Thì tiếp tục như thế, lại swap thằng gout là 9 với thằng node, node, node cuối cùng hiện tại là 5"
+  },
+  {
+    "start": 2946.32,
+    "end": 2948.32,
+    "text": "Thái bây giờ thằng 9 rồi là thằng 5"
+  },
+  {
+    "start": 2948.32,
+    "end": 2951.3,
+    "text": "Ok, sau đó thì cắt thằng 9 này đi"
+  },
+  {
+    "start": 2951.3,
+    "end": 2954.5,
+    "text": "Và khi đó cái bản của mình nó đã có 3 phần từ được sắp xếp tới là 9, 12"
+  },
+  {
+    "start": 2954.5,
+    "end": 2961.28,
+    "text": "Đúng nhỉ? Và tiếp tục như thế, lại tiếp tục swap thằng 5 này với thằng 1 này đúng không?"
+  },
+  {
+    "start": 2961.28,
+    "end": 2969.25,
+    "text": "xin lỗi, thằng 6 với thằng 5 chứ nhỉ, đấy sau khi mà Hippify lại thì thằng 6 nó về góc"
+  },
+  {
+    "start": 2969.25,
+    "end": 2972.96,
+    "text": "ok, và nó sẽ hoán vị 6 với 1"
+  },
+  {
+    "start": 2972.96,
+    "end": 2977.97,
+    "text": "đây, thì cái bản của bạn nó sẽ thành như thế này"
+  },
+  {
+    "start": 2977.97,
+    "end": 2986.13,
+    "text": "cứ thật tác của mình cứ hoán đổi như thế sau đó Hippify như thế và cuối cùng thì cái bản của bạn nó sẽ được sắp xếp theo thứ tự tăng dần như thế này"
+  },
+  {
+    "start": 2986.13,
+    "end": 2988.45,
+    "text": "thì đây chính là cái thực tượng của thật toán HippSort"
+  },
+  {
+    "start": 2988.45,
+    "end": 2991.97,
+    "text": "ok, vậy thì bây giờ mình sẽ đi vào cài đặt thật toán HippSort này"
+  },
+  {
+    "start": 2991.97,
+    "end": 2997.09,
+    "text": "Ok, nó sẽ có 2 cái phần chính 1 tài đặt thao tác, ngồi lại là thao tác Hippify"
+  },
+  {
+    "start": 2997.09,
+    "end": 3000.45,
+    "text": "Ok, ở đây mình sẽ viết 1 cái hèm gọi là Hippify"
+  },
+  {
+    "start": 3000.45,
+    "end": 3004.85,
+    "text": "Một cái mảng A có n là phần tự, và mình sẽ Hippify từ cái chỉ số i"
+  },
+  {
+    "start": 3004.85,
+    "end": 3009.73,
+    "text": "Tức là mình sẽ Hippify cái nốt gốc và nốt i, đúng nhỉ?"
+  },
+  {
+    "start": 3009.73,
+    "end": 3015.33,
+    "text": "Ok, cái chỉ số i thì khi đó cái thằng LabChine nó sẽ là 2i cộng 1 và RightChine nó sẽ là 2i cộng 2 đúng không?"
+  },
+  {
+    "start": 3015.33,
+    "end": 3018.73,
+    "text": "Ok, mình sẽ có 1 cái chỉ số Lab"
+  },
+  {
+    "start": 3018.73,
+    "end": 3030.33,
+    "text": "C++, include, cout, Refrigerator, class, struct, Freeform, Renew, ạ, renew, ạ, ạ, refrigerator,restart, Refrigerator, resources, controls, render, graphics, models,"
+  },
+  {
+    "start": 3030.33,
+    "end": 3031.27,
+    "text": "..."
+  },
+  {
+    "start": 3031.27,
+    "end": 3032.79,
+    "text": "..."
+  },
+  {
+    "start": 3032.79,
+    "end": 3034.43,
+    "text": "..."
+  },
+  {
+    "start": 3034.43,
+    "end": 3035.31,
+    "text": "..."
+  },
+  {
+    "start": 3035.31,
+    "end": 3036.31,
+    "text": "..."
+  },
+  {
+    "start": 3036.31,
+    "end": 3037.31,
+    "text": "..."
+  },
+  {
+    "start": 3037.31,
+    "end": 3038.31,
+    "text": "..."
+  },
+  {
+    "start": 3038.31,
+    "end": 3039.31,
+    "text": "..."
+  },
+  {
+    "start": 3039.31,
+    "end": 3040.31,
+    "text": "..."
+  },
+  {
+    "start": 3040.31,
+    "end": 3041.31,
+    "text": "..."
+  },
+  {
+    "start": 3041.31,
+    "end": 3042.31,
+    "text": "..."
+  },
+  {
+    "start": 3042.31,
+    "end": 3043.31,
+    "text": "..."
+  },
+  {
+    "start": 3043.31,
+    "end": 3044.31,
+    "text": "..."
+  },
+  {
+    "start": 3044.31,
+    "end": 3045.31,
+    "text": "..."
+  },
+  {
+    "start": 3045.31,
+    "end": 3046.31,
+    "text": "..."
+  },
+  {
+    "start": 3046.31,
+    "end": 3047.31,
+    "text": "..."
+  },
+  {
+    "start": 3047.31,
+    "end": 3048.31,
+    "text": "..."
+  },
+  {
+    "start": 3048.31,
+    "end": 3049.31,
+    "text": "..."
+  },
+  {
+    "start": 3049.31,
+    "end": 3055.33,
+    "text": "Bây giờ, lép này có quan bên trái và con bên phải, ít phá là con y, nó vẫn nằm trong mạng"
+  },
+  {
+    "start": 3055.33,
+    "end": 3058.93,
+    "text": "Thằng ít nhất, nó có con bên trái và con bên phải"
+  },
+  {
+    "start": 3058.93,
+    "end": 3063.55,
+    "text": "Vì vật có thể nốt ở chỉ số y, lép của nó là 2y6,..."
+  },
+  {
+    "start": 3063.55,
+    "end": 3067.73,
+    "text": "... nó sẽ ngoài mạng rồi, sẽ tính là ít thằng y không có con trái và không có con phái"
+  },
+  {
+    "start": 3068.53,
+    "end": 3076.19,
+    "text": "Nếu lép nhỏ hơn là ít có con bên trái và con bên trái là lép lớn hơn thằng gi过"
+  },
+  {
+    "start": 3076.19,
+    "end": 3087.02,
+    "text": "bằng lép, nếu con bên trái lớn hơn thằng gốc, cập nhật chỉ số lớn nhất, nói chính là con bên trái"
+  },
+  {
+    "start": 3087.02,
+    "end": 3095.02,
+    "text": "tương tự như vậy, nếu thằng i có con bên phải, con bên phải lớn hơn, thằng đang được con lớn nhất"
+  },
+  {
+    "start": 3095.02,
+    "end": 3099.01,
+    "text": "S, cái mình sẽ cập nhập larch"
+  },
+  {
+    "start": 3099.01,
+    "end": 3105.08,
+    "text": "bằng qua, đấy, vậy thì sau 2 cái ip này, mình đã có cái biến larch là cái thằng"
+  },
+  {
+    "start": 3105.08,
+    "end": 3108.2,
+    "text": "nó lưu cái chỉ số lớn nhất trong 3 thằng, đúng không?"
+  },
+  {
+    "start": 3108.2,
+    "end": 3112.2,
+    "text": "thằng nốt gốc y, thằng qua bên trái 2 y cộng 1 và thằng qua bên phải là 2 y cộng 2"
+  },
+  {
+    "start": 3112.2,
+    "end": 3117.2,
+    "text": "và nếu mà, nếu mà cái biến larch nó khác y, ok"
+  },
+  {
+    "start": 3117.2,
+    "end": 3122.4,
+    "text": "đấy, tức là cái thằng ở nốt gốc chưa phải là thằng lớn nhất thì mình mới tiến hành swap nhá"
+  },
+  {
+    "start": 3122.4,
+    "end": 3127.12,
+    "text": "Mình tiễn hành swap 2 thằng đứt là a, i và aLargex"
+  },
+  {
+    "start": 3127.12,
+    "end": 3142.14,
+    "text": "và mình tiếp tục gọi hippify đến cái thằng màng a này, có n phần tử và chỉ số Largex"
+  },
+  {
+    "start": 3142.14,
+    "end": 3150.81,
+    "text": "Tiếp tục hippify đến thằng con bên trái và thằng con bên phải trong trường hợp thằng con bên trái và thằng con bên phải nó lớn hơn thằng gốc"
+  },
+  {
+    "start": 3150.81,
+    "end": 3152.89,
+    "text": "Thế còn trong trường hợp Largex thì nó bằng i rồi nhé"
+  },
+  {
+    "start": 3152.89,
+    "end": 3157.69,
+    "text": "Tức là cái thằng non-gốc thì nó lớn hơn thằng con bên trái, thằng con bên phải thì mình sẽ không làm gì nữa"
+  },
+  {
+    "start": 3157.69,
+    "end": 3162.69,
+    "text": "Được nhờ, bây giờ nó khác, nó không phải là thằng lớn nhất thì mình mới swap của mình hippie-fi"
+  },
+  {
+    "start": 3162.69,
+    "end": 3169.92,
+    "text": "Bởi vì tí nữa khi mà xây dựng mark hippie thì các bạn xây dựng từ các cái level bên dưới dần dần lên"
+  },
+  {
+    "start": 3169.92,
+    "end": 3174.92,
+    "text": "Thành ra là nó luôn đảm bảo được rằng là các cái node ở bên dưới nó đã được hippie-fi rồi"
+  },
+  {
+    "start": 3174.92,
+    "end": 3177.92,
+    "text": "Ok, thì mình cần một cái thao tác như thế này"
+  },
+  {
+    "start": 3177.92,
+    "end": 3181.08,
+    "text": "Để ra kiểm tra nhớ, có thao tác kiểm tra này"
+  },
+  {
+    "start": 3181.08,
+    "end": 3192.48,
+    "text": "bởi vì khi mà các bạn Hippify thì mình sẽ xây dựng từ thằng này, thằng này sau đó mới set đến những cái thằng tra của nó, đúng không? Chứ mình không xây dựng từ trên xuống dưới, được không nhờ?"
+  },
+  {
+    "start": 3192.48,
+    "end": 3199.58,
+    "text": "Vậy thì mình đã xong được cái thao tác Hippify rồi nhá, không có gì khói hiểu đúng không? Bây giờ mình sẽ vào thuật toán Hippsoft"
+  },
+  {
+    "start": 3199.58,
+    "end": 3206.93,
+    "text": "thuật toán Hippsoft ấy, mà an này, corner phần tử ấy, thì cái thao tác đầu tiên của các bạn đấy chính là phải xây dựng được một cái mắc Hipp"
+  },
+  {
+    "start": 3206.93,
+    "end": 3215.25,
+    "text": "Mình sẽ, như lúc nãy mình nói, các bạn phải duyệt từ chỉ số mà của các nốt không phải nốt lá đúng không?"
+  },
+  {
+    "start": 3215.25,
+    "end": 3221.64,
+    "text": "Bắt đầu từ đầu tiên này, nò chứ 2, nò trên 2 chứ 1 à, đúng không?"
+  },
+  {
+    "start": 3221.64,
+    "end": 3227.73,
+    "text": "Y lớn mà không, y chứ chứ, và bạn gọi cái ham là ham hitv5 mà mình vừa xây dựng ở trên ấy"
+  },
+  {
+    "start": 3227.73,
+    "end": 3237.49,
+    "text": "A, nò và chỉ số là y, đấy, ok. Trong trường hợp cái mạng này thì nó sẽ hitv5 từ đỉnh này, nốt này, nốt này, sau đấy nốt này"
+  },
+  {
+    "start": 3237.49,
+    "end": 3241.65,
+    "text": "Vậy thì sau cái vòng 4 này thì nó sẽ xây dựng được 1 cái MacHip rồi, đúng không?"
+  },
+  {
+    "start": 3241.65,
+    "end": 3243.65,
+    "text": "Xây dựng được 1 cái MacHip rồi"
+  },
+  {
+    "start": 3243.65,
+    "end": 3248.18,
+    "text": "Tha tác Hippify này thì đúng nha"
+  },
+  {
+    "start": 3248.18,
+    "end": 3251.01,
+    "text": "Nó có độ phức tạp là Logner, đúng không?"
+  },
+  {
+    "start": 3251.01,
+    "end": 3257.76,
+    "text": "Như kiểu là bạn mỗi lần và bạn sử dụng priority queue, mỗi lần mà nó cập nhật lại"
+  },
+  {
+    "start": 3257.76,
+    "end": 3261.54,
+    "text": "Cập nhật lại phần thứ lớn nhất ở đầu hàng đợi"
+  },
+  {
+    "start": 3261.54,
+    "end": 3267.25,
+    "text": "Rồi, sau khi mà mới xây dựng được MacHip rồi, thì các bạn làm cho mình như sau"
+  },
+  {
+    "start": 3267.25,
+    "end": 3271.95,
+    "text": "Đây chính là các bạn xét từ cái chỉ số cuối cùng trong chỉ số trong mạng của mình"
+  },
+  {
+    "start": 3271.95,
+    "end": 3277.45,
+    "text": "Tức là 4, in, t, i, bằng, n là chữ 1, i lớn, bằng không, i chữ chữ"
+  },
+  {
+    "start": 3277.45,
+    "end": 3279.43,
+    "text": "Để làm gì?"
+  },
+  {
+    "start": 3279.43,
+    "end": 3284.43,
+    "text": "Để mình sẽ swap 2 thằng, đấy là thằng nốt gốc hiện tại, nó chính là cái thằng lớn nhất"
+  },
+  {
+    "start": 3284.43,
+    "end": 3288.63,
+    "text": "và cái thằng ở chỉ số i hiện tại, nó chính là cái phần tử cuối cùng trong mạng của mình"
+  },
+  {
+    "start": 3288.63,
+    "end": 3292.73,
+    "text": "Thì bạn sẽ tiến hành là swap 2 thằng, đấy là ai và a0"
+  },
+  {
+    "start": 3292.73,
+    "end": 3298.07,
+    "text": "Thì khi đó, tức cái thằng a0 của mình, nó đang là cái thằng nốt gốc của MarkHit"
+  },
+  {
+    "start": 3298.07,
+    "end": 3301.51,
+    "text": "nó sẽ là cái thằng lớn nhất trong mạng của mình, nó sẽ được đề về cuối, đưa về cuối"
+  },
+  {
+    "start": 3301.51,
+    "end": 3302.51,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 3302.51,
+    "end": 3306.47,
+    "text": "Thì khi đó mình sẽ được có một cái thằng cuối được đưa về rồi, đúng không?"
+  },
+  {
+    "start": 3306.47,
+    "end": 3307.47,
+    "text": "là thằng lớn nhất rồi"
+  },
+  {
+    "start": 3307.47,
+    "end": 3308.47,
+    "text": "Sau đó làm sao?"
+  },
+  {
+    "start": 3308.47,
+    "end": 3309.67,
+    "text": "Sau đó bạn Hippify"
+  },
+  {
+    "start": 3309.67,
+    "end": 3314.08,
+    "text": "Với cái node góc để nó cập nhật lại nhá"
+  },
+  {
+    "start": 3314.08,
+    "end": 3316.88,
+    "text": "Nó sẽ đi từ góc xuống, bắt đầu nó lại cập nhật lại một lần nữa"
+  },
+  {
+    "start": 3316.88,
+    "end": 3321.28,
+    "text": "Tức là mình sẽ cập nhật Hippify vào an, i và không"
+  },
+  {
+    "start": 3321.28,
+    "end": 3323.08,
+    "text": "Tức là mình sẽ Hippify từ node không"
+  },
+  {
+    "start": 3323.08,
+    "end": 3326.28,
+    "text": "Với cái số lượng phần tử của mạng, bây giờ nó chỉ còn là i thôi"
+  },
+  {
+    "start": 3326.28,
+    "end": 3327.28,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 3327.28,
+    "end": 3334.04,
+    "text": "bởi vì khi số lượng phần tử của máng bạn chỉ là i, thì nó sẽ không xét chỉ số cuối cùng mà bạn vừa xét nữa"
+  },
+  {
+    "start": 3334.04,
+    "end": 3337.04,
+    "text": "đúng không? Ví dụ bây giờ trong trường hợp này là i và nghe nói chứ 1 đúng không?"
+  },
+  {
+    "start": 3337.04,
+    "end": 3340.88,
+    "text": "Thì sau khi mà bạn đã đưa cái phần tử lớn nhất về cái chỉ số an nói chứ 1 rồi,"
+  },
+  {
+    "start": 3340.88,
+    "end": 3345.64,
+    "text": "thì cái mạng của bạn bây giờ nó chỉ còn i phần tử thôi, hay nó tích khác nó chỉ còn nói chứ 1 phần tử thôi"
+  },
+  {
+    "start": 3345.64,
+    "end": 3348.88,
+    "text": "thì nó chính là cái thao tác khi mà bạn loại bỏ cái này này,"
+  },
+  {
+    "start": 3348.88,
+    "end": 3353.08,
+    "text": "bạn loại bỏ bạn cho cái phần tử lớn nhất về cuối này này, như 2 này, về 5 này,"
+  },
+  {
+    "start": 3353.08,
+    "end": 3360.28,
+    "text": "thì bạn giảm cái chỉ số lượng phần tử của máng đi, bây giờ nó chỉ còn là 2, 4, 6, nó còn 5 thôi, thì tí nữa ấy"
+  },
+  {
+    "start": 3360.28,
+    "end": 3365.28,
+    "text": "các cái thao tác của bạn nó sẽ không xét cái thằng này nữa, thì thao tác hippie file của bạn nó sẽ không xét đến thằng cuốn này nữa"
+  },
+  {
+    "start": 3365.28,
+    "end": 3371.31,
+    "text": "ok, thằng ra chủ này đừng có gọi hippie file an là không nhé, bạn mới gọi hippie file an là không thì"
+  },
+  {
+    "start": 3371.31,
+    "end": 3377.31,
+    "text": "khi đó nó lại cập nhật cái mảng của bạn nó lại về ban đầu đấy, thằng lớn nhất nó lại về cuối, nó không được sắp xếp đâu"
+  },
+  {
+    "start": 3377.31,
+    "end": 3383.25,
+    "text": "Mình đã đưa được phần tử của lớn nhất về cuối dẫy rồi, thì mình giảm số lượng phần tử của màng đi"
+  },
+  {
+    "start": 3383.25,
+    "end": 3391.41,
+    "text": "Thực chất ở đây, số lượng phần tử của màng mình vẫn là nờ, nhưng ở đây mình gọi Hippify tới AI0 để mình không set phần tử lớn nhất nữa"
+  },
+  {
+    "start": 3391.41,
+    "end": 3392.37,
+    "text": "Ok hông nhờ?"
+  },
+  {
+    "start": 3392.37,
+    "end": 3399.17,
+    "text": "Sau cái vòng 4 này, nó cứ lần lượt đưa phần tử cuối về dẫy, sau nó rại xóa đi, phần tử đấy, cái nốt đấy đúng không?"
+  },
+  {
+    "start": 3399.17,
+    "end": 3419.47,
+    "text": "CUNG, nr, cut, lvlm, c 숨, rình, load, vnlm, int, ОOP."
+  },
+  {
+    "start": 3419.47,
+    "end": 3424.69,
+    "text": "A, nò, dựa các hoạt động trong màn, xem có lý sắp xếp hay không"
+  },
+  {
+    "start": 3424.69,
+    "end": 3429.35,
+    "text": "Ok, đây là sắp xếp tăng dần nhé, còn nếu mà sắp xếp ra em dần thì các bạn thấy"
+  },
+  {
+    "start": 3429.35,
+    "end": 3434.27,
+    "text": "Set the mean hit, ok, chắc là không vấn đề gì đúng không?"
+  },
+  {
+    "start": 3434.27,
+    "end": 3438.94,
+    "text": "Được, mình sẽ chạy thật tấn hit sort này"
+  },
+  {
+    "start": 3438.94,
+    "end": 3445.31,
+    "text": "Cũng rất là ngắn, cái đặt rất là dễ nhưng mà, trước khi cái đặt nó phải hiểu được cấu trúc dữ liệu hit"
+  },
+  {
+    "start": 3445.31,
+    "end": 3451.37,
+    "text": "Ở đây mình sẽ lấy 10 phần tử nhé, 19, 18, 1, 2, 3, 7, 6, 5, 4, 10"
+  },
+  {
+    "start": 3451.37,
+    "end": 3456.59,
+    "text": "Các bạn sẽ thành sắp xếp tăng gần 1,2,4,5,6,7,7,9,10"
+  },
+  {
+    "start": 3456.59,
+    "end": 3459.59,
+    "text": "Đó chính là mình sử dụng mark-heap nhé, từ từ"
+  },
+  {
+    "start": 3459.59,
+    "end": 3465.1,
+    "text": "Mình cho lớn hơn 1 chút đi, dụng bằng 100 đi"
+  },
+  {
+    "start": 3465.1,
+    "end": 3470.92,
+    "text": "Mình đỡ cái cn, rồi đây mình random"
+  },
+  {
+    "start": 3470.92,
+    "end": 3480.56,
+    "text": "Cái này mình sẽ cho ai là 1 cái số 500 đi"
+  },
+  {
+    "start": 3480.56,
+    "end": 3484.56,
+    "text": "Ok, sau đó mình sẽ thử random các số để chạy"
+  },
+  {
+    "start": 3484.56,
+    "end": 3488.1,
+    "text": "để cho nó sắp xếp"
+  },
+  {
+    "start": 3488.1,
+    "end": 3496.1,
+    "text": "Thì các bạn cũng sẽ được sắp xếp 1, 2, 12, 18, 3, 7, 4, 1, 4, 8, 5, 5, 5 cho đến cái số lớn cuối cùng, đây là 491"
+  },
+  {
+    "start": 3496.1,
+    "end": 3498.1,
+    "text": "Ok, chỗ này là 463 nha"
+  },
+  {
+    "start": 3498.1,
+    "end": 3500.1,
+    "text": "Rồi, thì đấy chính là thuật toán, hip saw"
+  },
+  {
+    "start": 3500.1,
+    "end": 3504.1,
+    "text": "Ok, các bạn có thể thử cai đặt nó xem là minhip sẽ có vấn đề gì không"
+  },
+  {
+    "start": 3504.1,
+    "end": 3511.1,
+    "text": "Nhưng mình nói đấy, các bạn chỉ cần hiểu được cái cầu chúc cây nhị phân hẳn trĩnh và cầu chúc dữ đậu hip"
+  },
+  {
+    "start": 3511.1,
+    "end": 3513.1,
+    "text": "Chứ còn bạn chưa cần phải xây dựng cây nhị phân, đúng nhỉ?"
+  },
+  {
+    "start": 3513.1,
+    "end": 3519.8,
+    "text": "Vậy thì tư tưởng của thật tác hipsoft là như thế, đúng không?"
+  },
+  {
+    "start": 3519.8,
+    "end": 3526.8,
+    "text": "Xây dựng MacHip, sau đó thì cứ hoán vị cái phần tử gốc của MacHip, với cái phần tử cuối cùng trong mạng của mình"
+  },
+  {
+    "start": 3526.8,
+    "end": 3536.08,
+    "text": "và Hippify lại từ đầu để cập nhật được cái phần tử gốc luôn là phần tử lớn nhất"
+  },
+  {
+    "start": 3536.08,
+    "end": 3539.08,
+    "text": "Nói chỉ có 2 thật tác như thế này thôi, cái đặt rất là ngắn"
+  },
+  {
+    "start": 3539.08,
+    "end": 3546.08,
+    "text": "Nhưng mà khi mà các bạn học hiếp xò thì hãy cố gắng hiểu được cái tát tác hiếp DeFi và cái cấu trúc dữ liệu hiếp, ok?"
+  },
+  {
+    "start": 3546.08,
+    "end": 3551.08,
+    "text": "Nếu bạn có thắc mắc gì thì có thể comment bên dưới nhé, mình sẽ giải ra."
+  }
+]

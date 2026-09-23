@@ -1,0 +1,5117 @@
+[
+  {
+    "start": 0.62,
+    "end": 11.02,
+    "text": "Các bạn đã học qua nhiều câu chúc dưới liệu rồi, đúng không? Bọn em học màng 1 triều, học màng 2 triều, học vector, học set, học map rồi, nữa."
+  },
+  {
+    "start": 11.02,
+    "end": 14.7,
+    "text": "Bây giờ mình sẽ học thêm 1 câu chúc dưới liệu nữa là danh sách liên kết."
+  },
+  {
+    "start": 14.7,
+    "end": 19.98,
+    "text": "Thì cái danh sách liên kết này thì nó cũng khá là tương đồng với thằng vector với các bạn."
+  },
+  {
+    "start": 19.98,
+    "end": 24.3,
+    "text": "Nó tương tự như 1 cái màng động, tức là cái màng có thể thay đổi kích thước."
+  },
+  {
+    "start": 24.3,
+    "end": 36.54,
+    "text": "Nhưng khác với vector đấy là các phần tử ở trong vector của các bạn, mặc dù nó được có phát động, nhưng mà nó lại nằm liên tiếp nhau trong bụ nhớ HIP"
+  },
+  {
+    "start": 36.54,
+    "end": 42.94,
+    "text": "Thế còn thằng danh xách liên kết đôi này, thì mỗi phần tử của nó sẽ nằm giải giác ở trong bụ nhớ"
+  },
+  {
+    "start": 42.94,
+    "end": 47.94,
+    "text": "Và các bạn sẽ phải liên kết các phần tử đấy lại với nhau thông qua một cái liên kết"
+  },
+  {
+    "start": 47.94,
+    "end": 53.22,
+    "text": "liên kết ở đây chính là địa chỉ của phần tử đó trong bụi nhau may tính"
+  },
+  {
+    "start": 53.22,
+    "end": 58.02,
+    "text": "có tên là danh xách liên kết và danh xách móc nối, tiếng anh là linh list"
+  },
+  {
+    "start": 58.02,
+    "end": 64.62,
+    "text": "Single linh list, VW linh list, danh xách linh kết đơn và danh xách linh kết đôi"
+  },
+  {
+    "start": 64.62,
+    "end": 68.06,
+    "text": "đầu tiên mình sẽ nói đến danh xách linh kết đơn trước"
+  },
+  {
+    "start": 68.06,
+    "end": 70.7,
+    "text": "và em có thể hình dung cái danh xách liên kết như thế này"
+  },
+  {
+    "start": 70.7,
+    "end": 73.26,
+    "text": "đây là các phần tử của mình"
+  },
+  {
+    "start": 73.26,
+    "end": 77.14,
+    "text": "ở trên nha, nó sẽ kết nối với nhau, thằng đằng trước, thằng đằng sau"
+  },
+  {
+    "start": 77.14,
+    "end": 80.5,
+    "text": "Thằng đáng trước thì nó sẽ lưu địa chỉ của thằng đứng đằng sau nha"
+  },
+  {
+    "start": 80.5,
+    "end": 86.06,
+    "text": "Mỗi phần tửa trong danh xe lin kết của các bạn có thể gọi là 1 node hoặc là 1 node cũng được"
+  },
+  {
+    "start": 86.06,
+    "end": 88.14,
+    "text": "và nó sẽ có 2 phần"
+  },
+  {
+    "start": 88.14,
+    "end": 90.9,
+    "text": "Phần thứ nhất là nó sẽ lưu dữ liệu của cái node đó"
+  },
+  {
+    "start": 90.9,
+    "end": 94.02,
+    "text": "Dữ liệu này thì có thể là kiểu dữ liệu thông thường"
+  },
+  {
+    "start": 94.02,
+    "end": 100.62,
+    "text": "như là in, t, float, double, chair hoặc là kiểu dữ liệu struct mà các bạn tự xây dựng ý"
+  },
+  {
+    "start": 100.62,
+    "end": 105.34,
+    "text": "ví dụ như là sinh viên, giáo viên gì đó thì mình cũng có thể quản lý ở trong danh xe lin kết cũng được"
+  },
+  {
+    "start": 105.34,
+    "end": 109.59,
+    "text": "Và cái phần thứ 2 của nó, đấy chính là cái phần liên kết"
+  },
+  {
+    "start": 109.59,
+    "end": 112.09,
+    "text": "Cái phần đó nó sẽ là một Ctrl"
+  },
+  {
+    "start": 112.09,
+    "end": 115.75,
+    "text": "để lưu cái địa chỉ của nốt đứng đằng sau trong danh sách liên kết"
+  },
+  {
+    "start": 115.75,
+    "end": 119.79,
+    "text": "Tại vì các bạn hình dụng khi mà các bạn có mảng 1 chiều và vector"
+  },
+  {
+    "start": 119.79,
+    "end": 122.73,
+    "text": "thì các cái phần tử của mình nó sẽ nằm cạnh nhau trong bố những máy tính"
+  },
+  {
+    "start": 122.73,
+    "end": 125.55,
+    "text": "và mình có thể quản lý bọn nó thông qua cái chỉ số"
+  },
+  {
+    "start": 125.55,
+    "end": 129.95,
+    "text": "mình không cần phải quản lý cái việc các cái phần tử để nó kết nối với nhau như thế nào"
+  },
+  {
+    "start": 129.95,
+    "end": 133.75,
+    "text": "Còn đối với danh sách liên kết thì mỗi thằng nằm 1 nơi"
+  },
+  {
+    "start": 133.75,
+    "end": 137.83,
+    "text": "Thế bây giờ muốn tạo thành một cái danh sách thì thằng đằng sau ấy"
+  },
+  {
+    "start": 137.83,
+    "end": 140.87,
+    "text": "Thằng đằng trước ấy, nó phải biết thằng đằng sau của nó nằm ở đâu"
+  },
+  {
+    "start": 140.87,
+    "end": 145.63,
+    "text": "Thế nên là nó sẽ cần phải thêm một cái vùng nhớ nữa để lưu cái địa chỉ của nốt đứng đằng sau"
+  },
+  {
+    "start": 145.63,
+    "end": 149.11,
+    "text": "Nhằm có thể kết nối các cái nốt ở trong danh sách lên kết của mình lại"
+  },
+  {
+    "start": 149.11,
+    "end": 151.91,
+    "text": "Và cái nốt cuối ở trong danh sách lên kết của mấy em này này"
+  },
+  {
+    "start": 151.91,
+    "end": 154.61,
+    "text": "Thì nó sẽ trò vào con trò nun"
+  },
+  {
+    "start": 154.61,
+    "end": 157.45,
+    "text": "Nên trên nhỉ, tại vì là nó không có thằng đứng sau ấy"
+  },
+  {
+    "start": 157.45,
+    "end": 161.85,
+    "text": "Thế nên là cái nốt cuối ở trong danh sách lên kết này của các bạn nó sẽ trò vào con trò nun"
+  },
+  {
+    "start": 161.85,
+    "end": 167.5,
+    "text": "Đúng rồi"
+  },
+  {
+    "start": 167.5,
+    "end": 174.97,
+    "text": "Các bạn có câu hỏi gì không nhỉ? Các bạn có câu hỏi gì về cái gianh xanh linh kết này không nhỉ?"
+  },
+  {
+    "start": 174.97,
+    "end": 178.13,
+    "text": "Ừ, một cái node, đây các bạn này node nè."
+  },
+  {
+    "start": 178.13,
+    "end": 185.77,
+    "text": "Còn là node cũng được, các bạn đọc thế nào thì đâu."
+  },
+  {
+    "start": 185.77,
+    "end": 189.77,
+    "text": "Trong quá trình mà anh cài đặt nếu mà các bạn không hiểu thì có thể tra đổi luôn nhé."
+  },
+  {
+    "start": 189.77,
+    "end": 194.77,
+    "text": "Những phần nhỏ nhất ở trong phần gianh xanh linh kết này cũng gây khó khăn cho các bạn"
+  },
+  {
+    "start": 194.77,
+    "end": 200.25,
+    "text": "nếu mà các bạn không rõ ràng ngay từ đầu về mặt lý thuyết, khi mà cài đặt thì nó gây khó khăn."
+  },
+  {
+    "start": 200.25,
+    "end": 208.85,
+    "text": "Rồi, thế thì bây giờ muốn tạo ra một cái danh xách liên kết. Bọn em chỉ cần tạo xây dựng một cái câu chúc. Các bạn định nghĩa một cái câu chúc node cho danh xách liên kết, nha."
+  },
+  {
+    "start": 208.85,
+    "end": 214.49,
+    "text": "Định nghĩa một câu chúc node cho danh xách liên kết. Sau đó thì mình sẽ tạo ra một cái danh xách liên kết."
+  },
+  {
+    "start": 214.49,
+    "end": 224.72,
+    "text": "Mỗi lần mà các bạn muốn tạo ra một node thì mình lại cấp phát động một node, sau đó thì mình cắn vào cái danh xách liên kết ở đầu, cuối hoặc là ở giữa. Đúng rồi."
+  },
+  {
+    "start": 224.72,
+    "end": 229.56,
+    "text": "Đây là cái cách mà các bạn em có thể định nghĩa một cái câu chúc node cho một danh xách liên kết."
+  },
+  {
+    "start": 229.56,
+    "end": 232.83,
+    "text": "Nên nó sẽ có 2 phần, phần thứ 1 là phần dữ liệu"
+  },
+  {
+    "start": 232.83,
+    "end": 246.67,
+    "text": "Cái kiểu dữ liệu này các bạn có thể thay thế, tuy bài toán, in a te long for load, double, chair, string, các kiểu, các bạn định nghĩa như struct, sinh viên, giao viên gì đó, phần chỗ này được"
+  },
+  {
+    "start": 246.67,
+    "end": 250.91,
+    "text": "Phần thứ 2 này của mình, đây là phần con trỏ"
+  },
+  {
+    "start": 250.91,
+    "end": 256.91,
+    "text": "Nó sẽ là một con trỏ cũng tên là note luôn, nhưng mà nó khác cái là kiểu con trỏ"
+  },
+  {
+    "start": 256.91,
+    "end": 258.91,
+    "text": "tên là nách, các bạn là tên là gì thì tập"
+  },
+  {
+    "start": 258.91,
+    "end": 260.91,
+    "text": "và lớn mọi người là tên là nách"
+  },
+  {
+    "start": 260.91,
+    "end": 264.91,
+    "text": "thì cái phần này là con trỏ dùng để lưu cái địa chỉ của nốt đứng làng sao"
+  },
+  {
+    "start": 264.91,
+    "end": 269.91,
+    "text": "người ta gọi gianh xe liên kết đơn này có một câu chúc tự trỏ"
+  },
+  {
+    "start": 269.91,
+    "end": 274.91,
+    "text": "tại vì bên trong nó lại có một cái thành phần có kiểu dữ liệu giống nó"
+  },
+  {
+    "start": 274.91,
+    "end": 276.91,
+    "text": "nhưng mà nó là con trỏ nha"
+  },
+  {
+    "start": 276.91,
+    "end": 279.91,
+    "text": "tại vì các bạn biết là muốn lưu địa chỉ thì bạn em phải dùng con trỏ ấy"
+  },
+  {
+    "start": 279.91,
+    "end": 281.91,
+    "text": "thế nên thành ra nha, các bạn hình dùng này"
+  },
+  {
+    "start": 281.91,
+    "end": 282.91,
+    "text": "ví dụ anh có cái nốt này đúng không?"
+  },
+  {
+    "start": 282.91,
+    "end": 284.91,
+    "text": "cái data của nó là ba nha"
+  },
+  {
+    "start": 284.91,
+    "end": 287.94,
+    "text": "Thằng này nó cần phải lưu địa chỉ của thằng đứng thằng sau này nè"
+  },
+  {
+    "start": 287.94,
+    "end": 293.67,
+    "text": "Ê thì khi đó ấy, cái thằng này đứng thằng sau ấy, nó sẽ có cái địa chỉ ở trong bộ như máy tính"
+  },
+  {
+    "start": 293.67,
+    "end": 298.17,
+    "text": "ví dụ như địa chỉ của nó là không ích 30, thì cái thằng hết này của các bạn là cái phần này nè"
+  },
+  {
+    "start": 298.17,
+    "end": 303.17,
+    "text": "cái phần này nó sẽ phải lưu là không ích 30, thấy cái phần này của bạn đặc biệt"
+  },
+  {
+    "start": 303.17,
+    "end": 309.9,
+    "text": "một chút đấy chính là nó phải là con trỏ, dùng nhỉ, tại vì con trỏ thì mới lưu địa chỉ được"
+  },
+  {
+    "start": 309.9,
+    "end": 312.54,
+    "text": "Các bạn muốn lưu địa chỉ của thằng đứng sau này đúng không?"
+  },
+  {
+    "start": 312.54,
+    "end": 316.94,
+    "text": "Thì mình phải có một cái thuộc tính khi đó có đó phải là một con chỏ"
+  },
+  {
+    "start": 316.94,
+    "end": 321.38,
+    "text": "Đây, đây là cái câu chúc của một node ở trong dành xem liên kết này"
+  },
+  {
+    "start": 321.38,
+    "end": 324.69,
+    "text": "Các bạn nào hỏi gì về câu chúc node này không?"
+  },
+  {
+    "start": 324.69,
+    "end": 329.45,
+    "text": "Đây là data nhá, còn đây là phần liên kết để lưu địa chỉ của thằng đứng sau đấy"
+  },
+  {
+    "start": 329.45,
+    "end": 339.22,
+    "text": "Rồi ok, thế thì bây giờ anh sẽ định đi vào một cái câu chúc node, vark node"
+  },
+  {
+    "start": 339.22,
+    "end": 345.5,
+    "text": "Anh sẽ có 2 phần, phần thứ nhất là data và phần thứ 2 là node, data này"
+  },
+  {
+    "start": 345.5,
+    "end": 347.5,
+    "text": "ạ, xin lỗi, int data đi"
+  },
+  {
+    "start": 347.5,
+    "end": 352.42,
+    "text": "và thứ 2 là node sound x, nó có 2 phần như thế thôi"
+  },
+  {
+    "start": 352.42,
+    "end": 355.92,
+    "text": "ok, 1 là dữ liệu, 2 là liên kết"
+  },
+  {
+    "start": 355.92,
+    "end": 360.26,
+    "text": "node đầu tiên có giá trị 3 kìa là sao anh?"
+  },
+  {
+    "start": 360.26,
+    "end": 362.68,
+    "text": "đấy chính là cái data của nó nè"
+  },
+  {
+    "start": 362.68,
+    "end": 365.18,
+    "text": "cái data của nó là bè, nó lưu số bè"
+  },
+  {
+    "start": 365.18,
+    "end": 367.18,
+    "text": "về mặt lưu dữ liệu"
+  },
+  {
+    "start": 367.18,
+    "end": 369.68,
+    "text": "cái data các bạn có thể đổi thành kiểu dữ liệu khác nhé"
+  },
+  {
+    "start": 369.68,
+    "end": 371.18,
+    "text": "chứ không nhất thiết là phải là xuống nguyên"
+  },
+  {
+    "start": 371.18,
+    "end": 373.18,
+    "text": "khi mà hướng dẫn anh lấy xuống nguyên cho nó ngắn gọn"
+  },
+  {
+    "start": 373.18,
+    "end": 375.18,
+    "text": "thế còn thì nếu ở trong phần bài tập ấy"
+  },
+  {
+    "start": 375.18,
+    "end": 381.58,
+    "text": "có thể cho các bạn danh sách, sinh viên, danh sách, giao viên, danh sách, các mặt hàng và quản lý ở trong một cái danh xe liên kết cũng được"
+  },
+  {
+    "start": 381.58,
+    "end": 386.7,
+    "text": "rồi thế thì bây giờ muốn tạo ra một cái node ấy, muốn tạo ra một node nha, mình phải làm gì"
+  },
+  {
+    "start": 386.7,
+    "end": 389.5,
+    "text": "thì bạn em không làm như này được là ví dụ mà em khai báo một cái node ích"
+  },
+  {
+    "start": 389.5,
+    "end": 395.02,
+    "text": "sau đó các bạn gán data của nó lọc trăm và cái phần ích của nó tạm thời các bạn là con cho là con tròn nun"
+  },
+  {
+    "start": 395.02,
+    "end": 398.7,
+    "text": "con tròn nun mà em có thể viết là nun này hoặc là nun Peterer cũng được"
+  },
+  {
+    "start": 398.7,
+    "end": 403.02,
+    "text": "nó như nhau, thằng nun Peterer này thì nó xuất hiện từ si ộng cộng 11"
+  },
+  {
+    "start": 403.02,
+    "end": 406.33,
+    "text": "Các bạn không thể khai bão 1 kiểu nốt như thế này được"
+  },
+  {
+    "start": 406.33,
+    "end": 410.89,
+    "text": "Nấy, mà mỗi nốt ở trong danh sách liên kết của các bạn sẽ phải được cấp phát động"
+  },
+  {
+    "start": 410.89,
+    "end": 412.61,
+    "text": "Tại sao nó cần phải cấp phát động?"
+  },
+  {
+    "start": 412.61,
+    "end": 417.45,
+    "text": "Tại vì khi mà các bạn cấp phát động thì các bạn sẽ có thể quản lý cái nốt đấy thông qua địa chỉ của nó"
+  },
+  {
+    "start": 417.45,
+    "end": 423.05,
+    "text": "Nên thực chất mỗi nốt ở trong danh sách liên kết của các bạn em ấy, nó lại là 1 cái con trỏ kiểu nốt"
+  },
+  {
+    "start": 423.05,
+    "end": 426.01,
+    "text": "Chứ nó không phải là 1 cái nốt thuần tí thông thường như thế này"
+  },
+  {
+    "start": 426.01,
+    "end": 430.28,
+    "text": "Thế bây giờ muốn tạo ra 1 nốt ở trong danh sách liên kết, mọi em phải làm như thế này này"
+  },
+  {
+    "start": 430.28,
+    "end": 436.62,
+    "text": "node sao, ví dụ x, bằng new node, à, tức là mình sẽ phải cấp phát động cho nó bằng toán tửa new"
+  },
+  {
+    "start": 436.62,
+    "end": 442.82,
+    "text": "sau đó các bạn mới gán data và gán nách, ví dụ, bạn em muốn cái node x này, data là bằng bao nhiêu thì các bạn gán"
+  },
+  {
+    "start": 442.82,
+    "end": 451.11,
+    "text": "data 100, thế còn cái phần nách, bằng bao nhiêu, ví dụ nhìn là con tròn nuôn, tạm thời mình cho nó con tròn nuôn tại chưa biết nó trò đi đâu kìa"
+  },
+  {
+    "start": 451.11,
+    "end": 459.6,
+    "text": "thì đây là cái cách, các bạn em cấp phát 1 node ở trong dành xuyên kết nha, bước 1 các bạn phải cấp phát cho nó, cấp phát động cho nó"
+  },
+  {
+    "start": 459.6,
+    "end": 462.04,
+    "text": "Công gian lưu chữ tương hướng với 1 node"
+  },
+  {
+    "start": 462.04,
+    "end": 464.36,
+    "text": "Sau đó thì mình sẽ gán data vào gán đách"
+  },
+  {
+    "start": 464.36,
+    "end": 466.48,
+    "text": "Hôm trước anh có hướng dẫn ở phần struct rồi"
+  },
+  {
+    "start": 466.48,
+    "end": 472.28,
+    "text": "Là khi mà các bạn có con trỏ kiểu struct, thì khi mà chui sất vào các thuộc tính"
+  },
+  {
+    "start": 472.28,
+    "end": 474.64,
+    "text": "thì các bạn sẽ dùng mũi tên, đúng không?"
+  },
+  {
+    "start": 474.64,
+    "end": 476.92,
+    "text": "Đấy, thì đây là mới cấp phát 1 node"
+  },
+  {
+    "start": 476.92,
+    "end": 479.84,
+    "text": "Bây giờ em muốn tạo ra 1 node nữa thì mình lại phải cấp phát động"
+  },
+  {
+    "start": 479.84,
+    "end": 483.44,
+    "text": "Node sau i đi, bằng new node, sau đó các bạn lại gán data"
+  },
+  {
+    "start": 483.44,
+    "end": 496.26,
+    "text": "i mũi tên data bằng 200, i mũi tên x, bằng nun, ạ, hệ thì các bạn phải nhớ cho mình í, là mỗi node ở trong danh sách liên kết thực chất là nó là cái kiểu này kìa"
+  },
+  {
+    "start": 496.26,
+    "end": 503.15,
+    "text": "nó là kiểu node sao kìa, í, tức là con trỏ kiểu node, chứ nó không phải là một cái node thông thường"
+  },
+  {
+    "start": 503.15,
+    "end": 511.83,
+    "text": "tại vì node sao í, tức là dưới dạ con trỏ thì mình mới có thể quản lý chung nó thông qua địa chỉ để thằng đằng sau nó lưu địa chỉ với thằng đứng trước"
+  },
+  {
+    "start": 511.83,
+    "end": 514.33,
+    "text": "Ctrl để chỉ thằng đứng đằng sau cho nó dễ"
+  },
+  {
+    "start": 514.33,
+    "end": 517.65,
+    "text": "Bây giờ các bạn muốn tạo ra một cái node nữa là node i"
+  },
+  {
+    "start": 517.65,
+    "end": 521.15,
+    "text": "node sau z đi, vàng new node sau đó anh gán"
+  },
+  {
+    "start": 521.15,
+    "end": 525.65,
+    "text": "z mũi tên data bằng 300 và anh sẽ cho z mũi tên x bằng nùn"
+  },
+  {
+    "start": 525.65,
+    "end": 527.65,
+    "text": "Vậy là anh đã có 3 cái node"
+  },
+  {
+    "start": 527.65,
+    "end": 530.65,
+    "text": "Nhưng mà 3 cái node này nó chưa tạo thành dành xét liên kết được"
+  },
+  {
+    "start": 530.65,
+    "end": 532.65,
+    "text": "Tại vì bây giờ nó đang riêng lẻ với nhau"
+  },
+  {
+    "start": 532.65,
+    "end": 534.65,
+    "text": "Thế làm sao để tạo thành dành xét liên kết"
+  },
+  {
+    "start": 534.65,
+    "end": 537.15,
+    "text": "Thế các bạn phải có câu loại như sau"
+  },
+  {
+    "start": 537.15,
+    "end": 540.18,
+    "text": "Mí dụ nha, các bạn muốn đây là thằng x đúng không?"
+  },
+  {
+    "start": 540.18,
+    "end": 541.68,
+    "text": "Đây là thằng i của các bạn"
+  },
+  {
+    "start": 541.68,
+    "end": 545.56,
+    "text": "và đây là thằng Z, và nó tạo thành 1 cái danh sách liên kết như thế này ấy"
+  },
+  {
+    "start": 545.56,
+    "end": 551.09,
+    "text": "thì các bạn phải có 1 câu lệnh để lưu địa chỉ của thằng I vào cái phần nách cho X"
+  },
+  {
+    "start": 551.09,
+    "end": 553.87,
+    "text": "đấy, tức là các bạn phải lưu địa chỉ thằng I vào đây"
+  },
+  {
+    "start": 553.87,
+    "end": 556.47,
+    "text": "thì X là 1 trăm đúng không? Thằng I này là 2 trăm đúng không?"
+  },
+  {
+    "start": 556.47,
+    "end": 561.47,
+    "text": "và tương tự như vậy, muốn thằng Z làm 1 cái node đứng sau thằng I thì các bạn phải lưu địa chỉ của thằng Z vào đây"
+  },
+  {
+    "start": 561.47,
+    "end": 568.29,
+    "text": "đấy, còn thằng Z là node cuối ở trong danh sách liên kết nên là cái phần nách của nó các bạn cho nó vào trò vào con trò nôn"
+  },
+  {
+    "start": 568.29,
+    "end": 572.67,
+    "text": "Muốn tạo ra một gianh sách liên kết theo thứ tự x, i, z như này các bạn phải làm như sau"
+  },
+  {
+    "start": 572.67,
+    "end": 576.77,
+    "text": "Đầu tiên, bạn em phải lưu thằng y vào phần x cho thằng x"
+  },
+  {
+    "start": 576.77,
+    "end": 579.73,
+    "text": "Câu lệnh sẽ là x mũi tên x bằng y"
+  },
+  {
+    "start": 579.73,
+    "end": 583.27,
+    "text": "Đây người ta đang gọi là cho x, cho vào y"
+  },
+  {
+    "start": 583.27,
+    "end": 585.18,
+    "text": "Ok chưa?"
+  },
+  {
+    "start": 585.18,
+    "end": 588.5,
+    "text": "Tương tự như vậy, các bạn muốn cho thằng z nó đứng sau thằng y"
+  },
+  {
+    "start": 588.5,
+    "end": 592.28,
+    "text": "thì các bạn phải cho y mũi tên x bằng với z"
+  },
+  {
+    "start": 592.28,
+    "end": 595.12,
+    "text": "Đấy thì bây giờ nó mới kết nối các cái nốt này vào với nhau"
+  },
+  {
+    "start": 595.12,
+    "end": 598.76,
+    "text": "và danh sách liên kết của bạn em sẽ có 3 nodes xyz"
+  },
+  {
+    "start": 598.76,
+    "end": 602.12,
+    "text": "mình sẽ quản lý cái danh sách liên kết này thông qua thằng ích"
+  },
+  {
+    "start": 602.12,
+    "end": 605.92,
+    "text": "các bạn quản lý thông qua thằng ích, người ta hãy gọi nó là het"
+  },
+  {
+    "start": 605.92,
+    "end": 608.56,
+    "text": "tức là cái node đầu tiên trong danh sách liên kết"
+  },
+  {
+    "start": 608.56,
+    "end": 612.25,
+    "text": "vậy là các bạn có 1 danh sách liên kết gồm 3 nodes rồi"
+  },
+  {
+    "start": 612.25,
+    "end": 614.25,
+    "text": "thì nữa các bạn muốn tạo thêm thẳng đúng không?"
+  },
+  {
+    "start": 614.25,
+    "end": 618.17,
+    "text": "thì các bạn lại phải cấp phát động, sau đó các bạn gắn vào đuôi, hãy gắn vào đầu, hãy gắn vào giữa"
+  },
+  {
+    "start": 618.17,
+    "end": 625.01,
+    "text": "thì đấy là cái cơ chế tạo node và cái cách mà các bạn liên kết các node trong danh sách liên kết với nhau"
+  },
+  {
+    "start": 625.01,
+    "end": 632.01,
+    "text": "Cô lệnh này là cho íc trỏ vào y, hay là các bạn lấy địa chỉ của y, các bạn lưu vào phần x cho thằng x"
+  },
+  {
+    "start": 632.01,
+    "end": 637.01,
+    "text": "Tương tự như vậy các bạn lấy thằng z là địa chỉ này nè, các bạn lưu vào phần x cho thằng y"
+  },
+  {
+    "start": 637.01,
+    "end": 642.33,
+    "text": "Thì các bạn có câu hỏi gì không? Có có khó khăn gì trong các câu lệnh này không?"
+  },
+  {
+    "start": 642.33,
+    "end": 645.65,
+    "text": "Cô chỗ nào cần giải thích các bạn tra đối cho nó rõ đi"
+  },
+  {
+    "start": 645.65,
+    "end": 660.18,
+    "text": "Cô lệnh nào mà các bạn không hiểu ý nghĩa của nó thì các bạn tra đối"
+  },
+  {
+    "start": 660.18,
+    "end": 668.63,
+    "text": "Một chỗ nách chỉ trỏ được vào một lần hay nhiều. Một thôi em ạ. Nếu mà ví dụ như em đang trỏ vào nốt này, nhưng mà em đổi thì nó lại trỏ ra nốt khác."
+  },
+  {
+    "start": 668.63,
+    "end": 688.11,
+    "text": "Nun ở đây là con trỏ nun ấy. Con trỏ nun. Con trỏ của bọn em khi mà sinh ra thì nó sẽ thường lưu địa chỉ của một cái vùng nhớ đúng không?"
+  },
+  {
+    "start": 688.11,
+    "end": 693.11,
+    "text": "Còn con trỏ nun của mình thì nó sẽ không được lưu địa chỉ của vùng nhớ nào kẻ, không được quản lý vùng nhớ nào kẻ."
+  },
+  {
+    "start": 727.08,
+    "end": 729.08,
+    "text": "nốt cuối ở trong danh xanh lên kết rồi"
+  },
+  {
+    "start": 729.08,
+    "end": 735.08,
+    "text": "Thằng nốt cuối ở trong danh xanh lên kết thì nó có một đặc điểm là phần nách của nó là con trò nun"
+  },
+  {
+    "start": 735.08,
+    "end": 738.08,
+    "text": "Ok chưa? Cái còn thực tế đằng sau nó có gì đâu?"
+  },
+  {
+    "start": 738.08,
+    "end": 745.68,
+    "text": "Còn các nốt khác như là nốt x, nốt y đúc nãy thì đằng sau nó, đằng sau thằng x là y và đằng sau y là z mà"
+  },
+  {
+    "start": 745.68,
+    "end": 768.78,
+    "text": "Thế thì theo các bạn mình yên ra các câu lệnh này thì nó sẽ yên ra cái gì?"
+  },
+  {
+    "start": 768.78,
+    "end": 775.38,
+    "text": "Câu lệnh số 31 và 32 thì nó sẽ hiển thị cái gì?"
+  },
+  {
+    "start": 775.38,
+    "end": 786.55,
+    "text": "x muscle-x→ x muscle-data"
+  },
+  {
+    "start": 786.55,
+    "end": 790.96,
+    "text": "data, is 200"
+  },
+  {
+    "start": 790.96,
+    "end": 795.67,
+    "text": "z data 300"
+  },
+  {
+    "start": 795.67,
+    "end": 802.82,
+    "text": "ko có đá bán khác çık"
+  },
+  {
+    "start": 802.82,
+    "end": 803.9,
+    "text": "đmuş crielactive"
+  },
+  {
+    "start": 803.9,
+    "end": 813.7,
+    "text": "ити"
+  },
+  {
+    "start": 813.7,
+    "end": 818.48,
+    "text": "im, x Something"
+  },
+  {
+    "start": 818.48,
+    "end": 821.02,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 821.02,
+    "end": 824.02,
+    "text": "Thằng Ý mà các bạn ních một lần là nó ra thằng Ý"
+  },
+  {
+    "start": 824.02,
+    "end": 828.02,
+    "text": "Xăm từ thằng Ý các bạn chui xuất vào data của nó thì nó sẽ là 200"
+  },
+  {
+    "start": 828.02,
+    "end": 832.66,
+    "text": "Còn câu lệnh này, ít mỗi tên ních là nó ra Ý rồi"
+  },
+  {
+    "start": 832.66,
+    "end": 835.66,
+    "text": "Xăm từ Ý các bạn lại ních một lần nữa là nó ra thằng Z"
+  },
+  {
+    "start": 835.66,
+    "end": 839.66,
+    "text": "Xăm từ thằng Z các bạn lại ních một lần nữa thì nó sẽ ra con trỏ, con trỏ nôn"
+  },
+  {
+    "start": 839.66,
+    "end": 845.75,
+    "text": "Em chưa hiểu chỗ ních xong rồi, đâu ra bằng với giá trị của Z là sao nhỉ"
+  },
+  {
+    "start": 845.75,
+    "end": 850.78,
+    "text": "Câu hỏi của em chưa dọn nghĩa lắm"
+  },
+  {
+    "start": 850.78,
+    "end": 854.62,
+    "text": "chỗ nách xong rồi đâu ra bằng với giá trị giết được hả?"
+  },
+  {
+    "start": 857.96,
+    "end": 862.5,
+    "text": "Vậy thì ở trăm trường hợp này, cái câu lệnh số 31 của các bạn nó sẽ in ra là 232"
+  },
+  {
+    "start": 862.5,
+    "end": 866.02,
+    "text": "còn câu lệnh 32 thì nó sẽ hiển thị con tròn nuôn, nha"
+  },
+  {
+    "start": 866.34,
+    "end": 869.46,
+    "text": "và khi mà hiển thị con tròn nuôn thì nó sẽ in ra cho em là số 0"
+  },
+  {
+    "start": 871.96,
+    "end": 873.24,
+    "text": "đây, 200 đây"
+  },
+  {
+    "start": 873.48,
+    "end": 875.16,
+    "text": "còn đây là số 0"
+  },
+  {
+    "start": 883.29,
+    "end": 884.73,
+    "text": "có khác hỏi lại rồi nè"
+  },
+  {
+    "start": 885.05,
+    "end": 887.53,
+    "text": "làm sao biết nách bằng 300 vậy anh?"
+  },
+  {
+    "start": 887.53,
+    "end": 890.73,
+    "text": "thì mình nhìn vào cái cơ chế của nó thôi chứ có gì đâu mà"
+  },
+  {
+    "start": 890.97,
+    "end": 892.73,
+    "text": "mà biết hay không?"
+  },
+  {
+    "start": 893.77,
+    "end": 896.33,
+    "text": "Cái giá trị data của node đầu tiên thì để làm gì?"
+  },
+  {
+    "start": 896.92,
+    "end": 898.72,
+    "text": "Cái giá trị data của node đầu tiên"
+  },
+  {
+    "start": 899.24,
+    "end": 904.36,
+    "text": "Thì mình để lưu chữ cái node đấy thôi, nó giống như em lưu cái phần tử đầu tiên ở trong mảng bằng bao nhiêu thôi có gì đó"
+  },
+  {
+    "start": 904.86,
+    "end": 909.74,
+    "text": "Các bạn hình dùng cái danh sách liên kết này, nó giống như một cái danh sách thôi mà, một cái mảng"
+  },
+  {
+    "start": 910.24,
+    "end": 915.36,
+    "text": "Thì mình sẽ lưu các cái phần tử ở trong, ví dụ các bạn có mà giải số, các bạn có thể lưu vào danh sách liên kết được"
+  },
+  {
+    "start": 915.88,
+    "end": 917.92,
+    "text": "Thì mình sẽ lưu vào cái phần data này này"
+  },
+  {
+    "start": 917.92,
+    "end": 925.99,
+    "text": "Còn cái phần x này này, là mục đích của mình để mình kết nối các notes ở trong danh xách mình kết lại với nhau để mình có cái thứ tự nào đó"
+  },
+  {
+    "start": 925.99,
+    "end": 930.99,
+    "text": "Thế là thằng này đứng sau, thằng này thằng này đứng sau này, nó không như màng một chiều hay vector là nó dựa vào chỉ số"
+  },
+  {
+    "start": 930.99,
+    "end": 934.99,
+    "text": "Thế còn ở đây thì mình sẽ kết nối nó với nhau bằng con trỏ, bằng địa trí"
+  },
+  {
+    "start": 934.99,
+    "end": 942.18,
+    "text": "Thế còn làm sao để biết là ví dụ như, nách, nách các thứ bằng bao nhiêu, thực ra nó rất là dễ thôi ví dụ nhé"
+  },
+  {
+    "start": 942.18,
+    "end": 948.27,
+    "text": "Lúc này anh khai báo thằng x này, data của nó là 100 đúng không?"
+  },
+  {
+    "start": 948.27,
+    "end": 953.31,
+    "text": "con trỏ của nó, phần x của nó đang là, đây là data nhé, con đây là phần x nhé"
+  },
+  {
+    "start": 953.31,
+    "end": 955.18,
+    "text": "con đây là thằng y này"
+  },
+  {
+    "start": 955.18,
+    "end": 958.58,
+    "text": "data của nó là 200, con cái phần x của nó đang là nun, đúng không?"
+  },
+  {
+    "start": 958.58,
+    "end": 960.64,
+    "text": "đây là thằng z đúng không?"
+  },
+  {
+    "start": 960.64,
+    "end": 964.62,
+    "text": "data của nó là 300, và cái phần x của nó đang là con trỏ nun"
+  },
+  {
+    "start": 964.62,
+    "end": 968.42,
+    "text": "đấy thì đây, 3 cái nốt này nó đang đứng riêng lẻ độc lập với nhau đúng không?"
+  },
+  {
+    "start": 968.42,
+    "end": 972.13,
+    "text": "đây, cái câu lệnh này đây"
+  },
+  {
+    "start": 972.13,
+    "end": 976.13,
+    "text": "đây, hôm nay mình hỏi các câu lệnh có chỗ nào không hiểu thì các bạn phải hỏi ngay"
+  },
+  {
+    "start": 976.13,
+    "end": 981.89,
+    "text": "Chứ đến xuống câu lệnh dưới rồi các bạn lên mấy lại thắc mắc thì nó khó khăn ra tìm nữa hợp tác cái theo tác được sao mà các bạn nắm được"
+  },
+  {
+    "start": 981.89,
+    "end": 985.33,
+    "text": "Thì một cái phần này ok chưa?"
+  },
+  {
+    "start": 985.33,
+    "end": 989.08,
+    "text": "Phần này nó tạo ra bar node như thế này, có bạn nào có thắc mắc không?"
+  },
+  {
+    "start": 989.08,
+    "end": 992.96,
+    "text": "Đấy mỗi node nó có 2 phần như thế, data ở trước, nách ở sau"
+  },
+  {
+    "start": 992.96,
+    "end": 997.38,
+    "text": "Thấy đấy"
+  },
+  {
+    "start": 997.38,
+    "end": 1000.98,
+    "text": "i mũi tên nách bằng i, x mũi tên nách bằng i đúng không?"
+  },
+  {
+    "start": 1000.98,
+    "end": 1003.86,
+    "text": "Thì cái thằng i này của bạn em thì thực chất nó sẽ là một cái địa trí"
+  },
+  {
+    "start": 1003.86,
+    "end": 1008.94,
+    "text": "Thằng x này cũng là một cái địa trí và thằng z này cũng có là một cái địa trí để anh in ở đây"
+  },
+  {
+    "start": 1008.94,
+    "end": 1021.94,
+    "text": "xe Ger g whispering"
+  },
+  {
+    "start": 1021.94,
+    "end": 1026.81,
+    "text": "this x, i and z"
+  },
+  {
+    "start": 1026.81,
+    "end": 1031.0,
+    "text": "là giai trị của xe ger"
+  },
+  {
+    "start": 1031.0,
+    "end": 1034.37,
+    "text": "hơi dạm chút, bởi vì nó là địa chỉ"
+  },
+  {
+    "start": 1034.37,
+    "end": 1040.4,
+    "text": "hình cái x của bạn em kìa, anh tọn gọi nó là không x38"
+  },
+  {
+    "start": 1040.4,
+    "end": 1042.98,
+    "text": "con thằng i của mình Đ consultants"
+  },
+  {
+    "start": 1042.98,
+    "end": 1045.03,
+    "text": "là không x20"
+  },
+  {
+    "start": 1045.03,
+    "end": 1047.27,
+    "text": "con thằng z của bạn là không x30"
+  },
+  {
+    "start": 1049.87,
+    "end": 1051.81,
+    "text": "đây là địa chỉ 3 con thằng xe ger"
+  },
+  {
+    "start": 1051.81,
+    "end": 1056.94,
+    "text": "Cô lệnh x mũi tên x bằng i, đây là phần nách của thằng ích"
+  },
+  {
+    "start": 1056.94,
+    "end": 1059.94,
+    "text": "Tạm thời, nó đang là lưu con trỏ nôn"
+  },
+  {
+    "start": 1059.94,
+    "end": 1061.94,
+    "text": "Và các bạn lại gán bằng i đúng không?"
+  },
+  {
+    "start": 1061.94,
+    "end": 1063.94,
+    "text": "Thì các bạn sẽ lưu thằng i vào đây"
+  },
+  {
+    "start": 1063.94,
+    "end": 1066.94,
+    "text": "Hay nói cái khác là các bạn sẽ lưu không ích 20 vào đây"
+  },
+  {
+    "start": 1066.94,
+    "end": 1067.94,
+    "text": "Đấy chưa?"
+  },
+  {
+    "start": 1067.94,
+    "end": 1070.94,
+    "text": "Thì khi đó, nó có một cái kết nối như thế này"
+  },
+  {
+    "start": 1070.94,
+    "end": 1073.51,
+    "text": "Tức là thằng ích của mình nó trỏ vào thằng i ấy"
+  },
+  {
+    "start": 1073.51,
+    "end": 1076.51,
+    "text": "Hay cái khác là thằng i nó đứng sau thằng ích ấy"
+  },
+  {
+    "start": 1076.51,
+    "end": 1077.51,
+    "text": "Thế thôi"
+  },
+  {
+    "start": 1077.51,
+    "end": 1083.91,
+    "text": "Cô lệnh này cho i mũ tên x bằng z thì nó là cái thằng, cái thằng này này bây giờ nó thành 0x30 nè"
+  },
+  {
+    "start": 1083.91,
+    "end": 1092.36,
+    "text": "Được chờ, ok, thì nó giống như thằng i nó trỏ vào thằng z, vậy là mình đã có cái danh sách liên kết này rồi"
+  },
+  {
+    "start": 1092.36,
+    "end": 1100.88,
+    "text": "x, i, z đúng không? Thế ở đây các bạn CO này, x mũ tên x, thì x mũ tên x thì nó sẽ là 0x20 hay nó cái khác nó là thằng i"
+  },
+  {
+    "start": 1100.88,
+    "end": 1105.48,
+    "text": "Nói xong từ thằng i đấy các bạn đã truy sất vào cái phần data của nó thì mình được là 200"
+  },
+  {
+    "start": 1105.48,
+    "end": 1107.64,
+    "text": "OK chứ ạ?"
+  },
+  {
+    "start": 1107.64,
+    "end": 1110.64,
+    "text": "Thế còn câu lệnh này, íc mũi tên nách là nó đã ra i rồi"
+  },
+  {
+    "start": 1110.64,
+    "end": 1115.64,
+    "text": "Xong từ i các bạn đã truy cập phần nách nữa thì nó ra thằng z này nè, là không íc 30 ạ"
+  },
+  {
+    "start": 1115.64,
+    "end": 1119.64,
+    "text": "Xong từ thằng z các bạn đã truy cập vào phần nách của nó thì nó sẽ ra con tròn nun này nè"
+  },
+  {
+    "start": 1119.64,
+    "end": 1124.07,
+    "text": "Thế thôi, được chứ ạ?"
+  },
+  {
+    "start": 1124.07,
+    "end": 1127.07,
+    "text": "Đấy các bạn xem con chỗ nào, cần giải thích không?"
+  },
+  {
+    "start": 1127.07,
+    "end": 1131.71,
+    "text": "íc i z trong trường hợp này nó là con trỏ hết, nó là địa chỉ"
+  },
+  {
+    "start": 1131.71,
+    "end": 1135.71,
+    "text": "Đấy, không íc 38 kìa, không íc e 20, không íc e 30 kìa kìa"
+  },
+  {
+    "start": 1135.71,
+    "end": 1141.18,
+    "text": "Còn cái 100, 200, 300 thì là đấy là cái data mà cái node đấy nó lưu"
+  },
+  {
+    "start": 1141.18,
+    "end": 1148.86,
+    "text": "Nếu mà các bạn học danh sách liên kết này mà mà em cứ hiểu cái xyz là 100, 200, 300 là các bạn không có hiểu bán chất của vấn đề"
+  },
+  {
+    "start": 1148.86,
+    "end": 1154.78,
+    "text": "Xyz trong trường hợp này nó là một cái địa chỉ, ba thằng xyz nó đều là địa chỉ"
+  },
+  {
+    "start": 1154.78,
+    "end": 1160.62,
+    "text": "Và cái vùng địa chỉ, cái bộ nhớ đấy, cái vùng nhớ mà cái địa chỉ đấy là con trỏ nó đang quản lý"
+  },
+  {
+    "start": 1160.62,
+    "end": 1165.42,
+    "text": "Thì các bạn sẽ sử dụng để lưu data và lưu cái phần lách đấy, lưu 2 cái phần này này"
+  },
+  {
+    "start": 1165.42,
+    "end": 1167.42,
+    "text": "Em nói cái khác là mình lưu một nốt ấy"
+  },
+  {
+    "start": 1167.42,
+    "end": 1174.02,
+    "text": "Và người ta sẽ quản lý cái danh sách liên kết của một em thông qua thằng này"
+  },
+  {
+    "start": 1174.02,
+    "end": 1178.37,
+    "text": "À, tức là người ta sẽ chỉ cần biết là cái thằng đầu tiên ở trong danh sách liên kết của bạn là thằng Ý"
+  },
+  {
+    "start": 1178.37,
+    "end": 1180.37,
+    "text": "Có giá trị như thế này thôi"
+  },
+  {
+    "start": 1180.37,
+    "end": 1184.5,
+    "text": "Tại vì có thằng Ý thì các bạn có thể ra thằng Ý, các bạn có thể ra thằng Giáp được"
+  },
+  {
+    "start": 1184.5,
+    "end": 1189.5,
+    "text": "Hay nói cái khác là mình có thể truy xuất ra bất cứ một cái phần tử nào trong danh sách liên kết thông qua thằng Ý này"
+  },
+  {
+    "start": 1189.5,
+    "end": 1193.5,
+    "text": "Bằng cách là lần, lần, lần từ nó xong cứ lần, lần, lần, lần"
+  },
+  {
+    "start": 1193.5,
+    "end": 1197.62,
+    "text": "Bây giờ mình muốn rượt qua cái danh sách liên kết thì mình sẽ làm như thế nào"
+  },
+  {
+    "start": 1197.62,
+    "end": 1208.58,
+    "text": "Bây giờ các bạn thấy là mỗi lần mà tạo ra một node ở trong danh xe liên kết thì các bạn sẽ cần phải cấp phát động này"
+  },
+  {
+    "start": 1208.58,
+    "end": 1214.58,
+    "text": "Sau đó mình gán data vào index nó sẽ lập đi lập lại nên các bạn có thể viết một cái hàm chuyên để tạo node"
+  },
+  {
+    "start": 1214.58,
+    "end": 1220.58,
+    "text": "Một cái hàm để tạo một node thì anh sẽ đặt nó là node cell, make node, có một cái data là x"
+  },
+  {
+    "start": 1220.58,
+    "end": 1225.9,
+    "text": "Cái hàm nó sẽ trẻ về là node cell nha, tức là nó trẻ về con trỏ kiểu node ấy"
+  },
+  {
+    "start": 1225.9,
+    "end": 1249.61,
+    "text": "Bên trong này bạn em sẽ cấp phát động node sao, new node, bằng 1 cái node mới này, đây là cấp phát động đúng không, sau đó các bạn sẽ gán cho data của nó, new node mũi tên data các bạn cho bằng x, new node mũi tên x tạm thời các bạn cho nó bằng con trỏ nùn, sau đó các bạn return về cho mình cái thằng new node là được, return về new node là xam"
+  },
+  {
+    "start": 1249.61,
+    "end": 1255.61,
+    "text": "Thì khi mà các bạn cấp phát động này thì cái vòng đời của nói là nó sẽ phải hết, chương trình nó mới trự, nó mới dừng"
+  },
+  {
+    "start": 1255.61,
+    "end": 1263.64,
+    "text": "Nha, khi mà các bạn cấp phát động này thì cái thằng new node này của các bạn nó sẽ chạy, nó sẽ còn tồn tại cho tới khi nào chương trình của bạn em nó còn hạt động"
+  },
+  {
+    "start": 1263.64,
+    "end": 1269.64,
+    "text": "Nó không như cái biến cục bộ, nấy, khi mà các bạn tạo ra một cái hàm nhé, ví dụ của anh em có một cái hàm E"
+  },
+  {
+    "start": 1269.64,
+    "end": 1272.64,
+    "text": "Ở trong hàm E này nếu mà bạn em khai báo ra một cái biến kiểu thông thường thôi"
+  },
+  {
+    "start": 1272.64,
+    "end": 1278.86,
+    "text": "Hoặc là một cái biến Ctrl nhưng mà các bạn không cấp phát động ấy, là hết cái hàm đến cái biến đấy nó sẽ bị hủy đi"
+  },
+  {
+    "start": 1278.86,
+    "end": 1286.96,
+    "text": "Còn nếu mà cái biến của các bạn được cấp phát động như thế này, là cái vòng đời của nó là nó hit hềm lên xong nó bị hủy"
+  },
+  {
+    "start": 1286.96,
+    "end": 1289.43,
+    "text": "Nói, ok chưa?"
+  },
+  {
+    "start": 1289.43,
+    "end": 1294.33,
+    "text": "Thế nên là bây giờ các bạn muốn tạo ra một cái node mới thì mình có thể gọi luôn cái hềm make node"
+  },
+  {
+    "start": 1294.33,
+    "end": 1297.63,
+    "text": "Sao các bạn truyền cái node mà các bạn muốn tạo là 100 vào"
+  },
+  {
+    "start": 1297.63,
+    "end": 1300.93,
+    "text": "Thằng i thì mình chỉ cần gọi make node, mình truyền 200 vào"
+  },
+  {
+    "start": 1300.93,
+    "end": 1304.63,
+    "text": "Và thằng z thì bạn em chỉ cần gọi make node và em truyền 300 vào"
+  },
+  {
+    "start": 1304.63,
+    "end": 1311.47,
+    "text": "Thì khi đó, hàm makenode sẽ tự cấp phát động, tự gán data và phần nách cho mình"
+  },
+  {
+    "start": 1311.47,
+    "end": 1320.08,
+    "text": "Thì nó sẽ tiện hơn, mình đã phải viết lại mấy câu đệnh đến nhiều lần mà có thể gọi hàm makenode này"
+  },
+  {
+    "start": 1320.08,
+    "end": 1324.88,
+    "text": "Hàm makenode này trả về con trỏ kiểu node"
+  },
+  {
+    "start": 1324.88,
+    "end": 1331.72,
+    "text": "Các bạn xem hàm makenode ok chưa?"
+  },
+  {
+    "start": 1331.72,
+    "end": 1353.51,
+    "text": "Bây giờ mình sẽ viết các hàm như là duyệt danh sách liên kết hoặc là đếm xem trong danh sách liên kết có bao nhiêu nodes"
+  },
+  {
+    "start": 1353.51,
+    "end": 1356.15,
+    "text": "Anh sẽ viết một cái hàm là hàm duyệt"
+  },
+  {
+    "start": 1356.15,
+    "end": 1359.35,
+    "text": "Hàm X node không có chức năng linh tụi nó lại không?"
+  },
+  {
+    "start": 1359.35,
+    "end": 1366.23,
+    "text": "Hàm X node chỉ có cấp phát node thôi, thì còn muốn kết nối nó với nhau thì em phải tự cài đặt các phương thức"
+  },
+  {
+    "start": 1366.23,
+    "end": 1371.63,
+    "text": "Ví dụ như là thêm cái node đấy vào cuối 1 cái danh sách liên kết, thêm vào giữa, thêm vào đầu"
+  },
+  {
+    "start": 1371.63,
+    "end": 1378.35,
+    "text": "Nó giống như vector, em phải tự xây dựng các hàm, giống như hàm pushback với hàm insert trong vector"
+  },
+  {
+    "start": 1378.35,
+    "end": 1381.38,
+    "text": "Thằng này là mới tạo node thôi, nha"
+  },
+  {
+    "start": 1381.38,
+    "end": 1385.38,
+    "text": "Thì nữa mình sẽ học các thao tác mà mình sẽ chèn vào danh xét link kết sau"
+  },
+  {
+    "start": 1385.38,
+    "end": 1387.48,
+    "text": "Đây, mình sẽ có 1 hàm duyệt"
+  },
+  {
+    "start": 1387.48,
+    "end": 1393.15,
+    "text": "Tham số của nó sẽ là 1 con trỏ, kiểu node tên là het"
+  },
+  {
+    "start": 1393.15,
+    "end": 1397.65,
+    "text": "Thằng này nó sẽ là cái thằng đại diện cho node đầu tiên ở trong danh xét link kết"
+  },
+  {
+    "start": 1397.65,
+    "end": 1401.65,
+    "text": "Thì các bạn sẽ duyệt như này, y, het, cac, nun"
+  },
+  {
+    "start": 1401.65,
+    "end": 1414.81,
+    "text": "CL-s∞ sha, edge,pmdgalin, Holding intellectual digital digital personal"
+  },
+  {
+    "start": 1415.05,
+    "end": 1426.17,
+    "text": "Ví d Вы Proposal 1.3 Instant"
+  },
+  {
+    "start": 1427.02,
+    "end": 1431.98,
+    "text": "E-paired"
+  },
+  {
+    "start": 1469.85,
+    "end": 1473.85,
+    "text": "Các bạn xia ra hét mũi tên data thì nó là 100"
+  },
+  {
+    "start": 1473.85,
+    "end": 1476.33,
+    "text": "Xong các bạn xuống câu lệnh này"
+  },
+  {
+    "start": 1476.33,
+    "end": 1479.33,
+    "text": "Câu lệnh này là mình lấy cái phần nách của thằng hét mình gán lại cho chính nó"
+  },
+  {
+    "start": 1479.33,
+    "end": 1483.33,
+    "text": "Thì bây giờ bạn em thấy cái phần nách của thằng hét nó là không ích 20"
+  },
+  {
+    "start": 1483.33,
+    "end": 1486.36,
+    "text": "Đúng không? Nó chính là địa chỉ của nốt đứng đằng sau"
+  },
+  {
+    "start": 1486.36,
+    "end": 1490.75,
+    "text": "Nên cái câu lệnh này này, nó sẽ giúp thằng hét của bạn nhảy ra nốt đứng đằng sau"
+  },
+  {
+    "start": 1490.75,
+    "end": 1492.75,
+    "text": "Vậy thì thằng hét của em nó sẽ sang đây"
+  },
+  {
+    "start": 1492.75,
+    "end": 1496.32,
+    "text": "Hiểu không?"
+  },
+  {
+    "start": 1496.32,
+    "end": 1499.32,
+    "text": "Hét bằng hét mũi tên nách thì là mình lấy cái phần nách của cái nốt hiện tại đó"
+  },
+  {
+    "start": 1499.32,
+    "end": 1501.32,
+    "text": "Gán lại cho chính nó"
+  },
+  {
+    "start": 1501.32,
+    "end": 1505.32,
+    "text": "Nhưng cái phần nách của node hiện tại chính là địa chỉ của thằng đứng nàng sau, đúng không?"
+  },
+  {
+    "start": 1505.32,
+    "end": 1508.32,
+    "text": "Thế nên câu lệnh đấy nó sẽ cho hết của bạn nhảy sang node thứ 2."
+  },
+  {
+    "start": 1508.32,
+    "end": 1511.32,
+    "text": "Rồi bây giờ mình quay lại cái vòng y, thì khi đó có khác nôn không?"
+  },
+  {
+    "start": 1511.32,
+    "end": 1515.32,
+    "text": "Vẫn khác con tròn nôn đúng không? Thì các bạn lại xiao ra hết mũi tên data thì nó là 200."
+  },
+  {
+    "start": 1515.32,
+    "end": 1521.72,
+    "text": "Sau các bạn lại lấy cái phần nách của nó, các bạn gán lại cho chính nó, thì cái phần nách của nó đang là 0x30 này này."
+  },
+  {
+    "start": 1521.72,
+    "end": 1526.97,
+    "text": "Anh nói cái khác là thằng Z í. Các bạn lại gán cho thằng hét, vậy thằng hét là nhảy ở đây."
+  },
+  {
+    "start": 1526.97,
+    "end": 1531.42,
+    "text": "Sau đó mình quay lại, mình check khác nôn, thì mình in ra data của nó là 300."
+  },
+  {
+    "start": 1531.42,
+    "end": 1533.62,
+    "text": "sau mình lấy cái phần nách của nó, mình gán lại cho chính nó"
+  },
+  {
+    "start": 1533.62,
+    "end": 1536.22,
+    "text": "thì cái phần nách của thằng hét lúc đấy nó đang là con tròn nôn"
+  },
+  {
+    "start": 1536.22,
+    "end": 1540.02,
+    "text": "các bạn gán lại cho thằng hét, vậy thì hét của mình khi đó nó sẽ thành con tròn nôn"
+  },
+  {
+    "start": 1540.02,
+    "end": 1543.42,
+    "text": "và các bạn quay trở lại các bạn check thì nó bị vi phạm điều kiện lập"
+  },
+  {
+    "start": 1543.42,
+    "end": 1545.42,
+    "text": "nên mình sẽ kết thúc và mình xuống giảm"
+  },
+  {
+    "start": 1545.42,
+    "end": 1548.52,
+    "text": "vậy là mình đã duyệt qua danh xe lên kết rồi"
+  },
+  {
+    "start": 1548.52,
+    "end": 1552.32,
+    "text": "cái duyệt xe lên kết đấy thì là cái câu lệnh này, đấy"
+  },
+  {
+    "start": 1552.32,
+    "end": 1555.29,
+    "text": "hét bằng hét một tên nách"
+  },
+  {
+    "start": 1555.29,
+    "end": 1557.29,
+    "text": "mình có duyệt ngược về được không anh?"
+  },
+  {
+    "start": 1557.29,
+    "end": 1559.89,
+    "text": "duyệt ngược thì em phải dùng danh xe lên kết đôi, em mới duyệt được"
+  },
+  {
+    "start": 1559.89,
+    "end": 1561.89,
+    "text": "dành xe linh kết đơn nó không duyệt ngược được"
+  },
+  {
+    "start": 1561.89,
+    "end": 1565.42,
+    "text": "dành xe linh kết đơn nó chỉ duyệt theo 1 triều thôi"
+  },
+  {
+    "start": 1565.42,
+    "end": 1567.42,
+    "text": "cái thằng dành xe linh kết đơn này nha"
+  },
+  {
+    "start": 1567.42,
+    "end": 1570.17,
+    "text": "khi mà bọn em chèn vào cuối á"
+  },
+  {
+    "start": 1570.17,
+    "end": 1572.17,
+    "text": "hoặc là chèn vào đầu ấy thì nó sẽ nhanh"
+  },
+  {
+    "start": 1572.17,
+    "end": 1574.67,
+    "text": "còn chèn vào giữa thì nó sẽ chậm"
+  },
+  {
+    "start": 1574.67,
+    "end": 1578.01,
+    "text": "tại vì cái cơ chế chèn vào giữa là nó sẽ phải chạy đến giữa"
+  },
+  {
+    "start": 1578.01,
+    "end": 1582.83,
+    "text": "bên lại cái thằng dành xe linh kết này nó không, ví dụ nó khó khăn ở cái là"
+  },
+  {
+    "start": 1582.83,
+    "end": 1588.59,
+    "text": "bây giờ bọn em muốn chi xuất 1 cái thằng nào mà giữa ở dành xe linh kết là mình không chi cập được ngay như là máng hoặc là vector"
+  },
+  {
+    "start": 1588.59,
+    "end": 1594.59,
+    "text": "Tại vì nó không có chỉ số mà bắt vùa các bạn phải lần từ đầu, các bạn phải chạy từ thằng hét, xong các bạn lần, lần, lần dần ra"
+  },
+  {
+    "start": 1594.59,
+    "end": 1603.06,
+    "text": "Nó sẽ có hạn chế như thế"
+  },
+  {
+    "start": 1603.06,
+    "end": 1609.06,
+    "text": "Đúng rồi, cái vector của các bạn ấy, cái vector mà em học từ khá là lâu rồi đúng không?"
+  },
+  {
+    "start": 1609.06,
+    "end": 1617.98,
+    "text": "Thằng vector của mình nhá, các phần tử trong vector ấy thì nó cũng sẽ được cấp phát động"
+  },
+  {
+    "start": 1617.98,
+    "end": 1621.98,
+    "text": "Nhưng mà bản thân cái biến vector đấy thì nó lại được cấp phát tính, ví dụ như em khai báo"
+  },
+  {
+    "start": 1621.98,
+    "end": 1624.86,
+    "text": "Trong trong bên thì nó được cấp phát ở vùng nhớ stack chẳng hạn"
+  },
+  {
+    "start": 1624.86,
+    "end": 1629.36,
+    "text": "Còn các phần tử ở trong vector của em là nó được cấp phát động ở vùng nhớ heap"
+  },
+  {
+    "start": 1629.36,
+    "end": 1637.72,
+    "text": "Nên thường là khi mà các bạn dùng vector thì cái kích cỡ của vector nó sẽ có thể cấp phát được lớn hơn cái mạng 1 chiều mà các bạn lưu ở trong vùng nhớ stack"
+  },
+  {
+    "start": 1637.72,
+    "end": 1643.16,
+    "text": "Và cái dành xây liên kết này cũng thế, mỗi node ở trong dành xây liên kết này của mọi em cũng được cấp phát động"
+  },
+  {
+    "start": 1643.16,
+    "end": 1647.46,
+    "text": "Nên khi đó cái kích thước của dành xây liên kết nó có thể to hơn rất là nhiều"
+  },
+  {
+    "start": 1647.46,
+    "end": 1652.14,
+    "text": "Vùng nhớ heap của các bạn thì nó to hơn so với vùng nhớ stack"
+  },
+  {
+    "start": 1652.14,
+    "end": 1656.92,
+    "text": "Hồi mà các bạn học mạng 1 chiều, anh có nói về vấn đề bị stack overflow"
+  },
+  {
+    "start": 1656.92,
+    "end": 1660.68,
+    "text": "khi mà các bạn khai báo 1 cái mạng 1 chiều quá lớn ở trong bên, còn nhớ không?"
+  },
+  {
+    "start": 1660.68,
+    "end": 1667.34,
+    "text": "Tại vì cái vùng nhớ đấy là vùng nhớ stack, còn cái vector của các bạn thì các phần tử của nó"
+  },
+  {
+    "start": 1667.34,
+    "end": 1670.86,
+    "text": "Với thằng danh xe liên kết này, các phần tử của nó thì nó nằm ở vùng nhớ heap cơ?"
+  },
+  {
+    "start": 1670.86,
+    "end": 1676.46,
+    "text": "Vùng nhớ heap đấy của các bạn thì nó sẽ lớn hơn và nó sẽ phụ thuộc vào bộ nhớ RAM"
+  },
+  {
+    "start": 1676.46,
+    "end": 1679.66,
+    "text": "nên là thường các bạn sẽ cấp phát được cái kích cỡ nó lớn hơn"
+  },
+  {
+    "start": 1681.37,
+    "end": 1685.85,
+    "text": "nhưng mà cái thòng vector của mình, các phần tửa trong vector của mình là được cấp phát động"
+  },
+  {
+    "start": 1686.57,
+    "end": 1688.65,
+    "text": "và được lưu ở trong vùng như hip, đúng không?"
+  },
+  {
+    "start": 1689.05,
+    "end": 1691.21,
+    "text": "Nhưng mà nó lại nằm cạnh nhau trong bộ như mai tính"
+  },
+  {
+    "start": 1691.37,
+    "end": 1693.93,
+    "text": "nên là nó vẫn có thể xử lý được thông qua chỉ số"
+  },
+  {
+    "start": 1694.17,
+    "end": 1697.69,
+    "text": "còn các phần tửa trong dành xe lên kết này là mỗi thằng nằm một chỗ"
+  },
+  {
+    "start": 1698.25,
+    "end": 1702.57,
+    "text": "đấy, thế nên là mình bắt buộc mình cần phải có cái liên kết giữa chúng nó với nhau"
+  },
+  {
+    "start": 1702.89,
+    "end": 1705.53,
+    "text": "bằng cách là mình lưu địa chỉ của nốt đứng sang sau"
+  },
+  {
+    "start": 1705.53,
+    "end": 1708.21,
+    "text": "vào phần nách của node đứng trước"
+  },
+  {
+    "start": 1708.21,
+    "end": 1710.34,
+    "text": "Thì đây là thao tác duyệt"
+  },
+  {
+    "start": 1710.34,
+    "end": 1714.34,
+    "text": "Thoàn thao tác đếm xem trong danh xe liên kết của mình có bao nhiêu nodes thì tương tự"
+  },
+  {
+    "start": 1714.34,
+    "end": 1716.1,
+    "text": "Anh sẽ viểu 1 cái hàm là sai đi"
+  },
+  {
+    "start": 1716.1,
+    "end": 1719.14,
+    "text": "node sao hết thì các bạn duyệt vào đếm thôi"
+  },
+  {
+    "start": 1719.14,
+    "end": 1730.93,
+    "text": "Ok"
+  },
+  {
+    "start": 1730.93,
+    "end": 1734.42,
+    "text": "Đây là 2 cái hàm chức năng nhỏ nhỏ"
+  },
+  {
+    "start": 1734.42,
+    "end": 1736.3,
+    "text": "1 là hàm để duyệt xe liên kết"
+  },
+  {
+    "start": 1736.3,
+    "end": 1739.86,
+    "text": "1 cái hàm để đếm xem trong xe liên kết của mình có bao nhiêu nodes"
+  },
+  {
+    "start": 1739.86,
+    "end": 1743.78,
+    "text": "Bạn em xem 3 cái hàm chức năng này có hàm nào khó khăn chỗ nào không?"
+  },
+  {
+    "start": 1743.78,
+    "end": 1754.93,
+    "text": "Cô em bảo, hàm make node, thêm dòng if new node bằng nun để return nghĩa là trường hợp, có phát động bị fail"
+  },
+  {
+    "start": 1754.93,
+    "end": 1757.13,
+    "text": "Ơ, em có thể cho dòng đấy và cũng được"
+  },
+  {
+    "start": 1757.13,
+    "end": 1759.38,
+    "text": "Tẩn thận quá, nha"
+  },
+  {
+    "start": 1759.38,
+    "end": 1765.14,
+    "text": "Tức là bạn này bảo là cô giá thì bảo là cho thêm 1 câu lệnh là if new node bằng nun đúng không?"
+  },
+  {
+    "start": 1765.14,
+    "end": 1771.18,
+    "text": "Thì các bạn return new node bằng nun à"
+  },
+  {
+    "start": 1771.18,
+    "end": 1773.58,
+    "text": "Các bạn sẽ return nun được"
+  },
+  {
+    "start": 1773.58,
+    "end": 1782.21,
+    "text": "Tại vì có thể, thực tế thì nó cũng sẽ có trường hợp đấy là mà em xin không cấp phát được, nhưng mà nói chung là hiếm khi đó"
+  },
+  {
+    "start": 1782.21,
+    "end": 1793.93,
+    "text": "Này, nồi, có bạn nào hỏi gì về 3 cái hạm này không?"
+  },
+  {
+    "start": 1793.93,
+    "end": 1808.19,
+    "text": "1 hạm tạo nốt, 1 hạm duyệt và 1 hạm đếm xem cho dành xanh linkết của mình có bao nhiêu nốt"
+  },
+  {
+    "start": 1808.19,
+    "end": 1809.19,
+    "text": "Rồi, ok nha"
+  },
+  {
+    "start": 1809.19,
+    "end": 1814.32,
+    "text": "Bây giờ mình bắt đầu mới đi vào các cái thao tác, gọi là thao tác thêm"
+  },
+  {
+    "start": 1814.32,
+    "end": 1816.32,
+    "text": "Thêm đầu, thêm cuối, thêm giữa"
+  },
+  {
+    "start": 1816.32,
+    "end": 1819.76,
+    "text": "Thì anh sẽ hướng dẫn cho bạn em cài đặt bằng 3 cách"
+  },
+  {
+    "start": 1819.76,
+    "end": 1825.92,
+    "text": "Đầu tiên là mình sẽ nói đến cái hàm thêm đầu"
+  },
+  {
+    "start": 1825.92,
+    "end": 1832.16,
+    "text": "node, cell và head"
+  },
+  {
+    "start": 1832.16,
+    "end": 1835.41,
+    "text": "và 1 cái node có data là x"
+  },
+  {
+    "start": 1835.41,
+    "end": 1837.41,
+    "text": "Cái hàm này có chức năng đấy là"
+  },
+  {
+    "start": 1837.41,
+    "end": 1842.82,
+    "text": "thêm 1 node có data là x vào đầu danh sách liên kết"
+  },
+  {
+    "start": 1842.82,
+    "end": 1845.5,
+    "text": "do head quản lý"
+  },
+  {
+    "start": 1845.5,
+    "end": 1850.55,
+    "text": "Bây giờ các bạn đang có 1 cái danh sách liên kết rồi, đúng không?"
+  },
+  {
+    "start": 1850.55,
+    "end": 1858.42,
+    "text": "Các bạn muốn thêm 1 node mới vào đầu, và cái node đấy data của nó là x thì mình sẽ làm như thế nào"
+  },
+  {
+    "start": 1858.42,
+    "end": 1863.42,
+    "text": "Thế từ từ từ từ từ, trước khi mà cái này thì nó phải có vấn đề chỗ này nữa"
+  },
+  {
+    "start": 1863.42,
+    "end": 1877.33,
+    "text": "Đây, là sự nhá, ở đây anh sẽ sia cho thằng x ra màn hình, anh sẽ viết 1 cái hàm như sao"
+  },
+  {
+    "start": 1877.33,
+    "end": 1885.54,
+    "text": "Đây là void thay đổi, thay đổi 1, node sao hết, các bạn cho hết bằng nụn"
+  },
+  {
+    "start": 1885.54,
+    "end": 1897.89,
+    "text": "Bây giờ trong main nhé, anh sẽ gọi thay đổi 1, anh chuyển ích vào, sau đó sau cái hàm thay đổi 1, anh sẽ shear the ích"
+  },
+  {
+    "start": 1897.89,
+    "end": 1903.94,
+    "text": "Cái đây anh tạo ra 1 cái node ích, bằng make node 100 thì các bạn hiểu cơ chế phạt động của nó rồi đúng không?"
+  },
+  {
+    "start": 1903.94,
+    "end": 1909.94,
+    "text": "Sau đó anh shear the ích thì nó sẽ in ra cái địa chỉ của cái thằng ích khi đó, sau đó gọi anh gọi thay đổi 1"
+  },
+  {
+    "start": 1909.94,
+    "end": 1914.94,
+    "text": "Thì cái hàm thay đổi 1 này của các bạn ấy nó có tham số là 1 con trỏ kiểu node, đây là hết"
+  },
+  {
+    "start": 1914.94,
+    "end": 1919.01,
+    "text": "Bên trong đấy các bạn gán hết bằng nuôn, các bạn chạy nhé"
+  },
+  {
+    "start": 1919.01,
+    "end": 1924.87,
+    "text": "Xem là thằng ích nó có bị thành nuôn không? Thì câu trả lời là không"
+  },
+  {
+    "start": 1924.87,
+    "end": 1929.74,
+    "text": "Thằng ích nó vẫn như cái giá trị ban đầu của nó là không ích 38 kìa"
+  },
+  {
+    "start": 1929.74,
+    "end": 1934.74,
+    "text": "Tại vì khi mà các bạn học cái phần này thì nhiều bạn cứ thấy là ở đây nó chuyển Ctrl"
+  },
+  {
+    "start": 1934.74,
+    "end": 1939.74,
+    "text": "Nên các bạn nghĩ là sau khi mà cái hàm thay đổi 1 này chạy xong thì thằng ích nó sẽ bị thay đổi"
+  },
+  {
+    "start": 1939.74,
+    "end": 1941.74,
+    "text": "Thì thế là hết sức sai lầm"
+  },
+  {
+    "start": 1941.74,
+    "end": 1944.5,
+    "text": "khi mà các bạn xây dựng hàm thì nó có 3 cách truyền"
+  },
+  {
+    "start": 1944.5,
+    "end": 1946.5,
+    "text": "1 là truyền giá trị đúng không?"
+  },
+  {
+    "start": 1946.5,
+    "end": 1948.5,
+    "text": "2 là truyền tham chiếu"
+  },
+  {
+    "start": 1948.5,
+    "end": 1951.66,
+    "text": "đấy, ba đấy là truyền con trỏ"
+  },
+  {
+    "start": 1951.66,
+    "end": 1953.66,
+    "text": "thì hồi mà học con trỏ thì các bạn biết rồi"
+  },
+  {
+    "start": 1953.66,
+    "end": 1957.06,
+    "text": "mình có, khi mà các bạn muốn thay đổi cái giá trị của một cái biến nào đó"
+  },
+  {
+    "start": 1957.06,
+    "end": 1959.42,
+    "text": "thì mình có thể xây dựng cái hàm có tham số là con trỏ"
+  },
+  {
+    "start": 1959.42,
+    "end": 1965.02,
+    "text": "sau đó mình truyền địa chỉ của cái biến mà mình cần thay đổi vào trong hàm đấy để cho nó thay đổi đúng không?"
+  },
+  {
+    "start": 1965.02,
+    "end": 1968.99,
+    "text": "nhưng mà các bạn phải nhớ là gì?"
+  },
+  {
+    "start": 1968.99,
+    "end": 1973.15,
+    "text": "lúc đấy là mình dùng con trỏ để mình thay đổi giá trị của biến thông thường"
+  },
+  {
+    "start": 1973.15,
+    "end": 1980.5,
+    "text": "Thế còn ở đây các bạn thấy nha, cái thằng x này của bạn thật, của bạn ấy, bản thân nó đã là con trỏ rồi này"
+  },
+  {
+    "start": 1980.5,
+    "end": 1986.03,
+    "text": "mà nó lại được truyền vào một hàm thay đổi 1 này này, cũng có tham số là con trỏ"
+  },
+  {
+    "start": 1986.03,
+    "end": 1991.07,
+    "text": "thì đây là truyền value, là truyền giá trị, chứ không phải truyền con trỏ"
+  },
+  {
+    "start": 1991.07,
+    "end": 1999.44,
+    "text": "được chưa nhỉ? Đây là truyền giá trị đấy các bạn ạ, tại vì tham số và đối số của các bạn khi đó nó có cùng kiểu với nhau, đều là con trỏ kiểu nốt"
+  },
+  {
+    "start": 1999.44,
+    "end": 2003.94,
+    "text": "sau khi hàm thay đổi chạy x của bạn có bị thay đổi đâu"
+  },
+  {
+    "start": 2003.94,
+    "end": 2006.95,
+    "text": "đây mình giải thích chỗ này"
+  },
+  {
+    "start": 2006.95,
+    "end": 2011.1,
+    "text": "thằng x sau khi cấp phát động"
+  },
+  {
+    "start": 2011.1,
+    "end": 2015.06,
+    "text": "thì nó sẽ bằng 0xsa1638"
+  },
+  {
+    "start": 2015.06,
+    "end": 2020.86,
+    "text": "sau đó các bạn truyền vào hàm thay đổi 1"
+  },
+  {
+    "start": 2020.86,
+    "end": 2023.82,
+    "text": "khi đó giá trị của x sẽ được gán cho thằng hét"
+  },
+  {
+    "start": 2023.82,
+    "end": 2026.39,
+    "text": "thằng hét của mình khi đó"
+  },
+  {
+    "start": 2026.39,
+    "end": 2029.98,
+    "text": "nó cũng là bằng 0x38"
+  },
+  {
+    "start": 2029.98,
+    "end": 2031.81,
+    "text": "Để chơi nhỉ"
+  },
+  {
+    "start": 2031.81,
+    "end": 2035.77,
+    "text": "Nhưng mà thằng hét và thằng ích khi đó nó là 2 biến khác nhau"
+  },
+  {
+    "start": 2035.77,
+    "end": 2038.39,
+    "text": "Nó là 2 cái biến con trỏ khác nhau"
+  },
+  {
+    "start": 2038.39,
+    "end": 2039.75,
+    "text": "Hình dung không?"
+  },
+  {
+    "start": 2039.75,
+    "end": 2041.27,
+    "text": "Nói"
+  },
+  {
+    "start": 2041.27,
+    "end": 2043.35,
+    "text": "Sau đó bây giờ các bạn gán hét bằng nôn"
+  },
+  {
+    "start": 2043.35,
+    "end": 2047.11,
+    "text": "Thì cái thằng hét này của mình nó không lưu cái địa chỉ của vùng nhớ này nữa"
+  },
+  {
+    "start": 2047.11,
+    "end": 2048.71,
+    "text": "Và bây giờ nó thành cái con trỏ nôn"
+  },
+  {
+    "start": 2048.71,
+    "end": 2050.47,
+    "text": "Còn bản thân thằng ích ấy"
+  },
+  {
+    "start": 2050.47,
+    "end": 2052.31,
+    "text": "Thì nó vẫn là không ích 38"
+  },
+  {
+    "start": 2052.31,
+    "end": 2054.01,
+    "text": "Đấy chưa?"
+  },
+  {
+    "start": 2054.01,
+    "end": 2057.05,
+    "text": "Nên là sau khi mà cái hạm thay đổi một chạy xong, thằng ích nó bị thay đổi đâu"
+  },
+  {
+    "start": 2057.05,
+    "end": 2058.74,
+    "text": "Nói"
+  },
+  {
+    "start": 2058.74,
+    "end": 2060.57,
+    "text": "Thế nên các bạn thấy nha"
+  },
+  {
+    "start": 2060.57,
+    "end": 2063.53,
+    "text": "Các cái node ở trong dân xây link kết của mình, nó đều là con trỏ rồi"
+  },
+  {
+    "start": 2063.53,
+    "end": 2064.69,
+    "text": "Ok không nhỉ?"
+  },
+  {
+    "start": 2064.69,
+    "end": 2069.73,
+    "text": "Ờ, thế mà bạn em xây dựng hàm mà nó có tham số là một con trỏ xong em chuyển vào ấy"
+  },
+  {
+    "start": 2069.73,
+    "end": 2071.33,
+    "text": "Thì đấy là chuyển giá trị"
+  },
+  {
+    "start": 2071.33,
+    "end": 2074.21,
+    "text": "Và sau cái hàm đấy, cái con trỏ nó không có bị thay đổi đâu"
+  },
+  {
+    "start": 2074.21,
+    "end": 2075.45,
+    "text": "Được chứ à?"
+  },
+  {
+    "start": 2075.45,
+    "end": 2078.09,
+    "text": "Các bạn muốn thay đổi, các bạn viết như thế này này"
+  },
+  {
+    "start": 2078.09,
+    "end": 2085.42,
+    "text": "Đấy là void, thay đổi 2, node, cell và hết như thế này này"
+  },
+  {
+    "start": 2085.42,
+    "end": 2088.34,
+    "text": "Đấy là các bạn gán bằng hết bằng con trỏ nôn như thế này này, ok"
+  },
+  {
+    "start": 2088.34,
+    "end": 2091.42,
+    "text": "Thì bây giờ các bạn mà gọi thay đổi 2, các bạn truyền thằng x vào nha"
+  },
+  {
+    "start": 2091.42,
+    "end": 2094.66,
+    "text": "sau cái hàm thay đổi 2 này, thằng ích của mình sẽ thành con trỏ nôn"
+  },
+  {
+    "start": 2094.66,
+    "end": 2098.91,
+    "text": "nên mà em xiao ra chỗ này nó sẽ ra xuống không, nó sẽ hẹn thịt ra xuống không, đây này"
+  },
+  {
+    "start": 2098.91,
+    "end": 2102.99,
+    "text": "đấy, tức là bây giờ mình phải xây dựng cái hàm nó có tham chiếu đến cái con trỏ kìa"
+  },
+  {
+    "start": 2102.99,
+    "end": 2106.74,
+    "text": "thì sau, sau hàm thay đổi 2 chạy xong, cái con trỏ đấy nó bị thay đổi"
+  },
+  {
+    "start": 2106.74,
+    "end": 2108.1,
+    "text": "nhé"
+  },
+  {
+    "start": 2108.1,
+    "end": 2111.06,
+    "text": "học là các bạn phải dùng con trỏ cấp 2"
+  },
+  {
+    "start": 2111.06,
+    "end": 2114.2,
+    "text": "như này này, void, thay đổi 3"
+  },
+  {
+    "start": 2114.2,
+    "end": 2120.21,
+    "text": "node, sao sao hết, sau đó vào trong bên trong này em giải tham chiếu cái con trỏ cấp 3 đó, à, cấp 2 đó"
+  },
+  {
+    "start": 2120.21,
+    "end": 2121.69,
+    "text": "xong em gán nó bằng nụn"
+  },
+  {
+    "start": 2121.69,
+    "end": 2124.43,
+    "text": "thì ở trong mên khi mà các bạn gọi thay đổi ba"
+  },
+  {
+    "start": 2124.43,
+    "end": 2127.44,
+    "text": "các bạn phải chuyển địa chỉ của thằng ích vào"
+  },
+  {
+    "start": 2127.44,
+    "end": 2128.32,
+    "text": "nha"
+  },
+  {
+    "start": 2128.32,
+    "end": 2130.56,
+    "text": "thì sau cái hàm đấy nó cũng bị thay đổi"
+  },
+  {
+    "start": 2130.56,
+    "end": 2133.37,
+    "text": "đây nó thành không nè"
+  },
+  {
+    "start": 2133.37,
+    "end": 2135.64,
+    "text": "được chưa nhỉ"
+  },
+  {
+    "start": 2135.64,
+    "end": 2137.23,
+    "text": "đây lưu ý nhá"
+  },
+  {
+    "start": 2137.23,
+    "end": 2138.45,
+    "text": "đấy"
+  },
+  {
+    "start": 2138.45,
+    "end": 2140.85,
+    "text": "khi mà các bạn em đã có biến con trỏ rồi"
+  },
+  {
+    "start": 2140.85,
+    "end": 2145.13,
+    "text": "mà các bạn muốn thay đổi con trỏ đấy sau khi mà hàm nó chạy xong ấy"
+  },
+  {
+    "start": 2145.13,
+    "end": 2148.29,
+    "text": "1 là mình phải dùng tham chiếu đến con trỏ"
+  },
+  {
+    "start": 2148.29,
+    "end": 2150.97,
+    "text": "2 là mình phải dùng con trỏ C++"
+  },
+  {
+    "start": 2150.97,
+    "end": 2154.97,
+    "text": "Mình thay đổi con, con em dùng con trò cấp 1 này là nó không thay đổi đâu"
+  },
+  {
+    "start": 2154.97,
+    "end": 2156.97,
+    "text": "Nói"
+  },
+  {
+    "start": 2156.97,
+    "end": 2161.97,
+    "text": "Tại sao mình lại phải nướng dẫn các bạn cái này? Tại vì khi mà các bạn thay đổi cái danh xách liên kết nó cũng thế"
+  },
+  {
+    "start": 2161.97,
+    "end": 2165.97,
+    "text": "Mình thêm các nodes, hay là xoá các nodes và danh xách liên kết nó cũng thế"
+  },
+  {
+    "start": 2165.97,
+    "end": 2169.64,
+    "text": "Khi đó các bạn sẽ phải thay đổi cái thằng hết ấy"
+  },
+  {
+    "start": 2169.64,
+    "end": 2172.28,
+    "text": "Mình có thể thay đổi thằng hết"
+  },
+  {
+    "start": 2172.28,
+    "end": 2177.73,
+    "text": "Nói, thế nên là các bạn phải có tham chiếu hoặc là con trò cấp 2"
+  },
+  {
+    "start": 2177.73,
+    "end": 2189.76,
+    "text": "Bây giờ mình vào thao tác thêm đầu, có 3 cách cốt, void, thêm đầu 1, node, sao, hết, thằng ích"
+  },
+  {
+    "start": 2189.76,
+    "end": 2198.24,
+    "text": "Tại vì khi thêm 1 node vào đầu, nó sẽ làm thay đổi thằng hết, nên mình phải có tham chiếu"
+  },
+  {
+    "start": 2198.24,
+    "end": 2201.8,
+    "text": "Không có tham chiếu vào, nó không thay đổi đâu"
+  },
+  {
+    "start": 2201.8,
+    "end": 2206.56,
+    "text": "đây các bạn xem ở trên blog này, anh có cái hình này trước nên làm cái video"
+  },
+  {
+    "start": 2206.56,
+    "end": 2216.36,
+    "text": "cái hình này các bạn có quan sát có thể là nó sẽ sẽ dễ nhìn hơn này"
+  },
+  {
+    "start": 2216.36,
+    "end": 2219.64,
+    "text": "thằng xách liên kết"
+  },
+  {
+    "start": 2219.64,
+    "end": 2222.12,
+    "text": "và hình như thế này thì phải"
+  },
+  {
+    "start": 2222.12,
+    "end": 2226.11,
+    "text": "đây các bạn nhìn cái hình này để các bạn xem cái đầu à"
+  },
+  {
+    "start": 2226.11,
+    "end": 2229.31,
+    "text": "cái cơ chế thêm nốt vào đầu, thằng xách liên kết cho nó dễ này"
+  },
+  {
+    "start": 2229.31,
+    "end": 2242.07,
+    "text": "đây đây đây, các bạn xem cái thao tác thêm nốt vào đầu, thằng xách liên kết nhé"
+  },
+  {
+    "start": 2242.07,
+    "end": 2248.06,
+    "text": "Bây giờ cái gianh xét liên kết của bạn em là nó đang có tần này thôi đúng không?"
+  },
+  {
+    "start": 2248.06,
+    "end": 2251.16,
+    "text": "Nó có tần này thôi, là 4 thằng"
+  },
+  {
+    "start": 2251.16,
+    "end": 2254.16,
+    "text": "Trong đó thằng hét của mình là cái nốt đầu tiên này có địa chỉ là 5"
+  },
+  {
+    "start": 2254.16,
+    "end": 2257.16,
+    "text": "Bây giờ địa chỉ nha, cái dưới chân này là địa chỉ, ạ"
+  },
+  {
+    "start": 2257.16,
+    "end": 2261.16,
+    "text": "Bây giờ các bạn muốn thêm 1 nốt vào đầu ấy, thì đầu tiên em cấp phát động cho nốt đấy"
+  },
+  {
+    "start": 2261.16,
+    "end": 2266.51,
+    "text": "Sau đó em phải cho cái nốt mới đấy, nó lưu địa chỉ của thằng hét cũ là 5"
+  },
+  {
+    "start": 2266.51,
+    "end": 2268.57,
+    "text": "Lưu thằng 5 vào đây, lưu 5 vào đây"
+  },
+  {
+    "start": 2268.57,
+    "end": 2277.9,
+    "text": "update manuscript"
+  },
+  {
+    "start": 2277.9,
+    "end": 2292.08,
+    "text": "update manuscript"
+  },
+  {
+    "start": 2292.08,
+    "end": 2294.08,
+    "text": "Bắt đầu mình mới update head ra node mới"
+  },
+  {
+    "start": 2294.08,
+    "end": 2296.43,
+    "text": "Thì khi đó mình code như sau"
+  },
+  {
+    "start": 2296.43,
+    "end": 2299.53,
+    "text": "Đầu tiên mà em cấp phát động node mới nhé, node"
+  },
+  {
+    "start": 2299.53,
+    "end": 2303.82,
+    "text": "Sao new node bằng cách là bạn em gọi cái ham make node em chuyển ích vào"
+  },
+  {
+    "start": 2303.82,
+    "end": 2306.49,
+    "text": "Vậy là mình có node mới rồi, đúng không?"
+  },
+  {
+    "start": 2306.49,
+    "end": 2310.32,
+    "text": "Nếu mà các bạn ngây thư, các bạn gán head bằng new node như thế này"
+  },
+  {
+    "start": 2310.32,
+    "end": 2313.32,
+    "text": "là cái danh xe liên kết của bạn em nó chỉ có 1 node thôi"
+  },
+  {
+    "start": 2313.32,
+    "end": 2318.8,
+    "text": "Đúng không? Nhiều bạn bảo an, nếu bây giờ thêm node vào đầu danh xe liên kết thì tôi gán head bằng new node"
+  },
+  {
+    "start": 2318.8,
+    "end": 2322.8,
+    "text": "Các bạn gán head bằng new node là lúc đấy danh xe liên kết nó chỉ đúng có 1 node mới đi thôi"
+  },
+  {
+    "start": 2322.8,
+    "end": 2354.25,
+    "text": "ね, mình esch"
+  },
+  {
+    "start": 2354.25,
+    "end": 2356.48,
+    "text": "Thao tác thêm đầu"
+  },
+  {
+    "start": 2356.48,
+    "end": 2360.48,
+    "text": "Mí dụ, trong bên, có 1 node sao hết bằng con tròn luôn"
+  },
+  {
+    "start": 2360.48,
+    "end": 2365.48,
+    "text": "Bây giờ em muốn thêm đầu, em có thể làm cái vòng foi chạy từ 1 tới 10"
+  },
+  {
+    "start": 2365.48,
+    "end": 2372.02,
+    "text": "Sau các bạn gọi cái hàm là thêm đầu 1, bạn em truyền hết với i vào"
+  },
+  {
+    "start": 2372.02,
+    "end": 2376.02,
+    "text": "Em rượt thử xem cái danh sách liên kết của mình, nó có phải từ 10 về 1 không?"
+  },
+  {
+    "start": 2376.02,
+    "end": 2378.6,
+    "text": "Đấy, từ 10 về 1 chưa?"
+  },
+  {
+    "start": 2378.6,
+    "end": 2382.49,
+    "text": "Anh cứ rượt từ 1 đến 10, anh thêm vào đầu, thêm vào đầu, thêm vào đầu"
+  },
+  {
+    "start": 2382.49,
+    "end": 2385.49,
+    "text": "Thì nó là danh sách liên kết lúc đấy của mình, nó sẽ là từ 10 về 1, đúng không?"
+  },
+  {
+    "start": 2385.49,
+    "end": 2387.49,
+    "text": "Các bạn không có con trỏ ở đây nha"
+  },
+  {
+    "start": 2387.49,
+    "end": 2389.84,
+    "text": "Không có cái tham chiếu ở đây nha"
+  },
+  {
+    "start": 2389.84,
+    "end": 2391.84,
+    "text": "Cái dành xe lên kênh của bạn nó trả con nốt nào hết"
+  },
+  {
+    "start": 2391.84,
+    "end": 2397.41,
+    "text": "Tại vì sao? Tại vì nó không có tham chiếu ở đây nên là"
+  },
+  {
+    "start": 2397.41,
+    "end": 2401.41,
+    "text": "Khi mà ở trong này các bạn gán từa lừa thằng hét bằng níu nốt nó có thay đổi đâu mà"
+  },
+  {
+    "start": 2401.41,
+    "end": 2403.48,
+    "text": "Nó vẫn là con trỏ nôn như ban đầu luôn"
+  },
+  {
+    "start": 2403.48,
+    "end": 2406.48,
+    "text": "Nên là khi đó mình phải có tham chiếu vào"
+  },
+  {
+    "start": 2406.48,
+    "end": 2409.48,
+    "text": "Thì sau khi mà cái hàm thêm đổi, thêm đầu 1 này nó chạy xong"
+  },
+  {
+    "start": 2409.48,
+    "end": 2411.48,
+    "text": "Thằng hét của bạn em nó mới được thay đổi"
+  },
+  {
+    "start": 2411.48,
+    "end": 2416.15,
+    "text": "Đấy nó có 3 việc, việc thứ nhất, cấp phát động 1 nốt mới"
+  },
+  {
+    "start": 2416.15,
+    "end": 2419.23,
+    "text": "Việc thứ 2, cho nốt mới chỏ vào thằng hét"
+  },
+  {
+    "start": 2419.23,
+    "end": 2423.59,
+    "text": "để lưu lại địa chỉ của thằng đầu tiên trong gian xe linkết lúc đó"
+  },
+  {
+    "start": 2423.59,
+    "end": 2427.75,
+    "text": "sau đó bắt đầu mình mới update thằng hét thành nốt mới"
+  },
+  {
+    "start": 2427.75,
+    "end": 2429.75,
+    "text": "là nốt mà các bạn vừa cấp phát động"
+  },
+  {
+    "start": 2429.75,
+    "end": 2432.31,
+    "text": "Đây là cách cài đạp thứ nhất"
+  },
+  {
+    "start": 2432.31,
+    "end": 2435.88,
+    "text": "Cái này thì các bạn chỉ dùng được trong C++ thôi"
+  },
+  {
+    "start": 2435.88,
+    "end": 2437.48,
+    "text": "tại vì nó có tham chiếu"
+  },
+  {
+    "start": 2437.48,
+    "end": 2443.72,
+    "text": "Cách thứ 2 là các bạn xây dựng bằng cách là dùng con chỏ cấp 2"
+  },
+  {
+    "start": 2443.72,
+    "end": 2446.68,
+    "text": "Nhưng mà nó sẽ phức tạp hơn"
+  },
+  {
+    "start": 2446.68,
+    "end": 2452.98,
+    "text": "khi đó chỗ này bọn em sẽ cần phải gán là sao hết, tức là bây giờ cái thằng hết của mình bản thân nữa là con trò cấp 2"
+  },
+  {
+    "start": 2452.98,
+    "end": 2456.6,
+    "text": "các bạn phải giải tham chiếu để nó lấy ra con trò cấp 1"
+  },
+  {
+    "start": 2456.6,
+    "end": 2462.45,
+    "text": "và nếu mà các bạn gọi hạm thêm đầu 2 này thì trong mê đấy em phải chuyển địa chỉ của thằng hết là"
+  },
+  {
+    "start": 2462.45,
+    "end": 2468.39,
+    "text": "đấy, thì đây là cách thứ 2, cách cài đặt thứ 2"
+  },
+  {
+    "start": 2468.39,
+    "end": 2476.73,
+    "text": "thêm đầu 2 xin lỗi, đây, nó cũng được đúng không?"
+  },
+  {
+    "start": 2476.73,
+    "end": 2482.62,
+    "text": "cách thứ 3, void thêm đầu 3, note sao hết"
+  },
+  {
+    "start": 2482.62,
+    "end": 2488.58,
+    "text": "trong trường hợp này các bạn sẽ không cần tham chí hoặc là không cần Ctrl"
+  },
+  {
+    "start": 2488.58,
+    "end": 2495.75,
+    "text": "nhưng mà sau khi mà các bạn thay đổi xong, các bạn phải return về thằng hét"
+  },
+  {
+    "start": 2495.75,
+    "end": 2501.75,
+    "text": "và cái hàm thêm đầu ba này các bạn phải viết kiểu là note sound, trả về kiểu note sound để trong men"
+  },
+  {
+    "start": 2501.75,
+    "end": 2507.29,
+    "text": "khi mà các bạn gọi cái hàm thêm đầu ba thì bọn em phải gán lại cho thằng hét"
+  },
+  {
+    "start": 2507.29,
+    "end": 2511.29,
+    "text": "hét bằng thêm đầu ba của hét như thế này thì nó mới được"
+  },
+  {
+    "start": 2511.29,
+    "end": 2516.46,
+    "text": "Thì các bạn thích cái đã theo cách nào thì cái"
+  },
+  {
+    "start": 2516.46,
+    "end": 2519.01,
+    "text": "Cách đầu tiên này thì chỉ dùng được cho si ổng cộng"
+  },
+  {
+    "start": 2519.01,
+    "end": 2523.53,
+    "text": "Với còn 2 cách này thì dùng được cho cả si và trong si ổng cộng"
+  },
+  {
+    "start": 2523.53,
+    "end": 2527.16,
+    "text": "Nó giống như này này"
+  },
+  {
+    "start": 2527.16,
+    "end": 2531.88,
+    "text": "Cái hàm thiên đầu 1 của bạn em nó giống như cái hề việc mà em thay đổi 1 biến interger"
+  },
+  {
+    "start": 2531.88,
+    "end": 2534.08,
+    "text": "Thay đổi 1 này"
+  },
+  {
+    "start": 2534.08,
+    "end": 2536.81,
+    "text": "Và em dùng con trỏ"
+  },
+  {
+    "start": 2536.81,
+    "end": 2543.96,
+    "text": "Cái hàm thứ 2 cũng là thay đổi 1 biến interger nhưng mà em phải dùng con trỏ"
+  },
+  {
+    "start": 2543.96,
+    "end": 2554.96,
+    "text": "và cách thứ 3 là em không dùng con trỏ và không dùng tham chiếu, nhưng mà em lại trả về, em lại trả về cái giá trị của biến x sau thay đổi"
+  },
+  {
+    "start": 2554.96,
+    "end": 2559.8,
+    "text": "Ok, các bạn thấy sự tương đương không?"
+  },
+  {
+    "start": 2559.8,
+    "end": 2565.72,
+    "text": "cái theo tác thêm đầu và danh xác liên kết là nó sẽ thay đổi cái thằng hét"
+  },
+  {
+    "start": 2565.72,
+    "end": 2572.72,
+    "text": "nên bắt buộc là mình phải cài đặt hàm làm sao nó thay đổi được thằng hét sau khi mà hàm đến nó chạy xong"
+  },
+  {
+    "start": 2572.72,
+    "end": 2575.04,
+    "text": "thì bạn em cài đặt theo cách nào cũng được"
+  },
+  {
+    "start": 2575.04,
+    "end": 2578.68,
+    "text": "Thầy cô yêu cầu cài đặt theo cách nào thì mình cài đặt theo cách đấy thôi"
+  },
+  {
+    "start": 2578.68,
+    "end": 2579.83,
+    "text": "nhá"
+  },
+  {
+    "start": 2580.83,
+    "end": 2582.71,
+    "text": "Trong đó cái cách thứ 2 này là khó nhất"
+  },
+  {
+    "start": 2582.71,
+    "end": 2584.83,
+    "text": "tại vì nó dùng con trỏ cấp 2"
+  },
+  {
+    "start": 2584.83,
+    "end": 2587.71,
+    "text": "còn 2 cách sau này thì nó sẽ dễ hơn"
+  },
+  {
+    "start": 2587.71,
+    "end": 2589.71,
+    "text": "anh thì thường 2 cài đặt mà cách này"
+  },
+  {
+    "start": 2596.01,
+    "end": 2599.48,
+    "text": "Các bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 2599.48,
+    "end": 2612.03,
+    "text": "Các bạn nào hỏi gì về cái hàm thêm đầu này không?"
+  },
+  {
+    "start": 2612.03,
+    "end": 2620.9,
+    "text": "Sau thêm đầu thì mình sẽ sang thêm cuối"
+  },
+  {
+    "start": 2620.9,
+    "end": 2624.57,
+    "text": "Thì thêm cuối thì các bạn cũng phải"
+  },
+  {
+    "start": 2624.57,
+    "end": 2628.09,
+    "text": "phải cấp phát thôi, đây các bạn có thể xem cái cơ chế thêm cuối"
+  },
+  {
+    "start": 2628.09,
+    "end": 2632.01,
+    "text": "cái hình của em thêm cuối cho nó dễ hiểu"
+  },
+  {
+    "start": 2632.01,
+    "end": 2634.73,
+    "text": "thêm cuối là phải đi đến cuối"
+  },
+  {
+    "start": 2634.73,
+    "end": 2636.73,
+    "text": "phải đến được cái thằng cuối này này"
+  },
+  {
+    "start": 2636.73,
+    "end": 2639.93,
+    "text": "xong bắt đầu cho thằng cuối này nó trỏ vào cái nốt mới là được"
+  },
+  {
+    "start": 2639.93,
+    "end": 2641.69,
+    "text": "đấy, đến cuối rồi đúng không?"
+  },
+  {
+    "start": 2641.69,
+    "end": 2645.61,
+    "text": "xong bắt đầu cho thằng này nó trỏ vào cái nốt mới mà em vừa xin cấp phát động"
+  },
+  {
+    "start": 2645.61,
+    "end": 2656.59,
+    "text": "đấy, thế là ngon thôi"
+  },
+  {
+    "start": 2656.59,
+    "end": 2663.0,
+    "text": "chịu rồi"
+  },
+  {
+    "start": 2665.16,
+    "end": 2671.64,
+    "text": "thêm nốt vào đầu thì"
+  },
+  {
+    "start": 2671.64,
+    "end": 2673.71,
+    "text": "cho node hết đúng không?"
+  },
+  {
+    "start": 2673.71,
+    "end": 2677.71,
+    "text": "cho node mới lưu lại thằng hết, sau đó update hết thành node mới"
+  },
+  {
+    "start": 2677.71,
+    "end": 2681.71,
+    "text": "còn muốn thêm vào cuối thì em phải đi từ thằng hết này, em đi dần dần đến thằng cuối này này"
+  },
+  {
+    "start": 2681.71,
+    "end": 2686.71,
+    "text": "sau đó em cho thằng cuối này nó trọt vào cái node mới là được, nó lưu lại địa chỉ của node mới là được"
+  },
+  {
+    "start": 2686.71,
+    "end": 2690.71,
+    "text": "thế thì ở đây bọn em cứ có phát động cho anh một cái node mới, node style new node"
+  },
+  {
+    "start": 2690.71,
+    "end": 2692.71,
+    "text": "bằng make node x đúng không?"
+  },
+  {
+    "start": 2692.71,
+    "end": 2696.71,
+    "text": "rồi, bây giờ các bạn phải đi đến được cái node cuối nhưng mà đừng dùng thằng hết này"
+  },
+  {
+    "start": 2696.71,
+    "end": 2701.23,
+    "text": "Tại vì nếu em dùng thằng hét để em đi, thì là cái danh sách liên kết của mình sẽ bị mất"
+  },
+  {
+    "start": 2701.23,
+    "end": 2704.39,
+    "text": "Tại vì cái thao tác đấy sẽ làm thằng hét bị thay đổi"
+  },
+  {
+    "start": 2704.39,
+    "end": 2708.75,
+    "text": "Nên ở đây các bạn sẽ dùng cho mình 1 cái node tạm để các bạn duyệt, dùng thằng này để duyệt"
+  },
+  {
+    "start": 2708.75,
+    "end": 2710.88,
+    "text": "Dùng để duyệt nha"
+  },
+  {
+    "start": 2710.88,
+    "end": 2713.1,
+    "text": "Con thằng hét là phải dữ nguyên"
+  },
+  {
+    "start": 2713.1,
+    "end": 2716.52,
+    "text": "Chứ bây giờ các bạn dùng thằng hét thì các bạn chạy chạy chạy qua các cái node"
+  },
+  {
+    "start": 2716.52,
+    "end": 2719.02,
+    "text": "Là danh sách liên kết của mình nó bị mất các cái node đằng trước ấy"
+  },
+  {
+    "start": 2719.02,
+    "end": 2726.07,
+    "text": "Ok, thế bây giờ làm sao để duyệt đến node cuối thì dừng các bạn sẽ để điều kiện là y, tem, mũi tên, nick, các nôn"
+  },
+  {
+    "start": 2726.07,
+    "end": 2733.23,
+    "text": "Các bạn cho tiện trang sách liên kết, nó giống như cái thao tác duyệt răng sách liên kết ở đoạn trên này nè"
+  },
+  {
+    "start": 2733.23,
+    "end": 2738.68,
+    "text": "Nhưng mà cái thao tác duyệt hay thao tác đếm này là mình duyệt xong cái răng sách liên kết luôn"
+  },
+  {
+    "start": 2738.68,
+    "end": 2743.68,
+    "text": "Còn cái thao tác này mình chỉ đến răng sách liên kết, cái nốt cuối ở trong răng sách liên kết của mình dừng"
+  },
+  {
+    "start": 2743.68,
+    "end": 2746.68,
+    "text": "Nên lúc đấy các bạn phải để là y tèm mũi tên nách khác luôn"
+  },
+  {
+    "start": 2746.68,
+    "end": 2751.16,
+    "text": "Nha, thì các bạn hình dung í, là thằng tèm của bạn em nha"
+  },
+  {
+    "start": 2751.16,
+    "end": 2754.74,
+    "text": "Đây, ban đầu em gán tèm bằng hét đúng không?"
+  },
+  {
+    "start": 2754.74,
+    "end": 2757.74,
+    "text": "Xong em chạy nha, em chạy đúng không?"
+  },
+  {
+    "start": 2757.74,
+    "end": 2767.67,
+    "text": "từ thằng thèm em, em từ thằng thèm em, nách, nách, nách"
+  },
+  {
+    "start": 2767.67,
+    "end": 2769.91,
+    "text": "thì khi mà thằng thèm của mình đến đây rồi nha"
+  },
+  {
+    "start": 2769.91,
+    "end": 2775.27,
+    "text": "thì khi đó cái thèm mũi tên nách của mình ấy là nó đã bằng con trỏ nôn rồi và lúc đấy nó đã dừng luôn rồi"
+  },
+  {
+    "start": 2775.27,
+    "end": 2779.11,
+    "text": "nên khi đó mình sẽ đến đây là dừng nha"
+  },
+  {
+    "start": 2779.11,
+    "end": 2785.75,
+    "text": "chứ còn nếu mà các bạn để là y thèm khác nôn ấy là nó duyệt xong qua cả cái nốt này luôn rồi"
+  },
+  {
+    "start": 2785.75,
+    "end": 2792.15,
+    "text": "ở đây mình muốn dừng ở cuối thì mình phải để cái điều kiện lập là y thèm mũi tên nách khác nôn"
+  },
+  {
+    "start": 2792.15,
+    "end": 2797.15,
+    "text": "Thì sau cái vòng qua này em chỉ cần cho tem mũi tên nick bằng new node là được"
+  },
+  {
+    "start": 2797.15,
+    "end": 2803.66,
+    "text": "Thì cái câu lệnh này nó sẽ lưu cái node mới á, địa chỉ của cái node mà em mới cấp phát ấy"
+  },
+  {
+    "start": 2803.66,
+    "end": 2808.66,
+    "text": "Vào cái phần nick cho thằng tem, thì khi đó cái thằng tem của mình nó..."
+  },
+  {
+    "start": 2808.66,
+    "end": 2811.66,
+    "text": "Thằng tem đây này, đây thằng tem thì đó đây này"
+  },
+  {
+    "start": 2811.66,
+    "end": 2813.66,
+    "text": "Cái phần nick của nó đang là nu, đúng không?"
+  },
+  {
+    "start": 2813.66,
+    "end": 2817.76,
+    "text": "Bây giờ nó sẽ lưu lại cái địa chỉ của cái thằng new node mà em vừa cấp phát ở đây"
+  },
+  {
+    "start": 2817.76,
+    "end": 2819.76,
+    "text": "Đây cái thằng new node này, địa chỉ của nó là 7 đúng không?"
+  },
+  {
+    "start": 2819.76,
+    "end": 2821.76,
+    "text": "Các bạn lưu bảy vào đây nè"
+  },
+  {
+    "start": 2821.76,
+    "end": 2825.86,
+    "text": "Lưu bảy vào cái phần xích cho thằng tèm đấy, là xong"
+  },
+  {
+    "start": 2825.86,
+    "end": 2827.86,
+    "text": "Nó sẽ thêm nốt này vào cuối"
+  },
+  {
+    "start": 2827.86,
+    "end": 2830.11,
+    "text": "Ok không nhỉ?"
+  },
+  {
+    "start": 2830.11,
+    "end": 2833.46,
+    "text": "Trước đây mình dạy có một bạn học trường sưu phạm kỹ thuật"
+  },
+  {
+    "start": 2833.46,
+    "end": 2835.46,
+    "text": "Bạn đi học mới muốn câu chúc dữ liệu giải thuật và"
+  },
+  {
+    "start": 2835.46,
+    "end": 2839.78,
+    "text": "Bạn ấy phải làm cái kiểu bài thuyết trình về danh xách niên kết ấy"
+  },
+  {
+    "start": 2839.78,
+    "end": 2844.78,
+    "text": "Thì khi mà học bạn ấy bảo là hôm đấy em học thầy giáo"
+  },
+  {
+    "start": 2844.78,
+    "end": 2848.94,
+    "text": "Thầy có hỏi là cái thao tác thêm cuối này nè"
+  },
+  {
+    "start": 2848.94,
+    "end": 2853.42,
+    "text": "Thế theo tác thêm cuối này ở trong danh xe linh kết thì nó có cần tham chiếu không"
+  },
+  {
+    "start": 2853.42,
+    "end": 2861.1,
+    "text": "Thì theo các bạn là danh xe linh kết này, nếu mà thêm vào cuối thì thằng hét này nó có cần tham chiếu không?"
+  },
+  {
+    "start": 2861.1,
+    "end": 2864.18,
+    "text": "Cần không?"
+  },
+  {
+    "start": 2864.18,
+    "end": 2866.73,
+    "text": "Hay là thêm đầu thì mới cần"
+  },
+  {
+    "start": 2866.73,
+    "end": 2868.33,
+    "text": "Thêm cuối thì không cần"
+  },
+  {
+    "start": 2868.33,
+    "end": 2873.24,
+    "text": "Có cần không nhỉ?"
+  },
+  {
+    "start": 2873.24,
+    "end": 2881.51,
+    "text": "Cần không?"
+  },
+  {
+    "start": 2881.51,
+    "end": 2884.52,
+    "text": "Không cần à?"
+  },
+  {
+    "start": 2884.52,
+    "end": 2887.54,
+    "text": "Chắc là cần"
+  },
+  {
+    "start": 2887.54,
+    "end": 2889.86,
+    "text": "Đây nhé, anh thử nhé"
+  },
+  {
+    "start": 2889.86,
+    "end": 2893.62,
+    "text": "Bây giờ sau khi mà em theo tác thêm đầu và"
+  },
+  {
+    "start": 2893.62,
+    "end": 2897.94,
+    "text": "dánh xe linh kết của mình từ mười về một em sẽ viết một hàm là thêm cuối"
+  },
+  {
+    "start": 2897.94,
+    "end": 2900.58,
+    "text": "sau em truyền thằng hết và em truyền một nghìn vào"
+  },
+  {
+    "start": 2900.58,
+    "end": 2903.86,
+    "text": "bây giờ các bạn chạy thử xem nó có thầm một nghìn ở cuối không nhé"
+  },
+  {
+    "start": 2903.86,
+    "end": 2913.58,
+    "text": "nếu nó có thêm thầm một nghìn ở cuối, tức là cái hàm thêm cuối thì mình OK đúng không?"
+  },
+  {
+    "start": 2913.58,
+    "end": 2915.8,
+    "text": "à tức là nó không cần đúng không?"
+  },
+  {
+    "start": 2915.8,
+    "end": 2920.12,
+    "text": "nó không cần cái... đây anh bỏ thầm chiếu đi nhé"
+  },
+  {
+    "start": 2920.12,
+    "end": 2923.1,
+    "text": "nó vẫn OK, nó vẫn có thầm một nghìn ở cuối"
+  },
+  {
+    "start": 2923.1,
+    "end": 2925.98,
+    "text": "mà cho vào thì cũng không sao, đúng không?"
+  },
+  {
+    "start": 2925.98,
+    "end": 2928.14,
+    "text": "nhưng mà thực tế là cần"
+  },
+  {
+    "start": 2928.14,
+    "end": 2933.14,
+    "text": "Tại vì đây anh đang cố tình thêm cuối ở trên 1 gianh sách nó đã có 10 thằng rồi"
+  },
+  {
+    "start": 2933.14,
+    "end": 2936.14,
+    "text": "Nếu cái gianh sách liên kết của đấy mà cô em nó rộng nha"
+  },
+  {
+    "start": 2936.14,
+    "end": 2938.52,
+    "text": "Nó rộng nó chưa có thằng nào ấy"
+  },
+  {
+    "start": 2938.52,
+    "end": 2942.52,
+    "text": "Thì các bạn thêm vào cuối nó không khác gì thêm vào đầu và lúc đấy nó sẽ ảnh hưởng đến thằng hét"
+  },
+  {
+    "start": 2942.52,
+    "end": 2945.52,
+    "text": "Và nếu không có tham chiếu là nó sẽ không thay đổi đâu"
+  },
+  {
+    "start": 2945.52,
+    "end": 2947.52,
+    "text": "Nên là cái hàm thêm cuối này nha"
+  },
+  {
+    "start": 2947.52,
+    "end": 2952.52,
+    "text": "Nếu cái gianh sách liên kết của bạn em nó đã có 1 ít nhất 1 thằng thì nó không cần tham chiếu"
+  },
+  {
+    "start": 2952.52,
+    "end": 2954.52,
+    "text": "Tại vì lúc đấy nó không có thay đổi thằng hét"
+  },
+  {
+    "start": 2954.52,
+    "end": 2955.52,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 2955.52,
+    "end": 2959.64,
+    "text": "Nhưng mà lúc danh xét liên kết mà nó rỗng nha, là nó phải có tham chiếu vào"
+  },
+  {
+    "start": 2959.64,
+    "end": 2962.56,
+    "text": "Đấy, nên lúc đấy là vẫn phải có các bạn nhé"
+  },
+  {
+    "start": 2962.56,
+    "end": 2968.79,
+    "text": "Nhưng mà cái hàm thêm cuối này á, hiện tại là nó chưa đúng được, nó chưa đúng 100% được"
+  },
+  {
+    "start": 2968.79,
+    "end": 2973.22,
+    "text": "Nó sẽ bị sai trong trường hợp danh xét liên kết nó rỗng"
+  },
+  {
+    "start": 2973.22,
+    "end": 2978.14,
+    "text": "Tức là ví dụ như bây giờ anh khai báo ra một cái node sao hết bằng nôn, sau anh gọi hết"
+  },
+  {
+    "start": 2978.14,
+    "end": 2980.62,
+    "text": "Thêm cuối anh chuyển hết và số 1 vào"
+  },
+  {
+    "start": 2980.62,
+    "end": 2984.56,
+    "text": "Thì các bạn thử đọc các câu lệnh ở trong cái hàm thêm cuối này"
+  },
+  {
+    "start": 2984.56,
+    "end": 2987.56,
+    "text": "bận em xem là câu lệnh nào nó sẽ gây ra lỗi"
+  },
+  {
+    "start": 2987.56,
+    "end": 2993.36,
+    "text": "nốt sao hết bằng nụn thêm cuối hết 1, sau đó duyệt hết"
+  },
+  {
+    "start": 2993.36,
+    "end": 2998.61,
+    "text": "các câu lệnh từ trên xuống dưới này, câu lệnh nào nó sẽ phát sinh lỗi"
+  },
+  {
+    "start": 2998.61,
+    "end": 3010.09,
+    "text": "câu nào nó phát sinh lỗi"
+  },
+  {
+    "start": 3010.09,
+    "end": 3027.36,
+    "text": "câu nào nó phát sinh lỗi"
+  },
+  {
+    "start": 3027.36,
+    "end": 3043.23,
+    "text": "đọc thì các bạn cứ đọc từ trên xuống dưới"
+  },
+  {
+    "start": 3043.23,
+    "end": 3047.13,
+    "text": "câu nào là câu gây lỗi"
+  },
+  {
+    "start": 3047.13,
+    "end": 3051.5,
+    "text": "không nhìn ra được à"
+  },
+  {
+    "start": 3051.5,
+    "end": 3054.78,
+    "text": "mẹ cao d manera the"
+  },
+  {
+    "start": 3055.28,
+    "end": 3062.28,
+    "text": "theo chuyên thường giới các bạn xem có lỗi không nhá cầu 44 đó"
+  },
+  {
+    "start": 3062.28,
+    "end": 3069.61,
+    "text": "tại sao cầu 44 lại gây lỗi"
+  },
+  {
+    "start": 3077.31,
+    "end": 3080.25,
+    "text": "nốt sound xin bằng new node bằng make node không vấn đề gì"
+  },
+  {
+    "start": 3080.77,
+    "end": 3082.79,
+    "text": "nốt sao tem bằng hat không sao"
+  },
+  {
+    "start": 3082.79,
+    "end": 3085.91,
+    "text": "tại vì khi đó thằng hat của em là nun thì cái câu lệnh này"
+  },
+  {
+    "start": 3085.91,
+    "end": 3087.86,
+    "text": "thằng tem của mình nó cũng bằng nun đúng không"
+  },
+  {
+    "start": 3087.94,
+    "end": 3091.0,
+    "text": "thằng hat này với thằng hat này giống nhau đều là nun đúng không"
+  },
+  {
+    "start": 3091.0,
+    "end": 3092.5,
+    "text": "nó cùng tên thôi"
+  },
+  {
+    "start": 3092.5,
+    "end": 3094.04,
+    "text": "nhưng ở đây các bạn gán sao tem bằng hat không sao"
+  },
+  {
+    "start": 3094.04,
+    "end": 3096.04,
+    "text": "Thế thì mình vào vòng qua ai nhé"
+  },
+  {
+    "start": 3096.04,
+    "end": 3100.04,
+    "text": "Khi mà các bạn truy cập vào tèm mũi tên nick phải là lỗi ngay"
+  },
+  {
+    "start": 3100.04,
+    "end": 3103.04,
+    "text": "Tại vì thằng tèm của mình khi đó là con trò nun"
+  },
+  {
+    "start": 3103.04,
+    "end": 3106.71,
+    "text": "Bản thân của nó không được quản lý một cái vùng nhớ nào kẻ"
+  },
+  {
+    "start": 3106.71,
+    "end": 3110.71,
+    "text": "À, tức là nó không có vùng nhớ để lưu nick hay lưu, lưu, lưu, data"
+  },
+  {
+    "start": 3110.71,
+    "end": 3111.71,
+    "text": "Mình dùng không?"
+  },
+  {
+    "start": 3111.71,
+    "end": 3116.48,
+    "text": "Nên cái câu lệnh số 44 các bạn mà truy cập vào phần nick của thằng tèm"
+  },
+  {
+    "start": 3116.48,
+    "end": 3118.48,
+    "text": "Thằng tèm lúc đấy là con trò nun lấy đâu ra vùng nhớ mà lưu"
+  },
+  {
+    "start": 3118.48,
+    "end": 3120.48,
+    "text": "Là nó sẽ gây lỗi ngay"
+  },
+  {
+    "start": 3120.48,
+    "end": 3121.48,
+    "text": "Được chưa nhờ?"
+  },
+  {
+    "start": 3121.48,
+    "end": 3123.48,
+    "text": "Đấy"
+  },
+  {
+    "start": 3123.48,
+    "end": 3132.08,
+    "text": "được chơi nhở, nấy, ok chưa, con trỏ nun là nó không có vùng nhớ, nó không trỏ vào một cái vùng nhớ được cấp phát nào cả"
+  },
+  {
+    "start": 3132.08,
+    "end": 3139.08,
+    "text": "thì làm sao mà các bạn lưu được nách với nun vào, nó giống như kiểu ông không có nhà mà ông tự nhiên ông nhảy vào nhà người ta ông ngồi"
+  },
+  {
+    "start": 3139.08,
+    "end": 3146.08,
+    "text": "đấy là vi phạm rồi đúng không, thì con trỏ nun cũng thế, con trỏ nun là nó không được cấp phát vùng nhớ, nó không quản lý vùng nhớ nào cả"
+  },
+  {
+    "start": 3146.08,
+    "end": 3151.84,
+    "text": "Nhưng mà bây giờ các bạn lại tuy tiện các bạn truy xuất vào, nó có vùng nhớ đâu mà truy xuất"
+  },
+  {
+    "start": 3151.84,
+    "end": 3154.48,
+    "text": "Nên là khi đó mà các bạn truy xuất vào tèm mũi tên nách kìa"
+  },
+  {
+    "start": 3154.48,
+    "end": 3157.84,
+    "text": "Hay là tèm mũi tên data là nó sẽ gây lỗi bộ nhớ nha"
+  },
+  {
+    "start": 3157.84,
+    "end": 3162.56,
+    "text": "Ok chưa? Nên cái hàm thêm cuối này của các bạn thì nó chỉ hoạt động đúng"
+  },
+  {
+    "start": 3162.56,
+    "end": 3164.88,
+    "text": "Khi mà răng xét liên kết của bạn nó có một nốt trở lên"
+  },
+  {
+    "start": 3164.88,
+    "end": 3167.04,
+    "text": "Còn nếu răng xét liên kết rỗng là nó sẽ gây lỗi ngay"
+  },
+  {
+    "start": 3167.04,
+    "end": 3171.56,
+    "text": "Đây, các bạn chạy trình trình sẽ bị lỗi ngay, nó không hiển thị được ở đây"
+  },
+  {
+    "start": 3171.56,
+    "end": 3175.65,
+    "text": "Nhưng mà cái gianh xét liên kết đấy của của anh em, núc đấy nó chả có nốt nào kẻ"
+  },
+  {
+    "start": 3175.65,
+    "end": 3179.42,
+    "text": "Nói, chờ"
+  },
+  {
+    "start": 3179.42,
+    "end": 3184.42,
+    "text": "Nếu các bạn chạy cái này trên đép xịa của cộng thì nó sẽ gây lỗi, nó sẽ hiển thị rõ cho các bạn được đấy"
+  },
+  {
+    "start": 3184.42,
+    "end": 3193.6,
+    "text": "Thế nên là bây giờ mình sẽ phải xử lý cái trường hợp là gianh xét liên kết nó rỗng riêng"
+  },
+  {
+    "start": 3193.6,
+    "end": 3197.6,
+    "text": "Quà cái cốt này nó chỉ đúng là gianh xét liên kết nó từ 1 node trở lên thôi"
+  },
+  {
+    "start": 3197.6,
+    "end": 3202.84,
+    "text": "Thì ở đây các bạn sẽ xử lý như sau này, đấy là nếu mà tem bằng nun hoặc là hết bằng nun cũng được"
+  },
+  {
+    "start": 3202.84,
+    "end": 3216.67,
+    "text": "dành xét liên kết dẫm, thêm vào cuối, dẫm vào đầu, cho new node bằng hét, return cho mình kết thúc trình trình luôn"
+  },
+  {
+    "start": 3216.67,
+    "end": 3225.17,
+    "text": "nếu ít không có đúng, mình sẽ cho nó chạy đoạn này để xử lý dành xét liên kết khi có từ 1 node trở lên"
+  },
+  {
+    "start": 3225.17,
+    "end": 3231.53,
+    "text": "bây giờ em chạy là ok rồi, sẽ thêm được dành xét liên kết của em con node 1"
+  },
+  {
+    "start": 3231.53,
+    "end": 3234.06,
+    "text": "Thế nên là theo tác thêm cuối"
+  },
+  {
+    "start": 3234.06,
+    "end": 3237.7,
+    "text": "Để các bạn phải chú ý cho anh cái trường hợp gianh sách liên kết nó rỗng"
+  },
+  {
+    "start": 3237.7,
+    "end": 3241.76,
+    "text": "Đấy, thế thôi"
+  },
+  {
+    "start": 3241.76,
+    "end": 3245.22,
+    "text": "Còn nếu mà nó không rỗng thì mình sẽ cố gắng duyệt đến nốt cuối"
+  },
+  {
+    "start": 3245.22,
+    "end": 3247.62,
+    "text": "sau đó cho nốt cuối, trỏ vào nốt mới là xong"
+  },
+  {
+    "start": 3247.62,
+    "end": 3251.78,
+    "text": "Các bạn xem cái hàm thêm cuối này có chỗ nào cần giải thích các bạn cho đổ nha"
+  },
+  {
+    "start": 3251.78,
+    "end": 3259.36,
+    "text": "Thêm đầu, thêm cuối"
+  },
+  {
+    "start": 3259.36,
+    "end": 3266.91,
+    "text": "Thật ra mình sẽ ăn thêm giữa thôi"
+  },
+  {
+    "start": 3266.91,
+    "end": 3269.71,
+    "text": "Thêm giữa thì nó sẽ có vị trí các bạn thêm"
+  },
+  {
+    "start": 3269.71,
+    "end": 3272.69,
+    "text": "ví dụ các bạn muốn thêm vào vị trí 1, 2, 3, 4 gì đó"
+  },
+  {
+    "start": 3272.69,
+    "end": 3283.15,
+    "text": "Voi thêm giữa tràn ích, node cell và head, thằng ích và vị trí tràn là k, chú ý nhé"
+  },
+  {
+    "start": 3283.15,
+    "end": 3290.77,
+    "text": "Nếu dành xét liên kết của các bạn có 4 nodes, thì mình sẽ cho phép tràn vào 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 3290.77,
+    "end": 3293.57,
+    "text": "Nếu tràn vào 1 thì nó sẽ tràn vào trước thằng 1"
+  },
+  {
+    "start": 3293.57,
+    "end": 3299.97,
+    "text": "Mình sẽ cho phép tràn vào 1, 2, 3, 4, còn nếu mà nó tràn vào 5, tức là tràn vào cuối"
+  },
+  {
+    "start": 3299.97,
+    "end": 3304.49,
+    "text": "Nói tổng quá ra là nếu gianh xét link kết, gianh xét link kết lúc đấy của bạn em có nờ nốt"
+  },
+  {
+    "start": 3304.49,
+    "end": 3307.49,
+    "text": "thì anh sẽ cho chèn từ 1 cho tới nờ cộng 1"
+  },
+  {
+    "start": 3307.49,
+    "end": 3315.68,
+    "text": "và nếu các bạn đi học thì thầy cô cho chèn từ chỉ số, từ không thì các bạn tự tùy trình lại sau cái code cho nó phù hợp"
+  },
+  {
+    "start": 3315.68,
+    "end": 3318.68,
+    "text": "đây thì anh sẽ lấy số thứ tự từ 1 cho tới nờ"
+  },
+  {
+    "start": 3318.68,
+    "end": 3323.68,
+    "text": "với nờ là số nốt trong gianh xét link kết và sẽ cho phép chèn từ 1 cho tới nờ cộng 1"
+  },
+  {
+    "start": 3323.68,
+    "end": 3326.68,
+    "text": "trong đó nờ cộng 1 thì nó tương đương với phép chèn vào cuối"
+  },
+  {
+    "start": 3326.68,
+    "end": 3332.07,
+    "text": "Còn các vị trí khác thì mình sẽ không chèn và mình coi là vị trí không hợp lệ"
+  },
+  {
+    "start": 3332.07,
+    "end": 3336.07,
+    "text": "Thế nên nó đầu hàm thêm giữa này mình sẽ chết cho gì nếu mà"
+  },
+  {
+    "start": 3336.07,
+    "end": 3345.07,
+    "text": "K nó nhỏ hơn 1 hoặc là K của bạn nó lớn hơn sai của hết cộng 1 thì mình sẽ return không có chèn"
+  },
+  {
+    "start": 3345.07,
+    "end": 3349.07,
+    "text": "Tại vì khi đó người ta đã cung cấp cái vị trí chèn không hợp lệ, mình không chèn"
+  },
+  {
+    "start": 3349.07,
+    "end": 3357.6,
+    "text": "Còn không các bạn muốn chèn vào vị trí K thì các bạn phải đến được cái node từ K chữ 1"
+  },
+  {
+    "start": 3357.6,
+    "end": 3363.17,
+    "text": "Các bạn muốn trèn vào vị trí K thì các bạn phải đến được nốt thứ K chứ 1"
+  },
+  {
+    "start": 3363.17,
+    "end": 3375.06,
+    "text": "Ví dụ ở đây, anh muốn trèn vào vị trí ở dựa đầu nha"
+  },
+  {
+    "start": 3375.06,
+    "end": 3380.18,
+    "text": "Ở đây, anh sẽ trèn vào vị trí của thằng này, thằng K bằng 3, 1, 2, 3"
+  },
+  {
+    "start": 3380.18,
+    "end": 3384.18,
+    "text": "Thì anh phải đến được nốt thứ 2 này nè, nốt thứ K chứ 1 í"
+  },
+  {
+    "start": 3384.18,
+    "end": 3387.78,
+    "text": "Nấy, sau đó cho cái nốt mới nhé, nó trỏ vào nốt K"
+  },
+  {
+    "start": 3387.78,
+    "end": 3391.54,
+    "text": "Lưu thằng bốn vào đấy"
+  },
+  {
+    "start": 3391.54,
+    "end": 3394.04,
+    "text": "bắt đầu cho node 1 trò vào node mới"
+  },
+  {
+    "start": 3394.04,
+    "end": 3398.72,
+    "text": "đây là đánh sinh kết của mình nó trèn vào giữa"
+  },
+  {
+    "start": 3398.72,
+    "end": 3400.88,
+    "text": "các bạn xem lại 1-2 lần nhé"
+  },
+  {
+    "start": 3400.88,
+    "end": 3405.52,
+    "text": "các phát động 1 node mới này"
+  },
+  {
+    "start": 3405.52,
+    "end": 3408.02,
+    "text": "cho cái node mới đấy trò vào node thứ K"
+  },
+  {
+    "start": 3408.02,
+    "end": 3410.58,
+    "text": "rồi đến cái node 1 nhé"
+  },
+  {
+    "start": 3410.58,
+    "end": 3418.0,
+    "text": "cho node mới trò vào node thứ K"
+  },
+  {
+    "start": 3418.0,
+    "end": 3420.5,
+    "text": "cho cái node thứ K chìm 1 đấy trò vào node mới"
+  },
+  {
+    "start": 3420.5,
+    "end": 3437.74,
+    "text": "rồi thế mình lưu ý này"
+  },
+  {
+    "start": 3437.74,
+    "end": 3443.28,
+    "text": "khi mà các bạn đã duyệt được đến cái node thứ K chìm 1 này này"
+  },
+  {
+    "start": 3443.28,
+    "end": 3446.67,
+    "text": "đây khi đó cái node này là node K chìm 1 đúng không?"
+  },
+  {
+    "start": 3446.67,
+    "end": 3451.48,
+    "text": "Thì nó phải có 2 thao tác để mà các bạn móc nối thằng này với thằng này"
+  },
+  {
+    "start": 3451.48,
+    "end": 3454.48,
+    "text": "Thằng này với nốt mới và nốt mới với thằng nốt kê đúng không?"
+  },
+  {
+    "start": 3454.48,
+    "end": 3456.98,
+    "text": "Thì các bạn phải làm thứ tự này mới chuẩn này"
+  },
+  {
+    "start": 3456.98,
+    "end": 3461.53,
+    "text": "Đấy là đầu tiên, em phải cho cái thằng này nó trỏ vào đây"
+  },
+  {
+    "start": 3461.53,
+    "end": 3462.53,
+    "text": "Được chứ à?"
+  },
+  {
+    "start": 3462.53,
+    "end": 3467.13,
+    "text": "Để cái nốt mới này của các bạn, nó có thể lưu được cái nốt từ kê cho tới cuối"
+  },
+  {
+    "start": 3467.13,
+    "end": 3472.44,
+    "text": "Sau đó bắt đầu rồi mình mới cho cái thằng kê chứ 1 nó trỏ vào đây"
+  },
+  {
+    "start": 3472.44,
+    "end": 3477.14,
+    "text": "Còn các bạn mà làm ngược lại là các bạn sẽ bị mất các cái nốt từ kê về cuối đấy"
+  },
+  {
+    "start": 3477.14,
+    "end": 3478.5,
+    "text": "Nha?"
+  },
+  {
+    "start": 3478.5,
+    "end": 3483.26,
+    "text": "Các bạn làm mà làm ngược lại nhé, tức là bây giờ các bạn đến được cái nốt thứ 1 này đúng không?"
+  },
+  {
+    "start": 3483.26,
+    "end": 3486.42,
+    "text": "Các bạn phải cho thằng ca thứ 1 này cho vào cái này nguồn luôn đúng không?"
+  },
+  {
+    "start": 3486.42,
+    "end": 3488.77,
+    "text": "Các bạn sẽ mất cái đoạn này đấy."
+  },
+  {
+    "start": 3488.77,
+    "end": 3493.71,
+    "text": "Mình phải làm đúng thứ tự, đầu tiên mình phải cho cái nốt mới để nó trỏ vào nốt thứ ca"
+  },
+  {
+    "start": 3493.71,
+    "end": 3498.57,
+    "text": "để nó lưu lại được các cái nốt từ thứ ca về cuối đã, đây, đây, cho nó vào đây."
+  },
+  {
+    "start": 3498.57,
+    "end": 3502.47,
+    "text": "Sau đó bắt đầu mình bị yên tâm mình cho cái thằng ca thứ 1 cho vào đây."
+  },
+  {
+    "start": 3502.47,
+    "end": 3504.87,
+    "text": "Đấy, nó chỉ có 2 bước như thế thôi, nhé."
+  },
+  {
+    "start": 3504.87,
+    "end": 3507.91,
+    "text": "Vậy thì các bạn sẽ phải đến được cái nốt thứ ca thứ 1"
+  },
+  {
+    "start": 3507.91,
+    "end": 3512.29,
+    "text": "cho nốt mới trỏ vào nốt thứ k và trỏ vào nốt thứ 1"
+  },
+  {
+    "start": 3512.29,
+    "end": 3518.32,
+    "text": "Nhưng mà bây giờ nếu muốn duyệt đến nốt thứ 1 thì các bạn phải dùng vòng 4"
+  },
+  {
+    "start": 3518.32,
+    "end": 3520.26,
+    "text": "Vòng 4"
+  },
+  {
+    "start": 3520.26,
+    "end": 3526.14,
+    "text": "Ví dụ như các bạn đang ở vị trí thứ 1, nốt thứ 1 mà các bạn muốn đến nốt thứ 6 thì các bạn sẽ phải nếch"
+  },
+  {
+    "start": 3526.14,
+    "end": 3531.0,
+    "text": "mấy lần, 1 sang 2, 2 sang 3, 3 sang 4, 4 sang 5"
+  },
+  {
+    "start": 3531.0,
+    "end": 3532.0,
+    "text": "đúng không?"
+  },
+  {
+    "start": 3532.0,
+    "end": 3536.87,
+    "text": "Sau đó 5 sang 6 thì các bạn sẽ phải nếch 1 lần, 2 lần, 3 lần, 4 lần và 5 lần thôi"
+  },
+  {
+    "start": 3536.87,
+    "end": 3540.67,
+    "text": "Đúng không? Các bạn đang ở hét, là ví dụ các bạn đang hét, đang ở hét bằng 1 đúng không?"
+  },
+  {
+    "start": 3540.67,
+    "end": 3548.26,
+    "text": "Các bạn muốn đi được đến cái nốt thứ 6 ấy, các bạn sẽ phải cho cái thằng hét đến nó ních 5 lần"
+  },
+  {
+    "start": 3548.26,
+    "end": 3553.48,
+    "text": "Đúng không? 1 lần này, 2 lần này, 3 lần này, 4 lần này, 5 lần này nó ra được cái nốt thứ 6"
+  },
+  {
+    "start": 3553.48,
+    "end": 3558.98,
+    "text": "Vậy thì bây giờ các bạn đang có thằng hét ở đây vị trí thứ 1, mà các bạn muốn đến được cái nốt thứ K chứ 1 ấy"
+  },
+  {
+    "start": 3558.98,
+    "end": 3561.98,
+    "text": "thì các bạn phải thực hiện K chứ 2 lần ních"
+  },
+  {
+    "start": 3561.98,
+    "end": 3564.58,
+    "text": "Nó sẽ đến nốt thứ ca chứ 1"
+  },
+  {
+    "start": 3564.58,
+    "end": 3567.94,
+    "text": "Các bạn phải dùng vòng 4, không dùng vòng y được"
+  },
+  {
+    "start": 3567.94,
+    "end": 3573.38,
+    "text": "Đây các bạn cứ cấp phát cho mình nốt mới"
+  },
+  {
+    "start": 3573.38,
+    "end": 3588.16,
+    "text": "Các bạn sẽ dùng nốt tạm bằng hét và cho mình 1 vòng 4 chạy từ y bằng 1 cho từ y nhỏ bằng ca chứ 2"
+  },
+  {
+    "start": 3588.16,
+    "end": 3591.4,
+    "text": "Sau đó cho tiêm bằng tiêm mũi tiến đích"
+  },
+  {
+    "start": 3591.4,
+    "end": 3595.6,
+    "text": "Sau cái vòng 4, thằng tiêm của các bạn đang là nốt thứ ca chứ 1"
+  },
+  {
+    "start": 3595.6,
+    "end": 3598.7,
+    "text": "Ok, bây giờ nhé"
+  },
+  {
+    "start": 3598.7,
+    "end": 3604.23,
+    "text": "Mình phải cho cái node mới á, nó trỏ vào node thứ K"
+  },
+  {
+    "start": 3604.23,
+    "end": 3609.47,
+    "text": "thì câu lệnh sẽ là new node mũi tên nách bằng tem mũi tên nách"
+  },
+  {
+    "start": 3609.47,
+    "end": 3614.15,
+    "text": "Tại vì tem của bạn em khi đó nó đang là cái node thứ K chứ 1 đấy"
+  },
+  {
+    "start": 3614.15,
+    "end": 3616.67,
+    "text": "nên em chỉ cần nách một lần là nó ra node thứ K"
+  },
+  {
+    "start": 3616.67,
+    "end": 3620.55,
+    "text": "Mình sẽ lấy cái node thứ K đó, mình lưu cái phần nách cho new node"
+  },
+  {
+    "start": 3620.55,
+    "end": 3624.58,
+    "text": "nha, đây là node thứ K đấy, cái tem mũi tên nách á"
+  },
+  {
+    "start": 3624.58,
+    "end": 3629.62,
+    "text": "sau đó bắt đầu rồi mình mới cho tèm mũi tên nick trỏ vào cái node mới, là được"
+  },
+  {
+    "start": 3629.62,
+    "end": 3632.1,
+    "text": "đây chính là chèn vào giữa"
+  },
+  {
+    "start": 3632.1,
+    "end": 3636.42,
+    "text": "ví dụ như ở đây anh sẽ tạo ra một cái danh xanh liên kết từ 1 đến 10"
+  },
+  {
+    "start": 3636.42,
+    "end": 3645.1,
+    "text": "sau đó anh sẽ gọi cái hèm thêm giữa"
+  },
+  {
+    "start": 3645.1,
+    "end": 3649.67,
+    "text": "anh truyền thằng hết, truyền số 1.000 và anh truyền vị trí 8 vào"
+  },
+  {
+    "start": 3649.67,
+    "end": 3651.83,
+    "text": "để anh chèn vào vị trí thứ 8"
+  },
+  {
+    "start": 3651.83,
+    "end": 3657.72,
+    "text": "đây các bạn thấy cái danh xanh liên kết của mình nó đã được chèn vào vị trí số 8, số 1.000"
+  },
+  {
+    "start": 3657.72,
+    "end": 3663.7,
+    "text": "Còn giả sử anh chèn vào vị trí số 11, thì nó sẽ chèn vào cuối"
+  },
+  {
+    "start": 3663.7,
+    "end": 3669.34,
+    "text": "Đấy, ok chưa? Thao tác thêm dữ ạ nha"
+  },
+  {
+    "start": 3669.34,
+    "end": 3673.78,
+    "text": "2 câu lệnh 6, 2 và 6, 3 các bạn phải làm đúng thứ tự"
+  },
+  {
+    "start": 3673.78,
+    "end": 3677.38,
+    "text": "Các bạn mà làm ngược là nó sẽ bị mất dành xét lên kết rồi nha"
+  },
+  {
+    "start": 3677.38,
+    "end": 3684.36,
+    "text": "Thực ra làm ngược cũng được, nhưng mà muốn làm ngược thì ở chỗ bước này các bạn phải lưu lại nốt thứ kè đã"
+  },
+  {
+    "start": 3684.36,
+    "end": 3693.14,
+    "text": "Đấy, cái cơ chế của cái thao tác thêm dữ ở trong dành xét lên kết"
+  },
+  {
+    "start": 3693.14,
+    "end": 3695.64,
+    "text": "là các bạn phải đến được cái node đứng trước"
+  },
+  {
+    "start": 3695.64,
+    "end": 3698.64,
+    "text": "node đứng trước cái vị trí mà các bạn muốn chèn ấy"
+  },
+  {
+    "start": 3698.64,
+    "end": 3705.14,
+    "text": "sau đó thì mình kết nối cái node mới, cái node mà các bạn chèn với cái node đứng trước và ba thằng đấy với nhau"
+  },
+  {
+    "start": 3705.14,
+    "end": 3713.27,
+    "text": "nhưng mà cái thật tác thêm giữa này thì nó cũng sẽ có cái trường hợp đặc biệt đấy là khi mà K bằng 1"
+  },
+  {
+    "start": 3713.27,
+    "end": 3716.77,
+    "text": "khi mà K bằng 1 thì các bạn sẽ không có node đứng đằng trước"
+  },
+  {
+    "start": 3716.77,
+    "end": 3718.91,
+    "text": "đúng không?"
+  },
+  {
+    "start": 3718.91,
+    "end": 3722.1,
+    "text": "khi mà K bằng 1 là các bạn chèn thẳng vào đầu ấy"
+  },
+  {
+    "start": 3722.1,
+    "end": 3724.73,
+    "text": "thế nên là các bạn phải xử lý riêng"
+  },
+  {
+    "start": 3724.73,
+    "end": 3729.05,
+    "text": "nếu trường hợp này, các bạn truyền cao bằng 1 vào lại nó, nó không có đúng đâu"
+  },
+  {
+    "start": 3729.05,
+    "end": 3732.45,
+    "text": "đây, các bạn trèn của cao bằng 1"
+  },
+  {
+    "start": 3732.45,
+    "end": 3740.7,
+    "text": "sẽ thành trèn vào vị trí thứ 2"
+  },
+  {
+    "start": 3740.7,
+    "end": 3745.92,
+    "text": "đây, các bạn phải xử lý trường hợp trèn cao bằng 1, trèn vào đầu riêng"
+  },
+  {
+    "start": 3745.92,
+    "end": 3751.92,
+    "text": "thì ở đây các bạn làm này thôi, nếu mà cao bằng 1, trèn thẳng vào đầu thì nó giống như thào tác thêm đầu"
+  },
+  {
+    "start": 3751.92,
+    "end": 3754.72,
+    "text": "đây là các bạn sẽ cho new nodes mũi tình nách bằng hết"
+  },
+  {
+    "start": 3754.72,
+    "end": 3758.98,
+    "text": "Các bạn cho hết bằng new node và các bạn return"
+  },
+  {
+    "start": 3758.98,
+    "end": 3764.64,
+    "text": "Còn cái đoạn này thì nó sẽ xử lý trong trường hợp các bạn chèn từ 2 cho tới các vị trí còn lại"
+  },
+  {
+    "start": 3764.64,
+    "end": 3773.28,
+    "text": "Nếu mà các bạn làm bài tập hoặc làm bài kiểm tra mà người ta yêu cầu chèn vị trí bắt đầu từ không thì các bạn chỉ cần giảm đi 1 đơn vị là được nhé"
+  },
+  {
+    "start": 3773.28,
+    "end": 3776.72,
+    "text": "Thì bây giờ nó sẽ chèm được vào đầu đấy"
+  },
+  {
+    "start": 3776.72,
+    "end": 3781.1,
+    "text": "Đấy là các cái thao tác thêm đầu, thêm cuối và thêm giữa"
+  },
+  {
+    "start": 3781.1,
+    "end": 3785.9,
+    "text": "Thao tác thêm cuối và thêm giữa thì các bạn nhớ cho mình cái trường hợp là nó sẽ thêm vào đầu nhé"
+  },
+  {
+    "start": 3785.9,
+    "end": 3788.54,
+    "text": "mình sẽ phải xử lý riêng, không là nó sẽ gây lỗi đấy"
+  },
+  {
+    "start": 3788.54,
+    "end": 3791.94,
+    "text": "hơi phức tạp, đúng không?"
+  },
+  {
+    "start": 3791.94,
+    "end": 3806.62,
+    "text": "Đấy là các thao tác thêm, đúng rồi"
+  },
+  {
+    "start": 3806.62,
+    "end": 3810.9,
+    "text": "Thế còn, tiếp theo thì mình sẽ đến các thao tác xóa"
+  },
+  {
+    "start": 3810.9,
+    "end": 3817.93,
+    "text": "Cũng có xóa đầu, xóa cuối và xóa giữa, void, xóa đầu, node sao và hết"
+  },
+  {
+    "start": 3817.93,
+    "end": 3819.73,
+    "text": "Ở đây anh sẽ kiểm tra nếu mà hết"
+  },
+  {
+    "start": 3819.73,
+    "end": 3822.69,
+    "text": "Nếu mà hết bằng nôn thì anh sẽ không có xóa gì hết"
+  },
+  {
+    "start": 3822.69,
+    "end": 3826.74,
+    "text": "Tại vì hết bằng nôn thì anh sẽ lên kết thúc rỗng là xóa cái gì"
+  },
+  {
+    "start": 3826.74,
+    "end": 3827.78,
+    "text": "đúng không?"
+  },
+  {
+    "start": 3827.78,
+    "end": 3829.78,
+    "text": "Thế các bạn xem cái thao tác xóa đầu nhé"
+  },
+  {
+    "start": 3829.78,
+    "end": 3836.13,
+    "text": "Đây các bạn xem xóa đầu nè"
+  },
+  {
+    "start": 3836.13,
+    "end": 3840.29,
+    "text": "Muốn xóa đầu các bạn sẽ cho thằng hét nó nhảy sang nốt thứ 2"
+  },
+  {
+    "start": 3840.29,
+    "end": 3844.29,
+    "text": "Sau đó thì các bạn delete cái vùng nhớ của cái thằng hét cũ đi là được"
+  },
+  {
+    "start": 3844.29,
+    "end": 3848.3,
+    "text": "Thế các bạn xem thao tác nhé"
+  },
+  {
+    "start": 3848.3,
+    "end": 3870.3,
+    "text": "Mày bây giờ rồi vậy"
+  },
+  {
+    "start": 3870.3,
+    "end": 3872.3,
+    "text": "Đấy cho thằng hét nhảy sang nốt thứ 2"
+  },
+  {
+    "start": 3872.3,
+    "end": 3874.3,
+    "text": "Mình delete cái nốt thứ 1 đi"
+  },
+  {
+    "start": 3874.3,
+    "end": 3883.73,
+    "text": "Thôi"
+  },
+  {
+    "start": 3883.73,
+    "end": 3888.5,
+    "text": "Câu lệnh đấy thì các bạn chỉ cần cho hét bằng hét mũi tiên next thôi đúng không?"
+  },
+  {
+    "start": 3888.5,
+    "end": 3890.5,
+    "text": "Sau đó các bạn delete thằng cũ đi in đây thì các bạn sẽ làm đi sau"
+  },
+  {
+    "start": 3890.5,
+    "end": 3894.14,
+    "text": "Đầu tiên bạn em sẽ dùng sao nốt tạm bằng hét"
+  },
+  {
+    "start": 3894.14,
+    "end": 3902.15,
+    "text": "Mục đích là các bạn lưu cái lưu chữ cái vùng nhớ, vùng nhớ cũ, địa chỉ của vùng nhớ cũ"
+  },
+  {
+    "start": 3902.15,
+    "end": 3905.35,
+    "text": "của thằng hét lúc lúc hiện tại bây giờ"
+  },
+  {
+    "start": 3905.35,
+    "end": 3909.99,
+    "text": "Xong bắt đầu các bạn cho hét bằng hét mũi tên nách để mình cho thằng hét là nhảy ra nốt thứ 2"
+  },
+  {
+    "start": 3909.99,
+    "end": 3914.95,
+    "text": "Thì bây giờ mình sẽ delete cái thằng tem, chứ mình không có delete thằng hét, mình hit thằng led, hét là giả luôn"
+  },
+  {
+    "start": 3914.95,
+    "end": 3917.79,
+    "text": "Đúng không? nên là mình phải lưu lại cái vùng nhớ cũ"
+  },
+  {
+    "start": 3917.79,
+    "end": 3919.79,
+    "text": "nốt hết đầu tiên"
+  },
+  {
+    "start": 3919.79,
+    "end": 3924.79,
+    "text": "sau để tìm nếu mình xóa thì các bạn sẽ delete cho thằng thèm để giải phóng vùng nhớ"
+  },
+  {
+    "start": 3924.79,
+    "end": 3929.29,
+    "text": "ok chưa?"
+  },
+  {
+    "start": 3929.29,
+    "end": 3931.29,
+    "text": "Thì đó là táo tác xóa đầu"
+  },
+  {
+    "start": 3931.29,
+    "end": 3934.29,
+    "text": "ví dụ dành xét liên kết của mọi em đang từ 1 đến 10"
+  },
+  {
+    "start": 3934.29,
+    "end": 3937.29,
+    "text": "em gọi xóa đầu, mọi em chuyển hết vào"
+  },
+  {
+    "start": 3937.29,
+    "end": 3942.88,
+    "text": "dành xét liên kết là thứ 2 cho tới 10 thôi"
+  },
+  {
+    "start": 3942.88,
+    "end": 3946.1,
+    "text": "tương tự như vậy nó sẽ có xóa dựa ở xóa cuối"
+  },
+  {
+    "start": 3946.1,
+    "end": 3956.92,
+    "text": "xóa cuối thì các bạn phải đến được cái nốt thứ 2 từ cuối về"
+  },
+  {
+    "start": 3956.92,
+    "end": 3959.37,
+    "text": "đến được cái nốt này"
+  },
+  {
+    "start": 3959.37,
+    "end": 3961.37,
+    "text": "Thế sao mình cho thấy nó trỏ vào nôn"
+  },
+  {
+    "start": 3961.37,
+    "end": 3963.37,
+    "text": "Mình đi lít thằng cuối đi là xong"
+  },
+  {
+    "start": 3963.37,
+    "end": 3979.13,
+    "text": "OK"
+  },
+  {
+    "start": 3979.13,
+    "end": 3981.13,
+    "text": "Rượt đến nốt thứ 2 từ cuối về nhé"
+  },
+  {
+    "start": 3981.13,
+    "end": 3995.58,
+    "text": "Đó"
+  },
+  {
+    "start": 3995.58,
+    "end": 3999.67,
+    "text": "Thế thì đây làm sao để rượt đến cái nốt thứ 2 từ cuối về"
+  },
+  {
+    "start": 3999.67,
+    "end": 4001.67,
+    "text": "Các bạn dùng cho anh 1 cái nốt sao tem bằng hết"
+  },
+  {
+    "start": 4001.67,
+    "end": 4006.83,
+    "text": "Các bạn để cái bỏng lập là y, tem, mũi tên nách, mũi tên nách khác nôn là được"
+  },
+  {
+    "start": 4006.83,
+    "end": 4010.9,
+    "text": "Nè nó đến nốt thứ 2 là nó dừng à, thứ 2 từ cuối về nó sẽ dừng"
+  },
+  {
+    "start": 4010.9,
+    "end": 4015.43,
+    "text": "Mình sẽ để 2 lần nách khác nôn là mình dừng"
+  },
+  {
+    "start": 4015.43,
+    "end": 4017.43,
+    "text": "Nó sẽ đến nốt thứ 2 là nó dừng"
+  },
+  {
+    "start": 4017.43,
+    "end": 4023.56,
+    "text": "Khi mà các bạn muốn duyệt qua gianh sách liên kết, thì các bạn sẽ để nốt khác nôn thì mình sẽ dừng"
+  },
+  {
+    "start": 4023.56,
+    "end": 4027.56,
+    "text": "Nếu mà muốn đến nốt cuối, thì mình sẽ để têm mũi tên nách khác nôn"
+  },
+  {
+    "start": 4027.56,
+    "end": 4032.56,
+    "text": "Còn đến nốt thứ 2 từ cuối về, thì các bạn phải để têm mũi tên nách, mũi tên nách khác nôn"
+  },
+  {
+    "start": 4032.56,
+    "end": 4034.69,
+    "text": "Tại vì các bạn hình dung đây nha"
+  },
+  {
+    "start": 4034.69,
+    "end": 4040.01,
+    "text": "Khi mà thằng têm của bạn em nó đến đây này, các bạn nách 1 lần, nó đã ra thằng này rồi"
+  },
+  {
+    "start": 4040.01,
+    "end": 4043.01,
+    "text": "Các bạn nách 1 lần nữa là nó sẽ ra con tròn nôn luôn rồi"
+  },
+  {
+    "start": 4043.01,
+    "end": 4048.77,
+    "text": "Thế nên mình sẽ tèm mũi tên nách, mũi tên nách khác nôn, là nó đến nốt thứ 2 là nó sẽ dừng"
+  },
+  {
+    "start": 4048.77,
+    "end": 4049.77,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 4049.77,
+    "end": 4056.76,
+    "text": "Thế thì bây giờ, khi mà các bạn đến được cái nốt thứ 2 thì cuối về rồi, các bạn sẽ..."
+  },
+  {
+    "start": 4056.76,
+    "end": 4061.82,
+    "text": "cái nốt mà cuối lúc đấy, anh sẽ đặt là xóa này nè, nó sẽ bằng tèm mũi tên nách"
+  },
+  {
+    "start": 4061.82,
+    "end": 4064.21,
+    "text": "Thằng này nó chính là nốt cuối đấy"
+  },
+  {
+    "start": 4064.21,
+    "end": 4066.34,
+    "text": "Thì nếu mình sẽ delete thằng này"
+  },
+  {
+    "start": 4066.34,
+    "end": 4070.34,
+    "text": "Còn bây giờ mình sẽ cho tèm mũi tên nách bằng... bằng nôn"
+  },
+  {
+    "start": 4070.34,
+    "end": 4075.9,
+    "text": "trò cái node thứ 2 từ cuối về nó trò vào nôn, chứ không phải trò vào cái node cũ kìa nữa"
+  },
+  {
+    "start": 4075.9,
+    "end": 4080.58,
+    "text": "sau đó các bạn delete cái thằng xóa đi để giải phóng cái vùng nhớ của node cũ đi"
+  },
+  {
+    "start": 4080.58,
+    "end": 4081.58,
+    "text": "là được"
+  },
+  {
+    "start": 4081.58,
+    "end": 4082.58,
+    "text": "đấy"
+  },
+  {
+    "start": 4082.58,
+    "end": 4091.45,
+    "text": "vậy nếu là node thứ mấy cứ nách nách cho đến khi vị trí đó hả anh?"
+  },
+  {
+    "start": 4091.45,
+    "end": 4094.45,
+    "text": "muốn về node thứ mấy, nhưng mà đây là"
+  },
+  {
+    "start": 4094.45,
+    "end": 4096.85,
+    "text": "nó chỉ một, hai nodes thì mình mới làm như thế thôi"
+  },
+  {
+    "start": 4096.85,
+    "end": 4100.01,
+    "text": "thế giới như cái danh xách lên kết của bạn em nó có 5.000 nodes"
+  },
+  {
+    "start": 4100.01,
+    "end": 4103.69,
+    "text": "nó bắt em truy xuất vào cái node thứ 300 thì em ngồi em nách cũng bao giờ"
+  },
+  {
+    "start": 4103.69,
+    "end": 4106.6,
+    "text": "Đúng đấy mình phải dùng vòng for, nha"
+  },
+  {
+    "start": 4110.16,
+    "end": 4117.84,
+    "text": "Còn ví dụ như nó cho tổng quát là ví dụ như muốn đến nốt thứ bao nhiêu từ cuối thì các bạn phải dùng vòng for mà tính, mà duyệt"
+  },
+  {
+    "start": 4118.56,
+    "end": 4123.18,
+    "text": "Chứ không dùng vòng y, nách, nách như này đến bao giờ"
+  },
+  {
+    "start": 4127.46,
+    "end": 4130.02,
+    "text": "Ví dụ muốn đến nốt thứ bao nhiêu từ cuối"
+  },
+  {
+    "start": 4130.78,
+    "end": 4136.42,
+    "text": "Thì các bạn, nó không khác gì các bạn duyệt bằng vòng for chỉ số được mà, đúng đấy các bạn phải tự"
+  },
+  {
+    "start": 4137.04,
+    "end": 4139.32,
+    "text": "Tự nghĩ ra cốt của vòng for mà cốt thôi"
+  },
+  {
+    "start": 4139.64,
+    "end": 4144.24,
+    "text": "tào tác xóa cuối này thì nó đang bị lỗi nếu danh xe liên kết của mình chỉ có 1 node"
+  },
+  {
+    "start": 4144.24,
+    "end": 4149.44,
+    "text": "đây các bạn thử hình dung nếu danh xe liên kết rỗng thì anh sẽ không xóa rồi đúng không?"
+  },
+  {
+    "start": 4149.44,
+    "end": 4153.11,
+    "text": "nếu hết bằng nôn là anh sẽ return không có xóa rồi"
+  },
+  {
+    "start": 4153.11,
+    "end": 4156.86,
+    "text": "còn nếu mà danh xe liên kết của mình nó có mỗi 1 node"
+  },
+  {
+    "start": 4156.86,
+    "end": 4160.24,
+    "text": "thì các bạn hình dung nha, nếu nó có 1 node"
+  },
+  {
+    "start": 4160.24,
+    "end": 4162.88,
+    "text": "thì các bạn nếch một phát là nó đã ra nôn luôn rồi"
+  },
+  {
+    "start": 4162.88,
+    "end": 4166.88,
+    "text": "xong các bạn lại từ nôn mà các bạn lại nếch một lần nữa phát thì sao nhỉ?"
+  },
+  {
+    "start": 4166.88,
+    "end": 4168.64,
+    "text": "thì nó sẽ bị lỗi bộ nhớ"
+  },
+  {
+    "start": 4168.64,
+    "end": 4175.04,
+    "text": "Thế nên cái hàm xóa cuối này, các bạn phải xử lý cái trường hợp danh xét liên kết nó có một nốt riêng"
+  },
+  {
+    "start": 4175.04,
+    "end": 4181.94,
+    "text": "Đấy, tức là, nếu tem mũi tên nick đã bằng nôn luôn rồi, à, lúc đấy danh xét liên kết nó chỉ có một nốt đấy"
+  },
+  {
+    "start": 4181.94,
+    "end": 4186.42,
+    "text": "Và các bạn xóa cuối thì các bạn chỉ cần cho hét bằng nôn"
+  },
+  {
+    "start": 4186.42,
+    "end": 4191.55,
+    "text": "Đấy, và các bạn đi lít thằng tem đi là được, và các bạn return, nhé"
+  },
+  {
+    "start": 4191.55,
+    "end": 4198.35,
+    "text": "Tại vì lúc đấy nó chỉ có một nốt mà nó xóa cuối, thì cái danh xét liên kết các bạn chỉ cần gắn hét bằng nôn và giải phóng cái nốt cũ đi là được"
+  },
+  {
+    "start": 4198.35,
+    "end": 4200.35,
+    "text": "node hat của đi là được"
+  },
+  {
+    "start": 4200.35,
+    "end": 4203.95,
+    "text": "là xoá cuối"
+  },
+  {
+    "start": 4203.95,
+    "end": 4205.95,
+    "text": "còn void xoá giữa"
+  },
+  {
+    "start": 4205.95,
+    "end": 4210.27,
+    "text": "node sao và hat thì anh sẽ có vị trí xoá là ca nhé"
+  },
+  {
+    "start": 4210.27,
+    "end": 4212.27,
+    "text": "mình sẽ kiểm tra"
+  },
+  {
+    "start": 4212.27,
+    "end": 4214.27,
+    "text": "nếu mà ca nó nhỏ hơn 1"
+  },
+  {
+    "start": 4214.27,
+    "end": 4218.27,
+    "text": "hoặc là ca nó lớn hơn sai của hat thì mình sẽ return"
+  },
+  {
+    "start": 4218.27,
+    "end": 4223.43,
+    "text": "tức là dành xây liên kết của mình có nờ node thì mình sẽ cho phép xoá từ 1 đến nờ"
+  },
+  {
+    "start": 4223.43,
+    "end": 4228.5,
+    "text": "còn nó xoá vị trí xoá node không hay xoá node không hợp lệ thì mình sẽ không xoá"
+  },
+  {
+    "start": 4228.5,
+    "end": 4236.26,
+    "text": "Thế muốn xóa được vị trí nốt thứ K trong danh xanh kết, các bạn phải đến nốt thứ K chứ 1"
+  },
+  {
+    "start": 4236.26,
+    "end": 4239.78,
+    "text": "Đây, các bạn xem cái thao tác xóa nốt thứ K này"
+  },
+  {
+    "start": 4239.78,
+    "end": 4242.78,
+    "text": "Đây, muốn xóa nốt này đúng không? Các bạn phải đến thằng này"
+  },
+  {
+    "start": 4242.78,
+    "end": 4246.9,
+    "text": "Các bạn cho thằng này nó chóa phát đến thằng đằng sau là xong"
+  },
+  {
+    "start": 4246.9,
+    "end": 4248.9,
+    "text": "Chóa phát đến cái thằng K cộng 1"
+  },
+  {
+    "start": 4248.9,
+    "end": 4262.74,
+    "text": "Đấy, xong bạn em đi lít cái thằng K đi"
+  },
+  {
+    "start": 4262.74,
+    "end": 4273.94,
+    "text": "Cũng phải duyệt đến nốt thứ K chứ 1 nha"
+  },
+  {
+    "start": 4273.94,
+    "end": 4276.94,
+    "text": "Sau đó cho cái nốt thứ K chứ 1 của bạn nó chóa vào nốt thứ K cộng 1"
+  },
+  {
+    "start": 4276.94,
+    "end": 4303.18,
+    "text": "Ins Engine, cout, class, n mattered SoF"
+  },
+  {
+    "start": 4303.18,
+    "end": 4306.7,
+    "text": "For, 1-2"
+  },
+  {
+    "start": 4306.7,
+    "end": 4315.32,
+    "text": "Temp, node之m"
+  },
+  {
+    "start": 4315.34,
+    "end": 4319.22,
+    "text": "For , node, node The Cab R...."
+  },
+  {
+    "start": 4319.22,
+    "end": 4321.92,
+    "text": "라는 note"
+  },
+  {
+    "start": 4321.92,
+    "end": 4324.75,
+    "text": "Cnot, tím nữ tên thriving, mammals, ck, node"
+  },
+  {
+    "start": 4324.77,
+    "end": 4327.65,
+    "text": "Als teammate nóiongo, then it means you will write nônown, nônnั่ng"
+  },
+  {
+    "start": 4327.67,
+    "end": 4330.36,
+    "text": "chó, Carloema, nôntmic, node"
+  },
+  {
+    "start": 4330.46,
+    "end": 4333.38,
+    "text": "So worldwide it has a code name Hamm assigned to that node"
+  },
+  {
+    "start": 4333.4,
+    "end": 4335.08,
+    "text": "so that they can enjoy all the content"
+  },
+  {
+    "start": 4335.1,
+    "end": 4337.52,
+    "text": "so that we can communicate"
+  },
+  {
+    "start": 4337.56,
+    "end": 4338.04,
+    "text": "Everything expected"
+  },
+  {
+    "start": 4338.06,
+    "end": 4338.88,
+    "text": "The outside fluid can express any desire"
+  },
+  {
+    "start": 4338.9,
+    "end": 4339.56,
+    "text": "etc."
+  },
+  {
+    "start": 4339.62,
+    "end": 4340.63,
+    "text": "That, by creating a part in game"
+  },
+  {
+    "start": 4340.67,
+    "end": 4342.09,
+    "text": "so that people can jumpく"
+  },
+  {
+    "start": 4342.13,
+    "end": 4343.39,
+    "text": "So by creating an image"
+  },
+  {
+    "start": 4343.43,
+    "end": 4344.43,
+    "text": "If we are trying to express a part in game"
+  },
+  {
+    "start": 4344.45,
+    "end": 4346.13,
+    "text": "we can unw things"
+  },
+  {
+    "start": 4346.17,
+    "end": 4347.89,
+    "text": "The image is connected with our files"
+  },
+  {
+    "start": 4347.91,
+    "end": 4350.35,
+    "text": "probably"
+  },
+  {
+    "start": 4383.84,
+    "end": 4407.92,
+    "text": "co Shake , Undo,"
+  },
+  {
+    "start": 4407.92,
+    "end": 4412.92,
+    "text": "C++ bằng 1, tức là các bạn muốn xóa cái thằng ở đầu, thì các bạn chỉ cần cho hết bằng hết mũi tên nickname thôi"
+  },
+  {
+    "start": 4412.92,
+    "end": 4424.2,
+    "text": "Sau đó thì các bạn sẽ delete thằng tem đi, và các bạn return, và cái đoạn code này thì nó sẽ xử lý được trong trường hợp mà nó xóa từ vị trí thứ 2 đổ đi"
+  },
+  {
+    "start": 4424.2,
+    "end": 4431.2,
+    "text": "Tại vì các bạn hình dung cái cơ chế hoạt động của các cái thao tác mà thêm giữa hay xóa giữa ở trong danh xách liên kết ấy"
+  },
+  {
+    "start": 4431.2,
+    "end": 4433.2,
+    "text": "Lên nó phải đến được cái node đứng đằng trước"
+  },
+  {
+    "start": 4433.2,
+    "end": 4438.62,
+    "text": "Đấy, nó phải đến được cái node đứng đằng trước, cái node bạn cần thêm hoặc xóa để nó xử lý"
+  },
+  {
+    "start": 4438.62,
+    "end": 4444.62,
+    "text": "Nhưng bây giờ nếu mà người ta cho thêm vào đầu, nguyên lại là xóa ở đầu"
+  },
+  {
+    "start": 4444.62,
+    "end": 4447.62,
+    "text": "thì các bạn lấy đâu ra cái thằng đứng đằng trước mà xử lý đúng không?"
+  },
+  {
+    "start": 4447.62,
+    "end": 4449.62,
+    "text": "Nên mình phải xử lý riêng, nha"
+  },
+  {
+    "start": 4449.62,
+    "end": 4453.62,
+    "text": "Đây là các cái thào tác thêm đầu, thêm cuối xóa đầu, xóa cuối xóa giữa"
+  },
+  {
+    "start": 4453.62,
+    "end": 4455.62,
+    "text": "mà các bạn cần phải xử lý được"
+  },
+  {
+    "start": 4455.62,
+    "end": 4462.38,
+    "text": "Thế còn nếu mà bạn em gặp một cái bài mà nó bắt các bạn dùng danh sách liên kết để mà xử lý các cái kiểu dữ liệu khác đúng không?"
+  },
+  {
+    "start": 4462.38,
+    "end": 4473.89,
+    "text": "Mí dụ như nó bắt các bạn em lại, bây giờ nó lại danh sách liên kết của mình, nó lại lưu một sinh viên kìa"
+  },
+  {
+    "start": 4473.89,
+    "end": 4478.77,
+    "text": "Thì thực ra nó chả có gì khác các bạn, chỉ cần tạo xây dựng thêm một cái struct sinh viên nữa"
+  },
+  {
+    "start": 4478.77,
+    "end": 4483.77,
+    "text": "Sau đó thì, ở những cái thằng x này này, mà em thay thành sinh viên là sao?"
+  },
+  {
+    "start": 4483.77,
+    "end": 4487.09,
+    "text": "Là nó sẽ thành lưu danh sách liên kết sinh viên, nha"
+  },
+  {
+    "start": 4487.09,
+    "end": 4491.42,
+    "text": "Đúng rồi"
+  },
+  {
+    "start": 4491.42,
+    "end": 4499.93,
+    "text": "Thì khi đó các bạn cốt dành xét liên kết thì nếu thực ra bạn nào mà học hiểu cái dành xét liên kết này, các bạn chất của nó, các bạn cốt nó rất là nhèn"
+  },
+  {
+    "start": 4499.93,
+    "end": 4503.25,
+    "text": "Các bạn đâu cần phải học thuộc mấy cái này đâu, đúng không?"
+  },
+  {
+    "start": 4503.25,
+    "end": 4509.15,
+    "text": "Các bạn chỉ cần nhớ cái cách hoạt động của nó, những cái trường hợp đặc biệt là các bạn sử lý được"
+  },
+  {
+    "start": 4509.15,
+    "end": 4511.15,
+    "text": "Còn mình nói thật cái này, các bạn không bao giờ học thuộc được cơ"
+  },
+  {
+    "start": 4511.15,
+    "end": 4520.92,
+    "text": "Nói cưu nách nách rồi nó sao lung tung như thế này thì bạn nào mà học thuộc được đúng không?"
+  },
+  {
+    "start": 4520.92,
+    "end": 4530.12,
+    "text": "Thì khi mà các bạn làm bài tập về cấu trúc dữ liệu giải thuật hoặc là đi thi chắc nghiệm hoặc là đi phỏng vấn mà người ta cho các cây câu mà nó có danh xét liên kết thì người ta có thể"
+  },
+  {
+    "start": 4530.12,
+    "end": 4536.66,
+    "text": "Cho các cây câu lệnh sau đó thì bắt các bạn lựa chọn xem, ví dụ như thào tác cho danh xét liên kết như thế này, thế này đúng không?"
+  },
+  {
+    "start": 4536.66,
+    "end": 4541.7,
+    "text": "Thào tác thêm đầu, thêm giữa, thêm cuối, hay chiển sau, các thứ linh tình, các câu lệnh nó sẽ là gì?"
+  },
+  {
+    "start": 4541.7,
+    "end": 4545.62,
+    "text": "Thì các bạn phải đọc các cây câu lệnh để các bạn hiểu cơ chế phạt động của nó thì mình mới chọn được"
+  },
+  {
+    "start": 4545.62,
+    "end": 4551.88,
+    "text": "Nãy thì đấy là danh xét liên kết đơn đấy các bạn"
+  },
+  {
+    "start": 4551.88,
+    "end": 4556.69,
+    "text": "Cái này thì mình thấy sinh viên học gặp nhiều khó khăn lắm"
+  },
+  {
+    "start": 4556.69,
+    "end": 4561.04,
+    "text": "Tại vì các bạn ấy thậm chí các bạn còn không hiểu cái bản chất của cái vấn đề đấy là"
+  },
+  {
+    "start": 4561.04,
+    "end": 4562.88,
+    "text": "Cái danh xách liên kết của các bạn ấy"
+  },
+  {
+    "start": 4562.88,
+    "end": 4565.76,
+    "text": "Thực chất mỗi node ở trong đấy nó đều là con trỏ hết"
+  },
+  {
+    "start": 4565.76,
+    "end": 4568.77,
+    "text": "Mỗi node ở trong danh xách liên kết của mình nó đều là con trỏ"
+  },
+  {
+    "start": 4568.77,
+    "end": 4575.01,
+    "text": "Và mình dùng cái con trỏ đấy quản lý một cái vùng nhớ để lưu thông tin về dữ liệu data của cái node"
+  },
+  {
+    "start": 4575.01,
+    "end": 4578.45,
+    "text": "Một cái node với lại là cái phần nách của cái node đó thôi"
+  },
+  {
+    "start": 4578.45,
+    "end": 4584.15,
+    "text": "Đôi khi các bạn học ở trên trường hoặc là học ở đâu đó thì"
+  },
+  {
+    "start": 4584.15,
+    "end": 4589.63,
+    "text": "người ta có thể làm như này, tức là người ta lại xây dựng thêm 1 struct là danh xách liên kết nữa"
+  },
+  {
+    "start": 4589.63,
+    "end": 4597.03,
+    "text": "Bên trong này người ta khai báo 2 cái node là sao hết với lại là sao node sao hết với lại node sao têu để"
+  },
+  {
+    "start": 4597.03,
+    "end": 4600.43,
+    "text": "quản lý cái node đầu và node cuối ở trong vector liên kết đấy"
+  },
+  {
+    "start": 4600.43,
+    "end": 4606.17,
+    "text": "Đấy, tức là mình xây dựng 1 kiểu chúc struct node rồi"
+  },
+  {
+    "start": 4606.17,
+    "end": 4608.97,
+    "text": "mà mình lại xây dựng thêm 1 struct danh xách liên kết nữa"
+  },
+  {
+    "start": 4608.97,
+    "end": 4614.77,
+    "text": "sau đó mình khai báo ra 2 cái con trỏ là hết và theo là đầu và đuôi để mình quản lý cái danh xách liên kết đấy"
+  },
+  {
+    "start": 4614.77,
+    "end": 4621.12,
+    "text": "Thực chất nếu các bạn cốt theo kiểu này nó sẽ dễ cốt hơn, dễ cải đặt hơn nhưng mà"
+  },
+  {
+    "start": 4621.12,
+    "end": 4627.83,
+    "text": "nó lại không giúp các bạn hiểu bản chất của vấn đề"
+  },
+  {
+    "start": 4627.83,
+    "end": 4631.92,
+    "text": "Mà ví dụ các bạn đi thi đúng không?"
+  },
+  {
+    "start": 4631.92,
+    "end": 4636.92,
+    "text": "Mình thấy có mấy đứa nó học vào trường, hoặc tự nhiên nó thi cái"
+  },
+  {
+    "start": 4636.92,
+    "end": 4643.52,
+    "text": "có cái bài mà người ta bắt các bạn cải đặt cái tháp tác là thêm vào giữa thêm vào cuối hay thêm vào sau thì đấy"
+  },
+  {
+    "start": 4643.52,
+    "end": 4647.14,
+    "text": "người ta lại cho các bạn cái khuôn mẫu hàm trước"
+  },
+  {
+    "start": 4647.14,
+    "end": 4650.14,
+    "text": "mà cái khuôn mẫu hàm đấy thì nó lại có thằng hét thôi"
+  },
+  {
+    "start": 4650.14,
+    "end": 4652.3,
+    "text": "nhưng nó không phải là cái struct danh xách liên kết này"
+  },
+  {
+    "start": 4652.3,
+    "end": 4657.74,
+    "text": "nên là ông nào học theo cái phong cách mà cố tình làm cho cái việc cài đập nó trở nên dễ dàng hơn"
+  },
+  {
+    "start": 4657.74,
+    "end": 4660.38,
+    "text": "bằng cách là xây dựng thêm một struct danh xách liên kết này"
+  },
+  {
+    "start": 4660.38,
+    "end": 4662.38,
+    "text": "là lúc đấy chịu không cốt được"
+  },
+  {
+    "start": 4662.38,
+    "end": 4666.96,
+    "text": "và mình thấy trong các cái tài liệu về lập trình danh xách liên kết ở nước ngoài"
+  },
+  {
+    "start": 4666.96,
+    "end": 4670.91,
+    "text": "hãng thế, không bao giờ người ta xây dựng cái struct danh xách liên kết kiểu như kia"
+  },
+  {
+    "start": 4670.91,
+    "end": 4674.91,
+    "text": "mà người ta chỉ có quản lý gianh xách linh kết của mình thông qua thằng hét thôi"
+  },
+  {
+    "start": 4674.91,
+    "end": 4679.91,
+    "text": "và các cái thao tác thêm đầu, thêm cuối, thêm giữa các thứ thì tùy cái cài đặt nhé"
+  },
+  {
+    "start": 4679.91,
+    "end": 4685.91,
+    "text": "có thể cài đặt bằng tham chiếu, có thể cài đặt bằng con trỏ cấp 2, có thể cài đặt bằng con trỏ cấp 1 bình thường"
+  },
+  {
+    "start": 4685.91,
+    "end": 4690.91,
+    "text": "nhưng mà mình sẽ return, return về cái con trỏ đấy sau khi mà thay đổi nó"
+  },
+  {
+    "start": 4690.91,
+    "end": 4699.39,
+    "text": "chứ không ai người ta cài đặt theo kiểu như thế này cả các bạn nhé"
+  },
+  {
+    "start": 4699.39,
+    "end": 4703.39,
+    "text": "đúng rồi gianh xách linh kết đơn thì không việt ngược được"
+  },
+  {
+    "start": 4703.39,
+    "end": 4706.05,
+    "text": "xanh xanh lên kết đơn, chỉ có đi 1 chiều thôi"
+  },
+  {
+    "start": 4710.24,
+    "end": 4713.8,
+    "text": "đây, mình sẽ up cái slide, up cái mạng huồn ở đây"
+  },
+  {
+    "start": 4713.8,
+    "end": 4715.56,
+    "text": "bạn nào tham khảo thì tham khảo"
+  },
+  {
+    "start": 4715.56,
+    "end": 4724.48,
+    "text": "ở trước mình nhớ có hồi Covid à"
+  },
+  {
+    "start": 4724.48,
+    "end": 4729.32,
+    "text": "mình có hướng dẫn một bạn này, bạn này học ở trường để học backfire nội"
+  },
+  {
+    "start": 4729.32,
+    "end": 4739.12,
+    "text": "bạn này, lúc đấy bạn đi thi cái môn"
+  },
+  {
+    "start": 4739.12,
+    "end": 4742.4,
+    "text": "có thể thi hình như là thi ở nhà hay sao cơ"
+  },
+  {
+    "start": 4742.4,
+    "end": 4746.32,
+    "text": "Thì ở trên trường, hôm đó mình còn đang đi tìm COVID-19"
+  },
+  {
+    "start": 4746.32,
+    "end": 4751.36,
+    "text": "Thì nó có mấy câu hỏi, thì muốn câu chúc giữa phật mà"
+  },
+  {
+    "start": 4751.36,
+    "end": 4755.44,
+    "text": "Nó có mấy câu hỏi liên quan đến stack, queue, danh sách liên kết"
+  },
+  {
+    "start": 4755.44,
+    "end": 4760.64,
+    "text": "Cơ hỏi này, cho danh sách liên kết với lại là câu lệnh nào sẽ thể"
+  },
+  {
+    "start": 4760.64,
+    "end": 4765.96,
+    "text": "Ví dụ như, cái node này nó đi đến đây rồi, câu lệnh nào sẽ thêm node vào, câu lệnh nào sẽ xóa"
+  },
+  {
+    "start": 4765.96,
+    "end": 4767.56,
+    "text": "Các bạn bắt nó chọn này"
+  },
+  {
+    "start": 4767.56,
+    "end": 4770.67,
+    "text": "Chắc bây giờ không biết là người ta có thi kiểu đấy nữa không"
+  },
+  {
+    "start": 4770.67,
+    "end": 4775.21,
+    "text": "Trước đây thì dành xe lên kết đơn cũng hay được, kết đơn và đôi thì nó cũng hay được hỏi"
+  },
+  {
+    "start": 4775.21,
+    "end": 4778.89,
+    "text": "Nhưng mà bây giờ thì người ta không có chuộng cái kiểu phỏng vấn đây lắm"
+  },
+  {
+    "start": 4778.89,
+    "end": 4781.73,
+    "text": "mà chủ yếu là người ta lại chuộng về cái việc các bạn"
+  },
+  {
+    "start": 4781.73,
+    "end": 4784.61,
+    "text": "tài đặt các câu chúc vào dữ liệu và thuật toán khác"
+  },
+  {
+    "start": 4784.61,
+    "end": 4786.89,
+    "text": "Tại vì dành xe lên kết đơn thì quanh đi quần lại"
+  },
+  {
+    "start": 4786.89,
+    "end": 4790.45,
+    "text": "Xe lên kết đơn hơi đôi, quanh đi quần lại thì nó chỉ có"
+  },
+  {
+    "start": 4790.45,
+    "end": 4796.73,
+    "text": "Các cái thao tác thêm đầu, thêm cuối, thêm giữa rồi chèn, rồi là xóa, rồi là lật ngược"
+  },
+  {
+    "start": 4796.73,
+    "end": 4799.73,
+    "text": "nên là nó không có nhiều câu hỏi lắm"
+  },
+  {
+    "start": 4799.73,
+    "end": 4801.73,
+    "text": "______"
+  }
+]

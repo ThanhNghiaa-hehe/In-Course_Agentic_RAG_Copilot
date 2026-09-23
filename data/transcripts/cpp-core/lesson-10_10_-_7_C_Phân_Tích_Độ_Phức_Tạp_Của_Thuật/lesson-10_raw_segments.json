@@ -1,0 +1,1227 @@
+[
+  {
+    "start": 4.56,
+    "end": 9.16,
+    "text": "Xin chào tất cả các bạn, quay một chút về độ phức tạp chính toán nhé."
+  },
+  {
+    "start": 9.16,
+    "end": 15.56,
+    "text": "Khi mình cốt thì mình cũng phải biết là độ phức tạp của thuật toán của mình đã cốt là bao nhiêu."
+  },
+  {
+    "start": 15.56,
+    "end": 21.96,
+    "text": "Với dữ hiệu input đầu vàng thì có hợp ý hay không, hay cần một cải chiến một thật toàn khu hợp hơn."
+  },
+  {
+    "start": 21.96,
+    "end": 28.96,
+    "text": "Nhưng ở đây mình chỉ giới thiệu qua thôi nhé, những chiến thức quan trọng nhất để đánh giá một thật toán thôi."
+  },
+  {
+    "start": 28.96,
+    "end": 34.44,
+    "text": "còn để học về phần lỗ phức tạp phật tính toán"
+  },
+  {
+    "start": 34.44,
+    "end": 37.74,
+    "text": "lỗ phức tạp tính toán thì các bạn cần hoặc trong một môn nào đó"
+  },
+  {
+    "start": 37.74,
+    "end": 40.58,
+    "text": "ví dụ là lỗ phức tạp tính toán rồi ra, hoặc là ngôn công suy dưới đó và là thuật"
+  },
+  {
+    "start": 40.58,
+    "end": 48.16,
+    "text": "ok, rồi thì đầu tiên mình sẽ bắt đầu với lỗ phức tạp tính toán này nhé"
+  },
+  {
+    "start": 48.16,
+    "end": 52.96,
+    "text": "thì trong lập trình thì lỗ phức tạp tính toán thì nó hay ký hiệu bằng cái chữ o lớn này này"
+  },
+  {
+    "start": 52.96,
+    "end": 54.66,
+    "text": "để ta gọi là Big O Notation"
+  },
+  {
+    "start": 54.66,
+    "end": 68.11,
+    "text": "Thông thường, độ phức tạp tính toán này, nối nôm nay, nó yêu cầu tính toán số lượng khép tính mà mình cần thực hiện"
+  },
+  {
+    "start": 68.11,
+    "end": 70.31,
+    "text": "cho mỗi lần chạy thuật toán của các bạn"
+  },
+  {
+    "start": 70.31,
+    "end": 74.91,
+    "text": "nếu mà bạn muốn tính toán bao nhiêu thao tác được thực hiện,"
+  },
+  {
+    "start": 74.91,
+    "end": 81.31,
+    "text": "trong một thuật toán của bạn, với thông qua input của ồ vào, được ồ vào là nr"
+  },
+  {
+    "start": 81.31,
+    "end": 87.07,
+    "text": "Ok, ở đây thì nó sẽ là input đầu vào, ví dụ như cái mảng có n là phần tử, chẳng hạn, ok?"
+  },
+  {
+    "start": 87.07,
+    "end": 91.86,
+    "text": "Hay là n là một số tự nhiên nào đó, ok?"
+  },
+  {
+    "start": 91.86,
+    "end": 97.22,
+    "text": "Nhưng mà chú ý là cái độ phức tạp kinh toán này này, nó sẽ tính cho cái trường hợp trung bình nhá, ok?"
+  },
+  {
+    "start": 97.22,
+    "end": 107.1,
+    "text": "Bởi vì cái thật quán của các bạn có thể có trường hợp tốt nhất và trường hợp tệ nhất, hoặc là nó có trường hợp tốt nhất và tất nhiên là bạn sẽ không đánh giá cái thật quán của mình"
+  },
+  {
+    "start": 107.1,
+    "end": 112.06,
+    "text": "tốt nhất là đánh giá qua giá trị, giá trị không bình"
+  },
+  {
+    "start": 112.06,
+    "end": 120.44,
+    "text": "Khi viết một độ phức tạp của thỉnh toán và một thuật toán, người ta sẽ ký hiệu O và trong đó là hàm F"
+  },
+  {
+    "start": 120.44,
+    "end": 125.44,
+    "text": "trong đó hàm F này thì cành nhỏ càng tốt, và tất nhiên là nhỏ nhất nó chính là O1"
+  },
+  {
+    "start": 125.44,
+    "end": 131.48,
+    "text": "người ta gọi là độ phức tạp hàng số, nó chính là những thao tác như bạn gán, gán A bằng B"
+  },
+  {
+    "start": 131.48,
+    "end": 135.48,
+    "text": "gán A bằng 5, gán B bằng 7, C bằng 4 hoặc là các thao tác cộng"
+  },
+  {
+    "start": 135.48,
+    "end": 144.48,
+    "text": "Các cao tắc có độ phức tạp vào O1, rất là nhanh, là độ phức tạp nhỏ nhất"
+  },
+  {
+    "start": 144.48,
+    "end": 152.15,
+    "text": "Chuy cập đến 1 phần tùa của mạng, hay gán các phần tùa của mạng thông qua chỉ số, thì nó cũng là O1"
+  },
+  {
+    "start": 152.15,
+    "end": 154.55,
+    "text": "ס warmup, Coupon"
+  },
+  {
+    "start": 154.55,
+    "end": 156.05,
+    "text": "..."
+  },
+  {
+    "start": 156.05,
+    "end": 157.71,
+    "text": "..."
+  },
+  {
+    "start": 157.71,
+    "end": 160.17,
+    "text": "..."
+  },
+  {
+    "start": 160.41,
+    "end": 162.81,
+    "text": "..."
+  },
+  {
+    "start": 174.32,
+    "end": 177.32,
+    "text": "ision"
+  },
+  {
+    "start": 177.56,
+    "end": 180.2,
+    "text": "..."
+  },
+  {
+    "start": 180.2,
+    "end": 183.97,
+    "text": "..."
+  },
+  {
+    "start": 218.1,
+    "end": 222.84,
+    "text": "ifom 1 feminine, input đó vào vector sau đó bạn làm cái gì đógu butt này"
+  },
+  {
+    "start": 222.92,
+    "end": 224.48,
+    "text": "可是 trong này nó phải o1 cơ"
+  },
+  {
+    "start": 224.58,
+    "end": 227.2,
+    "text": "OK, thư là thao tác và trong vòng powerful là o1"
+  },
+  {
+    "start": 227.22,
+    "end": 228.2,
+    "text": "Nên recipes đểemo chạy"
+  },
+  {
+    "start": 228.2,
+    "end": 230.54,
+    "text": "D estilo cái antagon for CL &Je"
+  },
+  {
+    "start": 230.68,
+    "end": 234.04,
+    "text": "cái vòng powerful của bạn này"
+  },
+  {
+    "start": 234.16,
+    "end": 246.24,
+    "text": "với input là đầu vào thì nó lập into an"
+  },
+  {
+    "start": 246.24,
+    "end": 251.24,
+    "text": "cout sẽ dân cái độ phức tạp của cái vòng phong bên ngoài này là owner với cái độ phức tạp của cái thao tác ở là trong là O1"
+  },
+  {
+    "start": 251.24,
+    "end": 254.24,
+    "text": "thì nó sẽ là owner, nhân một thì nó sẽ là owner"
+  },
+  {
+    "start": 254.24,
+    "end": 260.24,
+    "text": "Cái còn trong này cái thao tác của bạn ấy, ví dụ như trong thao tác ở trong này của bạn lại là 1 cái hàm kiểm tra xuống nguyên tố thế này, ok"
+  },
+  {
+    "start": 274.9,
+    "end": 280.9,
+    "text": "Giờ xíu như là trong cái hàm bản thịt từ 1 tới nờ này này, mà trong này bạn lại có 1 cái hàm là gọi cái hàm nguyên tố"
+  },
+  {
+    "start": 280.9,
+    "end": 286.76,
+    "text": "là cái hàm ít nguyên tố của i, bạn kia ra i, thì như thế cái độ phức tạp mà không còn là owner nữa"
+  },
+  {
+    "start": 286.76,
+    "end": 295.24,
+    "text": "bởi vì thao tác hàm nguyên tố trong code, vòng for của bạn có độ phí tạp lâu lúc nờ, thằng này có lâu lúc nờ, đúng không?"
+  },
+  {
+    "start": 295.24,
+    "end": 300.79,
+    "text": "Đấy, lại quên chưa, lại giải thích là thằng hàm nguyên tố này tại sao đều có lâu lúc nờ?"
+  },
+  {
+    "start": 300.79,
+    "end": 306.71,
+    "text": "Đối với nờ là input đầu vào nhá, mà vòng for của bạn dựa từ 2 cho từ căn bực 2 của nó ấy, thì nó là ô căn nờ, đúng không?"
+  },
+  {
+    "start": 306.71,
+    "end": 308.71,
+    "text": "Đó nghĩa là số vòng lập của nó."
+  },
+  {
+    "start": 308.71,
+    "end": 314.87,
+    "text": "Nhiều lúc nay đây chính là đối với input nờ đầu vào thì cái vòng for của bạn cần thực hiện là căn bực 2 của nờ vòng lập, đúng không?"
+  },
+  {
+    "start": 314.87,
+    "end": 319.07,
+    "text": "OOPDDLMLFFFNundial Nicholas Lo"
+  },
+  {
+    "start": 319.07,
+    "end": 319.55,
+    "text": "OOPDLMLFRNNV9"
+  },
+  {
+    "start": 319.55,
+    "end": 322.89,
+    "text": "OOPDLMLFRO catch"
+  },
+  {
+    "start": 322.89,
+    "end": 340.53,
+    "text": "Trong hi thiết"
+  },
+  {
+    "start": 340.53,
+    "end": 344.57,
+    "text": "OOPDLMLF photo"
+  },
+  {
+    "start": 378.96,
+    "end": 382.96,
+    "text": "Phức tạp của hàm nguyên tố 2 này, nói lại bao nhiêu nhỉ? Nó lại là owner, đúng không?"
+  },
+  {
+    "start": 382.96,
+    "end": 386.96,
+    "text": "Bởi vì bạn nhập 1 cái số là n thì để kiểm tra cái số đấy là n, có phải là số nguyên tố hay không?"
+  },
+  {
+    "start": 386.96,
+    "end": 388.96,
+    "text": "Thì bạn dựa từ n là 2 mà, ok?"
+  },
+  {
+    "start": 388.96,
+    "end": 392.96,
+    "text": "Bạn dựa từ n là tới 2, hay là bạn dựa từ 1 là tới n?"
+  },
+  {
+    "start": 392.96,
+    "end": 395.96,
+    "text": "Anh sẽ lỗi bạn dựa từ 2 tới n, hay là bạn dựa từ 1 là tới n?"
+  },
+  {
+    "start": 395.96,
+    "end": 397.96,
+    "text": "Thì nó đều được coi là n vòng lập nhé, ok?"
+  },
+  {
+    "start": 397.96,
+    "end": 401.96,
+    "text": "Nó chỉ xinh lau nhau 1, 2 vòng lập thì nó cũng sẽ có cái gì là tố yêu đâu."
+  },
+  {
+    "start": 401.96,
+    "end": 405.96,
+    "text": "khi đó phức tạp của hàm nguyên tố 2 có độ phức tạp là owner"
+  },
+  {
+    "start": 405.96,
+    "end": 411.96,
+    "text": "trong vòng for của bạn này, mà bạn gọi hàm nguyên tố 2, khi đó phức tạp của khối code lại khác"
+  },
+  {
+    "start": 411.96,
+    "end": 414.96,
+    "text": "nói lại là gì nhỉ? n là vòng lọc ở bên ngoài đúng không?"
+  },
+  {
+    "start": 414.96,
+    "end": 417.96,
+    "text": "mà mỗi thao tác ở trong có độ phức tạp là owner"
+  },
+  {
+    "start": 417.96,
+    "end": 423.47,
+    "text": "khi đó, cái độ phức tạp của mình sẽ là owner, nhưng với n là ONB"
+  },
+  {
+    "start": 423.47,
+    "end": 426.85,
+    "text": "ok, ON2"
+  },
+  {
+    "start": 426.85,
+    "end": 429.85,
+    "text": "khi đấy, chính là 1 cái ví dụ khi mà code của bạn nói chứa vòng for nhé"
+  },
+  {
+    "start": 429.85,
+    "end": 437.57,
+    "text": "nhé? Chỉ là cái vòng fo của mình phải có cái thao tác, thoáo tác vào trong vòng fo ấy, có đồ trong vòng fo nó có đồ phức tạp vào o1"
+  },
+  {
+    "start": 437.57,
+    "end": 443.97,
+    "text": "thì khi đó cái đồ phức tạp của mình là cái số vòng lạc, ok? Nhìn chung là người ta gọi là owner nhé"
+  },
+  {
+    "start": 443.97,
+    "end": 450.77,
+    "text": "ví dụ như bạn việt từ một cho tới mờ thì người ta cũng gọi là owner. Thật ra nó là o mer đấy, nhưng mà trên lý quyết, thì người ta sẽ gọi là owner"
+  },
+  {
+    "start": 450.77,
+    "end": 460.38,
+    "text": "ok? thay vì o mer. Rồi cái vòng fo và ngoài này cũng thế nhé mà ngoài này thì nó cũng việt từ 1 cho tới nờ thì cái đồ phức tạp của nó cũng sẽ là owner thôi"
+  },
+  {
+    "start": 460.38,
+    "end": 469.93,
+    "text": "Thằng này cũng được coi là owner, tức là bằng bạn diệt từ 1 tới 5 là 17, thì cũng được coi là owner"
+  },
+  {
+    "start": 469.93,
+    "end": 477.63,
+    "text": "Rồi, cái mà hay gặp nhất, chính là cái thằng này, là hai cái vòng fo là một nhau"
+  },
+  {
+    "start": 477.63,
+    "end": 483.55,
+    "text": "Giữ như cái vòng fo ở bên ngoài có bạn diệt từ 1 tới nở, vòng fo ở bên trong thì diệt từ 1 tới mở"
+  },
+  {
+    "start": 483.55,
+    "end": 487.55,
+    "text": "Và ở trong cái vòng fo trong cùng thì nó có độ phức tạp là hàng số"
+  },
+  {
+    "start": 487.55,
+    "end": 493.95,
+    "text": "Độ phức tạp của 2 cái vòng phò làm nhau này, nó sẽ chính là cái số vòng phò ở bên ngoài, dân mươi số vòng phò ở bên trăm"
+  },
+  {
+    "start": 493.95,
+    "end": 497.55,
+    "text": "Trong trường hợp này, độ phức tạp của nó sẽ là O, N, V, N mở, đúng không?"
+  },
+  {
+    "start": 497.55,
+    "end": 501.99,
+    "text": "Mà vì mỗi cái vòng phò ở bên ngoài thì nó thực hiện, hiện n mò vòng lập ở cái vòng phó bên trăm mà"
+  },
+  {
+    "start": 501.99,
+    "end": 506.55,
+    "text": "Nhưng ta là khi đó, tất cả cái số vòng lập của 2 cái vòng phò làm nhau này, nó sẽ là nở nguyên với mở"
+  },
+  {
+    "start": 506.55,
+    "end": 512.15,
+    "text": "Như dụng như bạn có 1 cái vòng phò như thế này, như là phó, N, K, vòng 1, y nhọc hơn là bằng Nam đi phọc cậu"
+  },
+  {
+    "start": 512.15,
+    "end": 524.04,
+    "text": "Then extract the .unit 那治索 ản out part in the hometown, and enter a .scale the hello"
+  },
+  {
+    "start": 524.04,
+    "end": 533.6,
+    "text": "So trading on each of my privilege is like connecting and proclaiming a scene."
+  },
+  {
+    "start": 533.6,
+    "end": 541.97,
+    "text": "So do this to get an instant understanding."
+  },
+  {
+    "start": 541.97,
+    "end": 545.21,
+    "text": "Chúng là bạn cứ hiểu đấy là 2 cái vòng 4 mà lầm nhau ít"
+  },
+  {
+    "start": 545.21,
+    "end": 550.57,
+    "text": "Thì cái độ phức tạp của 2 cái vòng 4 đấy nó sẽ là tích của cái số vòng 4 bên ngoài"
+  },
+  {
+    "start": 550.57,
+    "end": 554.65,
+    "text": "Cái số vòng lập bên ngoài, nhưng cái số vòng lập ở bên trong"
+  },
+  {
+    "start": 554.65,
+    "end": 556.77,
+    "text": "Mấy tụa này mình 1 mình cao phải tầm 1 không nữa"
+  },
+  {
+    "start": 556.77,
+    "end": 559.37,
+    "text": "Cái tụa này bạn sẽ tăng cái mình cao để lên"
+  },
+  {
+    "start": 559.37,
+    "end": 563.4,
+    "text": "Ví tắc nhân thôi mà, cái sau đó bạn chia ra cái mình cao"
+  },
+  {
+    "start": 563.4,
+    "end": 569.04,
+    "text": "Thì mình sẽ in ra là 50 đúng không?"
+  },
+  {
+    "start": 569.04,
+    "end": 571.87,
+    "text": "Nó sẽ lập tất cả là 50 lần"
+  },
+  {
+    "start": 571.87,
+    "end": 574.63,
+    "text": "Nhưng mà nhớ nhá, cái thao tác ở trong cái vòng 4 cái chỗ này này"
+  },
+  {
+    "start": 574.63,
+    "end": 583.63,
+    "text": "C++ này phải là O1, khi nó mới được coi là O, nhưng mà con chẳng may ở trong này, phải lại kiểm tra là ít nguyên tố của cao chẳng hạn"
+  },
+  {
+    "start": 583.63,
+    "end": 591.85,
+    "text": "Thì bạn sẽ in ra cao chẳng hạn. Thì khi đó nó lại khác hoàn toàn đúng không? Khi đó cái độ phức tạp của mình nghĩa, nó lại là gì nhỉ? Nó lại là O này"
+  },
+  {
+    "start": 591.85,
+    "end": 597.85,
+    "text": "Cái vòng 4 bên ngoài là nờ, ở đây là 5 nhé. Nhân với cái vòng 4 bên trong là mờ, cái số vòng lạc của vòng 4 bên trong là mờ"
+  },
+  {
+    "start": 597.85,
+    "end": 607.29,
+    "text": "Cout chăm cùng vòng for con, có độ phức tạp O lúc nở"
+  },
+  {
+    "start": 607.29,
+    "end": 611.93,
+    "text": "Khi đó, độ phức tạp của mình nói như thế này, nó là nở nhân dưới mở, nhân dưới lúc nở"
+  },
+  {
+    "start": 611.93,
+    "end": 618.41,
+    "text": "Trăm trường hợp mà độ phức tạp của bạn là nở nhân dưới mở, người ta vẫn gọi là ONR đúng tương cho nó gọi"
+  },
+  {
+    "start": 618.41,
+    "end": 620.73,
+    "text": "Nó mũi 2 mà"
+  },
+  {
+    "start": 620.73,
+    "end": 626.89,
+    "text": "Các bạn chú ý nhé, khi mà các bạn cốt các vòng for mà nó lồng nhau nhiều thì độ phức tạp nó rất là lớn"
+  },
+  {
+    "start": 626.89,
+    "end": 630.89,
+    "text": "dụ như là 3 vòng for lầm nhau, thì độ phức tạch của nó sẽ rất là lớn"
+  },
+  {
+    "start": 630.89,
+    "end": 635.28,
+    "text": "dụ như tk, vòng 0, k nhỏ hơn 20"
+  },
+  {
+    "start": 635.28,
+    "end": 640.2,
+    "text": "sau đó bạn làm cái gì ở đó, dụ như sia, gắt ca"
+  },
+  {
+    "start": 640.2,
+    "end": 646.72,
+    "text": "thì bạn thấy khi vòng for của mình ở bên ngoài nó lập 5, sau đó lại lập 10, lập 20"
+  },
+  {
+    "start": 646.72,
+    "end": 648.72,
+    "text": "cho nên mình cho 20"
+  },
+  {
+    "start": 648.72,
+    "end": 652.72,
+    "text": "khi đó cái độ phức tạch của nó sẽ lại là tick của 3 cái..."
+  },
+  {
+    "start": 652.72,
+    "end": 655.72,
+    "text": "số vòng lập của 3 cái vòng for này nhân với nhau"
+  },
+  {
+    "start": 655.72,
+    "end": 659.24,
+    "text": "vòng fo là nò vòng lập, vòng fo thứ 2 là mò vòng lập"
+  },
+  {
+    "start": 659.24,
+    "end": 664.77,
+    "text": "vòng fo thứ 3 là kè vòng lập, cái độ phức tạp là nò lập, chứ là nò nhìn mở nhìn kè"
+  },
+  {
+    "start": 664.77,
+    "end": 667.57,
+    "text": "và nó nhìn chung thì người ta gọi là oner bụ ba"
+  },
+  {
+    "start": 667.57,
+    "end": 671.84,
+    "text": "ok, oner bụ ba là rất tật tệ rồi, ok"
+  },
+  {
+    "start": 671.84,
+    "end": 681.92,
+    "text": "thì đấy chính là, chú ý khi mà bạn sử dụng nhiều vòng fo lầm nhau, thì bạn tính độ phức tạp nó như thế"
+  },
+  {
+    "start": 681.92,
+    "end": 684.96,
+    "text": "rồi có thêm một cái ví dụ nữa, đấy chính là ví dụ nhé"
+  },
+  {
+    "start": 684.96,
+    "end": 687.04,
+    "text": "mình có một cái vòng fo như thế này"
+  },
+  {
+    "start": 687.04,
+    "end": 720.53,
+    "text": "oo fit, cout,"
+  },
+  {
+    "start": 720.53,
+    "end": 748.49,
+    "text": "OK,"
+  },
+  {
+    "start": 748.49,
+    "end": 752.69,
+    "text": "Các chương trình của mình nghĩ sẽ chọn là cái thằng lớn nhất, thằng chương trình hợp này sẽ là ONRB"
+  },
+  {
+    "start": 752.69,
+    "end": 753.69,
+    "text": "Ok?"
+  },
+  {
+    "start": 753.69,
+    "end": 760.29,
+    "text": "Hí dụ như là cái chương trình của bạn có độ phức tạp tỏng quát như sau, đấy là cái đoạn thứ nhất thì nó có độ phức tạp là NRB"
+  },
+  {
+    "start": 760.29,
+    "end": 764.69,
+    "text": "Đoạn thứ 2 thì có độ phức tạp là NR, đoạn thứ 3 thì có độ phức tạp là 1"
+  },
+  {
+    "start": 764.69,
+    "end": 767.69,
+    "text": "Đoạn thứ 4 thì nó có độ phức tạp là NRB3"
+  },
+  {
+    "start": 767.69,
+    "end": 771.21,
+    "text": "Và độ thứ 5 thì nó có độ phức tạp là bình phương lốc nời"
+  },
+  {
+    "start": 771.21,
+    "end": 772.21,
+    "text": "Ok?"
+  },
+  {
+    "start": 772.21,
+    "end": 778.21,
+    "text": "Đó là độ phức tạp của chương trình của bạn sẽ xoạn cái thằng mà nó có giá trị lớn nhất, nó có mật cao nhất ở trong chương hợp này"
+  },
+  {
+    "start": 778.21,
+    "end": 780.21,
+    "text": "Đó chính là N3 này"
+  },
+  {
+    "start": 780.21,
+    "end": 783.21,
+    "text": "Đó là cái chương trình của bạn sẽ có độ phức tạp là N3"
+  },
+  {
+    "start": 783.21,
+    "end": 788.21,
+    "text": "Đó là thêm một cái thú ý nữa khi lựa xoạn đánh giá độ phức tạp thuật toán"
+  },
+  {
+    "start": 788.21,
+    "end": 793.21,
+    "text": "Mình cứ chọn cái thằng nào lớn nhất để mình đánh giá là độ phức tạp của chương trình của mình"
+  },
+  {
+    "start": 793.21,
+    "end": 797.21,
+    "text": "Thế còn trong chương hợp mà cái chương trình của bạn có 2 khối thứ nhất ở NRB"
+  },
+  {
+    "start": 797.21,
+    "end": 799.21,
+    "text": "nr bình và khối thứ 2 cũng là nr bình"
+  },
+  {
+    "start": 799.21,
+    "end": 802.97,
+    "text": "thì nó là bằng o2 của nr bình, đúng không?"
+  },
+  {
+    "start": 802.97,
+    "end": 805.47,
+    "text": "nhưng mà o của 2 nr bình thì nó vẫn là o nr bình"
+  },
+  {
+    "start": 805.47,
+    "end": 807.47,
+    "text": "ok, người ta vẫn coi là o nr bình"
+  },
+  {
+    "start": 807.47,
+    "end": 808.97,
+    "text": "đấy, đây có thể một cái chú ý nữa"
+  },
+  {
+    "start": 808.97,
+    "end": 811.44,
+    "text": "ok"
+  },
+  {
+    "start": 811.44,
+    "end": 817.2,
+    "text": "rồi, thì đấy chính là cái, nói chung là mình chỉ giới thiệu qua để cho các bạn nắm được cái"
+  },
+  {
+    "start": 817.2,
+    "end": 822.6,
+    "text": "cách code làm sao khi mà code nhiều vàng form nó làm nhau thì chú ý là độ phức tạp nó sẽ rất là lớn đấy"
+  },
+  {
+    "start": 822.6,
+    "end": 823.6,
+    "text": "ok"
+  },
+  {
+    "start": 823.63,
+    "end": 828.91,
+    "text": "Bây giờ thì sau khi mà biết tánh giá cái chương trình của mình nó chạy nhanh hay chậm thì bạn có thể dựa vào cái độ phức tạp đấy"
+  },
+  {
+    "start": 828.91,
+    "end": 834.03,
+    "text": "Càng vòng phô lòng nhau càng nhiều thì khi đó cái độ phức tạp của mình nó lớn thì nó sẽ dạy rất là nhiều"
+  },
+  {
+    "start": 834.03,
+    "end": 840.37,
+    "text": "Hay là có những cái bài toán mà nó có cái độ phức tạp lên đến 2 mũ NR chẳng ạ"
+  },
+  {
+    "start": 840.37,
+    "end": 842.77,
+    "text": "Ok, cái độ phức tạp rủy thừa như thế này này"
+  },
+  {
+    "start": 842.77,
+    "end": 846.21,
+    "text": "Hay là cái độ phức tạp mà nó là dai thừa chẳng ạ, hay là NR dai thừa chẳng ạ"
+  },
+  {
+    "start": 846.21,
+    "end": 849.97,
+    "text": "Ok, dụ như là xinh ra tất cả các cái hoàn tị chẳng ạ"
+  },
+  {
+    "start": 849.97,
+    "end": 856.37,
+    "text": "hay là sinh ra tất cả các tập con của 1 tập của n phần thứ"
+  },
+  {
+    "start": 856.37,
+    "end": 858.85,
+    "text": "khi đó các độ phức tạp của nó sẽ rất là lớn"
+  },
+  {
+    "start": 858.85,
+    "end": 866.13,
+    "text": "và với tùy vào input nờ nhé, bạn có thể lựa sọn các cái cách, các cái thuật toán khác nhau"
+  },
+  {
+    "start": 866.13,
+    "end": 868.37,
+    "text": "tùy thuộc vào n nữa đúng không?"
+  },
+  {
+    "start": 868.37,
+    "end": 871.81,
+    "text": "ví dụ nờ lớn thì bạn sẽ phải chọn cái độ phức tạp nhỏ một chút"
+  },
+  {
+    "start": 871.81,
+    "end": 876.61,
+    "text": "còn nếu mà nhỏ thì bạn có thể chọn các cái độ phức tạp mà nó chưa đối lớn một chút cũng được"
+  },
+  {
+    "start": 876.61,
+    "end": 883.13,
+    "text": "Điễn là, nói chung là, cái này là mình nghĩ, các bạn nên biết về chính là, thông thường thì"
+  },
+  {
+    "start": 883.13,
+    "end": 889.91,
+    "text": "cái số thao tác của chương trình của các bạn nên nói dơi vào khoảng 10 mũ 6 đổ lại, ok, 10 mũ 6 đổ lại"
+  },
+  {
+    "start": 889.91,
+    "end": 896.94,
+    "text": "Thì nó chạy mất khoảng 1 dây, hay tính của mình nó chạy khoảng mất 1 dây, cho nên các chương trình cảm ơn like thì nó chạy mất khoảng 1 dây"
+  },
+  {
+    "start": 896.94,
+    "end": 903.1,
+    "text": "Ok, thế nghĩa là nếu mà cái vòng phô của bạn nó chạy quá lâu thì cũng chạy 10 mũ 16, hay chạy 10 mũ 9,"
+  },
+  {
+    "start": 903.1,
+    "end": 905.74,
+    "text": "10 mũ 8 mà thời gian người ta dưới hẹn có 1 giây"
+  },
+  {
+    "start": 905.74,
+    "end": 913.74,
+    "text": "ok, mà vậy anh chạy nhẫn những 10 mũ 6 hoặc là 10 mũ 7 hoặc là 10 mũ 9 hoặc là 10 mũ 12 bòng lập thì chắc chắn nó sẽ bị tham lý nít"
+  },
+  {
+    "start": 913.74,
+    "end": 915.74,
+    "text": "ok, vậy chú ý như thế nhé"
+  },
+  {
+    "start": 915.74,
+    "end": 921.5,
+    "text": "cái số thao tác của chương trình của bạn thường nói dưới vào có 10 mũ 6 hoặc là 10 mũ 6 lốc, 10 mũ 6 thôi"
+  },
+  {
+    "start": 921.5,
+    "end": 925.98,
+    "text": "ở đây thì bạn cần phải biết một số cái thao tác mà nó có độ phức tạp như thế nào, đúng không?"
+  },
+  {
+    "start": 925.98,
+    "end": 935.18,
+    "text": "Chỉ ở đây người ta có tổng kết cho các thật toán cơ bản hay là các thao tác mà nó đã có sẵn cho độ phức tạp rồi và bạn cần tìm lắm được nhé"
+  },
+  {
+    "start": 935.18,
+    "end": 941.58,
+    "text": "Khi mà làm bài toán thì mình biết lựa chọn cái công thức lựa liệu nào hay là lựa chọn thật toán nào để cho độ phức tạp nhỏ"
+  },
+  {
+    "start": 941.58,
+    "end": 944.98,
+    "text": "Đầu tiên đấy chính là các công thức toán này"
+  },
+  {
+    "start": 944.98,
+    "end": 950.78,
+    "text": "Thì nó sẽ là O1 cho những cộng thư nhân chia, phần trăm, dư, thì nó đều là O1"
+  },
+  {
+    "start": 950.78,
+    "end": 953.14,
+    "text": "ok, orernroyalgrounds folder all sticky"
+  },
+  {
+    "start": 953.14,
+    "end": 958.66,
+    "text": "tất nhiên, OOP leo is smaller than OOP"
+  },
+  {
+    "start": 958.66,
+    "end": 965.98,
+    "text": "mاب, internetfruit, precisa xét port output"
+  },
+  {
+    "start": 996.4,
+    "end": 1001.71,
+    "text": "track..."
+  },
+  {
+    "start": 1001.71,
+    "end": 1007.05,
+    "text": "Will do for example"
+  },
+  {
+    "start": 1007.05,
+    "end": 1008.55,
+    "text": "outputn"
+  },
+  {
+    "start": 1008.55,
+    "end": 1011.69,
+    "text": "dar"
+  },
+  {
+    "start": 1011.69,
+    "end": 1012.85,
+    "text": "inputn"
+  },
+  {
+    "start": 1012.85,
+    "end": 1021.79,
+    "text": "nl"
+  },
+  {
+    "start": 1021.79,
+    "end": 1029.89,
+    "text": "line"
+  },
+  {
+    "start": 1029.89,
+    "end": 1036.13,
+    "text": "Bạn yên dạng thế nhé? Bạn yên dạng cấp phần tử trong một mạng thế, rất là dựa từ 1, dựa từ không, dựa từ không như thế này nè"
+  },
+  {
+    "start": 1036.13,
+    "end": 1043.77,
+    "text": "Thế bạn thấy là đối với input n là số lượng phần tử đầu vào nè, đúng không?"
+  },
+  {
+    "start": 1043.77,
+    "end": 1048.21,
+    "text": "Phù mạng này, thì bạn chỉ cần dựa từ khó int ở tây vẫn không, sau đó bạn chỉ yên cho ai, đúng không?"
+  },
+  {
+    "start": 1048.21,
+    "end": 1055.01,
+    "text": "Thằng này thì tôi coi là o1, thực ra là cái việc mà bạn dập nò phần tử trong mạng từ bàn thí mít, thì cái độ phức tạp của nó sẽ là oner"
+  },
+  {
+    "start": 1055.01,
+    "end": 1058.33,
+    "text": "Thương tự như vậy, khi mà bạn yên dạng thì cái độ phức tạp của nó cũng sẽ là oner thôi"
+  },
+  {
+    "start": 1058.33,
+    "end": 1059.96,
+    "text": "Đấy chưa?"
+  },
+  {
+    "start": 1059.96,
+    "end": 1062.4,
+    "text": "Thế là thêm 1 cái 2 thế ví dụ này"
+  },
+  {
+    "start": 1062.4,
+    "end": 1066.17,
+    "text": "Hay là diệt qua 1 cái các phần thử ở trong mạng"
+  },
+  {
+    "start": 1066.17,
+    "end": 1068.17,
+    "text": "Hay là diệt qua 1 phần thử ở trong vector"
+  },
+  {
+    "start": 1068.17,
+    "end": 1070.17,
+    "text": "Thì nó cũng đều là O, nò, cẹt, đúng không?"
+  },
+  {
+    "start": 1070.17,
+    "end": 1076.75,
+    "text": "Rồi, cái ham sót ở trong thư viện của các bạn có độ phức tạp là O, nò, lớp, nò, nhé"
+  },
+  {
+    "start": 1076.75,
+    "end": 1079.23,
+    "text": "Cái ham sót mà mình hay sử dụng, rồi thẳng tình kiếm ấy"
+  },
+  {
+    "start": 1079.23,
+    "end": 1084.75,
+    "text": "Còn đây nó collection với array chính sót ở trong Java"
+  },
+  {
+    "start": 1084.75,
+    "end": 1091.52,
+    "text": "Ở đây thì là"
+  },
+  {
+    "start": 1091.52,
+    "end": 1100.37,
+    "text": "Nếu bạn muốn diệt qua tất cả các tập hợp cỡ ca của một mạng nào đó thì độ phức tạp của nó là owner mũ ca"
+  },
+  {
+    "start": 1100.37,
+    "end": 1107.37,
+    "text": "Ví dụ như bạn muốn diệt qua tất cả các cặp 2 phần tử của một mạng nhé, ví dụ như thế thì độ phức tạp của nó sẽ là owner bình thường"
+  },
+  {
+    "start": 1107.37,
+    "end": 1116.85,
+    "text": "Ví dụ như thế này, cho là for, in, tê, non, in, non, in, con, con, con, con, con, con, con, con, con, con, con, con, con, con"
+  },
+  {
+    "start": 1116.85,
+    "end": 1121.97,
+    "text": "và bạn kiểm tra là, ví dụ như là bạn làm cái bài tòa này chính là tìm 2 số"
+  },
+  {
+    "start": 1121.97,
+    "end": 1126.88,
+    "text": "2 số trong mạng có tỏng lớn nhất chẳng hạn, ví dụ như thế"
+  },
+  {
+    "start": 1126.88,
+    "end": 1129.12,
+    "text": "ok, đây mình sẽ làm cách châu nhá"
+  },
+  {
+    "start": 1129.12,
+    "end": 1134.8,
+    "text": "đấy là bạn sẽ diệt tất cả các cái cặp số của 2 phần tử hay là nó sẽ là tất cả các tập con của 2 phần tử của cái mạng này"
+  },
+  {
+    "start": 1134.8,
+    "end": 1136.72,
+    "text": "thì mình sẽ cần 2 cái phòng follow-up nhau"
+  },
+  {
+    "start": 1136.72,
+    "end": 1138.64,
+    "text": "phong phong thứ nhất là chạy từ 0 cho tới nở"
+  },
+  {
+    "start": 1138.64,
+    "end": 1141.04,
+    "text": "phong phong thứ 2 thì chạy từ i, cộng 1 cho tới nở"
+  },
+  {
+    "start": 1141.04,
+    "end": 1144.16,
+    "text": "thế là đối với mỗi phần tử thì nó sẽ diệt tất cả các phần tử đến sau nói"
+  },
+  {
+    "start": 1144.16,
+    "end": 1153.43,
+    "text": "İşte, mình khiến cho íp và gi abdominal protecting with az mà lớn hơn 1 biến value ở đó để mình cho tập nhật 1 biến value này"
+  },
+  {
+    "start": 1153.93,
+    "end": 1168.37,
+    "text": "Bởi vì thực sự thì mình sẽ có 1 biến value bằng v Anh Bảo b grouping lạc chiếnобытиn của"
+  },
+  {
+    "start": 1168.37,
+    "end": 1170.97,
+    "text": "nó, với dân bạn cũng chạy nó. Bởi vì mình thấy nhiều khi cái cách này châu này nhiều bạn vẫn không biết, dụ như nó liên quan đến bài toàn gì đó mà nó cần xét 2 cái số, 2 cái cặp số,"
+  },
+  {
+    "start": 1170.97,
+    "end": 1172.69,
+    "text": "xe lỗ 1 cái cặp số ở trong mạng"
+  },
+  {
+    "start": 1172.69,
+    "end": 1178.77,
+    "text": "dụ như tìm 2 số có tổng lớn nhất, 2 số có hiệu lớn nhất, 2 số có tích lớn nhất, 2 số có ước dùng lớn nhất, vân vân"
+  },
+  {
+    "start": 1178.77,
+    "end": 1185.33,
+    "text": "thì nếu mà bạn chưa tìm được cái cách hiệu quả thì ít nhất là bạn phải biết sử dụng 2 cái vòng 4 làm nhau để set tất cả các tập con qua 2 phần tử của cái mạng đấy"
+  },
+  {
+    "start": 1185.33,
+    "end": 1188.33,
+    "text": "thì đây chính là cái cách mà bạn set tất cả các tập con của 2 phần tử"
+  },
+  {
+    "start": 1188.33,
+    "end": 1190.69,
+    "text": "còn có 3 phần tử thì bạn lại phải lòng nhau nhé"
+  },
+  {
+    "start": 1190.69,
+    "end": 1192.69,
+    "text": "thế ra là ở đây người ta có chú thích đấy chính là"
+  },
+  {
+    "start": 1192.69,
+    "end": 1200.01,
+    "text": "Bạn muốn dựa qua tất cả các tập con cỡ ca của 1 mạng của Nr phần tử, thì độ phức tạp của nó sẽ là ON1k"
+  },
+  {
+    "start": 1200.01,
+    "end": 1203.81,
+    "text": "Ở đây mình chỉ cần dựa qua các tập con có 2 phần tử thôi, đúng không?"
+  },
+  {
+    "start": 1203.81,
+    "end": 1206.15,
+    "text": "Nghĩa là cái độ phức tạp của mình cũng là ONr"
+  },
+  {
+    "start": 1206.15,
+    "end": 1210.99,
+    "text": "Thì đây chính là cái thêm 1 cái chú ý nữa nhá"
+  },
+  {
+    "start": 1210.99,
+    "end": 1218.8,
+    "text": "Còn đây là dựa qua tất cả các xắp xếp tới là tất cả các tập con của 1 cái mạng Nr phần tử"
+  },
+  {
+    "start": 1218.8,
+    "end": 1220.8,
+    "text": "khi đó cái độ phức tạp của nó chắc là 2 mũ N, đúng không?"
+  },
+  {
+    "start": 1220.8,
+    "end": 1226.1,
+    "text": "Bởi vì 1 cái mảng có N là phần tử thì nó có tất cả là 2 mũ N là tập con mà, ok?"
+  },
+  {
+    "start": 1226.1,
+    "end": 1230.1,
+    "text": "Hay là diệt qua tất cả các fomutation, các cái hoàn vị thì bạn thấy là"
+  },
+  {
+    "start": 1230.1,
+    "end": 1234.8,
+    "text": "với N là số nụ phần tử ở trong mạng thì khi đó với N là nờ hoàn vị đúng không?"
+  },
+  {
+    "start": 1234.8,
+    "end": 1237.8,
+    "text": "Nó sẽ có tất cả là N là hoàn vị thì người ta là để mà diệt qua tất cả là hoàn vị"
+  },
+  {
+    "start": 1237.8,
+    "end": 1239.6,
+    "text": "cho cái độ phức tạp của nó sẽ là ON là giai thừa."
+  },
+  {
+    "start": 1239.6,
+    "end": 1243.4,
+    "text": "Thì ra đối với cái bài toán mà xếp xắp xếp cái tập con này của 1 cái mảng có N là phần tử"
+  },
+  {
+    "start": 1243.4,
+    "end": 1245.4,
+    "text": "xead các hoàn vị của 1 tập"
+  },
+  {
+    "start": 1245.4,
+    "end": 1248.4,
+    "text": "phải thế nào phần thứ thì thông thường cái nò này rất là nhỏ"
+  },
+  {
+    "start": 1248.4,
+    "end": 1252.4,
+    "text": "ok, thì đây chính là 1 số cái thao tác và cái độ phức tạp dựng ứng"
+  },
+  {
+    "start": 1252.4,
+    "end": 1255.4,
+    "text": "và mình nghĩ là các bạn cần phải nắm được"
+  },
+  {
+    "start": 1255.4,
+    "end": 1259.4,
+    "text": "đấy là các cái thao tác của xead và map nó có độ phức tạp là ologner"
+  },
+  {
+    "start": 1259.4,
+    "end": 1261.4,
+    "text": "ok, đây là chính chiến vị phần là ologner"
+  },
+  {
+    "start": 1261.4,
+    "end": 1266.42,
+    "text": "rồi, ở đây thì họ có liệt kê cho mình 1 số cái giải trị của nò với nò là input ấy"
+  },
+  {
+    "start": 1266.42,
+    "end": 1272.42,
+    "text": "và các cái đồ phức tạp thật toán mà có thể chấp nhận được"
+  },
+  {
+    "start": 1272.42,
+    "end": 1278.42,
+    "text": "Ví dụ như nở nhỏ hơn 10, cái độ phức tạp hoặc nở may thường, nở mũ 7, nở mũ 6"
+  },
+  {
+    "start": 1278.42,
+    "end": 1280.42,
+    "text": "Thông thường là bạn hay cặp cái thang này này"
+  },
+  {
+    "start": 1280.42,
+    "end": 1283.42,
+    "text": "Đấy là nở nhỏ hơn hoặc bằng 5-10 mũ 5"
+  },
+  {
+    "start": 1283.42,
+    "end": 1287.58,
+    "text": "Khi đó bạn sẽ phải chọn cái lựa chọn với thật toán để là nở lúc nở"
+  },
+  {
+    "start": 1287.58,
+    "end": 1293.58,
+    "text": "Còn nói chung là nở càng lớn thì bạn sẽ phải lựa chọn cái độ phức tạp càng tốt, càng nhỏ đúng không"
+  },
+  {
+    "start": 1293.58,
+    "end": 1297.58,
+    "text": "Ví dụ như người ta cho 1 cái nở là 10, mũ 18"
+  },
+  {
+    "start": 1297.58,
+    "end": 1301.58,
+    "text": "Sau đó thì bạn nghĩ đến việc vượt từ 1 cho tới nở"
+  },
+  {
+    "start": 1301.58,
+    "end": 1306.38,
+    "text": "khi đó chắc chắn là không được, đúng không? bởi vì khi đó mình cần 10 mũ 18 vòng lập thôi mà, đúng không?"
+  },
+  {
+    "start": 1306.38,
+    "end": 1310.98,
+    "text": "mà 1 giây thì tàu sướng như cái máy tính của bạn nó chạy được 10 mũ 6 vòng lập"
+  },
+  {
+    "start": 1310.98,
+    "end": 1317.7,
+    "text": "khi đó nó cần 10 mũ 12 giây, nó mới chạy xong và bạn có thể đổ 1 mũ 12 giây để xem là nó sẽ mất bao nhiêu thời gian"
+  },
+  {
+    "start": 1317.7,
+    "end": 1321.04,
+    "text": "ok, thế ra là nơi càng nhỏ thì bạn có thể sử dụng cái độ phức tạp lớn"
+  },
+  {
+    "start": 1321.04,
+    "end": 1325.66,
+    "text": "còn nơi càng lớn khi đoan tạm trợ này, hối với cái thật toàn của mình sao cho cái độ phức tạp nó càng nhỏ càng cốt"
+  },
+  {
+    "start": 1325.66,
+    "end": 1339.94,
+    "text": "Để mà xem kỹ hơn về cái bài dạng về độ phức tạp này này, thì bạn có thể tìm cái bài dạng về độ phức tạp của một youtuber mình để ở dưới"
+  },
+  {
+    "start": 1339.94,
+    "end": 1346.98,
+    "text": "Nó là ông cũng hay làm về thuật toán ấy, đấy chính là ông phí xét thì đấy, ông phí xét thì đấy"
+  },
+  {
+    "start": 1346.98,
+    "end": 1352.78,
+    "text": "Mình cũng có một cái bài, trước đây mình đã từng xem là ông ấy làm cái phần về thuật toán này rất là kỹ"
+  },
+  {
+    "start": 1352.78,
+    "end": 1356.14,
+    "text": "thì có thể để cái link ở bên dưới để các bạn có thể tâm hạ thêm nhá, ok?"
+  }
+]

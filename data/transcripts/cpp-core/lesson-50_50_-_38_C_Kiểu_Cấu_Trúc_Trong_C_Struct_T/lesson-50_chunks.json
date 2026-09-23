@@ -1,0 +1,394 @@
+[
+  {
+    "chunk_id": "chunk_0_62",
+    "start_sec": 0,
+    "end_sec": 62,
+    "start_label": "00:00",
+    "end_label": "01:02",
+    "raw_text": "Hôm nay thì mình sẽ giới thiệu các bạn một kiếm thức mới, chính là kiếm thức về struct. Bạn nào học ngôn ương trình C, thì cũng biết thằng struct này đúng không? Thì khi mà mình muốn rộp những kiểu giữ liệu thông thường vào để tạo thành một kiểu giữ liệu mới, có thể lưu thông tin mà nó tổng hợp hơn, ví dụ như là lưu thông tin của một sinh viên, hoặc là một giáo viên, hay là một điểm trong toại độ không gian, vân vân, ok, thì mình sẽ sử dụng cái câu trúc, ok, nó gọi là struct trong C, cũng cậu. Ví dụ như là khi bạn lưu thông tin của một nhân viên nhé, nếu mà mình dùng các biến đơn ý, ví dụ như là một dùng một biến lưu tên, một biến lưu điểm, rồi là một biến lưu địa chỉ, email, vấn vận, thì khi đó việc quản lý biến rất là khó khăn Nếu mà có một nhân viên, hay một sinh viên thì nó đơn giản, nhưng mà nếu mà xanh xách sinh viên của mình nó lên đến 1.000 người thì khi đó cái số lượng biến của mình nó rất là nhiều ví dụ như là mỗi sinh viên bạn lại lùng dùng 4 biến để lưu thông tin ý khi đó, nhất là nó số lượng biến nó nhiều, thứ 2 là nó rất là khó cả lý bởi vì là nó yêu cầu là các cái thông tin nó sẽ đi kiểm với nhau, nó sẽ liền mạch với nhau"
+  },
+  {
+    "chunk_id": "chunk_40_105",
+    "start_sec": 40,
+    "end_sec": 105,
+    "start_label": "00:40",
+    "end_label": "01:45",
+    "raw_text": "Nếu mà có một nhân viên, hay một sinh viên thì nó đơn giản, nhưng mà nếu mà xanh xách sinh viên của mình nó lên đến 1.000 người thì khi đó cái số lượng biến của mình nó rất là nhiều ví dụ như là mỗi sinh viên bạn lại lùng dùng 4 biến để lưu thông tin ý khi đó, nhất là nó số lượng biến nó nhiều, thứ 2 là nó rất là khó cả lý bởi vì là nó yêu cầu là các cái thông tin nó sẽ đi kiểm với nhau, nó sẽ liền mạch với nhau ok, thằng ra là mình sẽ sử dụng 1 cái thằng để mình gột tất cả 4 cái thông tin đấy tạo thành 1 cái kiểu dữ liệu thôi ok, thì mình sẽ sử dụng thằng struct nhá ví dụ là nhân sinh viên của mình thì có tên này Cout, Yeah, have Ichin OK, một mạng sinh viên đi Thì khi đó mình sẽ gom 4 thằng này vào và mình tạo thành một struct sinh viên nhé OK, cái cách mà abreow struct ở trong nước trình sĩ cộng cộng thì nó sẽ như sao, đấy là struct này Từ khỏi struct nhé, sau đó bạn sẽ dùng cái tên struct Và trong này nó sẽ là các mèm plural của nó, tức là các thành phần của nó có thể là biến, hoặc là cũng có thể là ham nhé"
+  },
+  {
+    "chunk_id": "chunk_88_148",
+    "start_sec": 88,
+    "end_sec": 148,
+    "start_label": "01:28",
+    "end_label": "02:28",
+    "raw_text": "OK, cái cách mà abreow struct ở trong nước trình sĩ cộng cộng thì nó sẽ như sao, đấy là struct này Từ khỏi struct nhé, sau đó bạn sẽ dùng cái tên struct Và trong này nó sẽ là các mèm plural của nó, tức là các thành phần của nó có thể là biến, hoặc là cũng có thể là ham nhé OK? dụ như ở đây, ở trong này là các member, các thành phần, các thành phần của struct này dụ mình muốn xây dựng struct sinvian nhé, thì mình sẽ xây dựng như sao các bạn, khi mà xây dựng struct thì tự mà đắm bỏ hoặc này nhé, thì nó sẽ có cái dấu chấm phải ở cuối mình sẽ xây dựng struct, nên là sinvian và trong này thì mình sẽ dùng string để lưu mẽ sinvian rồi là string để lưu tên goba, double, float, don't laugh at me 3 địa chỉ là đệa string 1 struct sinVn có thể lưu được 4 thông tin, tên goba và địa chỉ cam"
+  },
+  {
+    "chunk_id": "chunk_130_192",
+    "start_sec": 130,
+    "end_sec": 192,
+    "start_label": "02:10",
+    "end_label": "03:12",
+    "raw_text": "rồi là string để lưu tên goba, double, float, don't laugh at me 3 địa chỉ là đệa string 1 struct sinVn có thể lưu được 4 thông tin, tên goba và địa chỉ cam 1 struct, 1 đối tượng sinVn ra, plan tùy bán sinVn ser, tên, 1 biến thông thường dụng mình đặt là x phải hả? Ok, rất là đơn giản như thế này thôi, trong C cộng cộng thì bạn không cần phải có tự khóa là struct ở trước này nhé, ok? Thế còn trong C thì bạn bắt buộc phải có tự khóa struct ở trong trước cái từng sinh viên này, trước cái tên struct, Thế còn trong ngôn lúc trí C++ thì mình sẽ không cần từ struct mà bạn khai bán một struct như là một cái kiểu dữ liệu thông thường, ok? Thì bây giờ nha, sau khi mà bạn có cái thằng x này rồi thì khi đó thằng x này nó sẽ chứa cả 4 cái thông tin này và bạn có thể truy cập vào từng thành phần"
+  },
+  {
+    "chunk_id": "chunk_172_232",
+    "start_sec": 172,
+    "end_sec": 232,
+    "start_label": "02:52",
+    "end_label": "03:52",
+    "raw_text": "Thế còn trong C thì bạn bắt buộc phải có tự khóa struct ở trong trước cái từng sinh viên này, trước cái tên struct, Thế còn trong ngôn lúc trí C++ thì mình sẽ không cần từ struct mà bạn khai bán một struct như là một cái kiểu dữ liệu thông thường, ok? Thì bây giờ nha, sau khi mà bạn có cái thằng x này rồi thì khi đó thằng x này nó sẽ chứa cả 4 cái thông tin này và bạn có thể truy cập vào từng thành phần Ok từ cái member của nó, ví dụ như bạn muốn biết cái ổng sinh viên x này có tên là gì hay là bạn muốn nhập Thì bạn cũng có thể nhập cho nó, ví dụ như mình see in cho, ah mình get like cho x chấm tên nhé Ok đầu tiên mình sẽ nhập mạ sinh viên không có dô cách nhé Bạn nhập như là một cái biến thông thường nhưng mà khi mà bạn truy cập vào cái thành phần của nó ấy thì mình sẽ sử dụng dâu chấm ok, toàn tử người ta gọi là dot operator bạn cứ chấm một cái và bạn truy cập đến tương thành phần mà bạn muốn truy cập bí mưu như bạn muốn nhập mã sinh viên thì mình sẽ xi in cho x chấm mã sinh viên còn nếu mà bạn nhập tên thì mình sẽ là x chấm tên tương tự như vậy nếu mà vpa thì mình cũng sẽ xi in cho x chấm vpa"
+  },
+  {
+    "chunk_id": "chunk_215_280",
+    "start_sec": 215,
+    "end_sec": 280,
+    "start_label": "03:35",
+    "end_label": "04:40",
+    "raw_text": "người ta gọi là dot operator bạn cứ chấm một cái và bạn truy cập đến tương thành phần mà bạn muốn truy cập bí mưu như bạn muốn nhập mã sinh viên thì mình sẽ xi in cho x chấm mã sinh viên còn nếu mà bạn nhập tên thì mình sẽ là x chấm tên tương tự như vậy nếu mà vpa thì mình cũng sẽ xi in cho x chấm vpa thế con địa chỉn thì mình sẽ vét la nhé ok, xi in và x chấm địa chỉ thế này bạn sẽ xi in chấm x nó để nó xoai phí niên tơ đi Thì khi đó nó sẽ nhập đầy đủ thông tin cho 1 sinh viên và bạn có thể in ra thông tin của 1 sinh viên đấy và các là CL và x, sinh viên này Rồi là x, tên này, rồi là x, gope, rồi là x, địa chỉ, ok Ở đây gope mình sẽ in ra 2 số sau giờ thức phân nhé, mình sẽ thêm là fix, rồi là set precision nữa truyền 2, ok, đây là 1 cái ví dụ về cách mà khai báo nè rồi là cách bị nghĩa struct này, cái khai báo rồi là nhập các cái thành phần mà truy cập vào các cái thành phần của nó"
+  },
+  {
+    "chunk_id": "chunk_260_325",
+    "start_sec": 260,
+    "end_sec": 325,
+    "start_label": "04:20",
+    "end_label": "05:25",
+    "raw_text": "Ở đây gope mình sẽ in ra 2 số sau giờ thức phân nhé, mình sẽ thêm là fix, rồi là set precision nữa truyền 2, ok, đây là 1 cái ví dụ về cách mà khai báo nè rồi là cách bị nghĩa struct này, cái khai báo rồi là nhập các cái thành phần mà truy cập vào các cái thành phần của nó ví dụ mình nhập 1 cái mẹ sinh viên là abcd gì đó đi, ok, tên là nguyễn văn nam chết rồi, mình chưa sinh chấm x no ở chỗ này đúng không, nó bị trôi lạnh này Các bạn chú ý nhé, nhập tên nhất các thứ mà có dấu cách nhớ, dùng gait live và trước gait live thì mình nhớ xử lý trôi lạnh Đây mình sẽ dùng là mạc sinh viên abcd, nguyễn ban nam, PA 2.17, con điện trị thì là hải dương Thì bạn thấy là khi đó cái biến ích này nó có thể lưu các cái thông tin thế, đấy là mạc sinh viên này, tên này, PA và sau đó thì là điện trị"
+  },
+  {
+    "chunk_id": "chunk_307_369",
+    "start_sec": 307,
+    "end_sec": 369,
+    "start_label": "05:07",
+    "end_label": "06:09",
+    "raw_text": "Đây mình sẽ dùng là mạc sinh viên abcd, nguyễn ban nam, PA 2.17, con điện trị thì là hải dương Thì bạn thấy là khi đó cái biến ích này nó có thể lưu các cái thông tin thế, đấy là mạc sinh viên này, tên này, PA và sau đó thì là điện trị Cái cách truy cập thì bạn cứ chấm nhé, chấm đến cái number đấy Rồi, thì đấy chính là một cách mà khai báo một struct sinh viên nhé, hoặc các bạn cũng có thể khai báo sinh viên như sau Đấy là bạn có thể khởi tạo cho nó luôn cái giá trị Đúng nhỉ, ví dụ như mạ sinh viên là abcd nhé Thế còn cái tên thì là mình sẽ để là ủng ưỡng Văn Nam Còn gặp nhé, thì mình để là 2.17 Địa chỉ thì mình sẽ để là 2 dưa Thì lần lượt nhé, thì lần lượt nó sẽ gán các cái giá trị đằng sau cái đóng, cái trong cái đóng của nhọn này này cho từng các member của bạn theo thứ tự từ trên xuống dưới, mạc sinh viên nó sẽ gán cho mạc sinh viên này"
+  },
+  {
+    "chunk_id": "chunk_348_416",
+    "start_sec": 348,
+    "end_sec": 416,
+    "start_label": "05:48",
+    "end_label": "06:56",
+    "raw_text": "Địa chỉ thì mình sẽ để là 2 dưa Thì lần lượt nhé, thì lần lượt nó sẽ gán các cái giá trị đằng sau cái đóng, cái trong cái đóng của nhọn này này cho từng các member của bạn theo thứ tự từ trên xuống dưới, mạc sinh viên nó sẽ gán cho mạc sinh viên này tên thì nó là đến Nguyễn Ban Nam để GPI, bạn để 217 và string, địa chỉ thì bạn để là Hải Dương thì đây là cách mà bạn khởi tạo luôn cái giá trị cho từng member của struct đó ok, và bạn cũng có thể nhập từ bàn phím, thông thường là mình sẽ nhập từ bàn phím hơn ok, còn đây là cách mà bạn khởi tạo một struct với những cái giá trị cho trước còn nếu mà bạn không khởi tạo, bạn chỉ khai báo thằng ít như thế này thì các cái giá trị của nó thường là rỗng String, VPE, có thể là giá trị là không Thằng string này do tổng hợp của nhiều thành phần với nhau, thường ra kích thước của nó cũng sẽ khác CL, size of, dùng tuấn tử size of để mình xem là thằng string viên này là chiếm 32"
+  },
+  {
+    "chunk_id": "chunk_399_461",
+    "start_sec": 399,
+    "end_sec": 461,
+    "start_label": "06:39",
+    "end_label": "07:41",
+    "raw_text": "Thằng string này do tổng hợp của nhiều thành phần với nhau, thường ra kích thước của nó cũng sẽ khác CL, size of, dùng tuấn tử size of để mình xem là thằng string viên này là chiếm 32 Chúng là cũng tùy vào các bạn khai báo nữa Đó chính là cách xa đáo các member, thông thường bạn thấy là các member của struct này thường là một biến đúng không? Một tạm gọi là cái trường dự liệu đi, đúng không? Nhưng mà nó cũng có thể là hàm nhé, không nhất thiên nó chỉ là các biến như thế này đâu có thể là hàm, ví dụ như mình muốn viết 1 cái hàm mà in thông tin sinh viên ở đây thì mình cũng có thể định nghĩa cái hàm đấy ngay trong cái thằng sinh viên này có thể là mình có thể định nghĩa 1 hàm là hàm in chẳng hạn thì trong này bạn sẽ làm cái gì, bạn in ra thông tin của sinh viên đúng không? Hình sẽ see out ra mã sinh viên"
+  },
+  {
+    "chunk_id": "chunk_444_507",
+    "start_sec": 444,
+    "end_sec": 507,
+    "start_label": "07:24",
+    "end_label": "08:27",
+    "raw_text": "có thể là hàm, ví dụ như mình muốn viết 1 cái hàm mà in thông tin sinh viên ở đây thì mình cũng có thể định nghĩa cái hàm đấy ngay trong cái thằng sinh viên này có thể là mình có thể định nghĩa 1 hàm là hàm in chẳng hạn thì trong này bạn sẽ làm cái gì, bạn in ra thông tin của sinh viên đúng không? Hình sẽ see out ra mã sinh viên sau đó là đây mình làm i như thế này, nhưng mà mình bỏ thằng x đi nhá, ok? đây mình sẽ làm i như thế này, nhưng ở đây mình chỉ cần in ra mã sinh viên này, tên này rồi là gopa này, rồi là địa chỉ Thì thế nó cũng sẽ in ra các cái thông tin của ông sinh viên đấy nhé Ở đây thì bạn trong hàng mên bạn muốn in ra thông tin của sinh viên này thì phải chỉ cần x, in là được Thì tự khắc nó sẽ gọi cái hàng in kia Ok, thì bạn thấy là bây giờ cái member của struct, nó có thể là các kiểu dữ liệu này, các cái tên biến của dữ liệu này Hoặc là con nó cũng có thể làm một hàng, nhé Kết quả vận thế thôi, ok Khi mà bạn xây dựng cái member là phang hàm ở trong cái struct đấy thì Mình chỉ cần xeo ra cái thông tin, cái trường dự liệu nó thôi nhá"
+  },
+  {
+    "chunk_id": "chunk_492_554",
+    "start_sec": 492,
+    "end_sec": 554,
+    "start_label": "08:12",
+    "end_label": "09:14",
+    "raw_text": "Kết quả vận thế thôi, ok Khi mà bạn xây dựng cái member là phang hàm ở trong cái struct đấy thì Mình chỉ cần xeo ra cái thông tin, cái trường dự liệu nó thôi nhá Thái này gọi là gì nhỉ? Ơ, attribute thực tính đi, ok Thì bạn sẽ làm bạn muốn in ra hay là bạn muốn nhập gì đó thì bạn cũng có thể, hoặc bạn cũng có thể viết một cái hàm nhập trong này cũng được Voin nhập trải hạn Ok, trong này thì bạn sẽ nhập cho mạng sinh viên này Sau đó bạn sin.xn, và bạn sin.getline lấy cho 1 tên, đúng không? Tương tự như cái chọc ham main và, um ... gopa đúng không? single, gopa rồi là cin.ignor rồi là hatline cho cin và địa chỉ Thì ở chọc ham main bạn có thể sử dụng cái ham là"
+  },
+  {
+    "chunk_id": "chunk_538_601",
+    "start_sec": 538,
+    "end_sec": 601,
+    "start_label": "08:58",
+    "end_label": "10:01",
+    "raw_text": "Tương tự như cái chọc ham main và, um ... gopa đúng không? single, gopa rồi là cin.ignor rồi là hatline cho cin và địa chỉ Thì ở chọc ham main bạn có thể sử dụng cái ham là ham.in OK, để mình nhập thông tin cho 1 sinh viên cũng được Đó, thì bạn thấy bây giờ các memory của nó có thể là hàn thôi Chứ không nhớ tiếc à Chỉ làm 1 cái thành phần như thế này, đúng không? được ph leaves and cauties in хотите có.'\" most supported focus game duip game are sin onsite Blue"
+  },
+  {
+    "chunk_id": "chunk_584_649",
+    "start_sec": 584,
+    "end_sec": 649,
+    "start_label": "09:44",
+    "end_label": "10:49",
+    "raw_text": "are sin onsite Blue original ctrl t responded bugs xinviên là xinviên y, mình gán bằng x, thì bây giờ bạn cho y chấm y để nó y ra thông tin của thằng 1 y này xem thế nào nhé bạn muốn thể gán 2 cái này với nhau thì bạn thấy là khi đó nó sẽ gán từng thành phần nói chung là copy cái nội dung của cái hthoc xinviên x cho thế ông y 2 ông này sẽ có nội dung là như nhau ok rồi, thì trong cái thằng xinviên này nó có 1 cái hạm tương đối rất đặc biệt người ta gọi là constructor constructor Con struct, tạo đúng không? C Dart có đorton thì nó không cần tạo về hoàn hIB, android, dre democratic"
+  },
+  {
+    "chunk_id": "chunk_634_698",
+    "start_sec": 634,
+    "end_sec": 698,
+    "start_label": "10:34",
+    "end_label": "11:38",
+    "raw_text": "Con struct, tạo đúng không? C Dart có đorton thì nó không cần tạo về hoàn hIB, android, dre democratic ST Blaze có tên chúng,ten struct của các bạn Thì yêu qu Emmanuel Sch Molly Pellet , là shrinkron Không tham sớtray Thì bạn chỉ cần dựng nó như thế này thôi Hoặc là bạn cũng có thể gán, đến chờ, ví dụ như mình cho mẹ sinh viên bằng A, B, C, D, nè, rồi là tên bằng Nguy mắt nam, VPA mình để là 3.0, còn jeer mình để là hài dương nè, nå! thì đây người ta gọi là con struct, con struct là hàm rất đặc biệt để chỉ là nó không có kiểu trả về mà nó có tên trùng với tên struct. Vậy thì ở trong hàng men nhé, bạn có thể khai báo cho mình 1 cái sinh viên ích như thế này Thì khi mà bạn khai báo 1 cái ông sinh viên ích như thế này và bạn dùng ích chấm in ý"
+  },
+  {
+    "chunk_id": "chunk_681_742",
+    "start_sec": 681,
+    "end_sec": 742,
+    "start_label": "11:21",
+    "end_label": "12:22",
+    "raw_text": "thì đây người ta gọi là con struct, con struct là hàm rất đặc biệt để chỉ là nó không có kiểu trả về mà nó có tên trùng với tên struct. Vậy thì ở trong hàng men nhé, bạn có thể khai báo cho mình 1 cái sinh viên ích như thế này Thì khi mà bạn khai báo 1 cái ông sinh viên ích như thế này và bạn dùng ích chấm in ý Rồi thì bạn xem cái điều gì nó xảy ra nhé Thì bạn thấy là sao nhỉ? Khi đó mỗi lần mà bạn tạo 1 cái mới 1 cái struct ấy Thì nó sẽ gọi cái constructor đấy Constructor sinh viên này này Và trong cái constructor sinh viên này thì mình đã gán giá trị mặc bệnh cùng mả sinh viên là abcd đúng không? BT là Nguyễn Văn Nam, GPR là PR chúng không có địa chỉ là hải dương ý khi mà bạn in ra thì nó sẽ có thông tin đấy nói chung là đây là cái giá trị mà mặc định mà mình khởi tạo cho mỗi sinh viên bạn khai bán một cái sinh viên i ra như thế cũng thế thôi ngôi như thế này sau đó bạn in ra thông tin của ông i thì ông i thông tin i hết như vậy bởi vì mỗi lần bạn tạo mới một cái struct ấy thì nó sẽ gọi cái hàm constructor này nhá ở đây bạn chỉ có một hàm constructor đúng không?"
+  },
+  {
+    "chunk_id": "chunk_726_792",
+    "start_sec": 726,
+    "end_sec": 792,
+    "start_label": "12:06",
+    "end_label": "13:12",
+    "raw_text": "bạn khai bán một cái sinh viên i ra như thế cũng thế thôi ngôi như thế này sau đó bạn in ra thông tin của ông i thì ông i thông tin i hết như vậy bởi vì mỗi lần bạn tạo mới một cái struct ấy thì nó sẽ gọi cái hàm constructor này nhá ở đây bạn chỉ có một hàm constructor đúng không? mà trong constructor đấy mình đã gán các cái giá trị mặc định như thế này rồi thằng ra là 2 cái ông xe mà mình khai bán trong hàm main này nó đều có thông tin là như thế cả Ok, hoặc bạn có thể khai bám một constructor khác nhá Có thể có nhiều hàm cùng tên mà đúng không? Mình đã học Function Overloading rồi đúng không? Thì ra mình có thể khai bám một hàm xinh viên, có hàm một constructor xinh viên có đầy đủ các tham số Đây chính là string mã này, rồi là string tên này, rồi là string vpa này xe lỗi float, double, a, dn, dn, string, dn, dn"
+  },
+  {
+    "chunk_id": "chunk_773_842",
+    "start_sec": 773,
+    "end_sec": 842,
+    "start_label": "12:53",
+    "end_label": "14:02",
+    "raw_text": "Đây chính là string mã này, rồi là string tên này, rồi là string vpa này xe lỗi float, double, a, dn, dn, string, dn, dn sau đó trong này bạn gán từng thành phần thông tin của constructor sinh viên này cho các thành phần của struct ok, mình sẽ cho là mã sinh viên bằng mã này, dù là tên thì bằng name, dù là dopa thì bằng điểm này con, dn, dn bây giờ nhé bạn có thể gọi 1 constructor khác các bạn cũng có thể gọi 2 con shocker, bặc định là không có tham số là x và y thì nó tự khác gọi con shocker này thì còn nếu mà bạn truyền con shocker mà nó có đầy đủ 4 tham số thì nó lại gọi con shocker này, ok rồi, ví dụ nhé, mình khai bám 1 cái ông sinh viên z chả nạ và mình truyền có thông tin của ông này là abcea chả nạ, rồi là nguyễn Hải Nam, lta lta 3.2 và địa chỉ thiền là nhân định"
+  },
+  {
+    "chunk_id": "chunk_825_888",
+    "start_sec": 825,
+    "end_sec": 888,
+    "start_label": "13:45",
+    "end_label": "14:48",
+    "raw_text": "rồi, ví dụ nhé, mình khai bám 1 cái ông sinh viên z chả nạ và mình truyền có thông tin của ông này là abcea chả nạ, rồi là nguyễn Hải Nam, lta lta 3.2 và địa chỉ thiền là nhân định sau đó mình dùng z, trầm in ok chỗ này là nên nhé thì bạn thấy khi đó làm sao nhỉ nó lại gọi 1 cái constructor khác và nó sẽ gán các cái giá trị mà mình khởi tạo cho cái constructor đây này mình truyền vào cái constructor khi mà mình khai báo cái sinh viên z ấy 4 thông tin này thì đó nó sẽ gọi cái constructor 2 này ok và nó sẽ gán lần lượt này mình sẽ gán các cái tham số mã, nêm, vừa điểm, vừa điện chỉ cho các cái thục tính của cái thằng sinh viên này ok các bạn có thể xây dựng nhiều con trỏ khác nhau nhé nhưng mà chú ý này, nếu mà bạn xây dựng con trỏ dưới này và không có con trỏ trên này"
+  },
+  {
+    "chunk_id": "chunk_873_938",
+    "start_sec": 873,
+    "end_sec": 938,
+    "start_label": "14:33",
+    "end_label": "15:38",
+    "raw_text": "mình sẽ gán các cái tham số mã, nêm, vừa điểm, vừa điện chỉ cho các cái thục tính của cái thằng sinh viên này ok các bạn có thể xây dựng nhiều con trỏ khác nhau nhé nhưng mà chú ý này, nếu mà bạn xây dựng con trỏ dưới này và không có con trỏ trên này thì khi mà bạn chạy bạn khai báo thằng x và thằng y này nè thì nó sẽ có vấn đề, nha bởi vì là nó sẽ không tìm thấy con trỏ mặc định mà không có tham số ở đây bạn khai báo 2 thằng sinh viên x và sinh viên y là 2 con trỏ à, 2 cái đối tượng sinh viên mà không có tham số đúng không? nhưng mà trong cái sinh viên của các bạn ấy không có con trỏ tư không có tham số đấy C++ đây chỉ cho quán trọc tour này, thực hiện được cái con trọc tour này có thể yêu cầu 4 tham số, khi phải bắt buộc khai báo như thế này một khi đã xây dựng nguyên con trọc tour này, phải sử dụng như thế còn nếu mà mình mở nó ra, không có vấn đề gì kìa, tự lựa chọn tự lựa cho con trọc tour 1 hoặc con trọc tour 2 cho khai báo của các bạn tùy vào tham xét tham số cho struct đó"
+  },
+  {
+    "chunk_id": "chunk_918_978",
+    "start_sec": 918,
+    "end_sec": 978,
+    "start_label": "15:18",
+    "end_label": "16:18",
+    "raw_text": "một khi đã xây dựng nguyên con trọc tour này, phải sử dụng như thế còn nếu mà mình mở nó ra, không có vấn đề gì kìa, tự lựa chọn tự lựa cho con trọc tour 1 hoặc con trọc tour 2 cho khai báo của các bạn tùy vào tham xét tham số cho struct đó nếu bạn không xây dựng cái thằng này, thì nó vẫn có, nó vẫn có mặc định mà, đúng không? nhưng khi đó thì nó gán các giá trị này có thể là các giá trị dỗng thôi, đúng không? nhưng mà nhớ, nếu bạn không xây dựng thì nó sẽ có mặc định một constructor không có tham số Nhưng nếu mà bạn đã xây dựng xanh xách, một con structure khác mà có tham số, mà không xây dựng con structure mà không có tham số này này Thì nếu mà bạn trong hàm mên và bạn khai báo một cái string struct, mà cái struct đấy của bạn không khởi tạo các tham số ấy, mình sẽ bao lỗi nhá, đấy là một cái chú ý như thế Rồi, thì đây chính là các cái hàm mà bạn có thể app dụng nhá"
+  },
+  {
+    "chunk_id": "chunk_956_1018",
+    "start_sec": 956,
+    "end_sec": 1018,
+    "start_label": "15:56",
+    "end_label": "16:58",
+    "raw_text": "Nhưng nếu mà bạn đã xây dựng xanh xách, một con structure khác mà có tham số, mà không xây dựng con structure mà không có tham số này này Thì nếu mà bạn trong hàm mên và bạn khai báo một cái string struct, mà cái struct đấy của bạn không khởi tạo các tham số ấy, mình sẽ bao lỗi nhá, đấy là một cái chú ý như thế Rồi, thì đây chính là các cái hàm mà bạn có thể app dụng nhá Mình có thể viết hàm in và hàm nhập trong này cho nó tiện này, đúng không? sau đó khi bạn muốn yên thông tin thì chỉ cần gọi đến các hang int và hang int này thôi rồi ở trong thằng constructor này có một cái rất là mạnh nữa đấy chính là bạn có thể nạp trong các toán tử bởi vì bạn chất các struct này nó sẽ chưa có những đực định nghĩa các toán tử như là lớn hơn, nhỏ hơn, hoặc là bằng hay gì đó vân vân dù nha, mình dùng một struct là sâu philit struct sâu philit thì nó sẽ có phân thức vào phần ảo là ab, đúng không? Mình sẽ là a cộng với bg nhá, ok?"
+  },
+  {
+    "chunk_id": "chunk_1001_1062",
+    "start_sec": 1001,
+    "end_sec": 1062,
+    "start_label": "16:41",
+    "end_label": "17:42",
+    "raw_text": "như là lớn hơn, nhỏ hơn, hoặc là bằng hay gì đó vân vân dù nha, mình dùng một struct là sâu philit struct sâu philit thì nó sẽ có phân thức vào phần ảo là ab, đúng không? Mình sẽ là a cộng với bg nhá, ok? Đấy, bạn không có thể xây dựng các cái thông tin như là nhập là in đúng không? Hoặc, thay vì bạn xây dựng thông tin là nhập vào in thì bạn có thể xây dựng cái... Mình có thể overload, mình có thể nạp chồng cái toán tử... người ta có lời tán tử insertion với extraction ấy, khi mà bạn cl ra cin ra, thì bình thường ví dụ như bạn khai báo là 1 cái số phức a C++, coverID, PtL Cl eraivi, Next Power �n k utilityés vault Hm....."
+  },
+  {
+    "chunk_id": "chunk_1042_1105",
+    "start_sec": 1042,
+    "end_sec": 1105,
+    "start_label": "17:22",
+    "end_label": "18:25",
+    "raw_text": "C++, coverID, PtL Cl eraivi, Next Power �n k utilityés vault Hm..... Mình sao có thrir ^^ m movies bằng a, cộng, b như thế này nó không cho đâu, ok, bởi vì là nó không biết 2 cái thằng a và b này cộng với nhau như thế nào, nhá dụ mình khởi tạo là a có giá trị là 1 cộng với 2d trả nạn và b có giá trị là 3 cộng với 4d trả nạn thì khi đó bạn khai bám 1 cái số phức C bằng a, cộng b thì nó sẽ không biết là 2 thằng này cộng với nhau như thế nào mà mình bắt buộc mình phải nạp trồng cái dấu cộng này, ok, cái tóa tử này bây giờ mình chạy thì nó sẽ bao lỗi, ok, đấy, vì cách mình có thể nạp trồng cái tóa tử này như sao Đầu tiên, cái tóa từ cộng này mình sẽ cho nó trả về 1 số phức"
+  },
+  {
+    "chunk_id": "chunk_1085_1148",
+    "start_sec": 1085,
+    "end_sec": 1148,
+    "start_label": "18:05",
+    "end_label": "19:08",
+    "raw_text": "thì khi đó bạn khai bám 1 cái số phức C bằng a, cộng b thì nó sẽ không biết là 2 thằng này cộng với nhau như thế nào mà mình bắt buộc mình phải nạp trồng cái dấu cộng này, ok, cái tóa tử này bây giờ mình chạy thì nó sẽ bao lỗi, ok, đấy, vì cách mình có thể nạp trồng cái tóa tử này như sao Đầu tiên, cái tóa từ cộng này mình sẽ cho nó trả về 1 số phức Tức là bạn sẽ cộng 2 cái số phức và bạn trả về 1 số phức đúng không? Đến ra cái kiểu trả về của mình sẽ là số phức Sau đó là sau khi mà có kiểu trả về rồi đúng không? thì mình sẽ cho cái Ở đây nó có củ pháp như thế này, để chính là kiểu trả về Rồi là operator từ khóa, bạn sẽ phải có 1 cái từ khóa từ khóa operator Rồi tiếp theo, đây chính là cái operator của bạn nhá có thể là dầu cộng, dấu chữ, dấu nhân, dấu chia hay là các toàn tử gì đó ở chỗ nào sau đó thì trong này sẽ là danh set tham số và tất nhiên là dưới này thì sẽ là các cốt trong này sẽ là cái cốt mà định địa bạn định địa cái operator đấy"
+  },
+  {
+    "chunk_id": "chunk_1131_1194",
+    "start_sec": 1131,
+    "end_sec": 1194,
+    "start_label": "18:51",
+    "end_label": "19:54",
+    "raw_text": "có thể là dầu cộng, dấu chữ, dấu nhân, dấu chia hay là các toàn tử gì đó ở chỗ nào sau đó thì trong này sẽ là danh set tham số và tất nhiên là dưới này thì sẽ là các cốt trong này sẽ là cái cốt mà định địa bạn định địa cái operator đấy ví dụ như mình muốn cộng, mình muốn nạp trồng 2 cái, nạp trồng cái cách và cộng 2 số phức ấy mình nạp trồng cái toàn tử cộng thì mình sẽ khai bá lo số phức này operator, sau đó là dầu cộng và trong này mình sẽ có 1 cái danh set tham số Mình sẽ dùng một thằng constant số phức other, ok. Từ quá constant này có nghĩa là hằng nhá, tức là mình sẽ không thay đổi tham số adder này. Các bạn không dùng constant dụng được. Đấy, đúng không? Kiểu trả về này. Từ quá operator này, cái ôi, cái từ operator mà bạn muốn nạp trồng, và đây là danh xét tham số, thì ở đây bạn khai bá cho mình cái số phức tỏng này, ok. sau đó mình sẽ cho tổng thì nó sẽ bằng cái thằng A, cái phân thực hiện tại này, cộng với azr.e"
+  },
+  {
+    "chunk_id": "chunk_1173_1233",
+    "start_sec": 1173,
+    "end_sec": 1233,
+    "start_label": "19:33",
+    "end_label": "20:33",
+    "raw_text": "Các bạn không dùng constant dụng được. Đấy, đúng không? Kiểu trả về này. Từ quá operator này, cái ôi, cái từ operator mà bạn muốn nạp trồng, và đây là danh xét tham số, thì ở đây bạn khai bá cho mình cái số phức tỏng này, ok. sau đó mình sẽ cho tổng thì nó sẽ bằng cái thằng A, cái phân thực hiện tại này, cộng với azr.e Thế còn, sẽ lỗ chỗ này là tổng.e nhá OK, còn chỗ này là tổng.b thì nó sẽ bằng b cộng với azr, cộng của b, nó sẽ bằng vui tơn với tổng Thì đây là cái cách mà bạn nặp trong cái toán từ cộng này, OK Mình sẽ có 1 cái toán từ khác nhá, và nhiệm vụ của cái thật dấu cộng này này Thì nó sẽ lấy thông tin của cái số phức hiện tại, đấy Nó chính là phần thực là a và phần ảo là b, thì nó cộng với phần thực của tham số thôi OK, tương ứng sau đó là bạn return về một số phức có tộng phần thực vào phần ảo tương ứng như thế nhé OK, phần a này thì bạn có thể hiểu đơn giản nó chính là phần a của số phức hiện tại"
+  },
+  {
+    "chunk_id": "chunk_1216_1278",
+    "start_sec": 1216,
+    "end_sec": 1278,
+    "start_label": "20:16",
+    "end_label": "21:18",
+    "raw_text": "Nó chính là phần thực là a và phần ảo là b, thì nó cộng với phần thực của tham số thôi OK, tương ứng sau đó là bạn return về một số phức có tộng phần thực vào phần ảo tương ứng như thế nhé OK, phần a này thì bạn có thể hiểu đơn giản nó chính là phần a của số phức hiện tại OK, con thằng alr.a này thì nó chính là phần ảo của số mà bạn muốn cộng với số hiện tại Phần thực xin lỗi, tương tự như vậy với phần ảo nhé Vậy thì bây giờ nhé, mình sẽ, đây, cái chỗ số phức C, bây giờ A, B mình chạy nhé Thì nó đã có 1 cái dấu cộng, nó đã được nạp trồng ở trên rồi nên là không có vấn đề gì cả Ok, và mình có thể in ra thông tin của thằng C này, C, A, thật này Vào phần áo này, C, B, thì nó sẽ in ra là 4, 6 đúng không? 4 cộng 6 di, đấy Ok, bạn cũng có thể nạp trồng các cái toán tử khác như là trừ nhé, mấy cái đấy thì các bạn tự làm nhân 2 số phức rồi là cộng 2 số phức rồi là chữ 2 số phức rồi các bạn làm được hết đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1257_1318",
+    "start_sec": 1257,
+    "end_sec": 1318,
+    "start_label": "20:57",
+    "end_label": "21:58",
+    "raw_text": "Vào phần áo này, C, B, thì nó sẽ in ra là 4, 6 đúng không? 4 cộng 6 di, đấy Ok, bạn cũng có thể nạp trồng các cái toán tử khác như là trừ nhé, mấy cái đấy thì các bạn tự làm nhân 2 số phức rồi là cộng 2 số phức rồi là chữ 2 số phức rồi các bạn làm được hết đúng không? ở đây mình chỉ giới thiệu cái cách này thôi đây là một cách nhé, hoặc là bạn cũng có thể khai báo nó như thế này đây là cách thứ nhất khi mà bạn định những operator cộng hoặc bạn cũng có thể sử dụng là một cái operator nhưng mà khi đó nhé cái operator của mình nó lại có 2 cái tham số cơ, đấy là constant số phức mình đặt là số phức x đi và thứ 2 là constant số phức y Rồi, chỗ này có vẻ như là các bạn thấy là cái này nó sẽ quen thuộc hơn với các bạn đúng không? Thông thường là bạn sẽ viết 1 cái hàm mà nó có 2 thăm số là x và số phức x và số y sau đó, return về tổng của 2 số phức này đúng không? Ok, ok, thế thôi."
+  },
+  {
+    "chunk_id": "chunk_1303_1365",
+    "start_sec": 1303,
+    "end_sec": 1365,
+    "start_label": "21:43",
+    "end_label": "22:45",
+    "raw_text": "Rồi, chỗ này có vẻ như là các bạn thấy là cái này nó sẽ quen thuộc hơn với các bạn đúng không? Thông thường là bạn sẽ viết 1 cái hàm mà nó có 2 thăm số là x và số phức x và số y sau đó, return về tổng của 2 số phức này đúng không? Ok, ok, thế thôi. Mà đây mình cũng làm tương tự như vậy, mình sẽ cho tổng.a thì bằng x.a, cộng với y.a dưới này thì là tổng.b thì nó sẽ bằng x.b, cộng với y.b, đấy. Nhưng mà trong trường hợp này nhá. Các bạn chú ý nếu mà bạn nạp trầm 1 operator trong struct thì nó chỉ cho phép bạn truyền vào 1 tham số như thế này thôi Thì còn nếu bạn muốn nạp trầm 1 struct mà nó có 2 tham số như thế này thì bạn sẽ phải khai báo cái ham này là ham friend Ok, hắn bạn màn thêm một cái tử khóa friend này nữa trước Thì đây có vẻ là nó sẽ nhìn, nó sẽ dễ, dễ hơn cho các bạn đúng không? Nó quen thuộc hơn, tức là tham số của mình sẽ có là 2 tham số số phức và x và số phức y"
+  },
+  {
+    "chunk_id": "chunk_1342_1404",
+    "start_sec": 1342,
+    "end_sec": 1404,
+    "start_label": "22:22",
+    "end_label": "23:24",
+    "raw_text": "Thì còn nếu bạn muốn nạp trầm 1 struct mà nó có 2 tham số như thế này thì bạn sẽ phải khai báo cái ham này là ham friend Ok, hắn bạn màn thêm một cái tử khóa friend này nữa trước Thì đây có vẻ là nó sẽ nhìn, nó sẽ dễ, dễ hơn cho các bạn đúng không? Nó quen thuộc hơn, tức là tham số của mình sẽ có là 2 tham số số phức và x và số phức y sau đó mình tính tỏng 2 số phức và return, đúng không? Ok, thì các bạn có thể lựa chọn 1 trong 2 cách này tuy nhá Mình thấy là cái cách ở dưới thì nó dễ hiểu hơn, đúng không? Nhưng mà nhớ trong truyền hợp mà bạn muốn khai báo cái nạp trồng cái toán tử như ở dưới thì bạn sẽ phải khai báo là friend, ok? thêm từ khóa friend vào trước cái hàn đó cái từ khóa friend này thì mình sẽ nói rõ hơn ở cái phần khi mà các bạn học về hướng đối tượng nhé rồi, thế còn 2 cái, đấy là cộng chữ nhân chia rồi là vân vân và vân vân đúng không? các bạn có thể tự làm được nhé thế còn nó có 2 cái toàn tử mà lúc nãy khi mà in ra thông tin của sinh viên thì mình dùng toàn tử, hàm in hay vào hàm nhập đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1383_1443",
+    "start_sec": 1383,
+    "end_sec": 1443,
+    "start_label": "23:03",
+    "end_label": "24:03",
+    "raw_text": "cái từ khóa friend này thì mình sẽ nói rõ hơn ở cái phần khi mà các bạn học về hướng đối tượng nhé rồi, thế còn 2 cái, đấy là cộng chữ nhân chia rồi là vân vân và vân vân đúng không? các bạn có thể tự làm được nhé thế còn nó có 2 cái toàn tử mà lúc nãy khi mà in ra thông tin của sinh viên thì mình dùng toàn tử, hàm in hay vào hàm nhập đúng không? hoặc bạn có thể nạp chồng 2 cái toàn tử insertion với extraction để nó in ra thông tin của nhân viên luôn bằng sinh với cao luôn ví dụ như là bạn muốn nạp chồng cái toàn tử insertion nhé thì bạn sẽ làm như sau friend này, kiểu trả về đúng không? chú ý nhá, cái thằng ham insertion sort này này, nó chính là cái thằng này này tức là bạn sẽ nhập thông tin trong một số phức ý thì nó sẽ có cái kiểu trả vế, nó sẽ là thuộc cái thằng là thằng iostream, ok mình đặt là operator, rồi là cái dấu như thế này, trong này mình sẽ có thông tin của một cái ông số phức"
+  },
+  {
+    "chunk_id": "chunk_1427_1520",
+    "start_sec": 1427,
+    "end_sec": 1520,
+    "start_label": "23:47",
+    "end_label": "25:20",
+    "raw_text": "tức là bạn sẽ nhập thông tin trong một số phức ý thì nó sẽ có cái kiểu trả vế, nó sẽ là thuộc cái thằng là thằng iostream, ok mình đặt là operator, rồi là cái dấu như thế này, trong này mình sẽ có thông tin của một cái ông số phức mình đặt là ít đi, nhưng mà chỗ này nhớ cho cái tham chiếu vào nhé, bởi vì là khi mà bạn nhập thì mình sẽ muốn thay đổi cái giá trị của cái số phức mà bạn nhập mà các bạn sẽ có dấu vào ở đây nhé rồi, ở đây mình sẽ có thêm 1 cái tham phục số nữa đấy là iostream à, mình đặt lại in, ok? và trong này thì bạn chỉ cần in này a này, sau đó là in, b này sau đó là x,e và in cho x,b và bạn sẽ return về trong mình cái thằng in này được ok, thì đây chính là cái cách nạp trầm cái tóa từ insert ok, nhớ nó có kiểu cho về iostream nhé bazen x, mang thăm x,64, childrenof, y, class, Sami, OS, 40, A"
+  },
+  {
+    "chunk_id": "chunk_1517_1583",
+    "start_sec": 1517,
+    "end_sec": 1583,
+    "start_label": "25:17",
+    "end_label": "26:23",
+    "raw_text": "A Rồi cách rồi, rồi là x, B Ok, xóa bạn return cho mình thằng A Thì bây giờ nhé Thay vì sử dụng hàm in và hàm out, bạn có thể nạp chồng 2 cái tóa tử insertion với ejection để mình dùng C in và C out để nhập trị cho cái số phức này luôn Mình dụ như ở đây mình khai báo 2 thằng là số phức A và B nhé, sau đó mình muốn nhập thông tin thì bạn chỉ cần C in cho A này, sau đó C in cho B Thì tự khắc là nó sẽ nhập thông tin cho thằng A và thằng B B, nó sẽ đợi cho bạn nhập phần thức, phần áo còn khi mà yên ra thì bạn chỉ cần dùng CL, C là được tiện đúng không? nhưng mà bạn phải nạp trồng trước khi mà sử dụng dụng như mình nhập là, số phức thứ nhất là 2 cộng với 3G số phức thứ 2 thì là 3 cộng với 4G thì khi đó nó sẽ có số phức tổng là 5 cộng với 7G ok, hả? 2 cái này dùng tương đối là 2, thành ra là các bạn nhớ cái test nạp trầm nó nhé, đó, thế thôi, đấy chính là một số kiến thức về quan trọng về nạp trầm"
+  },
+  {
+    "chunk_id": "chunk_1567_1633",
+    "start_sec": 1567,
+    "end_sec": 1633,
+    "start_label": "26:07",
+    "end_label": "27:13",
+    "raw_text": "nó sẽ có số phức tổng là 5 cộng với 7G ok, hả? 2 cái này dùng tương đối là 2, thành ra là các bạn nhớ cái test nạp trầm nó nhé, đó, thế thôi, đấy chính là một số kiến thức về quan trọng về nạp trầm tất nhiên là nó còn một cái toán tử mà mình cũng hay nạp trầm nữa, đấy chính là toán tử mà khạp hoặc là toán tử bằng ấy ví dụ như mình muốn định nghĩa xem là khi nào thì hai số phức bằng nhau nhé, thì mình có thể nạp trầm cái toán tử là dấu bằng ấy mình khai báo là ở đây bạn dùng cách này cũng được nhé, hoặc là cách sử dụng friend này cũng được nhé đây bạn có thể sử dụng như sau, đấy chính là boon, operator, mình định nghĩa cái dấu bằng nhá, mình nặp trong cái dấu bằng ở đây mình sẽ dùng 1 cái constan số phức, ever, khi mà 2 số phức bằng nhau thì mình quy định là phần thực và phần áo bằng nhau luôn, mình sẽ return vx bằng ever, x và i thì bằng az, y, ok, thì khi đó bạn có thể so sánh 2 số phức, nếu mà các bạn đã định nghĩa xong, đây vì dụ mình nhập vào 2 số phức a và b và mình kiểm tra này, nếu mà a mà bằng b"
+  },
+  {
+    "chunk_id": "chunk_1611_1676",
+    "start_sec": 1611,
+    "end_sec": 1676,
+    "start_label": "26:51",
+    "end_label": "27:56",
+    "raw_text": "ở đây mình sẽ dùng 1 cái constan số phức, ever, khi mà 2 số phức bằng nhau thì mình quy định là phần thực và phần áo bằng nhau luôn, mình sẽ return vx bằng ever, x và i thì bằng az, y, ok, thì khi đó bạn có thể so sánh 2 số phức, nếu mà các bạn đã định nghĩa xong, đây vì dụ mình nhập vào 2 số phức a và b và mình kiểm tra này, nếu mà a mà bằng b Re【l, l, nauthentic, oli,oren, chipالم beatdown, faa Wonderful Open, Mình đã nạp trầm cái dấu bằng này rồi mà Hoặc là bạn cũng có thể xây dựng tương tự như cái 2 cái toàn tử insert với ictrack ở kìa"
+  },
+  {
+    "chunk_id": "chunk_1633_1696",
+    "start_sec": 1633,
+    "end_sec": 1696,
+    "start_label": "27:13",
+    "end_label": "28:16",
+    "raw_text": "Re【l, l, nauthentic, oli,oren, chipالم beatdown, faa Wonderful Open, Mình đã nạp trầm cái dấu bằng này rồi mà Hoặc là bạn cũng có thể xây dựng tương tự như cái 2 cái toàn tử insert với ictrack ở kìa là frame, thì nó nhìn thấy nó có vẻ nó thoận hơn Đấy là operator, ah boon, operator Cái dấu bằng khi mà bạn sợ sánh là bạn muốn trả về đúng sai đúng không? Thì ra cái kiểu trả về của mình sẽ là boon nhá Operator, constant, so forth, a lot constant"
+  },
+  {
+    "chunk_id": "chunk_1680_1746",
+    "start_sec": 1680,
+    "end_sec": 1746,
+    "start_label": "28:00",
+    "end_label": "29:06",
+    "raw_text": "Đấy là operator, ah boon, operator Cái dấu bằng khi mà bạn sợ sánh là bạn muốn trả về đúng sai đúng không? Thì ra cái kiểu trả về của mình sẽ là boon nhá Operator, constant, so forth, a lot constant Mình đặt lại x và y đi cho nó khác với... Chỗ này bạn để constant được mà không để constant được nhé Mình sẽ return với x,e, bằng với y,e và x,d, bằng y,d Ok, rồi thì bây giờ bạn có thể xóa xánh hai thằng này với nhau cũng được Bạn lựa chọn cách này và cách này nha, tuy các bạn thấy cách nào hợp hơn từ thí dùng Hãy làm mình cũng hãy nạp chẳng với toán tử là toán tử nhỏ hơn ấy Bún operator bằng constant số x, constant số y"
+  },
+  {
+    "chunk_id": "chunk_1729_1794",
+    "start_sec": 1729,
+    "end_sec": 1794,
+    "start_label": "28:49",
+    "end_label": "29:54",
+    "raw_text": "Bún operator bằng constant số x, constant số y Trong này mình có thể định nghĩa 2 số x và số y này nhỏ hơn nhau khi nè, đúng hả? Đấy, được không? bạn có thể return về A bình cộng B bình đi mình sẽ return về x,a xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa Mình sẽ bình phương 2 cái thằng hồn thực vườn ảo lên sau đó cộng với nhau và mình sẽ thả nào lớn hơn thì mình sẽ coi nó là lớn hơn nhé"
+  },
+  {
+    "chunk_id": "chunk_1762_1824",
+    "start_sec": 1762,
+    "end_sec": 1824,
+    "start_label": "29:22",
+    "end_label": "30:24",
+    "raw_text": "mình sẽ return về x,a xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa, xa Mình sẽ bình phương 2 cái thằng hồn thực vườn ảo lên sau đó cộng với nhau và mình sẽ thả nào lớn hơn thì mình sẽ coi nó là lớn hơn nhé Ok, thì đó bạn cũng có thể xoánh 2 thằng này, sẽ là thằng nào lớn hơn, thằng nào nhỏ hơn rồi Mình dụ như là thằng nhất là 2, 3 này, thằng thứ 2 là 3, 4 thì nó sinh just đúng không thằng nhất, nhỏ hơn thằng thứ 2 Ê, rất là hay đúng không, dấu xoánh nhỏ hơn này rất là hay nhé, ví dụ Bạn có 1 cái struct là struct, ví dụ nhé Mình có 1 cái struct là struct sinh viên trong này mình sẽ khai báo là tên bà mã sinh viên thôi nhé"
+  },
+  {
+    "chunk_id": "chunk_1808_1869",
+    "start_sec": 1808,
+    "end_sec": 1869,
+    "start_label": "30:08",
+    "end_label": "31:09",
+    "raw_text": "Ê, rất là hay đúng không, dấu xoánh nhỏ hơn này rất là hay nhé, ví dụ Bạn có 1 cái struct là struct, ví dụ nhé Mình có 1 cái struct là struct sinh viên trong này mình sẽ khai báo là tên bà mã sinh viên thôi nhé sau đó là mình có một biến là biến đập bồ là VPA bây giờ giải sử trong cái... giải sử trong cái ham bên của mình ấy người ta yêu cầu mình nhập vào danh sách các sinh viên rồi chưa? sau đó sắp xếp các sinh viên này theo VPA giảm dần chẳng hạn ok, VPA giảm dần hoặc là tăng dần chẳng hạn thì mình có thể định nghĩa nhé khi mà bạn có một dâu xanh xách các sinh viên và bạn sắp xếp sinh viên đấy, thì thường là nó sẽ sắp xếp theo một tiêu trí nào đó, đúng không? thì bạn nên định nghĩa cái thứ tự sắp xếp sinh viên đấy, thì nó sẽ dễ hơn, ví dụ như mình muốn sắp xếp sinh viên theo thứ tự và PA tăng dần chẳng hạn thì khi đó bạn chỉ cần định nghĩa cho mình cái dấu nhỏ hơn ấy ok, dấu nhỏ hơn ấy boon này, friend này"
+  },
+  {
+    "chunk_id": "chunk_1848_1910",
+    "start_sec": 1848,
+    "end_sec": 1910,
+    "start_label": "30:48",
+    "end_label": "31:50",
+    "raw_text": "khi mà bạn có một dâu xanh xách các sinh viên và bạn sắp xếp sinh viên đấy, thì thường là nó sẽ sắp xếp theo một tiêu trí nào đó, đúng không? thì bạn nên định nghĩa cái thứ tự sắp xếp sinh viên đấy, thì nó sẽ dễ hơn, ví dụ như mình muốn sắp xếp sinh viên theo thứ tự và PA tăng dần chẳng hạn thì khi đó bạn chỉ cần định nghĩa cho mình cái dấu nhỏ hơn ấy ok, dấu nhỏ hơn ấy boon này, friend này bone, operator, zóa nhỏ hơn, constant, stringvn, avr, return, gpa nhỏ hơn, avr.gpa dạ sử trong hà mê mình nhập danh xách các sinh viên nhé quên chưa nói, nếu bạn muốn khai bám 1 mảng sinh viên hay 1 vector sinh viên thì tương tự như là các dự lượng khác để mình khai bão một cái vật sinh viên tương xách, mà bình tĩnh như thế này sau đó là mình sẽ nhập thông tin cho cái sinh viên này mình sẽ xin cho mẹ sinh viên sau đó là xin.xr"
+  },
+  {
+    "chunk_id": "chunk_1891_1953",
+    "start_sec": 1891,
+    "end_sec": 1953,
+    "start_label": "31:31",
+    "end_label": "32:33",
+    "raw_text": "quên chưa nói, nếu bạn muốn khai bám 1 mảng sinh viên hay 1 vector sinh viên thì tương tự như là các dự lượng khác để mình khai bão một cái vật sinh viên tương xách, mà bình tĩnh như thế này sau đó là mình sẽ nhập thông tin cho cái sinh viên này mình sẽ xin cho mẹ sinh viên sau đó là xin.xr và ghét like cho tên và chỗ này phải là danhxxe.sinhviên nhé, ok bạn truy cập vào danhxxe thì mới là ra cái cái đối tượng sinh viên đấy thôi đúng không? Thôi bạn đã truy cập đến tương thành phần của nó nhé và chỗ này mình sẽ xin cho danhsack.e.gpa ở dưới này thì bạn sẽ sort nhá, bạn sẽ sort với danhsack này sort, a và a cộng là xin lỗi danhsack, và danhsack cộng là... Thì bây giờ mặc định là nó sẽ sắp xếp theo gpa, bởi vì bạn đã định nghĩa cái việc so sánh 2 cái sinh viên này bằng cái toàn tử nhỏ hơn này rồi"
+  },
+  {
+    "chunk_id": "chunk_1936_1997",
+    "start_sec": 1936,
+    "end_sec": 1997,
+    "start_label": "32:16",
+    "end_label": "33:17",
+    "raw_text": "ở dưới này thì bạn sẽ sort nhá, bạn sẽ sort với danhsack này sort, a và a cộng là xin lỗi danhsack, và danhsack cộng là... Thì bây giờ mặc định là nó sẽ sắp xếp theo gpa, bởi vì bạn đã định nghĩa cái việc so sánh 2 cái sinh viên này bằng cái toàn tử nhỏ hơn này rồi ok, rồi mình sẽ phó sinh viên x hay chấm danh site, mình sẽ cl ra, x chấm mã sinh viên này rồi là x chấm tên này, ok và cuối cùng thì là x chấm gpa, thì bạn sẽ thấy là danh site sinh viên của mình sẽ được sắp xếp theo thứ tự điểm tăng dần gpa tăng dần, dụng mình nhập 3 sinh viên nhé ông thứ nhất thì có mãi là 1, nguyễn bên này, điểm là 2,13, 2 là 2, nguyễn 1, b, điểm là 3,14"
+  },
+  {
+    "chunk_id": "chunk_1977_2041",
+    "start_sec": 1977,
+    "end_sec": 2041,
+    "start_label": "32:57",
+    "end_label": "34:01",
+    "raw_text": "gpa tăng dần, dụng mình nhập 3 sinh viên nhé ông thứ nhất thì có mãi là 1, nguyễn bên này, điểm là 2,13, 2 là 2, nguyễn 1, b, điểm là 3,14 và ông thứ ba là ông nguyễn 1,c, có điểm là 1,15 thế thì bạn thấy là khi mà bạn sắp xếp thì nó sẽ dựa vào gba, ok thực ra thì cái chỗ sắp xếp này mình đã từng hướng dẫn các bạn xây dựng comparator rồi đúng không xây dựng comparator nó cũng rất là dễ thôi, đúng không Nhưng mà để các bạn biết thêm, đấy là mình có thể định nghĩa cái dấu nhỏ hơn để mà nó sắp xếp danh xách sinh viên của mình mặc định Bởi vì là mình đã định nghĩa cái dấu nhỏ hơn rồi thì nó cứ dựa vào cái tiêu trí đấy mà nó sắp xếp thôi Ok? Thì đây chính là cái kiến thức về struct của bạn nha Rồi, vậy thì đôi khi nhá, struct của bạn có thể lòng nhau Có thể lòng nhau, ví dụ như bạn sẽ dựng một struct về time đi"
+  },
+  {
+    "chunk_id": "chunk_2023_2084",
+    "start_sec": 2023,
+    "end_sec": 2084,
+    "start_label": "33:43",
+    "end_label": "34:44",
+    "raw_text": "Bởi vì là mình đã định nghĩa cái dấu nhỏ hơn rồi thì nó cứ dựa vào cái tiêu trí đấy mà nó sắp xếp thôi Ok? Thì đây chính là cái kiến thức về struct của bạn nha Rồi, vậy thì đôi khi nhá, struct của bạn có thể lòng nhau Có thể lòng nhau, ví dụ như bạn sẽ dựng một struct về time đi Ok, rồi sẽ có... rr, foosay, trả nạn và trong cái vết xem phim nào đó, mình là làm struct vẽ, thì nó lại có thời gian để xem phim đó ví dụ như string tên phim này, sau đó mình có một thêm tham thời gian trả nạn thì bạn thấy bây giờ các struct có thể lồng nhau nhé, trong struct vẽ thì mình lại có một struct tên là time tên là time, kiểu time đúng không? và có tên là thời gian thì cái cách truy cập thì tương tự như vậy, ví dụ bạn khai bám 1 cái vsmfilm lại a nhá, sau đó thì nếu mà mình muốn truy cập vào tên thì mình sẽ là"
+  },
+  {
+    "chunk_id": "chunk_2067_2127",
+    "start_sec": 2067,
+    "end_sec": 2127,
+    "start_label": "34:27",
+    "end_label": "35:27",
+    "raw_text": "thì bạn thấy bây giờ các struct có thể lồng nhau nhé, trong struct vẽ thì mình lại có một struct tên là time tên là time, kiểu time đúng không? và có tên là thời gian thì cái cách truy cập thì tương tự như vậy, ví dụ bạn khai bám 1 cái vsmfilm lại a nhá, sau đó thì nếu mà mình muốn truy cập vào tên thì mình sẽ là ghét like cho a chấm tên đúng không? nhưng nếu mà bạn muốn truy cập vào cái giờ và cái food và cái dây của cái vsmfilm đấy thì mình sẽ phải see in cho a đầu tiên bạn sẽ chấm thời gian lại nhá để nó ra được cái time đã truy cập vào thành phần của thằng thang, thêm 1 dâu chấm nữa, truy cập dần dần dần dần dần ở đây mình sẽ cho vào giờ sau đó là foot dây nhé, thì bạn cứ chấm từng thằng 1 thì thế rồi foot rồi dây, ok thì đây chính là trong trường hợp mà struct nó có thể lòng nhau nhé, thoải mái, ok thì đây chính là kiến thức về struct thông thường các bài tập về struct này thì nó liên quan đến các bài tập như là quản lý sinh viên hay là quản lý 1 cái danh sách gì đó"
+  },
+  {
+    "chunk_id": "chunk_2106_2168",
+    "start_sec": 2106,
+    "end_sec": 2168,
+    "start_label": "35:06",
+    "end_label": "36:08",
+    "raw_text": "dây nhé, thì bạn cứ chấm từng thằng 1 thì thế rồi foot rồi dây, ok thì đây chính là trong trường hợp mà struct nó có thể lòng nhau nhé, thoải mái, ok thì đây chính là kiến thức về struct thông thường các bài tập về struct này thì nó liên quan đến các bài tập như là quản lý sinh viên hay là quản lý 1 cái danh sách gì đó và thực hiện các cái thao tác như là tìm kiếm sub-shape hay là chuẩn hóa, vần vần, nhưng nhìn chung nó rất là dễ, đúng không, nó rất là dễ và nếu mà các bạn có kiến thức về struct và mình biết mình có thể thành thạo sử dụng sub-shape và tìm kiếm thì những cái bài tập này rất là đương dạng, đúng không và tất nhiên nếu mà bạn kiếm vào cái phần sub-shape thì đến phần bài tập này thì nó lại hơi gặp, có khăn một chút, ok Thì nói chung là struct thì mình giới thiệu như thế nhé Còn sang phần bài tập thì mình sẽ có nhiều ví dụ và có nhiều chú ý hơn để làm bài tập về struct cho nó ổn Ok, chốt lại để chính là struct thì nó sẽ có nhiều member, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2151_2187",
+    "start_sec": 2151,
+    "end_sec": 2187,
+    "start_label": "35:51",
+    "end_label": "36:27",
+    "raw_text": "Thì nói chung là struct thì mình giới thiệu như thế nhé Còn sang phần bài tập thì mình sẽ có nhiều ví dụ và có nhiều chú ý hơn để làm bài tập về struct cho nó ổn Ok, chốt lại để chính là struct thì nó sẽ có nhiều member, đúng không? Member thì có thể là thuộc tính hoặc là nó cũng có thể là một cái hèm là đó Và bạn có thể nạp trong các cái toán tử cho chính cái struct đó Ok, để mà so sánh hay là nhập rồi in rồi cộng chứ nhân chia làm sao cho nó hợp lý Ok, và tất nhiên là struct có thể lòng nhau, bạn sử dụng struct như là một chiếc kiểu dữ liệu thông thường Ok"
+  }
+]

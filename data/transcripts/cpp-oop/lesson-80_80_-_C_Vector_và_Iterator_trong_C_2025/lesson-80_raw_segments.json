@@ -1,0 +1,2557 @@
+[
+  {
+    "start": 0.0,
+    "end": 3.36,
+    "text": "Bây giờ mình sẽ sang kiến thức về vector và iterator."
+  },
+  {
+    "start": 3.36,
+    "end": 5.36,
+    "text": "Mình biết là các bạn đã đọc slide chưa?"
+  },
+  {
+    "start": 5.36,
+    "end": 9.2,
+    "text": "Đấy, để làm bài tập này, thì bạn em lọc ra vector và iterator để làm thôi."
+  },
+  {
+    "start": 9.2,
+    "end": 16.5,
+    "text": "Đấy, vector và iterator, đây nó có 20 bài sao, đúng không?"
+  },
+  {
+    "start": 16.5,
+    "end": 19.54,
+    "text": "20 bài cần bấy 3 bài này, anh để làm test."
+  },
+  {
+    "start": 19.54,
+    "end": 21.54,
+    "text": "Thế thì vector nó là cái gì?"
+  },
+  {
+    "start": 21.54,
+    "end": 24.94,
+    "text": "Vector ở trong xị ổng cộng ấy, nó giống như một cái mảng động."
+  },
+  {
+    "start": 24.94,
+    "end": 28.83,
+    "text": "Một cái mảng mà các bạn em có thể thay đổi kích thước."
+  },
+  {
+    "start": 28.83,
+    "end": 31.94,
+    "text": "Tức là mình có thể thêm vào, xóa đi."
+  },
+  {
+    "start": 31.94,
+    "end": 34.56,
+    "text": "cái kích thước của vector nó tự thay đổi"
+  },
+  {
+    "start": 34.56,
+    "end": 36.98,
+    "text": "còn thực tế khi mà bạn em dùng cái mạng 1 chiều"
+  },
+  {
+    "start": 36.98,
+    "end": 39.48,
+    "text": "dụ các em khai báo cái mạng em 100 như thế này"
+  },
+  {
+    "start": 39.48,
+    "end": 42.16,
+    "text": "thì từ đầu tới cuối chương trình của mình nó sẽ là 100 phần tử"
+  },
+  {
+    "start": 42.16,
+    "end": 45.66,
+    "text": "mình muốn cho thêm cũng không được mà bớt đi cũng không xong"
+  },
+  {
+    "start": 45.66,
+    "end": 48.82,
+    "text": "nhưng mà cái vector này thì nó giống như cái mạng 1 chiều"
+  },
+  {
+    "start": 48.82,
+    "end": 52.32,
+    "text": "nhưng mà có điều là nó có thể thay đổi kích thước 1 cách linh hoạt hơn"
+  },
+  {
+    "start": 52.32,
+    "end": 55.32,
+    "text": "nó dùng để thay thế cho mạng 1 chiều trong những trường hợp mà"
+  },
+  {
+    "start": 55.32,
+    "end": 58.06,
+    "text": "các em không biết trước cái mạng có bao nhiêu phần tử hoặc là"
+  },
+  {
+    "start": 58.06,
+    "end": 60.94,
+    "text": "mình cần phải thay đổi kích thước 1 cách liên tục"
+  },
+  {
+    "start": 60.94,
+    "end": 69.38,
+    "text": "các bạn có thể dùng vector, nhưng mà ưu điểm của nó là linh hoạt, nhưng mà về nhật điểm thì nó sẽ có phần trậm hơn một chút so với mạng 1 triệu"
+  },
+  {
+    "start": 69.38,
+    "end": 76.05,
+    "text": "để dùng vector thì mà em include cái thư viện vector vào, bạn nào dùng bit rồi thì thôi"
+  },
+  {
+    "start": 76.05,
+    "end": 80.34,
+    "text": "và vector thì nó cũng có thể dùng cho nhiều kiểu dữ liệu"
+  },
+  {
+    "start": 80.34,
+    "end": 86.18,
+    "text": "các bạn có thể khai báo ra vector, lưu integer, lưu longlong, forload, double, cha, boon, pe, các kiểu"
+  },
+  {
+    "start": 86.18,
+    "end": 91.58,
+    "text": "mình sẽ thay kiểu dữ liệu của nó trong này nhé, thành longlong, forload, double, cha, boon, vân vân"
+  },
+  {
+    "start": 91.58,
+    "end": 96.54,
+    "text": "khi đó mình khai báo như này là mình có 1 vector dẫn, chưa có phần tử nào kẻ"
+  },
+  {
+    "start": 96.54,
+    "end": 99.3,
+    "text": "bây giờ các bạn muốn thêm vào thì mình sẽ dùng hàm"
+  },
+  {
+    "start": 99.3,
+    "end": 102.34,
+    "text": "phải dùng hàm có tên là pushback"
+  },
+  {
+    "start": 102.34,
+    "end": 107.22,
+    "text": "thì nó sẽ thêm thêm ích vào cuối"
+  },
+  {
+    "start": 107.22,
+    "end": 111.1,
+    "text": "vector, thằng này nó sẽ có độ phức tạp là o1 khá là nhanh"
+  },
+  {
+    "start": 111.1,
+    "end": 118.14,
+    "text": "pushback, các bạn em cứ pushback là nó thêm vào và nó mở rộng cái kích thước của vector đây lên"
+  },
+  {
+    "start": 118.14,
+    "end": 130.5,
+    "text": "Các bạn push back, push back, push back, push, push, push, ok, cho 3, cho 1, cho 2, cho 5, cho 4, cho 10 vào, đó"
+  },
+  {
+    "start": 130.5,
+    "end": 134.53,
+    "text": "Thì các bạn hình dung, ban đầu vét tư này của em nó rỗng, nó chưa có phần tử nào cả"
+  },
+  {
+    "start": 134.53,
+    "end": 137.53,
+    "text": "Bây giờ mình push back 3, tức là mình cho 3 vào cuối"
+  },
+  {
+    "start": 137.53,
+    "end": 140.53,
+    "text": "Push back 1 thì nó có 3 rồi, nó thêm 1 vào cuối"
+  },
+  {
+    "start": 140.53,
+    "end": 142.53,
+    "text": "Đây thêm 2 thì nó là 3, 1, 2"
+  },
+  {
+    "start": 142.53,
+    "end": 145.53,
+    "text": "Dưới này nó thêm 5 vào thì nó thành 3, 1, 2, 5"
+  },
+  {
+    "start": 175.53,
+    "end": 180.32,
+    "text": ". Merry Christmas and Happy Birthday to mọi người"
+  },
+  {
+    "start": 185.78,
+    "end": 187.74,
+    "text": "Thank for watching"
+  },
+  {
+    "start": 202.33,
+    "end": 208.46,
+    "text": "Don't forget to like and subscribe"
+  },
+  {
+    "start": 213.08,
+    "end": 219.24,
+    "text": "Duself or Emplace Back"
+  },
+  {
+    "start": 223.32,
+    "end": 228.78,
+    "text": "Emplace Back"
+  },
+  {
+    "start": 228.78,
+    "end": 234.5,
+    "text": "Thế còn ti nữa, thêm vào giữa, thêm vào đầu hay là, như thế nào thì anh sẽ hướng dẫn nó có hàm khác"
+  },
+  {
+    "start": 234.5,
+    "end": 238.06,
+    "text": "Còn push back, em place back là nó thêm vào cuối thôi"
+  },
+  {
+    "start": 238.06,
+    "end": 240.14,
+    "text": "Các bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 240.14,
+    "end": 242.74,
+    "text": "Dùng vector quá dễ luôn, đúng không?"
+  },
+  {
+    "start": 242.74,
+    "end": 244.66,
+    "text": "Thì vì nó giống cái mạng 1 triều"
+  },
+  {
+    "start": 244.66,
+    "end": 258.09,
+    "text": "Ok rồi nha, có câu hỏi gì không các bạn?"
+  },
+  {
+    "start": 258.09,
+    "end": 262.03,
+    "text": "Nó có hạn chế gì so với 4 không anh?"
+  },
+  {
+    "start": 262.03,
+    "end": 264.47,
+    "text": "Thế sao lại hạn chế so với 4?"
+  },
+  {
+    "start": 264.47,
+    "end": 269.73,
+    "text": "Mình hỏi hạn chế với mạng 1 triều chứ?"
+  },
+  {
+    "start": 269.73,
+    "end": 273.85,
+    "text": "lúc nãy anh có nói có phần chậm hơn một chút so với mảng 1 triều"
+  },
+  {
+    "start": 273.85,
+    "end": 277.54,
+    "text": "còn nó được hỗ trợ mạnh hơn, nó linh hoạt hơn"
+  },
+  {
+    "start": 277.54,
+    "end": 285.66,
+    "text": "Thế bây giờ mình muốn duyệt qua từng phần tử trong vector thì làm như thế nào?"
+  },
+  {
+    "start": 285.66,
+    "end": 289.14,
+    "text": "Bạn em cũng có thể dùng chỉ số, vector nó cũng có chỉ số nha"
+  },
+  {
+    "start": 289.14,
+    "end": 293.5,
+    "text": "Thằng này sẽ là chỉ số 0, chỉ số 1, chỉ số 2, chỉ số 3, chỉ số 4, chỉ số 5 và chỉ số 6"
+  },
+  {
+    "start": 293.5,
+    "end": 297.94,
+    "text": "Bạn em sẽ làm vòng for từ i bằng không cho tới i nhỏ hơn v, sai, i cộng cộng"
+  },
+  {
+    "start": 297.94,
+    "end": 302.34,
+    "text": "Bạn em có thể ép cái thằng v, sai này sang integer để nó đỡ báo cảnh báo"
+  },
+  {
+    "start": 302.34,
+    "end": 310.94,
+    "text": "Tại vì cái ham sai này ở trong vector thì nó sẽ trẻ về cái kiểu dữ liệu là sai t, là kiểu dữ liệu là xuống nguyên không âm"
+  },
+  {
+    "start": 310.94,
+    "end": 315.94,
+    "text": "Khi mà em viết vòng for mà em viết là innerT vòng không y nhỏ hơn v.sai thì thường nó sẽ cảnh báo"
+  },
+  {
+    "start": 315.94,
+    "end": 321.54,
+    "text": "Tại vì cái biến innerT này là xuống nguyên có thể âm, còn bản chất cái thằng v.sai này lại là xuống nguyên không âm"
+  },
+  {
+    "start": 321.54,
+    "end": 327.14,
+    "text": "Nên khi mà em so sánh xuống nguyên có âm với cái xuống nguyên không thể, à không âm ấy thì nó cảnh báo một chút"
+  },
+  {
+    "start": 327.14,
+    "end": 329.94,
+    "text": "Mình bạn ép nó sang integer là nó hết cảnh báo nha"
+  },
+  {
+    "start": 329.94,
+    "end": 333.35,
+    "text": "Thì đó bạn em sẽ chỉ cần cl và vi là được"
+  },
+  {
+    "start": 333.35,
+    "end": 335.48,
+    "text": "Cái này thì giống mạng"
+  },
+  {
+    "start": 335.48,
+    "end": 337.88,
+    "text": "Hoặc là các bạn dùng range bay for loop, đúng không?"
+  },
+  {
+    "start": 337.88,
+    "end": 341.24,
+    "text": "For in at x, 2.v, bạn em cl và x là được, nó"
+  },
+  {
+    "start": 341.24,
+    "end": 343.93,
+    "text": "Thì nói chung duyệt nó giống mạng 1 triều thôi"
+  },
+  {
+    "start": 343.93,
+    "end": 348.63,
+    "text": "Dùng chỉ số hoặc là dùng range bay for loop"
+  },
+  {
+    "start": 348.63,
+    "end": 349.83,
+    "text": "OK chưa?"
+  },
+  {
+    "start": 349.83,
+    "end": 355.38,
+    "text": "Các bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 355.38,
+    "end": 358.02,
+    "text": "Nấy, ban đầu cái vector của mình nó dỗng nha"
+  },
+  {
+    "start": 358.02,
+    "end": 363.62,
+    "text": "Anh ơi, lúc nào làm sao để biết lúc nào vector dùng mạng 1 triều?"
+  },
+  {
+    "start": 363.62,
+    "end": 369.52,
+    "text": "Thì cái bài nào em gặp cái bài tập mà em cần lưu dãi số nhưng mà em lại chưa biết cái dãi số đó có bao nhiêu thằng"
+  },
+  {
+    "start": 369.52,
+    "end": 372.22,
+    "text": "100 thằng, 2000 thằng, ví dụ như cái bài mà"
+  },
+  {
+    "start": 372.22,
+    "end": 376.14,
+    "text": "nhập dãi số không biết trước số lượng phần tử thì mình có thể dùng vector là nó rất phù hợp"
+  },
+  {
+    "start": 376.14,
+    "end": 380.18,
+    "text": "Còn những cái bài nào mà mình biết chắc chắn là cái mảng này à, cần 100 thằng còn 1 nghìn thằng"
+  },
+  {
+    "start": 380.18,
+    "end": 381.88,
+    "text": "thì mà em có thể dùng mảng 1 chiều"
+  },
+  {
+    "start": 381.88,
+    "end": 382.62,
+    "text": "Nha"
+  },
+  {
+    "start": 382.62,
+    "end": 387.18,
+    "text": "Mà khi nào mà mình cần 1 cái mảng mà nó không biết trước số lượng phần tử"
+  },
+  {
+    "start": 387.18,
+    "end": 391.98,
+    "text": "cần nó linh hoạt hơn thì nữa mình cần nó xóa bớt rồi thêm vào thì các bạn sẽ dùng cái thằng vector"
+  },
+  {
+    "start": 391.98,
+    "end": 395.98,
+    "text": "còn nếu mà dùng để lưu chữ thông thường thì nên dùng mạng 1 chiều nó sẽ nhanh hơn"
+  },
+  {
+    "start": 395.98,
+    "end": 404.95,
+    "text": "rồi ok, thế mình có 1 cái lưu ý nhé, ví dụ bọn em có 1 cái vector V như thế này"
+  },
+  {
+    "start": 404.95,
+    "end": 415.01,
+    "text": "mà bọn em CL ra V5 thì theo các bạn thì nó sẽ ra kết quả là bao nhiêu"
+  },
+  {
+    "start": 415.01,
+    "end": 420.01,
+    "text": "không, có thể khai báo có mấy phần tử chức cũng được hoặc là có sẵn 100 phần tử chức cũng được"
+  },
+  {
+    "start": 420.01,
+    "end": 423.61,
+    "text": "các bạn ta anh sẽ lấy cái ví dụ đấy"
+  },
+  {
+    "start": 423.61,
+    "end": 426.18,
+    "text": "không được viết như thế này"
+  },
+  {
+    "start": 426.18,
+    "end": 427.18,
+    "text": "được chưa"
+  },
+  {
+    "start": 427.18,
+    "end": 430.89,
+    "text": "tại vì cái vector nó chưa có bộ nhớ"
+  },
+  {
+    "start": 430.89,
+    "end": 436.89,
+    "text": "Em không thể cial ra, cial ra v0, v1, v2, v3, v4 với 1 cái vector dẫm như thế này, nó sẽ báo lỗi ngay"
+  },
+  {
+    "start": 436.89,
+    "end": 440.89,
+    "text": "Đấy, nó giống như kiểu em trong mạng một chiếc em chia xuất ngoài mạng ấy"
+  },
+  {
+    "start": 440.89,
+    "end": 445.89,
+    "text": "Nhưng mà cái vector nó sẽ chặt chẽ hơn nên là các bạn mà nổp ở trên web.bà là sai luôn ấy, nhé"
+  },
+  {
+    "start": 445.89,
+    "end": 450.22,
+    "text": "Đấy, đúng rồi"
+  },
+  {
+    "start": 450.22,
+    "end": 454.22,
+    "text": "Bạn này bảo là có thể khai báo cái vector mà nó có sẵn phần tử không được"
+  },
+  {
+    "start": 454.22,
+    "end": 457.22,
+    "text": "Ví dụ, bạn em khai báo ra cái vector như thế này, giống như mạng ấy"
+  },
+  {
+    "start": 457.22,
+    "end": 460.22,
+    "text": "3, 2, 1, 5, 8, cũng được"
+  },
+  {
+    "start": 460.22,
+    "end": 481.22,
+    "text": "Vector có sẵn mấy thẳng rồi, có sẵn 5 số rồi, bọn em pushback 3 thì thêm 3 vào, thêm 3 1, có sẵn rồi em pushback vào thì mở rộng thêm thôi, không có gì cả"
+  },
+  {
+    "start": 481.22,
+    "end": 483.22,
+    "text": "Đấy, thì bây giờ cái vector của mình là sẽ như này"
+  },
+  {
+    "start": 483.22,
+    "end": 486.22,
+    "text": "Em có thể khai báo như này, nó có sẵn 5 thằng rồi"
+  },
+  {
+    "start": 486.22,
+    "end": 488.22,
+    "text": "Mình push back thì nó có thằng thứ 6"
+  },
+  {
+    "start": 488.22,
+    "end": 491.22,
+    "text": "Push back thì lại có thằng thứ 7, thứ 8, thứ 9, thứ 10, nhé"
+  },
+  {
+    "start": 491.22,
+    "end": 496.47,
+    "text": "Đúng rồi, có thể khai báo vector có sẵn số lượng phần tử"
+  },
+  {
+    "start": 496.47,
+    "end": 502.27,
+    "text": "Như này này, nếu mà em muốn khai báo ra 1 cái vector mà nó có sẵn 100 thằng, 1 nghìn thằng"
+  },
+  {
+    "start": 502.27,
+    "end": 505.27,
+    "text": "Hay là 500 thằng thì em sẽ khai báo như thế này"
+  },
+  {
+    "start": 505.27,
+    "end": 509.93,
+    "text": "Được chưa, là nó có sẵn 100 thằng"
+  },
+  {
+    "start": 509.93,
+    "end": 513.06,
+    "text": "Nếu em muốn 100 thằng đấy đều là số không"
+  },
+  {
+    "start": 513.06,
+    "end": 516.58,
+    "text": "Thì sẽ khai báo là 100.0"
+  },
+  {
+    "start": 516.58,
+    "end": 520.7,
+    "text": "Em muốn 100 thằng đấy là 28, thì khai báo là 128, đúng không?"
+  },
+  {
+    "start": 520.7,
+    "end": 524.7,
+    "text": "Đấy, thì là cái cách mà khai báo cái vector mà nó có sẵn phần tử"
+  },
+  {
+    "start": 524.7,
+    "end": 531.74,
+    "text": "Còn em khai báo không thì nó sẽ là vector rộng, không có phần tử nào, không có ô nhớ nào kể"
+  },
+  {
+    "start": 531.74,
+    "end": 536.46,
+    "text": "Đấy, thế nha, nhưng mà chỗ này là ngọt tròn nha, không phải ngọt vuông đâu"
+  },
+  {
+    "start": 536.46,
+    "end": 540.76,
+    "text": "Nấy, ngọt tròn, rồi"
+  },
+  {
+    "start": 540.76,
+    "end": 546.06,
+    "text": "Nếu khai báo giới hạn 100 phần tử nữa"
+  },
+  {
+    "start": 546.06,
+    "end": 549.02,
+    "text": "cho phần tử 1.0.1 không anh"
+  },
+  {
+    "start": 549.02,
+    "end": 550.82,
+    "text": "em nhập thì nó cũng không lưu đâu"
+  },
+  {
+    "start": 550.82,
+    "end": 552.22,
+    "text": "nếu mà em nhập, em cho vào thì được"
+  },
+  {
+    "start": 552.22,
+    "end": 555.02,
+    "text": "còn nhập, chi cập chỉ số thì không được"
+  },
+  {
+    "start": 555.02,
+    "end": 557.28,
+    "text": "sẽ bị lỗi, nhé"
+  },
+  {
+    "start": 557.28,
+    "end": 559.76,
+    "text": "bây giờ mình sẽ hướng dẫn các bạn cái cách nhập 1 cái mảng"
+  },
+  {
+    "start": 559.76,
+    "end": 561.28,
+    "text": "và 1 chiều và lưu vào cái vector"
+  },
+  {
+    "start": 561.28,
+    "end": 562.88,
+    "text": "ví dụ mà em có 1 cái mảng 1 chiều"
+  },
+  {
+    "start": 562.88,
+    "end": 565.92,
+    "text": "3, 2, 1, 8, 9, 0"
+  },
+  {
+    "start": 565.92,
+    "end": 567.76,
+    "text": "bây giờ mình lưu vào vector như thế nào"
+  },
+  {
+    "start": 567.76,
+    "end": 570.16,
+    "text": "có 2 cách, đầu tiên mà em nhập"
+  },
+  {
+    "start": 570.16,
+    "end": 572.24,
+    "text": "sau đó khai báo ra 1 cái vector rỗng"
+  },
+  {
+    "start": 572.24,
+    "end": 573.24,
+    "text": "nhé"
+  },
+  {
+    "start": 573.24,
+    "end": 600.31,
+    "text": "vctv,"
+  },
+  {
+    "start": 600.31,
+    "end": 630.96,
+    "text": "Clip Investigation, Isnaster,"
+  },
+  {
+    "start": 630.96,
+    "end": 634.64,
+    "text": "thì khi đó bạn em chỉ cần c in cho v0, v1, v2, v3 là được"
+  },
+  {
+    "start": 634.64,
+    "end": 638.24,
+    "text": "như này này, đấy, thế thôi, thì đây có 2 cách như vậy"
+  },
+  {
+    "start": 638.24,
+    "end": 651.73,
+    "text": "nhưng mà nếu mà bạn em đã khai báo cái vector v mà có sẵn nờ phần tử rồi"
+  },
+  {
+    "start": 651.73,
+    "end": 657.17,
+    "text": "mà trong này các bạn lại vẫn như cũ là các bạn vẫn nhập thằng xm pushback vào nhé"
+  },
+  {
+    "start": 657.17,
+    "end": 660.91,
+    "text": "là cái vector của mình nó sẽ có 2 nờ phần tử"
+  },
+  {
+    "start": 660.91,
+    "end": 664.35,
+    "text": "tại vì ban đầu nó đã chuẩn bị sẵn cho các bạn nờ phần tử là"
+  },
+  {
+    "start": 664.35,
+    "end": 666.59,
+    "text": "các cái giá trị mặc định là 6 x0 rồi"
+  },
+  {
+    "start": 666.59,
+    "end": 668.14,
+    "text": "đúng không?"
+  },
+  {
+    "start": 668.14,
+    "end": 673.9,
+    "text": "Bây giờ các bạn đã nhập 6 thằng sau các bạn pushback vào, thì cái vector của mình nó sẽ như thế này, hình dung không nhỉ?"
+  },
+  {
+    "start": 673.9,
+    "end": 681.58,
+    "text": "Thế nên là phải cẩn thận nhé, nếu mà nó đã sẵn em nhớ như thế này, thì các bạn xin cho v0, v1, v2, v3, v4 luôn"
+  },
+  {
+    "start": 681.58,
+    "end": 686.06,
+    "text": "Để chờ, chết đừng có pushback nữa, pushback là cho cái vector giống thôi"
+  },
+  {
+    "start": 686.06,
+    "end": 691.18,
+    "text": "Ok, thì tuy các bạn nhập như thế nào thì nhập nhé"
+  },
+  {
+    "start": 691.18,
+    "end": 700.69,
+    "text": "Nói ra các bạn em có thể nhập theo kiểu range before loop cũng được nhưng mà thôi anh không thích cái chơi lắm"
+  },
+  {
+    "start": 700.69,
+    "end": 736.29,
+    "text": "có 1 hàm, có tên là Hàm Popback, hàm này không có tham số gì cả, nó sẽ xóa phần tử, ở cuối, vector, nấy, thằng này chắc là O1 này, nấy, anh nhớ không nhầm nó là O1, khá là nhanh, tức là bây giờ bọn em có 1 cái vector như này, V đúng không, 3, 2, 1, 8, 9, 5 mà mình thấy thằng 5 ngứa mắt quá thì mình muốn xóa nó đi, rồi mà em chỉ cần viết V chấm popback, pop, pop là lấy ra"
+  },
+  {
+    "start": 736.29,
+    "end": 738.29,
+    "text": "PUS là đẩy vào á"
+  },
+  {
+    "start": 738.29,
+    "end": 744.18,
+    "text": "Thì khi đó các phần tử trong vector v của bạn em chỉ còn lại là 3, 2, 1, 8, 9"
+  },
+  {
+    "start": 744.18,
+    "end": 747.18,
+    "text": "Nó sẽ xoá thằng Nam đi và kích thước nó sẽ giảm đi 1 cái sai"
+  },
+  {
+    "start": 747.18,
+    "end": 750.02,
+    "text": "cái sai nó sẽ giảm đi 1"
+  },
+  {
+    "start": 750.02,
+    "end": 753.02,
+    "text": "Nhưng mà cẩn thận nha, nếu cái theo tác này"
+  },
+  {
+    "start": 753.02,
+    "end": 756.02,
+    "text": "được thực hiện khi mà cái vector của em nó rộng ấy"
+  },
+  {
+    "start": 756.02,
+    "end": 758.66,
+    "text": "nè, nó sẽ gây lỗi"
+  },
+  {
+    "start": 758.66,
+    "end": 762.36,
+    "text": "nếu chờ nó sẽ gây lỗi xác mình tên sinfo ở trên web đấy"
+  },
+  {
+    "start": 762.36,
+    "end": 764.36,
+    "text": "Tại vì cái vector nó có gì đâu mà ông đoài xoá đúng không?"
+  },
+  {
+    "start": 764.36,
+    "end": 767.36,
+    "text": "Nếu mà có từ 1 phần tử trở lên thì ok ông pop back được"
+  },
+  {
+    "start": 767.36,
+    "end": 771.36,
+    "text": "Vector không có phần tử nào mà ông lại pop back gây lỗi"
+  },
+  {
+    "start": 771.36,
+    "end": 772.36,
+    "text": "Nên em phải cẩn thận"
+  },
+  {
+    "start": 772.36,
+    "end": 777.36,
+    "text": "Khi mà pop back thì mình phải đảm bảo là vector của mình khi nó tối thiểu có một thằng thì mình mới pop back được"
+  },
+  {
+    "start": 777.36,
+    "end": 780.36,
+    "text": "Bây giờ nó không có thằng nào thì làm sao mà pop back được"
+  },
+  {
+    "start": 780.36,
+    "end": 783.36,
+    "text": "Ngoài ra nó có 2 cái hàm rất là thông dụng"
+  },
+  {
+    "start": 783.36,
+    "end": 787.46,
+    "text": "Đối với những cái thằng như vector setmap sau này bọn em học"
+  },
+  {
+    "start": 787.46,
+    "end": 791.0,
+    "text": "Đấy là cái hàm clear"
+  },
+  {
+    "start": 791.0,
+    "end": 794.0,
+    "text": "là nó sẽ xóa toàn bộ các phần tử ở trong web"
+  },
+  {
+    "start": 794.0,
+    "end": 798.0,
+    "text": "xóa các phần tửa trên vector luôn, xóa toàn bộ"
+  },
+  {
+    "start": 798.0,
+    "end": 805.93,
+    "text": "ví dụ như vector V của bạn em đang có 6 thằng như này mà em clear fact là nó rỗng luôn, không còn thần nào nữa"
+  },
+  {
+    "start": 805.93,
+    "end": 815.69,
+    "text": "và cái hàm tiếp theo là hàm empty, hàm empty chín nhỉ, vector mà"
+  },
+  {
+    "start": 815.69,
+    "end": 821.14,
+    "text": "thực ra thì bạn em dùng empty cũng được, mà có dùng hàm sai cũng được để check rỗng ấy mà"
+  },
+  {
+    "start": 821.14,
+    "end": 826.14,
+    "text": "cái hàm này nó sẽ check cái vector nó rỗng, nếu mà cái vector rỗng thì nó sẽ trả về true"
+  },
+  {
+    "start": 826.14,
+    "end": 828.58,
+    "text": "nếu vector không rỗng thì nó trả về phôn"
+  },
+  {
+    "start": 828.58,
+    "end": 831.02,
+    "text": "ví dụ như vector ban đầu này nhé"
+  },
+  {
+    "start": 831.02,
+    "end": 833.02,
+    "text": "nó đang có 6 thẳng anh yên"
+  },
+  {
+    "start": 833.02,
+    "end": 835.34,
+    "text": "daV.mt là nó sẽ bằng phôn"
+  },
+  {
+    "start": 835.34,
+    "end": 837.76,
+    "text": "tại nó còn, nó còn"
+  },
+  {
+    "start": 837.76,
+    "end": 838.64,
+    "text": "đúng không?"
+  },
+  {
+    "start": 838.64,
+    "end": 842.85,
+    "text": "nhưng mà sau khi mà anh clear sau anh cl daV.mt thì nó lại là true"
+  },
+  {
+    "start": 842.85,
+    "end": 843.85,
+    "text": "đấy"
+  },
+  {
+    "start": 843.85,
+    "end": 846.61,
+    "text": "thực ra cái hàm mt này các bạn dùng cũng được"
+  },
+  {
+    "start": 846.61,
+    "end": 848.45,
+    "text": "còn không một em dùng hàm sai đấy"
+  },
+  {
+    "start": 848.45,
+    "end": 851.69,
+    "text": "sai mà bằng không thì nó rỗng, mà sai khác không thì nó không rỗng"
+  },
+  {
+    "start": 851.69,
+    "end": 856.31,
+    "text": "nhưng mà hai cái hàm này thì cũng biết thêm, nó dễ dùng đấy mà"
+  },
+  {
+    "start": 856.31,
+    "end": 857.7,
+    "text": "đấy"
+  },
+  {
+    "start": 857.7,
+    "end": 860.86,
+    "text": "Bây giờ các bạn làm cho anh cái bài số 1 là PUS vào POP"
+  },
+  {
+    "start": 860.86,
+    "end": 863.42,
+    "text": "Có gợi ý nha, có gợi ý ở Debye"
+  },
+  {
+    "start": 863.42,
+    "end": 870.24,
+    "text": "Bài này nó cho bọn em 1 cái vector rỗng và các thao tác n thao tác"
+  },
+  {
+    "start": 870.24,
+    "end": 875.48,
+    "text": "Thao tác 1 thì thêm phần tử vào cuối thì em sẽ dùng cái hàm PUS back cho cái thao tác 1 này"
+  },
+  {
+    "start": 875.48,
+    "end": 881.36,
+    "text": "Phần thao tác 2 là xoá phần tử ở cuối vector, nếu vector không rỗng thì nó sẽ dùng hàm POP back"
+  },
+  {
+    "start": 881.36,
+    "end": 885.44,
+    "text": "Sau khi mà thực hiện 1 loạt các thao tác thì em sẽ in ra các phần tử ở trong vector"
+  },
+  {
+    "start": 885.44,
+    "end": 888.56,
+    "text": "Nhưng mà ở cái thao tác thứ 2 này thì cẩn thận nhé"
+  },
+  {
+    "start": 888.56,
+    "end": 893.28,
+    "text": "Thao tác thứ hai là mình sẽ dùng hàm popback để xóa phần tửa cuối vector"
+  },
+  {
+    "start": 893.28,
+    "end": 896.64,
+    "text": "Trước khi xóa thì mình phải check nó không có rỗng, thì mình xóa"
+  },
+  {
+    "start": 896.64,
+    "end": 899.64,
+    "text": "Còn các bạn vào phát các bạn popback luôn là các bạn sẽ bị lỗi đấy"
+  },
+  {
+    "start": 899.64,
+    "end": 902.28,
+    "text": "Tại vì có thể lúc đấy cái vector nó đang rỗng thì sao?"
+  },
+  {
+    "start": 902.28,
+    "end": 903.32,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 903.32,
+    "end": 908.4,
+    "text": "Sau khi mà thực hiện một loạt các thao tác này này, mà em kiểm tra nếu cái vector rỗng thì các bạn in ra empty"
+  },
+  {
+    "start": 908.4,
+    "end": 913.12,
+    "text": "Còn nếu mà nó không rỗng thì mình sẽ lần lượt in ra các phần tửa trong cái vector đấy từ đầu đến cuối"
+  },
+  {
+    "start": 913.12,
+    "end": 916.23,
+    "text": "Các bạn làm cho mình cái bài số 1 nhé"
+  },
+  {
+    "start": 916.23,
+    "end": 920.87,
+    "text": "Sau đó mình sẽ sang kiến thức là iterator"
+  },
+  {
+    "start": 920.87,
+    "end": 923.51,
+    "text": "Nhanh nhanh, các bạn ơi"
+  },
+  {
+    "start": 923.51,
+    "end": 934.74,
+    "text": "Này, bạn em, nếu mà đọc trước, làm bài tập trước thì tốt"
+  },
+  {
+    "start": 934.74,
+    "end": 935.74,
+    "text": "Cho các bạn 5 phút nha"
+  },
+  {
+    "start": 935.74,
+    "end": 1105.57,
+    "text": "Các bạn lưu ý đấy là, nếu cái vector rộng thì bạn em phải in dạy mt đấy nha"
+  },
+  {
+    "start": 1105.57,
+    "end": 1111.26,
+    "text": "Nhưng phải là mình cứ duyệt vào in đâu"
+  },
+  {
+    "start": 1111.26,
+    "end": 1114.61,
+    "text": "Vector này cốt nó dễ không đấy mà"
+  },
+  {
+    "start": 1114.61,
+    "end": 1117.61,
+    "text": "Các bạn chỉ cần học được các cái cứu pháp của nó"
+  },
+  {
+    "start": 1117.61,
+    "end": 1121.61,
+    "text": "Sau đó thì luyện bài tập để cho mình thành thạo các cứu pháp của nó thôi"
+  },
+  {
+    "start": 1121.61,
+    "end": 1123.61,
+    "text": "Sau đó các bạn dùng nó bình thường"
+  },
+  {
+    "start": 1123.61,
+    "end": 1125.61,
+    "text": "Mất 1 tiếng"
+  },
+  {
+    "start": 1125.61,
+    "end": 1129.29,
+    "text": "1 tiếng học lý thuyết với làm bài tập mất khoảng 2-3 tiếng nữa là xong"
+  },
+  {
+    "start": 1129.29,
+    "end": 1132.49,
+    "text": "là nó trở thành kiến thức của mình, nó thành kỹ năng của mình"
+  },
+  {
+    "start": 1132.49,
+    "end": 1134.49,
+    "text": "sau này không phải học lại nữa"
+  },
+  {
+    "start": 1134.49,
+    "end": 1142.28,
+    "text": "sau này các bạn có học Java script hoặc là CSAP chẳng hạn thì nó"
+  },
+  {
+    "start": 1142.28,
+    "end": 1146.6,
+    "text": "trong các nguồn lập trình đấy nó cũng sẽ có 1 cái thằng nó tương tự như cái thằng vector này này"
+  },
+  {
+    "start": 1146.6,
+    "end": 1152.95,
+    "text": "nó dùng để làm mạng động"
+  },
+  {
+    "start": 1152.95,
+    "end": 1157.9,
+    "text": "rồi, đây có phương phúc game bỗ hàng quân với camera là được rồi này"
+  },
+  {
+    "start": 1157.9,
+    "end": 1165.46,
+    "text": "bỗ hàng quân vẫn đang bị CE"
+  },
+  {
+    "start": 1165.46,
+    "end": 1169.14,
+    "text": "Cout làm như thế không đúng nữa em nha"
+  },
+  {
+    "start": 1169.14,
+    "end": 1174.58,
+    "text": "Hàm popback không có tham số đâu nha"
+  },
+  {
+    "start": 1174.58,
+    "end": 1180.07,
+    "text": "PUSBACK nó mới có tham số, còn popback là nó không có tham số"
+  },
+  {
+    "start": 1180.07,
+    "end": 1188.14,
+    "text": "Với lại ở đây là khi mà mình pushback là thêm 1 phần tử vào cuối, nó còn cho mình 1 số kìa"
+  },
+  {
+    "start": 1188.14,
+    "end": 1191.18,
+    "text": "Thao tác 1 nó sẽ cho mình 1 số này"
+  },
+  {
+    "start": 1191.18,
+    "end": 1193.66,
+    "text": "Thao tác 2 là xoá thì nó không cần cho số"
+  },
+  {
+    "start": 1193.66,
+    "end": 1196.46,
+    "text": "Thao tác 1 này bọn em phải nhập thêm 1 số nữa chứ"
+  },
+  {
+    "start": 1196.46,
+    "end": 1200.44,
+    "text": "Rồi mình pushback nó được"
+  },
+  {
+    "start": 1200.44,
+    "end": 1217.54,
+    "text": "Okay, nếu em có view link to do với phạm công bằng, các bạn học không nhanh xác đến tết đến nơi rồi"
+  },
+  {
+    "start": 1217.54,
+    "end": 1223.61,
+    "text": "Tháng trở bị hết tháng 9 rồi. 10-11-12 hết 2025 rồi."
+  },
+  {
+    "start": 1223.61,
+    "end": 1229.35,
+    "text": "Lâm xài."
+  },
+  {
+    "start": 1229.35,
+    "end": 1234.63,
+    "text": "Hopping này như biết lập trình trước cốt cường đối là ok nhưng mà nó hơi nhanh ẩu đoán."
+  },
+  {
+    "start": 1234.63,
+    "end": 1242.09,
+    "text": "Quỷ lâm thiếu cái sử lý In-Dial MT nhé."
+  },
+  {
+    "start": 1242.09,
+    "end": 1245.94,
+    "text": "Quỷ lệ là quỷ lâm, tại sao lại pushback tt?"
+  },
+  {
+    "start": 1245.94,
+    "end": 1250.82,
+    "text": "tt này là cái số 1 hoặc là số 2 là cái loại thao tác nó cho mình"
+  },
+  {
+    "start": 1250.82,
+    "end": 1256.05,
+    "text": "còn thao tác 1 này nó sẽ cho em 1 số nữa thì trong cái íp này em phải nhập số đấy đã chứ"
+  },
+  {
+    "start": 1256.05,
+    "end": 1257.57,
+    "text": "có nhìn cái input này không?"
+  },
+  {
+    "start": 1257.57,
+    "end": 1261.76,
+    "text": "đây này, nó cho mình số nè"
+  },
+  {
+    "start": 1261.76,
+    "end": 1268.19,
+    "text": "thêm link này, quân thì vẫn bị"
+  },
+  {
+    "start": 1268.19,
+    "end": 1274.83,
+    "text": "đấy, của quân thì đây dùng ham pop back anh nhắc rồi"
+  },
+  {
+    "start": 1274.83,
+    "end": 1280.02,
+    "text": "ham pop back cái, mà cái vector lúc đây nó giống là nó sẽ gây lỗi này này"
+  },
+  {
+    "start": 1280.02,
+    "end": 1284.47,
+    "text": "Tại vì khi đó em đang cố truy cập vào cái vùng nhớ nó không có"
+  },
+  {
+    "start": 1284.47,
+    "end": 1286.63,
+    "text": "Thôi, em sẽ hướng dẫn cái bài số 1 này nhá"
+  },
+  {
+    "start": 1286.63,
+    "end": 1290.19,
+    "text": "Bạn nào mà chưa làm được thì bề tranh thủ cốt lại nhá"
+  },
+  {
+    "start": 1290.19,
+    "end": 1292.75,
+    "text": "Đầu tiên ấy, mình khai báo ra 1 cái vector giấm"
+  },
+  {
+    "start": 1292.75,
+    "end": 1295.59,
+    "text": "Sau đó mình nhập n là số thao tác họ cho mình"
+  },
+  {
+    "start": 1295.59,
+    "end": 1299.0,
+    "text": "Làm n vòng lập"
+  },
+  {
+    "start": 1299.0,
+    "end": 1303.74,
+    "text": "Mỗi vòng lập mình sẽ nhập cái thao tác đấy xem là thao tác 1 hay thao tác 2"
+  },
+  {
+    "start": 1303.74,
+    "end": 1308.26,
+    "text": "Nếu thao tác là 1 thì là nó sẽ cho mình thêm 1 cái số nữa"
+  },
+  {
+    "start": 1308.26,
+    "end": 1310.26,
+    "text": "Mình nhập cái số đấy, sau đó ném nó vào"
+  },
+  {
+    "start": 1310.26,
+    "end": 1317.7,
+    "text": "nếu thao tác là 2 mình sẽ xóa cuối nhưng mình phải check là if not v.mt, tức là vector không rộng"
+  },
+  {
+    "start": 1317.7,
+    "end": 1322.1,
+    "text": "thì mình mới v.popback được, chứ đừng có popback ngay nó sẽ lỗi, bộ nhớ"
+  },
+  {
+    "start": 1322.1,
+    "end": 1328.02,
+    "text": "sau khi mà thực hiện sang 1 đoạt thao tác, nếu v.mt, tức là nó rộng, thì mọi em in ra là mt"
+  },
+  {
+    "start": 1328.02,
+    "end": 1332.9,
+    "text": "còn không thì mình sẽ tiến hành duyệt từng thằng 1 trong vector bcl ra thôi"
+  },
+  {
+    "start": 1332.9,
+    "end": 1335.02,
+    "text": "ok chưa?"
+  },
+  {
+    "start": 1335.02,
+    "end": 1342.18,
+    "text": "Đấy chính là cái bài thứ nhất nhé, luyện cho các bạn 2 cái hàm là pushback và pullback, hàm clear"
+  },
+  {
+    "start": 1342.18,
+    "end": 1351.62,
+    "text": "Bây giờ mình sẽ sang 1 cái rất là quan trọng đối với vector ấy, đấy chính là iterator"
+  },
+  {
+    "start": 1351.62,
+    "end": 1358.62,
+    "text": "Trong cái vector khi mà các bạn quản lý các phần tử thì mình có thể quản lý nó thông qua chỉ số là cái chính"
+  },
+  {
+    "start": 1358.62,
+    "end": 1362.78,
+    "text": "Ví dụ như cái vector của mình nó có 5 thằng là 1 label 5 như thế này"
+  },
+  {
+    "start": 1362.78,
+    "end": 1366.78,
+    "text": "Thằng cái thằng ở trong màng vector này nó sẽ có chỉ số đánh từ không, đúng không?"
+  },
+  {
+    "start": 1366.78,
+    "end": 1372.78,
+    "text": "Đúng không? Ngoài ra nó có 1 cái công cụ nữa. Đấy là iterator giúp cho các bạn có thể quản lý các phần tửa trong vector này."
+  },
+  {
+    "start": 1372.78,
+    "end": 1377.78,
+    "text": "Các bạn có thể hình dung cái vector iterator này, nó giống cái con trỏ B lúc nãy mà mình hướng dẫn cho các bạn ấy."
+  },
+  {
+    "start": 1377.78,
+    "end": 1381.78,
+    "text": "Là nó có thể quản lý các phần tửa trong cái vector của bạn."
+  },
+  {
+    "start": 1381.78,
+    "end": 1385.22,
+    "text": "Giống như con trỏ, nó tựa tựa như con trỏ trong máng."
+  },
+  {
+    "start": 1385.22,
+    "end": 1394.22,
+    "text": "Thế thì nó có 4 cái iterator chính các bạn cần phải nắm được. Thứ nhất là iterator begin là cái iterator trỏ đến thằng đầu tiên trong vector begin nó bắt đầu mà."
+  },
+  {
+    "start": 1394.22,
+    "end": 1396.82,
+    "text": "Còn cái iterator đi kèm với nó là n"
+  },
+  {
+    "start": 1396.82,
+    "end": 1399.7,
+    "text": "Thì nhớ là thằng n không phải là nó trò vào thằng cuối"
+  },
+  {
+    "start": 1399.7,
+    "end": 1402.34,
+    "text": "Mà là nó trò đến cái thằng sau cái thằng cuối cùng"
+  },
+  {
+    "start": 1402.34,
+    "end": 1406.91,
+    "text": "Thằng 5 là thằng cuối cùng, ở trong vector của mình thì thằng n nó quản lý cái ô nhớ thằng sau"
+  },
+  {
+    "start": 1406.91,
+    "end": 1409.71,
+    "text": "Sau thằng 5 luôn, chứ không phải thằng 5"
+  },
+  {
+    "start": 1409.71,
+    "end": 1414.03,
+    "text": "Ngoài ra nó có cặp đôi là r-begin và r-n nó có chữ r đằng trước"
+  },
+  {
+    "start": 1414.03,
+    "end": 1416.43,
+    "text": "R, tức là reverse là ngược lại"
+  },
+  {
+    "start": 1416.43,
+    "end": 1419.39,
+    "text": "Thì r-begin thì nó iterator trò đến thằng cuối"
+  },
+  {
+    "start": 1419.39,
+    "end": 1424.39,
+    "text": "Ctrl N sẽ là ô nhớ trước cái thằng đầu tiên, nó có 4 cái iterator như thế"
+  },
+  {
+    "start": 1424.39,
+    "end": 1428.84,
+    "text": "chứ ở begin trỏ vào thằng đầu, n thì sau thằng cuối"
+  },
+  {
+    "start": 1428.84,
+    "end": 1432.84,
+    "text": "rồi begin vào thằng cuối, con rỏ n thì nó trước thằng đầu"
+  },
+  {
+    "start": 1432.84,
+    "end": 1437.84,
+    "text": "thế thì khi mà các bạn có 1 cái vector, mình sẽ khai báo ra cái iterator cho vector đấy như sau"
+  },
+  {
+    "start": 1437.84,
+    "end": 1442.84,
+    "text": "các bạn khai báo này, ví dụ nha, 32891540"
+  },
+  {
+    "start": 1442.84,
+    "end": 1448.84,
+    "text": "các bạn khai báo là vector in ở t2.2. iterator it"
+  },
+  {
+    "start": 1448.84,
+    "end": 1454.84,
+    "text": "Các bạn đặt tên là gì thì đặt mình hay đặt là it, sau đó các bạn có thể gán cho nó, ví dụ v.begin chẳng hẹn"
+  },
+  {
+    "start": 1454.84,
+    "end": 1460.29,
+    "text": "Các bạn tự thay đổi kiểu dữ liệu này cho cái vector cho nó phù hợp với bài toán nhé"
+  },
+  {
+    "start": 1460.29,
+    "end": 1464.42,
+    "text": "Nấy thì bây giờ mình đã khai báo ra 1 cái vector iterator đây rồi"
+  },
+  {
+    "start": 1464.42,
+    "end": 1467.42,
+    "text": "Và mình gán cho nó bằng v.begin"
+  },
+  {
+    "start": 1467.42,
+    "end": 1473.06,
+    "text": "Nấy, được chưa? 2 cái đến nó khác nhau đấy, chức nào nó khác nhau đấy em ạ"
+  },
+  {
+    "start": 1473.06,
+    "end": 1483.33,
+    "text": "Thế thì, khi đó các bạn hình dung, nó giống như kiểu là cái y tư IT này nó trỏ, nó trỏ đến cái thằng đầu tiên, tại vì begin là,"
+  },
+  {
+    "start": 1483.33,
+    "end": 1488.37,
+    "text": "v,begin là y tư, trỏ thằng đầu tiên là thằng ba, vì đó các bạn có thể giải tham chiêu nó."
+  },
+  {
+    "start": 1488.37,
+    "end": 1491.17,
+    "text": "Sao cái IT đó thì nó sẽ ra số ba."
+  },
+  {
+    "start": 1491.17,
+    "end": 1493.17,
+    "text": "Nói các bạn thấy quen thuộc không?"
+  },
+  {
+    "start": 1493.17,
+    "end": 1499.46,
+    "text": "Nó giống như kiểu con trỏ mà nó trỏ đến phần tử trong bảng, thì cái y tư, nó sẽ trỏ đến các phần tử trong vector."
+  },
+  {
+    "start": 1499.46,
+    "end": 1507.8,
+    "text": "Còn nếu mộng em gán nó bằng v,n thì là nó sẽ trò đến ô nhứ đằng sau cái thằng không này này"
+  },
+  {
+    "start": 1507.8,
+    "end": 1512.15,
+    "text": "Thì đến đó nó sẽ ra giá trị rác nhé, chứ không phải là số 0 nữa nhé"
+  },
+  {
+    "start": 1512.15,
+    "end": 1515.15,
+    "text": "Mà chỗ này là cho số 6 đi, nó không phải số 6 này đâu"
+  },
+  {
+    "start": 1515.15,
+    "end": 1526.72,
+    "text": "Tại vì v,n là ô nhứ đằng sau thằng 6, nó sẽ ra cái giá trị rác"
+  },
+  {
+    "start": 1526.72,
+    "end": 1529.72,
+    "text": "Đấy, đấy là bộ đôi đầu tiên, nó ra số 0 nè"
+  },
+  {
+    "start": 1529.72,
+    "end": 1532.72,
+    "text": "v,begin và v,n đúng không?"
+  },
+  {
+    "start": 1532.72,
+    "end": 1534.72,
+    "text": "ngoài ra các bạn phải nhớ cho mình cái này"
+  },
+  {
+    "start": 1534.72,
+    "end": 1537.88,
+    "text": "đấy là v,begin, cộng y"
+  },
+  {
+    "start": 1537.88,
+    "end": 1540.88,
+    "text": "đấy là iterator"
+  },
+  {
+    "start": 1541.49,
+    "end": 1545.49,
+    "text": "trỏ tới, trỏ tới vi, này thấy quen không?"
+  },
+  {
+    "start": 1545.49,
+    "end": 1548.49,
+    "text": "nó khác gì cái a cộng y là con trỏ trỏ tới ai đâu"
+  },
+  {
+    "start": 1548.49,
+    "end": 1552.49,
+    "text": "nhưng mà đây là vector"
+  },
+  {
+    "start": 1552.49,
+    "end": 1554.49,
+    "text": "thấy giống không? nó có sự tương đồng ấy"
+  },
+  {
+    "start": 1554.49,
+    "end": 1559.49,
+    "text": "nó có sự tương đồng giữa con trỏ quản lý mảng và vector iterator ấy các bạn"
+  },
+  {
+    "start": 1559.49,
+    "end": 1561.49,
+    "text": "các bạn nhớ cho mình cái này"
+  },
+  {
+    "start": 1561.49,
+    "end": 1567.1,
+    "text": "Nên ví dụ, bây giờ mình khai báo cái IT mà mình gán cho nó là begin, cộng 4"
+  },
+  {
+    "start": 1567.1,
+    "end": 1572.3,
+    "text": "thì khi đó cái IT này của các bạn ạ, là nó sẽ trỏ đến cái thằng là chỉ số 4 ở trong vector"
+  },
+  {
+    "start": 1572.3,
+    "end": 1578.39,
+    "text": "0, 1, 2, 3, 4, à, nó trỏ đến thằng 1, nên các bạn giải tham chiếu nó sẽ ra số 1"
+  },
+  {
+    "start": 1578.39,
+    "end": 1581.82,
+    "text": "đấy, ok chìa"
+  },
+  {
+    "start": 1581.82,
+    "end": 1587.7,
+    "text": "và tất nhiên, cái thằng y tư, loay tư này nó cũng có thể cộng cộng để dịch sang phải, chư chư để dịch sang trái"
+  },
+  {
+    "start": 1587.7,
+    "end": 1590.42,
+    "text": "cộng bằng và chư bằng, giống như con trỏ"
+  },
+  {
+    "start": 1590.42,
+    "end": 1593.86,
+    "text": "nếu mà các bạn, nó đang trò đến thẳng ở chỉ số 4 đúng không?"
+  },
+  {
+    "start": 1593.86,
+    "end": 1597.46,
+    "text": "vk.com4 là nó trò đến thẳng 0, 1, 2, 3, 4"
+  },
+  {
+    "start": 1597.46,
+    "end": 1600.7,
+    "text": "bây giờ các bạn em cộng cộng it cái là nó nhảy sang nó trò đến thẳng 5 này"
+  },
+  {
+    "start": 1600.7,
+    "end": 1601.5,
+    "text": "nhá"
+  },
+  {
+    "start": 1601.5,
+    "end": 1603.42,
+    "text": "này các bạn cộng cộng it"
+  },
+  {
+    "start": 1603.42,
+    "end": 1606.14,
+    "text": "và các bạn csa của it thì nó sẽ ra số 5"
+  },
+  {
+    "start": 1606.14,
+    "end": 1610.98,
+    "text": "ngược lại các bạn mà chữ chữ it thì nó sẽ sang số bên trái"
+  },
+  {
+    "start": 1610.98,
+    "end": 1612.55,
+    "text": "đúng không?"
+  },
+  {
+    "start": 1612.55,
+    "end": 1616.31,
+    "text": "là ông 9, nếu chỗ này mình viết là chữ chữ it"
+  },
+  {
+    "start": 1616.31,
+    "end": 1620.36,
+    "text": "nó đang trò đến thẳng 5 này mà"
+  },
+  {
+    "start": 1620.36,
+    "end": 1627.5,
+    "text": "cộng cộng sang 1, cộng cộng sang 5, chù chù sang 9"
+  },
+  {
+    "start": 1627.5,
+    "end": 1632.02,
+    "text": "cộng bằng nhảy sang phái mấy ô, chù bằng nhảy sang trái mấy ô"
+  },
+  {
+    "start": 1632.02,
+    "end": 1635.7,
+    "text": "118207, ok"
+  },
+  {
+    "start": 1635.7,
+    "end": 1641.7,
+    "text": "mý dụ ở đây mình viết là, it cộng bằng 4, nó đang trò đến thằng chỉ số 4"
+  },
+  {
+    "start": 1641.7,
+    "end": 1644.5,
+    "text": "01234 là ông 1 này đúng không?"
+  },
+  {
+    "start": 1644.5,
+    "end": 1652.98,
+    "text": "Các bạn IT cộng bằng bốn thì nó sẽ nhảy sang phải bốn vị trí 1, 2, 3, 4, nó trò đến 11"
+  },
+  {
+    "start": 1652.98,
+    "end": 1656.18,
+    "text": "Nên khi đó mình sao của IT thì nó sẽ ra số 11 nha"
+  },
+  {
+    "start": 1656.18,
+    "end": 1664.85,
+    "text": "Ngược lại các bạn chữ bằng thì nó sẽ nhảy sang trái, chữ bằng 2 chẳng hẹn"
+  },
+  {
+    "start": 1664.85,
+    "end": 1669.49,
+    "text": "Thì nó đang ở thằng 1 này, các bạn chữ bằng 2 thì nó nhảy sang trái 1, O2O nó sẽ ra số 8"
+  },
+  {
+    "start": 1669.49,
+    "end": 1675.6,
+    "text": "Cái này nó giống kiến thức về con trỏ mà mình đã hướng dẫn cho các bạn rồi đấy"
+  },
+  {
+    "start": 1675.6,
+    "end": 1679.74,
+    "text": "Đấy là iterator ở trong vector"
+  },
+  {
+    "start": 1679.74,
+    "end": 1684.12,
+    "text": "Nhưng mà nhiều bạn bảo là thế em in ra cái iterator này thì nó sẽ ra cái gì?"
+  },
+  {
+    "start": 1684.12,
+    "end": 1687.8,
+    "text": "Nó trẻ cho các bạn in đâu, tại vì các bạn không in được IT"
+  },
+  {
+    "start": 1687.8,
+    "end": 1692.19,
+    "text": "Tức là các bạn em mà đòi in ra IT như thế này, nó sẽ báo lỗi, không in được"
+  },
+  {
+    "start": 1692.19,
+    "end": 1694.87,
+    "text": "Trên nó không phải là nó lưu địa chỉ đâu nhá"
+  },
+  {
+    "start": 1694.87,
+    "end": 1699.23,
+    "text": "Nhiều bạn bảo là nó lưu địa chỉ của phần tử ở trong vector mà nó đang quản lý là sai"
+  },
+  {
+    "start": 1699.23,
+    "end": 1700.63,
+    "text": "Nó không lưu cái đó"
+  },
+  {
+    "start": 1700.63,
+    "end": 1703.91,
+    "text": "Mà mà các bạn em in ra nó cũng không cho hiển thị, không cho in"
+  },
+  {
+    "start": 1703.91,
+    "end": 1711.5,
+    "text": "Thế thì bây giờ mình có thể dùng iterator để mình truy xuất vào các phần tửa trong vector thông qua chỉ số"
+  },
+  {
+    "start": 1711.5,
+    "end": 1715.1,
+    "text": "Ngoài ra các bạn có thể, có thể duyệt iterator bằng vector"
+  },
+  {
+    "start": 1715.1,
+    "end": 1717.26,
+    "text": "Thế xin lỗi hướng duyệt vector bằng iterator"
+  },
+  {
+    "start": 1717.26,
+    "end": 1720.7,
+    "text": "Bằng cách là bạn em khai báo ra một cái IT như thế này, đúng không?"
+  },
+  {
+    "start": 1720.7,
+    "end": 1723.1,
+    "text": "Thế, hoặc là các bạn khai báo trong vòng phó ổn được"
+  },
+  {
+    "start": 1723.1,
+    "end": 1729.1,
+    "text": "Sau đó mình duyệt for IT bằng v.begin, đấy, IT khác v.en, IT cậu cậu"
+  },
+  {
+    "start": 1729.1,
+    "end": 1731.1,
+    "text": "Và các bạn xia xa của IT"
+  },
+  {
+    "start": 1731.1,
+    "end": 1737.76,
+    "text": "Mình sẽ gán iterator cho nó trỏ vào thằng v.begin, trỏ vào thằng 3 này này"
+  },
+  {
+    "start": 1737.76,
+    "end": 1743.38,
+    "text": "Sau mặt em dùng tỏán tử cộng cộng để mình dịch iterator, sang 2, sang 8, sang 9, sang 1, sang 5, sang 4"
+  },
+  {
+    "start": 1743.38,
+    "end": 1747.28,
+    "text": "sang 6, sang 11, 8, 2, 0, 7 và bao giờ nó dịch đến thằng n"
+  },
+  {
+    "start": 1747.28,
+    "end": 1750.92,
+    "text": "Tức là nó phải đi qua thằng 7, nó đến ô nhứa đằng sau thằng 7, nó sẽ rừng"
+  },
+  {
+    "start": 1750.92,
+    "end": 1755.56,
+    "text": "Tại vì mình để điều kiện khác v.n nên khi nó bằng v.n là nó rừng"
+  },
+  {
+    "start": 1755.56,
+    "end": 1758.94,
+    "text": "Đây là cách mà các bạn duyệt qua vector của mình bằng iterator"
+  },
+  {
+    "start": 1758.94,
+    "end": 1766.9,
+    "text": "nhưng có một điều này mình thấy nhiều bạn không có nắm bắt được, ví dụ mình khai báo IT này nhé"
+  },
+  {
+    "start": 1766.9,
+    "end": 1772.62,
+    "text": "đây này các bạn hình dung duệt từ đầu đến cuối thì khai báo iterate tới là begin để cho nó trỏ vào thằng đầu tiên này"
+  },
+  {
+    "start": 1772.62,
+    "end": 1777.62,
+    "text": "không, cộng cộng, cộng cộng, cộng cộng, cộng cộng, bao giờ nó cộng cộng đến cái thằng n thì mình dưng"
+  },
+  {
+    "start": 1777.62,
+    "end": 1782.31,
+    "text": "đây, đây là mình khai báo IT bằng v,n"
+  },
+  {
+    "start": 1782.31,
+    "end": 1786.71,
+    "text": "sau đó mình cho IT chữ bằng 2"
+  },
+  {
+    "start": 1786.71,
+    "end": 1790.27,
+    "text": "thì theo các bạn khi mà mình xia xao của IT thì nó sẽ bằng bao nhiêu"
+  },
+  {
+    "start": 1790.27,
+    "end": 1799.45,
+    "text": "Mình khai báo vector, iterator, it bằng v,n, sau đó mình cho it chứ bằng 2 thì mình in a star của it nó bằng bao nhiêu?"
+  },
+  {
+    "start": 1799.45,
+    "end": 1808.87,
+    "text": "Bằng số 2 á, đó đúng không? v,n nó trỏ anh đâu?"
+  },
+  {
+    "start": 1808.87,
+    "end": 1826.92,
+    "text": "v,n là nó trỏ ô nhớ đằng sau thằng 7, nó đang ở ô nhớ đằng sau thằng 7 chỗ này nè, mình chứ bằng 2 nó nhảy 1 ô, 2 ô nó trỏ anh thằng không í nhớ, đúng không?"
+  },
+  {
+    "start": 1826.92,
+    "end": 1830.36,
+    "text": "Còn nếu mà nó trò đến thằng bẫy này thì em chứ 2 thì nó mới ra thằng 2 này"
+  },
+  {
+    "start": 1830.36,
+    "end": 1833.32,
+    "text": "Nó đây nó đứng sau thằng bẫy mà nên nó sẽ ra xuống không nhá"
+  },
+  {
+    "start": 1833.32,
+    "end": 1835.87,
+    "text": "Lưu ý cái đó"
+  },
+  {
+    "start": 1835.87,
+    "end": 1842.03,
+    "text": "Nhưng mà cái bộ, đấy là bộ đôi iterator là begin và end là 2 cái iterator người ta gọi là iterator thuận"
+  },
+  {
+    "start": 1842.03,
+    "end": 1847.92,
+    "text": "Còn nếu mà các em có cái iterator mà r, begin và r, end thì các em phải khai báo như thế này này"
+  },
+  {
+    "start": 1847.92,
+    "end": 1851.28,
+    "text": "Phải khai báo là reverse iterator"
+  },
+  {
+    "start": 1851.28,
+    "end": 1854.33,
+    "text": "R, begin"
+  },
+  {
+    "start": 1854.33,
+    "end": 1858.52,
+    "text": "bởi vì nó thuộc reverse là iterator ngược"
+  },
+  {
+    "start": 1858.52,
+    "end": 1863.34,
+    "text": "bây giờ, r, begin, nó sẽ trỏ vào thằng cuối"
+  },
+  {
+    "start": 1863.34,
+    "end": 1867.23,
+    "text": "nên khi đó mặt MCL sao của IT thì nó sẽ ra số 7"
+  },
+  {
+    "start": 1867.23,
+    "end": 1871.8,
+    "text": "được chứ?"
+  },
+  {
+    "start": 1871.8,
+    "end": 1873.91,
+    "text": "thế thôi"
+  },
+  {
+    "start": 1873.91,
+    "end": 1875.91,
+    "text": "nhưng mà cái iterator này nó ngược đời"
+  },
+  {
+    "start": 1875.91,
+    "end": 1879.91,
+    "text": "tức là bình thường bọn em cộng cộng là nó sẽ dịch sang phải, chư chư là dịch sang trái"
+  },
+  {
+    "start": 1879.91,
+    "end": 1882.91,
+    "text": "và cộng bằng là dịch sang phải, chư chư là dịch sang trái đúng không?"
+  },
+  {
+    "start": 1882.91,
+    "end": 1885.91,
+    "text": "đấy là iterator thuận thôi, còn cái ông iterator này"
+  },
+  {
+    "start": 1885.91,
+    "end": 1887.91,
+    "text": "các bạn mà cộng cộng là nó dịch sang trái"
+  },
+  {
+    "start": 1887.91,
+    "end": 1892.97,
+    "text": "cộng cộng cộng là nó dịch sang thằng 2, là thằng không"
+  },
+  {
+    "start": 1892.97,
+    "end": 1895.97,
+    "text": "cộng cộng lần nữa là nó dịch sang thằng 2"
+  },
+  {
+    "start": 1895.97,
+    "end": 1898.97,
+    "text": "cộng cộng thì nó dịch sang trái, còn chư chư thì nó mới lại dịch sang phái"
+  },
+  {
+    "start": 1898.97,
+    "end": 1900.97,
+    "text": "hình dung không nhỉ?"
+  },
+  {
+    "start": 1900.97,
+    "end": 1902.97,
+    "text": "tại vì nó là iterator ngược"
+  },
+  {
+    "start": 1902.97,
+    "end": 1904.97,
+    "text": "còn cái iterator lúc nãy của bạn là thuận"
+  },
+  {
+    "start": 1904.97,
+    "end": 1907.97,
+    "text": "thuận là nó giống như kiểu cái chiều từ trái qua phái"
+  },
+  {
+    "start": 1907.97,
+    "end": 1910.97,
+    "text": "còn thằng iterator reverse iterator này nó ngược lại"
+  },
+  {
+    "start": 1910.97,
+    "end": 1912.97,
+    "text": "nó loạt hoạt động theo kiểu từ phái qua trái"
+  },
+  {
+    "start": 1912.97,
+    "end": 1915.97,
+    "text": "nên nó sẽ nhảy sang thằng không nè"
+  },
+  {
+    "start": 1915.97,
+    "end": 1920.18,
+    "text": "Không, em ạ, nó báo lỗi ngay"
+  },
+  {
+    "start": 1920.18,
+    "end": 1926.71,
+    "text": "Các bạn không được gán iterator thường cho iterator ngược hoặc ngược lại, nó báo lỗi ngay ấy nhé"
+  },
+  {
+    "start": 1926.71,
+    "end": 1927.71,
+    "text": "OK"
+  },
+  {
+    "start": 1927.71,
+    "end": 1932.11,
+    "text": "Và mình có thể dùng iterator ngược này để duyệt cái vector nó ngược lại"
+  },
+  {
+    "start": 1932.11,
+    "end": 1937.2,
+    "text": "Còn em chỉ cần khai báo ra cái iterator xong gán cho nó bằng rò begin để nó trò vào thằng cuối này này"
+  },
+  {
+    "start": 1937.2,
+    "end": 1963.66,
+    "text": "Cao đó mình cộng cộngridt koń trbang kvc, ra"
+  },
+  {
+    "start": 1963.66,
+    "end": 1976.66,
+    "text": "Đấy, iterator này viết là nó rất hay bị sai chính tẻ, nên là các bạn phải cố gắng luyện tập một chút, viết nhiều nó quen thôi, chứ các bạn học vector, các bạn không viết nó bao giờ, các bạn viết là các bạn không nhớ, không nhớ nó viết như thế nào, nhá"
+  },
+  {
+    "start": 1976.66,
+    "end": 1986.91,
+    "text": "Nó có 4 thành iterator cần phải nhớ, với lại cái lý thuyết này nữa thôi, là các bạn sử dụng iterator thành thạo"
+  },
+  {
+    "start": 1986.91,
+    "end": 1999.3,
+    "text": "Các bạn nào hỏi gì về cái iterator này không? iterator"
+  },
+  {
+    "start": 1999.3,
+    "end": 2003.3,
+    "text": "nếu mà bạn nào mà liên hệ được cái mối quan hệ giữa con trỏ trên màng 1 chiều"
+  },
+  {
+    "start": 2003.3,
+    "end": 2006.3,
+    "text": "với cái iterator trong vector này, các bạn học thấy nó rất là dễ"
+  },
+  {
+    "start": 2006.3,
+    "end": 2014.63,
+    "text": "iterator nghĩa là gì anh? iterator nó phát triển ra cái từ iterate"
+  },
+  {
+    "start": 2014.63,
+    "end": 2017.82,
+    "text": "thông qua cái từ iterate là duyệt ấy, duyệt ấy"
+  },
+  {
+    "start": 2017.82,
+    "end": 2021.92,
+    "text": "thì iterator đây nó giống như kiểu là một cái công cụ giúp cho mình có thể duyệt"
+  },
+  {
+    "start": 2021.92,
+    "end": 2028.13,
+    "text": "và quản lý các phần từ trong vector, kiểu đó"
+  },
+  {
+    "start": 2028.13,
+    "end": 2042.82,
+    "text": "Thế thì iterator, em phải biết iterator tại vì các cái hàm của vector hay là sau này em sử dụng các cái thuật toán giữa các thứ ở trên vector thì người ta cần kiến thức về iterator"
+  },
+  {
+    "start": 2042.82,
+    "end": 2047.82,
+    "text": "nên là các bạn phải có iterator, các bạn mới biết dùng được các cái hàm của nó, các hàm của vector"
+  },
+  {
+    "start": 2047.82,
+    "end": 2053.04,
+    "text": "Sao không dùng bình thường mà dùng cái này anh? Bình thường là dùng gì?"
+  },
+  {
+    "start": 2053.04,
+    "end": 2059.1,
+    "text": "Không dùng bình thường, ý em hỏi dùng bình thường ở đây là dùng bảng một chiều hay là, hay dùng chỉ số?"
+  },
+  {
+    "start": 2059.1,
+    "end": 2082.06,
+    "text": "Các hàm, các hàm của vector, nó dùng iterator, chứ nó không có dùng chỉ số. Hình dung không? Mình bắt buộc phải có kiến thức về iterator. Thì mình mới có thể thành thạo được các hàm của vector."
+  },
+  {
+    "start": 2082.06,
+    "end": 2086.42,
+    "text": "Đúng rồi"
+  },
+  {
+    "start": 2086.42,
+    "end": 2089.7,
+    "text": "Thế thì ngoài ra"
+  },
+  {
+    "start": 2089.7,
+    "end": 2092.7,
+    "text": "Bọn em cần phải lưu ý là"
+  },
+  {
+    "start": 2092.7,
+    "end": 2095.9,
+    "text": "Khi mà các bạn xây dựng hạm, nó có tham số là vector"
+  },
+  {
+    "start": 2095.9,
+    "end": 2099.9,
+    "text": "Ví dụ anh có 1 hạm là void, duyệt, chẳng hạn, nó có tham số là 1 vector"
+  },
+  {
+    "start": 2099.9,
+    "end": 2102.12,
+    "text": "Đấy"
+  },
+  {
+    "start": 2102.12,
+    "end": 2104.12,
+    "text": "Các bạn xây dựng nó giống như kiểu dữ liệu bình thường đó"
+  },
+  {
+    "start": 2104.12,
+    "end": 2109.86,
+    "text": "Nhưng mà không y nhỏ nv.sai, y cộng cộng các bạn si là v, y chẳng hạn"
+  },
+  {
+    "start": 2109.86,
+    "end": 2113.84,
+    "text": "Đây, cái vector ban đầu kia đúng không?"
+  },
+  {
+    "start": 2113.84,
+    "end": 2118.51,
+    "text": "Mình có thể gọi duyệt, mình truyền v vào, đây được"
+  },
+  {
+    "start": 2118.51,
+    "end": 2129.74,
+    "text": "Nhưng nếu các bạn xây dựng cái hàm thay đổi, vector, thì bạn em phải có tham chiếu vào"
+  },
+  {
+    "start": 2129.74,
+    "end": 2136.16,
+    "text": "Nha, phải có tham chiếu thì cái vector nó mới bị thay đổi đấy, nó không có giống cái màng 1 chiều ở cái điểm này"
+  },
+  {
+    "start": 2136.16,
+    "end": 2143.76,
+    "text": "Nha, nếu các bạn ví dụ các bạn gọi thay đổi, thì bây giờ cái vector V của các bạn ấy, ở đây mình sẽ gán nó thành 28 hết nhá"
+  },
+  {
+    "start": 2144.27,
+    "end": 2153.63,
+    "text": "Thì nó sẽ bị thay đổi theo, nhưng nếu mà cái hàm thay đổi mình bỏ cái tham chiếu trước cái con trỏ V này là nó sẽ không thay đổi đâu, đây"
+  },
+  {
+    "start": 2153.63,
+    "end": 2159.89,
+    "text": "Nên là khi mà xây dựng hàm mà có tham số là vector ấy, mà muốn thay đổi cái vector đấy thì nhớ thêm tham chiếu vào"
+  },
+  {
+    "start": 2159.89,
+    "end": 2161.05,
+    "text": "OK chìa?"
+  },
+  {
+    "start": 2161.05,
+    "end": 2162.11,
+    "text": "Đấy"
+  },
+  {
+    "start": 2162.11,
+    "end": 2166.16,
+    "text": "Và các bạn cũng có thể viết hàm trẻ về vector cũng được"
+  },
+  {
+    "start": 2166.16,
+    "end": 2170.74,
+    "text": "Ví dụ hoàn toàn mình có thể viết 1 cái hàm trẻ về 1 cái vector in-t, anh đặt là getVector"
+  },
+  {
+    "start": 2170.74,
+    "end": 2174.08,
+    "text": "Bên trong này các bạn có thể tạo ra 1 cái vector kết quả sau đó thì"
+  },
+  {
+    "start": 2174.08,
+    "end": 2176.74,
+    "text": "Các bạn làm gì với cái vector này thì làm"
+  },
+  {
+    "start": 2176.74,
+    "end": 2180.58,
+    "text": "Ví dụ thêm vài thằng hay gì gì đấy đúng không?"
+  },
+  {
+    "start": 2180.58,
+    "end": 2185.85,
+    "text": "Sau đó bạn em có thể return với cái vector đấy cũng được nha"
+  },
+  {
+    "start": 2185.85,
+    "end": 2190.81,
+    "text": "trong mền các bạn muốn gọi hàm getVector này thì tạo ra 1 vector"
+  },
+  {
+    "start": 2190.81,
+    "end": 2192.85,
+    "text": "mà lưu cái kết quả"
+  },
+  {
+    "start": 2192.85,
+    "end": 2196.21,
+    "text": "REST bằng getVector"
+  },
+  {
+    "start": 2196.21,
+    "end": 2201.41,
+    "text": "thì khi đó cái vector REST của anh ấy, nó giống cái vector mà các bạn return ở trong cái hàm này"
+  },
+  {
+    "start": 2201.41,
+    "end": 2203.54,
+    "text": "mình có thể duyệt nó, nhé"
+  },
+  {
+    "start": 2203.54,
+    "end": 2207.02,
+    "text": "cái này thì các bạn dùng nó giống như kiểu dữ liệu thông thường thôi"
+  },
+  {
+    "start": 2207.02,
+    "end": 2211.46,
+    "text": "đấy thì đấy là lưu ý khi mà các bạn xây dựng hàm mà có tham số là vector"
+  },
+  {
+    "start": 2211.46,
+    "end": 2214.62,
+    "text": "hoặc là viết cái hàm trả về vector thì ở trong"
+  },
+  {
+    "start": 2214.62,
+    "end": 2228.02,
+    "text": "trong cái phần bài tập này nó cũng có cái phần để luyện kiến thức đấy, nè, nè, hàm trả về vector này, hay là các hàm lật ngợp vector các thứ, đúng rồi"
+  },
+  {
+    "start": 2228.02,
+    "end": 2237.97,
+    "text": "thế thì cái vector này ngoài ra nó còn các hàm nữa cơ, hàm pushback, pullback, clear, size, empty là các bạn học rồi"
+  },
+  {
+    "start": 2237.97,
+    "end": 2243.97,
+    "text": "hàm tiếp theo là hàm insert để các bạn có thể chèn cái 1 phần tử vào trong vector tại 1 cái chỉ số bất kì"
+  },
+  {
+    "start": 2243.97,
+    "end": 2248.41,
+    "text": "nhưng mà chen thì các bạn lại phải thông qua iterator đến cái chỉ số đó"
+  },
+  {
+    "start": 2248.41,
+    "end": 2252.09,
+    "text": "và cái hàm insert này độ phức tạp nó tương đối lớn nhé, nó là độ phức tạp là owner"
+  },
+  {
+    "start": 2252.09,
+    "end": 2255.57,
+    "text": "nên dùng là phải cẩn thận, tại vì nó lớn, độ phức tạp là lớn"
+  },
+  {
+    "start": 2255.57,
+    "end": 2258.33,
+    "text": "pushback thì nó chỉ mất o1 thôi nhưng mà thằng này chen"
+  },
+  {
+    "start": 2258.33,
+    "end": 2261.41,
+    "text": "tức là các bạn có một vét tư, em thêm vào cuối thì nó mất o1 thôi"
+  },
+  {
+    "start": 2261.41,
+    "end": 2263.97,
+    "text": "nhưng mà các bạn mà chen vào một vị trí nào mà giữa"
+  },
+  {
+    "start": 2263.97,
+    "end": 2266.09,
+    "text": "bằng cái hàm insert này thì nó sẽ mất owner"
+  },
+  {
+    "start": 2266.09,
+    "end": 2271.01,
+    "text": "đấy, cứu pháp của nó như sau, ví dụ nha các bạn muốn chen 100 vào chỉ số 2 á"
+  },
+  {
+    "start": 2271.01,
+    "end": 2274.89,
+    "text": "Thì bạn em phải truy xuất vào cái iterator đến cái chỉ số 2 đó"
+  },
+  {
+    "start": 2274.89,
+    "end": 2278.73,
+    "text": "Thế là mình sẽ viết là v,insert, v,begin, cộng 2"
+  },
+  {
+    "start": 2278.73,
+    "end": 2281.63,
+    "text": "Nó chính là cái iterator trỏ đến cái chỉ số 2 đó"
+  },
+  {
+    "start": 2281.63,
+    "end": 2283.63,
+    "text": "sau đó đến cái giá trị mà bạn em trèn"
+  },
+  {
+    "start": 2283.63,
+    "end": 2286.62,
+    "text": "Đấy, thế thôi"
+  },
+  {
+    "start": 2286.62,
+    "end": 2288.62,
+    "text": "Ví dụ như cái vector như kia đúng không?"
+  },
+  {
+    "start": 2288.62,
+    "end": 2294.91,
+    "text": "Mình sẽ cho v,insert, v,begin, cộng 4, 1.000"
+  },
+  {
+    "start": 2294.91,
+    "end": 2297.95,
+    "text": "Thì các bạn xem cái chỉ số 4 của các bạn đang là thầm 1 này đúng không?"
+  },
+  {
+    "start": 2297.95,
+    "end": 2301.15,
+    "text": "Bây giờ các bạn trèn thầm 1.000 vào thì nó sẽ trèn thầm 1.000 vào trước"
+  },
+  {
+    "start": 2301.15,
+    "end": 2311.92,
+    "text": "Vector.it được có cho d Senhor V comments"
+  },
+  {
+    "start": 2320.32,
+    "end": 2327.66,
+    "text": "C accomplice"
+  },
+  {
+    "start": 2339.72,
+    "end": 2342.52,
+    "text": "membrand 146 81012 13"
+  },
+  {
+    "start": 2342.52,
+    "end": 2367.6,
+    "text": "thay đại trỉ số 12, Schены hoiatricm đồn centigrade, tr loosely, tr"
+  },
+  {
+    "start": 2367.6,
+    "end": 2375.51,
+    "text": "Mình muốn xóa nó đi, thì em không thể v.eray 9 được, mà em phải xem nó nằm ở chỉ số mấy."
+  },
+  {
+    "start": 2375.51,
+    "end": 2381.51,
+    "text": "Thằng 9 này nó nằm ở chỉ số 3, nên mình phải xóa là v.eray, v.begin3,"
+  },
+  {
+    "start": 2381.51,
+    "end": 2389.51,
+    "text": "tức là mình phải chuyển vào iterator chỏ đến cái chỉ số của phần tử mà mình muốn xóa để mình xóa đi."
+  },
+  {
+    "start": 2389.51,
+    "end": 2394.04,
+    "text": "Nên là phải có kiến thức về iterator thì mình dùng mấy cái hạm này được, được chưa?"
+  },
+  {
+    "start": 2394.04,
+    "end": 2396.6,
+    "text": "Thì nó đã xóa đi cho các bạn cái số 9 rồi."
+  },
+  {
+    "start": 2396.6,
+    "end": 2401.2,
+    "text": "Hàm Eray và Insert"
+  },
+  {
+    "start": 2401.2,
+    "end": 2410.32,
+    "text": "Ngoài ra sẽ có một vài hàm nữa, ví dụ như hàm outside để em có thể gán các phần tửa trong vector V của mình thành 1 giá trị"
+  },
+  {
+    "start": 2410.32,
+    "end": 2416.84,
+    "text": "Đôi khi mình muốn gán tất cả phần tửa trong vector thành 1 số khác, em có thể dùng hàm outside này"
+  },
+  {
+    "start": 2416.84,
+    "end": 2421.11,
+    "text": "Hoặc là hàm resize để mình có thể thay đổi kích thước vector thành 1 kích thước khác"
+  },
+  {
+    "start": 2421.11,
+    "end": 2426.31,
+    "text": "Ví dụ, vector đang có 10 thằng, mình muốn nó thành 5 thằng, 100 thằng, 1 nghìn thằng thì mình sẽ resize nó"
+  },
+  {
+    "start": 2426.31,
+    "end": 2429.91,
+    "text": "2 cái này các bạn tự để mua lấy, nó cũng dễ thôi"
+  },
+  {
+    "start": 2429.91,
+    "end": 2436.24,
+    "text": "ngoài ra, sau này bạn em có thể dùng vector nó giống như 1 cái mảng 2 chiều"
+  },
+  {
+    "start": 2436.24,
+    "end": 2440.64,
+    "text": "thì cái này đến phần mảng 2 chiều thì anh sẽ hướng dẫn cho"
+  },
+  {
+    "start": 2440.64,
+    "end": 2444.08,
+    "text": "bạn nào biết mảng 2 chiều thì có thể đọc qua cái mục 8 này"
+  },
+  {
+    "start": 2444.08,
+    "end": 2447.84,
+    "text": "còn chưa biết thì đến mảng 2 chiều thì sẽ hướng dẫn cho các bạn cái cách đó"
+  },
+  {
+    "start": 2447.84,
+    "end": 2453.24,
+    "text": "Thế còn cái cách nhập mảng không biết trước số lượng phần tử này thì học rồi đấy"
+  },
+  {
+    "start": 2453.24,
+    "end": 2459.72,
+    "text": "Bây giờ mình có thể nhập tất cả các phần tử trong luồng input mà không biết trước số lượng phần tử sau đó niếm vào trong cái vector về"
+  },
+  {
+    "start": 2459.72,
+    "end": 2468.56,
+    "text": "Thế thì tất cả những cái bài mà các bạn dùng mạng 1 triều từ trước đến giờ ấy, để cốt ấy, ở cái phần mạng 1 triều cơ bản này này"
+  },
+  {
+    "start": 2468.56,
+    "end": 2471.28,
+    "text": "Thì bọn em có thể dùng vector để cốt được, nha"
+  },
+  {
+    "start": 2471.28,
+    "end": 2474.0,
+    "text": "Nếu bạn nào thích thì cứ dùng vector cốt bình thường, không sao hết"
+  },
+  {
+    "start": 2474.0,
+    "end": 2477.8,
+    "text": "Để cho nó quen cú pháp ấy, thì có thể dùng để cốt"
+  },
+  {
+    "start": 2477.8,
+    "end": 2480.28,
+    "text": "bây giờ bạn đang làm phần mạng một chiều cơ bản"
+  },
+  {
+    "start": 2480.28,
+    "end": 2482.92,
+    "text": "thì có thể dùng vector mà làm được"
+  },
+  {
+    "start": 2482.92,
+    "end": 2485.4,
+    "text": "dùng vector để lưu dãy số đấy cũng được"
+  },
+  {
+    "start": 2485.4,
+    "end": 2489.96,
+    "text": "hãy, hôm nay mình đã hướng dẫn cho các bạn xong phần vector iterator rồi"
+  },
+  {
+    "start": 2489.96,
+    "end": 2493.76,
+    "text": "và lý thuyết con trỏ rồi, đúng không?"
+  },
+  {
+    "start": 2493.76,
+    "end": 2496.55,
+    "text": "nhiệm vụ của các bạn ấy"
+  },
+  {
+    "start": 2496.55,
+    "end": 2500.87,
+    "text": "là các bạn hoàn thành node cho mình phần về mạng một chiều cơ bản"
+  },
+  {
+    "start": 2500.87,
+    "end": 2504.53,
+    "text": "sau đó thì mạng một chiều cơ bản"
+  },
+  {
+    "start": 2504.53,
+    "end": 2508.61,
+    "text": "sau đó thì các bạn sang cho mình phần vector và iterator buổi sau"
+  },
+  {
+    "start": 2508.61,
+    "end": 2515.29,
+    "text": "thì mình sẽ trả lời các câu hỏi của các bạn về phần vector và iterator này có chỗ nào chưa rõ thì các bạn trao đổi"
+  },
+  {
+    "start": 2515.29,
+    "end": 2525.12,
+    "text": "sau đó mình sẽ chữa một số bài tập và các bạn sẽ sang set vào map với một vài kiến thức lật vật như auto hoặc pe"
+  },
+  {
+    "start": 2525.12,
+    "end": 2528.76,
+    "text": "về các bạn đọc trước cho mình set với map, xem nó dùng làm gì"
+  },
+  {
+    "start": 2528.76,
+    "end": 2533.12,
+    "text": "nó áp dụng trong các dạng bài tập nào, sau đó lọc bài tập set map ra mà làm trước"
+  },
+  {
+    "start": 2533.12,
+    "end": 2538.05,
+    "text": "nhưng mà cái setmap là nó yêu cầu các bạn tương đối vững về iterator"
+  },
+  {
+    "start": 2538.05,
+    "end": 2542.61,
+    "text": "nên là có thể tìm hiểu lại về phần iterator nếu mà chưa vững nha các bạn"
+  },
+  {
+    "start": 2542.61,
+    "end": 2543.65,
+    "text": "Đợi anh trước"
+  },
+  {
+    "start": 2543.65,
+    "end": 2544.93,
+    "text": "setmap đúng không?"
+  },
+  {
+    "start": 2544.93,
+    "end": 2548.07,
+    "text": "Được rồi, setmap đúng rồi"
+  },
+  {
+    "start": 2548.07,
+    "end": 2549.41,
+    "text": "đây"
+  },
+  {
+    "start": 2549.41,
+    "end": 2552.41,
+    "text": "set 2025, map 2025 đâu rồi"
+  },
+  {
+    "start": 2552.41,
+    "end": 2553.93,
+    "text": "còn cái map nữa các bạn ơi"
+  },
+  {
+    "start": 2553.93,
+    "end": 2559.12,
+    "text": "đâu ta"
+  },
+  {
+    "start": 2559.12,
+    "end": 2560.87,
+    "text": "anh up cho cái set trước"
+  },
+  {
+    "start": 2560.87,
+    "end": 2565.25,
+    "text": "ư"
+  },
+  {
+    "start": 2565.25,
+    "end": 2567.73,
+    "text": "anh cũng trả để ý bão nó vào vào đâu nữa"
+  },
+  {
+    "start": 2567.73,
+    "end": 2570.49,
+    "text": "tại trong thành phố chim mình thì nó ít khi bị bão nên là"
+  },
+  {
+    "start": 2570.49,
+    "end": 2572.49,
+    "text": "Như khi cũng không để ý là..."
+  },
+  {
+    "start": 2572.49,
+    "end": 2576.48,
+    "text": "À đây rồi các bạn."
+  },
+  {
+    "start": 2576.48,
+    "end": 2581.71,
+    "text": "Rồi ok, bữa nay các bạn nghĩ đây nhé."
+  },
+  {
+    "start": 2581.71,
+    "end": 2584.51,
+    "text": "Về chịu khó làm bài tập nhé các bạn."
+  },
+  {
+    "start": 2584.51,
+    "end": 2586.51,
+    "text": "Đang đến cái phần 2 rồi đấy."
+  },
+  {
+    "start": 2586.51,
+    "end": 2588.51,
+    "text": "Đang đến cái phần vector set map rồi"
+  },
+  {
+    "start": 2588.51,
+    "end": 2591.51,
+    "text": "Các thuật toán sắp xếp tìm kiếm mà nó sang cái phần tối yêu rồi."
+  },
+  {
+    "start": 2591.51,
+    "end": 2595.24,
+    "text": "Các bạn chịu khó ăn chút."
+  },
+  {
+    "start": 2595.24,
+    "end": 2599.24,
+    "text": "Ừ được. Chắc 1-2 hôm nữa thì anh sẽ up lời giải cái test hôm qua."
+  },
+  {
+    "start": 2599.24,
+    "end": 2602.24,
+    "text": "Bạn nào chưa làm thì các bạn tham gia ảo mà cốt lại nhé."
+  },
+  {
+    "start": 2602.24,
+    "end": 2605.52,
+    "text": "Ok các bạn nghĩ đi."
+  }
+]

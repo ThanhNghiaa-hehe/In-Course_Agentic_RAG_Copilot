@@ -1,0 +1,3187 @@
+[
+  {
+    "start": 0.46,
+    "end": 7.46,
+    "text": "Trong video này mình sẽ thực dẫn các bạn một thật toán sắp xếp, tương đối là 2, và kinh niệm đấy chính là thật toán sắp xếp trộn, ok?"
+  },
+  {
+    "start": 7.46,
+    "end": 12.46,
+    "text": "Và nó liên quan đến một cái bài toán, đấy chính là bài toán đến số lượng cặp nghị thế trong mạng."
+  },
+  {
+    "start": 12.46,
+    "end": 22.72,
+    "text": "Để mình có thể cài đặt được thật toán mật xọc này, thì bạn phải biết được cái bài toán, đấy chính là mình sẽ trộn 2 cái dãy đã được sắp xếp, thành 1 cái dãy đã được sắp xếp và mình đã hướng dẫn cái bài toán này."
+  },
+  {
+    "start": 22.72,
+    "end": 24.72,
+    "text": "Các bạn có thể xem cái phần đề xuất này trên này nhé"
+  },
+  {
+    "start": 24.72,
+    "end": 26.72,
+    "text": "Ok"
+  },
+  {
+    "start": 26.72,
+    "end": 28.72,
+    "text": "Nếu mà bạn chưa biết trộn 2 cái dãy đã sắp xếp"
+  },
+  {
+    "start": 28.72,
+    "end": 30.72,
+    "text": "thành 1 cái dãy đã sắp xếp"
+  },
+  {
+    "start": 30.72,
+    "end": 32.72,
+    "text": "thì đấy chính là cái thao tác trộn của cái thuật toán mật xọc này nè"
+  },
+  {
+    "start": 32.72,
+    "end": 34.72,
+    "text": "Ok, thế ra mình sẽ phải biết được cái"
+  },
+  {
+    "start": 34.72,
+    "end": 36.72,
+    "text": "cách trộn 2 dãy đã, đấy đã"
+  },
+  {
+    "start": 36.72,
+    "end": 38.72,
+    "text": "trước khi mà mình cốt thuật toán mật xọc"
+  },
+  {
+    "start": 38.72,
+    "end": 41.26,
+    "text": "thuật toán mật xọc này thì là thuật toán chia và chị"
+  },
+  {
+    "start": 41.26,
+    "end": 43.26,
+    "text": "Ok, tư tưởng của nó đấy chính là nó sẽ chia"
+  },
+  {
+    "start": 43.26,
+    "end": 45.26,
+    "text": "cái dãy, cái mảng ban đầu của mình"
+  },
+  {
+    "start": 45.26,
+    "end": 47.26,
+    "text": "thành các cái dãy con"
+  },
+  {
+    "start": 47.26,
+    "end": 49.26,
+    "text": "Ok, sau đó thì"
+  },
+  {
+    "start": 49.26,
+    "end": 51.26,
+    "text": "khi mà cái dãy con của mình nó chỉ bao gồm có mỗi 1 phần tử thôi"
+  },
+  {
+    "start": 51.26,
+    "end": 57.02,
+    "text": "Một phần tử thôi, trăm trường hợp mà dãi con của mình, mỗi dãi con nó chỉ có một phần tử thì khi đó sẽ được sắp xếp đúng không?"
+  },
+  {
+    "start": 57.02,
+    "end": 59.62,
+    "text": "Cái mạng mà có một phần tử thì nó đã được sắp xếp đúng không?"
+  },
+  {
+    "start": 59.62,
+    "end": 66.62,
+    "text": "Thì nó sẽ tiến hành, nó trộn dần vào, nó trộn các phần tử này vào với nhau, và ở mỗi bước thì nó đều thực hiện cái công việc đấy là nó trộn"
+  },
+  {
+    "start": 66.62,
+    "end": 69.42,
+    "text": "Hai dãi đã được sắp xếp, tạo thành một dãi đã được sắp xếp"
+  },
+  {
+    "start": 69.42,
+    "end": 74.22,
+    "text": "Độ phức tạp của thằng này nó sẽ là nờ lúc nờ, ok, chung bình nó sẽ là nờ lúc nờ, ok?"
+  },
+  {
+    "start": 74.22,
+    "end": 77.3,
+    "text": "Nó sẽ không có trường hợp tệ nhất như quích xọc"
+  },
+  {
+    "start": 77.3,
+    "end": 79.34,
+    "text": "Quích xọc tệ nhất thì có thể đến nò bình"
+  },
+  {
+    "start": 79.34,
+    "end": 82.26,
+    "text": "Nhưng mà mật xọc thì tệ nhất nó cũng chỉ là nò lúc nò thôi"
+  },
+  {
+    "start": 82.26,
+    "end": 82.9,
+    "text": "Ok?"
+  },
+  {
+    "start": 83.82,
+    "end": 87.82,
+    "text": "Thì các bạn có thể nhìn thấy cái mạng của mình có là 6, 5, 12, 19, 1 này"
+  },
+  {
+    "start": 87.82,
+    "end": 92.02,
+    "text": "Thì cái thuật toán mật xọc này, nó thực hiện cái công việc đến là nó chia trước"
+  },
+  {
+    "start": 92.02,
+    "end": 92.82,
+    "text": "Ok?"
+  },
+  {
+    "start": 92.82,
+    "end": 96.98,
+    "text": "Nó chia trước sau đó nó bắt đầu nó mới gột lại với nhau"
+  },
+  {
+    "start": 96.98,
+    "end": 99.34,
+    "text": "Ok? Nó gột 2 cái dễ được sắp xếp lại với nhau"
+  },
+  {
+    "start": 99.34,
+    "end": 102.14,
+    "text": "Nó hơi ngược với quích xọc chút"
+  },
+  {
+    "start": 102.14,
+    "end": 107.94,
+    "text": "Đầu tiên, nó sẽ chia mạng của bạn 6, 5, 12, 19, 1, thành 2 cái giải con"
+  },
+  {
+    "start": 107.94,
+    "end": 111.86,
+    "text": "Thường là nó sẽ dùng 1 cái trị số LEP của ông 6 này"
+  },
+  {
+    "start": 111.86,
+    "end": 113.7,
+    "text": "và 1 trị số RY của ông 1 này này"
+  },
+  {
+    "start": 113.7,
+    "end": 116.66,
+    "text": "sau đó nó sẽ chia đôi cái mạng của bạn ra thành 2 cái giải con"
+  },
+  {
+    "start": 116.66,
+    "end": 120.18,
+    "text": "thì nó sẽ thành cái giáu giải 6, 5, 12 và giải 19, 1"
+  },
+  {
+    "start": 120.18,
+    "end": 124.98,
+    "text": "và tiếp tục nó gọi đệ quy đến cái giải con 6, 5, 12 để nó chia đôi cái giải 6, 5, 12 này ra"
+  },
+  {
+    "start": 124.98,
+    "end": 127.54,
+    "text": "thành cái giáu giải 6 và giải 5, 12"
+  },
+  {
+    "start": 127.54,
+    "end": 128.42,
+    "text": "Ok?"
+  },
+  {
+    "start": 128.42,
+    "end": 131.62,
+    "text": "Khi nào mà cái giải con của các bạn, nó chỉ có 1 phần tử í, như thế này này"
+  },
+  {
+    "start": 131.62,
+    "end": 134.5,
+    "text": "ok, dạy con đã được ok"
+  },
+  {
+    "start": 134.5,
+    "end": 136.94,
+    "text": "dạy con 512 nó tiếp tục nó lại chia ra"
+  },
+  {
+    "start": 136.94,
+    "end": 139.14,
+    "text": "thành 2 dạy con là 5 và 12"
+  },
+  {
+    "start": 139.14,
+    "end": 142.62,
+    "text": "bên ảnh thế, 19 1 thì nó sẽ chia ra là 10"
+  },
+  {
+    "start": 142.62,
+    "end": 144.74,
+    "text": "dạy con bên phạch là 9 và 1"
+  },
+  {
+    "start": 144.74,
+    "end": 147.5,
+    "text": "và 9 1 lại tiếp tục chia tiếp thành 9 và 1"
+  },
+  {
+    "start": 147.5,
+    "end": 151.14,
+    "text": "sau khi mà tất cả các phần tử ở trong màn của mình, nó chỉ có mỗi phần tử như thế này"
+  },
+  {
+    "start": 151.14,
+    "end": 153.94,
+    "text": "thì nó sẽ tiến hành nó gục, nó gục lại"
+  },
+  {
+    "start": 153.94,
+    "end": 156.66,
+    "text": "ví dụ như trong thường hợp này, 5 với 12 thì nó sẽ tiến hành nó gục"
+  },
+  {
+    "start": 156.66,
+    "end": 160.08,
+    "text": "thành 1 dạy con đã được tăng dần là thành 5 và 12"
+  },
+  {
+    "start": 160.08,
+    "end": 164.28,
+    "text": "sau nó tiếp tục nó gột thằng 6 với thằng 5 với 12 này, thằng cái dãy là 5, 62"
+  },
+  {
+    "start": 164.28,
+    "end": 167.28,
+    "text": "ok, cái dãy con 5, 12 này đã được sắp xếp đúng không?"
+  },
+  {
+    "start": 167.28,
+    "end": 168.88,
+    "text": "cái dãy con 6 này cũng đã được sắp xếp đúng không?"
+  },
+  {
+    "start": 168.88,
+    "end": 172.38,
+    "text": "thì nó sẽ chộn 2 cái dãy con này, tạo thằng cái dãy là 5, 62"
+  },
+  {
+    "start": 172.38,
+    "end": 175.68,
+    "text": "tương tự như vậy, dãy 10 đã được sắp xếp, và dãy 19 đã được sắp xếp"
+  },
+  {
+    "start": 175.68,
+    "end": 179.28,
+    "text": "thì nó cũng gột 2 cái này với nhau, thằng cái dãy là 190"
+  },
+  {
+    "start": 179.28,
+    "end": 182.48,
+    "text": "ok, và cái dãy bên trái là 5, 62 này này, đúng không?"
+  },
+  {
+    "start": 182.48,
+    "end": 186.68,
+    "text": "và cái dãy bên phải là 190 này này, lúc nãy bạn chia ra như thế này này"
+  },
+  {
+    "start": 186.68,
+    "end": 191.04,
+    "text": "Nhưng mà bây giờ thì khi mà nó gục lại thì 2 cái dãi con này nó đã đến được sắp xếp tăng dần rồi"
+  },
+  {
+    "start": 191.04,
+    "end": 195.44,
+    "text": "Thì nó chỉ cần gục 2 cái dãi tăng dần này, thành cái dãi tăng dần là 1, 5, 6, 9, 10, 12"
+  },
+  {
+    "start": 195.44,
+    "end": 200.44,
+    "text": "Ok, thì đấy chính là cái thuật tuấn tư tưởng của thuật tuấn sắp xếp trộn"
+  },
+  {
+    "start": 200.44,
+    "end": 202.56,
+    "text": "Các bạn có thể xem cái mẹ giả của nó này"
+  },
+  {
+    "start": 202.56,
+    "end": 207.24,
+    "text": "Thuật tuấn mật xọc này, sắp xếp cái mảng A nằm trong cái đoạn từ lab cho tới rai"
+  },
+  {
+    "start": 207.24,
+    "end": 211.4,
+    "text": "Ok, nếu mà chỉ số lab là lớn hơn hoặc bằng chỉ số rai thì bạn có thể return"
+  },
+  {
+    "start": 211.4,
+    "end": 213.68,
+    "text": "Đức là trường hợp nhỏ nhất của thuật tuấn mật xọc"
+  },
+  {
+    "start": 213.68,
+    "end": 219.72,
+    "text": "tức là cái chỉ số lép của bạn là lớn hơn rai, hoặc là lép bằng rai, trong trường hợp mà cái mạng của bạn chỉ có 1 phần tử"
+  },
+  {
+    "start": 219.72,
+    "end": 222.52,
+    "text": "cái dãi mà bạn đang xét nó có chỉ 1 phần tử thì bạn có thể dừng được"
+  },
+  {
+    "start": 222.52,
+    "end": 224.36,
+    "text": "ok, đấy chính là trường hợp nhỏ nhất"
+  },
+  {
+    "start": 224.36,
+    "end": 229.16,
+    "text": "còn không thì bạn sẽ tính cái chỉ số ở giữa, đến là mit-do bằng lép cộng rai chia cho 2"
+  },
+  {
+    "start": 229.16,
+    "end": 233.88,
+    "text": "sau đó thì bạn sẽ chia cái mạng từ lép cho tới rai của các bạn để thành 2 cái mảng con"
+  },
+  {
+    "start": 233.88,
+    "end": 236.72,
+    "text": "đấy là từ lép cho tới mit"
+  },
+  {
+    "start": 236.72,
+    "end": 241.2,
+    "text": "ok, từ lép cho tới mit-do và từ mit-do cộng 1 cho tới rai"
+  },
+  {
+    "start": 241.2,
+    "end": 248.4,
+    "text": "sau khi mà bạn gọi mật xọc đến đoạn bên trái và mật xọc đến đoạn bên phải thì khi đó đoạn bên trái của các bạn thì nó sẽ được sắp xếp"
+  },
+  {
+    "start": 248.4,
+    "end": 251.44,
+    "text": "và đoạn bên phải của bạn thì nó cũng sẽ được sắp xếp"
+  },
+  {
+    "start": 251.44,
+    "end": 255.96,
+    "text": "thì khi đó nó có một cái thao tác và thao tác mở chộn 2 cái dậy đến lại với nhau"
+  },
+  {
+    "start": 255.96,
+    "end": 262.04,
+    "text": "ok, đó, thì đấy chính là tư tưởng của tàu toán, squeeze xọc, ah xin lỗi, mật xọc, mấy dụng cái mạng của bạn nó như thế này này"
+  },
+  {
+    "start": 262.04,
+    "end": 267.66,
+    "text": "đây là 8, 2, 9, 1, 4, 0 chẳng hạn"
+  },
+  {
+    "start": 267.66,
+    "end": 270.34,
+    "text": "nó giả sứ như cái mạng ban đầu của các bạn nó như thế này"
+  },
+  {
+    "start": 270.34,
+    "end": 273.42,
+    "text": "Thì khi đó, chỉ xuống lép lên này và chỉ xuống ride lên này"
+  },
+  {
+    "start": 273.42,
+    "end": 278.42,
+    "text": "Đấy là 5 đúng không? Thì nó sẽ tiến hành lấy không, cộng cái 5 chia cho 2 là bằng 2 đúng không?"
+  },
+  {
+    "start": 278.42,
+    "end": 281.1,
+    "text": "Tức là cái chỉ số mít đồ của bạn nó là bằng 2"
+  },
+  {
+    "start": 281.1,
+    "end": 285.82,
+    "text": "Thì khi đó nó sẽ chia cái dạy con của bạn bắt đầu từ 0 và kết thúc ở 2"
+  },
+  {
+    "start": 285.82,
+    "end": 290.22,
+    "text": "Và cái dạy con thứ 2 ấy, đây là bắt đầu từ 3 và kết thúc tại 5"
+  },
+  {
+    "start": 290.22,
+    "end": 295.44,
+    "text": "Tức là cái dạy con 829 này này, là dạy con bên trái này"
+  },
+  {
+    "start": 295.44,
+    "end": 298.32,
+    "text": "Và dạy con 140 này là dạy con bên phải"
+  },
+  {
+    "start": 298.32,
+    "end": 301.26,
+    "text": "và tiếp tục có gọi địa quy đến 2 dạy con này, ok?"
+  },
+  {
+    "start": 301.26,
+    "end": 311.96,
+    "text": "Sau đó thì cái lời gọi địa quy của bạn nó tiếp tục nó chia cái dạy con 8, 2, 9 và 1, 4, 0 này cho tới khi mà nó chỉ có 1 phần tử thôi, sau đó nó bắt đầu nó lại gục lại, ok?"
+  },
+  {
+    "start": 311.96,
+    "end": 319.31,
+    "text": "Thì từ từ nhé, tí nữa mình sẽ giải thích cho các bạn cái cách mà thật toán mờ xọc này nó hoạt động, bởi vì nó là thật toán địa quy, ok?"
+  },
+  {
+    "start": 319.31,
+    "end": 322.11,
+    "text": "Nó hơi khó mua tạm chút với cái cách hoạt động của thằng này."
+  },
+  {
+    "start": 322.11,
+    "end": 333.46,
+    "text": "Thế còn cái thao tác trộn 2 dãy đã được sắp xếp thì ở đây mình sẽ không hướng dẫn lại cái cách mà các bạn trộn 2 cái dãy đã được sắp xếp tạo thành 1 cái dãy đã được sắp xếp nhé"
+  },
+  {
+    "start": 333.46,
+    "end": 337.57,
+    "text": "Ok, thôi mình cứ còn nói qua lại 1 chút cũng được"
+  },
+  {
+    "start": 337.57,
+    "end": 343.57,
+    "text": "Ví dụ bạn có 1 2 cái dãy đã được sắp xếp đấy là 1, 8, 9 và 10"
+  },
+  {
+    "start": 343.57,
+    "end": 351.42,
+    "text": "Và cái dãy thứ 2 đấy là 2, 3, 4 và 9 đi"
+  },
+  {
+    "start": 351.42,
+    "end": 356.06,
+    "text": "ok, là sứ bạn muốn chộn 2 cái dãy này thành 1 cái dãy tăng dần ấy thì mình sẽ dùng 2 cái chỉ số"
+  },
+  {
+    "start": 356.06,
+    "end": 361.1,
+    "text": "1 là chỉ số i, 2 là chỉ số g, bắt đầu từ 2 cái phần tử đầu tiên trong 2 cái dãy con này"
+  },
+  {
+    "start": 361.1,
+    "end": 367.1,
+    "text": "và ở bội bước ấy, bạn sẽ so sánh cái phần tử, ơ, mình tạm gọi cái mạng này là mạng a và cái mạng này là mạng b"
+  },
+  {
+    "start": 367.1,
+    "end": 371.34,
+    "text": "b i với, b i với, a i với b g"
+  },
+  {
+    "start": 371.34,
+    "end": 377.34,
+    "text": "xem là thằng nào là thằng nhỏ hơn, ok, trong trường hợp mà cái thằng a i này này, mà nó nhỏ hơn hoặc bằng cái thằng b g này này"
+  },
+  {
+    "start": 377.34,
+    "end": 380.86,
+    "text": "thì bạn sẽ cho cái thằng 1 này nó đi trước, ok"
+  },
+  {
+    "start": 380.86,
+    "end": 382.86,
+    "text": "bởi vì thầm 1 sẽ xuất hiện nhỏ hơn 2 mà"
+  },
+  {
+    "start": 382.86,
+    "end": 386.24,
+    "text": "bởi vì thì mình sẽ cho 1 đi trước, sau đó mình sẽ tăng cái chỉ số này lên"
+  },
+  {
+    "start": 386.24,
+    "end": 391.36,
+    "text": "sau đó tiếp tục nó lại xoánh ai với bg, là 2 với 8 thì thấy 2 nhỏ hơn, thì nó cho 2 đi trước"
+  },
+  {
+    "start": 391.36,
+    "end": 393.06,
+    "text": "sau đó tăng cái chỉ số g"
+  },
+  {
+    "start": 393.06,
+    "end": 397.38,
+    "text": "ai với bg trong thiệu hợp này nó sẽ là 8 với 3 thì thằng này lại nhỏ hơn đúng không?"
+  },
+  {
+    "start": 397.38,
+    "end": 400.08,
+    "text": "thì nó sẽ cho 3 đi trước, và nó tăng cái chỉ số g lên"
+  },
+  {
+    "start": 400.08,
+    "end": 405.37,
+    "text": "48 đúng không? thì thấy 4 nhỏ hơn đúng không? cho 4 đi trước và tăng chỉ số g lên"
+  },
+  {
+    "start": 405.37,
+    "end": 409.12,
+    "text": "89 đúng không? 8 nhỏ hơn 9 cho 8 đi trước"
+  },
+  {
+    "start": 409.12,
+    "end": 410.82,
+    "text": "tăng chỉ số e lên"
+  },
+  {
+    "start": 410.82,
+    "end": 414.66,
+    "text": "99 đúng không? Trong trường hợp bằng nhau, bạn cho thằng đi trước cũng được nhé"
+  },
+  {
+    "start": 414.66,
+    "end": 416.86,
+    "text": "Ok, trong trường hợp này mình yếu tiên thằng làng trên"
+  },
+  {
+    "start": 416.86,
+    "end": 420.54,
+    "text": "Thế ra mình cho 9 thằng này đi trước và mình tăng cái chỉ số y còn 2 lên là 10"
+  },
+  {
+    "start": 420.54,
+    "end": 424.24,
+    "text": "99 đi trước, tăng chỉ số y lên"
+  },
+  {
+    "start": 424.24,
+    "end": 429.44,
+    "text": "Và khi mà 102 cái chỉ số của cái đoạn con A và B này này, cái giải con A và B này này"
+  },
+  {
+    "start": 429.44,
+    "end": 431.2,
+    "text": "Nó vượt khỏi cái mạng của nó"
+  },
+  {
+    "start": 431.2,
+    "end": 434.0,
+    "text": "Ví dụ trong trường hợp này y nó vượt khỏi cái chỉ số cuối cùng ấy"
+  },
+  {
+    "start": 434.0,
+    "end": 435.48,
+    "text": "Thì bạn có thể dừng được rồi"
+  },
+  {
+    "start": 435.48,
+    "end": 437.56,
+    "text": "Ok, giả sử cái này 12 và 14"
+  },
+  {
+    "start": 437.56,
+    "end": 441.64,
+    "text": "Giả sử cái mạng của A của bạn là 18, 90, 12 và 14 như thế này"
+  },
+  {
+    "start": 441.64,
+    "end": 446.95,
+    "text": "Thì khi mà cái mảng B của các bạn nè, nó đã duyệt đến cái chỉ số sau, chỉ số cuối cùng rồi"
+  },
+  {
+    "start": 446.95,
+    "end": 449.35,
+    "text": "Tức là tất cả các phần tử ở trong mảng B đã duyệt xong rồi"
+  },
+  {
+    "start": 449.35,
+    "end": 453.13,
+    "text": "Nhưng mà trong mảng A của các bạn nè, những phần tử nào mà chưa được duyệt"
+  },
+  {
+    "start": 453.13,
+    "end": 458.15,
+    "text": "Ok, bắt đầu từ chỉ số i còn lại đến cuối cùng của mình, nó sẽ là cách phần tử rất là lớn"
+  },
+  {
+    "start": 458.15,
+    "end": 459.83,
+    "text": "Ví dụ như 12 và 14 này nè"
+  },
+  {
+    "start": 459.83,
+    "end": 464.27,
+    "text": "Nó, thì bạn sẽ phải đưa note những phần tử ở trong này nè, ra cái mạng của mình"
+  },
+  {
+    "start": 464.27,
+    "end": 467.67,
+    "text": "Ok, bạn sẽ phải in ra note là 12 và 14"
+  },
+  {
+    "start": 467.67,
+    "end": 472.11,
+    "text": "Ê, thì đấy chính là cái cách mà bạn trộn 2 cái dãy là được sắp xếp, tạo thành 1 cái dãy là được sắp xếp"
+  },
+  {
+    "start": 472.11,
+    "end": 474.11,
+    "text": "ok"
+  },
+  {
+    "start": 474.11,
+    "end": 478.22,
+    "text": "thì đây chính là cái thao tác trộn ấy, thao tác trộn ở chỗ này này"
+  },
+  {
+    "start": 478.22,
+    "end": 480.32,
+    "text": "thao tác mệt chỗ này của thao tác mệt sọc ấy"
+  },
+  {
+    "start": 480.32,
+    "end": 481.82,
+    "text": "ok"
+  },
+  {
+    "start": 481.82,
+    "end": 483.82,
+    "text": "bây giờ thì mình"
+  },
+  {
+    "start": 486.24,
+    "end": 489.64,
+    "text": "sẽ hướng dẫn các bạn cốt trước nhé, sau đó thì mình giải thích cốt được"
+  },
+  {
+    "start": 489.64,
+    "end": 491.64,
+    "text": "ở đây mình có 1 cái thao tác là thao tác trộn"
+  },
+  {
+    "start": 491.64,
+    "end": 495.39,
+    "text": "mình sẽ trộn 1 cái mảng A bắt đầu từ chỉ xuống LED"
+  },
+  {
+    "start": 495.39,
+    "end": 497.39,
+    "text": "mit, do, ra"
+  },
+  {
+    "start": 497.39,
+    "end": 500.88,
+    "text": "cái nhậm vụ của cái 2 mệt này đấy chính là trộn"
+  },
+  {
+    "start": 500.88,
+    "end": 503.61,
+    "text": "dãy, 2 dãy con"
+  },
+  {
+    "start": 503.61,
+    "end": 508.73,
+    "text": "ok, dãy thứ nhất í, bắt đầu từ chỉ số lép và kết thúc ở chỉ số mít đồ"
+  },
+  {
+    "start": 508.73,
+    "end": 513.53,
+    "text": "và dãy thứ 2 í, bắt đầu từ chỉ số mít đồ, cộng 1 cho tới y"
+  },
+  {
+    "start": 513.53,
+    "end": 516.57,
+    "text": "cả 2 cái dãy con này đều đã được sắp xếp tăng dần rồi nhá"
+  },
+  {
+    "start": 516.57,
+    "end": 521.93,
+    "text": "và bạn sẽ phải chộn 2 cái dãy này, thành 1 dãy tăng dần, sau đó lại copy lại cho mảng e"
+  },
+  {
+    "start": 521.93,
+    "end": 525.37,
+    "text": "ok, nó hơi phức tạm 1 chút, ví dụ như là như thế này này"
+  },
+  {
+    "start": 525.37,
+    "end": 537.98,
+    "text": "dạ sử mảng A của các bạn khi mà chộn ấy, nó là 1, 2, 4 và 2, 2, 3 chẳng hạn, nó chỉ số left này, chỉ số mid-do này, ok, chỉ số right này, hóa"
+  },
+  {
+    "start": 537.98,
+    "end": 545.98,
+    "text": "thì đầu tiên ấy, để mà chộn cái 1, 2 cái đoạn con từ left cho tới mid này này, với cái đoạn con từ mid-do cộng 1 cho tới right này"
+  },
+  {
+    "start": 545.98,
+    "end": 553.38,
+    "text": "tạo thành 1 cái dãy tăng dần ấy, ok, sau đó lại copy lại cái nội dung vào cái mảng A từ chỉ số left cho tới right này này"
+  },
+  {
+    "start": 553.38,
+    "end": 558.18,
+    "text": "các bạn phải làm 1 cái công việc đây, chính là bạn copy cái nội dung của thằng 1, 2, 4 này ra 1 cái mảng con"
+  },
+  {
+    "start": 558.18,
+    "end": 563.58,
+    "text": "và bạn cũng copy cái nội dung ở là 2, 2, 3 này ra cái mảng con"
+  },
+  {
+    "start": 563.58,
+    "end": 566.58,
+    "text": "đấy, sau bạn chộn 2 cái dạy này với nhau, ok?"
+  },
+  {
+    "start": 566.58,
+    "end": 572.98,
+    "text": "sau đó là chộn và bạn lần lượt bạn gán vào các cái phần tử bắt đầu từ chỉ xuống lép cho tới chỉ xuống rai của cái mảng ai bắt đầu"
+  },
+  {
+    "start": 572.98,
+    "end": 579.96,
+    "text": "đấy, ở đây chộn nhé, chộn nhưng mà bạn là phải gán lại, sau khi chộn xong bạn phải là gán lại"
+  },
+  {
+    "start": 579.96,
+    "end": 585.72,
+    "text": "Các phần tử sau khi đã trộn, cái giải con giấy lớn sau khi đã trộn, quay trở lại cái mạng A bắt đầu"
+  },
+  {
+    "start": 585.72,
+    "end": 589.24,
+    "text": "Thì ra cái công việc đầu tiên, các bạn sẽ phải copy cái nửa bên trái ra một cái mạng"
+  },
+  {
+    "start": 589.24,
+    "end": 591.16,
+    "text": "Copy cái nửa bên phải ra một cái mạng như sau"
+  },
+  {
+    "start": 591.16,
+    "end": 593.16,
+    "text": "Ở đây thì các bạn có thể dùng vector, ok?"
+  },
+  {
+    "start": 593.16,
+    "end": 597.72,
+    "text": "Mình sẽ dùng 1 cái vector, in, t, mình đặt là a, x đi"
+  },
+  {
+    "start": 597.72,
+    "end": 601.32,
+    "text": "Nó chính là cái mạng con bên trái, bắt đầu thì chỉ xuống left và kết thúc là chỉ xuống width đồ ấy"
+  },
+  {
+    "start": 601.32,
+    "end": 602.36,
+    "text": "Và sẽ là gì nhỉ?"
+  },
+  {
+    "start": 602.36,
+    "end": 607.4,
+    "text": "Nó sẽ là a, cộng left và a, cộng width đồ, cộng 1, ok?"
+  },
+  {
+    "start": 607.4,
+    "end": 609.4,
+    "text": "Ok, nhớ là cái đầu bút đằng sau nó không lấy đúng không?"
+  },
+  {
+    "start": 609.4,
+    "end": 615.4,
+    "text": "Thì ra là các bạn, nếu mà muốn copy cái nội dung từ cái màng a, từ cái đoạn a-lab cho tới amid-do ấy"
+  },
+  {
+    "start": 615.4,
+    "end": 619.4,
+    "text": "Thì cái chỉ số của nó sẽ phải là a-lab và amid-do, cộng 1 nhé"
+  },
+  {
+    "start": 619.4,
+    "end": 626.94,
+    "text": "Từ từ như vậy, bạn copy nội dung cho mình cái giải con từ amid-do, cộng 1 cho tới y, vector, int, i"
+  },
+  {
+    "start": 626.94,
+    "end": 632.2,
+    "text": "Nó sẽ là a-mid-do, cộng 1, đây chính là chỉ số bắt đầu này"
+  },
+  {
+    "start": 632.2,
+    "end": 636.58,
+    "text": "Và cái chỉ số kết thúc của mình nó sẽ là a-ry, cộng 1 nhé, ok"
+  },
+  {
+    "start": 636.58,
+    "end": 642.46,
+    "text": "Thì khi đó nó sẽ copy nội dung của đoạn từ alep cho tới amit vào vét từ x"
+  },
+  {
+    "start": 642.46,
+    "end": 646.86,
+    "text": "và nó copy cái nội dung từ amit.com.bote cho tới ary vào vét từ i"
+  },
+  {
+    "start": 646.86,
+    "end": 647.86,
+    "text": "Ok"
+  },
+  {
+    "start": 647.86,
+    "end": 656.1,
+    "text": "Sau đó thì bạn sẽ chộn 2 vét từ x và i này, thành 1 cái vét 1 cái mạng tăng dần và bạn gắn lần lượt vào các phần tử trong cái mạng a này"
+  },
+  {
+    "start": 656.1,
+    "end": 658.7,
+    "text": "Bắt đầu từ chỉ số lep nhé, bắt đầu từ chỉ số lep"
+  },
+  {
+    "start": 658.7,
+    "end": 666.3,
+    "text": "Ở đây thì mình sẽ dùng 1 cái chỉ số i bằng không và 1 cái chỉ số y bằng không và mình lập với điều kiện là y nhỏ hơn x.x"
+  },
+  {
+    "start": 666.3,
+    "end": 672.21,
+    "text": "D, nhỏ hơn i, far"
+  },
+  {
+    "start": 672.21,
+    "end": 689.75,
+    "text": "mới"
+  },
+  {
+    "start": 689.75,
+    "end": 694.11,
+    "text": "vào trong cái mảng A, ok. Nhưng mà chú ý nhé, mình sẽ bắt đầu từ cái chỉ số lep,"
+  },
+  {
+    "start": 694.11,
+    "end": 702.63,
+    "text": "tức là bạn sẽ cho A lep, bằng í, sau đó bạn mới tăng cái chỉ số lep và tăng cái chỉ số í lên, ạ, ok. Được không nhỉ?"
+  },
+  {
+    "start": 702.63,
+    "end": 710.47,
+    "text": "Ví dụ như trong trường hợp này nhé, lep của bạn ở chỉ số này là bằng 7 chân hạn. 897, lep của bạn chân hạn ra 7 đi."
+  },
+  {
+    "start": 710.47,
+    "end": 716.35,
+    "text": "Thì khi đó ấy, y của bạn đây, y của bạn đây, thì bạn thấy thầm 1 này này, nó nhỏ hơn thầm 2 này đúng không?"
+  },
+  {
+    "start": 716.35,
+    "end": 721.35,
+    "text": "Thì khi đó bạn sẽ phải cho, bạn sẽ phải cho F7, ok, bằng Xe"
+  },
+  {
+    "start": 721.35,
+    "end": 724.8,
+    "text": "Thế là mình sẽ gán cái giá trị ở chỗ này là 1 này"
+  },
+  {
+    "start": 724.8,
+    "end": 727.8,
+    "text": "Sau đó bạn tăng cái chỉ số lép lên để tìm nữa lép nó sang bên này"
+  },
+  {
+    "start": 727.8,
+    "end": 731.8,
+    "text": "Ok, và cứ như thế, lép của bạn nó tăng dần, tăng dần đến rai mà"
+  },
+  {
+    "start": 731.8,
+    "end": 734.8,
+    "text": "Thực ra là mình có thể dùng luôn cái chỉ số lép để mình tăng dần, tăng dần lên"
+  },
+  {
+    "start": 734.8,
+    "end": 738.8,
+    "text": "Thì khi đó, khi mà mình chộn 2 cái dậy X và Y vào với nhau ấy"
+  },
+  {
+    "start": 738.8,
+    "end": 742.8,
+    "text": "Thì nó sẽ điền đầy các cái phần tử tư chỉ số lép cho tối chỉ số rai, ok"
+  },
+  {
+    "start": 742.8,
+    "end": 748.04,
+    "text": "Còn trong trường hợp mà Xe nó lớn hơn Easy thì bạn sẽ phải cho Easy đi trước"
+  },
+  {
+    "start": 748.04,
+    "end": 751.04,
+    "text": "Thì bạn chỉ cần gán cái thằng Easy vào trong cái mảng A"
+  },
+  {
+    "start": 751.04,
+    "end": 753.72,
+    "text": "Ok, mình sẽ cho A lép bằng Easy"
+  },
+  {
+    "start": 753.72,
+    "end": 757.52,
+    "text": "Sau đó mình sẽ tăng cái chỉ số Lép và tăng cái chỉ số Z"
+  },
+  {
+    "start": 757.52,
+    "end": 760.52,
+    "text": "Ok, thì đây chính là cái xong cái vòng lập qua"
+  },
+  {
+    "start": 760.52,
+    "end": 764.64,
+    "text": "Nhưng lúc nãy mình nói sau cái vòng lập qua này thì chưa chộn xong đâu"
+  },
+  {
+    "start": 764.64,
+    "end": 769.2,
+    "text": "Bởi vì sau vòng lập qua này thì sẽ còn 1 trong 2 cái mạng mà nó có những phần tử ở cuối"
+  },
+  {
+    "start": 769.2,
+    "end": 772.72,
+    "text": "Ok, thì bạn sẽ phải đưa tất cả những phần tử ở cuối"
+  },
+  {
+    "start": 772.72,
+    "end": 775.4,
+    "text": "của 1 trong 2 cái mảng x và y kìa kìa"
+  },
+  {
+    "start": 775.4,
+    "end": 778.8,
+    "text": "Cho nó vào node, ok, chộn nó vào node"
+  },
+  {
+    "start": 778.8,
+    "end": 784.04,
+    "text": "Thì ở đây các bạn có thể sử dụng một lòng của y, đây là y x nhỏ hơn, x, sai"
+  },
+  {
+    "start": 784.04,
+    "end": 788.36,
+    "text": "Ok, để kiểm tra liệu rằng cái mảng x còn dư hay không, thì mình đưa node nó cả"
+  },
+  {
+    "start": 788.36,
+    "end": 792.76,
+    "text": "Mình sẽ cho elap, bằng xe sau mình tăng elap và tăng y"
+  },
+  {
+    "start": 792.76,
+    "end": 799.76,
+    "text": "tương tự như vậy, nếu mà cái mảng còn thứ ấy là mảng y thì phải xin lập điều kiện là y y nhỏ hơn y chấm sai"
+  },
+  {
+    "start": 799.76,
+    "end": 805.76,
+    "text": "rồi mình sẽ cho alep, vắng, easy, sau đó bạn tăng cái alep và tăng cái y lên"
+  },
+  {
+    "start": 805.76,
+    "end": 812.14,
+    "text": "đấy, thì đây chính là cái thao tác mà bạn chộn, chộn 2 cái mảng đã được tăng dần"
+  },
+  {
+    "start": 812.14,
+    "end": 818.14,
+    "text": "trăm thuật tuấn mật xọc ấy, thì là mình sẽ chộn 2 cái dãy bắt đầu từ chỉ số lep, cái thuật ở chỉ số mit-do"
+  },
+  {
+    "start": 818.14,
+    "end": 820.14,
+    "text": "và cái dãy từ mit-do cộng 1 cho tuyệt y"
+  },
+  {
+    "start": 820.14,
+    "end": 823.14,
+    "text": "2 cái dãy này đều đã được là dãy tăng dần rồi, mình sẽ chộn nó với nhau"
+  },
+  {
+    "start": 853.14,
+    "end": 857.74,
+    "text": "Thì ra mình cứ dùng luôn cái chỉ số lab để mình gắn từng từng từng thằng 1, từng lab cho tới rai"
+  },
+  {
+    "start": 857.74,
+    "end": 859.74,
+    "text": "Thì đây chính là cái thật tác mật xọc"
+  },
+  {
+    "start": 859.74,
+    "end": 862.88,
+    "text": "Ok, thật tác trộn của thật tác mật xọc"
+  },
+  {
+    "start": 862.88,
+    "end": 866.88,
+    "text": "Thế còn thật tác mật xọc ấy, thì các bạn nhìn vào đây, mình sẽ cốt đúng như thế này luôn"
+  },
+  {
+    "start": 866.88,
+    "end": 870.88,
+    "text": "Ok, đây, mình sẽ có 1 cái hàm là hàm mật xọc, merge"
+  },
+  {
+    "start": 870.88,
+    "end": 877.44,
+    "text": "Có chỉ bằng a này, có chỉ số lab và cái chỉ số rai"
+  },
+  {
+    "start": 877.44,
+    "end": 881.44,
+    "text": "Bạn kiểm tra, nếu mà lab mà lớn hơn hoặc bằng rai"
+  },
+  {
+    "start": 881.44,
+    "end": 885.14,
+    "text": "Thì bạn có thể return để cho nó kết thúc cái hàm mật xọc này"
+  },
+  {
+    "start": 885.14,
+    "end": 892.74,
+    "text": "Ok, ở đây bạn kiểm tra ít lab nhỏ hơn rai thì bạn mới thiết kiện 3 cái này cũng được, 3 cái, 4 cái theo tác này cũng được"
+  },
+  {
+    "start": 892.74,
+    "end": 898.56,
+    "text": "Còn không í, thì mình sẽ tính cái chỉ số đứng ở giữa, init, myth, bằng lab cộng rai chia cho 2"
+  },
+  {
+    "start": 898.56,
+    "end": 905.79,
+    "text": "Sau đó mình sẽ tiến hành gọi modsoc để nó tiếp tục nó chia cái dãy con bên trái, modsoc"
+  },
+  {
+    "start": 905.79,
+    "end": 911.3,
+    "text": "Mảng A này bắt đầu từ chỉ số lab và kết thúc ở chỉ số myth, modsoc"
+  },
+  {
+    "start": 911.3,
+    "end": 915.3,
+    "text": "Cồn mảng A bắt đầu từ chỉ số myth, đồ cộng 1 cho tới chỉ số rai"
+  },
+  {
+    "start": 915.3,
+    "end": 920.46,
+    "text": "sau khi mà mình gọi mật xọc tới amith và mật xọc tới amith cộng 1 cho the right"
+  },
+  {
+    "start": 920.46,
+    "end": 926.98,
+    "text": "thì hai cái dãy, hai cái mảng con từ left đến myth này và cái mảng con từ myth cộng 1 cho the right nó đều được sắp xếp rồi"
+  },
+  {
+    "start": 926.98,
+    "end": 931.98,
+    "text": "thì mình mới tiến hành gọi cái theo tác merge để nó trộn hai cái dạy đấy vào với nhau, ok?"
+  },
+  {
+    "start": 931.98,
+    "end": 934.02,
+    "text": "merge"
+  },
+  {
+    "start": 934.02,
+    "end": 941.8,
+    "text": "a, left, myth, right, ok, sau đó thì ở trong hàng bên thì mình sẽ thử check"
+  },
+  {
+    "start": 941.8,
+    "end": 944.5,
+    "text": "tử tét nhé"
+  },
+  {
+    "start": 944.5,
+    "end": 946.5,
+    "text": "mình dùng một cái mảng A có 100 phần tử đi"
+  },
+  {
+    "start": 946.5,
+    "end": 948.5,
+    "text": "mình tự xin nó ra đi"
+  },
+  {
+    "start": 948.5,
+    "end": 954.46,
+    "text": "for nt mình không, ít nhỏ hân nơi, cũng cậu"
+  },
+  {
+    "start": 954.46,
+    "end": 956.46,
+    "text": "cho ai y bằng"
+  },
+  {
+    "start": 956.46,
+    "end": 958.46,
+    "text": "gì nhập với ra, tật phần 101"
+  },
+  {
+    "start": 958.46,
+    "end": 960.46,
+    "text": "sau đó mình gọi hàn merge"
+  },
+  {
+    "start": 960.46,
+    "end": 962.46,
+    "text": "xó"
+  },
+  {
+    "start": 962.46,
+    "end": 964.46,
+    "text": "mảng A bắt đầu thị trị xuống không, bắt đầu thị trị xuống"
+  },
+  {
+    "start": 964.46,
+    "end": 966.46,
+    "text": "khi mà bạn thực hiện mờ xó"
+  },
+  {
+    "start": 966.46,
+    "end": 968.46,
+    "text": "thì bạn sẽ gọi cái lời gọi ban đầu"
+  },
+  {
+    "start": 968.46,
+    "end": 970.46,
+    "text": "để chính là cái mảng A bắt đầu thị trị xuống không"
+  },
+  {
+    "start": 970.46,
+    "end": 972.46,
+    "text": "và kết thúc ở trị xuống nr1 nhé"
+  },
+  {
+    "start": 972.46,
+    "end": 1009.18,
+    "text": "zusammen, let A1,"
+  },
+  {
+    "start": 1009.18,
+    "end": 1011.16,
+    "text": "a1, a1, a1, a1, a1, a1,..."
+  },
+  {
+    "start": 1011.16,
+    "end": 1012.32,
+    "text": "1"
+  },
+  {
+    "start": 1012.32,
+    "end": 1013.32,
+    "text": "Đúng nhỉ?"
+  },
+  {
+    "start": 1013.32,
+    "end": 1016.7,
+    "text": "Ơ, x, hlp, xe"
+  },
+  {
+    "start": 1016.7,
+    "end": 1020.6,
+    "text": "hlp bằng easy"
+  },
+  {
+    "start": 1020.6,
+    "end": 1021.6,
+    "text": "hlp"
+  },
+  {
+    "start": 1021.6,
+    "end": 1023.3,
+    "text": "easy"
+  },
+  {
+    "start": 1023.3,
+    "end": 1024.3,
+    "text": "OK"
+  },
+  {
+    "start": 1024.3,
+    "end": 1026.85,
+    "text": "mit 1 lép, ổng loài chỉ cho 2"
+  },
+  {
+    "start": 1026.85,
+    "end": 1029.42,
+    "text": "Ơm"
+  },
+  {
+    "start": 1029.42,
+    "end": 1031.74,
+    "text": "hlp mit"
+  },
+  {
+    "start": 1031.74,
+    "end": 1033.74,
+    "text": "mit đồ cộng 1 try"
+  },
+  {
+    "start": 1035.26,
+    "end": 1037.26,
+    "text": "mật xọc rồi đúng không?"
+  },
+  {
+    "start": 1037.26,
+    "end": 1044.65,
+    "text": "à, xin lỗi, do cái mạng lúc nãy mình rượt đến tận 100"
+  },
+  {
+    "start": 1044.65,
+    "end": 1048.44,
+    "text": "rồi thì mình cho nó vào 100 đi"
+  },
+  {
+    "start": 1048.44,
+    "end": 1051.06,
+    "text": "để cho nó ra nưu một trăm số luôn"
+  },
+  {
+    "start": 1051.06,
+    "end": 1056.92,
+    "text": "đấy, thì bạn thấy là nó sẽ sắp xếp một trăm số này theo thứ tự tăng dạch"
+  },
+  {
+    "start": 1056.92,
+    "end": 1058.92,
+    "text": "và thuật toán vào xọc, ok?"
+  },
+  {
+    "start": 1058.92,
+    "end": 1061.72,
+    "text": "thì đây chính là thuật toán vào xọc nha"
+  },
+  {
+    "start": 1061.72,
+    "end": 1066.68,
+    "text": "nó có các bước chính như thế, đây chính là nó sẽ chia giải từ lab cho the ride"
+  },
+  {
+    "start": 1066.68,
+    "end": 1069.32,
+    "text": "cái mạng từ lab cho the ride của mình thành hai cái giải con, đúng không?"
+  },
+  {
+    "start": 1069.32,
+    "end": 1072.12,
+    "text": "từ lab cho the mid và từ mid đồ cộng bột cho the ride"
+  },
+  {
+    "start": 1072.12,
+    "end": 1074.36,
+    "text": "sau đây thì đến hành sắp xếp hai cái giải con đấy"
+  },
+  {
+    "start": 1074.36,
+    "end": 1077.4,
+    "text": "và sau khi mà hai cái giải con đến sắp xếp xong thì nó mới trộng"
+  },
+  {
+    "start": 1077.4,
+    "end": 1091.29,
+    "text": "Nhưng mà, cái thuật toán này thì nó hơi khó, hơi khó hiểu ở cái chỗ đây chính là mình phải, mình phải hiểu cái cách nó chạy cơ, nhiều bạn cài đặt như thế này, nhưng mà chưa chắc đã hiểu là thằng mật xọc này nó sẽ chạy như thế nào"
+  },
+  {
+    "start": 1091.29,
+    "end": 1100.05,
+    "text": "Thật là nó đệ quy, thế nghĩa là cái cách chạy của nó hơi khó hiểu một chút, ở đây mình sẽ sử dụng luôn cái mạng này nhé, để các bạn thấy xem là, các cái lời gọi đệ quy nó sẽ chạy như thế nào"
+  },
+  {
+    "start": 1100.05,
+    "end": 1107.86,
+    "text": "Cái mạng của mình nó sẽ là, cái này mình phải cho nhỏ đi một chút rồi, mới đủ chỗ cho thằng này"
+  },
+  {
+    "start": 1107.86,
+    "end": 1112.46,
+    "text": "Đấy chính là cái mạng 6, 5, 12, 6, 5, 12, 19, 1"
+  },
+  {
+    "start": 1112.46,
+    "end": 1117.96,
+    "text": "6, 5, 12, 19, 1"
+  },
+  {
+    "start": 1117.96,
+    "end": 1119.96,
+    "text": "Ok, bây giờ ấy"
+  },
+  {
+    "start": 1119.96,
+    "end": 1123.42,
+    "text": "Cái mạng của bạn đang có chỉ số, có 6 phần tử đúng không?"
+  },
+  {
+    "start": 1123.42,
+    "end": 1126.42,
+    "text": "Thì cái lời gọi hạm đầu tiên của các bạn ấy, nó sẽ là gì?"
+  },
+  {
+    "start": 1126.42,
+    "end": 1128.42,
+    "text": "Nó sẽ là mật xọc của..."
+  },
+  {
+    "start": 1128.42,
+    "end": 1134.6,
+    "text": "Nó sẽ là mật xọc của mạng A đúng không? Bắt đầu từ chỉ số 0 và kết thúc ở chỉ số 5"
+  },
+  {
+    "start": 1134.6,
+    "end": 1138.9,
+    "text": "Có đúng như thế này không? Đây này, khi mà bạn bắt đầu gọi thật hoàn sắp xếp đấy"
+  },
+  {
+    "start": 1138.9,
+    "end": 1143.89,
+    "text": "Thì khi đó nó sẽ tiến hành kiểm tra lab với write, trong trường hợp này làm sao nhỉ?"
+  },
+  {
+    "start": 1143.89,
+    "end": 1147.61,
+    "text": "Trường hợp này là lab là không ở nhỏ ở năm thì nó chưa return được,"
+  },
+  {
+    "start": 1147.61,
+    "end": 1150.61,
+    "text": "tức là cái hạm mờ xọc này vẫn chưa được đẩy do khỏi stack đúng không, nó vẫn đang chạy."
+  },
+  {
+    "start": 1150.61,
+    "end": 1153.77,
+    "text": "Thì khi đó nó sẽ tiến hành, nó sẽ tiến hành tính,"
+  },
+  {
+    "start": 1153.77,
+    "end": 1158.15,
+    "text": "nó sẽ tiến hành cái tính chỉ số myth đồ bằng lab cộng write chỉ cho 2,"
+  },
+  {
+    "start": 1158.15,
+    "end": 1162.19,
+    "text": "thì khi đó cái myth đồ của mình nó sẽ là không cộng 5 chỉ cho 2 là bằng 2 đúng không?"
+  },
+  {
+    "start": 1162.19,
+    "end": 1165.75,
+    "text": "Ok, myth đồ của mình nó sẽ là bằng 2, khi mà bạn gọi cái hạm này này,"
+  },
+  {
+    "start": 1165.75,
+    "end": 1168.95,
+    "text": "thì mít đồ của mình nó sẽ bằng 2 đấy. Mình sẽ ghi cái giá trị mít đồ bên phải"
+  },
+  {
+    "start": 1168.95,
+    "end": 1173.51,
+    "text": "và nó sẽ tiến hành gọi nhảy vào cái hàm là mật xọc alec mit trước"
+  },
+  {
+    "start": 1173.51,
+    "end": 1180.18,
+    "text": "tức là nó sẽ gọi cái hàm mật xọc A, 0 và 2, đúng nhỉ?"
+  },
+  {
+    "start": 1180.18,
+    "end": 1183.18,
+    "text": "ok, chú ý nhá, cái hàm này chưa được chạy"
+  },
+  {
+    "start": 1183.18,
+    "end": 1185.58,
+    "text": "cái hàm mật xọc mà bạn gọi đến cái đoạn bên phải"
+  },
+  {
+    "start": 1185.58,
+    "end": 1188.22,
+    "text": "cái đoạn từ mít đồ có 1 cho đến bên phải chưa được chạy đâu"
+  },
+  {
+    "start": 1188.22,
+    "end": 1192.3,
+    "text": "nó mới chia cái mạng này thành 2 con để chính là 6, 5, 11 thôi"
+  },
+  {
+    "start": 1192.3,
+    "end": 1195.66,
+    "text": "ok, nó sẽ chia thành 6, 5, 11 đó"
+  },
+  {
+    "start": 1195.66,
+    "end": 1197.85,
+    "text": "191 thôi"
+  },
+  {
+    "start": 1197.85,
+    "end": 1199.85,
+    "text": "ok"
+  },
+  {
+    "start": 1199.85,
+    "end": 1205.07,
+    "text": "sau đó này, cái hạm bây giờ nó đang chạy để chính là hạm 1 xọc a02"
+  },
+  {
+    "start": 1205.07,
+    "end": 1207.07,
+    "text": "đấy chính là cái đoạn 651 này nè"
+  },
+  {
+    "start": 1207.07,
+    "end": 1213.07,
+    "text": "thì tiếp tục khi nó lại kiểm tra lab là 0 và mean write là bằng 2 thì vẫn chưa return được đúng không"
+  },
+  {
+    "start": 1213.07,
+    "end": 1216.07,
+    "text": "thì nó sẽ tính phần tửa giữa là lab cộng write chia cho 2"
+  },
+  {
+    "start": 1216.07,
+    "end": 1220.07,
+    "text": "lab cộng write chia cho 2 chọc trình hợp này là không cộng v2, chia 2 là 1"
+  },
+  {
+    "start": 1220.07,
+    "end": 1222.07,
+    "text": "mình sẽ kiếp viết cái chi số mít đồ 1 được giữa"
+  },
+  {
+    "start": 1222.07,
+    "end": 1224.42,
+    "text": "sau đó làm sao vậy"
+  },
+  {
+    "start": 1224.42,
+    "end": 1231.29,
+    "text": "Thì bây giờ nó lại gọi cái hàm gì? Sau khi mà nó tính mít đồ bằng 1 thì nó lại gọi cái hàm mật xọc của alep-mits"
+  },
+  {
+    "start": 1231.29,
+    "end": 1239.29,
+    "text": "Mật xọc của alep là 0 nhé, mits là 1 nhé. Vậy thì bây giờ cái hàm mà đang chạy đấy chính là a01"
+  },
+  {
+    "start": 1239.29,
+    "end": 1244.73,
+    "text": "Và tiếp tục nhé, thì khi đó cái dãy của bạn nó sẽ chia như thế này để nó sẽ chia thành 6 năm rồi"
+  },
+  {
+    "start": 1244.73,
+    "end": 1252.8,
+    "text": "Nói, ok. Nó lại tính bây giờ cái hàm là đang chạy là hàm mật xọc a01 đúng không?"
+  },
+  {
+    "start": 1252.8,
+    "end": 1256.92,
+    "text": "LAP là 0, RY là 1, nó vẫn chưa rừng được, nó vẫn chưa return"
+  },
+  {
+    "start": 1256.92,
+    "end": 1259.92,
+    "text": "và nó tiếp tục tính cái trị sầu đứng giữa là LAP còn RY chia cho 2"
+  },
+  {
+    "start": 1259.92,
+    "end": 1263.12,
+    "text": "Trong trường hợp này nó chính là 0, cộng 1 chia cho 2 là 0"
+  },
+  {
+    "start": 1263.12,
+    "end": 1268.57,
+    "text": "Đó, ok, và nó sẽ tiến hành gọi mật xọc của A LAP MIT"
+  },
+  {
+    "start": 1268.57,
+    "end": 1274.61,
+    "text": "MIT là 0 này, LAP là 0 này thì nó sẽ gọi hàm mật xọc của A, 0, 0"
+  },
+  {
+    "start": 1274.61,
+    "end": 1278.89,
+    "text": "Tức là khi đó cái giảy 0, 6 năm của các bạn nó chia thành thằng 6 đấy"
+  },
+  {
+    "start": 1278.89,
+    "end": 1281.28,
+    "text": "Đúng nhờ"
+  },
+  {
+    "start": 1281.28,
+    "end": 1285.16,
+    "text": "và khi mà nó chia thành thằng thằng 6 thì nó là lời gọi hàm mật xọc A00, đúng không?"
+  },
+  {
+    "start": 1285.16,
+    "end": 1289.22,
+    "text": "Nó chính là khi mà nó kiểm tra lab lớn hơn bằng write thì nó return"
+  },
+  {
+    "start": 1289.22,
+    "end": 1294.5,
+    "text": "bởi vì khi mà bạn gọi hàm mật xọc A00 này này, tức là cái giải con của bạn có chỉ có 1 phần tử này"
+  },
+  {
+    "start": 1294.5,
+    "end": 1297.9,
+    "text": "thì nó có thể dừng được ở đây rồi, tức là nó đã chia đến đến 1 phần tử cuối cùng rồi"
+  },
+  {
+    "start": 1297.9,
+    "end": 1300.38,
+    "text": "thì khi đó hàm mật xọc này nó sẽ bị return đúng không?"
+  },
+  {
+    "start": 1300.38,
+    "end": 1303.66,
+    "text": "lời gọi hàm mật xọc A00 nó sẽ bị return nó sẽ được đẩy ra khỏi stack"
+  },
+  {
+    "start": 1303.66,
+    "end": 1305.42,
+    "text": "đúng không? có đẩy ra khỏi stack"
+  },
+  {
+    "start": 1305.42,
+    "end": 1307.28,
+    "text": "thì thế nhá"
+  },
+  {
+    "start": 1307.28,
+    "end": 1311.28,
+    "text": "sau khi mà lời gọi hàm mật xọc A00 được đẩy ra khỏi stack"
+  },
+  {
+    "start": 1311.28,
+    "end": 1319.41,
+    "text": "thì đấy nó mới xăm câu lệnh thứ 29 của hàm mật xọc A01"
+  },
+  {
+    "start": 1319.41,
+    "end": 1323.41,
+    "text": "bởi vì lúc nãy hàm mật xọc A01 của bạn, sau khi mà tính được mít đồ bằng không"
+  },
+  {
+    "start": 1323.41,
+    "end": 1325.41,
+    "text": "thì nó gọi hàm mật xọc A00 đúng không?"
+  },
+  {
+    "start": 1325.41,
+    "end": 1327.41,
+    "text": "là ở câu lệnh 29 đúng không?"
+  },
+  {
+    "start": 1327.41,
+    "end": 1331.41,
+    "text": "thì bây giờ câu lệnh 29 này, hàm mật xọc A00 mới thực hiện xong"
+  },
+  {
+    "start": 1331.41,
+    "end": 1335.41,
+    "text": "thì nó mới nhảy xuống câu lệnh thứ 30 của hàm"
+  },
+  {
+    "start": 1335.41,
+    "end": 1339.89,
+    "text": "Hàm hiện tại trên đỉnh stack, mật xọc A01, tức là nó sẽ gọi cái gì nhỉ?"
+  },
+  {
+    "start": 1339.89,
+    "end": 1342.13,
+    "text": "Nó sẽ gọi mật xọc của..."
+  },
+  {
+    "start": 1342.13,
+    "end": 1348.34,
+    "text": "A, mít đồ cộng 1, rai đúng không? Mít đồ là không này?"
+  },
+  {
+    "start": 1348.34,
+    "end": 1351.62,
+    "text": "Cộng với 1 là 1 đúng không? Rai là 1, vậy thì nó sẽ là A11"
+  },
+  {
+    "start": 1351.62,
+    "end": 1357.62,
+    "text": "Khi mà nó chạy vào hàm mật xọc A11 thì nó thấy lép nó bằng rai thì nó cũng sẽ return luôn"
+  },
+  {
+    "start": 1357.62,
+    "end": 1360.86,
+    "text": "Thế là nó sẽ kết thúc luôn hàm mật xọc A11 của các bạn"
+  },
+  {
+    "start": 1360.86,
+    "end": 1366.5,
+    "text": "tức là khi đó, chính là các bạn gọi cái hàm mật xọc A11, nó chia cái dạy của các bạn, nó thành có mũ 1 số 5 như thế này này"
+  },
+  {
+    "start": 1367.07,
+    "end": 1370.15,
+    "text": "thì khi đó cái hàm mật xọc A11 của các bạn, nó cũng sẽ đã kết thúc"
+  },
+  {
+    "start": 1370.41,
+    "end": 1371.95,
+    "text": "rồi chưa, nó cũng sẽ kết thúc, đấy"
+  },
+  {
+    "start": 1372.19,
+    "end": 1372.95,
+    "text": "tức là"
+  },
+  {
+    "start": 1373.21,
+    "end": 1376.03,
+    "text": "hai cái câu lệnh nhá, hai cái câu lệnh, đây chính là câu lệnh"
+  },
+  {
+    "start": 1376.87,
+    "end": 1378.15,
+    "text": "thứ 29 đấy"
+  },
+  {
+    "start": 1378.41,
+    "end": 1379.17,
+    "text": "đây này"
+  },
+  {
+    "start": 1379.69,
+    "end": 1383.77,
+    "text": "khi mà bạn thực hiện cái lời gọi hàm mật xọc A00, nó sẽ gọi đến mật xọc của"
+  },
+  {
+    "start": 1384.03,
+    "end": 1386.33,
+    "text": "nó sẽ gọi đến mật xọc của"
+  },
+  {
+    "start": 1387.3,
+    "end": 1391.4,
+    "text": "mật xọc của A00, đấy, đây chính là cái câu lệnh số 29 này"
+  },
+  {
+    "start": 1391.7,
+    "end": 1396.18,
+    "text": "c b cour inter flux 14 equal to 29"
+  },
+  {
+    "start": 1396.2,
+    "end": 1401.92,
+    "text": "c r link là mAh of Mh1 Д!!!!"
+  },
+  {
+    "start": 1401.92,
+    "end": 1406.1,
+    "text": "Mh1 Mh2 E1 miyor r Money"
+  },
+  {
+    "start": 1406.1,
+    "end": 1417.18,
+    "text": "c b"
+  },
+  {
+    "start": 1417.18,
+    "end": 1424.32,
+    "text": "Chỉ số 0 và đoạn 1 kết thúc của chỉ số 1, nó chính là 2 dãy con 6 năm này nè"
+  },
+  {
+    "start": 1424.32,
+    "end": 1428.32,
+    "text": "Thì khi đó nó mới trộn nhá, nó mới tiến hành trộn 2 cái tháng 6 với 5 với nhau"
+  },
+  {
+    "start": 1428.32,
+    "end": 1430.78,
+    "text": "Thế nó mới trộn thành cái dạo đòi xảy 6 năm"
+  },
+  {
+    "start": 1430.78,
+    "end": 1433.38,
+    "text": "Thế nó sẽ lỗi trộn 6 năm thì nó phải thành 5-6"
+  },
+  {
+    "start": 1433.38,
+    "end": 1437.98,
+    "text": "Thì bạn thấy, đấy chính là 1 cái bước đầu tiên của thật toán Microsoft"
+  },
+  {
+    "start": 1437.98,
+    "end": 1439.78,
+    "text": "Đấy nó cứ chia, chia, chia, chia"
+  },
+  {
+    "start": 1439.78,
+    "end": 1443.78,
+    "text": "Chia đến bao giờ mà cái dãy, 2 cái dãy con của các bạn nó chỉ có 1 phần tử thôi"
+  },
+  {
+    "start": 1443.78,
+    "end": 1444.98,
+    "text": "Chỉ bắt đầu nó mới trộn lại"
+  },
+  {
+    "start": 1444.98,
+    "end": 1451.98,
+    "text": "OK không nhỉ? Đấy, và sau khi mà nó trộn xong cái 56 này nhé, thì nó sẽ xong câu lệnh số 31 của cái hàm mật xọt"
+  },
+  {
+    "start": 1451.98,
+    "end": 1457.68,
+    "text": "thì khi đó á, cái lời gọi hàm mật xọt A01 của các bạn nó sẽ được đẩy ra khỏi stack, nó sẽ được đẩy ra khỏi stack"
+  },
+  {
+    "start": 1457.68,
+    "end": 1465.53,
+    "text": "như thế này này, thì làm sao nhỉ? Cái hàm mật xọt A01 của các bạn lúc nãy á, đúng chứ à?"
+  },
+  {
+    "start": 1465.53,
+    "end": 1472.53,
+    "text": "Nó chính là cái câu lệnh thứ 29, đúng không? Khi mà bạn gọi đến quả đạn let meet í của cái lời gọi hàm A02"
+  },
+  {
+    "start": 1472.53,
+    "end": 1476.05,
+    "text": "Thì bây giờ câu lệnh số 29 của các bạn vừa được thực hiện xong rồi, đúng không?"
+  },
+  {
+    "start": 1476.68,
+    "end": 1479.56,
+    "text": "OK, câu lệnh số 29 của các bạn vừa được thực hiện xong rồi."
+  },
+  {
+    "start": 1480.34,
+    "end": 1485.33,
+    "text": "Uhm, xa để xoay được cái này nhỉ?"
+  },
+  {
+    "start": 1491.75,
+    "end": 1497.05,
+    "text": "Ờ, thì bây giờ nó sẽ xuống câu lệnh thứ 30 thôi, đấy là nó gọi đến amith.com1 cho theRy."
+  },
+  {
+    "start": 1497.63,
+    "end": 1506.79,
+    "text": "Ở đây nè, cái lab của các bạn là 0, và Ry là 2, thì nó đã gọi câu lệnh 29, đấy là nó gọi mật xọc của A."
+  },
+  {
+    "start": 1506.79,
+    "end": 1524.79,
+    "text": "con trỏ, damit, con résum, ít,.*, ít, shells, lọc,€ roll, types only environment,"
+  },
+  {
+    "start": 1524.79,
+    "end": 1527.27,
+    "text": "mít đồ cộng 1, tức là 1, cộng 1 là 2"
+  },
+  {
+    "start": 1527.27,
+    "end": 1529.07,
+    "text": "và write, tức là 2"
+  },
+  {
+    "start": 1529.07,
+    "end": 1530.55,
+    "text": "nó chính là cái trường hợp mà"
+  },
+  {
+    "start": 1530.55,
+    "end": 1533.11,
+    "text": "khi mà cái giải con có bạn nó chỉ có 11 thôi này"
+  },
+  {
+    "start": 1533.11,
+    "end": 1533.95,
+    "text": "đấy"
+  },
+  {
+    "start": 1533.95,
+    "end": 1539.47,
+    "text": "thì khi mà nó nhảy vào cái lời gọi hàm là mật xọc A22 của các bạn ấy"
+  },
+  {
+    "start": 1539.47,
+    "end": 1541.87,
+    "text": "thì nó rơi vào cái điệu kiện dừng"
+  },
+  {
+    "start": 1541.87,
+    "end": 1545.23,
+    "text": "tức là cái hầm đệ quy đấy nó kiểm tra láp lớn bằng write thì nó dừng luôn"
+  },
+  {
+    "start": 1545.23,
+    "end": 1549.31,
+    "text": "thì khi đó cái hàm mật xọc A22 của các bạn cũng được đẩy ra khỏi stack cũng xong luôn"
+  },
+  {
+    "start": 1549.31,
+    "end": 1550.99,
+    "text": "đúng không? cũng thực hiện xong"
+  },
+  {
+    "start": 1550.99,
+    "end": 1554.43,
+    "text": "nó không thực hiện được gì cả bởi vì nó cái mạng của nó chỉ có 1 phần tử mà"
+  },
+  {
+    "start": 1554.43,
+    "end": 1558.31,
+    "text": "thì khi đó chính là xong câu lệnh 29 và xong câu lệnh 30 rồi đấy"
+  },
+  {
+    "start": 1558.31,
+    "end": 1563.35,
+    "text": "thì nó mới nhảy xuống cái câu lệnh từ 31 của cái hàm mật xọc mà đang được thực hiện này, mật xọc A02 này này"
+  },
+  {
+    "start": 1563.35,
+    "end": 1572.84,
+    "text": "thì nó sẽ tiến hành nó trộn, nó chộn cái giải con bên trái bắt đầu từ chỉ số 0 cho tới chỉ số 1 là 56 này này"
+  },
+  {
+    "start": 1572.84,
+    "end": 1577.12,
+    "text": "và cái giải con bên phải là bắt đầu từ chỉ số 2 và kết thúc của chỉ số 2 là chính là 11 này này"
+  },
+  {
+    "start": 1577.12,
+    "end": 1581.16,
+    "text": "thì khi đó nó sẽ chộn 2 cái thằng 5, 6 và thằng 11 này thành 1 cái giải tăng dần"
+  },
+  {
+    "start": 1581.16,
+    "end": 1585.04,
+    "text": "Ok, mình sẽ để xoá ra cái thần này nhỉ"
+  },
+  {
+    "start": 1585.04,
+    "end": 1590.54,
+    "text": "Rồi ok"
+  },
+  {
+    "start": 1590.54,
+    "end": 1594.78,
+    "text": "Thì khi đó ấy, nó sẽ trộn 2 cái thần này với nhau này đấy"
+  },
+  {
+    "start": 1594.78,
+    "end": 1599.37,
+    "text": "Thánh 5, 6 và 11, đấy"
+  },
+  {
+    "start": 1599.37,
+    "end": 1603.53,
+    "text": "Ok, bạn thấy nó đã sắp được cái nửa bên trái rồi đấy"
+  },
+  {
+    "start": 1603.53,
+    "end": 1606.99,
+    "text": "Ok, sau bây giờ cái hàm mật xót này sau khi mà bạn trộn xong rồi ấy"
+  },
+  {
+    "start": 1606.99,
+    "end": 1609.15,
+    "text": "thì nó xong cái câu lệnh 3,4 của nó rồi đúng không?"
+  },
+  {
+    "start": 1609.15,
+    "end": 1611.67,
+    "text": "Thì nó kết thúc cái hàm này và nó được đẩy ra khỏi stack"
+  },
+  {
+    "start": 1611.67,
+    "end": 1614.17,
+    "text": "Thấy, nó được đẩy ra khỏi stack"
+  },
+  {
+    "start": 1614.17,
+    "end": 1620.71,
+    "text": "Ok, bạn có để ý được rằng là mình vừa thực hiện xong cái câu lệnh thứ 28"
+  },
+  {
+    "start": 1620.71,
+    "end": 1624.67,
+    "text": "à, xin lỗi, câu lệnh thứ 29 của cái lời gọi hàm Microsoft A05 không?"
+  },
+  {
+    "start": 1624.67,
+    "end": 1630.03,
+    "text": "Thì bây giờ nó sẽ gọi đến cái hàm bên phải thôi, cái câu lệnh số 30 của cái hàm đấy thôi"
+  },
+  {
+    "start": 1630.03,
+    "end": 1639.44,
+    "text": "Đấy là Microsoft A, mít đồ cộng 1, 2, cộng 1 là 3, write là 5, ok"
+  },
+  {
+    "start": 1639.44,
+    "end": 1643.39,
+    "text": "và chính là cái dãi này này, cái dãi X191 đấy"
+  },
+  {
+    "start": 1643.39,
+    "end": 1647.59,
+    "text": "và tiếp tục như thế nhé, nó lại tính mít đồ 3, cộng với 5 là 8, 8 chi 2 là 4 nữa hông?"
+  },
+  {
+    "start": 1648.32,
+    "end": 1653.22,
+    "text": "Đấy, thì nó sẽ gọi đến mật xọc của cái đoạn từ A từ 3 cho tới 4 nữa hông?"
+  },
+  {
+    "start": 1653.91,
+    "end": 1658.91,
+    "text": "Tức là khi đó cái giải con của bạn nó sẽ chia 19, 1 nó sẽ chia thành cái giải là 19,"
+  },
+  {
+    "start": 1659.21,
+    "end": 1661.61,
+    "text": "còn cái giải bên này nó sẽ là 1, hông?"
+  },
+  {
+    "start": 1662.11,
+    "end": 1666.71,
+    "text": "Em mật xọc 3, 4 thì nó lại tiếp tục chia, bởi vì lab vẫn nhỏ hơn run mà, nhỏ hơn run mà,"
+  },
+  {
+    "start": 1666.81,
+    "end": 1670.21,
+    "text": "3, 4 là 7, 7 chi 2 là 3, tức là mít đồ của bạn khi nó là 1, 3"
+  },
+  {
+    "start": 1670.21,
+    "end": 1674.53,
+    "text": "Thì nó sẽ gọi cái hàm là mật xọc từ A cho tới..."
+  },
+  {
+    "start": 1674.53,
+    "end": 1678.53,
+    "text": "Mình lab là 3, write là 3, I suy lỗi mít đồ là 3, tức là ab3"
+  },
+  {
+    "start": 1678.53,
+    "end": 1683.59,
+    "text": "Thức là nó cheer cái thằng này nó thành 10 rồi"
+  },
+  {
+    "start": 1683.59,
+    "end": 1687.59,
+    "text": "Thì cái hàm mật xọc ab3 của các bạn nó sẽ kết thúc ngay, bởi vì lab là grind mà"
+  },
+  {
+    "start": 1687.59,
+    "end": 1691.59,
+    "text": "Thì cái lời gọi hàm này đẩy ra khỏi stack này, đợi quy này kết thúc này"
+  },
+  {
+    "start": 1691.59,
+    "end": 1694.48,
+    "text": "Thì nó xong câu lệnh từ 29 nữa"
+  },
+  {
+    "start": 1694.48,
+    "end": 1697.92,
+    "text": "Xong câu lệnh từ 29 nữa, bây giờ nó sang cái câu lệnh từ 30"
+  },
+  {
+    "start": 1697.92,
+    "end": 1706.4,
+    "text": "Một xọc A34. Câu lệnh thứ 29 là gọi mệt xọc A33"
+  },
+  {
+    "start": 1706.4,
+    "end": 1710.44,
+    "text": "Câu lệnh thứ 30 là gọi mệt xọc A34"
+  },
+  {
+    "start": 1710.44,
+    "end": 1717.52,
+    "text": "Lép cộng 1. Lép cộng 1. Ai xin lỗi, miết đồ cộng 1 cho tôi write, miết đồ cộng 1, miết đồ là 3 này, cộng 1 là 4"
+  },
+  {
+    "start": 1717.52,
+    "end": 1720.75,
+    "text": "y là 4, y là a3, y là a4"
+  },
+  {
+    "start": 1720.75,
+    "end": 1725.75,
+    "text": "và hàm xoặc a3, a4, a4 này cũng được đẩy vào stack và nó cũng sẽ kết thúc luôn"
+  },
+  {
+    "start": 1725.75,
+    "end": 1730.75,
+    "text": "khi đó nó chính là cái phần tử mà bạn chia cái mạng của bạn nó chỉ có mỗi 1 phần tử là 9 thôi đấy"
+  },
+  {
+    "start": 1730.75,
+    "end": 1735.75,
+    "text": "và sau cái câu lệnh 29 và câu lệnh 30 này, nó đều được thực hiện xong rồi đúng không?"
+  },
+  {
+    "start": 1735.75,
+    "end": 1737.75,
+    "text": "2 cái hàm này được đệ quy này kết thúc hết rồi đúng không?"
+  },
+  {
+    "start": 1737.75,
+    "end": 1741.75,
+    "text": "thì nó sẽ xinh nhạy xuống cái câu lệnh 31 để nó chộn 2 cái dậy này với nhau"
+  },
+  {
+    "start": 1741.75,
+    "end": 1754.96,
+    "text": "OK, 34, thì nó sẽ tiến hành, nó chộn cái mạng A33 này với A44 với nhau, nó chính là 10 với 9 í, và nó sẽ tạo thành, nó tạo thành cái dãy là cái dãy 90, OK"
+  },
+  {
+    "start": 1754.96,
+    "end": 1764.24,
+    "text": "rồi hôm nhỏ, tương tự như vậy cái thằng, thì khi đó cái meme sẽ có cái mật xọc A34 của bạn nó kết thúc rồi đấy, OK, cho này kết thúc"
+  },
+  {
+    "start": 1764.24,
+    "end": 1769.11,
+    "text": "và bây giờ thì nó tiếp tục nó chạy cái mật xọc A35 thôi đúng không?"
+  },
+  {
+    "start": 1769.11,
+    "end": 1771.99,
+    "text": "đúng đấy, ea34 của các bạn ấy, nói chính là cái lời gọi hàm này"
+  },
+  {
+    "start": 1771.99,
+    "end": 1774.07,
+    "text": "thì bây giờ nó chạy sang, mật xọc quá"
+  },
+  {
+    "start": 1774.07,
+    "end": 1777.51,
+    "text": "mít đồ cộng 1 cho tuyệt Rai, mít đồ cộng 1 là 4"
+  },
+  {
+    "start": 1777.51,
+    "end": 1778.95,
+    "text": "4, cộng 1 là 5"
+  },
+  {
+    "start": 1778.95,
+    "end": 1782.87,
+    "text": "Rai là 5, tức là nó sẽ lọng gọi cái lời gọi đệ quy a5n5"
+  },
+  {
+    "start": 1782.87,
+    "end": 1783.96,
+    "text": "đó"
+  },
+  {
+    "start": 1783.96,
+    "end": 1785.96,
+    "text": "và chính là cái việc thầm 1 thế này"
+  },
+  {
+    "start": 1785.96,
+    "end": 1787.6,
+    "text": "đó, ok"
+  },
+  {
+    "start": 1787.6,
+    "end": 1789.32,
+    "text": "và chính là chia ra thầm 1 thế này"
+  },
+  {
+    "start": 1789.32,
+    "end": 1792.04,
+    "text": "và cái hàm mật xọc a5 này cũng sẽ kết thúc ngày lập tức"
+  },
+  {
+    "start": 1792.04,
+    "end": 1793.04,
+    "text": "hả"
+  },
+  {
+    "start": 1793.04,
+    "end": 1798.8,
+    "text": "Vậy thì cũng đã xong hai câu lệnh gọi bên trái và là câu lệnh gọi bên phải của hàm mật xọc ab5 này rồi đúng không?"
+  },
+  {
+    "start": 1798.8,
+    "end": 1801.92,
+    "text": "Thì nó sẽ tiến hành, nó tiến hành trộn hai cái dậy đầy lại với nhau"
+  },
+  {
+    "start": 1801.92,
+    "end": 1804.08,
+    "text": "Và dậy của bạn nó sẽ thành trộn thành"
+  },
+  {
+    "start": 1804.08,
+    "end": 1810.26,
+    "text": "Và sẽ trộn thành cái dậy đấy là 1, 9 và 10"
+  },
+  {
+    "start": 1810.26,
+    "end": 1813.54,
+    "text": "OK, sau đó cái lời gọi hàm mật xọc ab5 này sẽ kết thúc"
+  },
+  {
+    "start": 1813.54,
+    "end": 1817.28,
+    "text": "Được chưa?"
+  },
+  {
+    "start": 1817.28,
+    "end": 1820.4,
+    "text": "Và cái lời gọi hàm mật xọc ab5 của các bạn kết thúc ấy"
+  },
+  {
+    "start": 1820.4,
+    "end": 1822.96,
+    "text": "Nó chính là sau cái câu lệnh thứ 30 này này"
+  },
+  {
+    "start": 1822.96,
+    "end": 1825.12,
+    "text": "Câu lệnh thứ 29 của các bạn này"
+  },
+  {
+    "start": 1825.12,
+    "end": 1830.28,
+    "text": "Nó chính là lời gọi hàm mở xọc đoạn bên trái này, đoạn A02 này"
+  },
+  {
+    "start": 1830.28,
+    "end": 1835.28,
+    "text": "Còn lời gọi hàm bên phải là lời gọi hàm mở xọc A"
+  },
+  {
+    "start": 1835.28,
+    "end": 1837.28,
+    "text": "3 năm, bạn vừa kết thúc cả 2 rồi đấy"
+  },
+  {
+    "start": 1837.28,
+    "end": 1841.28,
+    "text": "Bây giờ nó sẽ tiến hành câu lệnh số 31 của hàm mở xọc này"
+  },
+  {
+    "start": 1841.28,
+    "end": 1845.28,
+    "text": "Hàm mở xọc ban đầu này, tức là nó sẽ chộn đoạn từ 0 cho thứ 2 và đoạn từ 3 cho thứ 5"
+  },
+  {
+    "start": 1845.28,
+    "end": 1849.28,
+    "text": "Nó chính là chộn đoạn 5, 6, 11 với 19 người đấy"
+  },
+  {
+    "start": 1849.28,
+    "end": 1851.28,
+    "text": "Nó sẽ tiến hành chộn 2 cái này vào với nhau"
+  },
+  {
+    "start": 1851.28,
+    "end": 1854.82,
+    "text": "Đấy, nó sẽ chộn 2 cái này"
+  },
+  {
+    "start": 1854.82,
+    "end": 1867.04,
+    "text": "Mình sẽ kéo nó lên ở trên này nhé"
+  },
+  {
+    "start": 1867.04,
+    "end": 1874.07,
+    "text": "Nó hơi bự"
+  },
+  {
+    "start": 1874.07,
+    "end": 1877.07,
+    "text": "Thì bây giờ nó sẽ tiến hành nó chộn 2 cái này vào với nhau thôi"
+  },
+  {
+    "start": 1877.07,
+    "end": 1881.07,
+    "text": "Nó sẽ tạo thành cái dãy là 1, 5, 9, 10"
+  },
+  {
+    "start": 1881.07,
+    "end": 1887.03,
+    "text": "Anh sẽ lỗi 1, 5, 6, 9, 10 và 11"
+  },
+  {
+    "start": 1887.03,
+    "end": 1889.03,
+    "text": "Và cái đây của mình nó sẽ tăng dần"
+  },
+  {
+    "start": 1889.03,
+    "end": 1891.03,
+    "text": "Và khi đó cái lời gọi hàm này cũng sẽ kết thúc"
+  },
+  {
+    "start": 1891.03,
+    "end": 1892.96,
+    "text": "Ok"
+  },
+  {
+    "start": 1892.96,
+    "end": 1894.96,
+    "text": "Lời gọi hàm này của các bạn nó sẽ kết thúc"
+  },
+  {
+    "start": 1894.96,
+    "end": 1897.05,
+    "text": "Và cái dãy của các bạn nó sẽ thành dãy tăng dần như cái này"
+  },
+  {
+    "start": 1897.05,
+    "end": 1899.05,
+    "text": "1, 5, 6, 9, 10, 11"
+  },
+  {
+    "start": 1899.05,
+    "end": 1910.56,
+    "text": "Để mình hiểu rõ hơn thật toán mật xọc này, ở đây mình không hướng dẫn lại thật toán mật cho nên nhớ, thật toán trộn này hay dạy này nhé"
+  },
+  {
+    "start": 1910.56,
+    "end": 1922.56,
+    "text": "Chỉ khó ở phần này thôi, ok, thành ra là các bạn nên viết một cái hàm nào đó ra, viết một cái hàm và sẽ lỗi viết một cái mạng nào đó ra sau đó thử xem là cái thật toán mật xọc này nó chạy như thế nào"
+  },
+  {
+    "start": 1922.56,
+    "end": 1928.56,
+    "text": "Ok, chạy như thế nào thì mình sẽ hiểu rõ hơn như nó như thế, thế còn cái hình này thì thực chất là nó không đúng đâu"
+  },
+  {
+    "start": 1928.56,
+    "end": 1932.08,
+    "text": "Nó không đúng đâu, bởi vì nó không chạy xong xong như thế này, đúng không?"
+  },
+  {
+    "start": 1932.08,
+    "end": 1935.76,
+    "text": "Mà thực chất là nó sẽ chia ra cái nhánh con này này, chia ra tận đây,"
+  },
+  {
+    "start": 1935.76,
+    "end": 1939.68,
+    "text": "sau đó bắt đầu nó chạy xong cái nhánh này, bắt đầu nó nhảy ra cái nhánh này, nó chạy đúng không?"
+  },
+  {
+    "start": 1939.68,
+    "end": 1944.72,
+    "text": "Ok, thì đây chính là cái thật toán mật xọc, các bạn có thể ca đặt như thế này."
+  },
+  {
+    "start": 1944.72,
+    "end": 1951.84,
+    "text": "Nhưng mà chú ý như thế này nhá, trong trường hợp này, hướng dẫn của người ta thì người ta lại chia khác mình một chút, đúng không?"
+  },
+  {
+    "start": 1951.84,
+    "end": 1956.24,
+    "text": "Ok, chắc là do cái chỉ số láp, write là không vấn đề gì cả, ok?"
+  },
+  {
+    "start": 1956.24,
+    "end": 1958.68,
+    "text": "Thật toán mật xọc"
+  },
+  {
+    "start": 1958.68,
+    "end": 1962.81,
+    "text": "Thật toán mật xọc là liên quan đến bài toán cao inversion"
+  },
+  {
+    "start": 1962.81,
+    "end": 1965.81,
+    "text": "Đấy là bạn sẽ phải đếm số lượng cặp nghịt thế ở trong màng"
+  },
+  {
+    "start": 1965.81,
+    "end": 1968.32,
+    "text": "Cặp nghịt thế ở trong màng biết là gì?"
+  },
+  {
+    "start": 1968.32,
+    "end": 1971.24,
+    "text": "Cặp nghịt thế ở trong màng, ví dụ cái màng của bạn muốn sắp xếp tăng dần"
+  },
+  {
+    "start": 1971.24,
+    "end": 1974.12,
+    "text": "Cặp nghịt thế chính như thế này"
+  },
+  {
+    "start": 1974.12,
+    "end": 1978.38,
+    "text": "8, 2, 1, 9, 7, 3, thế nào"
+  },
+  {
+    "start": 1978.38,
+    "end": 1982.7,
+    "text": "Các cặp nghịt thế chính là phần tử A, i, nó lớn hơn A, z"
+  },
+  {
+    "start": 1982.7,
+    "end": 1984.7,
+    "text": "Mà i lại nhỏ hơn z"
+  },
+  {
+    "start": 1984.7,
+    "end": 1985.98,
+    "text": "Hay nói cái khác là gì?"
+  },
+  {
+    "start": 1985.98,
+    "end": 1989.12,
+    "text": "cái phần tử đứng trước ấy, nó lại lớn hơn cái phần tử đứng sau"
+  },
+  {
+    "start": 1989.65,
+    "end": 1992.75,
+    "text": "đấy thì người ta gọi là một cái cắp nghịt thế trong cái mảng tăng dần"
+  },
+  {
+    "start": 1992.75,
+    "end": 1995.71,
+    "text": "ví dụ như trong trường hợp này nó tồn tại những cái cắp nghịt thế như sau này"
+  },
+  {
+    "start": 1995.71,
+    "end": 1997.61,
+    "text": "đấy là 8 và 2, đúng không?"
+  },
+  {
+    "start": 1997.61,
+    "end": 2002.24,
+    "text": "hoặc là 8 và 1, 8 và 7, 8 và 3"
+  },
+  {
+    "start": 2002.24,
+    "end": 2005.83,
+    "text": "2 và 1, đúng không vân vân?"
+  },
+  {
+    "start": 2005.83,
+    "end": 2007.83,
+    "text": "9, 7, 9, 3 rồi 7 và 3 vân vân"
+  },
+  {
+    "start": 2007.83,
+    "end": 2010.23,
+    "text": "nếu mà bạn dùng 2 và 4 thì cốt cái này quá dễ đúng không?"
+  },
+  {
+    "start": 2010.23,
+    "end": 2012.83,
+    "text": "đối phức tạp của nó sẽ là o nr bình, không vấn đề gì"
+  },
+  {
+    "start": 2012.83,
+    "end": 2015.33,
+    "text": "nhưng mà mình có thể sử dụng thuật toán mật xọc"
+  },
+  {
+    "start": 2015.33,
+    "end": 2018.41,
+    "text": "để mình đếm xem là nó có bao nhiêu cái cặp nghịch thế"
+  },
+  {
+    "start": 2018.41,
+    "end": 2021.61,
+    "text": "bấu chốt là ở chỗ này này, là ở cái thao tác merge này"
+  },
+  {
+    "start": 2021.61,
+    "end": 2026.21,
+    "text": "mình sẽ không đơn thuần là merge, nhưng nó không đơn thuần là trộn nữa"
+  },
+  {
+    "start": 2026.21,
+    "end": 2031.21,
+    "text": "mà mình sẽ xem là ở cái thao tác merge chỗ này nó sẽ xuất hiện bao nhiêu cặp nghịch thế"
+  },
+  {
+    "start": 2031.21,
+    "end": 2033.05,
+    "text": "và tại sao mình có thể đếm được"
+  },
+  {
+    "start": 2033.05,
+    "end": 2038.29,
+    "text": "ví dụ bạn có 2 cái dãy con như thế này, đấy là 1, 8, 7, 3, ạ sợ lỗi"
+  },
+  {
+    "start": 2038.29,
+    "end": 2040.93,
+    "text": "1, 8, 9 và 10"
+  },
+  {
+    "start": 2040.93,
+    "end": 2046.53,
+    "text": "dạy con thứ 2 thì là 2, 3, 4, 12"
+  },
+  {
+    "start": 2046.53,
+    "end": 2051.28,
+    "text": "cái dãi này là bên trái nhé, con thằng này là bên phải này"
+  },
+  {
+    "start": 2051.28,
+    "end": 2055.14,
+    "text": "giả sử bạn muốn chộn 2 cái dãi này về với nhau"
+  },
+  {
+    "start": 2055.14,
+    "end": 2059.14,
+    "text": "thì khi mà bạn chộn thì bạn có thể đếm được xem có bao nhiêu cặp nghịch thế đấy"
+  },
+  {
+    "start": 2059.14,
+    "end": 2063.9,
+    "text": "cái cách nó là như thế này, mình cũng vẫn dùng 2 cái chỉ số i và di nhé"
+  },
+  {
+    "start": 2063.9,
+    "end": 2068.66,
+    "text": "trong trường hợp này 1 mà nhỏ hơn 2 thì nó sẽ không tồn tại cặp nghịch thế"
+  },
+  {
+    "start": 2068.66,
+    "end": 2073.94,
+    "text": "1 đi trước, xong dịch sang 8 đúng không? 8 lớn hơn 2"
+  },
+  {
+    "start": 2073.94,
+    "end": 2081.88,
+    "text": "1 phần tử thuộc mảng bên trái, lớn hơn 1 phần tử thuộc mảng bên phải"
+  },
+  {
+    "start": 2081.88,
+    "end": 2089.08,
+    "text": "thì tất cả những phần tử tính từ trị số của thằng 8 về cuối của mảng bên trái sẽ lớn hơn thằng 2 này"
+  },
+  {
+    "start": 2089.08,
+    "end": 2092.68,
+    "text": "khi mà bạn phát hiện ra 8 lớn hơn 2 đúng không? 8 đứng trước 2 đúng không?"
+  },
+  {
+    "start": 2092.68,
+    "end": 2094.92,
+    "text": "cái thằng này là mảnh bên trái, thằng bên phải"
+  },
+  {
+    "start": 2094.92,
+    "end": 2099.68,
+    "text": "tất cả những phần tử là 8, 9, 10, nó sẽ tạo thành 1 cặp vịt thế với 2"
+  },
+  {
+    "start": 2099.68,
+    "end": 2107.08,
+    "text": "Đúng nhỉ? Thì khi đó mình sẽ đếm được cái số lượng cặp nghị thế nó sẽ là 8, 9, 2 và 12"
+  },
+  {
+    "start": 2107.08,
+    "end": 2112.8,
+    "text": "Sau đó thì bạn tăng chỉ số 2 lên đúng không? là 3, tiếp tục người 8 lại lớn hơn 3 đúng không?"
+  },
+  {
+    "start": 2112.8,
+    "end": 2119.2,
+    "text": "Thì khi đó 8, 9, 10 sẽ tạo cặp nghị thế với 3, tức là mình sẽ có thêm 3 cặp nghị thế nữa là 8, 3, 9, 3 và 13"
+  },
+  {
+    "start": 2119.2,
+    "end": 2123.0,
+    "text": "Thì sao tăng chỉ số lên 4 này? Thì lại thấy 8 lớn hơn 4 đúng không?"
+  },
+  {
+    "start": 2123.0,
+    "end": 2130.88,
+    "text": "Thì khi đó lại cặp nghị thế nữa, 8, 4, 9, 4 và 14, tăng chỉ số này lên đúng không? 8 nhỏ hơn 12 thì tăng 8, đúng không nhỉ?"
+  },
+  {
+    "start": 2130.88,
+    "end": 2136.88,
+    "text": "Do tăng 9, 9 nhỏ hơn 12, tăng 9, 10 nhỏ hơn 12, tăng, và khi đó nó kết thúc"
+  },
+  {
+    "start": 2136.88,
+    "end": 2140.88,
+    "text": "Và bạn đã đến được tất cả là 4, lúc nữa là 3, 3 là 9 cặp hình thế đúng không?"
+  },
+  {
+    "start": 2140.88,
+    "end": 2147.88,
+    "text": "Ở mỗi bước mình làm kiểu đó, mình phát hiện ra 1 phần tử của cái dãi bên trái, cái đoạn từ left cho tới mid-do"
+  },
+  {
+    "start": 2147.88,
+    "end": 2150.88,
+    "text": "Và lớn hơn 1 phần tử 5 trong cái đoạn từ mid-do còn 1 cho tới right"
+  },
+  {
+    "start": 2150.88,
+    "end": 2154.88,
+    "text": "Thì tất cả những phần tử từ cái chỉ số đang set cho tới cái chỉ số mid-do"
+  },
+  {
+    "start": 2154.88,
+    "end": 2159.88,
+    "text": "Nó đều lớn hơn cái phần tử mà mình đang set ở trong cái mạng right này"
+  },
+  {
+    "start": 2159.88,
+    "end": 2164.32,
+    "text": "Thì khi đó nó sẽ tạo thành cái hình thế thôi, đúng nhỉ? Ví dụ bạn có một cái mảng như thế này nhé"
+  },
+  {
+    "start": 2164.32,
+    "end": 2166.32,
+    "text": "Và bạn đếm cái cập hình thế của nó ấy"
+  },
+  {
+    "start": 2166.32,
+    "end": 2169.45,
+    "text": "Ví dụ là 8 này, 7 này, 1 này"
+  },
+  {
+    "start": 2169.45,
+    "end": 2173.26,
+    "text": "8, 7, 1, 9, 2, 3 đi"
+  },
+  {
+    "start": 2173.26,
+    "end": 2177.74,
+    "text": "Ok, giả sứ mật xọc của các bạn nó sẽ chia thành, nó sẽ chia thành 8, 7, 1"
+  },
+  {
+    "start": 2177.74,
+    "end": 2181.37,
+    "text": "Và bên này thì thành 9, 2, 3"
+  },
+  {
+    "start": 2181.37,
+    "end": 2185.95,
+    "text": "Ok, sau đó nó tiếp tục chia thành, chia thành 8 với 7"
+  },
+  {
+    "start": 2185.95,
+    "end": 2186.99,
+    "text": "Và 1"
+  },
+  {
+    "start": 2186.99,
+    "end": 2189.88,
+    "text": "Tiếp tục nó chia thành 9, 2 và 3"
+  },
+  {
+    "start": 2189.88,
+    "end": 2193.21,
+    "text": "Ok, và tiếp tục 8 với 7 nó chia thành 8 và 7"
+  },
+  {
+    "start": 2193.21,
+    "end": 2198.13,
+    "text": "1 thì nó chia thành 1 thôi, 9 thì nó sẽ thành 9 mà 2, 3"
+  },
+  {
+    "start": 2198.13,
+    "end": 2206.41,
+    "text": "Thì như thế này, khi mà các phần tử trong cái mạng của bạn nó chia ra nhỏ con như thành mỗi thằng 1 cái như thế này rồi này"
+  },
+  {
+    "start": 2206.41,
+    "end": 2214.93,
+    "text": "Thì bắt đầu nó có một cái thao tác merge, đấy chính là cái lúc mà bạn có thể đếm được cái cặp nghị thế trong mạng"
+  },
+  {
+    "start": 2214.93,
+    "end": 2219.19,
+    "text": "Ví dụ như trong trường hợp này, khi mà bạn trộn 2 cái thằng 87 với nhau ấy, đúng không?"
+  },
+  {
+    "start": 2219.19,
+    "end": 2222.19,
+    "text": "Tạo thành cái mảng tăng dân là 78 đúng không?"
+  },
+  {
+    "start": 2222.19,
+    "end": 2224.19,
+    "text": "Thì bạn đếm được số lượng cặp nghị thế là 1"
+  },
+  {
+    "start": 2224.19,
+    "end": 2231.19,
+    "text": "Chộn 2 cái thằng 7, 8 với thằng 1 này, nó thành cái dãy là 1, 7, 8"
+  },
+  {
+    "start": 2231.19,
+    "end": 2234.48,
+    "text": "Thì bạn đến được bao nhiêu cặp hình thế nhỉ? 7 với 1 và 8 với 1 đúng không?"
+  },
+  {
+    "start": 2234.48,
+    "end": 2236.48,
+    "text": "Tức là 2 cặp hình thế nữa"
+  },
+  {
+    "start": 2236.48,
+    "end": 2240.48,
+    "text": "Bên ảnh thế, bạn chộn 2 và 9 thì nó tạo thành cái mảng là 2, 9 không?"
+  },
+  {
+    "start": 2240.48,
+    "end": 2242.48,
+    "text": "Và bạn đến được 1 cặp hình thế"
+  },
+  {
+    "start": 2242.48,
+    "end": 2244.48,
+    "text": "Chộn 2, 9 với 3 đúng không?"
+  },
+  {
+    "start": 2244.48,
+    "end": 2247.48,
+    "text": "Thì nó sẽ tạo thành cái dãy là 2, 3 và 9 không?"
+  },
+  {
+    "start": 2247.48,
+    "end": 2249.48,
+    "text": "Thì nó có bao nhiêu cặp hình thế nhỉ? 1 đúng không? 9 lớn hơn 3 mà"
+  },
+  {
+    "start": 2249.48,
+    "end": 2251.48,
+    "text": "Có thêm 1 cặp hình thế nữa"
+  },
+  {
+    "start": 2251.48,
+    "end": 2254.44,
+    "text": "sau đó bạn chộn cái giải 1, 7, 8, với 2, 3, 9 này nè"
+  },
+  {
+    "start": 2254.44,
+    "end": 2258.2,
+    "text": "bạn đếm xem là khi mà bạn chộn 2 cái này với nhau thì lại có bao nhiêu cặp vịt thế nữa"
+  },
+  {
+    "start": 2258.2,
+    "end": 2261.72,
+    "text": "7, 8, 7, 2, 3 đúng không? là 2 nè"
+  },
+  {
+    "start": 2261.72,
+    "end": 2263.88,
+    "text": "8, 2, 3 cũng là 2 nữa là 4 nè"
+  },
+  {
+    "start": 2263.88,
+    "end": 2266.52,
+    "text": "đúng không? phải thế nó có 4 cặp vịt thế nữa"
+  },
+  {
+    "start": 2266.52,
+    "end": 2270.36,
+    "text": "và khi đó mình chộn nó thành cái giải là 1, 2, 3, 7, 8, 9 thôi"
+  },
+  {
+    "start": 2270.36,
+    "end": 2271.7,
+    "text": "đúng không?"
+  },
+  {
+    "start": 2271.7,
+    "end": 2274.74,
+    "text": "nhưng mình cũng đếm luôn được số lượng cặp vịt thế của nó đây nè"
+  },
+  {
+    "start": 2274.74,
+    "end": 2278.26,
+    "text": "đấy là 1, 2 là 3, 3 cũng 1 là 4, 4 là 5, 5 là cũng 1 là 9 nè"
+  },
+  {
+    "start": 2278.26,
+    "end": 2280.9,
+    "text": "bạn xem cái giải ban đầu này có phải có 9 cặp vịt thế không?"
+  },
+  {
+    "start": 2280.9,
+    "end": 2291.18,
+    "text": "8 với 7 nhá, 8 với 01, 82 anh này, 83 anh này"
+  },
+  {
+    "start": 2291.18,
+    "end": 2311.71,
+    "text": "đúng không, 7 với 01, 72 anh này, 72 anh này, 93 anh này,"
+  },
+  {
+    "start": 2311.71,
+    "end": 2316.87,
+    "text": "bàn đầu có thể đếm được thông qua là mỗi lúc mà bạn trộn"
+  },
+  {
+    "start": 2316.87,
+    "end": 2320.75,
+    "text": "bạn trộn 2 cái dãy bên trái, và 1 cái dãy bên phải"
+  },
+  {
+    "start": 2320.75,
+    "end": 2323.67,
+    "text": "thì mình đếm luôn xem là có bao nhiêu cặp nhịp thế"
+  },
+  {
+    "start": 2323.67,
+    "end": 2325.83,
+    "text": "ok, thì cái độ phức tạc của mình chỉ còn là"
+  },
+  {
+    "start": 2325.83,
+    "end": 2328.31,
+    "text": "oh, nó lốc nó, thay vì là nó bình như lúc nãy"
+  },
+  {
+    "start": 2328.31,
+    "end": 2329.38,
+    "text": "ok"
+  },
+  {
+    "start": 2329.38,
+    "end": 2332.42,
+    "text": "vậy thì các bạn sửa đủ ở cái ham mod xọt này đi 1 chút là được"
+  },
+  {
+    "start": 2332.42,
+    "end": 2333.9,
+    "text": "ham mod trên này đi 1 chút là được"
+  },
+  {
+    "start": 2333.9,
+    "end": 2336.66,
+    "text": "ở đây mình sẽ dùng 1 cái biến cao ở đây"
+  },
+  {
+    "start": 2336.66,
+    "end": 2342.06,
+    "text": "đúng nhỉ, và cái ham mod trên này của mình sẽ trả về 1 số nguyên"
+  },
+  {
+    "start": 2342.06,
+    "end": 2350.88,
+    "text": "Ở chỗ này, vector x là cái mảng bên trái nhé, mình kiểm tra nếu là lớn hơn đúng không?"
+  },
+  {
+    "start": 2350.88,
+    "end": 2355.48,
+    "text": "Từ từ, nếu mà xe nhỏ hơn hoặc bằng iz thì nó không tạo thành cặp vịt thế đúng không?"
+  },
+  {
+    "start": 2355.48,
+    "end": 2361.04,
+    "text": "Nhưng nếu mà xe mà lớn hơn, nó lớn hơn iz thì khi đó làm sao nhờ nó sẽ tạo thành cặp vịt thế?"
+  },
+  {
+    "start": 2361.04,
+    "end": 2368.04,
+    "text": "Và cái biến cao của mình nó sẽ cộng bằng tất cả các khách phần tử tính từ chỉ số i cho tới chỉ số cuối cùng ở trong mảng x"
+  },
+  {
+    "start": 2368.04,
+    "end": 2370.86,
+    "text": "ít.size, trjorie, amen"
+  },
+  {
+    "start": 2370.86,
+    "end": 2373.72,
+    "text": "Ở dưới này bạn return cho mình về biên cao đấy"
+  },
+  {
+    "start": 2374.36,
+    "end": 2377.78,
+    "text": "Mỗi khi mà bạn trộn 2 cái bánh bên trái và bánh bên thái với nhau"
+  },
+  {
+    "start": 2377.92,
+    "end": 2380.4,
+    "text": "bạn đếm sẽ có bao nhiêu, bàn cập mình thế"
+  },
+  {
+    "start": 2380.78,
+    "end": 2383.04,
+    "text": "Và bạn sẽ return cho mình về biên cao đấy"
+  },
+  {
+    "start": 2383.14,
+    "end": 2387.14,
+    "text": "Ok, sau đó cái hàm mơ xọc này, các bạn cũng sẽ return về biến interrier nhá"
+  },
+  {
+    "start": 2390.45,
+    "end": 2392.29,
+    "text": "Ở đây thì mình sẽ đỡ sợ đối đi một chút"
+  },
+  {
+    "start": 2395.78,
+    "end": 2398.56,
+    "text": "Mình có thể kiếm ch 테 là iplab nh 드 hơn ride"
+  },
+  {
+    "start": 2398.56,
+    "end": 2406.16,
+    "text": "Cái này các bạn cũng có thể thay iplib lớn rai, return bằng ip nhỏ hon rai, xong bạn cho 4 câu lệnh này vào trong cái ip ấy cũng được nhé"
+  },
+  {
+    "start": 2406.16,
+    "end": 2407.66,
+    "text": "Đây, bạn thật phút nhìn này nè"
+  },
+  {
+    "start": 2407.66,
+    "end": 2415.26,
+    "text": "iplib nhỏ hon rai thì mình sẽ dùng 1 cái biến đến khởi tại bằng không, sau đó mình tính mit, hẳn, lib, cộng rai, chia cho 2"
+  },
+  {
+    "start": 2415.26,
+    "end": 2428.14,
+    "text": "Sau đó mình sẽ cho đến cộng bằng mod sọc của a, lib, mit và đến cộng bằng mod sọc của a"
+  },
+  {
+    "start": 2428.14,
+    "end": 2430.14,
+    "text": "Mith đồ cộng 1 và rai đúng hả?"
+  },
+  {
+    "start": 2430.14,
+    "end": 2433.14,
+    "text": "Thì mình đếm cho bên ngoài đi"
+  },
+  {
+    "start": 2433.14,
+    "end": 2437.74,
+    "text": "Bởi vì nếu mà lab mà lớn ở bằng rai thì đếm nó bằng không mà"
+  },
+  {
+    "start": 2437.74,
+    "end": 2440.74,
+    "text": "bởi vì khi mà cái màng có bạn có một phần thứ ấy"
+  },
+  {
+    "start": 2440.74,
+    "end": 2444.74,
+    "text": "hoặc là nó lab lớn rai thì số lượng cặp thì thế của mình là không"
+  },
+  {
+    "start": 2444.74,
+    "end": 2452.06,
+    "text": "Sau đó bạn cho đếm cộng bằng merge của a, lab, width và rai"
+  },
+  {
+    "start": 2452.06,
+    "end": 2454.06,
+    "text": "Ok, và dưới này bạn vùi tôi được biến đếm"
+  },
+  {
+    "start": 2454.06,
+    "end": 2459.28,
+    "text": "Thì đây chỉ là cái cách mà bạn đếm cao inversion bằng thật toán mơ xọc"
+  },
+  {
+    "start": 2459.28,
+    "end": 2464.12,
+    "text": "Chỗ này có vẻ là hơi khó hiểu một chút đúng không? Thực chất đây chính là gì nhỉ?"
+  },
+  {
+    "start": 2464.12,
+    "end": 2472.32,
+    "text": "Khi mà bạn chộn cái số lượng cặp nghỉ thế trong cái đoạn từ left cho tới right nó chính là cái số lượng cặp nghỉ thế của cái đoạn bên trái này"
+  },
+  {
+    "start": 2472.32,
+    "end": 2479.92,
+    "text": "Cộng cái số lượng cặp nghỉ thế của cái đoạn bên phải, và cộng thêm cái số lượng cặp nghỉ thế mà 1 phần tử thì ở bên trái, 1 phần tử ở bên phải"
+  },
+  {
+    "start": 2479.92,
+    "end": 2485.12,
+    "text": "Thì ra cái biến đếm của bạn nó sẽ phải cộng thêm 3 thằng nghỉ thế, ok? Đây chính là số lượng cặp nghỉ thế bên trái"
+  },
+  {
+    "start": 2485.12,
+    "end": 2492.24,
+    "text": "cặp sứ lượng nghị thế, thuộc mạng bên phải, và sứ lượng cặp nghị thế mà một thằng thì ở bên trái, một thằng thì ở bên phải"
+  },
+  {
+    "start": 2492.24,
+    "end": 2494.04,
+    "text": "ok, xong bạn là vì tương vị bên đếm"
+  },
+  {
+    "start": 2494.04,
+    "end": 2496.04,
+    "text": "ở trong hàm mên của các bạn ạ"
+  },
+  {
+    "start": 2496.04,
+    "end": 2501.09,
+    "text": "bí dụ mình cho nó bằng 10.000 đi, ok"
+  },
+  {
+    "start": 2501.09,
+    "end": 2504.99,
+    "text": "để mình..."
+  },
+  {
+    "start": 2504.99,
+    "end": 2509.25,
+    "text": "thử mình sẽ dùng một cái biến an ở F"
+  },
+  {
+    "start": 2509.25,
+    "end": 2513.22,
+    "text": "bằng mật xóc sau đó mình sẽ in ra xem là nó có bao nhiêu cặp nghị thế nhé"
+  },
+  {
+    "start": 2513.22,
+    "end": 2516.74,
+    "text": "Chú ý nhá, cái mảng của bạn cũng sẽ được tăng dần luôn đấy"
+  },
+  {
+    "start": 2516.74,
+    "end": 2521.94,
+    "text": "Ok, ví dụ này, bạn chạy thì nó sẽ sinh ra một cái mảng tự nhiên, sau đó thì nó sẽ"
+  },
+  {
+    "start": 2521.94,
+    "end": 2523.94,
+    "text": "ít ra xem là có bao nhiêu cặp mình thế"
+  },
+  {
+    "start": 2528.88,
+    "end": 2533.36,
+    "text": "Mình sẽ dùng 2 cái, mình sẽ dùng một cái cách cốt châu nhá, mình dùng một cái cốt châu"
+  },
+  {
+    "start": 2533.36,
+    "end": 2538.0,
+    "text": "For, mình sẽ dùng một cái cốt cốt châu và một cái cách dùng cái"
+  },
+  {
+    "start": 2538.0,
+    "end": 2543.04,
+    "text": "thủ tắm ở xọc để đếm xem cái số lượng cặp mình thế trong mảng nó có khác nhau hay không"
+  },
+  {
+    "start": 2543.04,
+    "end": 2546.72,
+    "text": "Cảm ơn các bạn nhé, mình sẽ dùng một cái mạng con con trước"
+  },
+  {
+    "start": 2546.72,
+    "end": 2553.59,
+    "text": "Dùng một cái mạng con con như ngày nhé, đây là 871923 rồi nhé"
+  },
+  {
+    "start": 2553.59,
+    "end": 2559.94,
+    "text": "NTA, mấy phần tử nhé, 6 đúng không?"
+  },
+  {
+    "start": 2559.94,
+    "end": 2591.39,
+    "text": "8. vertices, memory, X,跡, sex,計, broth,"
+  },
+  {
+    "start": 2591.39,
+    "end": 2592.93,
+    "text": "để đếm cho là có bao nhiêu"
+  },
+  {
+    "start": 2592.93,
+    "end": 2596.32,
+    "text": "và mình sẽ dùng thêm một cái biến"
+  },
+  {
+    "start": 2596.32,
+    "end": 2600.28,
+    "text": "biến cao nữa để mình dùng hai vòng phó mình cốt châu ý"
+  },
+  {
+    "start": 2600.28,
+    "end": 2602.88,
+    "text": "cốt châu trước nhé, chú ý phải đếm trước nhé"
+  },
+  {
+    "start": 2602.88,
+    "end": 2606.18,
+    "text": "bởi vì nếu mà bạn gọi mật xọc xong là cái mạng nó tăng dần nữa"
+  },
+  {
+    "start": 2606.18,
+    "end": 2609.1,
+    "text": "cái cao inversion nó thành mà không đấy"
+  },
+  {
+    "start": 2609.1,
+    "end": 2611.1,
+    "text": "i nhỏ hơn nói cộng cộng nữa"
+  },
+  {
+    "start": 2611.1,
+    "end": 2615.1,
+    "text": "phó int tg đằng i cộng 1, i nhỏ hơn nói dì cộng cộng nữa"
+  },
+  {
+    "start": 2615.1,
+    "end": 2617.0,
+    "text": "và mình sẽ kiểm tra nếu mà ai i"
+  },
+  {
+    "start": 2617.0,
+    "end": 2620.0,
+    "text": "lớn hơn ai dì thì mình sẽ tăng về biến cao"
+  },
+  {
+    "start": 2620.0,
+    "end": 2624.12,
+    "text": "Ok, bởi vì cái biến cao nó sẽ lưu kết quả của phương pháp châu, mình giật châu"
+  },
+  {
+    "start": 2624.12,
+    "end": 2628.96,
+    "text": "Còn phương biến nrx này thì nó sẽ lưu cái kết quả mình sẽ dụng thủ tỏa mật xỏ"
+  },
+  {
+    "start": 2628.96,
+    "end": 2641.78,
+    "text": "Và mình sẽ xem là hai cái kết quả này có giống nhau hay không đúng không? Mình cho khoảng 100 tết thì"
+  },
+  {
+    "start": 2641.78,
+    "end": 2651.96,
+    "text": "Mình sẽ cho khoảng 100 tết, xem là sau đó diễn này thì mình sẽ in ra biến cao và biến nrx xem là nó có giống nhau hay không"
+  },
+  {
+    "start": 2651.96,
+    "end": 2659.44,
+    "text": "Ok, đây mình sẽ nhập vào khoảng 50 tết thôi"
+  },
+  {
+    "start": 2659.44,
+    "end": 2669.43,
+    "text": "Đấy, thì bạn thấy là cái cốt châu ấy và cái, cái cốt châu và cái mình sử dụng cuộc tuấn mật xò cái thì nó ra kết quái như nhau, đúng không?"
+  },
+  {
+    "start": 2669.43,
+    "end": 2675.78,
+    "text": "OK, đấy, các bạn thấy kết quả nó đều như nhau. Cái thẳng cốt châu thì nó chạy tương đối là lâu, nó còn mật xò cái chạy là nhanh."
+  },
+  {
+    "start": 2675.78,
+    "end": 2683.78,
+    "text": "Thì ra cái thời gian chạy của, của cốt châu thì nó hơi lâu một tí. OK, là các bạn cũng thể cho nó giảm đi một tí nữa."
+  },
+  {
+    "start": 2683.78,
+    "end": 2685.78,
+    "text": "Nghìn thôi, ok"
+  },
+  {
+    "start": 2685.78,
+    "end": 2687.78,
+    "text": "Để cho cốt châu nó chạy cũng nhanh ấy"
+  },
+  {
+    "start": 2687.78,
+    "end": 2690.29,
+    "text": "Thì các bạn sẽ thấy, ví dụ như mười ở trong"
+  },
+  {
+    "start": 2692.58,
+    "end": 2694.58,
+    "text": "Này, như nó ra cùng một tét thì phải"
+  },
+  {
+    "start": 2694.58,
+    "end": 2696.58,
+    "text": "Nó cái sét ran của mình"
+  },
+  {
+    "start": 2696.58,
+    "end": 2700.92,
+    "text": "Thì các bạn có thể xin ra các cái cốt ngẫu nhiên"
+  },
+  {
+    "start": 2700.92,
+    "end": 2702.92,
+    "text": "Sau đó là kiểm tra xem là"
+  },
+  {
+    "start": 2704.92,
+    "end": 2706.92,
+    "text": "Liệu rằng 2 cái cách mà mình cốt châu với cái cách mà"
+  },
+  {
+    "start": 2708.92,
+    "end": 2710.92,
+    "text": "Mình sử dụng thuật toán mà xó cái"
+  },
+  {
+    "start": 2710.92,
+    "end": 2712.92,
+    "text": "Thì cái việc mà đếm các cái cà phì thế trong mạng nó có"
+  },
+  {
+    "start": 2712.92,
+    "end": 2714.92,
+    "text": "Thì khác nhau hay không"
+  },
+  {
+    "start": 2714.92,
+    "end": 2740.81,
+    "text": "WHO, recording, cout,ounds &"
+  },
+  {
+    "start": 2740.81,
+    "end": 2745.41,
+    "text": "bởi để rõ ràng hơn là thật toán này nó hoạt động như thế nào, tốt nhất các bạn biết một cái máng ra"
+  },
+  {
+    "start": 2745.41,
+    "end": 2751.11,
+    "text": "sau đó thì mình thử vẽ ra, xem là cái các lời gọi hàm nó chạy như thế nào"
+  },
+  {
+    "start": 2751.11,
+    "end": 2754.11,
+    "text": "các lời gọi địa quy nó chạy mà nó kết thúc như thế nào để hiểu rõ hơn"
+  },
+  {
+    "start": 2754.11,
+    "end": 2756.61,
+    "text": "thật toán này mà xóa nó chạy như thế nào, ok?"
+  }
+]

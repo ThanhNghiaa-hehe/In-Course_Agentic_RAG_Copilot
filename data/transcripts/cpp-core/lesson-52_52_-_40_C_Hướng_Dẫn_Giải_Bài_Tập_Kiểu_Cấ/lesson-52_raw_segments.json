@@ -1,0 +1,3022 @@
+[
+  {
+    "start": 0.18,
+    "end": 4.78,
+    "text": "Trong video này thì mình xử dẫn các bạn một bài về quản lý sinh viên nhé, ok?"
+  },
+  {
+    "start": 4.78,
+    "end": 19.35,
+    "text": "Thông thường thì các bạn bài tập về phần cấu trúc này ấy, thì nó hay liên quan đến bạn làm việc với một cái đối tượng gì đó, ví dụ như sinh viên học sinh rồi là công nhân hay là sách và giết gì đó từ viện vân vân, ok?"
+  },
+  {
+    "start": 19.35,
+    "end": 26.55,
+    "text": "Và các yêu cầu của nó thì thông thường liên quan đến các cái chức năng như là tìm kiếm này, hiển thị rồi là sắp xếp là chính, ok?"
+  },
+  {
+    "start": 26.55,
+    "end": 33.59,
+    "text": "Thông thường thì bạn chỉ cần làm được một cái bài tập ở cái dạng này thôi, là mình có thể làm được các cái bài tập ở một cái cấu trúc khác nhé"
+  },
+  {
+    "start": 33.59,
+    "end": 37.51,
+    "text": "Còn nếu mà, tức là bạn làm được cái bài là một cấu trúc sinh viên chẳng hạn, đúng không?"
+  },
+  {
+    "start": 37.51,
+    "end": 43.43,
+    "text": "Nhưng mà sang cái bài là một cấu trúc nhân viên mà người ta đổi những cái yêu cầu đi một kí mà mình không làm được, thì đấy là"
+  },
+  {
+    "start": 43.43,
+    "end": 50.23,
+    "text": "Do mình yếu vào cái kỹ năng lập trình, cái kỹ thuật lập trình chứ không phải là nó yếu vào cái phần cấu trúc đâu"
+  },
+  {
+    "start": 50.23,
+    "end": 55.63,
+    "text": "mà hầu hết là do các bạn yếu lập trình quá, thành ra là làm được cái bài quản lý như thế này"
+  },
+  {
+    "start": 55.63,
+    "end": 58.71,
+    "text": "nhưng mà sang cái bài khác, người ta đổ yêu cầu đi một tí mình không thực hiện được"
+  },
+  {
+    "start": 58.71,
+    "end": 65.03,
+    "text": "ok? còn mình nghĩ là nếu các bạn làm được đầy đủ các bài tập mình đã từ hướng dẫn từ trước hơn giờ thì những cái bài tập này làm rất là đơn giản"
+  },
+  {
+    "start": 65.03,
+    "end": 68.23,
+    "text": "ok? mình chỉ cần làm một bài là các bài khác có thể làm được tương tự như vậy"
+  },
+  {
+    "start": 68.23,
+    "end": 74.09,
+    "text": "rồi, người ta sẽ cho mình một cái cấu trúc sinh viên bao gồm có mã sinh viên này, tên này, tên lớp và ngay sinh đúng không?"
+  },
+  {
+    "start": 74.09,
+    "end": 80.64,
+    "text": "sau đó điểm co pe là cái điểm thực hệ số 4, vậy thì là nó có 5 trường tất cả đúng không?"
+  },
+  {
+    "start": 80.64,
+    "end": 83.4,
+    "text": "Bốn cái trường đầu này thì mình sẽ dùng string để lưu nhá"
+  },
+  {
+    "start": 83.4,
+    "end": 87.9,
+    "text": "Mã sinh viên này, tên này, tên lớp và ngay sinh theo con gpa thì mình sẽ để là float và double"
+  },
+  {
+    "start": 87.9,
+    "end": 94.86,
+    "text": "Người ta yêu cầu mình sẽ dựng một cái trường trình thực hiện các yêu cầu như là thêm mới một sinh viên này"
+  },
+  {
+    "start": 94.86,
+    "end": 97.34,
+    "text": "Đúng không? Sau đó là hiển thị toàn bộ viên xách sinh viên này"
+  },
+  {
+    "start": 97.34,
+    "end": 101.18,
+    "text": "Rồi là tìm kiếm sinh viên theo mã này, hoặc là theo tên theo lớp"
+  },
+  {
+    "start": 101.18,
+    "end": 106.08,
+    "text": "Sau đó thì hiển thị các sinh viên có mã đúng với cái mã cần tìm hoặc chứa mã cần tìm"
+  },
+  {
+    "start": 106.08,
+    "end": 109.36,
+    "text": "Rồi là liệt kê các sinh viên có điểm gpa cao nhất này"
+  },
+  {
+    "start": 109.36,
+    "end": 112.35,
+    "text": "đây mình cho liệt kê"
+  },
+  {
+    "start": 112.35,
+    "end": 118.35,
+    "text": "rồi là liệt kê các sinh viên có gpe lớn hơn 2.5, theo thứ tự tiền giảm dần"
+  },
+  {
+    "start": 118.35,
+    "end": 125.35,
+    "text": "xắp xếp sinh viên theo tên này, rồi là xắp xếp sinh viên theo tên, vân vân, các yêu cầu ở dưới này thì mình sẽ xử lý tiếp nhé"
+  },
+  {
+    "start": 125.35,
+    "end": 131.35,
+    "text": "nói chung là nó có những cái bài tập mà nó liên quan đến lọc thông tin của một cái đối tượng thảm án một cái yêu cầu gì đó"
+  },
+  {
+    "start": 131.35,
+    "end": 133.35,
+    "text": "thì chất là nó cũng không khó đúng không?"
+  },
+  {
+    "start": 133.35,
+    "end": 140.35,
+    "text": "thường thường thì, ví dụ như tìm điểm sinh viên có điểm cao nhất này hay là tìm điểm sinh viên thoảm ảnh những điều kiện gì đó"
+  },
+  {
+    "start": 140.35,
+    "end": 146.35,
+    "text": "hoặc là tìm kiếm sinh viên thuộc cùng một lớp, thuộc cùng một chuyên ngành hay là có tên như thế nào đó"
+  },
+  {
+    "start": 146.35,
+    "end": 150.35,
+    "text": "ok, và các hiệu cửa với sắp xếp đầu tiên mình sẽ dựng cái câu chức sinh viên rồi đấy nhá"
+  },
+  {
+    "start": 150.35,
+    "end": 155.63,
+    "text": "ờ, ờ, hoặc là FV cho nó ngắn nhá"
+  },
+  {
+    "start": 155.63,
+    "end": 161.21,
+    "text": "mình sẽ có 4 cái trường đầu tiên mình sẽ để là string mà sinh viên tên lớp"
+  },
+  {
+    "start": 161.21,
+    "end": 164.93,
+    "text": "tên, lớp, ngay sinh, đúng không?"
+  },
+  {
+    "start": 164.93,
+    "end": 168.21,
+    "text": "và 1 cái nữa là cái điểm, mình đã là copy."
+  },
+  {
+    "start": 168.21,
+    "end": 172.13,
+    "text": "Trong cái hạm sinh viên này, mình sẽ viết luôn 2 cái hạm in thông tin"
+  },
+  {
+    "start": 172.13,
+    "end": 175.49,
+    "text": "mình nhập thông tin ở trong cái struct này nha, hoặc là các bạn viết ở ngoài ảnh được"
+  },
+  {
+    "start": 175.49,
+    "end": 179.38,
+    "text": "đây mình sẽ viết in luôn ở trong cái in thông tin nhá"
+  },
+  {
+    "start": 179.38,
+    "end": 184.51,
+    "text": "in thông tin thì mình sẽ CL ra là"
+  },
+  {
+    "start": 184.51,
+    "end": 189.98,
+    "text": "mã sinh viên này, 2 chấm"
+  },
+  {
+    "start": 189.98,
+    "end": 214.37,
+    "text": "下"
+  },
+  {
+    "start": 214.37,
+    "end": 221.38,
+    "text": "ch notifications in the menu"
+  },
+  {
+    "start": 221.38,
+    "end": 240.71,
+    "text": "ok rồi các bạn có thêm 1 khung là đằng trên này cho nó thân biệt giữa các xinh viên ra cho nó dễ nhìn cũng được"
+  },
+  {
+    "start": 240.71,
+    "end": 246.06,
+    "text": "ok để bọc thông tin của xinh viên lại"
+  },
+  {
+    "start": 246.06,
+    "end": 251.06,
+    "text": "Các bạn cũng có thể viết 1 hàm in ở bên ngoài như thế này cũng được nhé"
+  },
+  {
+    "start": 251.06,
+    "end": 255.06,
+    "text": "Đây, nếu mà bạn muốn viết 1 hàm in thông tin ở bên ngoài cái struct này cũng được như thế này"
+  },
+  {
+    "start": 255.06,
+    "end": 259.06,
+    "text": "Nó, ví dụ như là mình có 1 cái tham số đấy là sinh viên A chẳng hạn"
+  },
+  {
+    "start": 259.06,
+    "end": 262.06,
+    "text": "Thì các bạn làm tương tự như cái công việc ở cái hàm in này thôi"
+  },
+  {
+    "start": 262.06,
+    "end": 266.06,
+    "text": "Chờ, sau đó là, ở chỗ này thì mình sẽ CL ra các cái thông tin của nó"
+  },
+  {
+    "start": 266.06,
+    "end": 270.06,
+    "text": "Nhưng mà chỗ này thì mình sẽ cho là A chấm mã rồi là A chấm tên, đúng không?"
+  },
+  {
+    "start": 270.06,
+    "end": 273.64,
+    "text": "Rồi chỗ này là A chấm lớp, A chấm người sinh, vấn vấn"
+  },
+  {
+    "start": 273.64,
+    "end": 275.64,
+    "text": "ở trên này là a.pve"
+  },
+  {
+    "start": 275.64,
+    "end": 279.64,
+    "text": "2 cách làm nhé, các bạn chọn cách nào cũng được, mình viết luôn vào trong này cho nó tiện"
+  },
+  {
+    "start": 280.64,
+    "end": 285.8,
+    "text": "tiếp theo đấy là hàm nhập, ok, mình viết 1 cái hòa được hàm nhập này"
+  },
+  {
+    "start": 285.8,
+    "end": 290.8,
+    "text": "thì hàm nhập thì mình sẽ yêu cầu người dùng đầu tiên là nhập mã sinh viên nhé"
+  },
+  {
+    "start": 290.8,
+    "end": 294.8,
+    "text": "mã sinh viên thì thông thường nó sẽ không có cái lấu cách đúng không"
+  },
+  {
+    "start": 294.8,
+    "end": 300.8,
+    "text": "mình sẽ cl cho mã, sau đó là mình sẽ cl đàn là nhập tên sinh viên, ok"
+  },
+  {
+    "start": 300.8,
+    "end": 320.0,
+    "text": "�문, esec, icon, UI,"
+  },
+  {
+    "start": 320.0,
+    "end": 321.72,
+    "text": "Include value, Где vây giờ Exit?"
+  },
+  {
+    "start": 321.72,
+    "end": 322.72,
+    "text": "Về b pisit"
+  },
+  {
+    "start": 325.45,
+    "end": 327.17,
+    "text": "casecv,"
+  },
+  {
+    "start": 327.17,
+    "end": 329.45,
+    "text": "Merge value,"
+  },
+  {
+    "start": 334.87,
+    "end": 335.31,
+    "text": "Include value Wrong"
+  },
+  {
+    "start": 335.31,
+    "end": 335.43,
+    "text": "标"
+  },
+  {
+    "start": 335.43,
+    "end": 336.03,
+    "text": "aroo"
+  },
+  {
+    "start": 336.05,
+    "end": 338.25,
+    "text": "Blok"
+  },
+  {
+    "start": 339.19,
+    "end": 340.53,
+    "text": "Create value,"
+  },
+  {
+    "start": 340.53,
+    "end": 352.13,
+    "text": "v gol l"
+  },
+  {
+    "start": 352.13,
+    "end": 352.57,
+    "text": "Make value"
+  },
+  {
+    "start": 352.57,
+    "end": 352.75,
+    "text": "beat"
+  },
+  {
+    "start": 352.75,
+    "end": 354.17,
+    "text": "Bad"
+  },
+  {
+    "start": 354.17,
+    "end": 354.79,
+    "text": "Thường"
+  },
+  {
+    "start": 354.79,
+    "end": 355.71,
+    "text": "n SMS"
+  },
+  {
+    "start": 355.71,
+    "end": 358.03,
+    "text": "Nhưng mà nhớ, khi mà nhập thông tin thì có 2 cách"
+  },
+  {
+    "start": 358.03,
+    "end": 361.09,
+    "text": "1 là các bạn truyền cái tham số 1 cái sinh viên A nào đó"
+  },
+  {
+    "start": 361.09,
+    "end": 364.53,
+    "text": "Nhưng mà khi đó bạn phải truyền tham chiều vào như thế này, nhá, ok?"
+  },
+  {
+    "start": 364.53,
+    "end": 369.19,
+    "text": "2 là các bạn viết cho mình 1 cái hàm nhập mà nó trả về 1 cái sinh viên ấy, như thế này"
+  },
+  {
+    "start": 369.19,
+    "end": 370.87,
+    "text": "Tùy các bạn, chọn cách nào cũng được"
+  },
+  {
+    "start": 370.87,
+    "end": 374.79,
+    "text": "1 là bạn truyền tham chiều, thì chỗ này bạn sẽ cho là A,A này"
+  },
+  {
+    "start": 374.79,
+    "end": 377.3,
+    "text": "Cô này là A, tên này"
+  },
+  {
+    "start": 377.3,
+    "end": 379.3,
+    "text": "Cô chỗ này là A, lớp này"
+  },
+  {
+    "start": 379.3,
+    "end": 381.1,
+    "text": "Cô này là A, ngay sinh này"
+  },
+  {
+    "start": 381.1,
+    "end": 382.9,
+    "text": "Cô chỗ này thì là A,GPE"
+  },
+  {
+    "start": 382.9,
+    "end": 390.3,
+    "text": "Cái cách thứ 2, các bạn viết cho mình 1 hàm nhập thông tin cho 1 sinh viên, sẽ hùy tơn bởi 1 sinh viên, ví dụ nhảy sinh viên nhập này"
+  },
+  {
+    "start": 390.3,
+    "end": 393.5,
+    "text": "Trong này, bạn khai báo cho mình 1 sinh viên A ở trong này ra"
+  },
+  {
+    "start": 393.5,
+    "end": 399.9,
+    "text": "Và bạn cũng nhập đủ các thông tin cho sinh viên A đấy, sau đó thì cuối cùng bạn sẽ hùy tơn bởi thằng A này"
+  },
+  {
+    "start": 399.9,
+    "end": 404.7,
+    "text": "Thì đối với cái 2 hàm nhập này thì nó trong hàm mên nhé, nếu mà bạn sử dụng cái hàm nhập trên này này"
+  },
+  {
+    "start": 404.7,
+    "end": 409.3,
+    "text": "Thì bạn chỉ cần khai báo 1 cái ôm sinh viên A, sau đó bạn chuyển vào nhập, sau đó bạn chuyển A vào"
+  },
+  {
+    "start": 409.3,
+    "end": 411.92,
+    "text": "đây là cách mà bạn sử dụng hàm void thì nhất kia nhé"
+  },
+  {
+    "start": 411.92,
+    "end": 416.88,
+    "text": "còn nếu trong trường hợp mà bạn sử dụng cái hàm nhập thứ 2 thì bạn khán luôn sinh viên A bằng nhập như thế này kìa"
+  },
+  {
+    "start": 416.88,
+    "end": 421.98,
+    "text": "thì tự khác nó sẽ nhảy lên cái hàm nhập nó nhập thông tin trong cái sinh viên nào đó, trong hàm nhập là nó return"
+  },
+  {
+    "start": 421.98,
+    "end": 424.08,
+    "text": "cái sinh viên đấy cho cái ông sinh viên A của các bạn"
+  },
+  {
+    "start": 424.08,
+    "end": 426.84,
+    "text": "thì các bạn lựa chọn 1 trong 2 cách này cũng được nhé, ok"
+  },
+  {
+    "start": 426.84,
+    "end": 428.6,
+    "text": "mình sẽ bỏ cái phần này đi"
+  },
+  {
+    "start": 428.6,
+    "end": 432.08,
+    "text": "mình sẽ xây dựng luôn cái hàm nhập ở trong struct sinh viên, rồi"
+  },
+  {
+    "start": 432.08,
+    "end": 436.28,
+    "text": "ok, bây giờ thì mình sẽ thực hiện các cái yêu cầu"
+  },
+  {
+    "start": 436.28,
+    "end": 439.84,
+    "text": "Bây giờ mình sẽ viết 1 cái hàm mà nó hiển thị toàn bộ danh sách sinh viên nhé"
+  },
+  {
+    "start": 439.84,
+    "end": 444.76,
+    "text": "Ok, mình viết 1 cái hàm là void, in danh sách chẳng hạn, rồi chờ"
+  },
+  {
+    "start": 444.76,
+    "end": 448.67,
+    "text": "Ở đây mình sẽ sử dụng 1 cái mảng hoặc là 1 cái vector cũng được nhé"
+  },
+  {
+    "start": 448.67,
+    "end": 452.75,
+    "text": "Có thể các bạn quen với vector, quen với mảng hơn đúng không?"
+  },
+  {
+    "start": 452.75,
+    "end": 455.63,
+    "text": "Rồi ok, mình sẽ dùng 1 cái mảng đi, sinh viên A nhé"
+  },
+  {
+    "start": 455.63,
+    "end": 459.42,
+    "text": "Một mảng sinh viên A có nào phần tử, rồi chờ"
+  },
+  {
+    "start": 459.42,
+    "end": 465.06,
+    "text": "Thì mình chỉ cần xeo ra cái dòng để chính là thơm tin danh sách sinh viên cho nạn"
+  },
+  {
+    "start": 465.06,
+    "end": 472.86,
+    "text": "OK, xuống giảm nè, sau đó là mình sẽ riêng từ 4 in ở đây, vâng không, in ở hơn nơi, cộng cộng"
+  },
+  {
+    "start": 472.86,
+    "end": 480.13,
+    "text": "và bạn chỉ cần gọi cái ham in, bạn cho ai, chấm in là được"
+  },
+  {
+    "start": 480.13,
+    "end": 485.33,
+    "text": "bạn cứ nhập, bạn cứ xét ít một cái sinh viên ai, sau đó bạn chấm in để nó in ra cái thông tin là được"
+  },
+  {
+    "start": 485.33,
+    "end": 491.49,
+    "text": "OK, còn bạn nào muốn cẩn thận hơn thì các bạn có thể in ra chỗ này là thông tin sinh viên thứ y cũng được, không ấn đề gì"
+  },
+  {
+    "start": 491.49,
+    "end": 496.85,
+    "text": "OK, rồi, thế là xong cái ham, in thông tin có 1 danh sách sinh viên luôn nhé"
+  },
+  {
+    "start": 496.85,
+    "end": 506.65,
+    "text": "Bây giờ mình sẽ tìm kiếm sinh viên theo mã sinh viên, ok, mình viên 1 cái hàm là hàm, void, tìm kiếm mã nhé, ok"
+  },
+  {
+    "start": 506.65,
+    "end": 510.65,
+    "text": "Mình cũng có 1 cái danh sách sinh viên và có nờ phần có nờ bạn"
+  },
+  {
+    "start": 510.65,
+    "end": 516.45,
+    "text": "Sau đó thì ở trong cái hàm mà tìm kiếm sinh viên theo mã này này thì mình sẽ yêu cầu người dùng nhập vào cái mã mà họ cần tìm"
+  },
+  {
+    "start": 516.45,
+    "end": 518.87,
+    "text": "mình sẽ dùng một string là mã chả hạn"
+  },
+  {
+    "start": 519.01,
+    "end": 522.43,
+    "text": "xong mình CL ra là nhập mã sinh viên"
+  },
+  {
+    "start": 523.92,
+    "end": 527.72,
+    "text": "Viên cần tìm, ok, mình sẽ see in cho mã"
+  },
+  {
+    "start": 527.72,
+    "end": 531.84,
+    "text": "Rồi, bây giờ để mà liệt cái xinh viên có mã trùng với cái mã"
+  },
+  {
+    "start": 531.92,
+    "end": 535.48,
+    "text": "người ta nhập ấy, thì bạn duyệt qua cái danh xách sinh viên của mình"
+  },
+  {
+    "start": 535.48,
+    "end": 538.28,
+    "text": "O, interface vẫn không đi nhỏ hơn là íc gợi"
+  },
+  {
+    "start": 540.22,
+    "end": 542.92,
+    "text": "Rồi, nếu mà muốn tìm, tìm chính xác ấy"
+  },
+  {
+    "start": 542.92,
+    "end": 545.42,
+    "text": "Ok, muốn tìm chính xác ở đây mình dùng một cái biến ok nữa nhé"
+  },
+  {
+    "start": 545.42,
+    "end": 547.16,
+    "text": "hoặc 1 cái biến file"
+  },
+  {
+    "start": 547.16,
+    "end": 554.24,
+    "text": "Nếu bạn muốn tìm chính xác cái thông tin của mã của một sinh viên ở đó, ví dụ nhé"
+  },
+  {
+    "start": 554.24,
+    "end": 564.24,
+    "text": "Người ta nhập vào cái mã sinh viên và bạn phải tìm được cái sinh viên có chính xác mã như thế, thì mình sẽ so sánh cái mã sinh viên mà người ta nhập với cái mã sinh viên của các sinh viên trong sinh xác"
+  },
+  {
+    "start": 564.24,
+    "end": 570.89,
+    "text": "mình sẽ xoá xanh ít mạc, mà bằng ai.mạc"
+  },
+  {
+    "start": 570.89,
+    "end": 578.91,
+    "text": "ok, thì chứng tỏ là cái mạc người dùng vào nó chính xác luôn bằng cái mạc của cái ông sinh viên đấy thì mình sẽ CL đây là"
+  },
+  {
+    "start": 578.91,
+    "end": 581.71,
+    "text": "mình sẽ cho ai.in, ok"
+  },
+  {
+    "start": 581.71,
+    "end": 586.27,
+    "text": "rồi chờ, sau đó là mình return hoặc là break cũng được chỗ này mình return đi"
+  },
+  {
+    "start": 586.27,
+    "end": 591.04,
+    "text": "ok, um, mình return đi"
+  },
+  {
+    "start": 591.04,
+    "end": 593.44,
+    "text": "đó thì mình đã phải sử dụng biến phao này"
+  },
+  {
+    "start": 593.44,
+    "end": 596.36,
+    "text": "ok, đó"
+  },
+  {
+    "start": 596.36,
+    "end": 602.43,
+    "text": "sau đó dưới này thì nếu mà nó chạy được xứng dưới này thì mình sẽ in ra một cái câu lệnh đấy là không tìm thấy sinh viên nhé"
+  },
+  {
+    "start": 602.43,
+    "end": 611.46,
+    "text": "bởi vì là nếu mà nó tìm thấy một cái mạ sinh viên nào đó chung với cái mạ sinh viên mà người dùng nhập ấy"
+  },
+  {
+    "start": 611.46,
+    "end": 616.46,
+    "text": "thì nó sẽ in ra cái thông tin của cái ông đấy và return rồi, thông thường thì mạ sinh viên sẽ là duy nhất đúng không?"
+  },
+  {
+    "start": 616.46,
+    "end": 620.46,
+    "text": "nếu mà bạn tìm một cái bạn sinh viên nào có mạ đấy thì mình chỉ cần in ra sau đó mình kết thúc luôn"
+  },
+  {
+    "start": 620.46,
+    "end": 625.46,
+    "text": "ok? thì đây chính là cái cách mà tìm mạ sinh viên theo cái kiểu đấy chính là chính xác hoàn toàn đấy"
+  },
+  {
+    "start": 625.46,
+    "end": 640.85,
+    "text": "Còn nếu bạn muốn tìm mạ sinh viên, ví dụ như là ông có mạ sinh viên là 2018, 2022 tràn hạn, và ông cũng có mạ sinh viên là 2018, 3327 tràn hạn, 3327"
+  },
+  {
+    "start": 640.85,
+    "end": 648.93,
+    "text": "Mà người ta nhập vào cho bạn một cái mạ sinh viên, một cái chuỗi để tìm kiếm ấy, đây chính là 2018"
+  },
+  {
+    "start": 648.93,
+    "end": 654.45,
+    "text": "Thì khi đó bạn phải in ra tất cả các cái sinh viên mà nó có mạ mà có chứa cái số 2018 đấy kìa"
+  },
+  {
+    "start": 654.45,
+    "end": 655.45,
+    "text": "được chưa?"
+  },
+  {
+    "start": 655.45,
+    "end": 662.77,
+    "text": "Thế là người ta sẽ không yêu cầu bạn tìm kiếm chính xác nữa mà bạn phải tìm được các cái mạ sinh viên mà nó chứa cái mạ mà họ nhập vào ấy"
+  },
+  {
+    "start": 662.77,
+    "end": 663.47,
+    "text": "Ok?"
+  },
+  {
+    "start": 663.47,
+    "end": 666.37,
+    "text": "Thì khi đó mình sẽ phải sử dụng cái cách khác mình không làm được như thế này, nhá?"
+  },
+  {
+    "start": 666.37,
+    "end": 671.21,
+    "text": "Đây mình vẫn dùng cái biến là boon, file, bằng phones, rồi ok?"
+  },
+  {
+    "start": 671.21,
+    "end": 674.45,
+    "text": "Sau giữa này thì bạn sẽ phải sử dụng cái ham file của string ấy"
+  },
+  {
+    "start": 674.45,
+    "end": 678.33,
+    "text": "Trong string nó có một cái ham là ham file để tìm kiếm một cái chuỗi con"
+  },
+  {
+    "start": 678.33,
+    "end": 685.05,
+    "text": "Ví dụ, bạn muốn có một cái chuỗi là chuỗi abcd af này, abc này, ok"
+  },
+  {
+    "start": 685.05,
+    "end": 689.93,
+    "text": "Bạn muốn tìm xem là liệu rằng một cái sâu con abc nó có tổn tại trong cái xâu này này"
+  },
+  {
+    "start": 689.93,
+    "end": 696.89,
+    "text": "Thì bạn sẽ sử dụng ham phi nhá, mình sẽ cho là cái thằng này này, cái sâu này này là phi, ok"
+  },
+  {
+    "start": 696.89,
+    "end": 702.33,
+    "text": "Mình chấm phi, cái sâu con mà bạn tìm kiếm ví dụ như đây abc này"
+  },
+  {
+    "start": 702.33,
+    "end": 704.83,
+    "text": "Trong trường hợp mà nó tìm thấy nhá, ok"
+  },
+  {
+    "start": 704.83,
+    "end": 715.47,
+    "text": "nhớ là nó nếu mà tìm thấy, nó sẽ return cho bạn cái index, cái chỉ số đầu tiên của cái chuỗi con ABCD trong cái sâu này"
+  },
+  {
+    "start": 715.47,
+    "end": 725.79,
+    "text": "còn là ABC đi, cái là chỉ số của ông này này, đúng nhỉ? Ok, có thể trong cái sâu của bạn nó chưa nhiều cái sâu con ABC nhưng mà nó chỉ return cho các bạn cái chỉ số đầu tiên rồi nhé"
+  },
+  {
+    "start": 725.79,
+    "end": 733.23,
+    "text": "Ok, nếu mà bạn muốn return các liệt kê, tất cả các vị trí thì mình cứ phi, phi dần dần, ok, mình xoá cái sâu con này đi"
+  },
+  {
+    "start": 733.23,
+    "end": 736.91,
+    "text": "hoặc là mình tìm trong một cái đoạn nào đó để mình tìm các cái chỉ số đứng sau"
+  },
+  {
+    "start": 736.91,
+    "end": 740.25,
+    "text": "Thế còn chăm chừng hợp mà nó không tìm thấy ấy, nhá"
+  },
+  {
+    "start": 740.25,
+    "end": 746.33,
+    "text": "Nó không tìm thấy thì nó sẽ trả về một cái giá trị đấy là string i.poss như thế này"
+  },
+  {
+    "start": 746.33,
+    "end": 751.77,
+    "text": "Ok, cái giá trị của cái thằng này hình như là nó là cái giá trị lớn nhất của một cái kiểu dữ liệu tên là site"
+  },
+  {
+    "start": 751.77,
+    "end": 755.85,
+    "text": "Ok, mấy chung là các bạn cũng, nếu mà muốn thì tìm hiểu thêm nhá"
+  },
+  {
+    "start": 755.85,
+    "end": 760.25,
+    "text": "Thế còn các bạn cứ biết là nếu mà cái string nó tìm kiếm sâu con ấy"
+  },
+  {
+    "start": 760.25,
+    "end": 763.61,
+    "text": "mà nó không tìm thấy ấy, này chứ à, thì nó sẽ trả về cái giá trị này"
+  },
+  {
+    "start": 763.61,
+    "end": 769.34,
+    "text": "ok, còn nếu mà nó tìm thấy thì nó sẽ trả về cái chỉ số đầu tiên của cái sâu con đấy trong cái sâu ban đầu"
+  },
+  {
+    "start": 769.34,
+    "end": 771.24,
+    "text": "vậy thì ở dưới này mình sẽ kiểm tra là gì?"
+  },
+  {
+    "start": 771.24,
+    "end": 777.04,
+    "text": "íp ie.mã nhé, tức là cái sâu mã sinh viên bở cái anh này này"
+  },
+  {
+    "start": 777.04,
+    "end": 786.45,
+    "text": ".fi, ok, .fi cái mã mà người dùng người ta nhập vào ấy nó khác cái giá trị đấy chính là string 2.2.noboss"
+  },
+  {
+    "start": 786.45,
+    "end": 788.85,
+    "text": "có nghĩa là nó phi nó tìm thấy, ok"
+  },
+  {
+    "start": 788.85,
+    "end": 793.38,
+    "text": "nó tìm thấy một cái mã nào đó mà chứa cái mã sinh viên mà người dùng người ta nhập vào ấy"
+  },
+  {
+    "start": 793.38,
+    "end": 795.38,
+    "text": "Thì bạn sẽ cho ii.in"
+  },
+  {
+    "start": 795.38,
+    "end": 796.88,
+    "text": "Ok, đó"
+  },
+  {
+    "start": 796.88,
+    "end": 801.41,
+    "text": "Và bạn chuyển cho mình cái biến file, thành true, tức là đã tìm thấy"
+  },
+  {
+    "start": 801.41,
+    "end": 809.02,
+    "text": "Bởi vì trong trường hợp này, nếu mà người ta yêu cầu mình tìm cái mã sinh viên vào nó chứa 1 cái cụng nào đó, thì có thể rất nhiều sinh viên ở chứa cùng 1 cái cụng đấy"
+  },
+  {
+    "start": 809.02,
+    "end": 811.02,
+    "text": "Thì mình không vùi tơn được như cái bài trước đâu"
+  },
+  {
+    "start": 811.02,
+    "end": 816.02,
+    "text": "Và mình sẽ phải chuyển cái biến ok này thành true để tính nữa dưới này thì bạn check nếu mà ok mà bằng false"
+  },
+  {
+    "start": 816.02,
+    "end": 820.02,
+    "text": "Thì con nghĩa là không tìm thấy thì mình sẽ in ra cho người ta 1 cái câu lạnh đấy là không tìm thấy sinh viên, ok"
+  },
+  {
+    "start": 820.02,
+    "end": 826.02,
+    "text": "ít phủ định của file, bạn sẽ yên ra câu lệnh đấy là không tìm thấy sinh viên có mẹ vừa nhập"
+  },
+  {
+    "start": 826.02,
+    "end": 831.56,
+    "text": "ok, đó, thế thôi, đúng nhỉ"
+  },
+  {
+    "start": 831.56,
+    "end": 837.56,
+    "text": "rồi, thì đây chỉ là cái, có 2 cách tìm kiếm như thế nhá, 1 là tìm kiếm chính xác, thì bạn chỉ cần so sánh 2 chuỗi"
+  },
+  {
+    "start": 837.56,
+    "end": 843.56,
+    "text": "còn nếu mà tìm kiếm mẹ sinh viên mà nó chứa 1 cái cục nào đó thì bạn sẽ sử dụng hầm phi"
+  },
+  {
+    "start": 843.56,
+    "end": 847.56,
+    "text": "ok, thì nó sẽ tìm kiếm cái vị trí bắt đầu của 1 cái show con trong 1 cái show ban đầu"
+  },
+  {
+    "start": 847.56,
+    "end": 855.56,
+    "text": "nếu bạn tìm thấy thì nó sẽ trả về một trị số, còn nếu không tìm thấy thì nó sẽ trả về giá trị string 2.nabos"
+  },
+  {
+    "start": 855.56,
+    "end": 865.56,
+    "text": "xam tìm kiếm mã nhé, còn yêu cầu mà tìm kiếm theo tên, mã sinh viên theo tên và theo lớp thì các bạn làm tương tự như vậy đối với thằng tên và thằng lớp nhé"
+  },
+  {
+    "start": 865.56,
+    "end": 868.56,
+    "text": "ở đây mình chỉ hướng dẫn thằng mã sinh viên thôi"
+  },
+  {
+    "start": 868.56,
+    "end": 870.92,
+    "text": "ok"
+  },
+  {
+    "start": 870.92,
+    "end": 873.92,
+    "text": "rồi, tiếp theo này, liệt kê sinh viên có điểm gpa cao nhất"
+  },
+  {
+    "start": 873.92,
+    "end": 880.62,
+    "text": "rồi mình sẽ viết thêm 1 cái hàm nữa là liệt kê, liệt kê gpa nhé"
+  },
+  {
+    "start": 880.62,
+    "end": 884.81,
+    "text": "mình cũng có 1 tham số là 1 cái danh sách sinh viên có enough đúng chứ"
+  },
+  {
+    "start": 884.81,
+    "end": 889.81,
+    "text": "thì để mà liệt kê cái sinh viên mà có điểm gpa cao nhất ấy thì làm sao nhỉ"
+  },
+  {
+    "start": 889.81,
+    "end": 893.81,
+    "text": "các bạn phải tìm được cái ôm có gpa cao nhất đúng không"
+  },
+  {
+    "start": 893.81,
+    "end": 897.88,
+    "text": "có 2 cách làm 1 là bạn tìm cho mình gpa cao nhất, sau đó thì mình sẽ"
+  },
+  {
+    "start": 897.88,
+    "end": 904.02,
+    "text": "Duyệt lại danh sách và so sánh gpa đấy với từng gpa của một các ông sinh viên trong danh sách"
+  },
+  {
+    "start": 904.02,
+    "end": 907.1,
+    "text": "Ông nào mà có gpa chung với cái điểm cao nhất đấy thì mình sẽ in thông tin"
+  },
+  {
+    "start": 907.1,
+    "end": 913.95,
+    "text": "Hai là các bạn như kiểu tim phân tử lớn nhất ở trong mạng thôi mà sau đó thì mình cái cách đấy cũng được"
+  },
+  {
+    "start": 913.95,
+    "end": 918.59,
+    "text": "Tức là mình sẽ dùy chí thêm 1 cái vector để mình lưu các sinh viên mà có cùng điểm cao nhất đấy"
+  },
+  {
+    "start": 918.59,
+    "end": 921.59,
+    "text": "Thôi mình cứ làm bình thường nhé, đấy là mình sẽ tìm cái gpa cao nhất"
+  },
+  {
+    "start": 921.59,
+    "end": 926.34,
+    "text": "Và đây mình sẽ dùng 1 cái biến đắp bầu gpa thì mình để là không"
+  },
+  {
+    "start": 926.34,
+    "end": 930.34,
+    "text": "ok, sau đó mình sẽ rượt qua danh sexynvn"
+  },
+  {
+    "start": 930.34,
+    "end": 943.8,
+    "text": "ok, rồi sau đó thì bạn kiểm tra là nếu mà ai.gpa nó lớn hơn cái biến, mình ra ra rest đi"
+  },
+  {
+    "start": 943.8,
+    "end": 949.8,
+    "text": "cái rest ở đây nó sẽ lưu gpa cao nhất thì mình sẽ cập nhật rest bằng ai.gpa"
+  },
+  {
+    "start": 949.8,
+    "end": 952.8,
+    "text": "vậy thì chỉ cần 1 vòng for là bạn đã tìm được cái ông nào có điểm cao nhất rồi đúng không?"
+  },
+  {
+    "start": 952.8,
+    "end": 954.8,
+    "text": "bây giờ bạn nhìn ra cái thông tin đấy chính là"
+  },
+  {
+    "start": 954.8,
+    "end": 961.67,
+    "text": "dành xách sinh viên, có điểm 1gpa cao nhất"
+  },
+  {
+    "start": 961.67,
+    "end": 963.67,
+    "text": "sau đó bạn diễn qua dành xách"
+  },
+  {
+    "start": 963.67,
+    "end": 968.23,
+    "text": "và bạn so sánh thôi"
+  },
+  {
+    "start": 968.23,
+    "end": 972.23,
+    "text": "bạn so sánh là ít res mà bằng ai.gpa"
+  },
+  {
+    "start": 972.23,
+    "end": 974.23,
+    "text": "thì mình sẽ cho ai.in thế ra sao"
+  },
+  {
+    "start": 974.23,
+    "end": 976.23,
+    "text": "cái hạm in này dùng rất là nhiều"
+  },
+  {
+    "start": 976.23,
+    "end": 978.23,
+    "text": "thì các bạn nên viết 1 cái hạm để in thông tin nhé"
+  },
+  {
+    "start": 978.23,
+    "end": 982.23,
+    "text": "có thể viết ở trong struct hoặc là viết ở bên ngoại được"
+  },
+  {
+    "start": 982.23,
+    "end": 984.23,
+    "text": "thế ra sao, ok chưa"
+  },
+  {
+    "start": 984.23,
+    "end": 989.77,
+    "text": "Cách thứ hai, các bạn có thể làm như thế này cũng được"
+  },
+  {
+    "start": 989.77,
+    "end": 993.77,
+    "text": "Đấy chính là bạn duy trì cho mình thêm 1 cái vector, int, ok"
+  },
+  {
+    "start": 993.77,
+    "end": 1000.51,
+    "text": "Để mà lưu cái, lưu các cái chỉ số của các sinh viên mà có cùng điểm cao nhất ấy"
+  },
+  {
+    "start": 1000.51,
+    "end": 1009.15,
+    "text": "Ở đây mình kiểm tra là, nếu mà ie.gva lớn 100 thì mình sẽ cầm nhật REST bằng ie.gva sau đó là"
+  },
+  {
+    "start": 1009.15,
+    "end": 1016.75,
+    "text": "mình cho index.clear, và mình cho index.pushback, pushback, cái chỉ số i vào"
+  },
+  {
+    "start": 1016.75,
+    "end": 1022.63,
+    "text": "ok, còn nếu mà ai.gpm lại bằng rest thì mình chọn index"
+  },
+  {
+    "start": 1022.63,
+    "end": 1028.19,
+    "text": "cho này mình biết sai"
+  },
+  {
+    "start": 1028.19,
+    "end": 1035.51,
+    "text": "lxai.gpm bằng rest thì mình sẽ cho index.pushback"
+  },
+  {
+    "start": 1035.51,
+    "end": 1036.63,
+    "text": "i, ok"
+  },
+  {
+    "start": 1036.63,
+    "end": 1041.47,
+    "text": "và dưới này thì khi mà in ra thì các bạn chỉ cần duyệt qua các cái chỉ số trong cái vector này thôi"
+  },
+  {
+    "start": 1041.47,
+    "end": 1045.59,
+    "text": "Bạn đã biết là các chỉ số của các sinh viên bàn cốt cùng điểm gpa cao nhất rồi"
+  },
+  {
+    "start": 1045.59,
+    "end": 1047.79,
+    "text": "Ok, đấy là một cách làm thứ 2 nhá"
+  },
+  {
+    "start": 1047.79,
+    "end": 1051.71,
+    "text": "Còn không thì các bạn cứ tìm cho mình cái gpa cao nhất là được"
+  },
+  {
+    "start": 1051.71,
+    "end": 1061.31,
+    "text": "Rồi, ok. Thế là xong cái chức năng đấy là liệt cái các sinh viên mà có điểm gpa cao nhất nhá"
+  },
+  {
+    "start": 1061.31,
+    "end": 1070.59,
+    "text": "Rồi, bây giờ họ yêu cầu mình liệt cái các sinh viên có điểm gpa lớn hơn vào bằng năm theo thứ tự điểm giám dần"
+  },
+  {
+    "start": 1070.59,
+    "end": 1072.59,
+    "text": "À, xin lỗi theo thứ tự điểm giám dần"
+  },
+  {
+    "start": 1072.59,
+    "end": 1083.23,
+    "text": "rồi, vậy thì ở đây nó sẽ lọc thông tin đúng không? nó lọc thông tin của một cái các sinh viên mà có điểm gpe lớn hơn mà 2,5 sau đó là nó bắt mình in ra theo thứ tự điểm dán dần"
+  },
+  {
+    "start": 1083.23,
+    "end": 1094.64,
+    "text": "vậy thì ở đây, bạn chỉ cần mình đặt là void, liệt cái gpe 2 nhá, liệt cái sinh viên e có nơi vần tử"
+  },
+  {
+    "start": 1094.64,
+    "end": 1100.88,
+    "text": "thì đầu tiên mình sẽ lọc ra các sinh viên mà nó có điểm gpe mà lớn hơn mà bằng 2,5"
+  },
+  {
+    "start": 1100.88,
+    "end": 1102.88,
+    "text": "ok"
+  },
+  {
+    "start": 1102.88,
+    "end": 1105.45,
+    "text": "hoặc bàn này thì nó có nhiều cách làm lắm"
+  },
+  {
+    "start": 1105.45,
+    "end": 1109.45,
+    "text": "một là các bạn sắp xếp trước theo cái điểm gpe giảm dần"
+  },
+  {
+    "start": 1109.45,
+    "end": 1111.45,
+    "text": "sau đó thì mình liệt cái từ đầu tới cuối"
+  },
+  {
+    "start": 1111.45,
+    "end": 1115.45,
+    "text": "ông nào mà có điểm gpe lớn vào năm thì mình sẽ in ra"
+  },
+  {
+    "start": 1115.45,
+    "end": 1117.68,
+    "text": "còn không thì"
+  },
+  {
+    "start": 1117.68,
+    "end": 1120.06,
+    "text": "các bạn làm như thế này nhé"
+  },
+  {
+    "start": 1120.06,
+    "end": 1122.06,
+    "text": "các bạn tạo cho mình một cái vector sinh viên ở đây"
+  },
+  {
+    "start": 1122.06,
+    "end": 1126.7,
+    "text": "chứ hả bây giờ bạn duyệt qua cái danh xách sinh viên của bạn ấy"
+  },
+  {
+    "start": 1126.7,
+    "end": 1130.7,
+    "text": "sau đó là xem ông nào mà có gpe lớn vào năm thì bạn đẩy vào cái vector này"
+  },
+  {
+    "start": 1130.7,
+    "end": 1141.02,
+    "text": "for, innerTay bằng 0, i nhỏ hơn, nói, cộng cộng bận kiểm tra là ipai.gpa mà lớn bằng 2,5 thì mình sẽ cho v.bus3, ai"
+  },
+  {
+    "start": 1141.02,
+    "end": 1146.46,
+    "text": "Vậy thì sau cái vòng for này là bạn đã có tất cả các sinh viên mà có điểm gpa lớn bằng 2,5 đúng không?"
+  },
+  {
+    "start": 1146.46,
+    "end": 1153.1,
+    "text": "Bây giờ bạn chỉ cần sắp xếp các sinh viên trong cái vector v kìa kìa theo thứ tự điểm, xin lỗi theo thứ tự điểm dần dần là được"
+  },
+  {
+    "start": 1153.1,
+    "end": 1158.7,
+    "text": "Ở đây các bạn có thể dùng biểu thức làm đoạn được, hoặc là sử dụng một comparator ở đây nha"
+  },
+  {
+    "start": 1158.7,
+    "end": 1167.02,
+    "text": "C ạ, 1, singVnA , singVnB, yank, list-in, var,"
+  },
+  {
+    "start": 1167.02,
+    "end": 1181.2,
+    "text": "ok, rồi sau đó bạn xót cho mình v, dig in và v,en đúng không? sau đó thì mình truyền cái comparator 1 và bây giờ bạn chỉ cần duyệt qua các cái sinh viên thôi ok"
+  },
+  {
+    "start": 1181.2,
+    "end": 1187.2,
+    "text": "o sinh viên x hay v thì bạn chỉ cần cho x,in nó được để nó in ra cái thông tin đấy"
+  },
+  {
+    "start": 1187.2,
+    "end": 1190.2,
+    "text": "bây giờ mình sẽ viết thêm 1 câu dẫn nơi trước nè đời chính này"
+  },
+  {
+    "start": 1190.2,
+    "end": 1196.2,
+    "text": "danh side sinh viên có điểm gpe lớn 2.5"
+  },
+  {
+    "start": 1196.2,
+    "end": 1201.16,
+    "text": "ok, thế, rồi"
+  },
+  {
+    "start": 1201.16,
+    "end": 1207.16,
+    "text": "thế là xăm cái chức năng tiếp theo nhé, để chỉ là liệt gpe theo thứ tự giảm dần"
+  },
+  {
+    "start": 1207.16,
+    "end": 1211.58,
+    "text": "lọc ra những sinh viên có gpe lớn 2.5 sau đó giảm dần"
+  },
+  {
+    "start": 1211.58,
+    "end": 1215.58,
+    "text": "sắp xếp sinh viên theo tên, rồi ok"
+  },
+  {
+    "start": 1215.58,
+    "end": 1235.71,
+    "text": "sắp xếp sinh viên theo tên này có 2 cách sắp xếp, 1, người ta thoải mái, người ta sẽ sắp xếp sinh viên theo thứ tự ở đây, thứ tự, người ta không quan tâm đến việc tên ông nào có tên theo thứ tự từ điểm trước, người ta lấy tên họ tên, người ta so sánh chuỗi luôn"
+  },
+  {
+    "start": 1235.71,
+    "end": 1236.21,
+    "text": "ok"
+  },
+  {
+    "start": 1237.08,
+    "end": 1241.42,
+    "text": "bạn xoánh cái sinh viên, ví dụ như 2 cái bạn nhá, đây là bạn trần văn A"
+  },
+  {
+    "start": 1242.0,
+    "end": 1246.0,
+    "text": "đó, và bạn thứ 2 là bạn hoàng văn lâm trả nạn"
+  },
+  {
+    "start": 1246.0,
+    "end": 1248.16,
+    "text": "thì nếu mà mình sắp xếp theo cái kiểu là"
+  },
+  {
+    "start": 1248.16,
+    "end": 1252.0,
+    "text": "mình chỉ cần quan tâm đến 2 cái chuỗi này, cái chuỗi này là cái thứ tự tự điển nhỏ hơn ấy"
+  },
+  {
+    "start": 1252.0,
+    "end": 1253.6,
+    "text": "thì khi đó cái bạn hoàng văn lâm"
+  },
+  {
+    "start": 1253.6,
+    "end": 1258.0,
+    "text": "sẽ là cái bạn mà xếp trước trần văn A ở trong thứ, theo thứ tự tự điển"
+  },
+  {
+    "start": 1258.4,
+    "end": 1259.0,
+    "text": "đúng không?"
+  },
+  {
+    "start": 1259.44,
+    "end": 1264.76,
+    "text": "nhưng mà bạn thấy là bạn A bao giờ khi mà xếp xếp danh xách của mình thì nó cũng đứng trên các bạn lòng đúng không?"
+  },
+  {
+    "start": 1264.76,
+    "end": 1267.52,
+    "text": "Người ta sẽ xét tên trước sau đó mới đến họ và tên đệm đúng không?"
+  },
+  {
+    "start": 1267.52,
+    "end": 1279.24,
+    "text": "Vậy thì khi mà mình sắp xếp theo tên ấy, thì tuy đầu bài nhé, nếu mà đầu bài nó chặt chẽ, tức là họ yêu cầu mình sắp xếp theo tên trước sau đó mới đến phần họ và cuối cùng thì mình đến tên đệm ấy"
+  },
+  {
+    "start": 1279.24,
+    "end": 1281.88,
+    "text": "Thì các bạn làm như thế thì nó trởn hơn đúng không?"
+  },
+  {
+    "start": 1281.88,
+    "end": 1284.8,
+    "text": "Thì khi đó hai cái bạn là bạn ví dụ như bạn Hoàng Van Anh chẳng ạ"
+  },
+  {
+    "start": 1284.8,
+    "end": 1287.8,
+    "text": "Và thứ hai là bạn Nguyễn Van Anh chẳng ạ"
+  },
+  {
+    "start": 1287.8,
+    "end": 1291.56,
+    "text": "Thì đầu tiên họ sẽ hỏi xó xé khớp hai cái tên là Anh với Anh đúng không?"
+  },
+  {
+    "start": 1291.56,
+    "end": 1298.44,
+    "text": "2 bạn này chung tên anh thì họ sẽ so sánh đến họ là hoàng và nguyễn thì bạn hoàng sẽ đứng trước, nguyễn vàn anh theo thứ tư tử điển nữa"
+  },
+  {
+    "start": 1298.44,
+    "end": 1302.82,
+    "text": "Ok, mình sẽ làm kiểu đấy nhá, vậy thì để làm như thế đúng không?"
+  },
+  {
+    "start": 1302.82,
+    "end": 1308.78,
+    "text": "Vậy thì đối với mỗi cái tên người thì bạn chỉ cần phải có 1 cái chuỗi để mà đem ra mà so sánh đúng không?"
+  },
+  {
+    "start": 1308.78,
+    "end": 1309.54,
+    "text": "Đúng nhỉ?"
+  },
+  {
+    "start": 1309.54,
+    "end": 1316.84,
+    "text": "Tức là bạn hoàng vàn anh thì cái chuỗi mà đem ra so sánh thì nó phải là anh, hoàng vàn đúng không?"
+  },
+  {
+    "start": 1316.84,
+    "end": 1322.12,
+    "text": "ok, còn cái bạn nguyễn văn anh này thì cái chuỗi mà đem ra xóa xánh theo thứ tư tư điển, nó sẽ là anh nguyễn văn"
+  },
+  {
+    "start": 1322.12,
+    "end": 1331.88,
+    "text": "ok, vậy thì từ cái tên người, bạn chỉ cần viết 1 cái hàm nào đó mà nó trẻ về cho bạn cái, cái sâu mà bạn sẽ đem ra để xóa xánh tên í, theo thứ tư tư điển í"
+  },
+  {
+    "start": 1331.88,
+    "end": 1336.0,
+    "text": "ok, mình viết 1 cái hàm như thế nhá, string, mình đã đã chuẩn hóa chẳng"
+  },
+  {
+    "start": 1336.0,
+    "end": 1345.87,
+    "text": "mình sẽ nhập vào 1 cái name, sau đó mình sẽ return, cái này thì dễ thôi đúng không, bạn chỉ cần đưa cái tên lên trước, sau đó bạn cộng thêm cái phần tên họ và tên đệng vào được rồi"
+  },
+  {
+    "start": 1345.87,
+    "end": 1348.31,
+    "text": "mình sẽ dùng string-stream ở đây"
+  },
+  {
+    "start": 1348.31,
+    "end": 1351.9,
+    "text": "ss, rồi đó mình chuyển lên bà"
+  },
+  {
+    "start": 1351.9,
+    "end": 1353.9,
+    "text": "một cái vector string ở đây"
+  },
+  {
+    "start": 1353.9,
+    "end": 1357.04,
+    "text": "v nhá"
+  },
+  {
+    "start": 1357.04,
+    "end": 1359.54,
+    "text": "và một cái biến tạm ở đây"
+  },
+  {
+    "start": 1359.54,
+    "end": 1364.48,
+    "text": "rồi xoá mình tag ra, y, ss, token đúng không?"
+  },
+  {
+    "start": 1364.48,
+    "end": 1367.7,
+    "text": "thì mình sẽ cho v.busback token"
+  },
+  {
+    "start": 1367.7,
+    "end": 1371.32,
+    "text": "và mình sẽ tạo cho mình chỗ này một cái biến rest"
+  },
+  {
+    "start": 1371.32,
+    "end": 1374.94,
+    "text": "ok, bây giờ mình sẽ cộng cái"
+  },
+  {
+    "start": 1374.94,
+    "end": 1376.7,
+    "text": "cái tên của người dùng vào cái biến rest kìa"
+  },
+  {
+    "start": 1376.7,
+    "end": 1379.32,
+    "text": "v Aahh ..."
+  },
+  {
+    "start": 1380.74,
+    "end": 1382.96,
+    "text": "Vee ..."
+  },
+  {
+    "start": 1382.96,
+    "end": 1384.58,
+    "text": "Okay."
+  },
+  {
+    "start": 1389.72,
+    "end": 1391.84,
+    "text": "R faucieter 1."
+  },
+  {
+    "start": 1391.86,
+    "end": 1395.34,
+    "text": "Vee ..."
+  },
+  {
+    "start": 1395.34,
+    "end": 1399.5,
+    "text": "Okay."
+  },
+  {
+    "start": 1399.5,
+    "end": 1403.34,
+    "text": "Vee ..."
+  },
+  {
+    "start": 1403.34,
+    "end": 1406.28,
+    "text": "Vee ..."
+  },
+  {
+    "start": 1406.28,
+    "end": 1410.16,
+    "text": "tên trước, sau đó nó đến họ và đến tên đệm nhé"
+  },
+  {
+    "start": 1410.16,
+    "end": 1415.72,
+    "text": "ở đây thì mình làm theo kiểu đấy thế còn nếu mà người ta yêu cầu tên đệm trước thì các bạn lại xử lý thêm nhé"
+  },
+  {
+    "start": 1415.72,
+    "end": 1416.78,
+    "text": "ok"
+  },
+  {
+    "start": 1416.78,
+    "end": 1420.38,
+    "text": "rồi, vậy thì ở đây mình sẽ sub-save theo tên như sau nhé"
+  },
+  {
+    "start": 1420.38,
+    "end": 1425.54,
+    "text": "mình viết 1 cái ham là ham, void sub-save, tên ok"
+  },
+  {
+    "start": 1425.54,
+    "end": 1431.15,
+    "text": "1 cái ông sinh viên e có nờ phần tử, 1 danh xét sinh viên e có nờ phần tử"
+  },
+  {
+    "start": 1431.15,
+    "end": 1440.63,
+    "text": "Thì mình sẽ sọt, ok, các bạn này các bạn tự viết cũng được nhé, mà các bạn sử dụng hàm có sẵn cũng được"
+  },
+  {
+    "start": 1440.63,
+    "end": 1446.07,
+    "text": "Ở đây mình sẽ dùng thêm một comparator nữa, boon, comparator 2, syng viên A và syng viên B"
+  },
+  {
+    "start": 1446.07,
+    "end": 1452.67,
+    "text": "cái comparator này có nhiệm vụ là sub-save 2 cái ông syng viên A, syng viên B này theo thứ tự là từ điển, tên theo thứ tự là từ điển tăng dần nhá"
+  },
+  {
+    "start": 1452.67,
+    "end": 1460.39,
+    "text": "Thì đầu tiên các bạn sẽ lấy dùng string tên 1, thì nó sẽ bán chuẩn hóa của A chấm tên"
+  },
+  {
+    "start": 1460.39,
+    "end": 1465.55,
+    "text": "Để bạn lấy ra cái chuỗi mà tên để mà sắp xếp của cái ông sinh viên A"
+  },
+  {
+    "start": 1465.55,
+    "end": 1470.11,
+    "text": "Thứ 2 là string tên 2 thì nó sẽ bằng chuẩn hóa của mê chấm tên"
+  },
+  {
+    "start": 1470.11,
+    "end": 1473.39,
+    "text": "Và bạn chỉ cần return với tên 1 nhỏ hơn tên 2 này được"
+  },
+  {
+    "start": 1473.39,
+    "end": 1479.25,
+    "text": "Ok, ở dưới này thì bạn sẽ sort cái sinh viên A này có nào phần tử này"
+  },
+  {
+    "start": 1479.25,
+    "end": 1484.65,
+    "text": "Và chuyển vào cái comparator 2 thì nó sẽ sắp xếp sinh viên theo tên, theo tự tự điểm tăng dần"
+  },
+  {
+    "start": 1484.65,
+    "end": 1487.93,
+    "text": "Ok, mình thử test đã nhá, từ nãy giờ có thời nhiều rồi"
+  },
+  {
+    "start": 1487.93,
+    "end": 1492.37,
+    "text": "trong ham main mình sẽ khai báo 1 cái mảng sinh viên A"
+  },
+  {
+    "start": 1492.37,
+    "end": 1497.37,
+    "text": "có tối đa là 1 nhìn phần tử này và 1 cái biến nò, ok để lưu số sinh viên"
+  },
+  {
+    "start": 1497.37,
+    "end": 1501.23,
+    "text": "mỗi lần mà bạn nhập thêm 1 cái sinh viên thì cái biến nò kìa nó sẽ tăng lên"
+  },
+  {
+    "start": 1501.23,
+    "end": 1505.11,
+    "text": "cái này nếu mà bạn dùng vector thì nó tiện hơn, đúng không? mình đã phải khai báo 1 cái mảng"
+  },
+  {
+    "start": 1505.11,
+    "end": 1507.35,
+    "text": "nhưng mà có thể các bạn dùng mạng nó quen hơn"
+  },
+  {
+    "start": 1507.35,
+    "end": 1510.79,
+    "text": "rồi sau đó các bạn làm cho mình 1 cái menu như thế này"
+  },
+  {
+    "start": 1510.79,
+    "end": 1517.16,
+    "text": "ở đây mình sẽ CL ra 1 cái trên này để cho người ta nhập các cái lựa chọn nhé"
+  },
+  {
+    "start": 1517.16,
+    "end": 1521.74,
+    "text": "bài này thì hơi văn bở một tí"
+  },
+  {
+    "start": 1521.74,
+    "end": 1529.02,
+    "text": "Đầu tiên mình cốt nhiều mà nó yêu cầu nhập suất rồi để in ra các câu dẫn như thế này, đúng không?"
+  },
+  {
+    "start": 1529.02,
+    "end": 1533.08,
+    "text": "nhưng mà đôi khi mình cũng thỉnh tháng làm những cái bài như thế này cũng được"
+  },
+  {
+    "start": 1533.08,
+    "end": 1538.08,
+    "text": "Rồi, mình sẽ yêu cầu cái đầu tiên, cái chức năng đầu tiên đấy, đây chính là nhập thông tin đúng không?"
+  },
+  {
+    "start": 1538.08,
+    "end": 1542.61,
+    "text": "nhập thông tin sinh viên"
+  },
+  {
+    "start": 1542.61,
+    "end": 1548.5,
+    "text": "Ok, sau đó cái chức năng thứ 2, đây chính là hiển thị đoàn bộ danh sex sinh viên này"
+  },
+  {
+    "start": 1548.5,
+    "end": 1561.85,
+    "text": "trực năng thứ 3, tìm kiếm sinh viên theo tên, tìm kiếm sinh viên theo má s"
+  },
+  {
+    "start": 1561.85,
+    "end": 1567.26,
+    "text": "trực năng thứ 5, thứ 4, liệt kê sinh viên có gva cao nhất"
+  },
+  {
+    "start": 1567.26,
+    "end": 1576.38,
+    "text": "sau đó người ta nhập yêu cầu gì bạn cứ làm cái yêu cầu đấy, liệt kê sinh viên có điểm gva cao nhất"
+  },
+  {
+    "start": 1576.38,
+    "end": 1582.38,
+    "text": "Tiếp theo, đẹp các sinh viên có điểm gve lớn hơn bằng 2,5 để ra trưởng"
+  },
+  {
+    "start": 1582.38,
+    "end": 1590.15,
+    "text": "Đẹp các sinh viên có điểm gve lớn bằng 2,5"
+  },
+  {
+    "start": 1590.15,
+    "end": 1597.69,
+    "text": "Chức năng thứ 5 để chính là subcept, xin lỗi chức năng thứ 6 là subcept sinh viên theo tên"
+  },
+  {
+    "start": 1597.69,
+    "end": 1601.69,
+    "text": "Subcept sinh viên theo tên"
+  },
+  {
+    "start": 1601.69,
+    "end": 1608.82,
+    "text": "Rồi, rồi chức năng đóng cái này lại"
+  },
+  {
+    "start": 1608.82,
+    "end": 1614.32,
+    "text": "Rồi ở đây mình sẽ cho người dùng nhập vào một cái lựa chọn nhé, Michelle đây là nhập lựa chọn cho nó"
+  },
+  {
+    "start": 1615.56,
+    "end": 1619.56,
+    "text": "Sau đó là mình dùng một cái biến là lựa chọn, sau đó mình xin cho cái biến lựa chọn đấy"
+  },
+  {
+    "start": 1619.56,
+    "end": 1623.71,
+    "text": "Đây mình cho thêm một cái lựa chọn nữa là không dừng nhé"
+  },
+  {
+    "start": 1623.71,
+    "end": 1625.71,
+    "text": "Thuất, rồi"
+  },
+  {
+    "start": 1625.71,
+    "end": 1629.71,
+    "text": "Và mình kiểm tra íp lựa chọn là bằng 1, tức là nhập thông tin sinh viên đúng không?"
+  },
+  {
+    "start": 1629.71,
+    "end": 1637.71,
+    "text": "Thì khi đó ấy, bạn sẽ cho e của nò nhé, chỗ này mình sẽ khởi tạm nò bằng không"
+  },
+  {
+    "start": 1637.71,
+    "end": 1640.83,
+    "text": "Nó không có sinh viên nào mà, bạn sẽ cho an nó chấm nhập"
+  },
+  {
+    "start": 1640.83,
+    "end": 1645.28,
+    "text": "Ok, và sau khi mà nhập xong thông tin thì bạn tăng cái biến nở lên"
+  },
+  {
+    "start": 1645.28,
+    "end": 1649.2,
+    "text": "Vậy thì khi đó cái biến nở của mình nó sẽ losing số lượng sinh viên trong biến sách, đúng không?"
+  },
+  {
+    "start": 1649.2,
+    "end": 1655.28,
+    "text": "Nếu mà lựa chọn là 2 nhá, thì bạn chỉ cần gọi cái ham đấy là ham in danh sách thôi"
+  },
+  {
+    "start": 1655.28,
+    "end": 1659.71,
+    "text": "Chuyền em vào nào vào, chuyền mặt em vào phần tử vào"
+  },
+  {
+    "start": 1659.71,
+    "end": 1663.87,
+    "text": "Còn nếu mà lựa chọn là 3 thì mình gọi cái ham gì nhỉ?"
+  },
+  {
+    "start": 1663.87,
+    "end": 1666.27,
+    "text": "Cái ham đấy là ham tìm kiếm mẻ đúng không?"
+  },
+  {
+    "start": 1666.27,
+    "end": 1668.27,
+    "text": "Rồi mình sẽ gọi cái ham tìm kiếm mẹ nhé"
+  },
+  {
+    "start": 1668.27,
+    "end": 1670.27,
+    "text": "tìm kiếm mẹ, tiến e vào nó và"
+  },
+  {
+    "start": 1670.27,
+    "end": 1672.27,
+    "text": "còn nếu mà lựa chọn là 4 ấy"
+  },
+  {
+    "start": 1672.27,
+    "end": 1676.56,
+    "text": "tức là liệt kê sinh viên có điểm gpe có nhất hình như nào là"
+  },
+  {
+    "start": 1676.56,
+    "end": 1678.56,
+    "text": "liệt kê gpe đúng không?"
+  },
+  {
+    "start": 1678.56,
+    "end": 1682.56,
+    "text": "rồi ok, còn nếu mà lựa chức năng thứ 5"
+  },
+  {
+    "start": 1682.56,
+    "end": 1688.93,
+    "text": "thì là liệt kê gpe 2 đúng không?"
+  },
+  {
+    "start": 1688.93,
+    "end": 1690.93,
+    "text": "không có rồi, mình xe lại"
+  },
+  {
+    "start": 1690.93,
+    "end": 1694.27,
+    "text": "liệt kê gpe"
+  },
+  {
+    "start": 1694.27,
+    "end": 1696.53,
+    "text": "chết rồi, 2 kê ham này"
+  },
+  {
+    "start": 1696.53,
+    "end": 1698.53,
+    "text": "đây mình sẽ đặt cái thằng này là 2 nhé"
+  },
+  {
+    "start": 1698.53,
+    "end": 1707.74,
+    "text": "ok, rồi, còn nếu mà chức năng thứ 6 này, lựa chọn bằng 6 thì mình sẽ gọi cái hềm là hềm sắp xếp tên nữa"
+  },
+  {
+    "start": 1707.74,
+    "end": 1713.74,
+    "text": "còn nếu mà lựa chọn mà là không, thì tôi sẽ break cái menu để đi cho nó kết thúc"
+  },
+  {
+    "start": 1713.74,
+    "end": 1715.74,
+    "text": "rồi bây giờ mình thử tiếp cái chương trình này nhé"
+  },
+  {
+    "start": 1715.74,
+    "end": 1739.9,
+    "text": "return, return, return, rest, writekey gope2wasnotliclear, writekey, typezu, gope2, gope2, load"
+  },
+  {
+    "start": 1739.9,
+    "end": 1750.08,
+    "text": "Nò đến lúc nhật tiết cây rồi đúng không? Bây giờ nói hiện thị cho mình con menu như thế này, ví dụ mình nhập thông tin cho một ông nhé"
+  },
+  {
+    "start": 1750.08,
+    "end": 1756.7,
+    "text": "bây giờ mình sẽ nhập mã xinh viên đấy là 123. right now I'm going to enter the number of survivors, 123, 123 nhé"
+  },
+  {
+    "start": 1756.7,
+    "end": 1759.0,
+    "text": "1-2-3 nha! ok 1-2-3, 1-2-3"
+  },
+  {
+    "start": 1759.0,
+    "end": 1764.24,
+    "text": "tên là nguyễn ban nam nhé"
+  },
+  {
+    "start": 1764.24,
+    "end": 1767.64,
+    "text": "nhập lớp đấy là lớp 12c1 trại hại"
+  },
+  {
+    "start": 1767.64,
+    "end": 1771.78,
+    "text": "ngày sinh thì là 12 tháng 122002 trại hại"
+  },
+  {
+    "start": 1771.78,
+    "end": 1774.82,
+    "text": "ok. gba thì là nề 3.17"
+  },
+  {
+    "start": 1774.82,
+    "end": 1780.32,
+    "text": "vậy thì bây giờ trong danh sách sinh viên của các bạn đã có một ông rồi đúng không? mình nhập thêm một cái ông nữa nhé"
+  },
+  {
+    "start": 1780.32,
+    "end": 1784.38,
+    "text": "lại lựa chọn chức năng là một để nhập thông tin, thì nó lại yêu cầu mình nhập thêm đúng không?"
+  },
+  {
+    "start": 1784.38,
+    "end": 1787.88,
+    "text": "dụ mình nhập là 1-2-4, 1-2-4"
+  },
+  {
+    "start": 1787.88,
+    "end": 1797.58,
+    "text": "tên là trương văn nam, nhập lớp là lớp công nghệ hôm tin 1"
+  },
+  {
+    "start": 1797.58,
+    "end": 1805.77,
+    "text": "ok, ngày sinh thì là 17 tháng 12 năm 2033, ok, vn 2.3"
+  },
+  {
+    "start": 1805.77,
+    "end": 1808.77,
+    "text": "rồi bây giờ xong xanh xách sinh viên của mình đang có 2 ông thì mình thử hiển thị nhá"
+  },
+  {
+    "start": 1808.77,
+    "end": 1811.77,
+    "text": "mình lựa cho cái chức năng thứ 2 để hiển thị nhá"
+  },
+  {
+    "start": 1811.77,
+    "end": 1815.02,
+    "text": "đây, xanh xách sinh viên của các bạn đây"
+  },
+  {
+    "start": 1815.02,
+    "end": 1818.02,
+    "text": "đấy, động niễn văn nam này và bạn trương văn nam này ok"
+  },
+  {
+    "start": 1818.02,
+    "end": 1823.02,
+    "text": "Bây giờ mình thêm một vài ông nữa để tìm nữa mình check cái khả năng sắp xếp nhá, mình thêm một cái ông nữa đi"
+  },
+  {
+    "start": 1823.02,
+    "end": 1828.7,
+    "text": "Ông này có mã sinh viên là 1, 2, 5, 1, 2, 5"
+  },
+  {
+    "start": 1828.7,
+    "end": 1831.7,
+    "text": "Từ từ, mình để là 1, 3, 5, 1, 3, 5 đi"
+  },
+  {
+    "start": 1831.7,
+    "end": 1838.73,
+    "text": "Ok, nhật tên sinh viên là Nguyễn, ờ, Lương 1A chả nè"
+  },
+  {
+    "start": 1838.73,
+    "end": 1845.95,
+    "text": "Ok, này sinh là ngày 16-8-20-03"
+  },
+  {
+    "start": 1845.95,
+    "end": 1853.95,
+    "text": "gpl thì mình để thấp 1 tí để tí nữa mình check lựa chọn, gpl lớn bằng 2.5 nhé, mình sẽ để là 3.4 đi"
+  },
+  {
+    "start": 1853.95,
+    "end": 1861.26,
+    "text": "xét rồi, ngày xinh mình nhập nhầm rồi, không sao, lớp mình cũng nhập nhầm được rồi, ok"
+  },
+  {
+    "start": 1861.26,
+    "end": 1864.26,
+    "text": "bây giờ thì trong danh xách sinh viên của mình có 3 ông, đúng không?"
+  },
+  {
+    "start": 1864.26,
+    "end": 1869.26,
+    "text": "mình sẽ lựa chọn chức năng là 2 là diễn thị toàn bộ danh xách sinh viên thì khi đó nó sẽ có 3 ông như thế này"
+  },
+  {
+    "start": 1869.26,
+    "end": 1875.54,
+    "text": "ok, bây giờ mình thử tìm kiếm sinh viên theo mẹ nhé"
+  },
+  {
+    "start": 1875.54,
+    "end": 1877.54,
+    "text": "thì nó sẽ yêu cầu mình nhập vào cái mẹ sinh viên cần tìm"
+  },
+  {
+    "start": 1877.54,
+    "end": 1884.3,
+    "text": "tìm, ở đây có một cái ông là mã là 1-2-3, 1-2-3, 1-2-4, 1-2-4, 1-2-4, 1-3-5, 1-3-5, nếu mà bạn tìm kiếm chính xác thì nó cũng ra thôi"
+  },
+  {
+    "start": 1884.3,
+    "end": 1890.57,
+    "text": "Nghĩ dụ như mình tìm kiếm cái ông 1-2-3, 1-2-3 này sẽ là ông Giang Nguyễn Văn Nam ngay"
+  },
+  {
+    "start": 1890.57,
+    "end": 1893.25,
+    "text": "Đấy chưa? Thì nó sẽ ra ngay cái ông Mã Nguyễn Văn Nam"
+  },
+  {
+    "start": 1893.25,
+    "end": 1897.49,
+    "text": "Nhưng nếu mà mình chỉ nhập 1-2-3 thôi, thì nó cũng chỉ Giang Nguyễn Văn Nam thôi đúng không?"
+  },
+  {
+    "start": 1897.49,
+    "end": 1902.17,
+    "text": "Bởi vì trong 3 cái mã sinh viên này chỉ có mỗi ông Nguyễn Văn Nam là có mã là 1-2-3 đúng không?"
+  },
+  {
+    "start": 1902.17,
+    "end": 1904.69,
+    "text": "Rồi mình sẽ lựa chọn chức năng là 3 nhé, nhưng mình dập 1, 2, 3"
+  },
+  {
+    "start": 1904.69,
+    "end": 1908.29,
+    "text": "Thì nó chỉ ra nguyễn văn nam thôi, nhưng nếu mà mình dập là 1, 2 nhé"
+  },
+  {
+    "start": 1908.29,
+    "end": 1910.29,
+    "text": "Đây các bạn nhìn cái danh sách này"
+  },
+  {
+    "start": 1910.29,
+    "end": 1912.64,
+    "text": "Danh sách sinh viên đang có 3 ông như thế này"
+  },
+  {
+    "start": 1912.64,
+    "end": 1914.64,
+    "text": "Mình mà dập là mã là 1, 2"
+  },
+  {
+    "start": 1914.64,
+    "end": 1916.64,
+    "text": "Thì khi đó có ông nguyễn văn nam và ông trương văn nam này này"
+  },
+  {
+    "start": 1916.64,
+    "end": 1919.64,
+    "text": "là có mã sinh viên mà nó chứa 2 cái từ là từ 1, 2 này này"
+  },
+  {
+    "start": 1919.64,
+    "end": 1921.64,
+    "text": "Cái ông Lương văn E này thì không có đúng không?"
+  },
+  {
+    "start": 1921.64,
+    "end": 1925.24,
+    "text": "Rồi ra nếu mà mình dập cái mã sinh viên cần tìm kiếm là 1, 2 thì nó sẽ liễn thị 2 cái ông này"
+  },
+  {
+    "start": 1925.24,
+    "end": 1928.88,
+    "text": "lựa chẳng chức năng là 3, tìm kiến hiệu mại nhé, nhập là 1, 2"
+  },
+  {
+    "start": 1928.88,
+    "end": 1933.8,
+    "text": "Thì nó sẽ ôn găng miễn văn nèm và ông trưng văn nèm, nói chung tùy đầu vài các bạn tự quyết định kìa đấy"
+  },
+  {
+    "start": 1933.8,
+    "end": 1938.48,
+    "text": "Rồi bây giờ mình sẽ thử liệt kê xinh viên có điểm cao PA cao nhất thì ông là ông"
+  },
+  {
+    "start": 1938.48,
+    "end": 1941.62,
+    "text": "ông lung văn air đúng không, được 3,4 này"
+  },
+  {
+    "start": 1941.62,
+    "end": 1945.94,
+    "text": "Ok, thì mình sẽ nhập cái 4"
+  },
+  {
+    "start": 1945.94,
+    "end": 1949.86,
+    "text": "Đây thì nó sẽ hiển thị cho bạn danh sách cái xinh viên có điểm cao PA cao nhất"
+  },
+  {
+    "start": 1949.86,
+    "end": 1954.7,
+    "text": "Nếu mà bạn cho thêm 1 cái ông nữa mà cũng có điểm là 3,4 thì nó liệt kê hết nhé, ví dụ mình thêm 1 cái ông nữa này"
+  },
+  {
+    "start": 1954.7,
+    "end": 1967.42,
+    "text": "8, 136, 1, 136, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 6, 1, 3, 5, 6, 1, 3, 6, 1, 3."
+  },
+  {
+    "start": 1967.42,
+    "end": 1984.14,
+    "text": "Ngày sinh của ông ấy là 12 tháng 6 năm 2006-03 and"
+  },
+  {
+    "start": 1984.14,
+    "end": 1987.3,
+    "text": "đây, đây là ông lung văn A và ông lung văn AB"
+  },
+  {
+    "start": 1987.3,
+    "end": 1990.06,
+    "text": "đây là xong 4 chức năng đầu tiên, ok nhé"
+  },
+  {
+    "start": 1990.06,
+    "end": 1994.22,
+    "text": "bây giờ mình thử liệt cái các sinh viên có điểm gò PA lớn hơn 2,5 nhé, dễ đúng không?"
+  },
+  {
+    "start": 1994.22,
+    "end": 1998.62,
+    "text": "đây, các sinh viên có gò PA lớn hơn 2,5 đây"
+  },
+  {
+    "start": 1998.62,
+    "end": 2000.74,
+    "text": "đây chính là ông lung văn A được 3,4 này"
+  },
+  {
+    "start": 2000.74,
+    "end": 2002.66,
+    "text": "ông lung văn AB được 3,4 này"
+  },
+  {
+    "start": 2002.66,
+    "end": 2004.5,
+    "text": "và ông miễn văn Nam được 3,17"
+  },
+  {
+    "start": 2004.5,
+    "end": 2010.7,
+    "text": "thì người ta yêu cầu mình là các sinh viên có điểm gò PA lớn hơn 2,5 mình sẽ xắp xếp theo điểm dằm dần đấy"
+  },
+  {
+    "start": 2010.7,
+    "end": 2013.46,
+    "text": "đây, gò PA 3,4 này, 3,4 này, 3,17"
+  },
+  {
+    "start": 2013.46,
+    "end": 2024.1,
+    "text": "Ok, còn người ta yêu cầu thêm các chức năng khác, ví dụ như là, nếu mà hai bạn có cùng điểm thì lại sắp xếp theo cái mẹ sinh viên hay tên sinh viên thì các bạn chỉnh xử cái comparator điên tí ra được"
+  },
+  {
+    "start": 2024.1,
+    "end": 2029.12,
+    "text": "Rồi, bây giờ mình sẽ sang cái chức năng cuối, đấy là sắp xếp sinh viên theo tên nhé"
+  },
+  {
+    "start": 2029.12,
+    "end": 2033.17,
+    "text": "Rồi, sau khi mà lựa chọn chức năng là 6 thì nó sắp xếp rồi đúng không?"
+  },
+  {
+    "start": 2033.17,
+    "end": 2037.17,
+    "text": "Thì mình ra thử hiển thị lại toàn bộ với cái chức sinh viên xem là nó có sắp xếp theo tên không nhé"
+  },
+  {
+    "start": 2037.17,
+    "end": 2041.27,
+    "text": "Đây, sau sinh viên sau khi mà sắp xếp theo tên của các bạn đây"
+  },
+  {
+    "start": 2041.27,
+    "end": 2046.92,
+    "text": "Đấy là, chết rồi sao lương văn ab thì nó lại lên đầu nhỉ"
+  },
+  {
+    "start": 2046.92,
+    "end": 2056.1,
+    "text": "lương văn a, lương văn nam và trương văn nam, chết rồi"
+  },
+  {
+    "start": 2056.1,
+    "end": 2064.79,
+    "text": "trương văn a"
+  },
+  {
+    "start": 2064.79,
+    "end": 2069.46,
+    "text": "À rồi ok, lúc nãy là mình sắp xếp tên theo kiểu cộng chuỗi đúng không?"
+  },
+  {
+    "start": 2069.46,
+    "end": 2072.18,
+    "text": "thì cái thằng ab thì nó sẽ thành là..."
+  },
+  {
+    "start": 2072.18,
+    "end": 2076.9,
+    "text": "Thế thì alo thì nó lại là xếp sau đúng không? Ok"
+  },
+  {
+    "start": 2076.9,
+    "end": 2078.82,
+    "text": "Thì cũng không có gì khó khăn cả"
+  },
+  {
+    "start": 2078.82,
+    "end": 2081.32,
+    "text": "Cái comparator các bạn đổ đi một tí là được"
+  },
+  {
+    "start": 2081.32,
+    "end": 2084.32,
+    "text": "ở chỗ comparator 2 này nè, tự tự, mình xem nè"
+  },
+  {
+    "start": 2086.31,
+    "end": 2088.31,
+    "text": "các này bạn return cho mình cái vector đi"
+  },
+  {
+    "start": 2088.31,
+    "end": 2093.97,
+    "text": "ok, và chỗ này bạn return thẳng cho mình cái vector v"
+  },
+  {
+    "start": 2093.97,
+    "end": 2097.97,
+    "text": "để nó return về cho các bạn các cái tử trong tên với"
+  },
+  {
+    "start": 2097.97,
+    "end": 2102.48,
+    "text": "rồi, sau đó trong comparator này các bạn chỉnh lại 1 chút"
+  },
+  {
+    "start": 2102.48,
+    "end": 2105.48,
+    "text": "các bạn so sánh từ tên trước, bạn so sánh lại ít"
+  },
+  {
+    "start": 2105.48,
+    "end": 2113.48,
+    "text": "mình dùng 1 cái vector innerTV 1 bằng chuẩn hóa của e.name"
+  },
+  {
+    "start": 2113.48,
+    "end": 2121.48,
+    "text": "v2 bằng chuẩn hóa của v.name để mình lấy ra các cái tên của hai cái ông này sau đó mình so sánh từ thằng ấy 1 nhé"
+  },
+  {
+    "start": 2121.48,
+    "end": 2126.48,
+    "text": "từ thằng tên 1, đầu tiên mình sẽ so sánh tên ifv1.back"
+  },
+  {
+    "start": 2126.48,
+    "end": 2130.74,
+    "text": "tức là cái phần tử cuối trong tư tư v, khác v2.back"
+  },
+  {
+    "start": 2130.74,
+    "end": 2136.35,
+    "text": "cái bạn sẽ return v1.back, nhỏ hơn v2.back"
+  },
+  {
+    "start": 2136.35,
+    "end": 2139.35,
+    "text": "thế là mình sẽ so sánh tên trước"
+  },
+  {
+    "start": 2139.35,
+    "end": 2157.78,
+    "text": "Sao đó mình so sánh này, mình dùng 1 biến lang 1 bằng e.side và v1.side và lang 2 bằng v2.side, nó chính là cái số tên người của hai cái ông này"
+  },
+  {
+    "start": 2157.78,
+    "end": 2163.42,
+    "text": "Số lượng từ trong tên của hai ông này, sau đó mình rượt từ four in ở tên không, y nhỏ hơn"
+  },
+  {
+    "start": 2163.42,
+    "end": 2175.04,
+    "text": "min của lang 1 và lang 2, y cộng cộng, sau đó là mình kiểm tra yp v1i mà khát v2i"
+  },
+  {
+    "start": 2175.04,
+    "end": 2181.47,
+    "text": "Ok, thì mình sẽ return về v1i nhỏ hơn v2i"
+  },
+  {
+    "start": 2181.47,
+    "end": 2203.07,
+    "text": "Sau khi badbody cho xanh làmλέp ra khỏi krijgen, 🤬"
+  },
+  {
+    "start": 2203.07,
+    "end": 2209.6,
+    "text": "iustream, actually, the theme was one of straightforward."
+  },
+  {
+    "start": 2209.6,
+    "end": 2217.84,
+    "text": "To be more interesting is to see if there are no deploy themes that I need to make use of."
+  },
+  {
+    "start": 2217.84,
+    "end": 2230.96,
+    "text": "I will explain in-game following that theme so I have a level name."
+  },
+  {
+    "start": 2230.96,
+    "end": 2247.44,
+    "text": "Let's start with setting to add a string."
+  },
+  {
+    "start": 2247.44,
+    "end": 2260.65,
+    "text": "cout.str Still, nha, sauen lối, lối, lối, lối, lối, lối, lối. Mr. Singly, 1 name, abord, Input, Fill, Add myVan."
+  },
+  {
+    "start": 2260.65,
+    "end": 2272.46,
+    "text": "Input, input, Input, add tool. Enter. Now, input, add a, input, add a, input, add nn, input, click, drawMarket,"
+  },
+  {
+    "start": 2272.46,
+    "end": 2295.27,
+    "text": "Mãi xinh viên là n tick,唱"
+  },
+  {
+    "start": 2295.27,
+    "end": 2297.27,
+    "text": "nhập mạng sinh viên, nhập sai, thằng ra nó bị chối lại"
+  },
+  {
+    "start": 2297.27,
+    "end": 2300.17,
+    "text": "rồi ok nhập lại"
+  },
+  {
+    "start": 2300.17,
+    "end": 2302.17,
+    "text": "1 cái ông"
+  },
+  {
+    "start": 2302.17,
+    "end": 2304.17,
+    "text": "công nghệ quên"
+  },
+  {
+    "start": 2304.17,
+    "end": 2306.17,
+    "text": "tên sinh viên, đấy là nguyễn ban e đúng không?"
+  },
+  {
+    "start": 2306.17,
+    "end": 2308.33,
+    "text": "lớp là công nghệ công tin 1"
+  },
+  {
+    "start": 2308.33,
+    "end": 2312.33,
+    "text": "22 tháng 12 năm 2002"
+  },
+  {
+    "start": 2312.33,
+    "end": 2316.18,
+    "text": "rồi ông thứ 2 này"
+  },
+  {
+    "start": 2316.18,
+    "end": 2318.18,
+    "text": "mạng sinh viên là 2, tên là lương ban ab nhé"
+  },
+  {
+    "start": 2318.18,
+    "end": 2323.38,
+    "text": "nhập lớp là công nghệ công tin 2"
+  },
+  {
+    "start": 2323.38,
+    "end": 2325.38,
+    "text": "sinh là 27 tháng 11 năm 2003"
+  },
+  {
+    "start": 2325.38,
+    "end": 2327.38,
+    "text": "2008"
+  },
+  {
+    "start": 2327.38,
+    "end": 2329.38,
+    "text": "bây giờ mình thử nhập thêm 1 cái ông"
+  },
+  {
+    "start": 2329.38,
+    "end": 2334.98,
+    "text": "mình thử nhập thêm 1 cái ông mà ông đứng trước Nguyễn Văn A đi, ví dụ như là ông Hoàng Văn A đi, ok"
+  },
+  {
+    "start": 2334.98,
+    "end": 2340.11,
+    "text": "ba nhé, ông Hoàng Văn A, nhập lớp là công nghệ thông tin ba,"
+  },
+  {
+    "start": 2340.11,
+    "end": 2347.11,
+    "text": "hãy xin là 17 tháng 7 2003, và có PA là 2.9, ok"
+  },
+  {
+    "start": 2347.11,
+    "end": 2349.61,
+    "text": "bây giờ mình thử nhập thêm 1 cái ông nữa đi,"
+  },
+  {
+    "start": 2349.61,
+    "end": 2359.21,
+    "text": "bốn nhé, tên là Nguyễn Văn Nam, nhập lớp là công nghệ thông tin 1,"
+  },
+  {
+    "start": 2359.21,
+    "end": 2362.35,
+    "text": "Sinh là 20, tháng 8"
+  },
+  {
+    "start": 2362.35,
+    "end": 2369.68,
+    "text": "Rồi, bây giờ mình sẽ nhập 1 cái ông mà ông ấy sắp xếp trước, ông Nam này nhé"
+  },
+  {
+    "start": 2369.68,
+    "end": 2374.46,
+    "text": "Ông giữ là Nguyễn Văn, Nguyễn Văn Bắc chả nè"
+  },
+  {
+    "start": 2374.46,
+    "end": 2378.44,
+    "text": "Công niệm sinh 1 kìa"
+  },
+  {
+    "start": 2378.44,
+    "end": 2381.56,
+    "text": "Sinh là 26, tháng 5"
+  },
+  {
+    "start": 2381.56,
+    "end": 2389.5,
+    "text": "Rồi, bây giờ mình thử sắp xếp sinh viên theo tên nhé"
+  },
+  {
+    "start": 2389.5,
+    "end": 2392.94,
+    "text": "Bởi từ mình liệt kê đã nhé, đây hiển thị cho các bạn thấy cái thông tin sinh viên này"
+  },
+  {
+    "start": 2392.94,
+    "end": 2397.26,
+    "text": "Đây, là các cái sinh viên của trong viên sách của các bạn"
+  },
+  {
+    "start": 2397.26,
+    "end": 2401.74,
+    "text": "Nguyễn Văn E này, lương Văn IB này, vàng Văn E, vàng Nguyễn Văn Nam, vàng Nguyễn Văn Bắc đúng không?"
+  },
+  {
+    "start": 2401.74,
+    "end": 2404.62,
+    "text": "Bây giờ thì mình thử sắp xếp sinh viên theo tên"
+  },
+  {
+    "start": 2404.62,
+    "end": 2409.0,
+    "text": "Rồi sau đó mình sẽ hiển thị lại xem xem nó có sắp xếp không nhá"
+  },
+  {
+    "start": 2409.0,
+    "end": 2415.1,
+    "text": "Rồi thì bạn thấy là bây giờ cái sinh viên của mình, cái ông đầu tiên sẽ là ông Hoàng Van E"
+  },
+  {
+    "start": 2415.1,
+    "end": 2417.5,
+    "text": "Đúng không? Sau đó mình đến ông Viễn Van E đúng không?"
+  },
+  {
+    "start": 2417.5,
+    "end": 2420.7,
+    "text": "Sau đó mình đến Lương Văn AB đúng không? Sau đó mình đến Nguyễn Văn Bắc"
+  },
+  {
+    "start": 2420.7,
+    "end": 2424.22,
+    "text": "Và cuối cùng mình đến Nguyễn Văn Nam thì nó sẽ sắp xếp theo tên theo tư tư tư điển"
+  },
+  {
+    "start": 2424.22,
+    "end": 2427.98,
+    "text": "Ok? Vậy thì là xong xong 6 cái chức năng này nhá"
+  },
+  {
+    "start": 2427.98,
+    "end": 2429.58,
+    "text": "Mình sẽ ấn không để lực váp này"
+  },
+  {
+    "start": 2429.58,
+    "end": 2433.1,
+    "text": "Ok, bây giờ mình sẽ dựng nốt 2 cái chức năng cuối"
+  },
+  {
+    "start": 2433.1,
+    "end": 2444.69,
+    "text": "Sắp xếp sinh viên theo lớp, các sinh viên cùng lớp sẽ sắp xếp theo tên tăng dần theo thứ tự tử điển"
+  },
+  {
+    "start": 2444.69,
+    "end": 2449.14,
+    "text": "Chú ý sắp xếp tên trước sau đến họ và tên đệm rồi"
+  },
+  {
+    "start": 2449.14,
+    "end": 2452.54,
+    "text": "Bây giờ người ta lại yêu cầu mình sắp xếp theo cùng lớp đấy đúng không?"
+  },
+  {
+    "start": 2452.54,
+    "end": 2454.94,
+    "text": "Thông thường thì các sinh viên cùng lớp sẽ đứng cạnh nhau đúng không?"
+  },
+  {
+    "start": 2454.94,
+    "end": 2461.14,
+    "text": "Sau đó là trong cái lớp đấy các sinh viên cùng lớp thì bạn nào có thứ tự tử điển nhỏ hơn sẽ lại đứng trước đúng không?"
+  },
+  {
+    "start": 2461.14,
+    "end": 2463.14,
+    "text": "mình sẽ dẫn thêm một comparator nữa"
+  },
+  {
+    "start": 2463.14,
+    "end": 2465.14,
+    "text": "đây là boon comparator 3"
+  },
+  {
+    "start": 2465.14,
+    "end": 2467.14,
+    "text": "string.a và string.b"
+  },
+  {
+    "start": 2467.14,
+    "end": 2469.64,
+    "text": "ok, vậy thì đầu tiên mình sẽ so sánh đến lớp nhá"
+  },
+  {
+    "start": 2469.64,
+    "end": 2472.14,
+    "text": "bởi vì nếu mà hai cái string.a và b này có lớp khác nhau ấy"
+  },
+  {
+    "start": 2472.14,
+    "end": 2474.64,
+    "text": "thì bạn chỉ cần so sánh đến lớp thôi"
+  },
+  {
+    "start": 2474.64,
+    "end": 2476.64,
+    "text": "là hai bạn này có thể phân biệt được nhau rồi đúng không?"
+  },
+  {
+    "start": 2476.64,
+    "end": 2479.14,
+    "text": "thì bạn chỉ cần kiểm tra là ipa. lớp"
+  },
+  {
+    "start": 2479.14,
+    "end": 2481.14,
+    "text": "là fb. lớp"
+  },
+  {
+    "start": 2481.14,
+    "end": 2483.3,
+    "text": "thì bạn chỉ cần return về"
+  },
+  {
+    "start": 2483.3,
+    "end": 2485.3,
+    "text": "return về a. lớp nhỏ hơn b. lớp thôi"
+  },
+  {
+    "start": 2485.3,
+    "end": 2487.3,
+    "text": "đúng không? cái này nó chỉ là"
+  },
+  {
+    "start": 2487.3,
+    "end": 2489.3,
+    "text": "sẽ dẫn comparator cho"
+  },
+  {
+    "start": 2489.3,
+    "end": 2491.43,
+    "text": "xót thôi mà"
+  },
+  {
+    "start": 2491.43,
+    "end": 2494.43,
+    "text": "còn nếu mà hai bạn này cùng lớp ấy, thì mình sẽ xót xanh đến tên đúng không?"
+  },
+  {
+    "start": 2494.43,
+    "end": 2498.04,
+    "text": "nơi thì bạn chỉ cần copy cái thằng này thôi"
+  },
+  {
+    "start": 2498.04,
+    "end": 2500.04,
+    "text": "vứt nó xuống đây, thế là xăm"
+  },
+  {
+    "start": 2500.04,
+    "end": 2505.44,
+    "text": "chứ à, bây giờ mình sẽ viết một cái hàm nữa là hàm subzip lớp"
+  },
+  {
+    "start": 2505.44,
+    "end": 2510.44,
+    "text": "rồi, và trong cái hàm này thì mình chỉ cần gọi hàm xót và mình truyền comparator 3 vào được"
+  },
+  {
+    "start": 2510.44,
+    "end": 2513.73,
+    "text": "ok, và mình sẽ truyền comparator 3 vào đây"
+  },
+  {
+    "start": 2513.73,
+    "end": 2517.73,
+    "text": "thì khi đó nó sẽ subzip các cái sinh viên cùng lớp đứng cạnh nhau thì còn nếu mà"
+  },
+  {
+    "start": 2517.73,
+    "end": 2525.67,
+    "text": "cho trong lấp ấy, dù như là 10 bạn ở trong công nghiệm tin 1 sẽ đứng cạnh nhau và 10 bạn ấy sẽ được sắp xếp theo thứ tự tư điển tăng dần"
+  },
+  {
+    "start": 2527.93,
+    "end": 2530.97,
+    "text": "tiếp theo này, sắp xếp sinh viên theo lấp đúng không?"
+  },
+  {
+    "start": 2530.97,
+    "end": 2537.23,
+    "text": "sinh viên cùng lấp sẽ xếp theo thứ tự và devrait và giảm dần, trong trường hợp này thì mình sẽ viết thêm 1 comparator 4 vào đây"
+  },
+  {
+    "start": 2537.68,
+    "end": 2541.32,
+    "text": "nó vẫn là sinh viên A và sinh viên B đúng không?"
+  },
+  {
+    "start": 2541.52,
+    "end": 2543.9,
+    "text": "rồi, nếu mà hai bạn này khác lớp, đúng nhỉ?"
+  },
+  {
+    "start": 2543.9,
+    "end": 2546.16,
+    "text": "đây, nếu mà A khác lớp và B khác lớp"
+  },
+  {
+    "start": 2546.16,
+    "end": 2549.34,
+    "text": "thì mình sẽ return về hai các bạn này lớp đứng khác nhau đúng không?"
+  },
+  {
+    "start": 2549.34,
+    "end": 2554.3,
+    "text": "còn nếu bạn 2 bạn này cùng lớp, thì mình sẽ return về điểm GRPA giám dần đúng không?"
+  },
+  {
+    "start": 2554.3,
+    "end": 2562.7,
+    "text": "thì mình sẽ return về i.grpa lứa hb.grpa để cho các bạn cùng lớp thì đứng cạnh nhau mà ông nào có điểm cao hơn thì đứng trên"
+  },
+  {
+    "start": 2562.7,
+    "end": 2569.34,
+    "text": "void, sub-save, lớp 2, dễ chuyển vào danh sách sinh viên A của nò phần tự"
+  },
+  {
+    "start": 2569.34,
+    "end": 2574.4,
+    "text": "và mình sẽ sort với comparator 4"
+  },
+  {
+    "start": 2574.4,
+    "end": 2583.99,
+    "text": "Thôi nói chung là các bạn cốt tốt ở các phần trước thì sang phần này nó chỉ là thực hiện các yêu cầu đơn giản thôi, nó cũng chưa có gì cần phải đánh đố lắm"
+  },
+  {
+    "start": 2583.99,
+    "end": 2585.89,
+    "text": "Không có gì đánh đố các bạn đúng không?"
+  },
+  {
+    "start": 2585.89,
+    "end": 2590.39,
+    "text": "Rồi sang chức năng thứ này là chức năng thứ 6, bây giờ mình sẽ sang chức năng thứ 7"
+  },
+  {
+    "start": 2590.39,
+    "end": 2593.99,
+    "text": "Đấy là sub-shape sinh viên theo lớp"
+  },
+  {
+    "start": 2593.99,
+    "end": 2602.69,
+    "text": "Các bạn cùng lớp được sếp theo thứ tự tên ABC đi"
+  },
+  {
+    "start": 2602.69,
+    "end": 2610.69,
+    "text": "còn chức năng thứ 8, để chính là sub-save, string-vm theo lớp nha"
+  },
+  {
+    "start": 2610.69,
+    "end": 2618.62,
+    "text": "các bạn cùng lớp, được save, theo điểm vpa"
+  },
+  {
+    "start": 2618.62,
+    "end": 2625.84,
+    "text": "dạm dạm, ok, rồi, thấy là xong chức năng thứ 6, thứ 7 thì 8 nữa, bây giờ mình sẽ ếp node"
+  },
+  {
+    "start": 2625.84,
+    "end": 2629.28,
+    "text": "lựa chọn và bằng 7 thì sẽ sắp xếp lớp"
+  },
+  {
+    "start": 2629.28,
+    "end": 2635.6,
+    "text": "A và N, còn nếu mà lựa chọn là 8 thì bạn sẽ gọi sắp xếp lớp 2"
+  },
+  {
+    "start": 2635.6,
+    "end": 2641.07,
+    "text": "A và N, ok, rồi, thế là xong nha"
+  },
+  {
+    "start": 2641.07,
+    "end": 2644.35,
+    "text": "bây giờ mình thể triển tét 2 cái chức năng cuối là 7 với 8 rồi nhá"
+  },
+  {
+    "start": 2644.35,
+    "end": 2647.71,
+    "text": "bây giờ mình sẽ nhập 1 vài cái ông sinh viên mà có cùng lớp, chứ chứ"
+  },
+  {
+    "start": 2647.71,
+    "end": 2651.73,
+    "text": "mình sẽ nhập 6 sinh viên đi, ok"
+  },
+  {
+    "start": 2651.73,
+    "end": 2656.77,
+    "text": "cho 2 bạn cùng lớp và 3 bạn cùng lớp nhá, ví dụ nập thông tin sinh viên 1 này"
+  },
+  {
+    "start": 2656.77,
+    "end": 2665.28,
+    "text": "Mình sẽ nhập là 1, ông Nguyễn Văn E, lớp là công nghệ ông tương 1, ok, 22-12-2020-2, rồi 3.14"
+  },
+  {
+    "start": 2665.28,
+    "end": 2672.79,
+    "text": "Lại nhập thêm 1 ông nữa nè, ông này có mã sinh viên là 2, tên là Nguyễn Văn B, lớp thì là công nghệ ông tin 2, ok"
+  },
+  {
+    "start": 2672.79,
+    "end": 2678.79,
+    "text": "Nói sinh là 23-8-2020-3, ok, NGPE là 2.19"
+  },
+  {
+    "start": 2678.79,
+    "end": 2682.79,
+    "text": "Thêm 1 ông sinh viên nữa, Nguyễn Văn E, Nguyễn Văn B, bây giờ đến Nguyễn Văn C"
+  },
+  {
+    "start": 2682.79,
+    "end": 2691.04,
+    "text": "lỗi mạng sinh viên, 4 đi, nguyễn văn xe, mình sẽ cho ông này ở công niệm tin 2"
+  },
+  {
+    "start": 2691.04,
+    "end": 2695.49,
+    "text": "ngày sinh thì là 27 tháng 11 năm 20001"
+  },
+  {
+    "start": 2695.49,
+    "end": 2700.0,
+    "text": "mình để gặp E.A là bằng, bạn này là công niệm tin 2 đúng không?"
+  },
+  {
+    "start": 2700.0,
+    "end": 2705.0,
+    "text": "mình sẽ cho lớn hơn bạn này một tí nhé, 2.19 đấy là 3.12"
+  },
+  {
+    "start": 2705.0,
+    "end": 2711.02,
+    "text": "được 3 bạn rồi đúng không? mình sẽ cho thêm 3 ông nữa, ăn nguyễn văn tèo"
+  },
+  {
+    "start": 2711.02,
+    "end": 2722.5,
+    "text": "Bạn này thì học công nghiệm tin 1, 2, 0, 0, 3, ok, 3,5 nhé"
+  },
+  {
+    "start": 2722.5,
+    "end": 2730.87,
+    "text": "Vậy là có đang có công nghiệm tin 1, công nghiệm tin 1, 2 bạn có công nghiệm tin 2 rồi đúng không?"
+  },
+  {
+    "start": 2730.87,
+    "end": 2735.87,
+    "text": "Bây giờ mình sẽ nhập thêm 1 cái bạn công nghiệm tin 1 và 1 bạn công nghiệm tin 2 nữa nhé"
+  },
+  {
+    "start": 2735.87,
+    "end": 2739.13,
+    "text": "Sẽ sinh như là 6 đi, chết rồi"
+  },
+  {
+    "start": 2739.13,
+    "end": 2745.16,
+    "text": "Mình lại nhập lựa chọn nhầm là 6, mình sẽ nhập là 1 thông tin đúng không?"
+  },
+  {
+    "start": 2745.16,
+    "end": 2754.17,
+    "text": "20, nguyễn thịt thí, class, công nghệ thông tin 1, 2.1"
+  },
+  {
+    "start": 2754.17,
+    "end": 2764.1,
+    "text": "hôm nay xin mình nhập nhập, nhập thông tin 1, thêm 1 cái bạn nữa, ở công nghệ thông tin 3 nhé"
+  },
+  {
+    "start": 2764.1,
+    "end": 2766.3,
+    "text": "để cho có 3 lớp tất cả, ok"
+  },
+  {
+    "start": 2766.3,
+    "end": 2774.92,
+    "text": "ở mãi xinh viên là 17, nguyễn vật lòng, nhập lớp là công nghệ thông tin 3, ok"
+  },
+  {
+    "start": 2774.92,
+    "end": 2781.15,
+    "text": "CL là bằng 4, 2.4"
+  },
+  {
+    "start": 2781.15,
+    "end": 2787.56,
+    "text": "Bây giờ mình thử xắp xếp sinh viên theo lớp, sau đó các bạn cũng lớp theo thứ tự tên abc nhé, mình sẽ cho vào 7"
+  },
+  {
+    "start": 2787.56,
+    "end": 2794.01,
+    "text": "Ok, sau khi mà nhập 7 để nó xắp xếp xong thì mình sẽ nhập 2 để nó hiển thị, xem là có hiển thị có đúng không?"
+  },
+  {
+    "start": 2794.01,
+    "end": 2798.61,
+    "text": "Đây thì các bạn thấy danh xếp sinh viên của mình nó sẽ có như thế này"
+  },
+  {
+    "start": 2798.61,
+    "end": 2799.89,
+    "text": "Thấy là bạn..."
+  },
+  {
+    "start": 2799.89,
+    "end": 2804.09,
+    "text": "Nguyễn Văn A này, đúng không? Công nghiệm tin 1 này"
+  },
+  {
+    "start": 2804.09,
+    "end": 2807.01,
+    "text": "Bạn Nguyễn Văn Tèo cũng là công nghiệm tin 1 đúng không?"
+  },
+  {
+    "start": 2807.01,
+    "end": 2809.61,
+    "text": "Chỉ đó 2 cái bạn công nghiệm tin 1 này sẽ đứng cạnh nhau này"
+  },
+  {
+    "start": 2809.61,
+    "end": 2814.29,
+    "text": "Công niệm tinh 1 có thứ tự tự điển nhỏ nhất. Thành ra nó sẽ xếp trước, lớp này sẽ xếp trước, đúng không?"
+  },
+  {
+    "start": 2814.29,
+    "end": 2819.05,
+    "text": "Sau đó thì 2 cái bạn này thì bạn A xếp trước 1 tèo theo thứ tự tự điển, đúng không?"
+  },
+  {
+    "start": 2819.05,
+    "end": 2821.25,
+    "text": "Thành ra A sẽ xếp trước tèo theo thứ tự tự điển, đúng không?"
+  },
+  {
+    "start": 2821.25,
+    "end": 2825.42,
+    "text": "Sau đó với bạn tý, đúng không? Bạn tý xếp sau bạn tèo vào bạn A, đúng không?"
+  },
+  {
+    "start": 2825.42,
+    "end": 2831.42,
+    "text": "Thì còn 2 cái bạn thuộc công niệm tin 2 đấy là bạn nguyễn văn B và bạn nguyễn văn C này cũng sẽ được xếp cạnh nhau như thế này."
+  },
+  {
+    "start": 2831.42,
+    "end": 2833.86,
+    "text": "Ok, 2 bạn công niệm tin 2 này."
+  },
+  {
+    "start": 2833.86,
+    "end": 2837.38,
+    "text": "Khi bạn B có thư tự tự điển nhỏ hơn bạn C, thì bạn sẽ xếp trên"
+  },
+  {
+    "start": 2837.38,
+    "end": 2840.26,
+    "text": "Còn bạn Long có nghiệm tin 3 thì bạn xếp cuối"
+  },
+  {
+    "start": 2840.26,
+    "end": 2843.38,
+    "text": "Thế là xong ký chức năng là xắp xếp theo lớp và các kênh"
+  },
+  {
+    "start": 2843.38,
+    "end": 2846.18,
+    "text": "bạn cùng lớp đứng cạnh nhau theo thứ tự tự ABC"
+  },
+  {
+    "start": 2846.18,
+    "end": 2851.62,
+    "text": "Còn nếu mà xắp xếp sinh viên theo lớp và các bạn cùng lớp mà có điểm GPA giảm dần thì mình được cho chức năng là 8"
+  },
+  {
+    "start": 2851.62,
+    "end": 2855.14,
+    "text": "Ok, bây giờ mình thử hiển thị nhanh xách sinh viên nha"
+  },
+  {
+    "start": 2855.14,
+    "end": 2857.3,
+    "text": "Bây giờ các bạn cùng lớp phải đứng cạnh nhau"
+  },
+  {
+    "start": 2857.3,
+    "end": 2860.82,
+    "text": "Nhưng mà khi đó cái thứ tự xắp xếp các sinh viên ở trong cùng 1 cái lớp"
+  },
+  {
+    "start": 2860.82,
+    "end": 2863.78,
+    "text": "thì là điểm chắc phải dám dần, mình sẽ hiển thị là 2"
+  },
+  {
+    "start": 2863.78,
+    "end": 2876.25,
+    "text": "thì trong trường hợp này, cái bạn nguyễn văn tèo này này, bạn ấy thuộc công nghiệm tin 1, nhưng mà bạn ấy có điểm cao nhất, thì bạn này đứng ở trên, 2 cái bạn là bạn nguyễn văn A và bạn nguyễn thị tý, đúng không?"
+  },
+  {
+    "start": 2876.25,
+    "end": 2879.09,
+    "text": "có 2 điểm gpa là 3.14 và 2.1"
+  },
+  {
+    "start": 2879.09,
+    "end": 2883.33,
+    "text": "tương tự như vậy, 2 bạn là lớp, 2 công nghiệm tin 2 là nguyễn văn C và nguyễn văn B này này"
+  },
+  {
+    "start": 2883.33,
+    "end": 2887.33,
+    "text": "thì bạn nguyễn văn C có thức gpa lớn hơn thì bạn ấy sẽ set trên, bạn có nguyễn văn B"
+  },
+  {
+    "start": 2887.33,
+    "end": 2891.01,
+    "text": "ok, thế còn bạn nguyễn văn lòng này thì là bạn 1 mình 1 lớp rồi"
+  },
+  {
+    "start": 2891.01,
+    "end": 2896.01,
+    "text": "Thế thôi. Thế là xong một cái bài về quản lý sinh viên thật khạng đơn giản đúng không?"
+  },
+  {
+    "start": 2896.01,
+    "end": 2900.31,
+    "text": "Mấy chung là mình làm ở trên console, thế còn ở sau này thì các bạn có thể làm"
+  },
+  {
+    "start": 2900.31,
+    "end": 2907.01,
+    "text": "Trên khi mà các bạn học thêm các cái ngôn ữ lập trình, ví dụ như là về hướng đối tượng, thì bạn có thể xây dựng các cái"
+  },
+  {
+    "start": 2907.01,
+    "end": 2910.81,
+    "text": "chương trình quản lý nhưng mà tất nhiên nó sẽ không đơn giản như thế này, nó sẽ phức tả hơn rất nhiều"
+  },
+  {
+    "start": 2910.81,
+    "end": 2915.31,
+    "text": "Ở thời điểm hiện tại thì các bạn chỉ cần làm được những cái bài này là ok, dần dần mình sẽ tiếp cận hơn"
+  },
+  {
+    "start": 2915.31,
+    "end": 2923.07,
+    "text": "Tiếp cận lên với những nguồn lập trình bà cao hơn thì mình có thể xử lý trên gui rồi là cơ sở dữ liệu để xây dựng những chương trình quản lý của mình"
+  },
+  {
+    "start": 2923.07,
+    "end": 2928.11,
+    "text": "Ok, còn tư tưởng thì nó không có gì khác cả, các bạn cứ cốt tốt ở cái phần này thì sau này học nó dễ"
+  },
+  {
+    "start": 2928.11,
+    "end": 2932.55,
+    "text": "Ok, vậy thì các bài tập tương tự còn lại, ví dụ như là"
+  },
+  {
+    "start": 2932.55,
+    "end": 2937.47,
+    "text": "Quản lý sinh viên rồi là quản lý khách sạn, quản lý phòng, quản lý học sữa rồi là"
+  },
+  {
+    "start": 2937.47,
+    "end": 2941.23,
+    "text": "Cấu trúc nhân viên hay cái gì đó vân vân"
+  },
+  {
+    "start": 2941.23,
+    "end": 2944.11,
+    "text": "Thì mình nghĩ là các bạn có thể làm được, đúng không?"
+  },
+  {
+    "start": 2944.11,
+    "end": 2974.88,
+    "text": "bởi vì màu chốt các cái bài tập này thì nó chỉ có những cái yêu cầu, ví dụ như tìm kiếm xấp xếp hay là tính tổng lương nhân viên hay là tìm ổng nương nhân viên cao nhất hay là ổng nhân viên có lương thấp nhất hay là ổng nhiều năm kinh nghiệm nhất hay xấp xếp theo một cái tiêu trí nào đó, thì thực chất là nó cũng chỉ là một cái bài toán mà nó có một cái mô típ chung, các bạn cứ cốt tốt ở cái phần xấp xếp tìm kiếm và mình có kỹ năng cài đặt tương đối tối 1 tí thì những cái bài này làm nó"
+  },
+  {
+    "start": 2974.88,
+    "end": 2979.96,
+    "text": "Nó tương tự như nhau nhá, các bạn chỉ cần biết làm một bài, các bạn có thể làm được các cái bài còn lại"
+  },
+  {
+    "start": 2979.96,
+    "end": 2985.52,
+    "text": "Ok, mình có thể để cái mạng nguồn tham khảo cái bài này ở dưới, các bạn có thể tham khảo thêm nhá"
+  },
+  {
+    "start": 2985.52,
+    "end": 2990.0,
+    "text": "Ok, mà mình cũng để cái phi bài tập này ở dưới, các bạn có thể làm cái phi bài tập này"
+  },
+  {
+    "start": 2990.0,
+    "end": 2997.32,
+    "text": "Chứ những cái phần bài tập này thì nhiều khi có các bạn ấy lại yêu cầu là chữa hết các cái bài này"
+  },
+  {
+    "start": 2997.32,
+    "end": 3002.44,
+    "text": "Thế thì nó cũng không cần thiết, bởi vì nếu mà bạn phụ thuộc vào cái việc đấy quá thì chứng tỏ là"
+  },
+  {
+    "start": 3002.44,
+    "end": 3007.44,
+    "text": "Mình đang yếu ở cái kỹ năng code, chứ không phải là nó kỹ yếu ở kỹ năng kỹ kiến thức ở cái phần này đâu"
+  },
+  {
+    "start": 3007.44,
+    "end": 3016.44,
+    "text": "Ok, mình nghĩ là một cái ví dụ như thế là đủ cho các bạn có thể nắm bắt được cái 1 cái bài thập gì đó liên quan đến quản lý, vân vân"
+  },
+  {
+    "start": 3016.44,
+    "end": 3020.44,
+    "text": "Ok, còn nếu mà các bạn có thể sử dụng vector ở chỗ này thì rất là tiễn"
+  }
+]

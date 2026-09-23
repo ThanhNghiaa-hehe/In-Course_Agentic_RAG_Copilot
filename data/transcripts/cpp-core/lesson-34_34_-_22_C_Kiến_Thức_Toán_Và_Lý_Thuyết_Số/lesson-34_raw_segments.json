@@ -1,0 +1,4597 @@
+[
+  {
+    "start": 2.86,
+    "end": 8.86,
+    "text": "Ok, trong video này thì mình hướng dẫn các bạn giả bài toàn đấy là kiểm tra xuống yên tố."
+  },
+  {
+    "start": 8.86,
+    "end": 13.86,
+    "text": "Đồ vài thì input là một xuống yên dương nào làm trong khoảng từ 0 đến 10, 9."
+  },
+  {
+    "start": 13.86,
+    "end": 17.86,
+    "text": "Và output thì họ bắt những yes, nếu nào là xuống yên tố hước lại."
+  },
+  {
+    "start": 17.86,
+    "end": 21.89,
+    "text": "Thì in now, đúng không? Ok."
+  },
+  {
+    "start": 21.89,
+    "end": 26.89,
+    "text": "Thông thường khi mà các bạn mới học lập trình và các bạn gặp bài toàn đấy là kiểm tra xuống yên tố,"
+  },
+  {
+    "start": 26.89,
+    "end": 29.89,
+    "text": "thì các bạn hay dựa vào địa nghĩa xuống yên tố đấy chính là"
+  },
+  {
+    "start": 29.89,
+    "end": 32.89,
+    "text": "số mà nó chỉ có 2 ước là 1 và 9 nó đúng không?"
+  },
+  {
+    "start": 32.89,
+    "end": 36.89,
+    "text": "các bạn hãy cốt hềm xuống tối sau"
+  },
+  {
+    "start": 36.89,
+    "end": 43.04,
+    "text": "đây mình sẽ thêm 2 cái thư viện là map.h, stdl, h"
+  },
+  {
+    "start": 43.04,
+    "end": 46.39,
+    "text": "đây là các quay bạn ấy đến xem là nào có 3 vũ ước"
+  },
+  {
+    "start": 46.39,
+    "end": 48.39,
+    "text": "ok, mình đặt là handrimer"
+  },
+  {
+    "start": 48.39,
+    "end": 51.9,
+    "text": "sau đó thì bạn xuyên dù cái miền đến thở tạo vào"
+  },
+  {
+    "start": 51.9,
+    "end": 54.9,
+    "text": "không và bạn dựa từ 1 cho tới"
+  },
+  {
+    "start": 54.9,
+    "end": 59.9,
+    "text": "nào và kiểm tra ít, nào phần trang in, không thì bạn sẽ tăng đến đến nữa"
+  },
+  {
+    "start": 59.9,
+    "end": 64.16,
+    "text": "và dưới này thì bạn chưa cần kiểm tra đến mà đến màng 2 thì bạn dựa tên 1"
+  },
+  {
+    "start": 95.66,
+    "end": 100.66,
+    "text": "nếu không phải là số nguyên tố hay không thì bạn sẽ phải diệt 1 cái vòng lập chạy từ 1 cho tới n, đúng không?"
+  },
+  {
+    "start": 100.66,
+    "end": 104.66,
+    "text": "Ok, vậy cái số lượng vòng lập nó sẽ là n"
+  },
+  {
+    "start": 104.66,
+    "end": 111.66,
+    "text": "và giả xử như là bạn cần kiểm tra cái số 10 mũ 9 nãy, có phải là số nguyên tố hay không thì bạn cần 10 mũ 9 vòng lập"
+  },
+  {
+    "start": 111.66,
+    "end": 116.66,
+    "text": "và giả xử như là 1 dây thì máy tính của bạn nó chạy khoảng được 10 mũ 6 vòng lập"
+  },
+  {
+    "start": 116.66,
+    "end": 121.66,
+    "text": "thì khi đó để check số 10 mũ 9 có phải là số nguyên tố hay không thì nó cần 1 nhìn dây"
+  },
+  {
+    "start": 121.66,
+    "end": 125.42,
+    "text": "và tất nhiên, nếu càng lớn thì thời gian chạy sẽ rất là lâu"
+  },
+  {
+    "start": 125.42,
+    "end": 126.26,
+    "text": "đúng không nhỉ?"
+  },
+  {
+    "start": 126.26,
+    "end": 130.5,
+    "text": "ví dụ như cần kiểm tra 1 số khoảng 10 mũ 18 chẳng ạ"
+  },
+  {
+    "start": 130.5,
+    "end": 134.18,
+    "text": "khi chương trình này sẽ chạy đến khoảng 100 năm"
+  },
+  {
+    "start": 134.18,
+    "end": 138.62,
+    "text": "thì nó mới biết được là số cỡ khoảng 10 mũ 18 có phải là số đi tố hay không?"
+  },
+  {
+    "start": 138.62,
+    "end": 141.5,
+    "text": "ok, thế ra là mình sẽ phải cải kiến hơn 1 chút"
+  },
+  {
+    "start": 141.5,
+    "end": 144.5,
+    "text": "thì có 1 số bạn cải kiến như sau"
+  },
+  {
+    "start": 144.5,
+    "end": 146.62,
+    "text": "đấy chính là bạn ấy quan sát thấy là gì"
+  },
+  {
+    "start": 146.62,
+    "end": 153.1,
+    "text": "những cây số mà nằm trong khoảng từ nờ trên 2 cho tới nờ ấy, lớn hơn nờ trên 2 cho tới nờ ấy"
+  },
+  {
+    "start": 153.1,
+    "end": 156.22,
+    "text": "thì nó sẽ không thể là ước của nờ được nữa, đúng không?"
+  },
+  {
+    "start": 156.22,
+    "end": 163.9,
+    "text": "ngoại trừ nờ nhé, thế nên các bạn ấy phát hiện ra là ngoại trừ cái ước là chính nó thì các ước của nờ đều nằm trong khoảng từ 1 cho tới nờ trên 2"
+  },
+  {
+    "start": 163.9,
+    "end": 165.9,
+    "text": "Thường ra các bạn ấy cốt như thế này"
+  },
+  {
+    "start": 165.9,
+    "end": 169.65,
+    "text": "đấy là bạn ấy dùng một cái miếng cao khởi tạm bằng 1"
+  },
+  {
+    "start": 169.65,
+    "end": 175.89,
+    "text": "bởi vì bạn ấy biết là tới nờ này nó có một ước là chính nó rồi, sau đó là bạn ấy diệt từ 1 cho cưới"
+  },
+  {
+    "start": 175.89,
+    "end": 185.21,
+    "text": "Other.mmx, load class, transform, serve, prime,"
+  },
+  {
+    "start": 193.21,
+    "end": 198.87,
+    "text": "This port looks great, but it looks the best."
+  },
+  {
+    "start": 198.87,
+    "end": 200.23,
+    "text": "O is oner"
+  },
+  {
+    "start": 200.23,
+    "end": 207.59,
+    "text": "Tại vì khi mà nè lứa lớn một chút đi, việc mè bạn rợi architectures này và nè ljest nhấtımız, có thể có nè lứa nét"
+  },
+  {
+    "start": 207.59,
+    "end": 208.51,
+    "text": "Tại vì khi nè lứa lớn một chút đi, thì việc mè bạn che một vòng 4 che nè vòng lát với nè trên hà vòng lát thì nó không khác nhau là đáng yêu cả"
+  },
+  {
+    "start": 208.51,
+    "end": 212.32,
+    "text": "Không chiên, nhưng ra là cái việc cầu yếu này nó chưa đáng kể cho lắng"
+  },
+  {
+    "start": 212.32,
+    "end": 215.18,
+    "text": "Nhưng mà nó cũng là một cái phát hiện rồi, đúng không? các bạn đã nhìn thấy rằng là các bạn muốn"
+  },
+  {
+    "start": 215.18,
+    "end": 219.64,
+    "text": "các bạn muốn giải một số vòng lát khi trong này muốn kiểm tra một số ninh tố rồi"
+  },
+  {
+    "start": 219.64,
+    "end": 221.27,
+    "text": "Ok"
+  },
+  {
+    "start": 221.27,
+    "end": 227.67,
+    "text": "Nhưng mà thông thường các bạn hay làm theo kiểu đấy, chứ là các bạn đang đi chứng minh là nó là số nguyên tố"
+  },
+  {
+    "start": 227.67,
+    "end": 236.37,
+    "text": "Để mà cái thuật toán và cái chương trình của mình nó hiệu quả hơn thì các bạn nên làm ngược lại để là bạn hãy cố gắng chứng minh nó không phải là số nguyên tố"
+  },
+  {
+    "start": 236.37,
+    "end": 246.37,
+    "text": "Mà khi mà nó không phải là số nguyên tố thì có nghĩa là gì nhỉ? Mình chỉ cần biết là nó có thêm 1 cái ước nào đó ngoài 1 và chứng nó khi khi nó sẽ không phải là số nguyên tố đúng không?"
+  },
+  {
+    "start": 246.37,
+    "end": 249.47,
+    "text": "Ok, vậy thì mình sẽ..."
+  },
+  {
+    "start": 249.47,
+    "end": 251.26,
+    "text": "Đang như sau này"
+  },
+  {
+    "start": 251.26,
+    "end": 254.76,
+    "text": "Hầu tiên khi mà check một số nào đó, em có phải là xuống kinh tố hay không ấy"
+  },
+  {
+    "start": 254.76,
+    "end": 257.76,
+    "text": "thì mình gọi một cái ước đầu tiên của nó là i"
+  },
+  {
+    "start": 257.76,
+    "end": 260.76,
+    "text": "và cái ước còn lại của nó sẽ lại em chia cho i đúng không?"
+  },
+  {
+    "start": 260.76,
+    "end": 262.76,
+    "text": "Ví dụ như em bằng 60 ấy"
+  },
+  {
+    "start": 262.76,
+    "end": 265.76,
+    "text": "dạy xử như bạn biết một cái ước đầu tiên của nó là ba rồi"
+  },
+  {
+    "start": 265.76,
+    "end": 269.56,
+    "text": "thì bạn có thể xuyên ra được ngay cái ước còn lại của nó là 60, chi ba là 20"
+  },
+  {
+    "start": 269.56,
+    "end": 274.56,
+    "text": "hoặc ước là 2 thì bạn có thể xuyên ra cái ước còn lại của nó là 30"
+  },
+  {
+    "start": 274.56,
+    "end": 283.08,
+    "text": "Vậy thì khi mà bạn đã biết một cái ước i nào đó của một số miên dưng rồi, thì bạn có thể suy ra được ngay cái ước còn lại để nói chia cho i đúng không?"
+  },
+  {
+    "start": 283.08,
+    "end": 293.08,
+    "text": "Ok, và ở đây mình chỉ cần phát hiện ra là một cái ước nào đó, nó, à xin lỗi, mình chỉ cần phát hiện ra là nó có thêm một cái ước nào đó khác một và chỉ nó thôi đúng không?"
+  },
+  {
+    "start": 293.08,
+    "end": 299.08,
+    "text": "Và các bạn thấy là i và nòi trên i này bắt buộc nó sẽ thuộc vào cái đoạn từ 1 cho tới các 1, 2 của nó"
+  },
+  {
+    "start": 299.08,
+    "end": 304.36,
+    "text": "ít nhất là 1 trong 2 này, thằng này phải thuộc vào các đoạn từ 1 cho tới các 1, 2 của nò"
+  },
+  {
+    "start": 304.36,
+    "end": 307.2,
+    "text": "hoặc là cả 2 thằng này nằm trong đoạn từ 1 cho các 1, 2 của nò"
+  },
+  {
+    "start": 307.2,
+    "end": 309.8,
+    "text": "trong trường hợp khi mà nò nó là sụ trí phương ấy"
+  },
+  {
+    "start": 309.8,
+    "end": 312.84,
+    "text": "còn không thể có trường hợp là cái ước thứ nhất của nò là i"
+  },
+  {
+    "start": 312.84,
+    "end": 317.72,
+    "text": "và cái ước thứ 2 của nò là nò trên i nó đều lớn hơn"
+  },
+  {
+    "start": 317.72,
+    "end": 321.29,
+    "text": "nó đều lớn hơn, nó nằm ngoài khoảng này được"
+  },
+  {
+    "start": 321.29,
+    "end": 323.61,
+    "text": "bởi vì khi đó cái tích của nó sẽ vượt quá nò mà"
+  },
+  {
+    "start": 323.61,
+    "end": 329.33,
+    "text": "ok, thành ra là bây giờ để xét định xem là cái thằng nò có thêm 1 cái ước nào đó hay không ấy"
+  },
+  {
+    "start": 329.33,
+    "end": 331.95,
+    "text": "Thì các bạn chỉ cần duyệt từ 1 cho tới 1, 2 của nó thôi"
+  },
+  {
+    "start": 331.95,
+    "end": 334.71,
+    "text": "Hay nói cách khác là với 1 cái số nó nào đó ấy"
+  },
+  {
+    "start": 334.71,
+    "end": 336.71,
+    "text": "Và bạn muốn biết tất cả các ước của nó ấy"
+  },
+  {
+    "start": 336.71,
+    "end": 342.35,
+    "text": "Thì bạn cũng chỉ cần duyệt tất cả các cái ước từ 1 cho tới 12 của nó thì bạn có thể suy ra được các ước còn lạ"
+  },
+  {
+    "start": 342.35,
+    "end": 344.54,
+    "text": "Ní dụ như tháng 60 ạ"
+  },
+  {
+    "start": 344.54,
+    "end": 347.58,
+    "text": "Thì bạn chỉ cần duyệt từ 1 cho tới con 60 là bằng 7 đúng không?"
+  },
+  {
+    "start": 347.58,
+    "end": 349.58,
+    "text": "7, 14, 9, 8, 6, 4 rồi mà"
+  },
+  {
+    "start": 349.58,
+    "end": 354.18,
+    "text": "Thế là các cái ước là 1, 2, 3, 4, 5, 6, 7 và bạn xem lại"
+  },
+  {
+    "start": 354.18,
+    "end": 358.04,
+    "text": "Trong các cái số từ 1 cho tới 7 này có bao nhiêu số mà 60 nữa chia hết"
+  },
+  {
+    "start": 358.04,
+    "end": 359.24,
+    "text": "Thì con số 1 này này"
+  },
+  {
+    "start": 359.24,
+    "end": 362.64,
+    "text": "khi đó i là 1 thì cái thằng nói trên i nó rất là 60"
+  },
+  {
+    "start": 362.64,
+    "end": 366.04,
+    "text": "khi mà i bằng 2 thì i nói trên i nó rất là 30"
+  },
+  {
+    "start": 366.04,
+    "end": 367.94,
+    "text": "3 thì nói trên i sẽ là 20"
+  },
+  {
+    "start": 367.94,
+    "end": 370.04,
+    "text": "4 thì là 15, 5 thì là 10"
+  },
+  {
+    "start": 370.04,
+    "end": 372.94,
+    "text": "2 thì lỗi, 6 là 10, 7 thì không chỉ hết"
+  },
+  {
+    "start": 372.94,
+    "end": 376.14,
+    "text": "vậy thì bạn thấy là bạn chỉ cần rượt các cái ước là 1, 2, 3, 4, 5, 6"
+  },
+  {
+    "start": 376.14,
+    "end": 378.24,
+    "text": "bạn có thể suy ra được các cái ước còn lại là"
+  },
+  {
+    "start": 378.24,
+    "end": 381.54,
+    "text": "60, 30, 20, 15, 12 và 10, đúng không?"
+  },
+  {
+    "start": 381.54,
+    "end": 384.74,
+    "text": "vậy thì tại sao mình cần phải rượt những cái thằng này làm gì? đúng không?"
+  },
+  {
+    "start": 384.74,
+    "end": 387.24,
+    "text": "Thành ra là bây giờ ấy"
+  },
+  {
+    "start": 387.24,
+    "end": 393.64,
+    "text": "khi mà bạn muốn phát hiện xem là có thêm một cái ước nào đó ngoài 1 và chính nó hay không ấy thì bạn chỉ cần duyệt trong cái khoảng 2 là đủ"
+  },
+  {
+    "start": 393.64,
+    "end": 396.36,
+    "text": "ok, và tất nhiên là mình sẽ không duyệt vào 1 nữa nhé"
+  },
+  {
+    "start": 396.36,
+    "end": 401.56,
+    "text": "vậy thì thật quán của mình sẽ là mình sẽ duyệt từ 2 cho tới căn bực 2 của nở"
+  },
+  {
+    "start": 401.56,
+    "end": 405.4,
+    "text": "và các cái số nào trong khoảng từ 2 cho tới căn bực 2 của nở"
+  },
+  {
+    "start": 405.4,
+    "end": 411.16,
+    "text": "mà có một cái số nào nó là ước của nở thì khi đó nở sẽ không phải là số chính phương, ai sẽ lỗi không phải là số người tố"
+  },
+  {
+    "start": 411.16,
+    "end": 415.72,
+    "text": "ok, vậy thì các bạn sẽ không sử dụng 2 cái hèm này mà mình sẽ làm như sau"
+  },
+  {
+    "start": 415.72,
+    "end": 421.38,
+    "text": "Đấy chính là mình viết hàm tròi mà các bạn duyệt từ 2 cho về cao 1,2, truyền nờ"
+  },
+  {
+    "start": 421.38,
+    "end": 431.46,
+    "text": "Ok, và kiểm tra là if nờ phần trăng y mà vòng không thì có nghĩa là nó đã tổn tại thêm 1 cái ước nào đó nằm trong khoảng từ 2 truyền nờ rồi"
+  },
+  {
+    "start": 431.46,
+    "end": 436.0,
+    "text": "Thì mình có thể kết luận luôn, ok, nó không phải là xuống nghiên tố, mình ra là các bạn có thể return không luôn"
+  },
+  {
+    "start": 436.0,
+    "end": 439.26,
+    "text": "Mình đang đi cố gắng chứng mình nó không phải là xuống nghiên tố, đúng không?"
+  },
+  {
+    "start": 439.26,
+    "end": 444.16,
+    "text": "Tôi chỉ cần phát hiện ra anh có thể 1 cái ước nào đó nằm trong khoảng từ 2 truyền nờ"
+  },
+  {
+    "start": 444.16,
+    "end": 447.8,
+    "text": "Ok, 2 cái số này, các ước này thức chắc nó sẽ khác 1 và chính nó rồi, đúng không?"
+  },
+  {
+    "start": 447.8,
+    "end": 452.28,
+    "text": "Thì mình sẽ lưu tấn công luôn, mình sẽ kết luận luôn, thay vì là các bạn đi đếm, đếm, đếm là"
+  },
+  {
+    "start": 452.28,
+    "end": 455.8,
+    "text": "sẽ là có 3 những ước, và kết luận là có 2 ước"
+  },
+  {
+    "start": 455.8,
+    "end": 459.32,
+    "text": "thì nó là sống tồ, con không phải có 2 ước, thì nó không phải là sống tồ, ok?"
+  },
+  {
+    "start": 459.32,
+    "end": 461.32,
+    "text": "Mình có thể sử dụng câu rệnh lưu tên mà"
+  },
+  {
+    "start": 461.32,
+    "end": 467.95,
+    "text": "Đấy, còn nếu mà cái vòng fo của mình nó chạy xuống được cái giam thứ 9 này"
+  },
+  {
+    "start": 467.95,
+    "end": 470.55,
+    "text": "tức là nó sẽ, nó đã rượt tất cả các cái ước"
+  },
+  {
+    "start": 470.55,
+    "end": 472.55,
+    "text": "từ ha cho tới các 1, 2 của nó rồi"
+  },
+  {
+    "start": 472.55,
+    "end": 475.05,
+    "text": "nhưng mà không thấy một cái ước nào của nờ nữa"
+  },
+  {
+    "start": 475.05,
+    "end": 478.05,
+    "text": "chính tỏ khi đó nờ nó chỉ có ước là một và chỉ nó thôi"
+  },
+  {
+    "start": 478.05,
+    "end": 480.55,
+    "text": "thì bạn có thể kết luận nó là số nguyên tố"
+  },
+  {
+    "start": 480.55,
+    "end": 483.55,
+    "text": "ok, nhưng mà nếu mà nó không phải là số âm"
+  },
+  {
+    "start": 483.55,
+    "end": 485.05,
+    "text": "và nó phải lớn hơn một"
+  },
+  {
+    "start": 485.05,
+    "end": 488.55,
+    "text": "nên ra là bạn có thể return về cái câu lệnh đấy là nờ lớn hơn một"
+  },
+  {
+    "start": 488.55,
+    "end": 491.55,
+    "text": "để mình tự quyết định xem là nờ có phải là số nguyên tố hay không"
+  },
+  {
+    "start": 491.55,
+    "end": 494.55,
+    "text": "nếu mà nờ mà nhỏ hơn vào bằng một thì nó sẽ trả về không"
+  },
+  {
+    "start": 494.55,
+    "end": 498.55,
+    "text": "còn nếu mà nờ nó lớn hơn một thì nó sẽ trả về một"
+  },
+  {
+    "start": 498.55,
+    "end": 499.55,
+    "text": "ok"
+  },
+  {
+    "start": 499.55,
+    "end": 508.44,
+    "text": "bởi vì các bạn chú ý là nếu mà các bạn nhập vào một số n mà nó nhỏ hơn 1, ai xin lỗi nó nhỏ hơn 2, thì nó không chạy vào cái vòng 4 này đâu nhé, nó chạy"
+  },
+  {
+    "start": 508.44,
+    "end": 516.88,
+    "text": "bởi vì khi mà bạn duyệt từ 2 cho cứ 1, 2 của n mà nó nhỏ hơn, nhỏ hơn 2 thì vòng 4 này cũng chạy mà, thì nó sẽ nhảy xuống câu lệnh của chín này luôn"
+  },
+  {
+    "start": 516.88,
+    "end": 525.15,
+    "text": "và khi đó nếu mà bạn chủ quan bạn ghi tên 1 luôn thì bạn, khi đó bạn lại kết luận những cái số như là số 0, số 1 đều là số nghiên tố hay là những số ấm đều là số nghiên tố đấy nhé"
+  },
+  {
+    "start": 525.15,
+    "end": 532.97,
+    "text": "Đây chính là hềm số nguyên tố mà các bạn nên sử dụng bởi vì nó là hiệu quả hơn so với hai hềm lực lấy nhá"
+  },
+  {
+    "start": 532.97,
+    "end": 535.97,
+    "text": "và cái độ phức cạch của nó sẽ là o lúc nào"
+  },
+  {
+    "start": 535.97,
+    "end": 541.57,
+    "text": "hay vì bây giờ một kiểm tra một cái số là 10 mũ 18 vòng lập"
+  },
+  {
+    "start": 541.57,
+    "end": 546.07,
+    "text": "thì bây giờ bạn chỉ cần duyệt tối đe là con vật 2 của 10 mũ 18 là 10 mũ 9 vòng lập"
+  },
+  {
+    "start": 546.07,
+    "end": 548.37,
+    "text": "thời gian nó giảm đi rất là nhiều, đúng không?"
+  },
+  {
+    "start": 548.37,
+    "end": 550.57,
+    "text": "và nó xuống sẽ hiệu quả hơn rất là nhiều hình ra"
+  },
+  {
+    "start": 550.57,
+    "end": 554.45,
+    "text": "Từ bây giờ trở đi, khi mà bạn gặp một cái bài toán mà nó yêu cầu bạn kiểm tra xuống tố ấy"
+  },
+  {
+    "start": 554.45,
+    "end": 557.53,
+    "text": "thì các bạn phải viết hàm số nghiêm tố như thế này, nhá?"
+  },
+  {
+    "start": 557.53,
+    "end": 563.69,
+    "text": "Ok, một vài lỗi của các bạn hay khi mà hay viết cái hàm số nghiêm tố này"
+  },
+  {
+    "start": 563.69,
+    "end": 567.01,
+    "text": "Thứ nhất đấy là các bạn dự tìm 1, dự tìm 1 thì là hầm rồi"
+  },
+  {
+    "start": 567.01,
+    "end": 569.77,
+    "text": "bởi vì là cái số nào nó trả trí hết cho 1, đúng không?"
+  },
+  {
+    "start": 569.77,
+    "end": 572.33,
+    "text": "Vậy thì khi đó, nếu mà bạn dự tìm 1 trở đi"
+  },
+  {
+    "start": 572.33,
+    "end": 575.73,
+    "text": "thì ngay cái câu lệnh đầu tiên íp nập, chẳng y vẫn không, bạn dùy tân không rồi"
+  },
+  {
+    "start": 575.73,
+    "end": 578.45,
+    "text": "Khi đó bạn kết luận luôn, nó không phải là xuống nghiêm tố, đúng không?"
+  },
+  {
+    "start": 578.45,
+    "end": 582.15,
+    "text": "xai, bạn sẽ phải bỏ qua cái ước 1, mình không xéc nữa, ok?"
+  },
+  {
+    "start": 582.15,
+    "end": 588.07,
+    "text": "Thứ 2 là bạn không có cái dấu bằng ở chỗ này, chắc chừng là bạn không có cái dấu bằng trong cái chỗ này này"
+  },
+  {
+    "start": 588.07,
+    "end": 591.47,
+    "text": "Mà nó là bình thương của một số nguyên tố ấy, ví dụ như số 49 ý"
+  },
+  {
+    "start": 591.47,
+    "end": 596.47,
+    "text": "Khi khi đó bạn lại vô tình kết loạn số 49 là số nguyên tố đấy, ok?"
+  },
+  {
+    "start": 596.47,
+    "end": 602.23,
+    "text": "Đấy, mình ra lại, các bạn phải chú ý là phải duệt từ 2 cho tới căn 1, 2 của nó"
+  },
+  {
+    "start": 602.23,
+    "end": 606.86,
+    "text": "Thế là xong cái bài kiểm tra số nguyên tố này nhé, rất là dễ thôi"
+  },
+  {
+    "start": 606.86,
+    "end": 613.46,
+    "text": "dụ như mình nhập vào số 23, nó là số nguyên tố đúng không, output sẽ là yes"
+  },
+  {
+    "start": 613.46,
+    "end": 617.86,
+    "text": "nếu mà bạn nhập vào 1 số không phải là số nguyên tố, yes đúng không?"
+  },
+  {
+    "start": 617.86,
+    "end": 624.02,
+    "text": "dụ như số 40 thì nó sẽ 19, thì nó sẽ không phải là số nguyên tố, nó sẽ in general"
+  },
+  {
+    "start": 624.02,
+    "end": 632.18,
+    "text": "ok, trước là các bạn đã biết biết cái hẻm số nguyên tố rồi, thì những cái yêu cầu khác của đồ bài mình cũng có thể làm được"
+  },
+  {
+    "start": 632.18,
+    "end": 641.26,
+    "text": "Inja 1, nếu như nó xảy nguyên tố, hoặc là Inja không, nếu nó không phải là số nguyên tố, hoặc là liếp các số nguyên tố nhỏ hơn nào, liếp các số nguyên tố trong đoạn"
+  },
+  {
+    "start": 641.26,
+    "end": 650.58,
+    "text": "hay là từ A đến B, vân, vân, vân, vân, hay đến, các số nguyên tố trong đoạn, hay là đến các số nguyên tố từ 1 đến nờ, thì mình cũng có thể làm được rồi, đúng không?"
+  },
+  {
+    "start": 650.58,
+    "end": 656.3,
+    "text": "Các bạn chỉ cần viết được một hềm số nguyên tố nó, nó hiệu quả là được, ok?"
+  },
+  {
+    "start": 656.3,
+    "end": 660.3,
+    "text": "đây chính là cái cách mà bạn giải quyết các bà toàn"
+  },
+  {
+    "start": 660.3,
+    "end": 663.3,
+    "text": "đây là kiểm tra một số, có phải là số nguyên tố hay không"
+  },
+  {
+    "start": 663.3,
+    "end": 669.3,
+    "text": "chú ý, trong trường hợp này, cái số nào của bạn không phải là thuộc kiểu interview như thế này"
+  },
+  {
+    "start": 669.3,
+    "end": 675.3,
+    "text": "trong trường hợp này, nằm trong khoảng từ 0 đến 10 mũ 9 thì bạn có thể dùng số interview là đủ đúng không"
+  },
+  {
+    "start": 675.3,
+    "end": 679.3,
+    "text": "còn trong trường hợp này, cái input của bạn nó hượt quá interview ấy"
+  },
+  {
+    "start": 679.3,
+    "end": 684.3,
+    "text": "thì thì đó bạn cũng phải xây dựng một hàm primer với cái input đầu vài là long long"
+  },
+  {
+    "start": 684.3,
+    "end": 690.7,
+    "text": "Núi vì nếu mà input đầu và nó vượt quá integer mà bạn lại sử dụng cái ham primer của input"
+  },
+  {
+    "start": 690.7,
+    "end": 699.66,
+    "text": "Với tham số, xin lỗi, với tham số là sự integer thì nó không thể check được cho trường hợp cái số inner của bạn là thu kiểu long long đâu, ok?"
+  },
+  {
+    "start": 699.66,
+    "end": 705.26,
+    "text": "Nó sẽ bị sai đấy. Hình ra là các bạn cần chú ý về cái input của đầu vàng, ok?"
+  },
+  {
+    "start": 705.26,
+    "end": 716.19,
+    "text": "Trong video này thì mình sẽ hướng dẫn cái cách mà bạn sẽ dựng cái code cho bài toán đấy là"
+  },
+  {
+    "start": 716.19,
+    "end": 720.43,
+    "text": "hội yêu cầu mình liệt kê các cái số nguyên tố không vượt quá nở ấy, tức là nhỏ hơn là bằng nở ấy"
+  },
+  {
+    "start": 720.43,
+    "end": 724.19,
+    "text": "input thì chỉ là một số nguyên dương nào nằm trong khoảng từ 0 cho tới 116 thôi"
+  },
+  {
+    "start": 724.19,
+    "end": 728.99,
+    "text": "dụ như họ nhập 4 thì bạn sẽ phải in ra các số nguyên tố mà không vượt qua 4 bao gồm có 2 và 3"
+  },
+  {
+    "start": 728.99,
+    "end": 735.07,
+    "text": "hoặc là số 13 thì bạn sẽ in ra các số nguyên tố mà không vượt qua 13 bao gồm có 2, 3, 5, 10, 11, 13, đúng không?"
+  },
+  {
+    "start": 735.07,
+    "end": 739.51,
+    "text": "Bài này, nếu mà bạn làm cách mà không cần phải suy nghĩ thì các bạn chỉ cần làm như thế này thôi"
+  },
+  {
+    "start": 739.51,
+    "end": 742.67,
+    "text": "Đây chính là mình sẽ xây dựng một hàm xuống nguyên tố đúng không?"
+  },
+  {
+    "start": 742.67,
+    "end": 746.35,
+    "text": "int prime, hồi lắng nguyên tố đi cho dễ"
+  },
+  {
+    "start": 746.35,
+    "end": 751.63,
+    "text": "sau đó là bạn dùi từ 2, cho từ các mức 2 của nò"
+  },
+  {
+    "start": 751.63,
+    "end": 757.47,
+    "text": "ok, rồi bạn kiểm tra if, nò không chăm y mà bằng thông thì mình sẽ return không"
+  },
+  {
+    "start": 757.47,
+    "end": 760.27,
+    "text": "thông thì bạn sẽ return nò lớn hơn 1 đúng không?"
+  },
+  {
+    "start": 760.27,
+    "end": 763.27,
+    "text": "sau đó là trong ham main thì bạn chỉ cần nhập nò thôi"
+  },
+  {
+    "start": 763.27,
+    "end": 765.27,
+    "text": "một cái biến nò này"
+  },
+  {
+    "start": 765.27,
+    "end": 771.75,
+    "text": "và bạn chỉ cần duyệt các cái số từ không cho tới nhỏ hơn vào bằng n, đúng không?"
+  },
+  {
+    "start": 771.75,
+    "end": 776.19,
+    "text": "và bạn kiểm tra là if, write, nguyên tố của i thì bạn in ra cái biến đấy đúng không?"
+  },
+  {
+    "start": 776.19,
+    "end": 781.75,
+    "text": "Nói trả cần duy trì suy nghĩ cả, bởi vì mình đã viết cách viết xuống nguyên tố, hạm xuống nguyên tố rồi đúng không?"
+  },
+  {
+    "start": 781.75,
+    "end": 785.15,
+    "text": "Bây giờ họ yêu cầu mình là in ra các cái số nguyên tố mà không vượt quá nơ"
+  },
+  {
+    "start": 785.15,
+    "end": 788.71,
+    "text": "thì bạn chỉ cần duy trì từ không, hoặc là duy trì từ 1 cũng là duy trì từ không cho tới nơ"
+  },
+  {
+    "start": 788.71,
+    "end": 792.39,
+    "text": "trong có trình duyệt mà mình kiểm tra thằng nào mà nó xuống nguyên tố thì mình sẽ in ra"
+  },
+  {
+    "start": 792.39,
+    "end": 797.31,
+    "text": "Cái cách này rất là đơn giản và không cần gì phải suy nghĩ nhiều cả, đúng không?"
+  },
+  {
+    "start": 797.31,
+    "end": 802.79,
+    "text": "Ví dụ như số 13 thì bạn sẽ lift kê được 2, 3, 5, 7, 1, 13 là 6 số, đúng không?"
+  },
+  {
+    "start": 802.79,
+    "end": 805.99,
+    "text": "6 số nguyên tố như thế kia, ok?"
+  },
+  {
+    "start": 805.99,
+    "end": 812.87,
+    "text": "Nhưng mà đối với cái bài toán mà họ yêu cầu mình đếm các số nguyên tố nhỏ hơn nò, không vượt quả nò"
+  },
+  {
+    "start": 812.87,
+    "end": 817.31,
+    "text": "hoặc là liệt kê các số nguyên tố không vượt quả nò ấy, thì người ta có một cái phương pháp rất là hay"
+  },
+  {
+    "start": 817.31,
+    "end": 822.07,
+    "text": "Đấy chính là cái thuật toán xang số nguyên tố, elitothenes"
+  },
+  {
+    "start": 822.07,
+    "end": 827.83,
+    "text": "Cái thuật toán này thì cũng tương đối là lâu rồi, như là trước công nguyên thì phải"
+  },
+  {
+    "start": 827.83,
+    "end": 830.43,
+    "text": "Do nhật toán học của elitothenes mình nghĩ ra"
+  },
+  {
+    "start": 830.43,
+    "end": 836.11,
+    "text": "Thì cái tư tưởng của thuật toán xang này nó cũng rất là hay và nó cũng rất là dễ cải đặt"
+  },
+  {
+    "start": 836.11,
+    "end": 838.11,
+    "text": "Rất là dễ cải đặt"
+  },
+  {
+    "start": 838.11,
+    "end": 840.11,
+    "text": "Thì tư tưởng nó như thế này"
+  },
+  {
+    "start": 840.11,
+    "end": 844.75,
+    "text": "Nhưng mà trước hết khi bạn muốn xang một số nguyên tố thì các bạn phải chú ý đấy là"
+  },
+  {
+    "start": 844.75,
+    "end": 852.23,
+    "text": "Bạn muốn sàng các số nguyên tố không vượt quá nò"
+  },
+  {
+    "start": 852.23,
+    "end": 862.61,
+    "text": "Khi bạn phải tạo đục mạng, có kích thước là nò cộng 1 thần tự"
+  },
+  {
+    "start": 862.61,
+    "end": 867.8,
+    "text": "Ok, thông thường bạn có thể là sử dụng mạng integer hoặc mạng boon cũng được"
+  },
+  {
+    "start": 867.8,
+    "end": 875.8,
+    "text": "Ví dụ như trong cái bài này, họ yêu cầu bạn là nò có thể lên đến 10 mũ 6, thế là input lớn nhất có thể lên 10 mũ 6 đúng không?"
+  },
+  {
+    "start": 875.8,
+    "end": 879.28,
+    "text": "Vậy thì rất có thể bạn sẽ có tết cây là 10 mũ 6"
+  },
+  {
+    "start": 879.28,
+    "end": 884.2,
+    "text": "Cái input là 10 mũ 6 thì mình sẽ muốn sàng các cái số nguyên tố từ 1 cho tới 10 mũ 6 đúng không?"
+  },
+  {
+    "start": 884.2,
+    "end": 889.68,
+    "text": "Thì khi đó bạn sẽ phải tạo được 1 cái mạng là có 10 mũ 6 cộng 1 phần tử"
+  },
+  {
+    "start": 889.68,
+    "end": 893.78,
+    "text": "Ok? Tất nhiên là cái sàng giống nguyên tố này nó cũng có hạn chế"
+  },
+  {
+    "start": 893.78,
+    "end": 896.9,
+    "text": "Bởi vì khi mà bạn muốn sàng 1 cái số nguyên tố nó quá lớn ấy"
+  },
+  {
+    "start": 896.9,
+    "end": 899.5,
+    "text": "Thì bạn không thể khai báo được 1 cái mạng nó có kích thức lớn như vậy"
+  },
+  {
+    "start": 899.5,
+    "end": 902.9,
+    "text": "Ví dụ như 10 mũ 9 hay là 10 mũ 10 thì mình không thể sụm sàng được"
+  },
+  {
+    "start": 902.9,
+    "end": 906.9,
+    "text": "OK, thông thường thì từ 10 mũ 7 đổ xuống là bạn có thể sử dụng xàng rồi"
+  },
+  {
+    "start": 906.9,
+    "end": 914.54,
+    "text": "Vậy thì cái điều kiện đầu tiên các bạn phải nhớ đấy chính là muốn được sử dụng cái xàng sống nguyên tố thì bạn phải khai báo được 1 cái mạng có cái thước"
+  },
+  {
+    "start": 914.54,
+    "end": 921.57,
+    "text": "là nò cộng 1 với nò là cái số mà bạn muốn xàng các số nguyên tố vô nhỏ hơn là còn nói"
+  },
+  {
+    "start": 921.57,
+    "end": 923.57,
+    "text": "OK, thì cái tư tưởng của nó như thế này"
+  },
+  {
+    "start": 923.57,
+    "end": 928.82,
+    "text": "Ban đầu ạ, nó coi tất cả các cái sống nguyên tố từ 1 cho tới nò đều là sống nguyên tố"
+  },
+  {
+    "start": 928.82,
+    "end": 931.78,
+    "text": "ở đây mình sẽ khai báo một cái mạng Primer"
+  },
+  {
+    "start": 931.78,
+    "end": 934.06,
+    "text": "ở đây mình sẽ xảy ra tới 10 mũ 6 luôn nhé"
+  },
+  {
+    "start": 934.06,
+    "end": 940.42,
+    "text": "mình ra là mình sẽ khai báo một cái mạng Primer có kích cửa, cước là 10 mũ 6, 1, 1, 2, 3, 4, 5, 6, rồi"
+  },
+  {
+    "start": 940.42,
+    "end": 946.22,
+    "text": "ok, bang đầu ấy, nó sẽ coi tất cả các xuống nguyên tố từ 1 cho tới, từ không cho tới 10 mũ 6 để là xuống nguyên tố"
+  },
+  {
+    "start": 946.22,
+    "end": 952.14,
+    "text": "ok, như thế này nhé, mình dụ, mình cần xảy ra các xuống nguyên tố từ 1 cho tới 20 á"
+  },
+  {
+    "start": 952.14,
+    "end": 969.21,
+    "text": "1 trở tới 20, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ok"
+  },
+  {
+    "start": 969.21,
+    "end": 971.21,
+    "text": "Tức cho thêm số 0 đi"
+  },
+  {
+    "start": 971.21,
+    "end": 975.21,
+    "text": "Ví dụ bây giờ bạn muốn sản các cái số nguyên tố từ 0 trở tới 20"
+  },
+  {
+    "start": 975.21,
+    "end": 977.21,
+    "text": "xem là trong cái đoạn này có bao nhiêu số nguyên tố ấy"
+  },
+  {
+    "start": 977.21,
+    "end": 979.21,
+    "text": "thì bạn sẽ phải khai báo được 1 cái màn primer"
+  },
+  {
+    "start": 979.21,
+    "end": 981.89,
+    "text": "Or P, 21 phần tử đúng không?"
+  },
+  {
+    "start": 981.89,
+    "end": 986.61,
+    "text": "Sau đó ban đầu ấy, bạn sẽ cho P i bằng 1"
+  },
+  {
+    "start": 986.61,
+    "end": 991.21,
+    "text": "OK, P i bằng 1 với i là tất cả các giá trị thứ 0 cho tới 20"
+  },
+  {
+    "start": 991.21,
+    "end": 995.46,
+    "text": "Đây mình sẽ lưu cái giá trị P i ở dưới nhá, màu thết"
+  },
+  {
+    "start": 995.46,
+    "end": 1000.96,
+    "text": "Để chỉ ra rằng là ban đầu tất cả các số thứ 0 cho tới 20 đều là số nguyên tố"
+  },
+  {
+    "start": 1000.96,
+    "end": 1002.46,
+    "text": "Ban đầu nó coi như thế mà"
+  },
+  {
+    "start": 1002.46,
+    "end": 1007.85,
+    "text": "Sau đó thì nó sẽ loại dần đi, nó sẽ loại dần các cái số này đi bằng cách là sàng"
+  },
+  {
+    "start": 1007.85,
+    "end": 1015.05,
+    "text": "Ok, đầu tiên nó sẽ loại 2 thằng thủ công, đấy chính là thằng không và thằng 1, 2 thằng này là 2 thằng không phải số nguyên tố, nó sẽ loại thủ công đi"
+  },
+  {
+    "start": 1015.05,
+    "end": 1019.45,
+    "text": "bằng cách là cho P của không, bằng không và P của 1, bằng không"
+  },
+  {
+    "start": 1019.45,
+    "end": 1023.61,
+    "text": "Ok, sau đó thì nó sẽ duyệt từ 2 cho tới căn 1, 2 của 20"
+  },
+  {
+    "start": 1023.61,
+    "end": 1027.61,
+    "text": "Ok, 2 đến căn 1, 2 của 20 thì là tên bố nữa không?"
+  },
+  {
+    "start": 1027.61,
+    "end": 1030.68,
+    "text": "Khi mà nó duyệt cái số đầu tiên là số 2 á"
+  },
+  {
+    "start": 1030.68,
+    "end": 1035.56,
+    "text": "Nói chứ hả? Thì nó thấy là số 2 này nó là số nguyên tố này, bởi vì P của 2 bằng 1 mà"
+  },
+  {
+    "start": 1035.56,
+    "end": 1040.2,
+    "text": "Vì công việc của nó, nó sẽ rượt tất cả các bộ của 2"
+  },
+  {
+    "start": 1040.2,
+    "end": 1043.69,
+    "text": "và nó đánh dấu tất cả các bộ đấy không phải là số nguyên tố"
+  },
+  {
+    "start": 1043.69,
+    "end": 1048.69,
+    "text": "bởi vì cái bộ này đã là bộ của một số nguyên tố rồi, chắc chắn nó không thể là số nguyên tố được"
+  },
+  {
+    "start": 1048.69,
+    "end": 1053.69,
+    "text": "Khi đó, nó sẽ rượt các bộ của 2 bao gồm số 4 này, và nó chuyển số 4 thành không phải số nguyên tố này"
+  },
+  {
+    "start": 1053.69,
+    "end": 1062.69,
+    "text": "Khi thế là số 6, số 8, số 10, số 12, số 14, 16, 18, và 20"
+  },
+  {
+    "start": 1062.69,
+    "end": 1070.69,
+    "text": "Các bạn thấy là, khi mà bạn thấy phát hiện ra tháng 2 là số nguyên tố thì tất cả những cái bội của hai, nó chính là những số chặn ấy, sẽ không phải là số nguyên tố, đúng không?"
+  },
+  {
+    "start": 1070.69,
+    "end": 1075.69,
+    "text": "Tiếp theo nó duyệt cái số tiếp theo là số ba, thì nó sấy thằng ba này cũng là số nguyên tố này."
+  },
+  {
+    "start": 1075.69,
+    "end": 1086.1,
+    "text": "Thì khi đó nó cũng sẽ duyệt tất cả các bội của ba. Thì mình gặp tất nhiều các bạn hỏi đấy là, khi mà bạn duyệt cái bội của ba thì nhiều bạn nói là cái bội đầu tiên của ba nó sẽ là 6 đúng không?"
+  },
+  {
+    "start": 1086.1,
+    "end": 1088.1,
+    "text": "Thì cái điều này chính xác"
+  },
+  {
+    "start": 1088.1,
+    "end": 1091.1,
+    "text": "Nhưng mà các bạn chú ý là những cái bội mà"
+  },
+  {
+    "start": 1091.1,
+    "end": 1094.1,
+    "text": "ví dụ như bạn gặp một thằng i nào đó là số nguyên tố ấy"
+  },
+  {
+    "start": 1094.1,
+    "end": 1099.1,
+    "text": "Thì bạn chỉ cần set cái bội đầu tiên của nó là i bình phương thôi"
+  },
+  {
+    "start": 1099.1,
+    "end": 1101.1,
+    "text": "Không cần phải i đâu, bởi vì..."
+  },
+  {
+    "start": 1101.1,
+    "end": 1105.1,
+    "text": "Xin lỗi không phải là 2i đâu, bởi vì cái bội 2i nó đã"
+  },
+  {
+    "start": 1105.1,
+    "end": 1109.1,
+    "text": "nó đã được loại bởi những cái số nguyên tố mà nhỏ hơn thằng i"
+  },
+  {
+    "start": 1109.1,
+    "end": 1111.1,
+    "text": "Ví dụ in thằng 6 này này, đúng không?"
+  },
+  {
+    "start": 1111.1,
+    "end": 1114.1,
+    "text": "Bạn thấy là nó đã được loại bởi một cái số nguyên tố là số 2 nhỏ hơn 3 rồi"
+  },
+  {
+    "start": 1114.1,
+    "end": 1118.1,
+    "text": "Thành ra là cái bộ đầu tiên của y mà bạn cần phải loại bỏ nó chính là y bình"
+  },
+  {
+    "start": 1118.1,
+    "end": 1122.1,
+    "text": "Trong trường hợp này 3 thì nó sẽ loại thằng đầu tiên thằng 9 ok"
+  },
+  {
+    "start": 1122.1,
+    "end": 1128.1,
+    "text": "Sau đó nó loại 9, 3 là 12, 12, 3 là 15, 15, 3 là 18 ok"
+  },
+  {
+    "start": 1128.1,
+    "end": 1132.36,
+    "text": "21 nữa nhưng mà 21 không nằm trong khoảng mình sáng nên thôi ok"
+  },
+  {
+    "start": 1132.36,
+    "end": 1137.36,
+    "text": "Thì là các bạn thấy bây giờ những cái số nào mà nó có giá trị P mà bằng 1 thì nó vẫn là số nguyên tố"
+  },
+  {
+    "start": 1137.36,
+    "end": 1140.36,
+    "text": "Còn nếu mà P vẫn không thì nó sẽ không còn là số nguyên tố nữa ok"
+  },
+  {
+    "start": 1140.36,
+    "end": 1145.82,
+    "text": "Ok, khi mà nó duyệt qua thằng bốn í, duyệt qua thằng bốn thì thằng bốn này không phải là số nguyên tố nên nó chả làm gì cả"
+  },
+  {
+    "start": 1145.82,
+    "end": 1148.44,
+    "text": "Vậy thì là khi đó đã xong cái thuật toán sàng rồi"
+  },
+  {
+    "start": 1148.44,
+    "end": 1151.48,
+    "text": "Và bây giờ nhá, bạn chỉ cần duyệt từ không cho tới 20 thôi"
+  },
+  {
+    "start": 1151.48,
+    "end": 1154.72,
+    "text": "Mà cái số nào nó vẫn có cái giá trị PI của nó bằng 1 í"
+  },
+  {
+    "start": 1154.72,
+    "end": 1156.8,
+    "text": "Thì có nghĩa là cái số đấy là số nguyên tố"
+  },
+  {
+    "start": 1156.8,
+    "end": 1161.16,
+    "text": "Đây này, số 2 này, số 3, số 5, số 7"
+  },
+  {
+    "start": 1161.16,
+    "end": 1165.64,
+    "text": "Ờ, số 11 này, số 13 này, số 17 này, số 19"
+  },
+  {
+    "start": 1165.64,
+    "end": 1169.8,
+    "text": "Đấy, thì đấy chính là cái cách mà thuật toán sàng số nguyên tố rất sử dụng"
+  },
+  {
+    "start": 1169.8,
+    "end": 1186.7,
+    "text": "Các bạn có thể nhìn cái cách thức của nó xàng như sau"
+  },
+  {
+    "start": 1186.7,
+    "end": 1192.26,
+    "text": "Các bạn nhìn cái hình ở bên này này, đây bây giờ người ta sẽ xàng các số từ 2 cho tới 120 đúng không?"
+  },
+  {
+    "start": 1192.26,
+    "end": 1196.14,
+    "text": "Thì các bạn thấy các số màu đỏ đấy, đấy chính là nó đang loại các bộ của 2 đấy"
+  },
+  {
+    "start": 1196.14,
+    "end": 1200.26,
+    "text": "Tiếp theo nó loại các bộ của 3 là màu xanh này, 3, 9, 12, 15, 18, vân vân"
+  },
+  {
+    "start": 1200.26,
+    "end": 1206.5,
+    "text": "Tiếp theo nó loại bộ của 5, 25, 30, 35, 40, 7, 49"
+  },
+  {
+    "start": 1206.5,
+    "end": 1211.46,
+    "text": "Đấy các bạn thấy là cứ khi mà nó gặp 1 cái số nguyên tố nào đó thì nó sẽ loại cái bộ bình phương"
+  },
+  {
+    "start": 1211.46,
+    "end": 1216.46,
+    "text": "Cái bộ đầu tiên của cái số nghiên tố đấy là i bình phương, chứ không phải là 2i đúng không?"
+  },
+  {
+    "start": 1217.59,
+    "end": 1222.59,
+    "text": "Thì sau khi mà nó loại xong ấy, thì những cái số nào còn lại thì nó sẽ là số nghiên tố."
+  },
+  {
+    "start": 1222.59,
+    "end": 1224.59,
+    "text": "Cái số nào mà có..."
+  },
+  {
+    "start": 1226.49,
+    "end": 1229.49,
+    "text": "Đây, trong chương gặp này nó đang loại cái số 2 các bạn nhìn lại một lần nữa nhé."
+  },
+  {
+    "start": 1230.97,
+    "end": 1233.97,
+    "text": "Đang loại bộ của 2 đấy, sau đó nó loại bộ của 3 này."
+  },
+  {
+    "start": 1233.97,
+    "end": 1238.15,
+    "text": "Loại bộ của 5 này, sau đó nó loại bộ của 7."
+  },
+  {
+    "start": 1238.15,
+    "end": 1241.18,
+    "text": "5, 7"
+  },
+  {
+    "start": 1241.18,
+    "end": 1245.18,
+    "text": "Còn những số còn lại mà chưa bị loại thì nó sẽ là sáng xuống nguyên tố"
+  },
+  {
+    "start": 1245.18,
+    "end": 1251.55,
+    "text": "Bây giờ mình sẽ hướng dẫn cài đặt cái thuật toán này rất dễ thôi"
+  },
+  {
+    "start": 1251.55,
+    "end": 1256.26,
+    "text": "Đây chính là thuật toán sáng xuống nguyên tố"
+  },
+  {
+    "start": 1256.26,
+    "end": 1261.26,
+    "text": "Nó được dùng để sáng các cái số nguyên tố nhỏ hơn là trong đoạn"
+  },
+  {
+    "start": 1261.26,
+    "end": 1264.26,
+    "text": "Trong đoạn thì mình sẽ hướng dẫn kênh 3 để sau"
+  },
+  {
+    "start": 1264.26,
+    "end": 1266.26,
+    "text": "Thì mình sẽ sử dụng thủ tục tên là sáng"
+  },
+  {
+    "start": 1266.26,
+    "end": 1270.26,
+    "text": "Những vụ đầu tiên của việc sáng xuống nguyên tố đấy chính là"
+  },
+  {
+    "start": 1270.26,
+    "end": 1280.59,
+    "text": "Bạn sẽ phải coi tất cả các số từ 0 cho tới n là xuống nguyên tố"
+  },
+  {
+    "start": 1280.59,
+    "end": 1288.47,
+    "text": "Bằng cách là mình sẽ duyệt từ 0 cho tới n và mình sẽ set primer của i bằng 1, đúng không?"
+  },
+  {
+    "start": 1288.47,
+    "end": 1292.97,
+    "text": "Ở đây nếu primer của i bằng 1 thì có nghĩa là i là xuống nguyên tố nhé"
+  },
+  {
+    "start": 1292.97,
+    "end": 1297.61,
+    "text": "Còn nếu primer của i mà bằng 0 thì có nghĩa là i không phải là xuống nguyên tố"
+  },
+  {
+    "start": 1297.61,
+    "end": 1300.57,
+    "text": "Vậy thì đầu tiên mình sẽ diệt từ 4, in a day, bằng 1"
+  },
+  {
+    "start": 1300.57,
+    "end": 1304.24,
+    "text": "Trên loại y bằng 0 cho tới y nhỏ hơn, hoặc bằng 1 mũ 6 nữa"
+  },
+  {
+    "start": 1304.24,
+    "end": 1306.4,
+    "text": "2, 3, 4, 5, 6, y, cậu cậu"
+  },
+  {
+    "start": 1306.4,
+    "end": 1309.64,
+    "text": "Và mình sẽ cho rhymer của y bằng 1"
+  },
+  {
+    "start": 1309.64,
+    "end": 1313.92,
+    "text": "Rồi như lúc nãy mình nói đấy chính là bạn sẽ loại thủ công 2 thằng đầu đúng không?"
+  },
+  {
+    "start": 1313.92,
+    "end": 1316.78,
+    "text": "Loại 0 và 1"
+  },
+  {
+    "start": 1316.78,
+    "end": 1322.22,
+    "text": "Ok, bằng cách là cho rhymer của không bằng rhymer của 1 thì bằng bằng 0"
+  },
+  {
+    "start": 1322.22,
+    "end": 1324.22,
+    "text": "Vì 2 thằng này không phải là xuống yên tố đúng không?"
+  },
+  {
+    "start": 1324.22,
+    "end": 1328.42,
+    "text": "vãi nó đi, sau đó thì sao nhỉ, mình sẽ rượt từ 2 cho từ căn 1,2 của nở"
+  },
+  {
+    "start": 1328.42,
+    "end": 1332.32,
+    "text": "4, int, tê, i bằng 2 cho từ căn 1,2 của 1 triệu thì là 100"
+  },
+  {
+    "start": 1332.32,
+    "end": 1335.02,
+    "text": "ai xin lỗi, 1.000 nữa, ok"
+  },
+  {
+    "start": 1335.02,
+    "end": 1339.02,
+    "text": "và làm sao nhỉ, bạn kiểm tra, y là xuống nghiên tố"
+  },
+  {
+    "start": 1339.02,
+    "end": 1346.57,
+    "text": "ok, tức là y, y màu của y đấy, thì sao nhỉ, mình sẽ rượt tất cả các bộ của y"
+  },
+  {
+    "start": 1346.57,
+    "end": 1357.77,
+    "text": "tất cả các bộ số của y và cho nó không còn là xuống nghiên tố"
+  },
+  {
+    "start": 1357.77,
+    "end": 1360.38,
+    "text": "hơi lùng cùng thí"
+  },
+  {
+    "start": 1360.38,
+    "end": 1367.68,
+    "text": "fo, int t, ghi bằng i xa với i, ghi nhỏ hơn là 31 triệu, 1, 2, 3, 4, 5, 6, ghi cộng bằng i nhá"
+  },
+  {
+    "start": 1367.68,
+    "end": 1372.18,
+    "text": "chỗ này bạn cho ghi cộng bằng i để bạn duyệt các bộ của i thôi, nó không nhỉ"
+  },
+  {
+    "start": 1372.18,
+    "end": 1376.47,
+    "text": "bạn mà cho ghi cộng cộng là bị sai đấy nhá, ví dụ như bạn có i bằng 2 á"
+  },
+  {
+    "start": 1376.47,
+    "end": 1380.97,
+    "text": "thấy chứ à, mà nờ của bạn bằng 50 á, đúng không?"
+  },
+  {
+    "start": 1380.97,
+    "end": 1385.77,
+    "text": "thì khi đó bạn, nếu mà bạn muốn duyệt các bộ của 2 thì bạn sẽ phải cho bước nhảy của vòng fo là bằng i"
+  },
+  {
+    "start": 1385.77,
+    "end": 1390.77,
+    "text": "khi đó nó sẽ duyệt là 2, 4, 6, 8, 10, 12, 14, 16, 18 đúng không?"
+  },
+  {
+    "start": 1390.77,
+    "end": 1395.77,
+    "text": "còn nếu mà bạn cho i cộng cộng ấy thì khi đó nó sẽ bị sai đấy, nó sẽ thành 24567"
+  },
+  {
+    "start": 1395.77,
+    "end": 1401.77,
+    "text": "hoặc là nhiều bạn là cho i cộng cộng, xong đây ở đây lại kiểm tra ipe 100%"
+  },
+  {
+    "start": 1401.77,
+    "end": 1404.77,
+    "text": "à xin lỗi ipt zi 100% i bằng không"
+  },
+  {
+    "start": 1404.77,
+    "end": 1412.77,
+    "text": "thì như thế nó không đại phí ra đúng không? bởi vì mình có thể sử dụng vòng 4 với bước nhảy lại i để mà duyệt tất cả các bộ của i mà"
+  },
+  {
+    "start": 1412.77,
+    "end": 1416.65,
+    "text": "Đúng không? Thay vì là bạn duyệt từng thẳng mồ sau đó là bạn kiến tra kết tính chiếc hết"
+  },
+  {
+    "start": 1416.65,
+    "end": 1423.97,
+    "text": "Ok, và ở đây bạn chỉ cần cho primer của zi, bằng không, ok, zi không còn là số nghiên tố nữa"
+  },
+  {
+    "start": 1423.97,
+    "end": 1432.94,
+    "text": "Vậy thì sau cái thử tục sàng này này, thì bạn chỉ cần duyệt từ 1 cho tới nờ, duyệt từ không cho tới nờ"
+  },
+  {
+    "start": 1432.94,
+    "end": 1438.54,
+    "text": "Và những cái số nào mà nó có primer của cái số inare, nó vẫn bằng 1 thì chính tỏng nó là số nghiên tố"
+  },
+  {
+    "start": 1438.54,
+    "end": 1441.22,
+    "text": "Cái đây chính là kiến thức về sản xuống nguyên tố nhé"
+  },
+  {
+    "start": 1441.22,
+    "end": 1443.92,
+    "text": "Nó rất là quan trọng hình ra là các bạn nên hiểu"
+  },
+  {
+    "start": 1443.92,
+    "end": 1446.66,
+    "text": "sau đó thì cài đặt, nó cũng chỉ có mấy dòng thôi"
+  },
+  {
+    "start": 1446.66,
+    "end": 1451.08,
+    "text": "Và trong hàng mê ấy, thay vì làm như lúc nãy đấy chính là mình sẽ gọi hàm xuống nguyên tố ấy"
+  },
+  {
+    "start": 1451.08,
+    "end": 1453.98,
+    "text": "thì bây giờ mình đã biết số đấy có phải là xuống nguyên tố hay không"
+  },
+  {
+    "start": 1453.98,
+    "end": 1458.38,
+    "text": "bằng cách là sử dụng ngay cái giá trị của mạng primer kia đúng không?"
+  },
+  {
+    "start": 1458.38,
+    "end": 1459.98,
+    "text": "Chỗ này bạn xem một cái đã nhé"
+  },
+  {
+    "start": 1463.81,
+    "end": 1467.01,
+    "text": "Và chỗ này thì bạn chỉ cần kiểm tra là if primer của i là được"
+  },
+  {
+    "start": 1467.01,
+    "end": 1473.27,
+    "text": "Bây giờ nó sẽ rất là nhanh, bởi vì nó chỉ cần truy cập đến giá trị của phần tử"
+  },
+  {
+    "start": 1473.27,
+    "end": 1478.43,
+    "text": "có chỉ số là i thôi để nó có thể xác định xem i có phải là số mưu tố hay không?"
+  },
+  {
+    "start": 1478.43,
+    "end": 1485.39,
+    "text": "Với dụ như mình chạy với input là 100, thì nó sẽ in ra ngay được các số nguyên tố từ 1 đến 100"
+  },
+  {
+    "start": 1485.39,
+    "end": 1489.07,
+    "text": "Đây chính là các số nguyên tố từ 1 đến 100 nhé"
+  },
+  {
+    "start": 1489.07,
+    "end": 1492.97,
+    "text": "Hàm Sàng chỉ có 3 cái chú ý như thế thôi"
+  },
+  {
+    "start": 1492.97,
+    "end": 1495.69,
+    "text": "Thứ nhất là bạn duyệt từ 0 cho tới nờ và xét"
+  },
+  {
+    "start": 1495.69,
+    "end": 1499.69,
+    "text": "Vrimer của i để đánh dấu là ban đầu mình coi tất cả các số là số nguyên tố"
+  },
+  {
+    "start": 1499.69,
+    "end": 1502.89,
+    "text": "Sau đó thì loại bỏ thủ công, số 0 và số 1"
+  },
+  {
+    "start": 1502.89,
+    "end": 1507.05,
+    "text": "Còn tất cả những số thứ 2 trả đi thì mình sẽ sử dụng vòng 4 để loại"
+  },
+  {
+    "start": 1507.05,
+    "end": 1509.69,
+    "text": "Mình sẽ duyệt từ 2 cho tới căn vực 2 của nờ thôi nhé"
+  },
+  {
+    "start": 1509.69,
+    "end": 1512.57,
+    "text": "Thì như lúc nãy mình nói đấy, nói đấy, bạn không cần duyệt từ nờ đâu"
+  },
+  {
+    "start": 1512.57,
+    "end": 1517.85,
+    "text": "Bởi vì khi mà bạn chỉ cần duyệt tới căn vực 2 của nờ thì cái bộ đầu tiên mà bạn loại bỏ"
+  },
+  {
+    "start": 1517.85,
+    "end": 1519.85,
+    "text": "Đó chính là i bình phương nữa"
+  },
+  {
+    "start": 1519.85,
+    "end": 1525.45,
+    "text": "Thì khi bạn chỉ cần chạy từ i cho tới 1 nghìn thôi là bạn có thể loại bỏ được cái số là 1 triệu rồi"
+  },
+  {
+    "start": 1525.45,
+    "end": 1530.3,
+    "text": "Thì ở đây bạn chỉ cần kiểm tra nếu mà cái thằng i đấy là số nguyên tố này"
+  },
+  {
+    "start": 1530.3,
+    "end": 1534.3,
+    "text": "Thì mình sẽ duyệt tất cả các bộ của i, đúng không?"
+  },
+  {
+    "start": 1534.3,
+    "end": 1538.3,
+    "text": "Mà cái bộ của i như mình nói nó sẽ bắt đầu từ i bình chứ không phải là 2i"
+  },
+  {
+    "start": 1538.3,
+    "end": 1541.3,
+    "text": "Thực ra thì bạn cho chạy từ 2i nó cũng vẫn đúng thôi"
+  },
+  {
+    "start": 1541.3,
+    "end": 1543.3,
+    "text": "Nhưng mà cái số vòng lạc của nó sẽ tăng lên"
+  },
+  {
+    "start": 1543.3,
+    "end": 1547.3,
+    "text": "Mình chỉ cần duyệt cái bộ đầu tiên của i đấy chính là i bình thôi"
+  },
+  {
+    "start": 1547.3,
+    "end": 1552.18,
+    "text": "sau đó là mình duyệt tất cả các bộ chạy tới no, duyệt cho tới 1 triệu"
+  },
+  {
+    "start": 1552.18,
+    "end": 1557.34,
+    "text": "và cái bước nhảy của vòng 4 của mình nó sẽ là i để nó duyệt tất cả các bộ của bộ i"
+  },
+  {
+    "start": 1557.34,
+    "end": 1562.34,
+    "text": "nó sẽ là i, bình phương là i, bình phương cộng i, đi, bình phương cộng 2, i, bình phương cộng 3, i"
+  },
+  {
+    "start": 1562.34,
+    "end": 1566.34,
+    "text": "và bạn sẽ duyệt tất cả các bộ đấy và đánh dấu là primer của z vòng 0"
+  },
+  {
+    "start": 1566.34,
+    "end": 1570.07,
+    "text": "ok, thì đây chính là cái hàm sản sống nguyên tố"
+  },
+  {
+    "start": 1570.07,
+    "end": 1573.87,
+    "text": "một kiến thức tương đối là quan trọng và nó cũng rất là dễ cài đặc"
+  },
+  {
+    "start": 1573.87,
+    "end": 1579.87,
+    "text": "các bạn nên hiểu cái cách tư tưởng của thuật toán trước, sau đó là các bạn sẽ nhảy vào vào cái đặt"
+  },
+  {
+    "start": 1579.87,
+    "end": 1583.87,
+    "text": "các bạn nào học xí không cộng thì có thể sử dụng cái này là 4 cũng được"
+  },
+  {
+    "start": 1583.87,
+    "end": 1587.87,
+    "text": "đây chính là cái cách mà làm bài thứ 2 này nó hiệu quả hơn"
+  },
+  {
+    "start": 1587.87,
+    "end": 1592.87,
+    "text": "và nó cũng chính là một kiến thức quan trọng trong lý tuyết số, đấy là sản xuống nguyên tố mình vẫn dẫn đây"
+  },
+  {
+    "start": 1592.87,
+    "end": 1598.87,
+    "text": "các bạn tất nhiên là không nên làm theo cái cách lúc nãy, đấy chính là gọi hàm nguyên tố nhé"
+  },
+  {
+    "start": 1598.87,
+    "end": 1605.54,
+    "text": "Nó cũng được thôi nhưng mà cái độ phức tạp của nó sẽ là nờ lốc nờ đúng không?"
+  },
+  {
+    "start": 1605.54,
+    "end": 1613.54,
+    "text": "Trong khi nếu mà bạn dựa từ 1 cho tới nờ và bạn gọi hàm kiểm tra số nguyên tố ấy thì nó sẽ là o của nờ lốc nờ"
+  },
+  {
+    "start": 1613.54,
+    "end": 1619.82,
+    "text": "Còn thằng sản số nguyên tố này hình như nó là nờ lốc của lốc nờ thì phải"
+  },
+  {
+    "start": 1619.82,
+    "end": 1625.3,
+    "text": "Ok thì nó sẽ nhanh hơn so với cái việc mà bạn gọi hàm số nguyên tố nhé"
+  },
+  {
+    "start": 1625.3,
+    "end": 1629.3,
+    "text": "Và nó còn nhanh hơn nữa khi mà cái bài tỏán của bạn có nhiều tét cây á"
+  },
+  {
+    "start": 1629.3,
+    "end": 1631.3,
+    "text": "Bài này thì nó chỉ có một tiết cây thôi đúng không?"
+  },
+  {
+    "start": 1631.3,
+    "end": 1636.3,
+    "text": "Trong khi mà bài toán mà nó có nhiều tiết cây hơn thì cái sản xuống nghiên tố này nó hoạt động rất là tốt, rất là nhanh"
+  },
+  {
+    "start": 1636.3,
+    "end": 1637.3,
+    "text": "Ok"
+  },
+  {
+    "start": 1637.3,
+    "end": 1641.3,
+    "text": "Thì đây chính là kiến thức về sản xuống nghiên tố L-Tot-Tenet nhé"
+  },
+  {
+    "start": 1641.3,
+    "end": 1651.88,
+    "text": "Ok, trong video này thì mình sẽ hướng dẫn các bạn phân tích thực xuống nghiên tố của một số"
+  },
+  {
+    "start": 1651.88,
+    "end": 1653.88,
+    "text": "Nó cũng là một cái bài toán tương đối hay gọt"
+  },
+  {
+    "start": 1653.88,
+    "end": 1657.88,
+    "text": "Khi mà mình làm các bài toán để lý thiết số hay là bạn học phần hàm xong ấy"
+  },
+  {
+    "start": 1657.88,
+    "end": 1662.58,
+    "text": "Thì phần phân tích thực xuống nghiên tố này là các bạn học ở lớp 6 rồi đúng không?"
+  },
+  {
+    "start": 1662.58,
+    "end": 1667.38,
+    "text": "input thì ở đây sẽ cho mình một số nguyên rương làm trong khoảng thứ 1 cho tới 10 mũ 9"
+  },
+  {
+    "start": 1667.38,
+    "end": 1670.74,
+    "text": "và yêu cầu mình sẽ phân tích ra thành thừa số nguyên tố"
+  },
+  {
+    "start": 1670.74,
+    "end": 1675.5,
+    "text": "ok, mình dụ như số 28 này, thì mình sẽ phân tích thành 2x2x7 đúng không?"
+  },
+  {
+    "start": 1675.5,
+    "end": 1679.54,
+    "text": "cho những bạn nào mà quên cái cách phân tích thừa số nguyên tố thì mình có thể nhắc lại một chút từ sau"
+  },
+  {
+    "start": 1679.54,
+    "end": 1683.6,
+    "text": "à, ví dụ như bạn có một cái số là số..."
+  },
+  {
+    "start": 1683.6,
+    "end": 1687.24,
+    "text": "số 84 đi, ok"
+  },
+  {
+    "start": 1687.24,
+    "end": 1690.72,
+    "text": "để phân tích số 84 này thành thừa số nguyên tố thì"
+  },
+  {
+    "start": 1690.72,
+    "end": 1695.52,
+    "text": "Hồi xưa là các bạn hay là tìm số nghiên tố đầu tiên nhỏ nhất mà 84 nó chia hết đúng không?"
+  },
+  {
+    "start": 1695.52,
+    "end": 1697.2,
+    "text": "Trong truyền hợp này là số 2 đúng không nhỉ?"
+  },
+  {
+    "start": 1697.2,
+    "end": 1698.64,
+    "text": "Thấy, sau đoạn chia cho 2"
+  },
+  {
+    "start": 1698.64,
+    "end": 1701.04,
+    "text": "Tàn tư chia cho 2 thì nó là bằng 42 đúng không?"
+  },
+  {
+    "start": 1701.04,
+    "end": 1705.12,
+    "text": "Vậy là mình đã được 1 cái thử số nghiên tố đầu tiên để chính là 2 rồi đúng không?"
+  },
+  {
+    "start": 1705.12,
+    "end": 1711.12,
+    "text": "Bây giờ sau khi mà bạn chia 8 tư cho 2 được 42 thì bạn lại phải kiểm tra xem cái số 42 này còn chia hết cho cái"
+  },
+  {
+    "start": 1711.12,
+    "end": 1713.68,
+    "text": "thử số nghiên tố mà bạn người chia không là 2 đúng không?"
+  },
+  {
+    "start": 1713.68,
+    "end": 1715.04,
+    "text": "Thì nó vẫn chia hết đúng nhỉ?"
+  },
+  {
+    "start": 1715.04,
+    "end": 1717.76,
+    "text": "Thì bạn lại chia cho 2 lần nữa thì nó ra 21"
+  },
+  {
+    "start": 1717.76,
+    "end": 1720.08,
+    "text": "Vậy thì bạn thêm 1 thử số nghiên tố nữa"
+  },
+  {
+    "start": 1720.08,
+    "end": 1727.68,
+    "text": "Bây giờ, cái số của bạn là 21, thì nó không chỉ hết cho 2 nữa, thì bạn lại phải cố gắng tìm cái số nghiên tố tiếp theo, mà lớn hơn 2"
+  },
+  {
+    "start": 1727.68,
+    "end": 1732.08,
+    "text": "Ông 21 này, ông ấy chia hết, thì nó là thằng 3 đúng không? Chia cho 3 thì nó cũng 7"
+  },
+  {
+    "start": 1732.08,
+    "end": 1738.48,
+    "text": "Bây giờ, bạn đã tìm thêm được cái số nghiên tố nữa là 3, và bây giờ cái số của bạn là 7 đúng không?"
+  },
+  {
+    "start": 1738.48,
+    "end": 1743.48,
+    "text": "Bảy nó không chia hết cho 3 nữa, thì bạn lại phải tìm các cái số nghiên tố lớn hơn mà 7 nó chia hết thôi"
+  },
+  {
+    "start": 1743.48,
+    "end": 1745.48,
+    "text": "Đến thằng 5 thì không chia hết đúng không?"
+  },
+  {
+    "start": 1745.48,
+    "end": 1747.48,
+    "text": "Đến thằng 7 thì mới chia hết"
+  },
+  {
+    "start": 1747.48,
+    "end": 1751.48,
+    "text": "Thành ra là cái thường số nguyên tố cuối cùng của cái số 84 này nó chính là 7"
+  },
+  {
+    "start": 1751.48,
+    "end": 1753.48,
+    "text": "Và phân tích nó sẽ là 2x2x3x7"
+  },
+  {
+    "start": 1753.48,
+    "end": 1755.48,
+    "text": "Ok"
+  },
+  {
+    "start": 1755.48,
+    "end": 1757.48,
+    "text": "Vậy thì mấu chốt của các bạn này đấy chính là gì nhỉ?"
+  },
+  {
+    "start": 1757.48,
+    "end": 1761.48,
+    "text": "Khi mà phân tích thường số nguyên tố mà bạn gặp một cái thường số nguyên tố nào đó"
+  },
+  {
+    "start": 1761.48,
+    "end": 1765.48,
+    "text": "Thì bắt buộc là bạn sẽ phải dùng cái số ban đầu để bạn chia cho cái thường số nguyên tố đấy"
+  },
+  {
+    "start": 1765.48,
+    "end": 1767.48,
+    "text": "Cho tới khi nó không chia hết thì thôi"
+  },
+  {
+    "start": 1767.48,
+    "end": 1769.48,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 1769.48,
+    "end": 1773.92,
+    "text": "và mỗi lần bạn chia cho thửa xuống nguyên tố đấy thì bạn sẽ in ra nó là được"
+  },
+  {
+    "start": 1773.92,
+    "end": 1777.72,
+    "text": "trong input này thì nó sẽ in ra cái thửa xuống nguyên tố đấy thôi"
+  },
+  {
+    "start": 1777.72,
+    "end": 1781.32,
+    "text": "phải thì cái ham phân tích thửa xuống nguyên tố mình viết như sau nhé"
+  },
+  {
+    "start": 1781.32,
+    "end": 1783.8,
+    "text": "void, phân tích, in là tên là"
+  },
+  {
+    "start": 1783.8,
+    "end": 1791.51,
+    "text": "các bạn thức là cái thửa xuống nguyên tố của một số trong trường hợp nó không phải là xuống nguyên tố ấy, đúng không?"
+  },
+  {
+    "start": 1791.51,
+    "end": 1798.51,
+    "text": "n là nó không phải là xuống nguyên tố thì các thửa xuống nguyên tố của nó chắc chắn là nó sẽ nằm trong cái đoạn thứ 2 cho thức ứng bật 2 của nó, đúng không?"
+  },
+  {
+    "start": 1798.51,
+    "end": 1802.32,
+    "text": "Chắc chắn là như thế rồi, nếu mà trong truyền hợp nờ, nó không phải là số nguyên tố ấy"
+  },
+  {
+    "start": 1802.32,
+    "end": 1806.92,
+    "text": "Bây giờ thì mình chỉ cần duyệt từ 2 thôi, các 1-2 của nờ thôi"
+  },
+  {
+    "start": 1806.92,
+    "end": 1810.48,
+    "text": "Tương tự mình vẫn thích kiểu xí lỗi như là kiểm tra số nguyên tố ấy"
+  },
+  {
+    "start": 1810.48,
+    "end": 1816.85,
+    "text": "Và ở trong này này, bạn sẽ sử dụng 1 cái vòng lập y đấy chính là"
+  },
+  {
+    "start": 1816.85,
+    "end": 1822.57,
+    "text": "Trưng nào mà nờ còn chia hết cho i thì bạn sẽ còn chia cho cái thử số nguyên tố i đây đúng không?"
+  },
+  {
+    "start": 1822.57,
+    "end": 1826.25,
+    "text": "Và bạn lấy nờ chia cho i, mình sẽ sử dụng 1 vòng lập y để làm điều đó"
+  },
+  {
+    "start": 1826.25,
+    "end": 1829.65,
+    "text": "y nờ phần 100 i mà bằng không, đó"
+  },
+  {
+    "start": 1829.65,
+    "end": 1835.05,
+    "text": "Thì có nghĩa là gì? Nếu mà thằng nơi nó bắt gặp một cái thường xuống nguyên tố i nào đó thì nó sẽ kiểm tra là"
+  },
+  {
+    "start": 1835.05,
+    "end": 1839.05,
+    "text": "trực nào cái biến nờ nó còn chia hết cho i thì bạn sẽ y ra biến i đúng không?"
+  },
+  {
+    "start": 1839.05,
+    "end": 1841.35,
+    "text": "Nó tương tự như cái số 84 của vừa đồ mình làm ích"
+  },
+  {
+    "start": 1841.35,
+    "end": 1843.65,
+    "text": "sau đó bạn làm gì nữa, bạn lấy nờ chia cho i"
+  },
+  {
+    "start": 1843.65,
+    "end": 1845.84,
+    "text": "nờ chia cho bằng i"
+  },
+  {
+    "start": 1845.84,
+    "end": 1847.36,
+    "text": "Ok"
+  },
+  {
+    "start": 1847.36,
+    "end": 1852.66,
+    "text": "Thì nếu mà nó còn chia hết cho i thì nó lại quay trở lại vòng lập y và nó in tiếp ra cái thường xuống nguyên tố đấy"
+  },
+  {
+    "start": 1852.66,
+    "end": 1857.76,
+    "text": "còn nếu mà nó không chia hết thì nó sẽ nhảy xuống dưới và tiếp tục với những cái giá trị i lớn hơn đúng không?"
+  },
+  {
+    "start": 1857.76,
+    "end": 1862.56,
+    "text": "Ví dụ như ở trong hàm main mình sẽ nhập vào một số n và mình gọi hàm phân tích nó"
+  },
+  {
+    "start": 1862.56,
+    "end": 1866.92,
+    "text": "để xem cái phân tích ở số nhiên tố của nó"
+  },
+  {
+    "start": 1866.92,
+    "end": 1874.83,
+    "text": "đây mình sẽ gọi phân tích và để chuyển vào và ví dụ như số 84 lúc nãy nhé"
+  },
+  {
+    "start": 1874.83,
+    "end": 1880.8,
+    "text": "từ ví dụ như số 27 thì nó sẽ là 1, 3, nhưng 3, nhưng 3 đúng không?"
+  },
+  {
+    "start": 1880.8,
+    "end": 1884.97,
+    "text": "đây nó sẽ là 1, 3, nhưng 3, nhưng 3 này, ok"
+  },
+  {
+    "start": 1884.97,
+    "end": 1887.39,
+    "text": "nhưng mà số 84 thì nó lại bị sai"
+  },
+  {
+    "start": 1887.39,
+    "end": 1890.48,
+    "text": "nó sẽ in ra có mỗi 2 số 2 thì phải"
+  },
+  {
+    "start": 1890.48,
+    "end": 1895.16,
+    "text": "hẳn sẽ lỗi 2, 2, 3 nó không in ra được cái số 7 ở cuối á"
+  },
+  {
+    "start": 1895.16,
+    "end": 1901.76,
+    "text": "bởi vì là các bạn chú ý là sau cái vòng 4 này này bạn sẽ phải kiểm tra xem là n nó đã bằng 1 hay chưa"
+  },
+  {
+    "start": 1901.76,
+    "end": 1908.36,
+    "text": "bởi vì khi mà bạn lấy 8 tư chi 2 bằng 42, 42 chi 2 bằng 21, 21 chi 3 bằng 7"
+  },
+  {
+    "start": 1908.36,
+    "end": 1910.64,
+    "text": "thì bạn thấy là khi mà n nó bằng 7 này này"
+  },
+  {
+    "start": 1910.64,
+    "end": 1913.08,
+    "text": "nó là cái thừa số nguyên tố cuối cùng rồi ý"
+  },
+  {
+    "start": 1913.08,
+    "end": 1917.88,
+    "text": "thì trong vòng 4 của nó nó sẽ không tìm được cái số nào mà 7 nó chia hết đâu"
+  },
+  {
+    "start": 1917.88,
+    "end": 1922.08,
+    "text": "bởi vì cái vòng 4 của bạn không có duyệt đến tới 7"
+  },
+  {
+    "start": 1922.08,
+    "end": 1924.2,
+    "text": "bạn duyệt chỉ duyệt từ 2 đến 1, 2 của n"
+  },
+  {
+    "start": 1924.2,
+    "end": 1928.0,
+    "text": "Thôi mà khi đó cái nờ của bạn ấy, biết nờ của bạn nó về bảy rồi ấy"
+  },
+  {
+    "start": 1928.0,
+    "end": 1932.18,
+    "text": "Thì cái việc mà bạn duyệt từ hai cho cân bực hai của nó"
+  },
+  {
+    "start": 1932.18,
+    "end": 1935.78,
+    "text": "Nó không còn tìm được cái ước nguyên tố nào mà chia hết"
+  },
+  {
+    "start": 1935.78,
+    "end": 1938.38,
+    "text": "Không còn tìm được một cái thửa số nguyên tố nào nữa"
+  },
+  {
+    "start": 1938.38,
+    "end": 1940.91,
+    "text": "Chính tỏ là sau cái vòng 4 này ấy"
+  },
+  {
+    "start": 1940.91,
+    "end": 1945.11,
+    "text": "Thì rất có thể là cái thằng nờ của bạn nó chưa phân tích thửa số nguyên tố xong đâu"
+  },
+  {
+    "start": 1945.11,
+    "end": 1946.51,
+    "text": "Tức là nó chưa về 1 ấy"
+  },
+  {
+    "start": 1946.51,
+    "end": 1948.31,
+    "text": "Ok, nó chưa về 1"
+  },
+  {
+    "start": 1948.31,
+    "end": 1952.51,
+    "text": "Thì ở chỗ này bạn phải check là ít nờ mà khác, nờ mà khác 1"
+  },
+  {
+    "start": 1952.51,
+    "end": 1956.51,
+    "text": "Thì bạn sẽ in ra cái thửa xuống nghiên tố cuối cùng, nó chính là nò đấy"
+  },
+  {
+    "start": 1956.51,
+    "end": 1960.11,
+    "text": "Thì trong truyền hợp số 84 này thì nó minh ra là 2237"
+  },
+  {
+    "start": 1960.11,
+    "end": 1962.11,
+    "text": "Ok, bạn phải chú ý cái điều đấy"
+  },
+  {
+    "start": 1962.11,
+    "end": 1965.11,
+    "text": "Trong cái vòng 4 kia thì nó không giải quyết được cái thửa xuống nghiên tố cuối cùng"
+  },
+  {
+    "start": 1965.11,
+    "end": 1969.51,
+    "text": "Nếu mà cái nò này nó có chứa từ 2 thửa xuống nghiên tố trở lên"
+  },
+  {
+    "start": 1969.51,
+    "end": 1972.51,
+    "text": "Bắt buộc là bạn phải kiểm tra bên ngoài vòng 4 này nữa"
+  },
+  {
+    "start": 1972.51,
+    "end": 1976.52,
+    "text": "Bây giờ thì nó sinh ra là 2237"
+  },
+  {
+    "start": 1976.52,
+    "end": 1979.9,
+    "text": "Ok, mình lấy ví dụ nhá"
+  },
+  {
+    "start": 1979.9,
+    "end": 1981.9,
+    "text": "Về vòng 4 kia thì"
+  },
+  {
+    "start": 1981.9,
+    "end": 1987.22,
+    "text": "Ví dụ như là cái số 84 này này thì ban đầu mình sẽ duyệt từ 2 cho thức cần vật 2 của 84 đúng không?"
+  },
+  {
+    "start": 1987.22,
+    "end": 1989.66,
+    "text": "Con 84 thì là vàng 9 đúng không?"
+  },
+  {
+    "start": 1989.66,
+    "end": 1995.64,
+    "text": "Thì bạn đầu tiên bạn gặp cái thằng y bằng 2 thì thấy là 84 chia hết cho 2 đúng không?"
+  },
+  {
+    "start": 1995.64,
+    "end": 1999.64,
+    "text": "Thì cái vòng 4 đấy khi đó nó sẽ chạy, nó sẽ chạy 2 lần"
+  },
+  {
+    "start": 1999.64,
+    "end": 2002.68,
+    "text": "Thì chưa đầu tiên nó in ra cái biến 2 và nó lấy 84 chia cho 2"
+  },
+  {
+    "start": 2002.68,
+    "end": 2005.8,
+    "text": "Vậy thì cái output của bạn nó sẽ in ra được 1 cái biến 2"
+  },
+  {
+    "start": 2005.8,
+    "end": 2008.92,
+    "text": "Và khi đó của bạn nó sẽ bằng 42"
+  },
+  {
+    "start": 2008.92,
+    "end": 2015.29,
+    "text": "và quay trở lại vòng ngoài này thì nó thấy và 4, 2 vẫn chỉ hết cho 2 thì nó lại tiếp tục in ra 2 và lấy nời chia cho 2"
+  },
+  {
+    "start": 2015.29,
+    "end": 2019.49,
+    "text": "thì khi đó mình thêm 1 số 2 nữa và 4, 2 chia cho 2 thì được 21"
+  },
+  {
+    "start": 2019.49,
+    "end": 2025.79,
+    "text": "OK, khi mà nó bằng 21 rồi thì nó quay trở lại đây nữa kiểm trai điều kiện 21 chia cho 2 ấy thì nó không còn đúng nữa"
+  },
+  {
+    "start": 2025.79,
+    "end": 2028.29,
+    "text": "đấy là cái thử số nguyên tố 2 này đã xong rồi, đúng không?"
+  },
+  {
+    "start": 2028.29,
+    "end": 2034.94,
+    "text": "thì tiếp tục nó sẽ tăng y lên, tăng y lên 1 đơn vị nữa là ba đúng không?"
+  },
+  {
+    "start": 2034.94,
+    "end": 2038.28,
+    "text": "1 đơn vị nữa là ba, chú ý nhá, bây giờ nó bằng 21 thôi"
+  },
+  {
+    "start": 2038.28,
+    "end": 2042.28,
+    "text": "Đúng chứ ạ? Khi đó, cái căn vật 2 của 21, nó chỉ bằng 4 thôi"
+  },
+  {
+    "start": 2042.28,
+    "end": 2045.28,
+    "text": "Ok, tức là bây giờ bạn chỉ cần duyệt từ"
+  },
+  {
+    "start": 2045.28,
+    "end": 2050.87,
+    "text": "Thì có nghĩa là khi đó, cái i bằng 3 của bạn, nó vẫn nhỏ hơn mà bằng căn vật 2 của nó, nó vẫn đàng nào trong vòng 4 nhá"
+  },
+  {
+    "start": 2050.87,
+    "end": 2055.37,
+    "text": "Thì bạn thấy là khi mà bạn duyệt từ số nghiên tố 3, thì thằng 21 này chia cho 3 đúng không?"
+  },
+  {
+    "start": 2055.37,
+    "end": 2057.76,
+    "text": "Thì nó sẽ chia cho 3 này"
+  },
+  {
+    "start": 2057.76,
+    "end": 2063.76,
+    "text": "Ok, nó in ra 3, xin lỗi sau nó nó chia cho 3 thì in nó sẽ bằng 7 đúng không?"
+  },
+  {
+    "start": 2063.76,
+    "end": 2066.76,
+    "text": "Nhưng mà nó quay trở lại cái điều kiện này"
+  },
+  {
+    "start": 2066.76,
+    "end": 2069.2,
+    "text": "Thì nó kiểm tra 7, nó không chỉ hết cho 3 nữa thì nó sẽ kết thúc"
+  },
+  {
+    "start": 2069.2,
+    "end": 2069.9,
+    "text": "OK"
+  },
+  {
+    "start": 2069.9,
+    "end": 2073.4,
+    "text": "Và bây giờ của bạn, vòng 4 nó đã kết thúc rồi"
+  },
+  {
+    "start": 2073.4,
+    "end": 2078.42,
+    "text": "Bởi vì là bạn duyệt từ bây giờ i của bạn, nếu mà theo vòng 4 thì i nó sẽ tăng lên bốn nữa"
+  },
+  {
+    "start": 2078.42,
+    "end": 2080.18,
+    "text": "Y cộng cộng lên bốn, đúng không?"
+  },
+  {
+    "start": 2080.18,
+    "end": 2084.8,
+    "text": "Nhưng mà bây giờ nó chỉ vầng 7 thôi, và điều kiện lập là nhỏ hơn căn vật 2 của 7"
+  },
+  {
+    "start": 2084.8,
+    "end": 2087.54,
+    "text": "Thì bốn nó không còn nhỏ hơn căn vật 2 của 7 nữa"
+  },
+  {
+    "start": 2087.54,
+    "end": 2089.7,
+    "text": "Thật ra là nó sẽ kết thúc vầng 4 ở đó"
+  },
+  {
+    "start": 2089.7,
+    "end": 2092.8,
+    "text": "Và bạn thấy là bây giờ cái thằng nò này này, nó đang vầng 7"
+  },
+  {
+    "start": 2092.8,
+    "end": 2094.96,
+    "text": "Thì nó chính là cái thử súng viên tố cuối cùng luôn"
+  },
+  {
+    "start": 2094.96,
+    "end": 2100.8,
+    "text": "Thì bạn sẽ phải check, nếu mà nó vẫn khác 1, thì bạn sẽ phải in ra thử sống tố cuối cùng là 7"
+  },
+  {
+    "start": 2100.8,
+    "end": 2105.46,
+    "text": "Còn nếu mà bạn không check, không check cái chỗ này, nó chỉ đúng trong trường hợp là cái thẳng nò này"
+  },
+  {
+    "start": 2105.46,
+    "end": 2110.06,
+    "text": "Nó là trong phần tích thử sống viên tố của nó, nó chỉ có một thử sống tố duy nhất"
+  },
+  {
+    "start": 2110.06,
+    "end": 2115.98,
+    "text": "Ví dụ như cái số 27, đúng đấy mình cố tỉnh lấy, thì nó bằng ba, nhân ba, nhân ba"
+  },
+  {
+    "start": 2115.98,
+    "end": 2118.86,
+    "text": "Thằng này nó có thể giải quyết được ngay ở trong vòng 4"
+  },
+  {
+    "start": 2118.86,
+    "end": 2124.46,
+    "text": "Ngay ở trong vòng 4 thôi thì khi mà lấy 27 chia ba chia ba chia ba thì khi đó nò nó sẽ về 1 rồi"
+  },
+  {
+    "start": 2124.46,
+    "end": 2126.98,
+    "text": "tức là nó đã phân tích thử số nguyên tố xong rồi"
+  },
+  {
+    "start": 2126.98,
+    "end": 2129.38,
+    "text": "ok, thì nó sẽ in ra là 3 số 3"
+  },
+  {
+    "start": 2129.38,
+    "end": 2133.42,
+    "text": "cái con trăm trường hợp mà cái phân tích thử số nguyên tố của bạn mà nó có 2 thử số nguyên tố trở lên"
+  },
+  {
+    "start": 2133.42,
+    "end": 2135.14,
+    "text": "thì bắt buộc là kiểm tra"
+  },
+  {
+    "start": 2135.14,
+    "end": 2140.06,
+    "text": "sau cái 1 co đấy xe là nó đã khác 1 thay chưa để đảm bảo được rằng là"
+  },
+  {
+    "start": 2140.06,
+    "end": 2142.38,
+    "text": "mình không bỏ xót của thử số nguyên tố cuối cùng"
+  },
+  {
+    "start": 2142.38,
+    "end": 2146.3,
+    "text": "ok, thì đấy chính là cái bài phân tích thử số nguyên tố cơ bản nhé"
+  },
+  {
+    "start": 2146.3,
+    "end": 2150.65,
+    "text": "sau khi mà mình đã hiểu được cái cách phân tích thử số nguyên tố cơ bản rồi thì"
+  },
+  {
+    "start": 2150.65,
+    "end": 2154.31,
+    "text": "đầu bài nó có thể yêu cầu mình in ra theo cách khác nhau"
+  },
+  {
+    "start": 2154.31,
+    "end": 2161.91,
+    "text": "Ví dụ như nó yêu cầu mình mỗi thừa số nguyên tố chỉ lên kê 1 lần, đúng không? Ví dụ như số 28 này thì nó được phân tích thành 2 nhưng 2 nhưng 7"
+  },
+  {
+    "start": 2161.91,
+    "end": 2168.11,
+    "text": "Nhưng ở bây giờ thì cái thừa số nguyên tố thứ 2 này này là 2 này này, nó chỉ in ra 1 lần, chỉ nó không in ra là 2, 2, 7 nữa"
+  },
+  {
+    "start": 2168.11,
+    "end": 2171.51,
+    "text": "Thì rất là đơn giản thôi, các bạn chỉ cần kiểm tra ở chỗ này này"
+  },
+  {
+    "start": 2171.51,
+    "end": 2175.0,
+    "text": "Tức là bạn nếu mà kiểm tra íp nó 100% i vào 0"
+  },
+  {
+    "start": 2175.0,
+    "end": 2182.27,
+    "text": "Ok, bình thường là bạn sử dụng 1 vòng y, bạn in ra i và lấy nó ở chia chỗ i đúng không?"
+  },
+  {
+    "start": 2182.27,
+    "end": 2186.39,
+    "text": "nhưng mà như thế thì nó sẽ in ra đầy đủ cái số lần xuất hiện của cái thừa số nguyên tố i này"
+  },
+  {
+    "start": 2186.39,
+    "end": 2190.39,
+    "text": "Ok? Vậy thì ở đây để mà in ra một lần thì bạn chỉ cần in ra một lần ở đây thôi"
+  },
+  {
+    "start": 2190.39,
+    "end": 2191.91,
+    "text": "100D và i ở đây thôi"
+  },
+  {
+    "start": 2191.91,
+    "end": 2196.91,
+    "text": "Thế còn cái vòng lập guai, vòng lập guai là 100i vòng không thì tuyết cho nó chạy thỏ mái nhá"
+  },
+  {
+    "start": 2196.91,
+    "end": 2198.67,
+    "text": "Nhưng mà mình không được in ở trong này"
+  },
+  {
+    "start": 2198.67,
+    "end": 2202.63,
+    "text": "Vì nếu mà bạn in ở trong này thì sẽ in ra đầy đủ mà mình chỉ in một lần ở bên ngoài thôi"
+  },
+  {
+    "start": 2202.63,
+    "end": 2209.39,
+    "text": "Thế còn cái nhiệm vụ của vòng lập guai để lấy nở, chia cho i cho từ khi không chia hết cho i thì thôi"
+  },
+  {
+    "start": 2209.39,
+    "end": 2211.19,
+    "text": "Thì vẫn phải thực hiện bình thường"
+  },
+  {
+    "start": 2211.19,
+    "end": 2213.19,
+    "text": "có điều là mình sẽ in ra ở bên ngoài như thế này"
+  },
+  {
+    "start": 2213.19,
+    "end": 2217.33,
+    "text": "Ok, thì khi đó bộ thửa số nguyên tố chỉ xuất hiện có một lần thôi"
+  },
+  {
+    "start": 2217.33,
+    "end": 2220.43,
+    "text": "dụ như số 84 thì nó chỉ in ra là 2, 3, 7 thôi"
+  },
+  {
+    "start": 2220.43,
+    "end": 2222.27,
+    "text": "chỉ nó không in ra là 2, 2, 3, 7"
+  },
+  {
+    "start": 2222.27,
+    "end": 2227.71,
+    "text": "thì đây cũng chính là một điều kiện in khác của cái bài toàn phân tích thửa số nguyên tố"
+  },
+  {
+    "start": 2227.71,
+    "end": 2231.31,
+    "text": "Ok, thì đây chính là phân tích thửa số nguyên tố thứ 2 nhá"
+  },
+  {
+    "start": 2231.31,
+    "end": 2236.66,
+    "text": "sang cái phân tích thửa số nguyên tố thứ 3 thì nó lại yêu cầu mình đấy là"
+  },
+  {
+    "start": 2236.66,
+    "end": 2239.96,
+    "text": "đối với bộ thửa số nguyên tố bạn phải xem là cái thửa số nguyên tố đấy"
+  },
+  {
+    "start": 2239.96,
+    "end": 2242.92,
+    "text": "Nó có số mũ là bao nhiêu, sau đó bạn int ra đằng sau như thế kia kìa"
+  },
+  {
+    "start": 2242.92,
+    "end": 2245.42,
+    "text": "Ok, thì nó cương tự như vậy thôi"
+  },
+  {
+    "start": 2245.42,
+    "end": 2247.42,
+    "text": "Mình bỏ ra phân tích 2 nhé"
+  },
+  {
+    "start": 2247.42,
+    "end": 2251.14,
+    "text": "Bạn duyệt từ 2 cho tất cả mức 2 của nó"
+  },
+  {
+    "start": 2251.14,
+    "end": 2254.34,
+    "text": "Và bạn kiểm tra là, if nè phần 100 i bằng không"
+  },
+  {
+    "start": 2254.34,
+    "end": 2257.2,
+    "text": "Thì đây chính là thời điểm bạn sử dụng một biến đếm"
+  },
+  {
+    "start": 2257.2,
+    "end": 2259.92,
+    "text": "Bạn đếm xem là cái thử số nguyên tố i kìa"
+  },
+  {
+    "start": 2259.92,
+    "end": 2261.92,
+    "text": "Nó có số mũ là bao nhiêu, đúng không?"
+  },
+  {
+    "start": 2261.92,
+    "end": 2263.92,
+    "text": "Mình sẽ dùng một biến cao phần cao bằng không"
+  },
+  {
+    "start": 2263.92,
+    "end": 2266.42,
+    "text": "Và lạp y nè phần 100 i bằng không"
+  },
+  {
+    "start": 2266.42,
+    "end": 2268.92,
+    "text": "Nó trong này bạn sẽ tăng cái biến cao lên mỗi lần"
+  },
+  {
+    "start": 2268.92,
+    "end": 2273.28,
+    "text": "Mà nó chia cho i, đúng không?"
+  },
+  {
+    "start": 2273.28,
+    "end": 2279.22,
+    "text": "Sau vòng lập qua này, mình đã biết là cái biến cao, nó chính là số mũ của i rồi, mình sẽ in ra"
+  },
+  {
+    "start": 2279.22,
+    "end": 2289.38,
+    "text": "Đối với cái đêm số mũ này, sau vòng lập qua này là bạn đã đếm được nó có số mũ là bao nhiêu rồi, đúng không?"
+  },
+  {
+    "start": 2289.38,
+    "end": 2292.46,
+    "text": "Cái biến cao này này, nó chính là đêm số mũ của thực sống minh vũ i đấy"
+  },
+  {
+    "start": 2292.46,
+    "end": 2298.96,
+    "text": "Thì bạn chỉ cần in ra theo đúng yêu mực ẩu của đồ bà, đấy chính là phần trăm đe này, đóng mở ngoặc phần trăm đe này"
+  },
+  {
+    "start": 2298.96,
+    "end": 2302.96,
+    "text": "trong đó là dầu cách, trong đó phần trăm đe đầu tiên chính là cái thường số nguyên tổ y"
+  },
+  {
+    "start": 2302.96,
+    "end": 2307.96,
+    "text": "và phần trăm đe thứ 2 ở trong có chính là cái thường số mũ của thường số nguyên tổ y"
+  },
+  {
+    "start": 2307.96,
+    "end": 2314.82,
+    "text": "tương tự như vậy, sau cái vòng lập 4 này, bạn cũng phải kiểm tra xem nờ đã khắc 1 thay chưa"
+  },
+  {
+    "start": 2314.82,
+    "end": 2318.82,
+    "text": "nếu mà xin lỗi nờ đã về 1 thay chưa, nếu mà nờ vẫn khắc 1 định"
+  },
+  {
+    "start": 2318.82,
+    "end": 2322.82,
+    "text": "thì chứng tỏ cái thường số nguyên tổ cuối cùng nó chính là thằng nờ, đúng không?"
+  },
+  {
+    "start": 2322.82,
+    "end": 2327.82,
+    "text": "thì mình sẽ int phần trăm đe 1, sau đó là những nờ"
+  },
+  {
+    "start": 2327.82,
+    "end": 2336.98,
+    "text": "nếu có số mũ là 1 thôi, nếu có số mũ là 2 thì chắc chắn nó sẽ được xử lý trong vòng 4 rồi"
+  },
+  {
+    "start": 2336.98,
+    "end": 2343.94,
+    "text": "các bạn yên tâm là số mũ là 1 thôi"
+  },
+  {
+    "start": 2343.94,
+    "end": 2351.48,
+    "text": "cái đấy chính là việc người ta yêu cầu bạn thân tích thường số nguyên tố và nó bắt in theo một cái mẫu nào đó"
+  },
+  {
+    "start": 2351.48,
+    "end": 2357.16,
+    "text": "thì mình nghĩ là việc mà nếu bạn hiểu cái cách thân tích thường số nguyên tố thì người ta yêu cầu mình như thế nào mình cũng có thể xử được"
+  },
+  {
+    "start": 2357.16,
+    "end": 2363.4,
+    "text": "dụ như trong trình hợp này thì nó sẽ nhìn ra là 2, 1, 3, 1 và xin lỗi, 2, 2, 3, 1 và 7, 1 như thế"
+  },
+  {
+    "start": 2363.4,
+    "end": 2366.96,
+    "text": "ok, đây chỉ là cái cách phân tích thử số nguyên tố thứ 2"
+  },
+  {
+    "start": 2366.96,
+    "end": 2379.26,
+    "text": "cái cách phân tích thứ 4 nhé, các bạn như thế này, các bạn có thể dừng lại sau đó là thử cốt trước 2 cái cách phân tích cuối cùng này đi xem có cốt được không nhé, sau đó sẽ xem lời giải sao"
+  },
+  {
+    "start": 2379.26,
+    "end": 2386.54,
+    "text": "dụ như số 8 ấy, thì trong trình hợp này họ sẽ yêu cầu mình là viết thành 2x2x2, thế là ở giữa các cái thử số nguyên tố nó có dấu nhân"
+  },
+  {
+    "start": 2386.54,
+    "end": 2388.02,
+    "text": "dồn dồn nhân"
+  },
+  {
+    "start": 2388.02,
+    "end": 2389.48,
+    "text": "thì cũng rất là đơn giản thôi"
+  },
+  {
+    "start": 2389.48,
+    "end": 2390.52,
+    "text": "các bạn thấy là"
+  },
+  {
+    "start": 2390.52,
+    "end": 2394.56,
+    "text": "khi mà đã phân tích xong, hay nó cách khác là"
+  },
+  {
+    "start": 2394.56,
+    "end": 2398.22,
+    "text": "thừa số nguyên tố cuối cùng, sau thừa số nguyên tố cuối cùng"
+  },
+  {
+    "start": 2398.22,
+    "end": 2399.9,
+    "text": "thì nó sẽ không có dồn ít nữa đúng không?"
+  },
+  {
+    "start": 2399.9,
+    "end": 2405.26,
+    "text": "còn khi mà bạn xép một thừa số nguyên tố nào đó mà thừa số nguyên tố đấy chưa phải là thừa số nguyên tố cuối cùng"
+  },
+  {
+    "start": 2405.26,
+    "end": 2407.62,
+    "text": "thì chắc chắn là đằng sau nó sẽ có một dồn nhân"
+  },
+  {
+    "start": 2407.62,
+    "end": 2408.42,
+    "text": "ok"
+  },
+  {
+    "start": 2408.42,
+    "end": 2410.86,
+    "text": "vậy thì các bạn xử lý cái này như sau này"
+  },
+  {
+    "start": 2410.86,
+    "end": 2412.62,
+    "text": "phân tích 3"
+  },
+  {
+    "start": 2412.62,
+    "end": 2416.32,
+    "text": "các bạn cũng làm như mình cứu ở lần dưới thứ 2, đi phần 2 của nào nhé"
+  },
+  {
+    "start": 2416.32,
+    "end": 2418.32,
+    "text": "ok, sau đó là..."
+  },
+  {
+    "start": 2420.32,
+    "end": 2422.99,
+    "text": "gì nhỉ?"
+  },
+  {
+    "start": 2422.99,
+    "end": 2424.99,
+    "text": "bạn lạp thôi, y nở phần trăm y vẫn không"
+  },
+  {
+    "start": 2424.99,
+    "end": 2428.99,
+    "text": "ok, chắc chắn là bạn sẽ y ra cái thằng y rồi đúng không?"
+  },
+  {
+    "start": 2428.99,
+    "end": 2430.99,
+    "text": "y ra thằng y rồi là cái thằng y tố đấy rồi"
+  },
+  {
+    "start": 2430.99,
+    "end": 2432.99,
+    "text": "sau đó bạn lấy nở chia cho y"
+  },
+  {
+    "start": 2432.99,
+    "end": 2434.99,
+    "text": "sau khi mà bạn lấy nở chia cho y rồi"
+  },
+  {
+    "start": 2434.99,
+    "end": 2436.99,
+    "text": "thì bạn kiểm tra xem là nở đã bằng 1 thay chưa"
+  },
+  {
+    "start": 2436.99,
+    "end": 2438.99,
+    "text": "thông thường khi mà phân tích thử số nghiên tố"
+  },
+  {
+    "start": 2438.99,
+    "end": 2440.99,
+    "text": "là bạn chia cái số n ở bên đầu cho các thử số nghiên tố của nó"
+  },
+  {
+    "start": 2440.99,
+    "end": 2444.99,
+    "text": "và khi mà phân tích xong thì nở nó về 1 đúng không?"
+  },
+  {
+    "start": 2444.99,
+    "end": 2452.51,
+    "text": "sau khi bạn lấy nơi, chia cho y, kiểm tra, nr mà khác một, chứng tỏ là gì? chứng tỏ là bạn chưa phân tích xong"
+  },
+  {
+    "start": 2452.51,
+    "end": 2457.99,
+    "text": "thì nó vẫn còn một thử số nghiên tố nào đó là sao đúng không? thì bạn sẽ in ra dồ x, ở đây, như thế này"
+  },
+  {
+    "start": 2457.99,
+    "end": 2459.99,
+    "text": "ok, thế là xong, nhá"
+  },
+  {
+    "start": 2459.99,
+    "end": 2465.99,
+    "text": "dưới này cũng thế, bạn kiểm tra nr mà khác một, thì bạn sẽ in ra thử số nghiên tố cuối cùng, nó chính là nờ đấy"
+  },
+  {
+    "start": 2465.99,
+    "end": 2474.86,
+    "text": "ok, thì nó sẽ ra được kiếp bài mà khi mà bạn cốt thì họ bắt mình in ra các số dấu nhân giữa các thử số nghiên tố"
+  },
+  {
+    "start": 2474.86,
+    "end": 2476.86,
+    "text": "trong chế hợp này sẽ là 2x2x"
+  },
+  {
+    "start": 2480.36,
+    "end": 2483.0,
+    "text": "ờ, xíu ếp và dream"
+  },
+  {
+    "start": 2483.0,
+    "end": 2485.98,
+    "text": "nó sẽ in ra là 2x2x3x7"
+  },
+  {
+    "start": 2485.98,
+    "end": 2488.94,
+    "text": "rồi hẹn phân tích 3 nha, OK"
+  },
+  {
+    "start": 2490.17,
+    "end": 2495.23,
+    "text": "phân tích 4, vậy bạn có thể dừng lại sau đó cốt trước, sau đó xem giờ giải nha"
+  },
+  {
+    "start": 2496.59,
+    "end": 2503.13,
+    "text": "bài số 4, nó yêu cầu là bạn sẽ viết thành 6 nò bằng đúng không ?"
+  },
+  {
+    "start": 2503.13,
+    "end": 2505.93,
+    "text": "tức là cái nò bằng này thì không có vấn đề gì cả bạn chỉ cần"
+  },
+  {
+    "start": 2506.47,
+    "end": 2508.47,
+    "text": "ở đây nó sẽ yêu cầu bạn là"
+  },
+  {
+    "start": 2508.47,
+    "end": 2515.4,
+    "text": "Ok, bạn sẽ viết thành 2 mũ 2, nên nhân 3, nhân 1, nhân 5, mũ 1, đúng không?"
+  },
+  {
+    "start": 2515.4,
+    "end": 2519.08,
+    "text": "Thế là bây giờ mình sẽ phải viết các thường xuống nguyên tố, kèm theo dấu mũ và"
+  },
+  {
+    "start": 2519.08,
+    "end": 2522.52,
+    "text": "ở giữa các thường xuống nguyên tố phải có dấu nhân nữa, dấu sao nữa, đúng không?"
+  },
+  {
+    "start": 2522.52,
+    "end": 2530.42,
+    "text": "Ok, mình sẽ viết cái hềm phân tích 4, inner tên rồi, rồi sau đó bạn giữ thứ 2, cho dấu 1, 2, 3, 4,"
+  },
+  {
+    "start": 2530.42,
+    "end": 2538.24,
+    "text": "Ok, ở chỗ này thì bạn sẽ kiểm tra íp nở phần trăm i vào 0, bởi vì bạn cần đến cái thường xuống nguyên tố này có số mũ là bao nhiêu mà?"
+  },
+  {
+    "start": 2538.24,
+    "end": 2540.72,
+    "text": "dùng 1 cái biến cao để đến thức xung tố"
+  },
+  {
+    "start": 2540.72,
+    "end": 2544.08,
+    "text": "y nở phần trăm i còn không, mình sẽ tăng cái biến cao để lên"
+  },
+  {
+    "start": 2544.08,
+    "end": 2545.76,
+    "text": "và lấy nở chia cho i"
+  },
+  {
+    "start": 2545.76,
+    "end": 2549.68,
+    "text": "vậy thì sau cái quán này, bạn đã biết là cái thức xung tố i này có số mũ là bao nhiêu rồi, đúng không?"
+  },
+  {
+    "start": 2549.68,
+    "end": 2551.84,
+    "text": "Các bạn chỉ cần kiểm tra là"
+  },
+  {
+    "start": 2551.84,
+    "end": 2559.68,
+    "text": "prinsa, phần trăm d, mũ, phần trăm d, đúng nhỉ?"
+  },
+  {
+    "start": 2559.68,
+    "end": 2565.27,
+    "text": "Trong đó, phần trăm d đầu tiên chính là i và phần trăm d thứ 2 nó chính là cenote"
+  },
+  {
+    "start": 2565.27,
+    "end": 2568.71,
+    "text": "Ok, tương tự như vậy, ở chỗ này bạn sẽ kiểm tra là nếu mà"
+  },
+  {
+    "start": 2568.71,
+    "end": 2573.89,
+    "text": "nò mật khác 1, chứ tức là bạn chưa phân tích xong đúng không?"
+  },
+  {
+    "start": 2573.89,
+    "end": 2577.49,
+    "text": "thì bạn sẽ in ra cái dấu xang"
+  },
+  {
+    "start": 2577.49,
+    "end": 2582.13,
+    "text": "ok, còn nếu nò nó bằng 1 thì có nghĩa là bạn phân tích xong rồi thì bạn sẽ không in dấu xang nữa nhé"
+  },
+  {
+    "start": 2582.13,
+    "end": 2586.59,
+    "text": "ok, thế này thì bạn sẽ kiểm tra nếu mà nò khắc 1 thì nò chính là thử súng tố cuối cùng"
+  },
+  {
+    "start": 2586.59,
+    "end": 2589.81,
+    "text": "thì bạn sẽ in ra là phần trăm đê mũ 1 đúng nhá"
+  },
+  {
+    "start": 2589.81,
+    "end": 2592.25,
+    "text": "thằng cuối cùng này thì bao giờ nó cũng có mũ là 1 này"
+  },
+  {
+    "start": 2592.25,
+    "end": 2596.23,
+    "text": "sau đó là bạn chuyển cái thử súng tố cuối cùng và nó chính là nò"
+  },
+  {
+    "start": 2596.23,
+    "end": 2601.61,
+    "text": "dụ như, phân tích 4, à, phải là nó còn yêu cầu bạn phải in ra cái làng trước này nữa"
+  },
+  {
+    "start": 2601.61,
+    "end": 2603.91,
+    "text": "100D, bằng, đúng không?"
+  },
+  {
+    "start": 2603.91,
+    "end": 2607.65,
+    "text": "bằng sau có bằng có dấu cách, không? có dấu cách nữa, đúng không?"
+  },
+  {
+    "start": 2607.65,
+    "end": 2614.81,
+    "text": "rồi, ví dụ như mình gọi cái hàm phân tích 4, và mình phải truyền vào cái số, ở đây là số 60 đi"
+  },
+  {
+    "start": 2614.81,
+    "end": 2618.67,
+    "text": "v mình sẽ in ra cái là 2 mũ 2, nhưng 3 mũ 1, nhưng 5 mũ 1"
+  },
+  {
+    "start": 2618.67,
+    "end": 2621.98,
+    "text": "và mình sẽ nói lại in ra"
+  },
+  {
+    "start": 2621.98,
+    "end": 2624.58,
+    "text": "à, xin lỗi chỗ này mình chưa truyền là"
+  },
+  {
+    "start": 2624.58,
+    "end": 2632.35,
+    "text": "60 bằng 2 mũ 2, nhân 3 mũ 1 và nhân 5 mũ 1"
+  },
+  {
+    "start": 2632.35,
+    "end": 2635.91,
+    "text": "Đây chính là bài phân tích thị súng nghiên tố thôi"
+  },
+  {
+    "start": 2635.91,
+    "end": 2643.71,
+    "text": "Nhưng mà họ yêu cầu mình in ra nhiều cách khác nhau thì mình nghĩ là việc mà các bạn cài đặt với cách khác nhau này cũng rất là tốt"
+  },
+  {
+    "start": 2643.71,
+    "end": 2649.31,
+    "text": "Nó sẽ không chỉ đơn thuận là cái cách bột này nữa và nó có 5 cách thì bạn có thể cốt cả 5 cách này"
+  },
+  {
+    "start": 2649.31,
+    "end": 2654.23,
+    "text": "Một khi bạn đã hiểu được cái cách phân tích thị súng nghiên tố rồi thì vài nó yêu cầu mình in ra theo cái mẫu nào"
+  },
+  {
+    "start": 2654.23,
+    "end": 2661.23,
+    "text": "bài phân tích thị sống nguyên tố các bạn nhé"
+  },
+  {
+    "start": 2661.23,
+    "end": 2674.22,
+    "text": "trong bài này thì mình sẽ hướng đến các bạn 1 cái bài tiếp theo về phần sản xuống nguyên tố này"
+  },
+  {
+    "start": 2674.22,
+    "end": 2676.22,
+    "text": "đấy là sản xuống nguyên tố trên đoạn"
+  },
+  {
+    "start": 2676.22,
+    "end": 2685.38,
+    "text": "nó không còn là sản xuống nguyên tố từ 1 cho tới đó nữa mà nó sẽ sản nguyên tố trên 1 cái đoạn từ 2 cái số lab cho thể write"
+  },
+  {
+    "start": 2685.38,
+    "end": 2688.9,
+    "text": "input thì mình sẽ có 2 số nguyên không bỡm nơi là a và b"
+  },
+  {
+    "start": 2688.9,
+    "end": 2696.02,
+    "text": "trong đó thì a và b nằm trong khoảng từ 0 đến 10, 9 và b trừ đi a thì nhỏ hơn 11 năm"
+  },
+  {
+    "start": 2696.02,
+    "end": 2700.54,
+    "text": "thì như thế này thực chất thì nếu mà đối với các bài sản xuống viên tố trên đoạn ấy"
+  },
+  {
+    "start": 2700.54,
+    "end": 2706.22,
+    "text": "thì bạn cũng có thể sản tới cái cận chê nấy, làm 10, 9 nè này"
+  },
+  {
+    "start": 2706.22,
+    "end": 2707.62,
+    "text": "nhưng mà trong chương hợp này nó lớn quá"
+  },
+  {
+    "start": 2707.62,
+    "end": 2710.02,
+    "text": "nên ra là mình không thể sản được trong đoạn đúng không?"
+  },
+  {
+    "start": 2710.02,
+    "end": 2715.34,
+    "text": "Thì cái điều kiện tương tự như khi mà mình sàng số nguyên tố từ mồn cho tới nào ấy"
+  },
+  {
+    "start": 2715.34,
+    "end": 2717.06,
+    "text": "Thì là điều kiện để bạn có thể sàng được"
+  },
+  {
+    "start": 2717.06,
+    "end": 2718.98,
+    "text": "Số nguyên tố trên đoạn từ left đến right"
+  },
+  {
+    "start": 2718.98,
+    "end": 2722.58,
+    "text": "Thì nó là bạn phải tạm một cái mà nó có kích thước"
+  },
+  {
+    "start": 2722.58,
+    "end": 2725.69,
+    "text": "Đây chính là right chí ly left"
+  },
+  {
+    "start": 2725.69,
+    "end": 2729.41,
+    "text": "Cọc 1, tuy là số lượng chữ số nằm trong đoạn từ left đến right đấy"
+  },
+  {
+    "start": 2729.41,
+    "end": 2734.93,
+    "text": "Ok, thế còn cái việc mà xây dựng cái sàng số nguyên tố trên đoạn thì nó tương tự như là"
+  },
+  {
+    "start": 2734.93,
+    "end": 2739.8,
+    "text": "Bài xây dựng sàng số nguyên tố từ mồn cho tới nào thôi, ok"
+  },
+  {
+    "start": 2739.8,
+    "end": 2743.8,
+    "text": "xe dựng 1 tổ tục xang"
+  },
+  {
+    "start": 2743.8,
+    "end": 2748.56,
+    "text": "Input là có 2 thằng lab và drive"
+  },
+  {
+    "start": 2748.56,
+    "end": 2751.56,
+    "text": "Đầu tiên là bạn có thể làm 1 chấm nhìn cái mạng primer nó có cửa là"
+  },
+  {
+    "start": 2751.56,
+    "end": 2755.56,
+    "text": "Rep to rely, write to lab cộng mồn"
+  },
+  {
+    "start": 2755.56,
+    "end": 2758.56,
+    "text": "Mình sẽ xếp tất cả các giá trị của mạng primer"
+  },
+  {
+    "start": 2758.56,
+    "end": 2767.1,
+    "text": "3 đầu cũng là bằng bồ thết, i, t, i nhỏ hơn bằng write to lab cộng mồn"
+  },
+  {
+    "start": 2767.1,
+    "end": 2771.1,
+    "text": "và mình sẽ cho primer của i vào mằng bồn"
+  },
+  {
+    "start": 2771.1,
+    "end": 2787.1,
+    "text": "bây giờ mình sẽ loại dần nhé, mình sẽ duyệt từ 2 cho tư cân bậc 2 của biến error bởi vì là để mà sang được đến các cái số nguyên tố mà đến tận error thì chắc chắn là mình sẽ phải xa duyệt các cái số từ 2 cho tư cân bậc 2 của error mà, đúng không?"
+  },
+  {
+    "start": 2787.1,
+    "end": 2793.54,
+    "text": "bây giờ là mình sẽ duyệt từ 2 cho tư cân bậc 2 của error đấy, đi khọng khọng"
+  },
+  {
+    "start": 2793.54,
+    "end": 2799.54,
+    "text": "bây giờ thì bạn chỉ cần duyệt các cái bội của cái i này này, mà nó nằm trong cái đoạn tư lép cho tư write thôi nhé"
+  },
+  {
+    "start": 2799.54,
+    "end": 2807.74,
+    "text": "dự như bạn có một biến left là bằng 20 và right bằng 100"
+  },
+  {
+    "start": 2807.74,
+    "end": 2816.8,
+    "text": "khi mà bạn duyệt qua một biến y bằng 2, bình thường khi mà duyệt các số nguyên tố từ 1 đến n thì mình sẽ duyệt cái bộ đầu tiên của 2 là 4"
+  },
+  {
+    "start": 2816.8,
+    "end": 2820.8,
+    "text": "bộ tiếp theo là 6, 4, 6, 8, 10, 12, 14, 16, 18 đúng không?"
+  },
+  {
+    "start": 2820.8,
+    "end": 2824.8,
+    "text": "nhưng mà trong trường hợp này, những cái số đấy nó không nằm trong cơ đoạn từ left cho tới right"
+  },
+  {
+    "start": 2824.8,
+    "end": 2829.24,
+    "text": "và bạn không cần phải duyệt những cái bội của hai mà nó nhỏ hơn lép nữa"
+  },
+  {
+    "start": 2829.24,
+    "end": 2833.72,
+    "text": "Mình chỉ cần duyệt các cái bội của hai mà nó lớn hơn hoặc bằng cái miếng lép này thôi này"
+  },
+  {
+    "start": 2833.72,
+    "end": 2839.4,
+    "text": "Thì cái cách mà bạn có thể tìm ngay được cái bội của một số nha"
+  },
+  {
+    "start": 2839.4,
+    "end": 2843.24,
+    "text": "của một số ha i này nè mà nó lớn hơn hoặc bằng lép ạ"
+  },
+  {
+    "start": 2843.24,
+    "end": 2844.92,
+    "text": "Thì đấy chính là cái công thức như thế này"
+  },
+  {
+    "start": 2844.92,
+    "end": 2848.36,
+    "text": "Bạn sẽ có cộng lấy cái lép này, cộng với i, chứ một đúng chứ"
+  },
+  {
+    "start": 2848.36,
+    "end": 2850.68,
+    "text": "sau đó bạn chia cho i và bạn nhân gược lại với i"
+  },
+  {
+    "start": 2850.68,
+    "end": 2852.44,
+    "text": "Thì nó sẽ ra được cái bội"
+  },
+  {
+    "start": 2852.44,
+    "end": 2857.8,
+    "text": "Bội mà nhỏ nhất, mà lớn hơn hoặc bằng lab, là bội của i"
+  },
+  {
+    "start": 2857.8,
+    "end": 2864.17,
+    "text": "Công thức của nó sẽ là lấy lab cộng với i chứ 1, chia cho i và nhân gợi lại với i, ở đây chiều nguyên nhá"
+  },
+  {
+    "start": 2864.17,
+    "end": 2871.91,
+    "text": "Tại sao lại như thế này? Thực ra khi bạn lấy lab cộng với i chứ 1, nó có 2 trường hợp"
+  },
+  {
+    "start": 2871.91,
+    "end": 2874.47,
+    "text": "Trường hợp thứ nhất là cái biến lab nó đã chia hết cho i rồi"
+  },
+  {
+    "start": 2874.47,
+    "end": 2881.99,
+    "text": "Khi lab nó chia hết cho i rồi, thì lab cộng với i chứ 1 nó vẫn chưa ra được cái bội tiếp theo của cái biến i"
+  },
+  {
+    "start": 2881.99,
+    "end": 2882.99,
+    "text": "Đấy chưa?"
+  },
+  {
+    "start": 2882.99,
+    "end": 2886.11,
+    "text": "Thì khi mà bạn lấy cái lép cộng y chứ 1 chia cho i này này,"
+  },
+  {
+    "start": 2886.11,
+    "end": 2892.99,
+    "text": "sau đó bạn nhân gược lại với i thì nó không sẽ không nhảy ra được cái bộ tiếp theo trong trường hợp mà cái biến lép này nó đã chia cho i."
+  },
+  {
+    "start": 2892.99,
+    "end": 2899.75,
+    "text": "Ví dụ như lép bằng 20 đúng không? Bây giờ bạn muốn tìm cái số mà lớn hơn hợp bằng 20 mà chia hết cho 2, nhỏ nhất đúng không?"
+  },
+  {
+    "start": 2899.75,
+    "end": 2905.83,
+    "text": "Thì khi đó bạn sẽ lấy 20 cộng với 1, sau đó là chia cho 2 và bạn nhân gược lại với 2 thì nó vẫn bằng 20."
+  },
+  {
+    "start": 2905.83,
+    "end": 2912.13,
+    "text": "bởi vì khi mà bạn lấy 20 bạn cộng vũ y trường 1 này này, nó chưa ra được cái bộ tiếp theo của 2, đây chính là số 22"
+  },
+  {
+    "start": 2912.13,
+    "end": 2917.03,
+    "text": "rồi chưa? thì khi mà bạn chia cho 2 và nhìn được lại thì nó vẫn ra số 20 này thôi"
+  },
+  {
+    "start": 2917.03,
+    "end": 2921.43,
+    "text": "và khi mà trong trường hợp mà cái biến láp ấy, nó không chia hết cho 2"
+  },
+  {
+    "start": 2921.43,
+    "end": 2926.83,
+    "text": "cái biến láp nó không chia hết cho 2, biến dụng như cái biến láp đó bằng 19 chẳng ạ"
+  },
+  {
+    "start": 2926.83,
+    "end": 2931.13,
+    "text": "thì việc bạn lấy láp cộng vũ y trường 1 ấy, ở đây y bằng 2 nhá"
+  },
+  {
+    "start": 2931.13,
+    "end": 2935.23,
+    "text": "thì nó sẽ là 19 cộng vũ 1 đúng không? chia cho 2, sau đó bạn nhìn được lại với 2"
+  },
+  {
+    "start": 2935.23,
+    "end": 2938.75,
+    "text": "thì nó đảm bảo được rằng là gì khi mà bạn lấy lép cộng về i trường bột"
+  },
+  {
+    "start": 2938.75,
+    "end": 2943.71,
+    "text": "nó sẽ ra được cái bội của i mà lớn hơn hoặc bằng lép rồi"
+  },
+  {
+    "start": 2943.71,
+    "end": 2945.23,
+    "text": "nhiều đấy là chắc chắn đúng không?"
+  },
+  {
+    "start": 2945.23,
+    "end": 2952.83,
+    "text": "bởi vì trong trường hợp mà lép mà không chia hết cho i thì cùng lắm là nó cũng chỉ cần thiếu nữa là i trường một đơn vị thôi"
+  },
+  {
+    "start": 2952.83,
+    "end": 2957.23,
+    "text": "là nó có thể tiến tới cái bội đầu tiên của i mà lớn hơn một lép mà"
+  },
+  {
+    "start": 2957.23,
+    "end": 2968.23,
+    "text": "ok, thế là việc mà bạn cộng với i trừ 1 thì nó giúp bạn xử lý được cả hai trường hợp, thế là trường hợp LAP đã chia hết chỗ i và LAP chưa chia hết chỗ i"
+  },
+  {
+    "start": 2968.23,
+    "end": 2980.94,
+    "text": "mình lấy thêm 1 ví dụ này nhé, ví dụ như bạn có 1 cái biến ích bằng 5, ok, và 1 cái biến LAP thì bằng 36 đi, ok"
+  },
+  {
+    "start": 2980.94,
+    "end": 2987.74,
+    "text": "bây giờ bạn phải tìm 1 cái số mà nó lớn hơn hoặc bằng 36 mà nó chia hết cho 5, nhưng mà cái số này phải là nhỏ nhất í"
+  },
+  {
+    "start": 2987.74,
+    "end": 2989.74,
+    "text": "Ok, ví dụ là đơn giản thôi, đúng không?"
+  },
+  {
+    "start": 2989.74,
+    "end": 2992.48,
+    "text": "Bạn sẽ lấy 36 cộng với 5, 1"
+  },
+  {
+    "start": 2992.48,
+    "end": 2995.6,
+    "text": "sau đó là bạn chia cho 5, và nhìn được lại với 5"
+  },
+  {
+    "start": 2995.6,
+    "end": 2997.6,
+    "text": "thì nó vừa đủ là 40, đúng không?"
+  },
+  {
+    "start": 2997.6,
+    "end": 3002.24,
+    "text": "Bởi vì khi mà cái số này nó không chia hết cho 5 này, 36 này, đúng không?"
+  },
+  {
+    "start": 3002.24,
+    "end": 3007.04,
+    "text": "Thì bạn cộng thêm cái 4 này này, cái 5, 1 là 4 này này"
+  },
+  {
+    "start": 3007.04,
+    "end": 3009.86,
+    "text": "nó sẽ ra được cái số tiếp theo"
+  },
+  {
+    "start": 3009.86,
+    "end": 3013.96,
+    "text": "nó ra được cái số bội mà lớn hơn mà 36 mà chia hết cho 5"
+  },
+  {
+    "start": 3013.96,
+    "end": 3023.56,
+    "text": "hay là bạn là 37, 38, 39, 40 đi trang nữa thì việc mà bạn cộng với 5 chiều mồ tệ, nó cũng không thể ra được số bộ tiếp theo của số 5 là số 45"
+  },
+  {
+    "start": 3023.56,
+    "end": 3028.4,
+    "text": "ra là khi mà lờ của bạn là 36, 37, 38, 39, 40 đi trang nữa thì"
+  },
+  {
+    "start": 3028.4,
+    "end": 3033.16,
+    "text": "cái cap tính đấy nó luôn đảm bảo là nó sẽ tìm ra được cho bạn là số 40"
+  },
+  {
+    "start": 3033.16,
+    "end": 3035.88,
+    "text": "trong trường hợp mà cái biến lab này nó đã chỉ hết cho x rồi"
+  },
+  {
+    "start": 3035.88,
+    "end": 3040.6,
+    "text": "thì nó không thể nhảy ra được cái bộ tiếp theo, thế còn nếu mà trong trường hợp lab nó chưa hết chỉ hết cho x"
+  },
+  {
+    "start": 3040.6,
+    "end": 3046.56,
+    "text": "thì cái việc mà bạn cậu với ít chữ 1 thì nó sẽ ra được cái số mè"
+  },
+  {
+    "start": 3046.56,
+    "end": 3049.88,
+    "text": "chỉ hết cho ít mà lớn hơn là bằng lép, ok?"
+  },
+  {
+    "start": 3049.88,
+    "end": 3052.92,
+    "text": "thì đây chính là cái cách mà bạn tìm cái số mà"
+  },
+  {
+    "start": 3052.92,
+    "end": 3058.88,
+    "text": "trong trường hợp này là bạn phải tìm một cái số làm sao nhỏ lớn hơn hoặc bằng lép, đúng không?"
+  },
+  {
+    "start": 3058.88,
+    "end": 3061.62,
+    "text": "mà nhỏ nhất sau đó thì chỉ hết cho ít đó"
+  },
+  {
+    "start": 3061.62,
+    "end": 3064.32,
+    "text": "chứ không phải là bình thường thì mình duyệt là từ í bình"
+  },
+  {
+    "start": 3064.32,
+    "end": 3068.68,
+    "text": "nhưng mà trong trường hợp này mình phải duyệt từ cái số mà lớn hơn là bằng lép và chỉ hết cho ít"
+  },
+  {
+    "start": 3068.68,
+    "end": 3071.54,
+    "text": "xoàn bước nhảy lên"
+  },
+  {
+    "start": 3071.54,
+    "end": 3077.58,
+    "text": "dùi tư di bằng for, in, te, di"
+  },
+  {
+    "start": 3077.58,
+    "end": 3085.12,
+    "text": "dùi lön hơn trong 2 số, e xa với i, e đình puân"
+  },
+  {
+    "start": 3085.12,
+    "end": 3089.16,
+    "text": "và là lön hơn bằng lab và chia cho i"
+  },
+  {
+    "start": 3089.16,
+    "end": 3092.62,
+    "text": "dùi tư dùi lön hơn trong 2 số này"
+  },
+  {
+    "start": 3092.62,
+    "end": 3094.14,
+    "text": "Thì nó sẽ là"
+  },
+  {
+    "start": 3094.14,
+    "end": 3098.84,
+    "text": "lab, cộng vệ y, chiều 1, chia cho y, sau đó nhân ngược lại vệ y"
+  },
+  {
+    "start": 3098.84,
+    "end": 3100.6,
+    "text": "Đấy, bạn sẽ diệt từ thằng này, nhá"
+  },
+  {
+    "start": 3100.6,
+    "end": 3102.6,
+    "text": "Bạn sẽ diệt từ thằng lớn hơn trong 2 thằng này"
+  },
+  {
+    "start": 3102.6,
+    "end": 3105.1,
+    "text": "Sau đó là y, nhỏ hơn hoặc bằng y, y cộng bằng y"
+  },
+  {
+    "start": 3105.1,
+    "end": 3108.48,
+    "text": "Ok, nhưng mà có 1 cái chú ý như thế này"
+  },
+  {
+    "start": 3108.48,
+    "end": 3115.42,
+    "text": "Bây giờ ấy, bạn sẽ không gán là primer của y bằng 1, 0 nữa"
+  },
+  {
+    "start": 3115.42,
+    "end": 3119.38,
+    "text": "Bởi vì như thế thì bạn sẽ cần 1 cái mảng có kích thước là error"
+  },
+  {
+    "start": 3119.38,
+    "end": 3122.96,
+    "text": "Cộng 1, phần tử, chứ không phải là rep, the write chứ lab cộng 1, đúng không?"
+  },
+  {
+    "start": 3122.96,
+    "end": 3135.12,
+    "text": "Mà ở đây ạ, bạn sẽ thẳng lab, để chỉ ra là thẳng lab, nó có phải là số nguyên tố hay không thì bạn sẽ phải kiểm tra cái primer 0"
+  },
+  {
+    "start": 3135.12,
+    "end": 3139.62,
+    "text": "Nói lab cộng 1 thì bạn sẽ kiểm tra cái primer 1"
+  },
+  {
+    "start": 3139.62,
+    "end": 3146.32,
+    "text": "Mình tự như vậy, đối với biến ế rõ ấy thì bạn sẽ phải kiểm tra primer của write to the lab"
+  },
+  {
+    "start": 3146.32,
+    "end": 3157.14,
+    "text": "Ok, chứ bây giờ mình không gán primer của z bằng không đâu, vì việc mình gán primer z bằng không thì khi đó bạn cần phải có một cái mảng là error cộng buồn hơn tử, rồi chứ?"
+  },
+  {
+    "start": 3157.14,
+    "end": 3172.94,
+    "text": "Vậy thì ở chỗ này primer bạn sẽ phải gán là z to the left, bằng không? Ok, tức là mình sẽ coi cái biến left ấy, nó sẽ là chỉ số không và tăng dần đến cái chỉ số error, right thì nó sẽ có chỉ số là right to the left, ok?"
+  },
+  {
+    "start": 3172.94,
+    "end": 3175.74,
+    "text": "Chú ý cho đấy nhé"
+  },
+  {
+    "start": 3175.74,
+    "end": 3181.74,
+    "text": "Rồi, tức là ví dụ như bạn có một cái mạng mà quên clip bằng 10 và write bằng 20 ấy"
+  },
+  {
+    "start": 3181.74,
+    "end": 3184.74,
+    "text": "thì rõ ràng là bạn chỉ cần cái mạng có 11 phần tử thôi đúng không?"
+  },
+  {
+    "start": 3184.74,
+    "end": 3188.74,
+    "text": "Thì khi đó cái việc mà 10, 11, 12, 13 cho đến 20 ấy"
+  },
+  {
+    "start": 3188.74,
+    "end": 3193.74,
+    "text": "thì bạn phải coi thằng 10 này này, nó nằm ở cái vị trí đầu tiên của mạng"
+  },
+  {
+    "start": 3193.74,
+    "end": 3197.74,
+    "text": "tức là chỉ số 0, chỉ số 1, chỉ số 2 cho tới chỉ số 10 đúng không?"
+  },
+  {
+    "start": 3197.74,
+    "end": 3200.74,
+    "text": "Chỉ không thể là mình lấy là chỉ số 10, chỉ số 11, chỉ số 12 được"
+  },
+  {
+    "start": 3200.74,
+    "end": 3204.26,
+    "text": "Thế gió dàng là bạn cần một cái mạng có 21 phần cử cơ"
+  },
+  {
+    "start": 3204.26,
+    "end": 3205.46,
+    "text": "Ok"
+  },
+  {
+    "start": 3205.46,
+    "end": 3207.02,
+    "text": "Ở đây mình viết thêm một cái ham map"
+  },
+  {
+    "start": 3207.02,
+    "end": 3218.26,
+    "text": "Emotions, int, int a, int d, int a, int a, int a, int a, int b"
+  },
+  {
+    "start": 3218.26,
+    "end": 3223.42,
+    "text": "Sau đó thì bạn bây giờ đã xây dẫn xong cái sang này rồi thì mình chỉ cần duyệt từ"
+  },
+  {
+    "start": 3223.42,
+    "end": 3226.86,
+    "text": "Các cái số ở trong cái đoạn này và mình in ra cái số nào là số mình tổ được rồi"
+  },
+  {
+    "start": 3226.86,
+    "end": 3227.9,
+    "text": "Ok"
+  },
+  {
+    "start": 3227.9,
+    "end": 3238.34,
+    "text": "Thế là mình sẽ diệt for int, i và tất nhiên là mình cũng sẽ diệt từ cái số lớn hơn trong 2 số, đấy là lép hoặc là biến 2 nhá"
+  },
+  {
+    "start": 3238.34,
+    "end": 3245.76,
+    "text": "Mà sẽ diệt từ i và mắc của lép và 2 cho tới i nhỏ hơn hoặc bằng right, ok, cảm cận"
+  },
+  {
+    "start": 3245.76,
+    "end": 3253.05,
+    "text": "Rồi đây thì bạn có thể diệt từ lép cũng được, nhưng mà trong trường hợp mà lép nó nhỏ hơn hoặc bằng 2 thì bạn cũng không cần phải set những cái số đó"
+  },
+  {
+    "start": 3253.05,
+    "end": 3256.19,
+    "text": "mình sẽ xét từ số lớn hơn trong hai số, đấy là lab và high"
+  },
+  {
+    "start": 3256.19,
+    "end": 3259.49,
+    "text": "dụ như lab bằng 1 thì bạn chỉ cần giữa từ high thôi đúng không?"
+  },
+  {
+    "start": 3259.49,
+    "end": 3263.09,
+    "text": "còn lab mà nó lớn hơn 2, dụ lab là 100 thì mình sẽ giữa từ lab"
+  },
+  {
+    "start": 3263.09,
+    "end": 3268.07,
+    "text": "ok, sau đó thì bạn kiểm trai là if prime của i chưa đi lab nhé"
+  },
+  {
+    "start": 3268.07,
+    "end": 3271.69,
+    "text": "nhớ là i chưa đi lab bởi vì là mình lưu cái thằng"
+  },
+  {
+    "start": 3271.69,
+    "end": 3274.49,
+    "text": "mình check cái tính nguyên tố của cái biến lab ở chỉ số 0 mà"
+  },
+  {
+    "start": 3274.49,
+    "end": 3279.15,
+    "text": "hiện ra ở đây, khi mà muốn check cái số i nào đó có phải là số nguyên tố hay không"
+  },
+  {
+    "start": 3279.15,
+    "end": 3283.07,
+    "text": "Thì bạn phải kiểm tra cái chỉ số tư ứng của nó để chính là i trừ đi lep"
+  },
+  {
+    "start": 3283.07,
+    "end": 3286.51,
+    "text": "Nếu mà i trừ đi lep mà là số nghiên tố thì có nghĩa là i là số nghiên tố"
+  },
+  {
+    "start": 3286.51,
+    "end": 3290.31,
+    "text": "Thì mình sẽ in ra lại i, ok"
+  },
+  {
+    "start": 3290.31,
+    "end": 3293.91,
+    "text": "Thì trong tết cây nó sẽ nhập vào 2 số F và B đúng không?"
+  },
+  {
+    "start": 3293.91,
+    "end": 3297.51,
+    "text": "Sau đó mình chỉ cần gọi cái hàn là sàn kia thôi"
+  },
+  {
+    "start": 3297.51,
+    "end": 3299.15,
+    "text": "I nó t lep, ra"
+  },
+  {
+    "start": 3299.15,
+    "end": 3310.38,
+    "text": "Sau đó bạn sẽ gọi hàn sàn và chuyển lep và ra được"
+  },
+  {
+    "start": 3310.38,
+    "end": 3312.58,
+    "text": "V nó sẽ sàn cho các số nghiên tố nhé"
+  },
+  {
+    "start": 3312.58,
+    "end": 3314.7,
+    "text": "Mình dụ mình sàn các số nghiên tố từ 1 đến 1"
+  },
+  {
+    "start": 3314.7,
+    "end": 3317.02,
+    "text": "10 cho tất cả 100 đi"
+  },
+  {
+    "start": 3318.31,
+    "end": 3321.31,
+    "text": "Cái đây là cách mà bạn sàng số nguyên tố trên đoạn nhá"
+  },
+  {
+    "start": 3321.31,
+    "end": 3325.31,
+    "text": "Ok, không phải là lúc nào mình cũng sàng nguyên tố từ 1 tới nờ, đúng đấy"
+  },
+  {
+    "start": 3325.31,
+    "end": 3330.31,
+    "text": "nhiều bạn thì lại thấy cái sàng số trên đoạn này hơi khó hình như là các bạn ấy sàng"
+  },
+  {
+    "start": 3330.31,
+    "end": 3335.31,
+    "text": "cho tới cái cận trên luôn, dụ như cái cận drive nó có thể lên đến người bụi chi"
+  },
+  {
+    "start": 3335.31,
+    "end": 3339.31,
+    "text": "thì không phải lúc nào nó cũng có thể sàng được đến cái cận drive đúng không?"
+  },
+  {
+    "start": 3339.31,
+    "end": 3343.31,
+    "text": "Đặc biệt là trong trường hợp 2 cái cận left và drive, nó là số long long chẳng hạn"
+  },
+  {
+    "start": 3343.31,
+    "end": 3348.97,
+    "text": "Nhưng mà cái khoảng cách dựa 2 cái số đấy, nó vừa đủ, ví dụ nó chỉ khoảng 15-16 thôi"
+  },
+  {
+    "start": 3348.97,
+    "end": 3352.51,
+    "text": "Để nó đảm bảo được rằng là cái khoảng cách từ số lép cho tới số write"
+  },
+  {
+    "start": 3352.51,
+    "end": 3356.01,
+    "text": "Các bạn vẫn có thể xây dựng được 1 cái mạng có kích cỡ như vậy"
+  },
+  {
+    "start": 3356.01,
+    "end": 3359.91,
+    "text": "Ok, thì đấy chính là cái cách mà bạn sản xuống nghiên tố trên đoạn nha"
+  },
+  {
+    "start": 3359.91,
+    "end": 3362.91,
+    "text": "Nóng cũng được 2 cái, đây là sản xuống nghiên tố"
+  },
+  {
+    "start": 3362.91,
+    "end": 3371.93,
+    "text": "Trên cái khoảng từ 1 cho tới nở và thứ 2 là khoảng sản xuống nghiên tố từ 1 cái dựa 2 số A và B, ok"
+  },
+  {
+    "start": 3371.93,
+    "end": 3384.61,
+    "text": "VG này thì mình sẽ hướng dẫn cái cách mà các bạn tính tổng ức số của một số nguyên, và cũng đếm luôn số lượng ức số của một số nguyên nhé"
+  },
+  {
+    "start": 3384.61,
+    "end": 3387.81,
+    "text": "Mình sẽ làm cái bài đếm số lượng ức số của một số nguyên trước"
+  },
+  {
+    "start": 3387.81,
+    "end": 3394.81,
+    "text": "Thông thường thì khi mà các bạn đã viết một cái hàm đếm số lượng ức số của một số nguyên, các bạn đã làm như thế này, đúng không?"
+  },
+  {
+    "start": 3394.81,
+    "end": 3401.0,
+    "text": "Đấy là các bạn đã dùng một cái biên đếm của tàu hàng không và các bạn duyệt từ 1 cho thế nào đúng không?"
+  },
+  {
+    "start": 3401.0,
+    "end": 3402.24,
+    "text": "lỗi 1 sρω tiền nở"
+  },
+  {
+    "start": 3402.24,
+    "end": 3409.42,
+    "text": "và bạn sẽ kiểm tra íp nonprofit i mà không tức là i là ướp của nò đúng không, thì mình sẽ tăng lê"
+  },
+  {
+    "start": 3409.42,
+    "end": 3412.46,
+    "text": "và bạn sẽ return với ướp cart đúng không, cái cách này nó không xa"
+  },
+  {
+    "start": 3414.36,
+    "end": 3418.32,
+    "text": "nhưng mà nó sẽ rất là lâu, đấy, nó sẽ rất là lâu"
+  },
+  {
+    "start": 3418.32,
+    "end": 3424.92,
+    "text": "ok thành ra là người ta sẽ không người ta sẽ không sử dụng ham này để đến số lượng ướp số có 1 số đâu"
+  },
+  {
+    "start": 3424.92,
+    "end": 3429.82,
+    "text": "các bạn học phần số nguyên tố rồi đúng không, khi mà học số nguyên tố thì mình cũng nói rất rõ ràng đấy chính là"
+  },
+  {
+    "start": 3429.82,
+    "end": 3440.32,
+    "text": "khi mà bạn có một số n nào đó ấy, thì nếu mà bạn biết một ước còn biết một ước đầu tiên là i, rồi thì bạn có thể biết được cái ước còn lại là n chia cho i đúng không?"
+  },
+  {
+    "start": 3440.32,
+    "end": 3448.32,
+    "text": "hình ra là để đếm số lượng ước số của một số ấy thì mình xét thấy như thế này, ví dụ như bạn có số là số 50 chẳng hạn, đúng không?"
+  },
+  {
+    "start": 3448.32,
+    "end": 3454.08,
+    "text": "thằng 50 này thì nó có những cái ước làm 1 này, 2, 5, 10 đúng không?"
+  },
+  {
+    "start": 3454.08,
+    "end": 3460.25,
+    "text": "25, 50, hết trị nhỉ, hết rồi đúng không?"
+  },
+  {
+    "start": 3460.25,
+    "end": 3463.01,
+    "text": "Ơ, từ từ, Ơ, 4, 6, rồi, ok"
+  },
+  {
+    "start": 3463.01,
+    "end": 3467.89,
+    "text": "Thì bạn thấy là, bạn không cần phải xét những cái ước là 10 với 25 với 50 đâu"
+  },
+  {
+    "start": 3467.89,
+    "end": 3472.61,
+    "text": "Bởi vì là, khi mà xét 3 cái ước nằm trong đoạn từ căn bật 2 của 1"
+  },
+  {
+    "start": 3472.61,
+    "end": 3474.69,
+    "text": "Xin lỗi, từ 1 cho từ căn bật 2 của 50"
+  },
+  {
+    "start": 3474.69,
+    "end": 3478.13,
+    "text": "Là 1, 2, 5 mình có thể tìm được các cái ước còn lại đúng không?"
+  },
+  {
+    "start": 3478.13,
+    "end": 3481.33,
+    "text": "Khi mà i bằng 1 này thì bạn có thể tìm được cái ước là"
+  },
+  {
+    "start": 3481.33,
+    "end": 3483.97,
+    "text": "nòi chia y, chính là 50 đúng không?"
+  },
+  {
+    "start": 3483.97,
+    "end": 3488.37,
+    "text": "khi mà y bằng 2 thì bạn có thể tìm cái ước còn lại của nó là nòi chia y là 25"
+  },
+  {
+    "start": 3488.37,
+    "end": 3492.05,
+    "text": "và khi mà y bằng 5 thì mình có thể tìm cái ước còn lại của nó là nòi chia y là 10"
+  },
+  {
+    "start": 3492.05,
+    "end": 3498.53,
+    "text": "thì cái 1, 2 năm này chắc chắn nó sẽ thuộc vào cái đoạn từ 1 cho tới căn bậc 2 của nòi"
+  },
+  {
+    "start": 3498.53,
+    "end": 3501.89,
+    "text": "nò là tổng quét nhé, trong trường hợp này thì nó là 250"
+  },
+  {
+    "start": 3501.89,
+    "end": 3506.84,
+    "text": "mình có giải thích cái phần này ở chỗ bài mà kiểm tra số nguyên tố rồi mà"
+  },
+  {
+    "start": 3506.84,
+    "end": 3511.28,
+    "text": "Vậy thì quay trở lại cái bài mà đếm số lượng ức số của một số nguyên dương này này"
+  },
+  {
+    "start": 3511.28,
+    "end": 3515.8,
+    "text": "Thay vì bạn duyệt từ 1 cho tới n, như thế này sau đó bạn kiểm tra íp n là 100 i là 0"
+  },
+  {
+    "start": 3515.8,
+    "end": 3517.32,
+    "text": "Thì bạn tặng cái biến đếm lên ấy"
+  },
+  {
+    "start": 3517.32,
+    "end": 3522.72,
+    "text": "Thì sao nhỉ? Thì mình bây giờ mình chỉ cần duyệt từ 1 cho tới căn vật 2 của n"
+  },
+  {
+    "start": 3522.72,
+    "end": 3526.36,
+    "text": "Nhưng mà khi mà bạn gặp 1 cái ước i nào đó thì bạn sẽ đếm 2 lần"
+  },
+  {
+    "start": 3526.36,
+    "end": 3529.68,
+    "text": "1 là đếm cho chính nó, 2 là đếm cho cái ước còn lại"
+  },
+  {
+    "start": 3529.68,
+    "end": 3530.96,
+    "text": "N là chiếc i"
+  },
+  {
+    "start": 3530.96,
+    "end": 3535.72,
+    "text": "Ví dụ trong trường hợp 50 này thì mình duyệt từ 1 cho tới căn vật 2 của 50 là số 7 đúng không?"
+  },
+  {
+    "start": 3535.72,
+    "end": 3539.24,
+    "text": "1, 2, 3, 4, 5, 6, 7"
+  },
+  {
+    "start": 3539.24,
+    "end": 3542.32,
+    "text": "Rượt qua 1 này thì bạn sẽ tăng cái biến đếm lên 2"
+  },
+  {
+    "start": 3542.32,
+    "end": 3545.84,
+    "text": "bởi vì là mình biết là nó có 1 ước là 1 và ước còn lại là 50 mà"
+  },
+  {
+    "start": 3545.84,
+    "end": 3548.84,
+    "text": "Rượt qua 2 thì bạn sẽ cũng tăng lên 2 nữa"
+  },
+  {
+    "start": 3548.84,
+    "end": 3552.28,
+    "text": "bởi vì là mình đếm ước là 2 và đếm ước là 25 nữa"
+  },
+  {
+    "start": 3552.28,
+    "end": 3555.56,
+    "text": "Rượt qua 3 thì nó không chia hết, rượt qua 4 không chia hết, rượt qua 5"
+  },
+  {
+    "start": 3555.56,
+    "end": 3559.62,
+    "text": "thì mình cũng lại tăng lên 2 vì mình đếm cho cả thằng 10 nữa"
+  },
+  {
+    "start": 3559.62,
+    "end": 3562.02,
+    "text": "Rượt qua 6 thì không chia hết, rượt qua 7 thì không chia hết"
+  },
+  {
+    "start": 3562.02,
+    "end": 3565.7,
+    "text": "và khi đó thì bạn đã đếm được cả thằng 50 này nó có 6 ước như thế này"
+  },
+  {
+    "start": 3565.7,
+    "end": 3569.7,
+    "text": "Vậy thì bây giờ, cái số vòng lập của mình nói chỉ còn là căn bậc 2 của nờ vòng lập"
+  },
+  {
+    "start": 3569.7,
+    "end": 3572.7,
+    "text": "Thay vì là duyệt từ 1 cho tới nờ như thế này nữa, đúng không?"
+  },
+  {
+    "start": 3572.7,
+    "end": 3575.7,
+    "text": "Thì cái cách này là cái cách cơ bản, người ta sẽ không làm như thế này"
+  },
+  {
+    "start": 3575.7,
+    "end": 3577.7,
+    "text": "Mà các bạn sẽ phải cốt như sau"
+  },
+  {
+    "start": 3577.7,
+    "end": 3581.28,
+    "text": "Đấy là bạn sẽ dùng cho mình 1 cái biến cao, khởi tạm bằng phơm"
+  },
+  {
+    "start": 3581.28,
+    "end": 3586.34,
+    "text": "Nói sau đó bạn duyệt từ 1 cho tới căn bậc 2 của nờ, ok"
+  },
+  {
+    "start": 3586.34,
+    "end": 3589.34,
+    "text": "Và bạn kiểm tra là if, nờ phần trăm i bằng phơm"
+  },
+  {
+    "start": 3589.34,
+    "end": 3593.34,
+    "text": "Thì ở đây mình sẽ cho cao cộng bằng 2 đấy, sau đó bạn duyệt đến cái biến cao"
+  },
+  {
+    "start": 3593.34,
+    "end": 3596.58,
+    "text": "ok, rồi cái này nó sẽ liệu hiệu quả hơn"
+  },
+  {
+    "start": 3596.58,
+    "end": 3599.58,
+    "text": "ở đây có 2 chất cây đúng không, 12 và 28"
+  },
+  {
+    "start": 3599.58,
+    "end": 3604.36,
+    "text": "thì ở đây mũ chất cây thì mình sẽ nhập vào 1 cái biến nờ đúng không"
+  },
+  {
+    "start": 3604.36,
+    "end": 3611.0,
+    "text": "sau đó bạn yên ra cái số lượng ước của nờ"
+  },
+  {
+    "start": 3611.0,
+    "end": 3620.62,
+    "text": "ok, thì kết quả nó sẽ, xin lỗi chỗ này mình sẽ phải yên ra là cao 2 của nờ"
+  },
+  {
+    "start": 3620.62,
+    "end": 3627.42,
+    "text": "thì nó sẽ yên ra được các số lượng ước số của nờ, là 4 và 6 đúng không"
+  },
+  {
+    "start": 3627.42,
+    "end": 3630.26,
+    "text": "ok, nhưng mà các bạn chú ý nhé"
+  },
+  {
+    "start": 3630.26,
+    "end": 3634.08,
+    "text": "cái hạm cao 2 này nó chưa đúng đâu, ví dụ như bạn có số là số 16"
+  },
+  {
+    "start": 3634.08,
+    "end": 3636.22,
+    "text": "thì các bạn sẽ thấy nó bị sai"
+  },
+  {
+    "start": 3636.22,
+    "end": 3640.35,
+    "text": "số 16 nó chỉ có 5 ước thôi đúng không?"
+  },
+  {
+    "start": 3640.35,
+    "end": 3644.99,
+    "text": "số 16 nó chỉ có 5 ước thôi, đây chính là 1, 2, 4, 8 và 16 đúng không?"
+  },
+  {
+    "start": 3644.99,
+    "end": 3650.83,
+    "text": "nhưng mà kể cái cốt của mình, cái cốt cao 2 của mình đến là 6 là bởi vì như thế này"
+  },
+  {
+    "start": 3650.83,
+    "end": 3655.51,
+    "text": "khi mà bạn duyệt từ 1 cho tới 1, 2 của 16, từ là 1, 2, 3, 4 đúng không?"
+  },
+  {
+    "start": 3655.51,
+    "end": 3659.35,
+    "text": "hơi chủ quan là khi mà duệt 1 thì mình tăng lên 2 đúng không?"
+  },
+  {
+    "start": 3659.35,
+    "end": 3662.45,
+    "text": "duệt qua 2 cũng chia hết thì mình lại cộng thêm 2 đúng không?"
+  },
+  {
+    "start": 3662.45,
+    "end": 3665.97,
+    "text": "duệt qua 3 thì không chia hết, mà duệt qua 4 thì chia hết mình lại cộng thêm 2 đúng không?"
+  },
+  {
+    "start": 3665.97,
+    "end": 3673.09,
+    "text": "nhưng mà voting khi mà i bằng bốn í, thì cái thằng n chia i nó cũng bằng bốn, đúng không?"
+  },
+  {
+    "start": 3673.09,
+    "end": 3675.73,
+    "text": "thì trong trường hợp này nó chỉ là 1 thằng đúng không?"
+  },
+  {
+    "start": 3675.73,
+    "end": 3678.69,
+    "text": "thì bạn chỉ đến được 1 thôi nhưng mà voting ở đây mình lại cộng thêm 2"
+  },
+  {
+    "start": 3678.69,
+    "end": 3683.33,
+    "text": "vậy thì cái cốt hàm cao 2 này nó sẽ bị sai khi mà cái nờ của mình nó là số 9 phương"
+  },
+  {
+    "start": 3683.33,
+    "end": 3686.53,
+    "text": "Nó sẽ bị sai khi mà mình là số chính phương"
+  },
+  {
+    "start": 3686.53,
+    "end": 3689.53,
+    "text": "Thành ra là bạn cần phải sử lý note note cái trường hợp đấy"
+  },
+  {
+    "start": 3689.53,
+    "end": 3691.73,
+    "text": "Đấy chính là nếu mà nó là số chính phương"
+  },
+  {
+    "start": 3691.73,
+    "end": 3695.33,
+    "text": "Thì cái cặng bực 2 của cái số nò ban đầu ấy, nó bị đến thừa một lần"
+  },
+  {
+    "start": 3695.33,
+    "end": 3698.13,
+    "text": "Bạn giảm cái biến cao của mình đi một tươn vị là được"
+  },
+  {
+    "start": 3698.13,
+    "end": 3700.93,
+    "text": "Hoặc bạn có thể check ở trong vòng phone này cũng được như sau"
+  },
+  {
+    "start": 3700.93,
+    "end": 3704.13,
+    "text": "Đấy là bạn kiểm tra ip nò phần 100 i vầng 0 ạ"
+  },
+  {
+    "start": 3704.13,
+    "end": 3706.74,
+    "text": "Tức là nò chia cho i rồi đúng không?"
+  },
+  {
+    "start": 3706.74,
+    "end": 3708.94,
+    "text": "Thì mình sẽ kiểm tra note là"
+  },
+  {
+    "start": 3708.94,
+    "end": 3713.9,
+    "text": "Nếu mà i mà khác em nói chia cho i, tức là 2 cái số này là"
+  },
+  {
+    "start": 3713.9,
+    "end": 3720.9,
+    "text": "2 cái số khác nhau ý, mình sẽ cho cao cộng bằng 2, còn không ạ, 2 cái số này mà nó là 1, thì bạn chỉ tăng thêm 1 thôi"
+  },
+  {
+    "start": 3720.9,
+    "end": 3724.9,
+    "text": "thì nó sẽ sử dý đường khi trường hợp đấy là nờ nó là số chính phương, ok?"
+  },
+  {
+    "start": 3724.9,
+    "end": 3731.99,
+    "text": "thì bây giờ nó chỉ in ra 5 thôi, thay vì là in ra 6 như lúc nãy, nhá, các bạn chú ý cái trường hợp này nó rất dễ xài ở đây"
+  },
+  {
+    "start": 3731.99,
+    "end": 3738.99,
+    "text": "mặc dù mình làm nó nhanh, nhưng mà mình phải cẩn thận cái trường hợp là nờ nó là số chính phương, thì căn bằng 2 của nó sẽ bị đếm trùng 1 lần, ok?"
+  },
+  {
+    "start": 3738.99,
+    "end": 3743.43,
+    "text": "hoặc là bạn có thể íp nó 100y vào không, bạn cho cao cộng bằng 2 đây"
+  },
+  {
+    "start": 3743.43,
+    "end": 3746.63,
+    "text": "sau đó dưới này bạn kiểm tra xem nếu mà nó là số chín cương"
+  },
+  {
+    "start": 3746.63,
+    "end": 3750.79,
+    "text": "nếu nó là số chín cương"
+  },
+  {
+    "start": 3750.79,
+    "end": 3756.49,
+    "text": "thì bạn sẽ giảm cái biến cao đi 1 nâng vị cho là bạn vừa tồn đi đến cao"
+  },
+  {
+    "start": 3756.49,
+    "end": 3760.61,
+    "text": "bởi vì là cái căn bằng 2 của nó bị đếm dư một lần ở trong trên này"
+  },
+  {
+    "start": 3760.61,
+    "end": 3764.01,
+    "text": "đấy, thì bây giờ nó sẽ là hàm đếm số dựa số"
+  },
+  {
+    "start": 3764.01,
+    "end": 3766.69,
+    "text": "ước số của một số một cách chính xác, ok"
+  },
+  {
+    "start": 3766.69,
+    "end": 3771.17,
+    "text": "cái cách thứ 3 là các bạn sử dụng trên cái dựa trên cái lý tuyết như thế này này"
+  },
+  {
+    "start": 3771.17,
+    "end": 3776.73,
+    "text": "Đấy chính là, nếu bạn có một số n nào đó được phân tích dưới dạng từ số nguyên phố là"
+  },
+  {
+    "start": 3776.73,
+    "end": 3782.73,
+    "text": "P1, mũ E1, nhân với P2, mũ E2, nhân với chấm chấm, nhân với Pk, mũ EK"
+  },
+  {
+    "start": 3782.73,
+    "end": 3787.13,
+    "text": "Thì khi đó, cái số lượng, cái ham của nờ này ký hiệu là DNR"
+  },
+  {
+    "start": 3787.13,
+    "end": 3795.7,
+    "text": "Thì nó sẽ được bằng E1, cộng với 1, nhân với E2, cộng với 1, nhân với chấm chấm chấm, nhân với EK, cộng 1"
+  },
+  {
+    "start": 3795.7,
+    "end": 3799.7,
+    "text": "Nói này nó dựa trên quý tắc nhân thôi mà, ok, dựa trên quý tắc nhân thôi"
+  },
+  {
+    "start": 3799.7,
+    "end": 3808.22,
+    "text": "Đó, ví dụ bạn có nd bằng số 60 ạ, thì 60 được phân tích dưới dạng là 2 bình thường nhưng 2, à xin lỗi nhưng 3, nhưng 5 đúng không?"
+  },
+  {
+    "start": 3808.22,
+    "end": 3814.38,
+    "text": "Thì bạn có thể xây ra được cái số lượng ước của số 60 đây chính là 2, cộng 1 là 3 đúng không?"
+  },
+  {
+    "start": 3814.38,
+    "end": 3821.58,
+    "text": "Sau đó là nhân với 1, cộng 1, sau đó tiếp tục là nhân với 1, cộng 1, đó, thì nó sẽ ra được là 12 ước, ok?"
+  },
+  {
+    "start": 3821.58,
+    "end": 3827.78,
+    "text": "Thành ra là cái hàm ước số bạn cũng có thể làm như sau, int klb, int n đúng không?"
+  },
+  {
+    "start": 3827.78,
+    "end": 3832.98,
+    "text": "dù cho mình cái biến REST, cái cao bằng không, rồi đó bạn duyệt tư, tự tự nhiêu phân tích cái số miễn tố của nó"
+  },
+  {
+    "start": 3832.98,
+    "end": 3840.78,
+    "text": "để các bạn duyệt tư 2, chỉ có bằng 2 của nó, mỗi vòng lạp thì mình dù mình có thể tạm cái biến cao bằng không để đến số lượng ước của thằng này"
+  },
+  {
+    "start": 3840.78,
+    "end": 3848.3,
+    "text": "sẽ đó là lạp thôi, ngoài là phần trăm Ý bằng không, thì bạn sẽ cho tăng cái biến cao lên và cho nó chia bằng Ý, ok"
+  },
+  {
+    "start": 3848.3,
+    "end": 3853.9,
+    "text": "đấy, cứ gặp một thường số miễn tố nào và có số lần có... có... có..."
+  },
+  {
+    "start": 3853.9,
+    "end": 3856.9,
+    "text": "cái số mũ của nó rồi thì bạn sẽ cho REST"
+  },
+  {
+    "start": 3856.9,
+    "end": 3860.9,
+    "text": "Sao bằng, cao cộng 1"
+  },
+  {
+    "start": 3860.9,
+    "end": 3864.94,
+    "text": "Thực kết chất chỗ cao cộng không thì không vấn đề gì cả nhé"
+  },
+  {
+    "start": 3864.94,
+    "end": 3868.94,
+    "text": "Tại vì nếu mà cái vòng lập y nào đó của bạn mà nó..."
+  },
+  {
+    "start": 3868.94,
+    "end": 3871.94,
+    "text": "cái số y đấy không phải là cửa xuống nguyên tố của nó cũng không vấn đề gì cả"
+  },
+  {
+    "start": 3871.94,
+    "end": 3876.94,
+    "text": "Bởi vì khi đó cái đến cao nó bằng không thì bạn nhân cái kết quả của bạn với 1 thì nó cũng không vấn đề gì"
+  },
+  {
+    "start": 3876.94,
+    "end": 3878.94,
+    "text": "Ok, xin lỗi cho này là 1 nhé"
+  },
+  {
+    "start": 3878.94,
+    "end": 3880.94,
+    "text": "Sau đó bạn dưới này thì bạn kiểm trai note"
+  },
+  {
+    "start": 3880.94,
+    "end": 3884.94,
+    "text": "Nếu mà mà khác 1 thì bạn sẽ cho rest sau bằng 2 nữa"
+  },
+  {
+    "start": 3884.94,
+    "end": 3886.94,
+    "text": "REST"
+  },
+  {
+    "start": 3886.94,
+    "end": 3891.58,
+    "text": "Bởi vì cái chỗ này nếu mà nó khác một thì nó chính là số nguyên tố cuối cùng ý"
+  },
+  {
+    "start": 3891.58,
+    "end": 3893.58,
+    "text": "Số nguyên tố cuối cùng thì nó có số mũ làm một đúng không?"
+  },
+  {
+    "start": 3893.58,
+    "end": 3898.58,
+    "text": "Thì vậy khi đó sẽ nhân biến REST của mình với 1, 1, 2"
+  },
+  {
+    "start": 3898.58,
+    "end": 3903.67,
+    "text": "Thì bạn có thể sử dụng hàm cao 3 này dựa trên cái lưới tuyết này để tìm số lựa ước số còn một số cũng được"
+  },
+  {
+    "start": 3903.67,
+    "end": 3907.66,
+    "text": "Không vấn đề gì kẻ nhé"
+  },
+  {
+    "start": 3907.66,
+    "end": 3909.66,
+    "text": "OK, kết quả nó vẫn thế thôi"
+  },
+  {
+    "start": 3909.66,
+    "end": 3914.66,
+    "text": "Thấy ra là từ bây giờ khi mình gặp cái bài toán mà đếm số lựa ước số còn một số thì tất nhiên là mình sẽ không sử dụng cái này"
+  },
+  {
+    "start": 3914.66,
+    "end": 3917.7,
+    "text": "Các bạn có thể sử dụng cái này hoặc cái này được được, ok?"
+  },
+  {
+    "start": 3917.7,
+    "end": 3923.9,
+    "text": "Sau đó thì mình sẽ xử lý luôn cái bài mà tính tổng ức số của một số nguyên nhé."
+  },
+  {
+    "start": 3923.9,
+    "end": 3926.5,
+    "text": "Nếu mà làm thông thường thì các bạn cũng làm như lúc nãy."
+  },
+  {
+    "start": 3926.5,
+    "end": 3929.7,
+    "text": "Đây chính là các bạn dùng một biến xam khởi tạm bằng không, đúng không?"
+  },
+  {
+    "start": 3929.7,
+    "end": 3938.05,
+    "text": "Sau đó bạn diệt từ 1 cho tích nò và cho bạn kiểm tra là if, if nò, 100e bằng không, đúng không?"
+  },
+  {
+    "start": 3938.05,
+    "end": 3942.05,
+    "text": "Thì mình sẽ cho xam cộng bằng i, sau đó bạn return xam."
+  },
+  {
+    "start": 3942.05,
+    "end": 3944.69,
+    "text": "Thì như thế này, cái độ phức tạp của nó là owner"
+  },
+  {
+    "start": 3944.69,
+    "end": 3947.69,
+    "text": "Thì thính ra là nó tương tự như cái hèm đêm 2 này này"
+  },
+  {
+    "start": 3947.69,
+    "end": 3951.65,
+    "text": "Được chưa? Bạn đã biết một cái ước i nào đó rồi thì bạn cũng không cần phải"
+  },
+  {
+    "start": 3951.65,
+    "end": 3955.15,
+    "text": "Không cần phải xét cái ước còn lại nữa là nó chị i nữa"
+  },
+  {
+    "start": 3955.15,
+    "end": 3958.41,
+    "text": "Ví dụ như tính tỏng ước của số 16 ấy"
+  },
+  {
+    "start": 3958.41,
+    "end": 3960.13,
+    "text": "Thì khi mà bạn gặp cái ước"
+  },
+  {
+    "start": 3960.13,
+    "end": 3962.97,
+    "text": "Bạn dựa từ 1 tới 4 nào"
+  },
+  {
+    "start": 3962.97,
+    "end": 3965.65,
+    "text": "Khi mà gặp cái ước thứ nhất là 1 thì mình sẽ"
+  },
+  {
+    "start": 3965.65,
+    "end": 3970.09,
+    "text": "Cho cái biến xâm của mình cộng thêm 1 và cộng thêm cả số 16 chỉ trong 1 là 16 nữa"
+  },
+  {
+    "start": 3970.09,
+    "end": 3974.25,
+    "text": "dù có 2 thì bạn vừa cộng thêm 2 và vừa cộng thêm cái ước còn lại của nó là 8 nữa"
+  },
+  {
+    "start": 3974.25,
+    "end": 3975.77,
+    "text": "dù có ba ba thì không chia hết"
+  },
+  {
+    "start": 3975.77,
+    "end": 3981.29,
+    "text": "dù có 4 thì 2 thằng 4 và 16 chiếu 4 nó là 1, thế nào là bạn chỉ cộng thêm 4 nữa"
+  },
+  {
+    "start": 3981.29,
+    "end": 3984.49,
+    "text": "thì đấy chính là cách mà bạn tính tổng mưu số của một số nhé"
+  },
+  {
+    "start": 3984.49,
+    "end": 3986.49,
+    "text": "vậy thì mình sẽ làm như sau"
+  },
+  {
+    "start": 3986.49,
+    "end": 3992.12,
+    "text": "và mình sẽ không dùng cách trên này, mình sẽ sử dụng một cái biến xăm ở tạm bằng không"
+  },
+  {
+    "start": 3992.12,
+    "end": 3996.58,
+    "text": "sau đó bạn dựa từ 1 cho tới căn vật 2 của nó, ok"
+  },
+  {
+    "start": 3996.58,
+    "end": 4005.73,
+    "text": "vô lại kiểm tra là if, nó vẫn trăm i bằng phơm, thì sẽ kiểm tra nốt, if, i mà khác, nó chia cho i"
+  },
+  {
+    "start": 4005.73,
+    "end": 4010.13,
+    "text": "thì bạn sẽ cộng cả hai thằng đúng không, xăm cộng bằng i và cộng n nó chia i luôn"
+  },
+  {
+    "start": 4010.13,
+    "end": 4013.49,
+    "text": "thì còn nếu mà trong trình hợp mà hai thằng này mà nó giống nhau ấy"
+  },
+  {
+    "start": 4013.49,
+    "end": 4017.53,
+    "text": "trong trình hợp nó nó là sự chính phương thì bạn chỉ cộng một thằng thôi để chính là i nhá"
+  },
+  {
+    "start": 4017.53,
+    "end": 4021.29,
+    "text": "để nó không bị tính cái căn bật 2 của nó bị trùng một lần nào kẹ"
+  },
+  {
+    "start": 4021.29,
+    "end": 4031.18,
+    "text": "đây là cái cách mà bạn tính tổng ước của một số nhé"
+  },
+  {
+    "start": 4031.18,
+    "end": 4035.18,
+    "text": "ok, tất nhiên là mình sẽ không riêng từng bột cho tới nò sau đó kiểm tra tính chi hết đâu"
+  },
+  {
+    "start": 4035.18,
+    "end": 4040.1,
+    "text": "để dạng cái số vòng lọc của mình xuống mà, xuống còn canh nò thôi"
+  },
+  {
+    "start": 4040.1,
+    "end": 4044.5,
+    "text": "thì đây chính là cái hàm mà tính tổng ước của một số"
+  },
+  {
+    "start": 4044.5,
+    "end": 4047.1,
+    "text": "2, 10, 2, 8 nữa"
+  },
+  {
+    "start": 4047.1,
+    "end": 4052.7,
+    "text": "2, 8 thì nó có tổng ước là 5, 6 nữa, 10 mình nói số hơn hàm mà"
+  },
+  {
+    "start": 4052.7,
+    "end": 4057.56,
+    "text": "Đây chính là cái hầm đếm số lượng ước của một số nhé"
+  },
+  {
+    "start": 4057.56,
+    "end": 4061.32,
+    "text": "Các bạn chú ý khi mà đếm số lượng ước số của một số hay là tính tỏng ước số của một số"
+  },
+  {
+    "start": 4061.32,
+    "end": 4064.26,
+    "text": "thì các bạn chỉ cần duyệt từ 1 cho tới con vực 2 của nò"
+  },
+  {
+    "start": 4064.26,
+    "end": 4067.02,
+    "text": "và xử lý nốt trường hợp nò nó là số chính phương"
+  },
+  {
+    "start": 4067.02,
+    "end": 4071.78,
+    "text": "thì mình có thể đếm được ước số của một số hay là tính tỏng của một ước số nó hiệu quá hơn"
+  }
+]

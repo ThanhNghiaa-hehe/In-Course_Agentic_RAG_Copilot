@@ -1,0 +1,1082 @@
+[
+  {
+    "chunk_id": "chunk_0_63",
+    "start_sec": 0,
+    "end_sec": 63,
+    "start_label": "00:00",
+    "end_label": "01:03",
+    "raw_text": "Hôm nay thì anh sẽ hướng dẫn sang thuật toán tìm kiếm, và nó cũng là cái phần khó cuối cùng mà các bạn cần phải học. Sau này thì các bạn học chuỗi kí tự này, hay là học mảng 2 chiều này, hay là học lập trình hướng đối tượng ấy, thì nhìn chung nó đều sử dụng những kiến thức mà mình đã từng học, nên là nó không có gì khó khăn cả. Hôm nay anh sẽ hướng dẫn phần thuật toán tìm kiếm Trong lập trình, hai công việc là xắp xếp và tìm kiếm thì nó sẽ thường xuyên Cần phải có, đúng không? Như dụ như các bạn thấy, khi mà các bạn lên website, các bạn tìm kiếm sản phẩm chẳng hạn, thì nó đều là các thuật toán tìm kiếm Cũng phải học cái mạng, lớp xị ổ cậu cũng phải học mấy cái này Nhờ bạn bảo là thuật toán xắp xếp với thuật toán tìm kiếm thì Nó có cái chữ thuật toán này, mình học cái lớp thuật toán nhưng mà thực tế thì khi mà bạn em học xị ẩm cộng này thì em cũng phải học nhiều kiến thức liên quan đến thuật toán đấy"
+  },
+  {
+    "chunk_id": "chunk_47_110",
+    "start_sec": 47,
+    "end_sec": 110,
+    "start_label": "00:47",
+    "end_label": "01:50",
+    "raw_text": "Cũng phải học cái mạng, lớp xị ổ cậu cũng phải học mấy cái này Nhờ bạn bảo là thuật toán xắp xếp với thuật toán tìm kiếm thì Nó có cái chữ thuật toán này, mình học cái lớp thuật toán nhưng mà thực tế thì khi mà bạn em học xị ẩm cộng này thì em cũng phải học nhiều kiến thức liên quan đến thuật toán đấy Rồi, ok Thấy mình chút Ờ, ok Nó sẽ có 2 thuật toán tỉnh kiếm Thực ra thì nó có cả thuật toán tỉnh kiếm 8 phân nhưng mà nó tương tự nhi nhị phân nha Thì thuật toán đầu tiên là thuật toán tỉnh kiếm tuyên tính Nó khá là dễ thôi, ví dụ như các bạn em có 1 giải số Các bạn muốn tìm kiếm xem trong giải số đó có tồn tại một phần tử nào cho trước hay không thì thuật toán tìm kiếm tuyên tính này sẽ rượt từ đầu đến cuối"
+  },
+  {
+    "chunk_id": "chunk_94_157",
+    "start_sec": 94,
+    "end_sec": 157,
+    "start_label": "01:34",
+    "end_label": "02:37",
+    "raw_text": "Thì thuật toán đầu tiên là thuật toán tỉnh kiếm tuyên tính Nó khá là dễ thôi, ví dụ như các bạn em có 1 giải số Các bạn muốn tìm kiếm xem trong giải số đó có tồn tại một phần tử nào cho trước hay không thì thuật toán tìm kiếm tuyên tính này sẽ rượt từ đầu đến cuối Rượt từ đầu đến cuối và kiểm tra xem là cái thằng đấy nó có nằm ở trong mạng của mình không Nếu có thì nó sẽ trả về chu, còn nếu mà tuần bộ giải số của mình mà không gặp thì nó sẽ trả về phone nha Cái này thì khá cơ bản, và nó sẽ có độ phức tạp là owner Bọn em tự cốt lấy cái hèm này, không có gì khó khăn Mình sẽ tập trung vào thuật toán tìm kiếm tối yêu hơn là thuật toán tìm kiếm nhị phân rất là quan trọng và được ứng dụng rộng giải trong thực tế Thuật toán tìm kiếm nhị phân này nó sẽ có 1 điều kiện để có thể áp dụng được là cái giải số mà các bạn muốn tìm kiếm thì nó phải được sắp xếp theo thứ tự tăng dần hoặc là giảm dần rồi thì thuật toán tìm kiếm nhị phân này mới áp dụng được Còn cái thuật toán tìm kiếm tuyên tính này của các bạn thì không cần điều kiện đó, nó có thể tìm kiếm trên 1 cái giải số bất kì nhưng mà nhị phần thì sẽ cần phải sắp xếp trước, thì mới tìm kiếm được"
+  },
+  {
+    "chunk_id": "chunk_136_203",
+    "start_sec": 136,
+    "end_sec": 203,
+    "start_label": "02:16",
+    "end_label": "03:23",
+    "raw_text": "Thuật toán tìm kiếm nhị phân này nó sẽ có 1 điều kiện để có thể áp dụng được là cái giải số mà các bạn muốn tìm kiếm thì nó phải được sắp xếp theo thứ tự tăng dần hoặc là giảm dần rồi thì thuật toán tìm kiếm nhị phân này mới áp dụng được Còn cái thuật toán tìm kiếm tuyên tính này của các bạn thì không cần điều kiện đó, nó có thể tìm kiếm trên 1 cái giải số bất kì nhưng mà nhị phần thì sẽ cần phải sắp xếp trước, thì mới tìm kiếm được thì mình sẽ nói đến cái ý tưởng của nó nha ý tưởng của thật tán tìm kiếm nhị phần ấy là nó sẽ tìm kiếm trong 1 cái đoạn ở trên cái mẻ hả? rất là khi mà các bạn tìm kiếm thì nó tìm kiếm ở trên 1 cái đoạn từ chỉ số lab cho tới chỉ số y, nấy, tôi chết rồi, ăn lóc gì đây và cứ mỗi lần mà nó tìm kiếm ấy nó sẽ tính ra cái thằng ở đứng giữa cái thằng chỉ số đứng giữa nha, cái thằng đứng giữa thì các bạn gọi là chung vị đúng không? trung vị hoặc cần gọi thực ra thì nếu mà nói chính xác thì nó gọi là giá trị trung vị nhưng mà bọn em cứ coi nó như một cái giá trị trung bình là được ok đây, các bạn đợi mình chút nha dù như bọn em có một cái giải số đã được sắp xếp tăng dần hoặc là giảm dần"
+  },
+  {
+    "chunk_id": "chunk_186_247",
+    "start_sec": 186,
+    "end_sec": 247,
+    "start_label": "03:06",
+    "end_label": "04:07",
+    "raw_text": "thực ra thì nếu mà nói chính xác thì nó gọi là giá trị trung vị nhưng mà bọn em cứ coi nó như một cái giá trị trung bình là được ok đây, các bạn đợi mình chút nha dù như bọn em có một cái giải số đã được sắp xếp tăng dần hoặc là giảm dần 1, 3, 3, 5, 8, 9, 10, về 12 đi ok giả sứ như đây là cái giải số mà các bạn tìm kiếm thì thuật toán tìm kiếm nhị phân ấy nó sẽ duy trì một cái đoạn từ chỉ số left cho tới chỉ số right Ví dụ như đây, lab của mình nó sẽ bằng 0 là chỉ số của bạn này Con write của mình sẽ là 0, 1, 2, 3, 4, 5, 6, 7, ok, write bằng 7 Ok Sau đó ấy, thì cứ mỗi lần thuật toán mà nó tìm kiếm ấy thì nó sẽ tính ra cái chỉ số đứng giữa gọi là meet Bằng cách là nó lấy cận lab, cộng cận write chia cho 2 Ví dụ như trong trường hợp này anh tính là 0, cộng 7 chia cho 2 thì nó sẽ là bear Đây là chỉ số của thằng đứng giữa"
+  },
+  {
+    "chunk_id": "chunk_232_295",
+    "start_sec": 232,
+    "end_sec": 295,
+    "start_label": "03:52",
+    "end_label": "04:55",
+    "raw_text": "Sau đó ấy, thì cứ mỗi lần thuật toán mà nó tìm kiếm ấy thì nó sẽ tính ra cái chỉ số đứng giữa gọi là meet Bằng cách là nó lấy cận lab, cộng cận write chia cho 2 Ví dụ như trong trường hợp này anh tính là 0, cộng 7 chia cho 2 thì nó sẽ là bear Đây là chỉ số của thằng đứng giữa Nó sẽ đem cái giá trị của thằng đứng giữa này, nó đi tìm kiếm và nó so sánh với cái giá trị x của các bạn đang tìm Thì nó sẽ xảy ra ba trường hợp, trường hợp thứ nhất là cái giá trị x mà bọn em tìm kiếm ấy, nó lại bằng luôn cái thằng đứng giữa Đây, cái giá trị của thằng đứng giữa của cái giải số khi đấy là 5 Nó lại bằng luôn cái giá trị mà các bạn đang đi tìm kiếm thì thuật toán tìm kiếm nhị phân của mình, nó sẽ dừng ngay lập tức Cái này thì cũng dễ hiểu thôi, đúng không? Nó như kiểu mọi em có một cái hàng người đã được sắp xếp theo chiều cao tăng dần ấy sau đó mình sẽ chọn cái bạn đứng giữa và mình so sánh cái chiều cao của bạn đứng giữa đấy với cái chiều cao mà các bạn đang đi tìm kiếm nếu mà cái chiều cao của bạn đứng giữa đấy mà bằng luôn cái giá trị mà các bạn đi tìm kiếm thì thuật toàn sẽ dừng ngay và kết luận là cái chiều cao đã có một cái bạn có chiều cao như vậy nằm ở trong hàng thì còn không ấy thì nó sẽ phải, cái chiều cao đấy nó sẽ phải nhỏ hơn hoặc là nó lớn hơn"
+  },
+  {
+    "chunk_id": "chunk_277_339",
+    "start_sec": 277,
+    "end_sec": 339,
+    "start_label": "04:37",
+    "end_label": "05:39",
+    "raw_text": "và mình so sánh cái chiều cao của bạn đứng giữa đấy với cái chiều cao mà các bạn đang đi tìm kiếm nếu mà cái chiều cao của bạn đứng giữa đấy mà bằng luôn cái giá trị mà các bạn đi tìm kiếm thì thuật toàn sẽ dừng ngay và kết luận là cái chiều cao đã có một cái bạn có chiều cao như vậy nằm ở trong hàng thì còn không ấy thì nó sẽ phải, cái chiều cao đấy nó sẽ phải nhỏ hơn hoặc là nó lớn hơn cái giá trị đứng giữa, phải đúng không? Ví dụ như các bạn tìm kiếm cái giá trị không phải là 5 nữa, mà các bạn này tìm giá trị là bằng ích bằng 2 Thì khi mà nó so sánh cái thằng ích này với cái thằng đứng giữa thì thấy 2 nó nhỏ hơn thằng đứng giữa Vậy thì thuật toán tìm kiếm nhị phân của mình ấy, nó sẽ không có xét nữa bên phải nữa, đúng không nhỉ? Tại vì cái giải số của em đã được tăng dần rồi, mà bây giờ mình phát hiện ra là cái giá trị của mình tìm kiếm nó lại nhỏ hơn cái thằng đứng giữa Vậy thì nó phải nằm ở bên nửa bên trái, khi đó mình sẽ cho cái thằng ròi nó nhảy ra đây Thì khi đó mình sẽ update là... ...Roy của mình nó sẽ bằng Meet chứ đi một. Để cái vòng lập tiếp theo thì thuật toán tìm kiếm nhị phần của mình sẽ tìm ở nửa bên trái thôi. Nên trên nhỉ? Khá là cơ bản thôi, cái này chắc là các bạn hiểu được."
+  },
+  {
+    "chunk_id": "chunk_324_389",
+    "start_sec": 324,
+    "end_sec": 389,
+    "start_label": "05:24",
+    "end_label": "06:29",
+    "raw_text": "Thì khi đó mình sẽ update là... ...Roy của mình nó sẽ bằng Meet chứ đi một. Để cái vòng lập tiếp theo thì thuật toán tìm kiếm nhị phần của mình sẽ tìm ở nửa bên trái thôi. Nên trên nhỉ? Khá là cơ bản thôi, cái này chắc là các bạn hiểu được. Cái dãi của mình nó tăng dần rồi, đúng không? Bây giờ mình đính cái thằng đứng ở giữa, là cái giá trị chung chung ở giữa, đúng không? Mà nó lại lớn hơn cái giá trị mà các bạn đang đi tìm kiếm. Vậy thì cái giá trị mà mình tìm kiếm nó phải nằm ở nửa bên trái. Chứ nó không thể nằm ở nửa bên phải được Tại vì nửa bên phải của mình đều là những cái thằng mà nó lớn hơn hoặc bằng cái thằng đứng giữa đó mà Ok, thì khi đó mình sẽ cập nhật cái thằng rai bằng mít chữ 1 Phần ngược lại, nếu mà các bạn tìm 1 cái giá trị mà nó lại lớn hơn thằng đứng giữa Ví dụ như các bạn tìm cái giá trị là 11 Thằng 11 này so với cái thằng đứng giữa là 5 thì nó lớn hơn Vậy thì chắc chắn thằng 11 này nó không thể nằm ở cái nửa bên trái được Tại vì cái nửa bên trái này của mình thì đều là những cái thằng mà nó nhỏ hơn hoặc bằng 5 Đúng không? Mình phải tìm ở nửa bên phải này, thì may ra mới có. Khi đó, các bạn phải cho thằng lep lại nhảy ra đây. Ok. Thế là mình sẽ cho lep bằng mit cộng với 1. Thì vòng lập tiếp theo nó sẽ tìm kiếm vào trong cái đoạn này."
+  },
+  {
+    "chunk_id": "chunk_372_433",
+    "start_sec": 372,
+    "end_sec": 433,
+    "start_label": "06:12",
+    "end_label": "07:13",
+    "raw_text": "Tại vì cái nửa bên trái này của mình thì đều là những cái thằng mà nó nhỏ hơn hoặc bằng 5 Đúng không? Mình phải tìm ở nửa bên phải này, thì may ra mới có. Khi đó, các bạn phải cho thằng lep lại nhảy ra đây. Ok. Thế là mình sẽ cho lep bằng mit cộng với 1. Thì vòng lập tiếp theo nó sẽ tìm kiếm vào trong cái đoạn này. Thế thôi, nó chỉ có 3 trường hợp như thế thôi. Các bạn hiểu ý tưởng của nó là làm được thôi mà. Có 3 trường hợp. Đấy là cái thằng đứng giữa của mình, nó bằng luôn cái thằng x mà các bạn tìm kiếm. Trường hợp thứ 2 là nó nhỏ hơn, và trường hợp thứ 3 là lớn hơn. thì các bạn tư duy xem là nếu mà nhỏ hơn thì mình sẽ làm tìm kiếm ở bên phả hay tìm kiếm ở bên trái và cái câu lệnh mình sẽ update, mình sẽ thay đổi thằng lab hay thay đổi thằng y là được thì thuật toán tìm kiếm nhị phân của mình nó rất là hiệu quả tại vì cứ mỗi lần mà thuật toán tìm kiếm nó lập một lần ấy thì nó sẽ giảm đi được một nửa cái giảy số mà các bạn tìm kiếm ví dụ ban đầu các bạn có 100 thằng thì chỉ sau một lần lập nó sẽ chỉ còn tìm kiếm ở 50 thằng rồi lại 25 thằng rồi lại 12 thằng rồi lại 6 thằng rồi lại thằng 3 thằng 2 thằng và 1 thằng"
+  },
+  {
+    "chunk_id": "chunk_418_479",
+    "start_sec": 418,
+    "end_sec": 479,
+    "start_label": "06:58",
+    "end_label": "07:59",
+    "raw_text": "thì nó sẽ giảm đi được một nửa cái giảy số mà các bạn tìm kiếm ví dụ ban đầu các bạn có 100 thằng thì chỉ sau một lần lập nó sẽ chỉ còn tìm kiếm ở 50 thằng rồi lại 25 thằng rồi lại 12 thằng rồi lại 6 thằng rồi lại thằng 3 thằng 2 thằng và 1 thằng Được chứ? nên là cái thuật toán tình kiếm nhị phân của mình sẽ có độ phức tạp là lốc 2 của nở với nở của mình là cái số lượng phần tử trong dạy số đó Được chứ? Tại vì nó trẻ đôi, trẻ đôi, trẻ đôi như thế mà Đấy nên thuật toán rất là hiệu quả ấy nhé Bây giờ mình sẽ cốt cái thuật toán này Các bạn nào có câu hỏi gì không? Các bạn nào có thuật toán hiện có câu hỏi gì về thuật toán tình kiếm nhị phân này không? Nếu mà bọn em app dụng trên cái dãy giảm dần thì cái logic nó ngược lại một chút logic ngược lại viết buồn binary search mảng a của n là phần tử bắt đầu từ lab và kết thúc ở write và mình sẽ tìm kiếm thằng x các bạn sẽ để điều kiện là blog y lab nhỏn bằng write chừng nào đoạn tìm kiếm"
+  },
+  {
+    "chunk_id": "chunk_462_523",
+    "start_sec": 462,
+    "end_sec": 523,
+    "start_label": "07:42",
+    "end_label": "08:43",
+    "raw_text": "logic ngược lại viết buồn binary search mảng a của n là phần tử bắt đầu từ lab và kết thúc ở write và mình sẽ tìm kiếm thằng x các bạn sẽ để điều kiện là blog y lab nhỏn bằng write chừng nào đoạn tìm kiếm sẽ còn tối thiểu 1 phần tử lab của bạn phải nhỏn bằng write đoạn mà bạn em tìm kiếm có tối thiểu 1 phần tử mỗi lần mình sẽ tính ra chỉ số meet là đứng dưỡi bằng lab và write chơi cho 2 trường hợp thứ nhất là Amid của bạn em nó bằng thằng Ích đây là trường hợp đẹp nhất khi mà cái thằng đứng giữa nó bằng luôn cái giá trị mà các bạn tìm kiếm lưu ý nha cái mít này nó là chỉ số, chứ nó không phải là giá trị nên là bạn em phải truy cập vào là Amid chứ không được lấy mít so sánh đâu nha rồi thì mình sẽ return to luôn thế còn cái trường hợp thứ 2, Amid của các bạn nó nhỏ hơn ích cái này các bạn nhẩm ở trong đầu một chút là đều thôi đây cái giải của mình đây đúng không? giải đoạn của mình đang left drive và mít đây Bây giờ, cái thằng Amid của các bạn là cái thằng đứng dưỡn này này"
+  },
+  {
+    "chunk_id": "chunk_507_567",
+    "start_sec": 507,
+    "end_sec": 567,
+    "start_label": "08:27",
+    "end_label": "09:27",
+    "raw_text": "rồi thì mình sẽ return to luôn thế còn cái trường hợp thứ 2, Amid của các bạn nó nhỏ hơn ích cái này các bạn nhẩm ở trong đầu một chút là đều thôi đây cái giải của mình đây đúng không? giải đoạn của mình đang left drive và mít đây Bây giờ, cái thằng Amid của các bạn là cái thằng đứng dưỡn này này Nó nhỏ hơn thằng X, vậy thì thằng X nó phải tìm kiếm vào nửa này Đúng không? Mình bỏ cái đoạn này đi Khi đó cái biến LAP này của bạn nó phải nhảy ra đây Nó nhảy ra làng sau cái thằng Amid cộng 1 Khi mà các bạn vòng lại cái vòng Y Khi đó LAP RY của mình nó sẽ tìm nửa nửa bên phải Nên cái câu lệnh của mình update nó sẽ là gì? Nó sẽ là LAP bằng Amid cộng với 1 Cái còn ngược lại, thì các bạn cho RY bằng Amid trừ đi 1 Nó nếu mà nó chạy được đến dòng số 19, thì có nghĩa là cái đoạn mà các bạn tìm kiếm nó hết rồi nó không còn nữa thì mình sẽ return phone là không tìm thấy thì đây chính là thật tấn tìm kiếm nhị phân nha nhưng mà lưu ý là cái giải số của bạn là phải tăng dần hoặc là giảm dần nếu mà cái giải số của bạn em giảm dần thì cái logic của 2 cái nhánh này nó sẽ ngược lại"
+  },
+  {
+    "chunk_id": "chunk_552_612",
+    "start_sec": 552,
+    "end_sec": 612,
+    "start_label": "09:12",
+    "end_label": "10:12",
+    "raw_text": "nó không còn nữa thì mình sẽ return phone là không tìm thấy thì đây chính là thật tấn tìm kiếm nhị phân nha nhưng mà lưu ý là cái giải số của bạn là phải tăng dần hoặc là giảm dần nếu mà cái giải số của bạn em giảm dần thì cái logic của 2 cái nhánh này nó sẽ ngược lại còn đây là cái giải tăng dần còn nếu mà ngược lại giải giảm dần thì mà em đổi cái logic của 2 cái nhánh này đi nha Ví dụ nhanh có 1 cái mảng e có 10 phần tử, bằng 0, 1, 2, 3, 7, 8, 9, 10, 12, 14, ok Đôi, 4, 6, 8, 10, 11 phần tử rồi Thì khi đó, bạn em sẽ shear ra binary search mảng e bắt đầu từ 0 và kết thúc ở N21 mà mình sẽ tìm kiếm thằng x ví dụ như thằng 12 Các bạn sẽ thấy nó sẽ tìm thấy và nó trả về tru ID hả? Đây nó trả về tru này các bạn này"
+  },
+  {
+    "chunk_id": "chunk_596_667",
+    "start_sec": 596,
+    "end_sec": 667,
+    "start_label": "09:56",
+    "end_label": "11:07",
+    "raw_text": "Các bạn sẽ thấy nó sẽ tìm thấy và nó trả về tru ID hả? Đây nó trả về tru này các bạn này Vì dụ như em tìm kiếm giá trị technique nè, cho nên làm không tìm thấy thì sẽ trả về phone Đây, trả được không? Em vào cái link được, còn cái mật khẩu là 625237, mà anh trả nhớ mặt khẩu là lắm Các bạn làm khó mình, đây nha"
+  },
+  {
+    "chunk_id": "chunk_632_696",
+    "start_sec": 632,
+    "end_sec": 696,
+    "start_label": "10:32",
+    "end_label": "11:36",
+    "raw_text": "Các bạn làm khó mình, đây nha ID của hoạt đây 698225681, mật khẩu là 625237 anh đã bảo bọn em đổi tên từ những cái buổi đầu, bây giờ đến cái buổi số 20 hơn 20 rồi mà bọn em vẫn cái vấn đề tên 10 tuổi thì anh cũng không hiểu luôn ấy"
+  },
+  {
+    "chunk_id": "chunk_677_741",
+    "start_sec": 677,
+    "end_sec": 741,
+    "start_label": "11:17",
+    "end_label": "12:21",
+    "raw_text": "anh đã bảo bọn em đổi tên từ những cái buổi đầu, bây giờ đến cái buổi số 20 hơn 20 rồi mà bọn em vẫn cái vấn đề tên 10 tuổi thì anh cũng không hiểu luôn ấy mấy cái đấy thì bọn bạn phải tự biết đấy, đây là thuật toán tìm kiếm nhị phân nha các bạn nào hỏi gì về cái thuật toán tìm kiếm nhị phân này không? nếu mà các bạn muốn hiểu dõi, hiểu dõi thuật toán tìm kiếm nhị phân nó chạy như thế nào thì mình sẽ phải viết ra một vài giải số viết ra một vài dãi số xong xem là nó chạy như thế nào, từng bước từng bước một, thì nó sẽ ổn hơn tìm kiếm nhị phân với ham 5 trong set map cái nào tối yêu hơn, thì nó chung là như nhau thôi"
+  },
+  {
+    "chunk_id": "chunk_725_785",
+    "start_sec": 725,
+    "end_sec": 785,
+    "start_label": "12:05",
+    "end_label": "13:05",
+    "raw_text": "viết ra một vài dãi số xong xem là nó chạy như thế nào, từng bước từng bước một, thì nó sẽ ổn hơn tìm kiếm nhị phân với ham 5 trong set map cái nào tối yêu hơn, thì nó chung là như nhau thôi nó đều là lốc nờ cả, đều là lốc nờ cả mình sẽ lấy một số trường hợp về thật toán tìm kiếm nhị phân này xem nó hoạt động trên cái dãi số như thế nào nhé mình sẽ lấy cho các bạn 2 trường hợp, trường hợp thứ nhất là nó tìm thấy, và trường hợp thứ hai là nó không tìm thấy đây, mình sẽ lấy 1 cái giải số như sao 1, 1, 3, 5, 8, 9, 10, 12, 14 ok, mình sẽ tìm kiếm ở ví dụ thứ nhất, mình sẽ tìm kiếm thằng 12 nhá mình xem nào, ừ, 12 đi thì ban đầu cái lép của bạn nó sẽ bằng 0 này"
+  },
+  {
+    "chunk_id": "chunk_767_834",
+    "start_sec": 767,
+    "end_sec": 834,
+    "start_label": "12:47",
+    "end_label": "13:54",
+    "raw_text": "1, 1, 3, 5, 8, 9, 10, 12, 14 ok, mình sẽ tìm kiếm ở ví dụ thứ nhất, mình sẽ tìm kiếm thằng 12 nhá mình xem nào, ừ, 12 đi thì ban đầu cái lép của bạn nó sẽ bằng 0 này còn rai của bạn nó sẽ bằng 2, 4, 6, 8, 9, rai của mình bằng 8 thì đó các bạn sẽ vào vòng rai, tại vì lép nhỏ bằng rai đúng không mình sẽ tính ra được mith là không cộng với 8, chi cho 2 là 4, công 1, 2, 3, 4 là ông này đó, mith ạ thì so sánh thẳng mith bằng 4 này nè a-mith của mình là 8, so sánh với thẳng 12 thì nó không có íp này nó không có đúng nên nó không vùi tương trù được đúng không mà nó rời cái nhánh thứ 2 đấy là a-mith của bạn nhỏ hơn ít rõ ràng, 8 nhỏ hơn 12 thì đó bạn sẽ update lép bằng mith cộng 1 tức là lép của bạn nó sẽ, bây giờ nó sẽ bằng 5 nhưng không còn là 4 nữa lép của bạn nó sẽ bằng 5, tức là nó sẽ trò vào thằng 9 y của bạn thì vẫn bằng 8, nhìn chung là mình đã bỏ các đoạn này đi rồi quay trở lại vòng y, lep của mình vẫn nhỏ bằng y, mình lại tính ra cái chỉ số đứng giữa khi đó, nó sẽ là 5, 8, chia cho 2 là bằng 6 à"
+  },
+  {
+    "chunk_id": "chunk_818_888",
+    "start_sec": 818,
+    "end_sec": 888,
+    "start_label": "13:38",
+    "end_label": "14:48",
+    "raw_text": "lép của bạn nó sẽ bằng 5, tức là nó sẽ trò vào thằng 9 y của bạn thì vẫn bằng 8, nhìn chung là mình đã bỏ các đoạn này đi rồi quay trở lại vòng y, lep của mình vẫn nhỏ bằng y, mình lại tính ra cái chỉ số đứng giữa khi đó, nó sẽ là 5, 8, chia cho 2 là bằng 6 à 8, 5, 13, chia cho 2 là 6, chính là cái chỉ số của thằng 10 này nè thì các bạn so sánh amith của mình là 10, với thằng 12 là nhỏ hơn, thì nó lại update lep bằng myth cộng 1 myth của bạn là bằng 7, mà các bạn cho lep bằng myth cộng 1 thì lep của bạn nó sẽ bằng 7 Ctrl sẽ bằng 8, mình tìm kiếm có 2 thằng này thôi, thằng 12 và thằng 14 thì khi đó, meet của bạn sẽ là 7, cộng 8, chi cho 2 cũng là 7, thì nó cũng là thằng 12 này xo xanh Amit với x thì nó đúng, nên nó sẽ return to và kết luận là thằng 12 nó tìm thấy thế thôi, nó cứ trẻ đôi như thế thôi, lớn hơn thì nó tìm kiếm ở bên phải, mà nhỏ hơn thì nó tìm kiếm ở bên trái đây là trường hợp mà nó tìm thấy, thế còn trường hợp mà nó không tìm thấy thì cái vòng y này nó sẽ lập lại Vì dụ, mình sẽ tìm kiếm số x bằng 6 để không tìm thấy"
+  },
+  {
+    "chunk_id": "chunk_872_932",
+    "start_sec": 872,
+    "end_sec": 932,
+    "start_label": "14:32",
+    "end_label": "15:32",
+    "raw_text": "đây là trường hợp mà nó tìm thấy, thế còn trường hợp mà nó không tìm thấy thì cái vòng y này nó sẽ lập lại Vì dụ, mình sẽ tìm kiếm số x bằng 6 để không tìm thấy Bạn đầu meet của bạn bằng 4 là ông này So sánh với thằng x là 6, thì thằng 8 nó lớn hơn nên nó sẽ rơi vào L và nó cho write bằng meet chữ 1, tức là write của bạn nó nhảy ra đây, đúng không? Thì đó write của bạn nó sẽ chỉ bằng 3 thôi, tức mình sẽ tìm kiếm trong đoạn này Thì khi đó các đoạn của bạn tính mít ra nó sẽ là không cộng bè, chia cho 2 là bằng 1 Nó chính là thằng này Đúng không? mít của mình thì đó bằng 1 và cái giá trị cũng là số 1 luôn Thì so với thằng 6 thì không có giống So xánh emit nhỏ hơn 6 thì mình sẽ update lép bằng mít cộng 1 Thì lép của bạn nó sẽ ra 2, tại vì mít đang bằng 1 mà, đúng không? Roi của mình thì vẫn bằng bè, tức là các bạn tìm kiếm cái giáy số mà nó chỉ có 2 cái thằng là bè và 5 này này Đó Thì mình lại tính mít của các đoạn đấy ra"
+  },
+  {
+    "chunk_id": "chunk_916_978",
+    "start_sec": 916,
+    "end_sec": 978,
+    "start_label": "15:16",
+    "end_label": "16:18",
+    "raw_text": "So xánh emit nhỏ hơn 6 thì mình sẽ update lép bằng mít cộng 1 Thì lép của bạn nó sẽ ra 2, tại vì mít đang bằng 1 mà, đúng không? Roi của mình thì vẫn bằng bè, tức là các bạn tìm kiếm cái giáy số mà nó chỉ có 2 cái thằng là bè và 5 này này Đó Thì mình lại tính mít của các đoạn đấy ra adding, and then, , mít của bạn là 5, nhỏ hơn thằng x là 6, thì mình lại cho lép bằng mít cộng 1 thì mít của bạn đã bằng bè rồi nha, các bạn cho lép bằng mít cộng 1 thì lép của mình nó sẽ ra 4 trong khi đó cái y của bạn đã bằng bè, đúng không? thì quay trở lại vòng y nó sẽ bị vì phạm cái điều kiện lạc, khi đó mình sẽ return phone nè, nó không tìm thấy thằng 6, cái thôi"
+  },
+  {
+    "chunk_id": "chunk_963_1023",
+    "start_sec": 963,
+    "end_sec": 1023,
+    "start_label": "16:03",
+    "end_label": "17:03",
+    "raw_text": "thì mít của bạn đã bằng bè rồi nha, các bạn cho lép bằng mít cộng 1 thì lép của mình nó sẽ ra 4 trong khi đó cái y của bạn đã bằng bè, đúng không? thì quay trở lại vòng y nó sẽ bị vì phạm cái điều kiện lạc, khi đó mình sẽ return phone nè, nó không tìm thấy thằng 6, cái thôi 1 cái điểm sai hay gặp ở cái thuật toán tình kiếm nhị phân này là cái chỗ này các bạn không có cho dấu bằng là sai nha, phải có dấu bằng vào, tại vì khi mà lép của mình nó bằng y dãi số của mình tìm kiếm có 1 thằng thì mình vẫn tìm bình thường không phải là lab phải nhỏ unride đâu, lab có thể bằng ride được khi đó các đoạn mà bạn em tìm kiếm trên dãi số nó chỉ có 1 phần tử đúng rồi cái hàm binary search này nó có sẵn nha nó cũng lốc nờ mà em nó cũng lốc nờ nó có hàm có sẵn, các bạn có thể tự cốt như thế này cũng được hoặc là bạn em có thể sử dụng hàm có sẵn"
+  },
+  {
+    "chunk_id": "chunk_1007_1068",
+    "start_sec": 1007,
+    "end_sec": 1068,
+    "start_label": "16:47",
+    "end_label": "17:48",
+    "raw_text": "cái hàm binary search này nó có sẵn nha nó cũng lốc nờ mà em nó cũng lốc nờ nó có hàm có sẵn, các bạn có thể tự cốt như thế này cũng được hoặc là bạn em có thể sử dụng hàm có sẵn hàm có sẵn thì cú pháp nó giống hàm source đấy là binary search, a và a cộng nờ nếu mà bạn app dụng ở trên máng nếu mà bạn em áp dụng trên vector thì nó sẽ là a.begin và a.en nó cũng sẽ trả về chu hoặc là phone, tweet, xem phần tử này có xuất hiện hay không nhưng mà cái mảng an này phải được sắp xếp theo thứ tự tăng dần như mảng ngậu nhiên mà các bạn gọi binary search sẽ bị sai tại vì nhiều bạn cứ nghĩ là mình sẽ có một cái mảng ngậu nhiên sau mình gọi binary search thì nó tự sắp xếp cho mình là không phải cái mảng đấy phải được sắp xếp trước hoặc là cái vector đấy phải sắp xếp trước thì bạn em mới gọi binary search được là nó sẽ chả về trù và trù 12 thì nó chả về trù tuy các bạn thôi, thích dùng hầm có sẵn được mà tự viết cũng được muốn in ra vị trí thì sao, muốn in ra vị trí thì em phải tự cốt lấy"
+  },
+  {
+    "chunk_id": "chunk_1051_1112",
+    "start_sec": 1051,
+    "end_sec": 1112,
+    "start_label": "17:31",
+    "end_label": "18:32",
+    "raw_text": "cái mảng đấy phải được sắp xếp trước hoặc là cái vector đấy phải sắp xếp trước thì bạn em mới gọi binary search được là nó sẽ chả về trù và trù 12 thì nó chả về trù tuy các bạn thôi, thích dùng hầm có sẵn được mà tự viết cũng được muốn in ra vị trí thì sao, muốn in ra vị trí thì em phải tự cốt lấy còn hầm binary search thì nó chỉ chả về trù hoặc là phô nôi tính nữa thì nó sẽ có các biến thể của thuật án tìm kiếm nhị phân em có thể in ra vị trí được thếaga thuật án tìm kiếm nhị phân này của mình sẽ hoạt động vào trong những bài toán kiểu như thế này Mà em lọc ra phần bài tập về set map Nó sẽ có cái bài ngày xưa bạn em làm bằng set vào map để là truy vấn phần tử này Bây giờ nó cho mình một cái mảng A của một phần tử, sau đó yêu cầu bạn em trả lời các cái truy vấn Mỗi truy vấn thì hỏi bạn em là cái thằng X nó có xuất hiện trong mảng hay không? Thì trước đây các bạn dùng set vào map để lưu mảng A để mình có thể tìm kiếm nhanh Bây giờ bạn em có thể một cách nữa là bạn em sẽ lưu cái mảng A này vào một cái mảng bình thường"
+  },
+  {
+    "chunk_id": "chunk_1093_1155",
+    "start_sec": 1093,
+    "end_sec": 1155,
+    "start_label": "18:13",
+    "end_label": "19:15",
+    "raw_text": "Bây giờ nó cho mình một cái mảng A của một phần tử, sau đó yêu cầu bạn em trả lời các cái truy vấn Mỗi truy vấn thì hỏi bạn em là cái thằng X nó có xuất hiện trong mảng hay không? Thì trước đây các bạn dùng set vào map để lưu mảng A để mình có thể tìm kiếm nhanh Bây giờ bạn em có thể một cách nữa là bạn em sẽ lưu cái mảng A này vào một cái mảng bình thường Nhưng mà trước khi mà mình truy vấn thì mình sẽ sắp xếp cái mảng A đấy tăng dần Thực chứ à? Sau đó mỗi truy vấn thì các bạn dùng binary search trên cái giải tăng dần đấy thì nó sẽ mất lốc nờ cho mỗi truy vấn Thì mọi em thì làm cho anh cái bài số 2 truy vấn phần tử xem nào Mọi người làm cho mình cái bài số 2 truy vấn phần tử xem nào Ừ, làm bằng binary search nha, đây, cứu pháp Mọi em nếu mà bạn nào mà tinh ý thì các bạn sẽ thấy mấy cái hàm thuật quán ở trong cái thư viện algorithm như hàm sort này Rồi hàm binary search này, thì nó đều có cứu pháp giống nhau nếu mình tìm kiếm trên mạng thì nó sẽ là acogner còn nếu mà tìm kiếm ở trên vector thì nó sẽ là begin.n"
+  },
+  {
+    "chunk_id": "chunk_1140_1204",
+    "start_sec": 1140,
+    "end_sec": 1204,
+    "start_label": "19:00",
+    "end_label": "20:04",
+    "raw_text": "Mọi em nếu mà bạn nào mà tinh ý thì các bạn sẽ thấy mấy cái hàm thuật quán ở trong cái thư viện algorithm như hàm sort này Rồi hàm binary search này, thì nó đều có cứu pháp giống nhau nếu mình tìm kiếm trên mạng thì nó sẽ là acogner còn nếu mà tìm kiếm ở trên vector thì nó sẽ là begin.n và nó cũng hỗ trợ tìm kiếm trên đoạn nữa, nha đó, đây là thuật toán tìm kiếm không trước anh có chia sẻ là trong nhóm bạn em có một bạn gửi đây là có bạn lớp 7, lớp 7 cho nó đã học thuật toán tìm kiếm nhị phân này rồi đó mà bạn em học lại học, bạn em đòi đi làm, kiếm tiền mà bạn em còn không cốt được cái thuật toán tìm kiếm nhị phân, vất đi đúng không? mình đòi học công nghệ thông tin để mình học kỹ năng mình đi làm, mình kiếm tiền, hẳn hoai, mình cần không cốt được mấy cái bài mà thằng lớp 7 nó còn cốt được thì các bạn nghĩ là các bạn kiếm tiền nữa không nhưng mà theo đánh giá của mình thì 10 ông học công nghệ thông tin thì chắc phải ít là 5 ông không cốt được thuật toán tìm kiếm nhị phân"
+  },
+  {
+    "chunk_id": "chunk_1185_1245",
+    "start_sec": 1185,
+    "end_sec": 1245,
+    "start_label": "19:45",
+    "end_label": "20:45",
+    "raw_text": "mình đi làm, mình kiếm tiền, hẳn hoai, mình cần không cốt được mấy cái bài mà thằng lớp 7 nó còn cốt được thì các bạn nghĩ là các bạn kiếm tiền nữa không nhưng mà theo đánh giá của mình thì 10 ông học công nghệ thông tin thì chắc phải ít là 5 ông không cốt được thuật toán tìm kiếm nhị phân mà không biết thuật toán tìm kiếm nhị phân như thế nào luôn ít đấy nhưng mà cứ nhặt ngẫu nhiên 10 ông học công nghệ thông tin ở các trường đại học ở Việt Nam này này xong bảo là em cốt cho anh thuật toán tìm kiếm nhị phân Thì mình nghĩ chắc phải có tầm 5 ít là 5 âu không cốt được Chứ mình chưa nói mấy kiến thức khó như là đồ thị, hay là cây, hay là những cái bài toàn khó, chứ có thứ những cái kỹ thuật khó nha Mình đang nói đến những thuật, 100 những thuật toàn quan trọng nhất này Bài tiết thì hả? Tiết anh thấy làm ok mà, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1221_1282",
+    "start_sec": 1221,
+    "end_sec": 1282,
+    "start_label": "20:21",
+    "end_label": "21:22",
+    "raw_text": "Chứ mình chưa nói mấy kiến thức khó như là đồ thị, hay là cây, hay là những cái bài toàn khó, chứ có thứ những cái kỹ thuật khó nha Mình đang nói đến những thuật, 100 những thuật toàn quan trọng nhất này Bài tiết thì hả? Tiết anh thấy làm ok mà, đúng không? Hôm nay cũng không có chiến lại Sau khi mà học xong buổi ngày hôm nay là bạn em có đủ đầy đủ kiến thức để các bạn làm các các bài tập liên quan đến mạng 1 triều nâng cao và lại phần về thuật toàn sắp xếp và tìm kiếm Mình dạy đệ quy nó hơi muộn một chút để cho các bạn học được tương đối nhiều kiến thức thì mình quay lại đệ quy cũng không sao Thứ còn ngày xưa mình thấy là khi mà mới học thì vừa học xong hèm, người ta đã dạy đệ quy rồi trong khi đó thì người học người ta mới học đến hèm, kiến thức nó chưa có Học đệ quy thì nó lại hơi khó hiểu, nó hơi chiều tượng, nó gây khó khăn"
+  },
+  {
+    "chunk_id": "chunk_1260_1320",
+    "start_sec": 1260,
+    "end_sec": 1320,
+    "start_label": "21:00",
+    "end_label": "22:00",
+    "raw_text": "Mình dạy đệ quy nó hơi muộn một chút để cho các bạn học được tương đối nhiều kiến thức thì mình quay lại đệ quy cũng không sao Thứ còn ngày xưa mình thấy là khi mà mới học thì vừa học xong hèm, người ta đã dạy đệ quy rồi trong khi đó thì người học người ta mới học đến hèm, kiến thức nó chưa có Học đệ quy thì nó lại hơi khó hiểu, nó hơi chiều tượng, nó gây khó khăn nên là mình để cái đệ quy ở đoạn đằng sau này Nếu mà em cốt được thì tự cốt Cout xong, nếu mà thành thạo rồi thì mình sẽ dùng hèm có sẵn Tại nó không có hơn chục dòng, bài nào research này có hơn chục dòng thì các bạn cout chắc là được Có gì là có 4 thằng sai này rồi"
+  },
+  {
+    "chunk_id": "chunk_1298_1365",
+    "start_sec": 1298,
+    "end_sec": 1365,
+    "start_label": "21:38",
+    "end_label": "22:45",
+    "raw_text": "Tại nó không có hơn chục dòng, bài nào research này có hơn chục dòng thì các bạn cout chắc là được Có gì là có 4 thằng sai này rồi Bình tĩnh, mình dễ ích Thật toàn tìm kiếm này nó hơi khó hiểu và nó có 1 số bài toán cũng hơi khó so với mấy cái bài like set map hay sub set mà các bạn đã từng học thì Thật toàn tìm kiếm này là nó hơi khó Cô Đồng Xuân Đức, đây của Khoả, hay bạn này là nô quý, trần minh nhật bị sai"
+  },
+  {
+    "chunk_id": "chunk_1346_1598",
+    "start_sec": 1346,
+    "end_sec": 1598,
+    "start_label": "22:26",
+    "end_label": "26:38",
+    "raw_text": "so với mấy cái bài like set map hay sub set mà các bạn đã từng học thì Thật toàn tìm kiếm này là nó hơi khó Cô Đồng Xuân Đức, đây của Khoả, hay bạn này là nô quý, trần minh nhật bị sai Cho bạn thêm 2 phút nữa sử lý bài này nha Nó dễ mè, bạn em dùng hàm có sẵn được Bina Research Các bạn côn khá lộn rồi này"
+  },
+  {
+    "chunk_id": "chunk_1379_1601",
+    "start_sec": 1379,
+    "end_sec": 1601,
+    "start_label": "22:59",
+    "end_label": "26:41",
+    "raw_text": "Các bạn côn khá lộn rồi này Có một số bạn bị sai chắc là chưa xót cái giải số"
+  },
+  {
+    "chunk_id": "chunk_1379_1602",
+    "start_sec": 1379,
+    "end_sec": 1602,
+    "start_label": "22:59",
+    "end_label": "26:42",
+    "raw_text": "Các bạn côn khá lộn rồi này Có một số bạn bị sai chắc là chưa xót cái giải số Xong đã tìm kiếm bị phân đúng không"
+  },
+  {
+    "chunk_id": "chunk_1379_1605",
+    "start_sec": 1379,
+    "end_sec": 1605,
+    "start_label": "22:59",
+    "end_label": "26:45",
+    "raw_text": "Các bạn côn khá lộn rồi này Có một số bạn bị sai chắc là chưa xót cái giải số Xong đã tìm kiếm bị phân đúng không Ừ, biết sử dụng là được"
+  },
+  {
+    "chunk_id": "chunk_1379_1610",
+    "start_sec": 1379,
+    "end_sec": 1610,
+    "start_label": "22:59",
+    "end_label": "26:50",
+    "raw_text": "Các bạn côn khá lộn rồi này Có một số bạn bị sai chắc là chưa xót cái giải số Xong đã tìm kiếm bị phân đúng không Ừ, biết sử dụng là được Cô sẽ có minh trên này"
+  },
+  {
+    "chunk_id": "chunk_1379_1613",
+    "start_sec": 1379,
+    "end_sec": 1613,
+    "start_label": "22:59",
+    "end_label": "26:53",
+    "raw_text": "Các bạn côn khá lộn rồi này Có một số bạn bị sai chắc là chưa xót cái giải số Xong đã tìm kiếm bị phân đúng không Ừ, biết sử dụng là được Cô sẽ có minh trên này Cô trần minh nhật trên này"
+  },
+  {
+    "chunk_id": "chunk_1379_1618",
+    "start_sec": 1379,
+    "end_sec": 1618,
+    "start_label": "22:59",
+    "end_label": "26:58",
+    "raw_text": "Các bạn côn khá lộn rồi này Có một số bạn bị sai chắc là chưa xót cái giải số Xong đã tìm kiếm bị phân đúng không Ừ, biết sử dụng là được Cô sẽ có minh trên này Cô trần minh nhật trên này anh đã bảo là dùng binary search cho em, em dùng set làm cái gì"
+  },
+  {
+    "chunk_id": "chunk_1602_1669",
+    "start_sec": 1602,
+    "end_sec": 1669,
+    "start_label": "26:42",
+    "end_label": "27:49",
+    "raw_text": "Ừ, biết sử dụng là được Cô sẽ có minh trên này Cô trần minh nhật trên này anh đã bảo là dùng binary search cho em, em dùng set làm cái gì với lại nha ở đây em đưa các phần tửa trong set vào cái mạng để nó sắp xuyết theo thứ tăng dần đúng không nhưng mà khi đó cái mạng của mình nó có con n phần tửa nữa đâu mà sort a và a cộng nó là xin lỗi binary search a và a cộng nó còn đúng không ý tưởng của em là em đưa các phần tửa trong set ra cái mạng sau đó em tìm kiếm nhị phân ở trên cái mạng cái gì tại sao mình không dùng sort mà mình lại làm cái công việc nó phức tạp như thế này? mà chưa kể nhá, khi mà mình chuyển cái mảng A của mình từ cái xếp sang ấy cái số lượng phần tử trong mảng A của mình nó không còn lại n phần tử nữa nhưng mà khi mà em binary search em vẫn tìm kiếm trên từ A và A cũng là nó sẽ bị sai làm gì mà phức tạp thế, bây giờ mình chỉ cần nhập mảng A, sau khi mình sort nó tăng dần thế mà"
+  },
+  {
+    "chunk_id": "chunk_1650_1719",
+    "start_sec": 1650,
+    "end_sec": 1719,
+    "start_label": "27:30",
+    "end_label": "28:39",
+    "raw_text": "mà chưa kể nhá, khi mà mình chuyển cái mảng A của mình từ cái xếp sang ấy cái số lượng phần tử trong mảng A của mình nó không còn lại n phần tử nữa nhưng mà khi mà em binary search em vẫn tìm kiếm trên từ A và A cũng là nó sẽ bị sai làm gì mà phức tạp thế, bây giờ mình chỉ cần nhập mảng A, sau khi mình sort nó tăng dần thế mà đúng không? còn lưu miễn thành bình này chắc là lại đưa cái hàm sort vào trong truy vấn đúng không? đây bây giờ mỗi truy vấn em đem cái mảng em xót lại một lần thì có phải là nó thừa không? tại sao mình không xót nó đúng một lần thôi? thì khi đó cái giải số của mình nó tăng dần rồi và các cái truy vấn của mình thì mình chỉ cần tìm kiếm trên cái mảng tăng dần đấy thôi bên đây cứ mỗi truy vấn em lại đi xót một lần có phải nó thừa không? nó thừa cái này không? thì mình phải tư duy chỗ đó chứ bây giờ mỗi truy vấn mà em xót một lần như thế này thì mỗi truy vấn nó vẫn mất nờ lúc nờ nó còn chậm hơn là thuật toán tìm kiếm tuyên tính nữa xót này nó mất nò lúc nò này, còn kể cả bây giờ em không binary search mà em dùng thật tàn tìm kiến tuyến tính nó còn nhanh hơn cái code này của em"
+  },
+  {
+    "chunk_id": "chunk_1703_1778",
+    "start_sec": 1703,
+    "end_sec": 1778,
+    "start_label": "28:23",
+    "end_label": "29:38",
+    "raw_text": "bây giờ mỗi truy vấn mà em xót một lần như thế này thì mỗi truy vấn nó vẫn mất nờ lúc nờ nó còn chậm hơn là thuật toán tìm kiếm tuyên tính nữa xót này nó mất nò lúc nò này, còn kể cả bây giờ em không binary search mà em dùng thật tàn tìm kiến tuyến tính nó còn nhanh hơn cái code này của em ở đây các bạn nhập mảng vào này, sau đó các bạn đem các bạn xót theo thứ tự tăng dần thôi rồi xót A và A cộng nờ, ok sau đó mình nhập quy là số truy vấn đúng không? y quy chữ chữ thì mỗi truy vấn em nhập thằng x ok, nó hỏi thằng x này có xuất hiện hay không đúng không? thì mình chỉ cần kiểm tra là if binary search Các phần nào mà phần sắp xếp và tìm kiếm nhé"
+  },
+  {
+    "chunk_id": "chunk_1776_1838",
+    "start_sec": 1776,
+    "end_sec": 1838,
+    "start_label": "29:36",
+    "end_label": "30:38",
+    "raw_text": "Các phần nào mà phần sắp xếp và tìm kiếm nhé Hình như là cái bài mà... Ờ, đây, bài 26 này này Nó cho bạn em một cái mảng A gồm nở phần tử và xuống yên ích Nhận vụ của bạn là tìm xem là trong mảng của mình nó có cái cặp AE chứ đi AZ bằng ích hay không Tức là mình phải tìm xem là trong mảng có tồn tại 2 thằng mà nó có hiệu bằng ích hay không ấy Thì bài này, bạn em có thể dùng map để đánh dấu Mình sẽ đánh dấu các cái giá trị xuất hiện là trong mảng, đúng không? Các thứ 2 là các bạn có thể sử dụng thuật tán tìm kiếm nhị phân cũng được Là mình đem, mình sắp xếp cái giải số đấy tăng dần Ví dụ mình xong, khi mà các bạn sắp xếp mảng tăng dần nó sẽ thành 1, 3, 5, 10, 14, 23, 47 trang hạn, ví dụ như thế Giờ, xíu như các bạn em đang muốn kiểm tra xem là trong mảng của mình có 2 thằng mà cái độ tranh lệch của nó ích là bằng 11 hay không, đúng không? Thì cái bước thứ nhất là mình shot cái mảng này là nó mất nờ lúc nờ Bây giờ các bạn sẽ duyệt qua từng phần từ 1 ở trong mảng Mình gọi cái thằng đấy là AI"
+  },
+  {
+    "chunk_id": "chunk_1822_1883",
+    "start_sec": 1822,
+    "end_sec": 1883,
+    "start_label": "30:22",
+    "end_label": "31:23",
+    "raw_text": "Giờ, xíu như các bạn em đang muốn kiểm tra xem là trong mảng của mình có 2 thằng mà cái độ tranh lệch của nó ích là bằng 11 hay không, đúng không? Thì cái bước thứ nhất là mình shot cái mảng này là nó mất nờ lúc nờ Bây giờ các bạn sẽ duyệt qua từng phần từ 1 ở trong mảng Mình gọi cái thằng đấy là AI Thì các bạn sẽ kiểm tra xem là trong màng của mình nó có cái thằng là AI cộng K hay không? Có đúng không? Nếu mà nó có thằng AI cộng K thì chứng tỏ là cái 2 thằng này nó đợi độ trình lịch là K Mặc mỗi lần mà các bạn duyệt qua từ 1 trong màng này này, mình tìm kiếm xem cái thằng AI cộng K này nó có xuất hiện hay không thì mình chỉ mất lốc nờ Mình dùng tìm kiếm nhị phân nhé, tại vì cái giải số của mình nó tăng dần Thì khi đó các bạn duyệt qua từ 1 trong màng này Cứ mỗi lần mà duyệt qua thằng AI, bạn em kiểm tra xem là cái thằng AI cộng can nó có xuất hiện không? Có phát là mình kết luận luôn Ok, thì các bạn thử lệm cho mình cái bài số 26 này xem nào, bằng thuật toán tìm kiếm nhị phân xem nào Thì khi đó toàn bộ trương trình của bạn em nó sẽ có độ phức tạp là nờ lốc nờ Và khi đó thì nờ của mình lên đến 10 năm, 10 mũ 6 thì hoàn toàn bình thường"
+  },
+  {
+    "chunk_id": "chunk_1868_1932",
+    "start_sec": 1868,
+    "end_sec": 1932,
+    "start_label": "31:08",
+    "end_label": "32:12",
+    "raw_text": "Ok, thì các bạn thử lệm cho mình cái bài số 26 này xem nào, bằng thuật toán tìm kiếm nhị phân xem nào Thì khi đó toàn bộ trương trình của bạn em nó sẽ có độ phức tạp là nờ lốc nờ Và khi đó thì nờ của mình lên đến 10 năm, 10 mũ 6 thì hoàn toàn bình thường Đây, lọc ra cái phần lớp nâng cao của các bạn Đây, toàn mấy bạn khóa trước Levan Đại, Nguyễn Đắc Kiên, Nguyễn Đức Thiện, Long, Lưu Văn Minh, 36, cho các bạn 5 phút để xử lý bài này nha Bước thứ nhất, mình sẽ xót cái mảng tăng dần, sau khi mà cái mảng của mình tăng dần rồi thì mình có thể duyệt qua từng phần tựa 1 ở trong mạng gọi là thằng AI và mình tìm kiếm cái sự xuất hiện của thằng AI cộng ca bằng thuật toán tìm kiếm nhị phân để nó chỉ mất lớp cho mỗi lần tìm kiếm thôi còn lại cái kỹ năng cai đập là ở các bạn sau cái này thì mình sẽ sang các biến thể của thuật tán tìm kiếm nghị phân nha"
+  },
+  {
+    "chunk_id": "chunk_1911_2246",
+    "start_sec": 1911,
+    "end_sec": 2246,
+    "start_label": "31:51",
+    "end_label": "37:26",
+    "raw_text": "Bước thứ nhất, mình sẽ xót cái mảng tăng dần, sau khi mà cái mảng của mình tăng dần rồi thì mình có thể duyệt qua từng phần tựa 1 ở trong mạng gọi là thằng AI và mình tìm kiếm cái sự xuất hiện của thằng AI cộng ca bằng thuật toán tìm kiếm nhị phân để nó chỉ mất lớp cho mỗi lần tìm kiếm thôi còn lại cái kỹ năng cai đập là ở các bạn sau cái này thì mình sẽ sang các biến thể của thuật tán tìm kiếm nghị phân nha các biến thể của thuật tán tìm kiếm nghị phân nó sẽ khó hơn ok mình sẽ chứa mấy bài này nha, mình gọi mình thân"
+  },
+  {
+    "chunk_id": "chunk_1935_2263",
+    "start_sec": 1935,
+    "end_sec": 2263,
+    "start_label": "32:15",
+    "end_label": "37:43",
+    "raw_text": "ok mình sẽ chứa mấy bài này nha, mình gọi mình thân thế sao lại mình tìm lại tìm kiếm thằng AI"
+  },
+  {
+    "chunk_id": "chunk_2246_2306",
+    "start_sec": 2246,
+    "end_sec": 2306,
+    "start_label": "37:26",
+    "end_label": "38:26",
+    "raw_text": "thế sao lại mình tìm lại tìm kiếm thằng AI bây giờ em tìm kiếm thằng AI thì bao giờ mà nó trả tìm thấy đúng không? bây giờ em diệt qua cái mạng, xong em tìm kiếm trên cái mạng của mình tìm thằng AI thì nó đâu có thỏa mãn được cái yêu cầu của đề bài tìm kiếm thằng AI thì bao giờ nó chả thấy đúng không? ừ ngồi ok bài này nó bắt mình tìm xem trong màng của mình nó có 2 thằng mà cái độ trình lệch của nó bằng ích hay không đúng không? thì các bạn nhập màng sau đó thì ở đây mình nhập thêm thằng ích kìa chỗ này kìa rồi"
+  },
+  {
+    "chunk_id": "chunk_2291_2374",
+    "start_sec": 2291,
+    "end_sec": 2374,
+    "start_label": "38:11",
+    "end_label": "39:34",
+    "raw_text": "ngồi ok bài này nó bắt mình tìm xem trong màng của mình nó có 2 thằng mà cái độ trình lệch của nó bằng ích hay không đúng không? thì các bạn nhập màng sau đó thì ở đây mình nhập thêm thằng ích kìa chỗ này kìa rồi các bạn shot cho mình cái màng 1 lần để cái màng của mình nó tăng dần bây giờ các bạn diệt qua từng phần tự 1 ở trong màng thì mình đã có thằng rồi mình diệt cái này là vòng foi đi cho nó khác tên Rồi thì bây giờ mình đang xét cái thằng ở trong mạng của mình, nó có giá trị là ai thì bọn em tìm kiếm xem là cái thằng ai cộng ca nó có xuất hiện hay không? Có thì 2 thằng này cái độ tranh lịch là bằng ca mà mình sẽ phải dùng binary search để mình tìm kiếm ở trên mảng A, cái giá trị là ai cộng ca này nó mới nhanh được, mình chỉ cần viết là ip, binary search, ai cộng nờ đúng không? uy Thằng AI cộng kè Sự gi результат"
+  },
+  {
+    "chunk_id": "chunk_2349_2410",
+    "start_sec": 2349,
+    "end_sec": 2410,
+    "start_label": "39:09",
+    "end_label": "40:10",
+    "raw_text": "Sự gi результат trôi này là i cộng xong nhé thế thì bây giờ này thông thường thuật toán tìm kiếm nhị phân nó sẽ không hỏi mấy cái kiểu là nó hỏi bạn em là có xuất hiện hay không đâu, nó không dễ như thế mà thường nó sẽ là các biến thể của thuật toán tìm kiếm nhị phân em chạy for rồi binary search từ a cộng 1 cho từ a cộng nở cộng 1, a cộng k là sai nó không có sai nhưng mà có thể là do em nhập cái mạng của mình nó không có chuẩn em tìm từ a cộng 1 cho từ a cộng nở cộng 1 có nghĩa là em lưu cái mạng của mình từ chỉ số 1 đến chỉ số nở cái gì"
+  },
+  {
+    "chunk_id": "chunk_2394_2457",
+    "start_sec": 2394,
+    "end_sec": 2457,
+    "start_label": "39:54",
+    "end_label": "40:57",
+    "raw_text": "em chạy for rồi binary search từ a cộng 1 cho từ a cộng nở cộng 1, a cộng k là sai nó không có sai nhưng mà có thể là do em nhập cái mạng của mình nó không có chuẩn em tìm từ a cộng 1 cho từ a cộng nở cộng 1 có nghĩa là em lưu cái mạng của mình từ chỉ số 1 đến chỉ số nở cái gì nếu mà em lưu từ chỉ số 1 đến chỉ số nở thì em sẽ tìm kiếm như vậy tốt nhất là mình nộp ở trong mình lưu từ không đến nở đi thì một vài cái biến thể thì anh có liệt cái ở trong slide đó thứ nhất là nó sẽ cho bạn em 1 cái giải tăng dần sau nó hỏi các bạn là cái giải cái vị trí bắt đầu của cái vị trí đầu tiên của cái số trong cái giải tăng dần dụ như các bạn có 1 dãi tăng dần là 1, 3, 3, 4, 5, 8, 9 đúng không? thì nó có thể hỏi các bạn là vị trí xuất hiện đầu tiên của tháng 3 là ở đâu? dãi này tăng dần hoặc là dám dần nhé, và nó hỏi các bạn là vị trí đầu tiên của tháng 3"
+  },
+  {
+    "chunk_id": "chunk_2440_2502",
+    "start_sec": 2440,
+    "end_sec": 2502,
+    "start_label": "40:40",
+    "end_label": "41:42",
+    "raw_text": "cái vị trí đầu tiên của cái số trong cái giải tăng dần dụ như các bạn có 1 dãi tăng dần là 1, 3, 3, 4, 5, 8, 9 đúng không? thì nó có thể hỏi các bạn là vị trí xuất hiện đầu tiên của tháng 3 là ở đâu? dãi này tăng dần hoặc là dám dần nhé, và nó hỏi các bạn là vị trí đầu tiên của tháng 3 hoặc là nó cũng có thể hỏi các bạn vị trí cuối cùng đó thì những biến thể đó thì các bạn có thể áp dụng thuật quán tìm kiếm nhị phân chứ đừng có duyệt từ đầu đến cuối là nó sẽ mất owner bây giờ mình sẽ hướng dẫn cho các bạn cách tìm vị trí đầu tiên của 1 số trong dãi đã sắp xếp theo thứ tự tăng dần 1, 2, 3, 4, 5, 6, ok và mình sẽ tìm vị trí đầu tiên của thằng X là bằng 3 nha thì nó giống hết thuật toán tìm kiếm nhị phân đấy là nó cũng duy trì lapRy, lap 0, 2, 4, 6, 8, 10, Ry bằng 9 sau nó tính ra chỉ số đường giữa là 0, 9, chiếc 2 là 4 thì khi đó cái thằng Amid của mình, nó cũng sẽ được so sánh với cái thằng X thôi"
+  },
+  {
+    "chunk_id": "chunk_2484_2546",
+    "start_sec": 2484,
+    "end_sec": 2546,
+    "start_label": "41:24",
+    "end_label": "42:26",
+    "raw_text": "thì nó giống hết thuật toán tìm kiếm nhị phân đấy là nó cũng duy trì lapRy, lap 0, 2, 4, 6, 8, 10, Ry bằng 9 sau nó tính ra chỉ số đường giữa là 0, 9, chiếc 2 là 4 thì khi đó cái thằng Amid của mình, nó cũng sẽ được so sánh với cái thằng X thôi cout, cache, nítết, containers,doc, Mector and cache Hён Cypher, if this is construction, nager. edge, bằng x nhé, các bạn không được trẻ về cái chỉ số mit này, đúng không? Tại vì nó có thể không phải là cái vị trí đầu tiên, thay vì đó thì các bạn sẽ tạo ra cho mình 1 cái biến kết quả ban đầu các bạn khởi tạo bằng chiều 1, nó tương ứng với việc là thằng x nó không có xuất hiện ở trong màn của mình"
+  },
+  {
+    "chunk_id": "chunk_2529_2590",
+    "start_sec": 2529,
+    "end_sec": 2590,
+    "start_label": "42:09",
+    "end_label": "43:10",
+    "raw_text": "bằng x nhé, các bạn không được trẻ về cái chỉ số mit này, đúng không? Tại vì nó có thể không phải là cái vị trí đầu tiên, thay vì đó thì các bạn sẽ tạo ra cho mình 1 cái biến kết quả ban đầu các bạn khởi tạo bằng chiều 1, nó tương ứng với việc là thằng x nó không có xuất hiện ở trong màn của mình xong bây giờ các bạn check cái thằng amit của mình là 3, nó bằng thằng x thì mình ghi nhận là cái mit khi đó, đấy là bằng 4 tức là mình chỉ được phép ghi nhận lại thôi chứ mình chưa được return đúng không? Thì khi đó mình sẽ ghi nhận được là cái thẳng ở chỉ số 4 ở trong mạng của mình có giá trị là 3 Sau đó, do là mình muốn tìm vị trí đầu tiên, nên mình sẽ bỏ các bạn này đi Bỏ được đúng không? Mà mình sẽ tìm kiếm ở nửa bên trái này, tiếp tục tìm kiếm ở nửa bên trái xem có thẳng 3 hay không? Thì ở nửa bên phải này của các bạn có thể có thẳng 3 nhé Nhưng mà 2 cái chỉ số đằng sau này, nó không có tốt bằng cái chỉ số mà các bạn đang có là 4 nên mình có thể bỏ đi được và các bạn tiếp tục thật toàn tìm kiếm nhị phân của mình ở nửa bên trái để nó đi nó update tiếp cho cái biến kết quả này nếu mà nó có thằng ba thì nó sẽ tiếp tục update"
+  },
+  {
+    "chunk_id": "chunk_2574_2635",
+    "start_sec": 2574,
+    "end_sec": 2635,
+    "start_label": "42:54",
+    "end_label": "43:55",
+    "raw_text": "Thì ở nửa bên phải này của các bạn có thể có thẳng 3 nhé Nhưng mà 2 cái chỉ số đằng sau này, nó không có tốt bằng cái chỉ số mà các bạn đang có là 4 nên mình có thể bỏ đi được và các bạn tiếp tục thật toàn tìm kiếm nhị phân của mình ở nửa bên trái để nó đi nó update tiếp cho cái biến kết quả này nếu mà nó có thằng ba thì nó sẽ tiếp tục update và nếu mà nó không có thằng ba thì mình cũng đang có cái chỉ số bốn này rồi là đáp án tối yêu nhất rồi nên nó chỉ khác cái thằng thật toàn tìm kiếm nhị phân, nói đúng 1 cái thôi là bây giờ mình sẽ viết 1 cái hèm có tên là FirstBot nha mình sẽ tạo ra 1 cái biến đáp án là bằng chừng 1 Thì khi mà các bạn lập thuật toàn tìm kiếm nhị phân, nếu mà emit của bạn nó bằng ích thì các bạn sẽ cho nrf bằng mit, tức là mình sẽ ghi nhận lại thôi Ghi nhận lại cái chỉ số đó thôi Sau đó các bạn cho y bằng mit chứ 1 để mình tìm kiếm thêm ở bên trái Tìm kiếm thêm ở bên trái Ok, và dưới này các bạn sẽ return về cho mình cái biến nrf Thế là được Trong trường hợp mà nó không tìm thấy thì cái biến nrf của bạn này, bọn em nó vẫn sẽ bằng chứ 1"
+  },
+  {
+    "chunk_id": "chunk_2618_2678",
+    "start_sec": 2618,
+    "end_sec": 2678,
+    "start_label": "43:38",
+    "end_label": "44:38",
+    "raw_text": "Sau đó các bạn cho y bằng mit chứ 1 để mình tìm kiếm thêm ở bên trái Tìm kiếm thêm ở bên trái Ok, và dưới này các bạn sẽ return về cho mình cái biến nrf Thế là được Trong trường hợp mà nó không tìm thấy thì cái biến nrf của bạn này, bọn em nó vẫn sẽ bằng chứ 1 Thì nó mình sẽ return về chứ 1 trừ 1, còn nếu mà nó tìm thấy thì nó sẽ trẻ về cho các bạn được cái chỉ số đầu tiên của thằng Ích trong cái mảng tăng dần đấy, chỉ số đầu tiên của thằng Ích trong cái mảng tăng dần ví dụ như ở đây, mình sẽ nhập 1 cái mảng và Ích, sau đó mình sẽ CL the first spot mà mình chuyển A nè A không nòi trừ 1 và Ích vào để mình tìm cái chỉ số đầu tiên nhé ví dụ như cái dại số của mình có 10 phần tử như vừa rồi đấy là 1, 2, 3, 3, 3, 3, 4, 5, 6 ok, có đúng không? 4, 6, 8, 10, ok rồi nó sẽ tìm kiếm được cho bạn em cái chỉ số đầu tiên của thằng Ba trong cái mạng của mình là chỉ số 2"
+  },
+  {
+    "chunk_id": "chunk_2659_2720",
+    "start_sec": 2659,
+    "end_sec": 2720,
+    "start_label": "44:19",
+    "end_label": "45:20",
+    "raw_text": "đấy là 1, 2, 3, 3, 3, 3, 4, 5, 6 ok, có đúng không? 4, 6, 8, 10, ok rồi nó sẽ tìm kiếm được cho bạn em cái chỉ số đầu tiên của thằng Ba trong cái mạng của mình là chỉ số 2 ok rồi, sao nó dạ 1 thế? nhập nờ và ích à, mình kiếu thằng ích, đúng không? 3, rồi ok thì nó sẽ tìm cho bạn em được cái chỉ số của thằng ích là 2 đấy, đúng không? và nếu mà các bạn tìm 1 cái giá trị nó không xuất hiện nha ví dụ như mình cho thằng ích là 10, 3 thì nó sẽ in ra trường 1 đừng có cho cái đáp án này là không nha Thế sao đáp AN-NX không cho bằng không? Cho bằng không thì nhớ đâu cái thằng đấy nó xuất hiện ở chỉ số không thì mình sai à, đúng không? Mình phải cho nó tương hương với cái số âm 1, nó đại diện như là một cái chỉ số không có tồn tại trong máng. Thế mình thì tự nhiên khởi tạo cho cái biến AN-S nó là một cái chỉ số hợp lệ trong máng nó chết rõ."
+  },
+  {
+    "chunk_id": "chunk_2704_2767",
+    "start_sec": 2704,
+    "end_sec": 2767,
+    "start_label": "45:04",
+    "end_label": "46:07",
+    "raw_text": "Thế sao đáp AN-NX không cho bằng không? Cho bằng không thì nhớ đâu cái thằng đấy nó xuất hiện ở chỉ số không thì mình sai à, đúng không? Mình phải cho nó tương hương với cái số âm 1, nó đại diện như là một cái chỉ số không có tồn tại trong máng. Thế mình thì tự nhiên khởi tạo cho cái biến AN-S nó là một cái chỉ số hợp lệ trong máng nó chết rõ. Thì trong cái phần mà bài tập mà, bọn em lọc ra cái phần bài tập về Comparative, nó có cái bài đấy. Nó có bài số 11 là First Position, nó cho bọn em một cái giải số đã được sắp xếp thời thư tự tăng dần. sau đó bắt các bạn tìm vị trí đầu tiên của thằng Ích, các bạn có thể lấy mã nguồn này bà nồn thế thôi, nếu em ít của mình bằng Ích thì mình ghi nhận lại cái chỉ số mít, sau đó mình ép thật toán tìm kiếm nhị phần nó tìm kiếm tiếp ở bên trái có thì có, mà không có thì thôi, thế là việc mà tìm kiếm nhị phần ở nửa bên trái có thể có, hoặc là không có và kể kẽ mình bắt nó chạy đến tận cùng như thế thì độ phức tạp của nó cũng vẫn là lốc nờ thôi tức là nó có thể không tối yêu bằng thật toán tìm kiếm nhị phân"
+  },
+  {
+    "chunk_id": "chunk_2751_2812",
+    "start_sec": 2751,
+    "end_sec": 2812,
+    "start_label": "45:51",
+    "end_label": "46:52",
+    "raw_text": "có thì có, mà không có thì thôi, thế là việc mà tìm kiếm nhị phần ở nửa bên trái có thể có, hoặc là không có và kể kẽ mình bắt nó chạy đến tận cùng như thế thì độ phức tạp của nó cũng vẫn là lốc nờ thôi tức là nó có thể không tối yêu bằng thật toán tìm kiếm nhị phân bởi vì thật toán tìm kiếm nhị phân thì có thể đang chạy là nó dừng rồi, đúng không? Còn cái thật toán firstspot này thì nó sẽ chạy đến khi nào lép của bạn lớn hơn rai nhưng mà kể cả nó chạy đến khi nào lép lớn hơn rai thì độ phức tạp nó còn vẫn là lốc nở thì mình sẽ có cái hèm là vị trí đầu tiên, đúng không? ngoài ra nó bắt các bạn tìm vị trí cuối cùng thì khi mà các bạn muốn tìm vị trí cuối cùng thì nó chỉ khác một cái là khi mà các bạn chặt ra cái thằng đứng dưỡi nha mà nó bằng cái thằng ít kỷ thì mình bỏ cái nửa bên trái đi, bỏ nửa bên trái đi và mình sẽ tìm kiếm một cái nửa bên phải khi đó các bạn sẽ thay mỗi câu lệnh chỗ 46 này thành lab bằng mít cộng 1 để cái vầm lập tiếp theo nó bắt buộc nó tìm ở bên phải tại vì mình muốn tìm vị trí cuối mà"
+  },
+  {
+    "chunk_id": "chunk_2792_2853",
+    "start_sec": 2792,
+    "end_sec": 2853,
+    "start_label": "46:32",
+    "end_label": "47:33",
+    "raw_text": "mà nó bằng cái thằng ít kỷ thì mình bỏ cái nửa bên trái đi, bỏ nửa bên trái đi và mình sẽ tìm kiếm một cái nửa bên phải khi đó các bạn sẽ thay mỗi câu lệnh chỗ 46 này thành lab bằng mít cộng 1 để cái vầm lập tiếp theo nó bắt buộc nó tìm ở bên phải tại vì mình muốn tìm vị trí cuối m các bạn sẽ làm được cái bài vị trí cuối cùng nên là sau này nha, nếu mà các bạn có một cái giải tăng dần hoặc là giảm dần mà các bạn muốn tìm vị trí đầu tiên, vị trí cuối cùng của một số ích nào đó trong cái dãi tăng dần và giảm dần đấy thì các bạn có thể dùng tìm kiếm nhị phân biến đổi, nó sẽ mất lốc rồi nhưng không phải là mình chạy từ đầu đến cuối là owner đâu nha còn cái bài số 13 này nó cũng là một cái biến thể khác là nó bắt các bạn tìm cái giá trị của phần tử lớn nhất, nhỏ hơn hoặc bằng ích đọc mấy cái này mình nói thật là các bạn đọc nhiều khi các bạn đọc các bạn không biết nó hiện ra hỏi cái gì nó loạn đến bức độ như thế"
+  },
+  {
+    "chunk_id": "chunk_2838_2899",
+    "start_sec": 2838,
+    "end_sec": 2899,
+    "start_label": "47:18",
+    "end_label": "48:19",
+    "raw_text": "còn cái bài số 13 này nó cũng là một cái biến thể khác là nó bắt các bạn tìm cái giá trị của phần tử lớn nhất, nhỏ hơn hoặc bằng ích đọc mấy cái này mình nói thật là các bạn đọc nhiều khi các bạn đọc các bạn không biết nó hiện ra hỏi cái gì nó loạn đến bức độ như thế Mình ví dụ cho các bạn 1 cái giải số như này và ở cái bài số 13 này thì nó bắt mọi em là tìm cái giá trị của phần tử lớn nhất, nhỏ hơn hoặc bằng ích lớn nhất, nhỏ hơn hoặc bằng ích ví dụ như bây giờ ích của mình nó bằng số, mình lấy cái giải khác đi 1, 3, 5, 8, 8, 9, 10 và 12, ok bây giờ nó yêu cầu các bạn là tìm cái giá trị lớn nhất mà nhỏ hơn hoặc bằng số 7 thì các bạn phải tìm được ngay là số 5 nhớ số lớn nhất nhỏ hơn bằng 7 là số 5 hoặc là số lớn nhất mà nhỏ hơn bằng 14 thì các bạn phải tìm ngay được số 12 với độ phức tạp là lốc nờ thì nói chung là nó cũng giống hệt như 2 biến thể mà các bạn vừa cốt thôi"
+  },
+  {
+    "chunk_id": "chunk_2884_2944",
+    "start_sec": 2884,
+    "end_sec": 2944,
+    "start_label": "48:04",
+    "end_label": "49:04",
+    "raw_text": "nhớ số lớn nhất nhỏ hơn bằng 7 là số 5 hoặc là số lớn nhất mà nhỏ hơn bằng 14 thì các bạn phải tìm ngay được số 12 với độ phức tạp là lốc nờ thì nói chung là nó cũng giống hệt như 2 biến thể mà các bạn vừa cốt thôi đấy là các bạn cũng chặp đôi ra sau đó thì các bạn kiểm tra xem là cái thằng Amid của mình nó có nhỏ hơn hoặc bằng X hay không hay là Amid của bạn nó lại lớn hơn X nếu mà Amid của các bạn nói nhỏ hơn là bằng X là các bạn sẽ update được bởi vì mục tiêu mình là tìm cái thằng lớn nhất nhỏ hơn bằng ích nên nếu amnit của bạn mà nhỏ bằng ích thì các bạn update lại cái thằng amnit này còn nếu mà cái amnit của bạn là lớn hơn ích thì các bạn phải tìm kiếm ở nửa bên trái làm sao cho cái giá trị, giá trị của giá trị mình tìm nó nhỏ xuống thì các bạn có thể làm được cái bài số 13 như sau nhưng mà cái bài số 13 này nó bắt các bạn tìm giá trị thực ra thì việc mà tìm giá trị hay là tìm chỉ số thì nó tương đương như nhau"
+  },
+  {
+    "chunk_id": "chunk_2926_2991",
+    "start_sec": 2926,
+    "end_sec": 2991,
+    "start_label": "48:46",
+    "end_label": "49:51",
+    "raw_text": "làm sao cho cái giá trị, giá trị của giá trị mình tìm nó nhỏ xuống thì các bạn có thể làm được cái bài số 13 như sau nhưng mà cái bài số 13 này nó bắt các bạn tìm giá trị thực ra thì việc mà tìm giá trị hay là tìm chỉ số thì nó tương đương như nhau Tại vì có chỉ số thì các bạn có thể suy ra giá trị nhé Đây mình sẽ đặt cái hàm là hàm Laurel, ok Mản A, bắt đầu từ chỉ số left, kết thúc là chỉ số right Nói chung là nó không có gì khác với hai cái hàm này đâu Nó biến đổi đi một chút thôi, mình đặt cái này là Laurel Cái này nó sẽ trả về chỉ số nha Thì mình cũng chặt đôi ra và nó chỉ có hai trường hợp, đấy là emit của bạn nó nhỏ hơn hoặc bằng ích Thì các bạn update lại cho mình cái chỉ số mit đó Sau đó mình muốn tìm cái thằng lớn nhất, hay nó khác là thằng xuất hiện cuối cùng dãy của mình nó tăng dần rồi mà, nên là cái thằng lớn nhất thì nó sẽ là tương đương với cái thằng xuất hiện cuối cùng nên cái bước tiếp theo các bạn phải tìm kiếm ở nửa bên phải, mình cho lab bằng mit cộng 1 thế còn nếu mà nó rơi vào L thì các bạn cho write bằng mit chừng 1 bài này nó chỉ có 2 trường hợp thôi, 1 là emit nhỏ bằng ích, 2 là emit lớn hơn ích"
+  },
+  {
+    "chunk_id": "chunk_2974_3035",
+    "start_sec": 2974,
+    "end_sec": 3035,
+    "start_label": "49:34",
+    "end_label": "50:35",
+    "raw_text": "dãy của mình nó tăng dần rồi mà, nên là cái thằng lớn nhất thì nó sẽ là tương đương với cái thằng xuất hiện cuối cùng nên cái bước tiếp theo các bạn phải tìm kiếm ở nửa bên phải, mình cho lab bằng mit cộng 1 thế còn nếu mà nó rơi vào L thì các bạn cho write bằng mit chừng 1 bài này nó chỉ có 2 trường hợp thôi, 1 là emit nhỏ bằng ích, 2 là emit lớn hơn ích đấy, không dưới này các bạn return viên n ở S là được nha sau đó dưới này thì các bạn nhập nở vào ích, sau đó các bạn gọi cái ham, mình đặt là hamlower đi Thực ra nó là upper thì chính xác hơn. Mình đặt là press bằng lower, xong các bạn truyền bằng a, bắt đầu thì chỉ xuống không, kết thúc là chỉ xuống n là chiều 1 và thằng x vào. Thì nó sẽ xảy ra 2 trường hợp nếu cái red của bạn nó bằng chiều 1, thì có nghĩa là nó không tìm thấy được cái thằng nào mà nhỏ hơn là bằng x trong mẻm của bạn. Hay nói khác là cái giải số của bạn đều là cái thằng lớn hơn x, thì theo Debye nó bắt các bạn in ra là not fail, đúng không? còn không thì mình dựa vào cái chỉ số web đó, mình cia ra web là ra kết quả thôi thì mình tìm chỉ số, nhưng mà nếu nó bắt mình in ra giá trị thì mình cũng có thể xử lý được"
+  },
+  {
+    "chunk_id": "chunk_3018_3080",
+    "start_sec": 3018,
+    "end_sec": 3080,
+    "start_label": "50:18",
+    "end_label": "51:20",
+    "raw_text": "Hay nói khác là cái giải số của bạn đều là cái thằng lớn hơn x, thì theo Debye nó bắt các bạn in ra là not fail, đúng không? còn không thì mình dựa vào cái chỉ số web đó, mình cia ra web là ra kết quả thôi thì mình tìm chỉ số, nhưng mà nếu nó bắt mình in ra giá trị thì mình cũng có thể xử lý được thì mấy cái biến thể này nha, mấy cái biến thể của thuật tán tìm kiếm nhị phân này này nó cứ hỏi vị trí đầu tiên, vị trí cuối cùng hay là nhỏ nhất với lớn nhất gì đấy á thì cách làm là như này, là các bạn cứ xác định cho mình là khi nào thì có thể update được kết quả, đúng không? khi nào mà các bạn so sánh cái thằng emit với thằng ít, như thế nào thì mình sẽ update kết quả thì các bạn ghi nhận lại cái chỉ số của thằng mit khi đó và sau khi mà update xong thì các bạn phải xem là mình sẽ tiếp tục tìm ở bên trái hay là tìm ở bên phải để mình lựa cái câu lựa chọn là lab bằng mit cộng 1 hay write bằng mit chứ 1 thế thì nói chung là nó chỉ có khác nhau ở những cái nhánh ở bên trong này thôi thì các bạn tự lựa đấy, các bạn xem khi nào mình update kết quả"
+  },
+  {
+    "chunk_id": "chunk_3063_3131",
+    "start_sec": 3063,
+    "end_sec": 3131,
+    "start_label": "51:03",
+    "end_label": "52:11",
+    "raw_text": "và sau khi mà update xong thì các bạn phải xem là mình sẽ tiếp tục tìm ở bên trái hay là tìm ở bên phải để mình lựa cái câu lựa chọn là lab bằng mit cộng 1 hay write bằng mit chứ 1 thế thì nói chung là nó chỉ có khác nhau ở những cái nhánh ở bên trong này thôi thì các bạn tự lựa đấy, các bạn xem khi nào mình update kết quả khi nào mình tìm ở bên trái, khi nào mình tìm ở bên phải là được là các bạn có thể làm được tất cả các biến thể của thuật tán tỉnh kiếm nhị phân mà nó hay hỏi Thế em xem cái lịch học nội dung trong các buổi học này, em không tham gia vào buổi học là nó chữa đến bài 17 con tét comparator rồi đây này Chữa xong cái phần comparator rồi đấy Các bạn thử làm cho mình cái bài số 14 rồi đó Ủa tại sao nó lại chữa đến bài 17 được nhỉ? Trong khi đó các bạn đã học thuật tán tỉnh kiếm nhị phân đâu Chưa 1 bình, sao nói? Chưa đến bài số 17, contact comparator được nhỉ các bạn nhỉ?"
+  },
+  {
+    "chunk_id": "chunk_3115_3175",
+    "start_sec": 3115,
+    "end_sec": 3175,
+    "start_label": "51:55",
+    "end_label": "52:55",
+    "raw_text": "Ủa tại sao nó lại chữa đến bài 17 được nhỉ? Trong khi đó các bạn đã học thuật tán tỉnh kiếm nhị phân đâu Chưa 1 bình, sao nói? Chưa đến bài số 17, contact comparator được nhỉ các bạn nhỉ? Lô lô. À, dậy dùng ham ấy gì? À rồi, ok, ok, dùng ham thì được. Các bạn đã học ngấy đâu? Tự cốt đâu. Các bạn thử làm cái bài số 14 này xem nào. Bài số 14 này, các bạn tự cốt lấy đi. Nó cho các bạn 2 cái mảng A và B cùng nờ vào mờ phần tử. Mình có gợi ý luôn rồi đó. Nó hỏi các bạn là nhiệm vụ của bạn là với mỗi phần tử trong mảng A, các bạn hãy chỉ ra có bao nhiêu phần tử trong mảng B nhỏ hơn nó."
+  },
+  {
+    "chunk_id": "chunk_3150_3214",
+    "start_sec": 3150,
+    "end_sec": 3214,
+    "start_label": "52:30",
+    "end_label": "53:34",
+    "raw_text": "Các bạn đã học ngấy đâu? Tự cốt đâu. Các bạn thử làm cái bài số 14 này xem nào. Bài số 14 này, các bạn tự cốt lấy đi. Nó cho các bạn 2 cái mảng A và B cùng nờ vào mờ phần tử. Mình có gợi ý luôn rồi đó. Nó hỏi các bạn là nhiệm vụ của bạn là với mỗi phần tử trong mảng A, các bạn hãy chỉ ra có bao nhiêu phần tử trong mảng B nhỏ hơn nó. Mỗi phần tử trong mạng E chỉ xem là trong mạng B có bao nhiêu thằng nhỏ hơn nó đúng không? Ví dụ như cái mạng B của các bạn là 1, 1, 3, 5, 8, 9, 10, 12, và cái thằng X ở trong mạng E của các bạn là số 7 thì các bạn phải trẻ lời được ngay là thằng 7 này là 1 phần tử trong mạng E thì nó sẽ có 4 thằng nhỏ hơn nó Thì cách làm tối yêu á, là mình sẽ sort cái mạng B này theo thứ tự tăng dần Thực chứ à? Mình sort cái mạng B này theo thứ tự tăng dần thì mất nờ lúc nờ thôi đúng không? sau đó mình duyệt qua phần tửa trong mạng A mỗi lần mà mình duyệt qua một phần tửa trong mạng A mình sẽ tìm kiếm nhanh ở trong mạng B này có bao nhiêu thằng nhỏ hơn nó bằng cách là"
+  },
+  {
+    "chunk_id": "chunk_3195_3259",
+    "start_sec": 3195,
+    "end_sec": 3259,
+    "start_label": "53:15",
+    "end_label": "54:19",
+    "raw_text": "Thì cách làm tối yêu á, là mình sẽ sort cái mạng B này theo thứ tự tăng dần Thực chứ à? Mình sort cái mạng B này theo thứ tự tăng dần thì mất nờ lúc nờ thôi đúng không? sau đó mình duyệt qua phần tửa trong mạng A mỗi lần mà mình duyệt qua một phần tửa trong mạng A mình sẽ tìm kiếm nhanh ở trong mạng B này có bao nhiêu thằng nhỏ hơn nó bằng cách là các bạn tìm ra cái vị trí cuối cùng của cái thằng mà nó, vị trí cuối cùng, đúng không? của cái thằng mà nó nhỏ hơn cái thằng íc đó tại vì cái mạng B của mình nó tăng dần rồi thì mình có cái vị trí cuối cùng của thằng nhỏ hơn thằng íc đó thì mình có thể biết là từ đầu dãy đến thằng đấy là bao nhiêu thằng tại vì từ đầu dãy đến cái thằng cuối cùng đấy đều là những thằng nhỏ hơn íc mà đúng không? thì khi đó bạn em có thể tìm kiếm nó nhanh hơn Vậy thì chốt lại bài này các bạn phải viết được 1 hèm tìm vị trí cuối cùng của 1 phần tử mà nó nhỏ hơn ích trong 1 giáy số tăng dần Được chưa? Thế thì khi đó toàn bộ chương trình của mình sẽ mất nờ lúc nờ là bạn em làm được thôi Chứ bài này thì bây giờ tầm này thì mà các bạn còn dùng 2 vòng 4 lần nhau nữa thì thôi"
+  },
+  {
+    "chunk_id": "chunk_3240_3304",
+    "start_sec": 3240,
+    "end_sec": 3304,
+    "start_label": "54:00",
+    "end_label": "55:04",
+    "raw_text": "Vậy thì chốt lại bài này các bạn phải viết được 1 hèm tìm vị trí cuối cùng của 1 phần tử mà nó nhỏ hơn ích trong 1 giáy số tăng dần Được chưa? Thế thì khi đó toàn bộ chương trình của mình sẽ mất nờ lúc nờ là bạn em làm được thôi Chứ bài này thì bây giờ tầm này thì mà các bạn còn dùng 2 vòng 4 lần nhau nữa thì thôi học hành cái gì nữa đúng không? Chến thức này thì không bao giờ làm dùng 2 vòng 4 được Nò với mở của mình nó lên 1 triệu mà Nhanh nha các bạn Đấy thì nói chung là nó có nhiều biến thể lắm nha Nó có nhiều biến thể lắm nhưng mà Khi mà bạn em cài đặt cái biến thể này Thì bạn em chỉ cần nhớ là Khi nào thì mình update kết quả Ví dụ như Amid lớn hơn ích này 2 Amid nhỏ hơn ích này, 2 Amid lớn màng ích này 2 Amid nhỏ màng ích để mình Giữa vào đầu bài để mình xem là Khi mình chặt ra thì cái thằng Amid với thằng ích như thế nào Thì mình có thể update được kết quả Và sau khi mà update được kết quả tuyết theo mình sẽ tiếp tục đi tìm cái thẳng ở cuối hay thẳng ở đầu, để mình điều chỉnh cái câu lệnh left-right"
+  },
+  {
+    "chunk_id": "chunk_3289_3606",
+    "start_sec": 3289,
+    "end_sec": 3606,
+    "start_label": "54:49",
+    "end_label": "60:06",
+    "raw_text": "2 Amid nhỏ màng ích để mình Giữa vào đầu bài để mình xem là Khi mình chặt ra thì cái thằng Amid với thằng ích như thế nào Thì mình có thể update được kết quả Và sau khi mà update được kết quả tuyết theo mình sẽ tiếp tục đi tìm cái thẳng ở cuối hay thẳng ở đầu, để mình điều chỉnh cái câu lệnh left-right thì cái đây các bạn phải tư duy, các bạn mới cốt được cái đây là cái cách mà các bạn tự cốt các biến thể, còn liệt kê các biến thể này thì nó nhiều loại lắm, nó nhiều lắm nhưng mà đây mình chỉ hướng dẫn các bạn vài cái thôi, còn hướng dẫn cái phương pháp chung như thế thực ra thì nó có hèm có sẵn rồi, nhưng mà dùng hèm có sẵn nó khó nên là tốt nhất bọn em nên tự biết cốt các biến thể của thuật tán tỉnh kiếm nhị vân Nhanh các bạn ơi, còn hàm lau bào và upper bào nữa Ok, mình sẽ chữa bài số 14 nha"
+  },
+  {
+    "chunk_id": "chunk_3333_3611",
+    "start_sec": 3333,
+    "end_sec": 3611,
+    "start_label": "55:33",
+    "end_label": "60:11",
+    "raw_text": "Ok, mình sẽ chữa bài số 14 nha Như anh hướng dẫn đây, các bạn em phải viết cái hàm tìm vị trí cuối cùng của thằng nhỏ hơn nè"
+  },
+  {
+    "chunk_id": "chunk_3333_3616",
+    "start_sec": 3333,
+    "end_sec": 3616,
+    "start_label": "55:33",
+    "end_label": "60:16",
+    "raw_text": "Ok, mình sẽ chữa bài số 14 nha Như anh hướng dẫn đây, các bạn em phải viết cái hàm tìm vị trí cuối cùng của thằng nhỏ hơn nè Vị trí cuối cùng của thằng nhỏ hơn thôi, anh lấy luôn cái hàm last spot này nhé, nó sửa lại một chút là được"
+  },
+  {
+    "chunk_id": "chunk_3333_3622",
+    "start_sec": 3333,
+    "end_sec": 3622,
+    "start_label": "55:33",
+    "end_label": "60:22",
+    "raw_text": "Ok, mình sẽ chữa bài số 14 nha Như anh hướng dẫn đây, các bạn em phải viết cái hàm tìm vị trí cuối cùng của thằng nhỏ hơn nè Vị trí cuối cùng của thằng nhỏ hơn thôi, anh lấy luôn cái hàm last spot này nhé, nó sửa lại một chút là được Cuối cùng nhỏ hơn thì tức là amid của mình nhỏ hơn ít là mình update được đúng không?"
+  },
+  {
+    "chunk_id": "chunk_3606_3670",
+    "start_sec": 3606,
+    "end_sec": 3670,
+    "start_label": "60:06",
+    "end_label": "61:10",
+    "raw_text": "Như anh hướng dẫn đây, các bạn em phải viết cái hàm tìm vị trí cuối cùng của thằng nhỏ hơn nè Vị trí cuối cùng của thằng nhỏ hơn thôi, anh lấy luôn cái hàm last spot này nhé, nó sửa lại một chút là được Cuối cùng nhỏ hơn thì tức là amid của mình nhỏ hơn ít là mình update được đúng không? Sau đó thì cuối cùng nên là sau khi mình cho amid bằng Anos bằng mid thì mình sẽ cho lib bằng mid cộng 1 còn 2 cái nhánh này thì không có gì khác. Vậy là mình đã có cái hàm tìm vị trí cuối cùng của thằng nhỏ hơn ích trong cái mạng đã được sắp xếp theo thứ tự tăng dần. Thì dưới này nó cho bạn em 2 mạng là F và B, nè, mờ này. Các bạn khai báo ra 2 cái vector hoặc là ra 2 cái mạng. Rồi sau đó bạn em sort cái mạng B thì nhớ đừng có sort mạng E nha. Rồi sau đó mình duyệt qua từng phần tử 1 ở trong mạng E. Thì Debye nó hỏi là, trong mạng B có bao nhiêu thằng nhỏ hơn thằng ích này đúng không? Thì mình đã có cái hèm cốt nhanh để tìm vị trí cuối cùng rồi Thì anh đặt là rest bằng last port và các bạn truyền"
+  },
+  {
+    "chunk_id": "chunk_3651_3712",
+    "start_sec": 3651,
+    "end_sec": 3712,
+    "start_label": "60:51",
+    "end_label": "61:52",
+    "raw_text": "Rồi sau đó bạn em sort cái mạng B thì nhớ đừng có sort mạng E nha. Rồi sau đó mình duyệt qua từng phần tử 1 ở trong mạng E. Thì Debye nó hỏi là, trong mạng B có bao nhiêu thằng nhỏ hơn thằng ích này đúng không? Thì mình đã có cái hèm cốt nhanh để tìm vị trí cuối cùng rồi Thì anh đặt là rest bằng last port và các bạn truyền Ở đây mình tìm kiếm ở trên mảng B nha Mình sẽ truyền B Bắt đầu thì chỉ số 0 và kết thúc là chỉ số m, trừ 1 vào Và mình sẽ tìm kiếm thằng x Thì khi đó tính từ chỉ số đầu tiên ở trong mạng của bạn là chỉ số 0 Đến cái chỉ số red này thì nó đều là những cái thằng nhỏ hơn ích hết Đúng không? Thì đó các bạn chỉ cần siarza red cộng 1 là được Và nó có 1 cái hay là gì? nếu mà trong trường hợp Red của bạn nó bằng M1, trong màn của bạn nó không có bác thần nào nó nhỏ hơn ích í thì mình sẽ lấy M1 cộng với 1 thì nó vừa đẹp là nó sẽ ra số 0 còn nếu mà các bạn tìm được cái chỉ số thì mình lấy cái chỉ số đấy mình cộng thêm 1 thì nó cũng sẽ ra được cái số lượng phần tử tính từ đầu dãi đến cái chỉ số đó thì bà em có thể làm được cái bài số 14"
+  },
+  {
+    "chunk_id": "chunk_3691_3754",
+    "start_sec": 3691,
+    "end_sec": 3754,
+    "start_label": "61:31",
+    "end_label": "62:34",
+    "raw_text": "nếu mà trong trường hợp Red của bạn nó bằng M1, trong màn của bạn nó không có bác thần nào nó nhỏ hơn ích í thì mình sẽ lấy M1 cộng với 1 thì nó vừa đẹp là nó sẽ ra số 0 còn nếu mà các bạn tìm được cái chỉ số thì mình lấy cái chỉ số đấy mình cộng thêm 1 thì nó cũng sẽ ra được cái số lượng phần tử tính từ đầu dãi đến cái chỉ số đó thì bà em có thể làm được cái bài số 14 nhiều bạn bài này các bạn như đi, các bạn sort cái mảng A các bạn sort mảng A, các bạn làm thay đổi cái mảng A rồi còn đâu mà điều đó nó không cần thiết xót, mang b, 3, 7, 6, 3, 7, ok, các bạn lấy con submit toàn bộ chương trình của mình khi đó này, các bạn xót thì nó mất nờ lúc nờ, đúng không? cái vòng for này là owner, với chỗ này các bạn gọi cái ham last spot nó mất lúc nờ nữa toàn bộ chương trình của mình nó chỉ mất nờ lúc nờ, nó sẽ kịp thời gian ok, các bạn nào có câu hỏi gì không? câu hỏi gì về bài số 14 này không? còn bài số 15 thì nó ngược lại, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_3734_3809",
+    "start_sec": 3734,
+    "end_sec": 3809,
+    "start_label": "62:14",
+    "end_label": "63:29",
+    "raw_text": "toàn bộ chương trình của mình nó chỉ mất nờ lúc nờ, nó sẽ kịp thời gian ok, các bạn nào có câu hỏi gì không? câu hỏi gì về bài số 14 này không? còn bài số 15 thì nó ngược lại, đúng không? bài số 15 thì nó bắt bọn em là bối với mỗi phần tử ở trong mạng E thì kiểm xe xem là trong mạng B nó có bao nhiêu thằng lớn hơn nó thì các bạn phải tìm vị trí đầu tiên của thằng lớn hơn, mà mình tính từ đầu, từ vị trí đến cuối dãi bài số 15 này về bọn em tự triển khai lấy nhe, đây cốt đây em, tự triển khai lấy emit nhỏ hơn ít thì mình ghi nhận lại cái chỉ số, ghi nhận lại cái chỉ số mit khi đó"
+  },
+  {
+    "chunk_id": "chunk_3789_3851",
+    "start_sec": 3789,
+    "end_sec": 3851,
+    "start_label": "63:09",
+    "end_label": "64:11",
+    "raw_text": "emit nhỏ hơn ít thì mình ghi nhận lại cái chỉ số, ghi nhận lại cái chỉ số mit khi đó đây, nếu như em có giải thích ở cái bài vị trí đầu tiên này mà emit nhỏ hơn ít thì mình lưu lại cái chỉ số của cái thằng emit Amid, sau đó mình sẽ tìm kiếm ở bên phải Tại vì mình muốn tìm vị trí cuối cùng mà Lúc nãy anh nói cái biến thể đầu tiên thì không hỏi Biến thể đầu tiên là tìm vị trí cuối, đầu tiên của thằng Ích ở trong mạng tăng dân Bây giờ mình sẽ tìm vị trí cuối cùng Vì vị trí cuối cùng thì nếu cái thằng đứng giữa nó thoả mẽm rồi thì mình sẽ bước tiếp theo mình tìm kiếm ở bên phải thôi Cũng có ấy mà"
+  },
+  {
+    "chunk_id": "chunk_3835_3903",
+    "start_sec": 3835,
+    "end_sec": 3903,
+    "start_label": "63:55",
+    "end_label": "65:03",
+    "raw_text": "Bây giờ mình sẽ tìm vị trí cuối cùng Vì vị trí cuối cùng thì nếu cái thằng đứng giữa nó thoả mẽm rồi thì mình sẽ bước tiếp theo mình tìm kiếm ở bên phải thôi Cũng có ấy mà Không chịu đọc trước sở like với các thứ đi các bạn lưỡi lắm nhắc bao nhiêu lần rồi phải đọc trước, sở like, phải cốt trước ở nhà đi bọn em không có thông minh đến bức độ mà anh nói này, bọn em cốt được ngay đâu toàn phải học trước hết còn các bạn dõi lắm thì các bạn chưa đọc trước, chưa biết kiến thức đấy mình nói, các bạn hiểu thì ok còn bảo là làm bài tập app dụng và các bạn không có làm được nên là chung ở trong công việc hay là trong học tập thế thôi, nếu mà các bạn có muốn được cái sự mà Mình bắt đầu nó ok nhất, thì các bạn phải có sự chuẩn bị trước Các bạn không có sự chuẩn bị trước trong các cuộc thi, các thứ mình phải chuẩn bị trước"
+  },
+  {
+    "chunk_id": "chunk_3885_3949",
+    "start_sec": 3885,
+    "end_sec": 3949,
+    "start_label": "64:45",
+    "end_label": "65:49",
+    "raw_text": "học tập thế thôi, nếu mà các bạn có muốn được cái sự mà Mình bắt đầu nó ok nhất, thì các bạn phải có sự chuẩn bị trước Các bạn không có sự chuẩn bị trước trong các cuộc thi, các thứ mình phải chuẩn bị trước Nó có 2 biến thể, 2 hàm có sẵn, trong siệm cộng là hàm lau bao và upper bao Thì đầu tiên mình sẽ hướng dẫn hàm lau bao, hàm lau bao này có thể áp dụng cho vector hoặc là cho mảng Vector, metee edge, net format Measpr white, mirror mic Bowser, hơi khó một chút, tại vì nó trẻ với iterator và con trỏ"
+  },
+  {
+    "chunk_id": "chunk_3929_3992",
+    "start_sec": 3929,
+    "end_sec": 3992,
+    "start_label": "65:29",
+    "end_label": "66:32",
+    "raw_text": "Measpr white, mirror mic Bowser, hơi khó một chút, tại vì nó trẻ với iterator và con trỏ Ví dụ, cái mảng A như thế này Ok, cái mảng A này có đôi 4, 6, 8, 9 thẳng Thì khi mà các bạn dùng lau bao, mà các bạn áp dụng trên cái mảng A kìa thì nó sẽ trẻ với con trỏ bằng boss, lau bao A, A, cộng nờ và x, ví dụ như là số 9 chẳng hả? Thì nhiệm vụ của hàm lau bao này sẽ trẻ về con trỏ đến phần tứ, đầu tiên, hoặc khác là nhỏ nhất Tại vì giá của mình nó tăng dần rồi, nên cái thằng đầu tiên cũng đại diện cho cái thằng nhỏ nhất"
+  },
+  {
+    "chunk_id": "chunk_3976_4037",
+    "start_sec": 3976,
+    "end_sec": 4037,
+    "start_label": "66:16",
+    "end_label": "67:17",
+    "raw_text": "A, A, cộng nờ và x, ví dụ như là số 9 chẳng hả? Thì nhiệm vụ của hàm lau bao này sẽ trẻ về con trỏ đến phần tứ, đầu tiên, hoặc khác là nhỏ nhất Tại vì giá của mình nó tăng dần rồi, nên cái thằng đầu tiên cũng đại diện cho cái thằng nhỏ nhất Mà lớn hơn hoặc bằng 9, thì nó là thằng 10 đúng không? Nên khi đó, cái post này của các bạn chính là con trỏ, nó trỏ đến thằng 10 này Nếu mà bạn em muốn in ra cái giá trị mà nó trẻ về, thì các bạn sẽ giải tham chiếu con trỏ là được Thì nó sẽ ra số 10 Còn nếu mà các bạn muốn lấy ra cái chỉ số của thằng 10, thì các bạn phải làm như thế nào? Các bạn phải lấy con trò POS đó, các bạn chưa đi E Còn như kiên thức này không? Cái thằng 10 này nó nằm ở cái chỉ số là 0, 1, 2, 3, 4, 5, 6 Khi đó, cái POS này của bạn là chính là E cộng 6 Đúng không? Thì nếu mà các bạn muốn lấy ra cái giá trị của cái thằng O ở chỉ số 6 thì mình giải tham chiếu ra được Nhưng nếu mà các em muốn lấy ra cái chỉ số của thằng 10 này thì mình phải lấy E cộng 6, mình chưa đi E thì nó sẽ ra là cái chỉ số là 6"
+  },
+  {
+    "chunk_id": "chunk_4018_4080",
+    "start_sec": 4018,
+    "end_sec": 4080,
+    "start_label": "66:58",
+    "end_label": "68:00",
+    "raw_text": "Cái thằng 10 này nó nằm ở cái chỉ số là 0, 1, 2, 3, 4, 5, 6 Khi đó, cái POS này của bạn là chính là E cộng 6 Đúng không? Thì nếu mà các bạn muốn lấy ra cái giá trị của cái thằng O ở chỉ số 6 thì mình giải tham chiếu ra được Nhưng nếu mà các em muốn lấy ra cái chỉ số của thằng 10 này thì mình phải lấy E cộng 6, mình chưa đi E thì nó sẽ ra là cái chỉ số là 6 Ok Giá trị là 10, đúng không? Còn chỉ số thì là chỉ số 6 Thế thôi, các bạn có thể thay cái này thành auto cũng được. Thay cái này thành auto-poss cũng được. Nhưng mà nhớ cho mình là khi mà app dụng trên mạng thì nó trẻ về con trỏ. Và nó sẽ xảy ra cái trường hợp mà nó không thể tìm thấy được cái thằng mà lớn hơn hoặc bằng ích. Đấy. Ví dụ như bây giờ mà bạn em tìm kiếm cái thằng là lớn hơn là bằng 19, thì trong mạng của mình nó không có cái thằng nào lớn hơn là bằng 19. Đúng không? Thì khi đó nó sẽ trẻ về là e共 n. Đấy, nó trẻ về e共 n. Thành ra là các bạn mà giải tham chiếu cái con trỏ e共 n đấy thì nó sẽ là một cái giá trị rác. Còn nếu các bạn lấy A cộng nở, các bạn chứ đi A thì nó sẽ ra nở Đấy đó trường hợp không tìm thấy"
+  },
+  {
+    "chunk_id": "chunk_4058_4120",
+    "start_sec": 4058,
+    "end_sec": 4120,
+    "start_label": "67:38",
+    "end_label": "68:40",
+    "raw_text": "Đấy. Ví dụ như bây giờ mà bạn em tìm kiếm cái thằng là lớn hơn là bằng 19, thì trong mạng của mình nó không có cái thằng nào lớn hơn là bằng 19. Đúng không? Thì khi đó nó sẽ trẻ về là e共 n. Đấy, nó trẻ về e共 n. Thành ra là các bạn mà giải tham chiếu cái con trỏ e共 n đấy thì nó sẽ là một cái giá trị rác. Còn nếu các bạn lấy A cộng nở, các bạn chứ đi A thì nó sẽ ra nở Đấy đó trường hợp không tìm thấy Này, nhớ cho mình nhá, cái này nó hơi khó, khó nhớ Còn nếu các bạn app dụng ở trên vector thì nó sẽ trả về iterator thôi Nếu mà cái mạng A này của bạn nó là cái vector Thì các bạn đổi cái này A và A cộng nở thành v.begin và v.en thôi Và nó cũng sẽ có 2 trường hợp như thế thôi Đây thì nó sẽ trả về iterator nhá, nên là anh sẽ dùng auto cho nó nhanh Ví dụ như bây giờ mà các bạn lau bao cái giá trị là 4, thì cái thằng đầu tiên hay thằng nhỏ nhất mà lớn bằng 4 là 6 này Đúng không? Nếu các bạn xe sao của POT thì nó sẽ ra 6"
+  },
+  {
+    "chunk_id": "chunk_4102_4165",
+    "start_sec": 4102,
+    "end_sec": 4165,
+    "start_label": "68:22",
+    "end_label": "69:25",
+    "raw_text": "Đây thì nó sẽ trả về iterator nhá, nên là anh sẽ dùng auto cho nó nhanh Ví dụ như bây giờ mà các bạn lau bao cái giá trị là 4, thì cái thằng đầu tiên hay thằng nhỏ nhất mà lớn bằng 4 là 6 này Đúng không? Nếu các bạn xe sao của POT thì nó sẽ ra 6 Còn các bạn lấy ra cái chỉ số của thằng 6 này thì các bạn phải lấy cái iterator đấy, các bạn chứ đi, chứ đi V.begin Nó thì nó sẽ ra được cái chỉ số, là chỉ súng, ba, giá trị thì là 6 Cần chưa? Còn nếu mà nó không tìm được cái thằng nào mà lớn hơn hoặc bằng cái thằng X mà các bạn tìm kiến thì nó trả VV.en Các bạn tìm kiếm thằng 24, sẽ trả về v.en Nhìn chung là khi các bạn áp dụng cái hàm lao bao này để tìm kiếm trên một đoạn nào đó mà không tìm thấy thì nó sẽ trả về cận cuối Chứ không phải lúc nào cũng là v.en với ai cộng nờ đâu nhé Nó còn tùy là các bạn tìm từ đâu đến đâu nữa Thì đấy là hàm lao bao và thằng lao bao này cũng có thể áp dụng ở trên đoạn"
+  },
+  {
+    "chunk_id": "chunk_4147_4208",
+    "start_sec": 4147,
+    "end_sec": 4208,
+    "start_label": "69:07",
+    "end_label": "70:08",
+    "raw_text": "thì nó sẽ trả về cận cuối Chứ không phải lúc nào cũng là v.en với ai cộng nờ đâu nhé Nó còn tùy là các bạn tìm từ đâu đến đâu nữa Thì đấy là hàm lao bao và thằng lao bao này cũng có thể áp dụng ở trên đoạn Bạn em thấy mấy cái hàm xót này, binary search này lào bao là những hầm thuật toán nằm trong thuy viện algorithm thì các bạn thấy cú pháp của nó khá tương đồng với nhau Thế thì nếu mà các bạn áp dụng trên set thì cũng thế thôi Nó cũng sẽ trải về con trỏ set hoặc là multi set hoặc là map hoặc là multi map nhưng mà khi mà các bạn áp dụng trên set hoặc là multi set hay map và multi map thì các bạn nên dùng cú pháp là set. Ví dụ như chỗ này các bạn là set thì các bạn dùng set.lào bao nó sẽ chạy nhanh hơn là các bạn dùng lào bao như thế này, dụ như 4 chẳng hạng khi mà các bạn, app dụng với set và map, các bạn nên dùng set.lb"
+  },
+  {
+    "chunk_id": "chunk_4193_4253",
+    "start_sec": 4193,
+    "end_sec": 4253,
+    "start_label": "69:53",
+    "end_label": "70:53",
+    "raw_text": "thì các bạn dùng set.lào bao nó sẽ chạy nhanh hơn là các bạn dùng lào bao như thế này, dụ như 4 chẳng hạng khi mà các bạn, app dụng với set và map, các bạn nên dùng set.lb tức là các bạn cũng có thể gọi theo cái phong cách là lb.set.begin và set.en nhưng mà nó sẽ chậm hơn tại vì cái phong cách đấy thì nó app dụng cho cái thằng mạng và vector còn thằng set thì nó có thể dùng cái khu pháp này nó nhanh hơn sét.lb hoặc là multi-set hoặc là map hoặc là multi-map đều được trong trường hợp này nó cũng sẽ trẻ về cái giá trị là vòng số 6 thôi và các bạn có thể dùng cái thằng Lao Bao để làm cái bài số 14 lúc nữa í Ấy xin lỗi, số 16 này nè nó cho mảng E cùng nào vào mở phần tử, nhiệm vụ của bạn là vối mỗi phần tử trong mảng E"
+  },
+  {
+    "chunk_id": "chunk_4232_4296",
+    "start_sec": 4232,
+    "end_sec": 4296,
+    "start_label": "70:32",
+    "end_label": "71:36",
+    "raw_text": "và các bạn có thể dùng cái thằng Lao Bao để làm cái bài số 14 lúc nữa í Ấy xin lỗi, số 16 này nè nó cho mảng E cùng nào vào mở phần tử, nhiệm vụ của bạn là vối mỗi phần tử trong mảng E hãy chỉ ra trong có bao nhiêu phần tử trong mảng B lớn hơn hoặc bằng nó quá đẹp để dùng Lao Bao đúng không thì các bạn sắp xếp cái mảng B tăng dần bây giờ nó hỏi là cái thằng X ở trong mảng E này của các bạn í là có bao nhiêu thằng ở trong mảng B về lớn hơn hoặc bằng thằng Ích đó, thì mình tìm cái gì? Mình tìm cái vị trí đầu tiên của thằng lớn hơn hoặc bằng Ích, sau đó mình tính từ cái chỉ số đến cuối dãy. Trong trường hợp này, bạn em có thằng 7 và bạn em muốn biết là cái mảng B có bao nhiêu thằng lớn 7, đúng không? Lớn hơn hoặc bằng 7 thì mình tìm cái vị trí đầu tiên này nè. Là thằng 8, sau đó mình tính từ chỉ số đến cuối dãy. Có bao nhiêu thằng? Là xong. Mình vừa hướng dẫn cho các bạn lau bao để cách tìm chỉ số và tìm giá trị rồi đúng không?"
+  },
+  {
+    "chunk_id": "chunk_4277_4339",
+    "start_sec": 4277,
+    "end_sec": 4339,
+    "start_label": "71:17",
+    "end_label": "72:19",
+    "raw_text": "Trong trường hợp này, bạn em có thằng 7 và bạn em muốn biết là cái mảng B có bao nhiêu thằng lớn 7, đúng không? Lớn hơn hoặc bằng 7 thì mình tìm cái vị trí đầu tiên này nè. Là thằng 8, sau đó mình tính từ chỉ số đến cuối dãy. Có bao nhiêu thằng? Là xong. Mình vừa hướng dẫn cho các bạn lau bao để cách tìm chỉ số và tìm giá trị rồi đúng không? Tìm chỉ số thì các bạn chỉ cần lấy cái giá trị của hàm lau bao, trả về các bạn chưa đi cái tên mạng là nó giá trị số Còn nếu mà muốn lấy giá trị thì bạn em giải tham chiếu nó là được Đấy thì đấy là cách dùng của hàm lau bao Nó cũng có độ phức tạp là ologner Thì các bạn làm cho mình cái bài số 16 này bằng lau bao Thực ra thì bạn em có thể tự cốt được Mình tự cốt hàm là tìm vị trí đầu tiên của thằng lớn hơn bằng ích trong mạng tăng dần Tự cốt được mà, nhưng mà các bạn nên biết dùng hàm có sẵn nữa Giả sứ, nếu có thể hành thạo được hàm có sẵn thì mình dùng luôn hàm có sẵn Còn nếu mà cảm thấy hàm có sẵn, cốt nó khó quá thì bạn em lại chuyển sang tự cốt lấy"
+  },
+  {
+    "chunk_id": "chunk_4323_4389",
+    "start_sec": 4323,
+    "end_sec": 4389,
+    "start_label": "72:03",
+    "end_label": "73:09",
+    "raw_text": "Tự cốt được mà, nhưng mà các bạn nên biết dùng hàm có sẵn nữa Giả sứ, nếu có thể hành thạo được hàm có sẵn thì mình dùng luôn hàm có sẵn Còn nếu mà cảm thấy hàm có sẵn, cốt nó khó quá thì bạn em lại chuyển sang tự cốt lấy Các bạn làm cho mình cái bài xuống 16 lên này, 16 nha dẫn app about drill app about drill af rev.. đây có thể tham khảo cái cách mà anh lấy ra cái trị số lào bao dùng với set với lào bao dùng với mạng thì tốc độ tìm kiếm"
+  },
+  {
+    "chunk_id": "chunk_4376_4764",
+    "start_sec": 4376,
+    "end_sec": 4764,
+    "start_label": "72:56",
+    "end_label": "79:24",
+    "raw_text": "rev.. đây có thể tham khảo cái cách mà anh lấy ra cái trị số lào bao dùng với set với lào bao dùng với mạng thì tốc độ tìm kiếm trị số nó vẫn giống như nhau thực ra thì nếu mà em dùng cái cú pháp đối với mạng thì nó sẽ chậm hơn nên là em phải dùng set.lào bao thì nó sẽ nhanh hơn còn nếu mà mình dùng cái cú pháp giống như mạng, Vector là nó chậm hơn trong phần bài tập mà sắp xếp tìm kiếm nó có cái bài đấy đấy bọn em ạ ok mình sẽ chữa cái bài số 16 này nhé"
+  },
+  {
+    "chunk_id": "chunk_4407_4769",
+    "start_sec": 4407,
+    "end_sec": 4769,
+    "start_label": "73:27",
+    "end_label": "79:29",
+    "raw_text": "ok mình sẽ chữa cái bài số 16 này nhé bởi vì nó đang có tết nên là nhiều người nột quá các bạn"
+  },
+  {
+    "chunk_id": "chunk_4407_4776",
+    "start_sec": 4407,
+    "end_sec": 4776,
+    "start_label": "73:27",
+    "end_label": "79:36",
+    "raw_text": "ok mình sẽ chữa cái bài số 16 này nhé bởi vì nó đang có tết nên là nhiều người nột quá các bạn các bạn làm từ từ thôi nhé"
+  },
+  {
+    "chunk_id": "chunk_4407_4789",
+    "start_sec": 4407,
+    "end_sec": 4789,
+    "start_label": "73:27",
+    "end_label": "79:49",
+    "raw_text": "ok mình sẽ chữa cái bài số 16 này nhé bởi vì nó đang có tết nên là nhiều người nột quá các bạn các bạn làm từ từ thôi nhé ở đây, các bạn nhập mảng A, sau đó mình sẽ sort B và B cộng mờ để mình sắp xếp cái mảng B theo thứ tự tăng dần này"
+  },
+  {
+    "chunk_id": "chunk_4769_4866",
+    "start_sec": 4769,
+    "end_sec": 4866,
+    "start_label": "79:29",
+    "end_label": "81:06",
+    "raw_text": "các bạn làm từ từ thôi nhé ở đây, các bạn nhập mảng A, sau đó mình sẽ sort B và B cộng mờ để mình sắp xếp cái mảng B theo thứ tự tăng dần này sau đó mình duyệt for nrt x2.a để mình duyệt qua từng phần tử 1 ở trong mảng A thì khi đó các bạn sẽ dùng là nrt support bằng lau bao, nhưng mà mình sẽ tìm kiếm trên mảng B nên nó sẽ là b và b cộng mờ, mục tiêu là mình sẽ tìm ra cái chỉ số của thằng đầu tiên lớn hơn vào bằng ích ở trong cái mảng b thì nếu mà làm một cách từ từ thì các bạn sẽ lấy ra cái chỉ số đó là index bằng port chứ đi b đúng không? thì từ cái chỉ số index này đến cái chỉ số cuối cùng ở trong mảng b là mờ chứ 1 thì nó sẽ có mờ chứ index phần tử và nó có một cái rất là hay như này là nếu ở trong cái mảng b này của các bạn nó không có thằng nào lớn hơn vào bằng ích Ví dụ nó trả về A共 6, A共 5, A共 3 gì đấy"
+  },
+  {
+    "chunk_id": "chunk_4861_4956",
+    "start_sec": 4861,
+    "end_sec": 4956,
+    "start_label": "81:01",
+    "end_label": "82:36",
+    "raw_text": "Ví dụ nó trả về A共 6, A共 5, A共 3 gì đấy Ví dụ như các bạn tìm kiếm thằng 9 này Trong trường hợp này, hầm lau 3 của mình sẽ trả về chỉ số của thằng 10 này Mà thằng 10 này là chỉ số 2, 4, 6, 7 là A共 6 đúng không? Thì khi đó con trỏ POT của mình sẽ có giá trị là A共 6 Nếu mà em muốn lấy ra cái chỉ số 6 này này Thì em phải lấy con trỏ đó, em chưa đi cái mảng A Thì nó sẽ ra cái chỉ số 6 toac, mistr, cout, sculpt, myślęIEL, nguyên trai, vκs, type, exp, digital, mạng, tênnika, content. toac, nghe, tênnika,iggs, tru twist, lìt, dân sát, lìt, v offended, tru zug, Toac, tênnika, cho mình lấy cái con trỏ mà nó trả về, mình chứa đi con trỏ b, nó ra cái trỉ sổ. Ngày xưa hồi học cái lý thuyết về mạng 1 triều. A xí lươi cái lý thuyết con trỏ thì mình có nhấn mạnh về cái vấn đề là trang mạng b, nó sẽ trẻ về con trỏ trong mạng b đúng không, nhiều bạn cứ lấy chữ A, chết giỡ rồi, thế là học vẹt rồi đúng không"
+  },
+  {
+    "chunk_id": "chunk_4947_5009",
+    "start_sec": 4947,
+    "end_sec": 5009,
+    "start_label": "82:27",
+    "end_label": "83:29",
+    "raw_text": "trang mạng b, nó sẽ trẻ về con trỏ trong mạng b đúng không, nhiều bạn cứ lấy chữ A, chết giỡ rồi, thế là học vẹt rồi đúng không mờ chữ đi index, ngày xưa các bạn học cái bài mà từ A đến B nó có bao nhiêu phần tử chưa, học chưa, học cái đấy rồi đúng không thì cái mạng B của mình, sau khi mà mình tìm được cái chỉ số của thằng đầu tiên lớn hơn hoặc bằng ích là index đúng không Cái chỉ số cuối cùng ở trong mạng B của mình là mờ chữ 1 đúng không? Thì từ index cho tới mờ chữ 1 thì nó sẽ có mờ chữ 1 chữ đi index cộng 1 thằng đúng không? Chính thức là 1, cấp 1 Mà cái này mình còn nhắc lại cho các bạn luôn rồi, là từ A đến B có bao nhiêu số ấy? Thì bây giờ từ index cho tới mờ chữ 1 thì nó sẽ có mờ chữ đi index số, cái 2 cái này nó chia tiêu cho nhau nè Nó không phải nó còn mờ chữ đi index số hả? Cái index này nó là cái chỉ số của thằng đầu tiên lớn hơn là bằng ích Thì mình sẽ tính từ cái chỉ số đến đến cuối dãy Thì nó đều là những cái thằng mà lớn hơn là bằng ích thôi Rãi mình tăng dần mà, rãi b của mình tăng dần mà"
+  },
+  {
+    "chunk_id": "chunk_4991_5052",
+    "start_sec": 4991,
+    "end_sec": 5052,
+    "start_label": "83:11",
+    "end_label": "84:12",
+    "raw_text": "Nó không phải nó còn mờ chữ đi index số hả? Cái index này nó là cái chỉ số của thằng đầu tiên lớn hơn là bằng ích Thì mình sẽ tính từ cái chỉ số đến đến cuối dãy Thì nó đều là những cái thằng mà lớn hơn là bằng ích thôi Rãi mình tăng dần mà, rãi b của mình tăng dần mà Thì công thức nó sẽ là mờ chỉ đi index Các bạn thấy không? Những cái như thế nhưng các bạn cũng sẽ gặp khó khăn Các bạn không có bao giờ động đến ý Không có bao giờ làm các cái bài tập như cái thứ ấy Thì mình nói thật là các bạn không bao giờ cốt được Bây giờ mình hỏi từ A đến B, các bạn còn không biết là nó có bao nhiêu số Thì bây giờ mình bảo các bạn tính từ index cho tới cuối rãi nó có bao nhiêu số Các bạn cũng khẳt khưỡng mãi, các bạn mới tính ra được Mà những kiến thức đấy thì nhiều khi mình sợ các bạn bị thọt thì mình có cho vào bài tập ở những cái buổi đầu tiên đấy Nói chung là mình đã từng học qua rồi, mình thấy những cái đó nó cũng sẽ gây khó khăn cho người mới mà"
+  },
+  {
+    "chunk_id": "chunk_5036_5099",
+    "start_sec": 5036,
+    "end_sec": 5099,
+    "start_label": "83:56",
+    "end_label": "84:59",
+    "raw_text": "Mà những kiến thức đấy thì nhiều khi mình sợ các bạn bị thọt thì mình có cho vào bài tập ở những cái buổi đầu tiên đấy Nói chung là mình đã từng học qua rồi, mình thấy những cái đó nó cũng sẽ gây khó khăn cho người mới mà Mà các bạn phải va vấp với nó, làm với nó thì mới cốt được, khi mà gặp thì mới cốt được Đó, thế là bài số 16, lớn hơn hoặc bằng có 1 hạm nữa là hạm upper bao nó chỉ khác hạm lau bao cái là nó trả về vị trí của thằng đầu tiên lớn hơn lau bao là lớn hơn hoặc bằng, còn upper thì nó sẽ là lớn hơn hẳn luôn và mình có 1 cái nhắc cho các bạn là như thế này nếu các bạn lấy upper, cái giá trị của hạm upper trả về mà các bạn chứ đi cái giá trị của hạm lau bao trả về thì nó sẽ ra được số lần xuất hiện của thằng x trong mảng tăng dần nếu các bạn có một cái mảng tăng dần và các bạn muốn đếm xem là cái thằng ích đến nó xuất hiện bao nhiêu lần"
+  },
+  {
+    "chunk_id": "chunk_5083_5147",
+    "start_sec": 5083,
+    "end_sec": 5147,
+    "start_label": "84:43",
+    "end_label": "85:47",
+    "raw_text": "nếu các bạn lấy upper, cái giá trị của hạm upper trả về mà các bạn chứ đi cái giá trị của hạm lau bao trả về thì nó sẽ ra được số lần xuất hiện của thằng x trong mảng tăng dần nếu các bạn có một cái mảng tăng dần và các bạn muốn đếm xem là cái thằng ích đến nó xuất hiện bao nhiêu lần thì các bạn có thể dùng luôn lau bao và up bao ok bình thường ý, giả sứ như các bạn muốn đếm xem thằng Nam này xuất hiện bao nhiêu lần các bạn sẽ phải viết hai hẻm 1 là cái hẻm vị trí đầu tiên 2 là cái hẻm vị trí cuối, rồi mình lấy vị trí cuối trừ vị trí đầu cộng 1 thì nó sẽ ra đường xuống lần xuất hiện của thằng Nam đúng không? 2 là các bạn có thể dùng hẻm lau bao và up bao đấy là các bạn dùng lau bao thì nó sẽ trẻ về được cái chỉ số này Đây là cái chỉ xuất của thằng đầu tiên lớn hơn bằng Nam Thế còn nếu mà mình Apple bao thì nó sẽ trả về cái thằng đầu tiên lớn hơn Nam, nó sẽ là thằng tám này nè Được chứ à? Thì khi đó mình lấy vị trí Apple, mình trừ vị trí lau ư, thì nó sẽ ra được cái số lần xuất hiện của thằng Nam Vì trong trường hợp mà thằng Nam nó không xuất hiện, ví dụ như 1, 3, 4, 4, 4, 8, 9 nhỉ ạ"
+  },
+  {
+    "chunk_id": "chunk_5128_5189",
+    "start_sec": 5128,
+    "end_sec": 5189,
+    "start_label": "85:28",
+    "end_label": "86:29",
+    "raw_text": "Thế còn nếu mà mình Apple bao thì nó sẽ trả về cái thằng đầu tiên lớn hơn Nam, nó sẽ là thằng tám này nè Được chứ à? Thì khi đó mình lấy vị trí Apple, mình trừ vị trí lau ư, thì nó sẽ ra được cái số lần xuất hiện của thằng Nam Vì trong trường hợp mà thằng Nam nó không xuất hiện, ví dụ như 1, 3, 4, 4, 4, 8, 9 nhỉ ạ Ok, thì các bạn lau bao thằng Nam nó sẽ trả về cái vị trí này Xin lỗi, lau bao thằng Nam nó sẽ trả về vị trí này Tại vì thằng Nam nó không xuất hiện mà, nên vị trí đầu tiên lớn của bằng Nam nó cũng là thằng 8 Mà các bạn up a bow thằng Nam thì nó cũng sẽ ra cái vị trí này Nên khi đó các bạn lấy up a bow, các bạn chứ lâu a bow thì nó sẽ ra xuống không Nên là không phải lo, nhé Nên nên mình có nhắc lại cho các bạn là Sau này nếu mà các bạn muốn tìm xem là cái thằng ích ấy nó xuất hiện ở trong mảng của mình bao nhiêu lần theo thứ tự tăng dần rồi Các mảng ấy, thì các bạn có thể lấy cái giá trị của hàm up a bow, các bạn chứ đi cái giá trị của hàm lâu a bow Thì nó sẽ ra được cái số lần xuất hiện ở đây nó có cái bài số 18 này, các bạn code size rất là nhiều thì mình sẽ hướng dẫn cái bài số 18 này nhé"
+  },
+  {
+    "chunk_id": "chunk_5169_5236",
+    "start_sec": 5169,
+    "end_sec": 5236,
+    "start_label": "86:09",
+    "end_label": "87:16",
+    "raw_text": "Sau này nếu mà các bạn muốn tìm xem là cái thằng ích ấy nó xuất hiện ở trong mảng của mình bao nhiêu lần theo thứ tự tăng dần rồi Các mảng ấy, thì các bạn có thể lấy cái giá trị của hàm up a bow, các bạn chứ đi cái giá trị của hàm lâu a bow Thì nó sẽ ra được cái số lần xuất hiện ở đây nó có cái bài số 18 này, các bạn code size rất là nhiều thì mình sẽ hướng dẫn cái bài số 18 này nhé bài 18 nó cho bạn em một cái mảng A gồm nở phần tử vào số nguyên Dương K, xuống nguyên K, xin lỗi bạn ấy đếm xem trong mảng của mình nó có bao nhiêu cặp A, I, A, Z đấy, mà cái độ tranh lệch của chúng bằng K đếm nhé, đếm xem có bao nhiêu cặp đó, tất nhiên là không thể high 4 được bài này là đếm nó sẽ khó hơn cái bài mà các bạn kiểm tra, đúng để kiểm tra thì mình chỉ cần kiểm tra là có ra được, còn bây giờ nó lại bắt mình đếm Thế ý tưởng là gì? Mình cũng sắp xếc cái mảng theo thứ tự tăng dần Mình sắp xếc cái mảng e theo thứ tự tăng dần 1, 1, 3, 3, 4, 5, 5, 6, 8, chẳng hạc đúng không? Sau đó thì mình sẽ có một thằng kê ví dụ như kê của mình đó bằng 5 đi"
+  },
+  {
+    "chunk_id": "chunk_5220_5280",
+    "start_sec": 5220,
+    "end_sec": 5280,
+    "start_label": "87:00",
+    "end_label": "88:00",
+    "raw_text": "Mình sắp xếc cái mảng e theo thứ tự tăng dần 1, 1, 3, 3, 4, 5, 5, 6, 8, chẳng hạc đúng không? Sau đó thì mình sẽ có một thằng kê ví dụ như kê của mình đó bằng 5 đi Được chứ à? Kê bằng 4 đi Bây giờ các bạn muốn đếm xem là trong mảng của mình nó có bao nhiêu cặp mà cái độ trình là của nó bằng 4 đi Thì mình xót cái mảng của mình tăng dần một lần, sau đó các bạn duyệt qua từng phần tử 1 ở trong mảng A, thì mình gọi cái thằng đấy là AI Ví dụ như AI của mình là thằng 1 này này Thì các bạn sẽ phải đếm nhanh là trong mảng của mình có bao nhiêu thằng có giá trị là AI cộng K, có đến được không? Quá dễ Các bạn chỉ cần tìm vị trí cuối, tìm vị trí đầu, tao lấy vị trí cuối, chỉ vị trí đầu cộng 1 Mà cái việc tìm vị trí vào cuối vào đầu đấy, nó chỉ mất có lốc nờ cho mỗi lần tìm thôi Đúng không? Ví dụ như thằng 1 này thì bạn em tìm ra vị trí đầu tiên của cái thằng có giá trị là 1, cộng 4 là 5 thì nó tìm được thằng này Đây là vị trí cuối, vậy thì mình sẽ đếm được 2 cặp"
+  },
+  {
+    "chunk_id": "chunk_5261_5324",
+    "start_sec": 5261,
+    "end_sec": 5324,
+    "start_label": "87:41",
+    "end_label": "88:44",
+    "raw_text": "Các bạn chỉ cần tìm vị trí cuối, tìm vị trí đầu, tao lấy vị trí cuối, chỉ vị trí đầu cộng 1 Mà cái việc tìm vị trí vào cuối vào đầu đấy, nó chỉ mất có lốc nờ cho mỗi lần tìm thôi Đúng không? Ví dụ như thằng 1 này thì bạn em tìm ra vị trí đầu tiên của cái thằng có giá trị là 1, cộng 4 là 5 thì nó tìm được thằng này Đây là vị trí cuối, vậy thì mình sẽ đếm được 2 cặp Đấy là thằng 1 này, cái thằng 1 này, cái thằng 1 này Thế thôi. Đức là ý tưởng là mình sẽ có thằng AI và mình sẽ đếm nhanh xem là thằng AI cộng ca xuất hiện bao nhiêu lần Thế thôi. Và việc mà tìm xem cái thằng AI cộng ca này xuất hiện bao nhiêu lần thì các bạn sẽ dùng tìm kiếm nhị phân cho nó mới nhanh Này các bạn tham khảo nha. Nhưng mà Bài này nó có thể bị sai nếu mà các bạn tìm kiếm từ đầu dãy tại vì nó có trường hợp K bằng không Tại sao K bằng không mà các bạn tìm từ đầu dãy nó sẽ bị sai? Mình ví dụ như này là sứa như các bạn có 1 cái dãy số như này, mà K của nó lại bằng không cái mảng E của mình nó là 1 này, 2, 2, 2, 2, 2, 3, 3, 8, chẳng hạn thì khi mà các bạn xét cái thằng AI là thằng 2 này nhá"
+  },
+  {
+    "chunk_id": "chunk_5305_5369",
+    "start_sec": 5305,
+    "end_sec": 5369,
+    "start_label": "88:25",
+    "end_label": "89:29",
+    "raw_text": "Tại sao K bằng không mà các bạn tìm từ đầu dãy nó sẽ bị sai? Mình ví dụ như này là sứa như các bạn có 1 cái dãy số như này, mà K của nó lại bằng không cái mảng E của mình nó là 1 này, 2, 2, 2, 2, 2, 3, 3, 8, chẳng hạn thì khi mà các bạn xét cái thằng AI là thằng 2 này nhá thì khi đó cái thằng AI cộng K của mình, mà K của mình bằng không thì nó cũng sẽ là số 2 luôn Thì nếu các bạn tìm từ đầu dãy thì nó sẽ đếm được là 5 thằng Khi đó nó sẽ xét thằng 2 này với thằng 2 này, thằng này với thằng này, thằng này với thằng này, thằng này với thằng này Với lại ngoài nó với chính nó luôn và nó đếm được 5 cặp thì dẫn đến bị sai Sai thứ nhất là mình đếm thừa tại vì cái thằng 2 này với cái thằng 2 này nó đếm cặp rồi Thằng 2 này với thằng 2 này nó đếm cặp rồi, bây giờ các bạn lại đếm lại 1 lần nữa Chưa kể là các bạn còn đếm thằng 2 này với chính nó nên nó sẽ bị sai Để chánh việc đếm thừa như vậy thì khi các bạn xét thằng AI này này, các bạn tìm một đoạn đứng đằng sau thôi Không có tìm từ đầu dãy, thì nó sẽ chánh việc đếm trùng và xét thằng AI với chính nó trong trường hợp ca bằng không"
+  },
+  {
+    "chunk_id": "chunk_5352_5413",
+    "start_sec": 5352,
+    "end_sec": 5413,
+    "start_label": "89:12",
+    "end_label": "90:13",
+    "raw_text": "Chưa kể là các bạn còn đếm thằng 2 này với chính nó nên nó sẽ bị sai Để chánh việc đếm thừa như vậy thì khi các bạn xét thằng AI này này, các bạn tìm một đoạn đứng đằng sau thôi Không có tìm từ đầu dãy, thì nó sẽ chánh việc đếm trùng và xét thằng AI với chính nó trong trường hợp ca bằng không Thì khi đó các bạn app dụng hàm lào bao vào app của bao, mình phải tìm từ chỉ số y cộng 1 cho tới cuối dãy Chứ bạn nào mà tìm từ đầu dãy thì các bạn sẽ bị sai sau khi mà các bạn nhập mảng, các bạn xót cái mảng A theo thứ tự tăng dần và dùng cái biến A nơi S bằng không sau đó mình duyệt qua từng phần tử 1 ở trong mảng A thì nó chính là thằng AI và các bạn phải đếm nhanh xem là cái thằng AI cộng K nó xuất hiện bao nhiêu lần thì lúc nãy mình nói các bạn ấy, nếu mà các bạn muốn tìm kiếm nhanh một số xuất hiện bao nhiêu lần trong mảng các bạn chỉ cần dùng 2 hèm là lau vào bao bao hoặc là các bạn tự cốt nếu các bạn muốn ở đây mình sẽ dùng sao P1 bằng lau vào bao nhưng mà mình sẽ tìm từ A cộng E cộng 1 tức là mình sẽ tìm từ chỉ số i cộng 1 cho tới cuối dãi"
+  },
+  {
+    "chunk_id": "chunk_5395_5458",
+    "start_sec": 5395,
+    "end_sec": 5458,
+    "start_label": "89:55",
+    "end_label": "90:58",
+    "raw_text": "thì lúc nãy mình nói các bạn ấy, nếu mà các bạn muốn tìm kiếm nhanh một số xuất hiện bao nhiêu lần trong mảng các bạn chỉ cần dùng 2 hèm là lau vào bao bao hoặc là các bạn tự cốt nếu các bạn muốn ở đây mình sẽ dùng sao P1 bằng lau vào bao nhưng mà mình sẽ tìm từ A cộng E cộng 1 tức là mình sẽ tìm từ chỉ số i cộng 1 cho tới cuối dãi chứ anh không có tìm từ đầu dãi bạn nào mà chỗ này mà dùng là a với a cộng nờ là các bạn sẽ bị sai nấy, upvow để mình tìm ra thì mình cũng tìm từ a cộng i cộng 1 cho tới cuối dãi thế thôi thì khi đói các bạn muốn biết cái thằng ai cộng kè này xuất hiện bao nhiêu lần các bạn chỉ cần lấy p2 này, các bạn chưa đi p1 thì nó sẽ ra sự được số lần xuất hiện của thằng ai cộng kè và mình sẽ lấy mình cộng 1 cái biến an ở F tại vì nó có thể kết hợp với thằng ai đúng không? để tạo ra các cái cặp có độ trình lệnh quần kê dưới này các bạn xe ra biến an hợp ra được các bạn nào mà biết cốt ấy, mấy cái hàm lao bao, up a bao thì cốt nó sẽ rất là tối yêu và nó gọn không là các bạn sử lý nó khó trong trường hợp mà các bạn dùng hàm lao bao và up a bao mà cảm thấy nó không có tự tin thì tốt nhất là bạn em sẽ tự cốt những cái biến thể này này"
+  },
+  {
+    "chunk_id": "chunk_5443_5506",
+    "start_sec": 5443,
+    "end_sec": 5506,
+    "start_label": "90:43",
+    "end_label": "91:46",
+    "raw_text": "các bạn nào mà biết cốt ấy, mấy cái hàm lao bao, up a bao thì cốt nó sẽ rất là tối yêu và nó gọn không là các bạn sử lý nó khó trong trường hợp mà các bạn dùng hàm lao bao và up a bao mà cảm thấy nó không có tự tin thì tốt nhất là bạn em sẽ tự cốt những cái biến thể này này đúng không? tại vì thực tế này, để mà làm được cái bài số 18 này thì các bạn chỉ cần biết cái cốt tìm vị trí đầu tiên và tìm cái vị trí cuối cùng của một số trong cái giải tăng dần là các bạn có thể xử lý được Thì đấy là cái kiến thức về thuật hoán tìm kiếm về lau bao up or down mà các bạn cần phải làm được Thì cái 20 phần bài tập về lau bao up or down với comparator này Nó là một cái phần bài tập rất là quan trọng Các bạn cần phải thanh thạo cho mình phần này Có em ạ Đây mình sẽ hướng dẫn nhanh cái kiến thức về đệ quy nhá các bạn Đệ quy Đệ quy thì đến tầm này bạn em mới học Còn nếu các bạn học sớm quá thì nó hơi khó khăn cho các bạn ạ"
+  },
+  {
+    "chunk_id": "chunk_5486_5548",
+    "start_sec": 5486,
+    "end_sec": 5548,
+    "start_label": "91:26",
+    "end_label": "92:28",
+    "raw_text": "Có em ạ Đây mình sẽ hướng dẫn nhanh cái kiến thức về đệ quy nhá các bạn Đệ quy Đệ quy thì đến tầm này bạn em mới học Còn nếu các bạn học sớm quá thì nó hơi khó khăn cho các bạn ạ Vì đệ quy nó là một kiến thức tương đối là chủ tượng Ừ được em ạ Đây, kiến thức về đệ quy Cũng có, có rất nhiều thuật toán bằng người ta cốt bằng đệ quy, đúng không? Ví dụ như là thuật toán sắp xếp nhanh, thuật toán sắp xếp vun đống, thuật toán sắp xếp trộn Hay là các cấu trúc dữ liệu tối yêu như là cấu trúc dữ liệu kiểu cây, cây phân đoạn rồi cây nhị phân các thứ, hay là các thật toán trên đồ thị, người ta rất hay là dùng đệ quy nhất là những thật toán trên cây, người ta hay dùng đệ quy"
+  },
+  {
+    "chunk_id": "chunk_5528_5592",
+    "start_sec": 5528,
+    "end_sec": 5592,
+    "start_label": "92:08",
+    "end_label": "93:12",
+    "raw_text": "Ví dụ như là thuật toán sắp xếp nhanh, thuật toán sắp xếp vun đống, thuật toán sắp xếp trộn Hay là các cấu trúc dữ liệu tối yêu như là cấu trúc dữ liệu kiểu cây, cây phân đoạn rồi cây nhị phân các thứ, hay là các thật toán trên đồ thị, người ta rất hay là dùng đệ quy nhất là những thật toán trên cây, người ta hay dùng đệ quy đây là một thật toán hoặc là một kỹ thuật lập trình, các bạn muốn gọi nó như thế nào cũng được, hỏi là hàm, hàm cũng được trước khi thì mình sẽ nói qua cho các bạn về câu chúc dữ liệu, có tên là câu chúc dữ liệu ngăn xếp ở trong xị ổng cộng đây là một câu chúc dữ liệu tựa tựa như là cái mảng hoặc là cái vector hay cái set của cái map của các bạn nhưng mà cái tính chất hoạt động thì nó sẽ khác Travel,"
+  },
+  {
+    "chunk_id": "chunk_5568_5638",
+    "start_sec": 5568,
+    "end_sec": 5638,
+    "start_label": "92:48",
+    "end_label": "93:58",
+    "raw_text": "Travel, Cách hoạt động người ta viết tắt là lethal, viết tắt của từ last in nhưng mà first out, tức là vào cuối nhưng mà lại ra đầu, thì đây là cách thức hoạt động của ngăn xếp"
+  },
+  {
+    "chunk_id": "chunk_5622_5683",
+    "start_sec": 5622,
+    "end_sec": 5683,
+    "start_label": "93:42",
+    "end_label": "94:43",
+    "raw_text": "Cách hoạt động người ta viết tắt là lethal, viết tắt của từ last in nhưng mà first out, tức là vào cuối nhưng mà lại ra đầu, thì đây là cách thức hoạt động của ngăn xếp Ngăn xếp nó không có chỉ số, nó không có giống vector, sao mà các bạn nói cái thằng này giống vector được Thằng vector thì các bạn có thể dùng nó để mô phỏng cái ngăn xếp nhưng mà thực tế thì ngăn xếp và vector mình nó khác nhau hoàn toàn Vector của mình nó giống như một cái giải số có thể duyệt từ đầu đến cuối hoặc duyệt từ cuối về đầu một cách thoải mái Đúng không? Còn cái ngăn xếp này nó không duyệt được kiểu đấy đâu Ngăn xếp nó chỉ còn cho vào lấy ra, cho vào lấy ra thôi Nó có xây dựng sẵn rồi Thì để mà thêm một phần tử vào thì các bạn push Còn lấy một phần tử ra thì các bạn pop Push, pop, push, pop Thì nó có mấy cái hạm chính thôi"
+  },
+  {
+    "chunk_id": "chunk_5667_5728",
+    "start_sec": 5667,
+    "end_sec": 5728,
+    "start_label": "94:27",
+    "end_label": "95:28",
+    "raw_text": "Nó có xây dựng sẵn rồi Thì để mà thêm một phần tử vào thì các bạn push Còn lấy một phần tử ra thì các bạn pop Push, pop, push, pop Thì nó có mấy cái hạm chính thôi Cái ngăn xếp thì nó có mấy hạm chính thôi khi mà bạn em muốn dùng thì bạn em include cho anh cái stack vào khi mà các bạn khai báo thì giống mấy cái mà các bạn hay dùng đó, đấy là stack sau đến kiểu dữ liệu, dụ như int này, đúng không? các bạn dùng ft.pus thì nó sẽ thêm 1 thằng vào, dụ như cho thêm số 1 các bạn đã tiếp tục ft.pus, thêm số 2, rồi ft.pus, thêm số 3, thêm số 4 nữa nha thì khi đó kênh ăn xếp của các bạn nó như thế này, đúng không? từ trên đỉnh xuống dưới rồi nó sẽ là 4, 3, 2, 1 hỗ trợ cái theo tác là các bạn truy suất b distable Khi các bạn không truy suất được vào Danger. No 1o 3, chỉ được truy suất b isoad und 0"
+  },
+  {
+    "chunk_id": "chunk_5702_5766",
+    "start_sec": 5702,
+    "end_sec": 5766,
+    "start_label": "95:02",
+    "end_label": "96:06",
+    "raw_text": "các bạn đã tiếp tục ft.pus, thêm số 2, rồi ft.pus, thêm số 3, thêm số 4 nữa nha thì khi đó kênh ăn xếp của các bạn nó như thế này, đúng không? từ trên đỉnh xuống dưới rồi nó sẽ là 4, 3, 2, 1 hỗ trợ cái theo tác là các bạn truy suất b distable Khi các bạn không truy suất được vào Danger. No 1o 3, chỉ được truy suất b isoad und 0 it's entonces ft . cheapest CloseBaby hãy thăng ở trên đỉnh hàng đợi, ăn ngăn xếp đúng không? Thì đó mình tiếp tục xeo ra, ft.tools thì nó rất là số 3. Nói chung nó chỉ có hỗ trợ mấy hẻm, 1 là cái hẻm sai đúng không?"
+  },
+  {
+    "chunk_id": "chunk_5751_5813",
+    "start_sec": 5751,
+    "end_sec": 5813,
+    "start_label": "95:51",
+    "end_label": "96:53",
+    "raw_text": "Thì đó mình tiếp tục xeo ra, ft.tools thì nó rất là số 3. Nói chung nó chỉ có hỗ trợ mấy hẻm, 1 là cái hẻm sai đúng không? Hẻm sai, hẻm clear, hẻm empty, rồi là hẻm push để thêm vào này, hẻm pop để lấy ra này và hẻm pop để mà các bạn truy cập vào cái thẳng ở đỉnh của ngăn xếp. Và cái thao tác pop này thì lưu ý là nếu cái ngăn xếp của bạn nó rỗng và các bạn pop là nó sẽ gây lỗ nha. ứng dụng của nó, ứng dụng của nó thì khá là nhiều ví dụ như là nó có thể tính cái việc mà ví dụ như các bạn khai báo một cái biến tổng, các bạn cho nó bằng A, B, C, C như thế này ấy nếu mà để mà tính được cái giá trị của cái biểu thức tổng này trong lập trình ấy thì cái máy tính của các bạn nó phải dùng an sếp nó mới tính được con người các bạn nhìn với đây các bạn tính được là A, B, C, C, 2D tính như thế nào đúng không cái máy tính để mà tính được cái biểu thức như thế này nó rất là khó nó phải dùng an sếp nó mới tính được ấy"
+  },
+  {
+    "chunk_id": "chunk_5794_5856",
+    "start_sec": 5794,
+    "end_sec": 5856,
+    "start_label": "96:34",
+    "end_label": "97:36",
+    "raw_text": "nếu mà để mà tính được cái giá trị của cái biểu thức tổng này trong lập trình ấy thì cái máy tính của các bạn nó phải dùng an sếp nó mới tính được con người các bạn nhìn với đây các bạn tính được là A, B, C, C, 2D tính như thế nào đúng không cái máy tính để mà tính được cái biểu thức như thế này nó rất là khó nó phải dùng an sếp nó mới tính được ấy Các bạn lập trình, các bạn viết đóng màu ngọt nhọn, đóng màu ngọt tròn, các thứ mà nó trẩn chỉ nó kết hợp được với nhau ấy, thì nó cũng là ứng dụng của ngăn xếp ấy, nó sẽ check cho các bạn được là cái đóng màu ngọt tròn, đóng màu ngọt nhọn của các bạn nó có hợp lệ hay không ấy, nó đều là ứng dụng của ngăn xếp ấy. Ừ, đấy là ngăn xếp và trong lập trình của các bạn thì nó sẽ có một cái bộ nhớ, có những tên là bộ nhớ ngăn xếp mà mình đã từng nói qua bài tập về mạng 1 triều cơ bản mà các bạn bị chàn bộ như ngăn xếp nhớ không? trong lập trình nó cũng sẽ có bộ như ngăn xếp đó và nó có 1 cái khái niệm có tên là Stack Frame hoặc là 1 cái cơ chế, 1 cái kỹ thuật quản lý bộ nhớ có tên là Stack Frame"
+  },
+  {
+    "chunk_id": "chunk_5841_5912",
+    "start_sec": 5841,
+    "end_sec": 5912,
+    "start_label": "97:21",
+    "end_label": "98:32",
+    "raw_text": "bài tập về mạng 1 triều cơ bản mà các bạn bị chàn bộ như ngăn xếp nhớ không? trong lập trình nó cũng sẽ có bộ như ngăn xếp đó và nó có 1 cái khái niệm có tên là Stack Frame hoặc là 1 cái cơ chế, 1 cái kỹ thuật quản lý bộ nhớ có tên là Stack Frame cái này nó hoạt động như thế nào? tức là khi mà các bạn lập trình và các bạn xây dựng ra các hàm con thì nó sẽ có 1 cái kỹ thuật quản lý bộ nhớ chương trình của mình có tên là Stack Frame Ví dụ, mình sẽ có 1 cái hàm tên là e, sau đó mình sẽ cl và chữ e, sau đó mình có 1 cái hàm là hàm b, mình sẽ cl ra chữ b, sau đó mình gọi hàm e, sau đó mình cl, chữ c, sau đó mình cl, mình đã tiếp tục gọi hàm e 1 lần nữa, sau đó mình cl ra chữ d, bây giờ mình sẽ hướng dẫn cho các bạn cái cơ chế stack frame này, bằng cách trong men mình sẽ gọi hàm b, thực ra thì cái stack frame này thì nó giúp cho các bạn hiểu được là cái"
+  },
+  {
+    "chunk_id": "chunk_5869_5931",
+    "start_sec": 5869,
+    "end_sec": 5931,
+    "start_label": "97:49",
+    "end_label": "98:51",
+    "raw_text": "Ví dụ, mình sẽ có 1 cái hàm tên là e, sau đó mình sẽ cl và chữ e, sau đó mình có 1 cái hàm là hàm b, mình sẽ cl ra chữ b, sau đó mình gọi hàm e, sau đó mình cl, chữ c, sau đó mình cl, mình đã tiếp tục gọi hàm e 1 lần nữa, sau đó mình cl ra chữ d, bây giờ mình sẽ hướng dẫn cho các bạn cái cơ chế stack frame này, bằng cách trong men mình sẽ gọi hàm b, thực ra thì cái stack frame này thì nó giúp cho các bạn hiểu được là cái Các cái hàm trong chương trình của mình nó chạy theo thứ tự như thế nào thôi Các bạn cứ hiểu đơn giản là mỗi lần mà các bạn gọi một cái hàm ấy hay là một cái hàm con được gọi thì những cái thông tin của cái hàm đó nó sẽ được lưu chữ ở trong một cái người ta gọi là frame, stack frame và nó sẽ đẩy vào trong bộ nhớ ngăn xếp để thực hiện"
+  },
+  {
+    "chunk_id": "chunk_5915_5980",
+    "start_sec": 5915,
+    "end_sec": 5980,
+    "start_label": "98:35",
+    "end_label": "99:40",
+    "raw_text": "Các bạn cứ hiểu đơn giản là mỗi lần mà các bạn gọi một cái hàm ấy hay là một cái hàm con được gọi thì những cái thông tin của cái hàm đó nó sẽ được lưu chữ ở trong một cái người ta gọi là frame, stack frame và nó sẽ đẩy vào trong bộ nhớ ngăn xếp để thực hiện Đây là cái bộ nhớ ngăn xếp của bạn em này Khi mà các bạn gọi hàm B này thì nó phát sinh ra một cái lời gọi hàm ấy Thì nó sẽ tạo ra một stack frame của thằng B và nó đẩy vào trong bộ những ngăn xếp Trong bộ những ngăn xếp của mình sẽ có một hàm là hàm B Bây giờ các bạn vào hàm B, các bạn sẽ thực hiện những câu lệnh này, từ trên xuống dưới Cái câu lệnh đầu tiên là nó sia chữ B, là ok rồi, đúng không? Nó xuống câu lệnh thứ 2, nó gọi hàm E Thì khi nó đã phát sinh ra một lời gọi hàm, đúng không? Và khi đó cái hàm E của bạn sẽ được đẩy vào trong bộ những ngăn xếp Vậy thì trong bộ những ngăn xếp của bạn sẽ có 2 hàm Đây không phải là lập trình mà các hàm có thể chạy xong xong được, đúng không? Nên là cái thằng nào nó nằm ở bên trên thì nó sẽ là cái hàm được thực hiện trước hay nó khác là nó đang được thực hiện, ví dụ như đây có 2 hàm E và B, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_5964_6026",
+    "start_sec": 5964,
+    "end_sec": 6026,
+    "start_label": "99:24",
+    "end_label": "100:26",
+    "raw_text": "Vậy thì trong bộ những ngăn xếp của bạn sẽ có 2 hàm Đây không phải là lập trình mà các hàm có thể chạy xong xong được, đúng không? Nên là cái thằng nào nó nằm ở bên trên thì nó sẽ là cái hàm được thực hiện trước hay nó khác là nó đang được thực hiện, ví dụ như đây có 2 hàm E và B, đúng không? Ở trong hàm B này có các bạn nó gọi hàm E bây giờ thằng E nó phải chạy xong đã, thì thằng B của bạn nó mới xuống được câu lệnh số 14 Bây giờ các bạn phải vào hàm E, các bạn chạy đã vào hàm E thì các bạn CL chịu E sau đó các bạn chạy xong thì hàm E của mình nó kết thúc nên là trạng thái của ham A nó sẽ được đẩy ra khỏi bộ như ngăn xếp đúng không? khi đó mình bắt đầu, mình mới xuống được câu lệnh số 14 ở trong ham B bởi vì bây giờ ham B nó nằm ở trên đỉnh của ngăn xếp, nó mới được chạy tiếp mình CL chữ C sau mình xuống câu lệnh số 15 lại gọi ham A đúng không? nó lại đẩy ham A vào trong bộ như ngăn xếp và bây giờ các bạn lại phải ưu tiên chạy ham A đã mình lại vào ham A mình CL chữ E sau đó CL chữ E xong thì ham A nó kết thúc thì các bạn lại xoá nó ra khỏi bộ như ngăn xếp"
+  },
+  {
+    "chunk_id": "chunk_6009_6070",
+    "start_sec": 6009,
+    "end_sec": 6070,
+    "start_label": "100:09",
+    "end_label": "101:10",
+    "raw_text": "mình CL chữ C sau mình xuống câu lệnh số 15 lại gọi ham A đúng không? nó lại đẩy ham A vào trong bộ như ngăn xếp và bây giờ các bạn lại phải ưu tiên chạy ham A đã mình lại vào ham A mình CL chữ E sau đó CL chữ E xong thì ham A nó kết thúc thì các bạn lại xoá nó ra khỏi bộ như ngăn xếp B mới lại chạy tiếp đúng không? Các bạn mình xuống câu lệnh xuống 16, các bạn nhìn ra chữ D Sau khi nhìn ra chữ D thì cái hàm B của mình nó chạy xong và nó được đẩy dọc vào bộ như ngăn xếp và bộ như ngăn xếp của bạn nó lại rộng như ban đầu Đấy thì đấy là cái cư chế khi mà các bạn gọi các cái hàm hay là nói chung là các cái hàm nó gọi lại lẫn nhau ý thì nó sẽ hoạt động như thế nào Trong cái bộ như ngăn xếp của các bạn thì nó có thể tồn tại nhiều trạng thái của các cái hàm nhưng mà cái thằng nào trên đỉnh của ngăn xếp thì nó sẽ được thực hiện trước Còn những cái thẳng ở dưới là nó đang đợi Được chưa? Rối á, nó rõ như ban ngày, mà bảo rối á, cái này mà em đã bảo rối Thế thì em học quay lui, em học các thứ thì nó còn đến bức độ như thế nào Cái này nó trả có gì rối cả Các bạn thấy nó rối á"
+  },
+  {
+    "chunk_id": "chunk_6053_6117",
+    "start_sec": 6053,
+    "end_sec": 6117,
+    "start_label": "100:53",
+    "end_label": "101:57",
+    "raw_text": "Còn những cái thẳng ở dưới là nó đang đợi Được chưa? Rối á, nó rõ như ban ngày, mà bảo rối á, cái này mà em đã bảo rối Thế thì em học quay lui, em học các thứ thì nó còn đến bức độ như thế nào Cái này nó trả có gì rối cả Các bạn thấy nó rối á Anh chỉ thấy đơn giản là, ví dụ như Thằng A Xin lỗi thằng B đúng không? Nó gọi thằng A Thì thằng A phải chạy xong đã, thì thằng B mới được chạy tiếp Nó đơn giản như thế rồi mà, đây này trong hàm b của mình nó có 1, 2, 3, 4, 5 câu lệnh thì mình, thì nó, thường là các câu lệnh này sẽ được thực hiện từ trên xuống dưới đúng không? nhưng mà nó lại phát sinh ra những cái câu lệnh là gọi cái hàm khác thì bao giờ cái hàm khác đấy phải chạy xong thực ra nó trẻ có gì rối cả, sao các bạn là bán nó rối nhỉ? thế này mà các bạn học mấy cái thuật toán như là, mấy cái thuật toán, hay là các cái, gọi là gì nhỉ?"
+  },
+  {
+    "chunk_id": "chunk_6099_6159",
+    "start_sec": 6099,
+    "end_sec": 6159,
+    "start_label": "101:39",
+    "end_label": "102:39",
+    "raw_text": "thực ra nó trẻ có gì rối cả, sao các bạn là bán nó rối nhỉ? thế này mà các bạn học mấy cái thuật toán như là, mấy cái thuật toán, hay là các cái, gọi là gì nhỉ? Các cấu trúc dữ liệu mà nó nâng cao í, đấy các bạn học cái đấy nó còn vất vả nữa Còn cái này nó chưa có gì cả Cái này nó rõ mè đúng không? Nó chỉ đơn thuận lần anh giải thích cho bạn em là cái cơ chế các cái hèm gọi nhau nó hoạt động như thế nào thôi mà Thì cứ gọi thì nó ném vào trong ngăn xếp mà chạy xong thì nó xóa ra khỏi ngăn xếp Thì các bạn phải nắm được cái đó, các bạn mới hiểu được đệ quy Nhưng mà tại sao sinh viên học đệ quy nó cứ gặp khó khăn hay là học về danh sách liên kết nó gặp khó khăn tại vì người ta không có hiểu được cái bản chất của vấn đề nấy, học không có hiểu bản chất của vấn đề thì làm sao mà mình hiểu được những cái khó hơn cái khó hơn, tức là về đệ quy á"
+  },
+  {
+    "chunk_id": "chunk_6140_6201",
+    "start_sec": 6140,
+    "end_sec": 6201,
+    "start_label": "102:20",
+    "end_label": "103:21",
+    "raw_text": "Nhưng mà tại sao sinh viên học đệ quy nó cứ gặp khó khăn hay là học về danh sách liên kết nó gặp khó khăn tại vì người ta không có hiểu được cái bản chất của vấn đề nấy, học không có hiểu bản chất của vấn đề thì làm sao mà mình hiểu được những cái khó hơn cái khó hơn, tức là về đệ quy á thì nó cần các bạn hiểu được cái cấu trúc dữ liệu ngăn xếp với lại là cái cơ chế stack frame thì mình phải nắm được 2 cái đệ vững, thì mình mới biết là đệ quy nó hoạt động như thế nào để mình biết là sau khi mà hàm này chạy xong thì cái hàm này nó được chạy tiếp, kiểu như thế Nhưng mà em không có nắm được, mà người ta dậy đệ quy luôn, các bạn thấy nó chiều tượng quá Thực ra thì nó khá là rõ ràng với những bạn này mà học lý thuyết nó vẫn Đệ quy, đúng rồi Thì đấy là cái mình hướng dẫn cho các bạn về stack frame, tại vì mình thấy nha Cái stack frame này, kiến thức về stack frame này mình trả thấy có các cái trường trình nào mà nó hướng dẫn"
+  },
+  {
+    "chunk_id": "chunk_6183_6246",
+    "start_sec": 6183,
+    "end_sec": 6246,
+    "start_label": "103:03",
+    "end_label": "104:06",
+    "raw_text": "Đệ quy, đúng rồi Thì đấy là cái mình hướng dẫn cho các bạn về stack frame, tại vì mình thấy nha Cái stack frame này, kiến thức về stack frame này mình trả thấy có các cái trường trình nào mà nó hướng dẫn Tức là các cái xáo trình hay là các cái stack về lập trình, người ta không có hướng dẫn về stack frame khi mà học đệ quy phát là người ta cứ hỏi, người ta chỉ có giới thiệu đệ quy là cái hẻm gọi lại chính nó, nhưng mà làm sao mà sinh viên nó hiểu được mấy cái đấy, đúng không? Cái quan trọng cái bản chất của cái đệ quy đấy là các bạn nó hoạt động dựa trên cấu trúc dự liệu ngăn xếp và cơ chế là cơ chế stack frame nhưng mà không giới thiệu 2 cái đấy, rồi cứ nói đệ quy là cái hẻm gọi lại chính nó, thì sinh viên nó biết như thế thôi, đúng không? Nhưng mà rất ít bạn có thể hiểu được là đệ quy nó hoạt động như thế nào? nếu mà chỉ có hướng dẫn đệ quy là cái hạm gọi lại chính nó sau đó nói cho các bạn một vài cái ví dụ nên là mình chả biết dịch cái stack frame này gian tính việt là cái gì"
+  },
+  {
+    "chunk_id": "chunk_6226_6289",
+    "start_sec": 6226,
+    "end_sec": 6289,
+    "start_label": "103:46",
+    "end_label": "104:49",
+    "raw_text": "rồi cứ nói đệ quy là cái hẻm gọi lại chính nó, thì sinh viên nó biết như thế thôi, đúng không? Nhưng mà rất ít bạn có thể hiểu được là đệ quy nó hoạt động như thế nào? nếu mà chỉ có hướng dẫn đệ quy là cái hạm gọi lại chính nó sau đó nói cho các bạn một vài cái ví dụ nên là mình chả biết dịch cái stack frame này gian tính việt là cái gì bởi vì mình chưa đọc một cuốn sách nào mà nó nói về cái vấn đề là stack frame này kìa đọc tìm tài liệu tiếng Anh thì stack frame này người ta nói rất là rõ nên mình chả dịch sang tính việt cứ để nó thế thôi em cứ hiểu là nói chung em gọi hạm em gọi cái hạm thì thông tin của cái hạm đấy nó sẽ được đóng gói vào trong một cái khung đi cho nó ném vào trong bộ nhớ ngăn xếp để thực thi và bao giờ mà cái hàm đấy của em nó chạy xong thì cái hàm, cái hàm đấy nó chạy xong nó sẽ được xóa ra khỏi bộ nhớ ngăn xếp nó không còn tốn chi phí, đúng không? Không còn tốn bộ nhớ nữa mà Thế còn cái hàm đệ quy của bạn em ấy là một cái hàm mà nó gọi lại chính nó"
+  },
+  {
+    "chunk_id": "chunk_6273_6335",
+    "start_sec": 6273,
+    "end_sec": 6335,
+    "start_label": "104:33",
+    "end_label": "105:35",
+    "raw_text": "và bao giờ mà cái hàm đấy của em nó chạy xong thì cái hàm, cái hàm đấy nó chạy xong nó sẽ được xóa ra khỏi bộ nhớ ngăn xếp nó không còn tốn chi phí, đúng không? Không còn tốn bộ nhớ nữa mà Thế còn cái hàm đệ quy của bạn em ấy là một cái hàm mà nó gọi lại chính nó Đúng như thế thật, ví dụ như anh có một cái hàm void có tên là Requse Ở trong cái hàm void này này nó có thể có một câu lệnh mà nó gọi lại cái hàm Requse đó thì đấy người ta gọi là cái hàm Đệ Quy lúc nãy nha, cái hàm B này của con em ấy nó gọi hàm A là chuyện bình thường đúng không? hoặc là trước đây cái hàm chữ số nghiên tố các bạn gọi cái hàm nghiên tố các thứ để gọi đấy là các hàm nó gọi lại lẫn nhau nhưng mà đây bây giờ cái hàm của mình nó lại gọi lại chính nó luôn ví dụ như cái hàm B này của anh ấy mà trong cái hàm B này nó có một câu lệnh mà nó gọi lại đúng cái tăng B này thì người ta gọi cái hàm B là hàm Đệ Quy Visual Studio có thể gọi lại với tham số khác Có nghĩa là ví dụ như hàm b này có tham số là n Nhưng ở trong hàm b này các bạn gọi hàm b"
+  },
+  {
+    "chunk_id": "chunk_6318_6378",
+    "start_sec": 6318,
+    "end_sec": 6378,
+    "start_label": "105:18",
+    "end_label": "106:18",
+    "raw_text": "ví dụ như cái hàm B này của anh ấy mà trong cái hàm B này nó có một câu lệnh mà nó gọi lại đúng cái tăng B này thì người ta gọi cái hàm B là hàm Đệ Quy Visual Studio có thể gọi lại với tham số khác Có nghĩa là ví dụ như hàm b này có tham số là n Nhưng ở trong hàm b này các bạn gọi hàm b Nhưng mà với tham số là nờ chữ 1, thì nó vẫn coi là đệ quy Nó chỉ khác cái tham số thôi Một thằng là nờ, một thằng là nờ chữ 1, còn về hàm thì nó vẫn là cái hàm đó Thế nên khi đó người ta gọi cái hàm b này là hàm đệ quy Vài hiểu được đệ quy nó chạy như thế nào thì khá là phức tạc Nhưng mà các bạn cứ hiểu đơn giản là hàm đệ quy là nó sẽ gọi lại chính nó Đệ Quy này phát triển trên công thức về toán học, nên thường nó sẽ rất ngắn Hàm Đệ Quy nó ngắn, nhưng có một số trường hợp sẽ tạo ra những cốt có độ phức tạp rất lớn Ví dụ các bạn cốt Sophie Bonacci bằng Đệ Quy chẳng hạn, nó sẽ tạo ra độ phức tạp rất lớn"
+  },
+  {
+    "chunk_id": "chunk_6361_6432",
+    "start_sec": 6361,
+    "end_sec": 6432,
+    "start_label": "106:01",
+    "end_label": "107:12",
+    "raw_text": "Hàm Đệ Quy nó ngắn, nhưng có một số trường hợp sẽ tạo ra những cốt có độ phức tạp rất lớn Ví dụ các bạn cốt Sophie Bonacci bằng Đệ Quy chẳng hạn, nó sẽ tạo ra độ phức tạp rất lớn Đúng rồi mà Đệ Quy nếu mà em không có điểm dừng thì nó sẽ gây chàn bộ như ngăn xếp bởi vì là bộ như ngăn xếp thì có hạn, nhưng các bạn gọi đệ quy mà không có điểm dừng, thì nó sẽ gây chán bộ như ngăn xếp, mình sẽ nói rõ hơn về cơ chế mà gây chán bộ như ngăn xếp nha cái đệ quy này chắc là hôm nay chưa xong được đâu bạn em ạ, tại vì phần đằng sau nó cần giải thích khá là dài nó bình tĩnh nha, đệ quy chưa cần phải làm bài tập đâu"
+  },
+  {
+    "chunk_id": "chunk_6413_6477",
+    "start_sec": 6413,
+    "end_sec": 6477,
+    "start_label": "106:53",
+    "end_label": "107:57",
+    "raw_text": "nó bình tĩnh nha, đệ quy chưa cần phải làm bài tập đâu bài tập stack thì mấy nữa mới làm, gần cuối khoáng mới làm bài 16, bài 16 này thì dùng, em dùng multi-set làm gì cho nó chậm multi-set nó chậm hơn rất là nhiều so với mảng 1 triều nâng cao với sub-set và tìm kiếm là không có hỏi thế nào, tự nhiên này đi dùng set cho nó khổ"
+  },
+  {
+    "chunk_id": "chunk_6459_6519",
+    "start_sec": 6459,
+    "end_sec": 6519,
+    "start_label": "107:39",
+    "end_label": "108:39",
+    "raw_text": "multi-set nó chậm hơn rất là nhiều so với mảng 1 triều nâng cao với sub-set và tìm kiếm là không có hỏi thế nào, tự nhiên này đi dùng set cho nó khổ tại vì cái ham distance này nó sẽ chạy rất là chậm này mà chưa kể là nó là owner nhé, owner em gọi là lần thì nó cũng tương đương với owner thôi Về bài tập ấy thì bạn em làm cái phần bài tập về mạng 1 triều nâng cao trước, sắp xếp tìm kiếm Với lại là mạng 1 triều nâng cao trước, còn đệ quy thì bởi sao học tiếp đã rồi mình làm Bởi sao thì anh sẽ hướng dẫn 1 số bài tập về phần sắp xếp tìm kiếm này Những cái bài quan trọng mình sẽ hướng dẫn vào buổi ngày hôm sau Với lại là kỹ thuật đệ quy, rồi đó các bạn sang mạng 2 triều rồi sang chuỗi"
+  },
+  {
+    "chunk_id": "chunk_6499_6565",
+    "start_sec": 6499,
+    "end_sec": 6565,
+    "start_label": "108:19",
+    "end_label": "109:25",
+    "raw_text": "Với lại là mạng 1 triều nâng cao trước, còn đệ quy thì bởi sao học tiếp đã rồi mình làm Bởi sao thì anh sẽ hướng dẫn 1 số bài tập về phần sắp xếp tìm kiếm này Những cái bài quan trọng mình sẽ hướng dẫn vào buổi ngày hôm sau Với lại là kỹ thuật đệ quy, rồi đó các bạn sang mạng 2 triều rồi sang chuỗi Phần mạng 2 triều vào chuỗi thì nó khá là nhanh thôi có chuỗi thì nó nhiều, chuỗi thì nó nhiều kiến thức quá đây anh sẽ up cái phần về chuỗi với mảng 2 triều các bạn đọc trước ấy nha mảng 2 triều, với string nay bọn em đã là buổi số 12 rồi thì nó có khoảng tầm 90 buổi nữa nếu nó xong khoai học rồi, khoảng tháng nữa thôi các bạn ờ, ờ ok các bạn nghĩ đi"
+  },
+  {
+    "chunk_id": "chunk_6546_6621",
+    "start_sec": 6546,
+    "end_sec": 6621,
+    "start_label": "109:06",
+    "end_label": "110:21",
+    "raw_text": "ờ, ờ ok các bạn nghĩ đi tập giao hả, vào hợp nữa hả em duyệt cái mảng A thì nó đâu có thân đảm bảo ra theo thứ tự tăng dẫn Mạng A có xác xếp theo thứ tự tăng dần đâu Em đã duyệt mạng A Thì nó duyệt theo thứ tự trong mạng A Chứ nó đâu có duyệt theo thứ tự tăng dần Nên sẽ bị sai cái đó Thì em phải học xong tất cả các kiến thức về mạng 1 chiều"
+  },
+  {
+    "chunk_id": "chunk_6605_6667",
+    "start_sec": 6605,
+    "end_sec": 6667,
+    "start_label": "110:05",
+    "end_label": "111:07",
+    "raw_text": "Thì em phải học xong tất cả các kiến thức về mạng 1 chiều Rồi xét, map, xác xếp, tìm kiến thì mình mới học string được chứ Chứ mình làm sao mày học string ngay đầu được Học string ngay đầu thì Những cái bài cần xác xếp, cần xét, cần map thì làm sao mà em làm được Sót mảng án được nhưng làm như này là hơi dài Thêm phát IO vào với lại dùng máng, thay trì vì dùng vector chắc nó cũng sẽ nhanh hơn mà sao hợp vào dao của hai máng không bị tây lời e mặc dù cùng cốt"
+  },
+  {
+    "chunk_id": "chunk_6638_6702",
+    "start_sec": 6638,
+    "end_sec": 6702,
+    "start_label": "110:38",
+    "end_label": "111:42",
+    "raw_text": "Thêm phát IO vào với lại dùng máng, thay trì vì dùng vector chắc nó cũng sẽ nhanh hơn mà sao hợp vào dao của hai máng không bị tây lời e mặc dù cùng cốt Nói chung lẽ các em cùng cốt mà nộp một, hai lần nó cũng có thể khác nhau, nói gì là hai bài Cùng cốt các bạn nộp là hai lần khác nhau, cái máy nó có thể chạy trình lệch một chút thời gian Nó tương tự như nhau rồi, map nó nhanh hơn một chút cho em ạ Úi dồi, em cứ dùng quá nhiều set như thế này thì rõ"
+  },
+  {
+    "chunk_id": "chunk_6683_6719",
+    "start_sec": 6683,
+    "end_sec": 6719,
+    "start_label": "111:23",
+    "end_label": "111:59",
+    "raw_text": "Nó tương tự như nhau rồi, map nó nhanh hơn một chút cho em ạ Úi dồi, em cứ dùng quá nhiều set như thế này thì rõ Không cần phải làm, nó phức tạc như thế Thêm fast.io vào, đấy nó là một kinh nghiệm cái test lớn như thế này Ok các bạn nghĩ đi, cả hai thằng đều 1 triệu mà"
+  }
+]

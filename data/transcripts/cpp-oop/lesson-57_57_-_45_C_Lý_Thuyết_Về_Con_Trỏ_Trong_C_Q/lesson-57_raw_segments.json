@@ -1,0 +1,2607 @@
+[
+  {
+    "start": 0.66,
+    "end": 8.99,
+    "text": "Trong video này thì mình xứng dẫn các bạn khái niệm về con trỏ, trong C++ thì có một khái niệm để chính là con trỏ,"
+  },
+  {
+    "start": 8.99,
+    "end": 19.16,
+    "text": "và các bạn học C++ thì cũng phải biết một chút về con trỏ, sau này mình có thể cài đặt các câu chức dữ liệu mà nó liên quan đến câu chức tự trỏ đó, ok?"
+  },
+  {
+    "start": 19.16,
+    "end": 26.74,
+    "text": "Thì đầu tiên, khi mà nói về con trỏ thì thực chất con trỏ nó cũng chỉ là một cái biến, ok?"
+  },
+  {
+    "start": 26.74,
+    "end": 31.34,
+    "text": "Nhưng mà có một điều đặc biệt, ví dụ khi mà bạn khai báo một cái biến này in the tê A như thế này đúng không?"
+  },
+  {
+    "start": 31.34,
+    "end": 37.37,
+    "text": "Thì cái thằng A ở trong bụi nhớ RAM của các bạn ấy, nó sẽ có một cái địa chỉ nào đó, ví dụ như là 998 chẳng ạ"
+  },
+  {
+    "start": 37.37,
+    "end": 46.06,
+    "text": "Ok, bởi vì từng ô nhớ RAM ở trong ô nhớ RAM của các bạn sẽ được đánh địa chỉ nhá, trên nó không thể mỗi ô mà không có địa chỉ được"
+  },
+  {
+    "start": 46.06,
+    "end": 55.06,
+    "text": "Vì như thế rất là khó quản lý, nó như là một ngô nhè, mỗi ô nhớ như là một ngô nhè sẽ phải có địa chỉ riêng để mà mình quản lý, thế điều hành nó mới quản lý được đúng không?"
+  },
+  {
+    "start": 55.06,
+    "end": 64.06,
+    "text": "khi mà khai bám, bạn khai bám một biến là in ở tìa A như thế này, thì khi đó cái biến A này nó sẽ chiếm bốn bay ở trong ôn nhớ gram của mình đúng không?"
+  },
+  {
+    "start": 64.06,
+    "end": 69.56,
+    "text": "Thường là bốn bay liên tiếp, mình cứ gọi tạm gục nó thành 1 ô, bốn bay luôn nhé, ok?"
+  },
+  {
+    "start": 69.56,
+    "end": 75.66,
+    "text": "và nó sẽ có địa chỉ thông thường thì nhé, khi mà bạn khai bám một cái biến A thì nó sẽ cấp phát cho bạn bao nhiêu nhỉ?"
+  },
+  {
+    "start": 75.66,
+    "end": 84.06,
+    "text": "xin lỗi bốn bay đúng không? Thôi là 32 bits, 1 bay này, 2 bay này, 3 bay và 4 bay để lưu cái thằng A"
+  },
+  {
+    "start": 84.06,
+    "end": 88.16,
+    "text": "và cái địa chỉ của thằng A khi đó nó sẽ là cái địa chỉ của O đầu tiên"
+  },
+  {
+    "start": 88.16,
+    "end": 94.52,
+    "text": "ví dụ như O này nó sẽ có địa chỉ là 102, O này thì là 103, O này là 104, O này là 105"
+  },
+  {
+    "start": 94.52,
+    "end": 98.82,
+    "text": "thì khi đó cái biến A của bạn ấy nó sẽ có cái địa chỉ là cái O đầu tiên này này"
+  },
+  {
+    "start": 98.82,
+    "end": 102.82,
+    "text": "thế còn thằng A này nó sẽ chiếm 4 O, nhớ liên tiếp 4 3"
+  },
+  {
+    "start": 102.82,
+    "end": 104.42,
+    "text": "mỗi 3 là 8 bits đúng không?"
+  },
+  {
+    "start": 104.42,
+    "end": 106.32,
+    "text": "tức là 32 bits"
+  },
+  {
+    "start": 106.32,
+    "end": 109.82,
+    "text": "32 bits thì cứ mỗi 1 O nó chưa 8 bits của cái thằng A này đúng không?"
+  },
+  {
+    "start": 109.82,
+    "end": 111.32,
+    "text": "đều diễn là dạy mỹ phần ấy"
+  },
+  {
+    "start": 111.32,
+    "end": 114.24,
+    "text": "Ok, đây là 1 biến thông thường đúng không?"
+  },
+  {
+    "start": 114.24,
+    "end": 116.8,
+    "text": "Thằng A này nó có thể lưu 1 cái giá trị nào đó"
+  },
+  {
+    "start": 116.8,
+    "end": 120.12,
+    "text": "Mình dụ như thế này, bạn khai báo 1 cái biến A đúng không?"
+  },
+  {
+    "start": 120.12,
+    "end": 123.54,
+    "text": "Sao đó bạn gán cho nó giá trị là 100, ok"
+  },
+  {
+    "start": 123.54,
+    "end": 125.22,
+    "text": "Thì đây là 1 cái biến A đúng không?"
+  },
+  {
+    "start": 125.22,
+    "end": 128.62,
+    "text": "Có địa chỉ là 102 và lưu cái giá trị là 100"
+  },
+  {
+    "start": 128.62,
+    "end": 132.02,
+    "text": "Thế còn cái biến con trỏ ấy thì nó cũng là 1 cái biến nhé, nó cũng là 1 cái biến"
+  },
+  {
+    "start": 132.02,
+    "end": 133.54,
+    "text": "Mình tạm gọi nó đặt nó ở đây"
+  },
+  {
+    "start": 133.54,
+    "end": 136.96,
+    "text": "Ok, mình đặt nó là Peterer"
+  },
+  {
+    "start": 136.96,
+    "end": 140.22,
+    "text": "Nhưng mà cái biến này nó có 1 cái điều đặc biệt"
+  },
+  {
+    "start": 140.22,
+    "end": 144.94,
+    "text": "Đấy chính là cái giá trị của nó ấy, là nó lại lưu cái giá trị của một cái biến khác"
+  },
+  {
+    "start": 144.94,
+    "end": 147.42,
+    "text": "Vì xin lỗi lưu cái địa chỉ của một biến khác"
+  },
+  {
+    "start": 147.42,
+    "end": 150.3,
+    "text": "Đó, cho nó không lưu những cái giá trị như thế này"
+  },
+  {
+    "start": 150.3,
+    "end": 154.46,
+    "text": "Ví dụ như ở đây, cái con trỏ Peterall này nó có thể lưu cái địa chỉ của một biến A này"
+  },
+  {
+    "start": 154.46,
+    "end": 156.38,
+    "text": "1, 1, 2, như thế này"
+  },
+  {
+    "start": 156.38,
+    "end": 162.33,
+    "text": "Thì khi mà một con trỏ nó lưu cái địa chỉ của một biến khác ấy, thì người ta gọi là cái con trỏ này nó quản lý cái biến này"
+  },
+  {
+    "start": 162.33,
+    "end": 165.05,
+    "text": "Ok, hoặc là cái con trỏ này nó trỏ vào cái biến này"
+  },
+  {
+    "start": 165.05,
+    "end": 169.53,
+    "text": "Thì thế thôi, con trỏ chỉ đơn giản thế thôi, đây chính là nó sẽ lưu cái địa chỉ của cái biến khác"
+  },
+  {
+    "start": 169.53,
+    "end": 172.77,
+    "text": "OK chơi nhỉ, và nó nhé, nó cũng có địa chỉ của riêng nó"
+  },
+  {
+    "start": 172.77,
+    "end": 174.97,
+    "text": "ví dụ như nó có thể địa chỉ là 80 chứ hả?"
+  },
+  {
+    "start": 174.97,
+    "end": 178.37,
+    "text": "Nhưng mà cái giá trị của nó lưu thì lại là địa chỉ của một biến khác"
+  },
+  {
+    "start": 178.37,
+    "end": 182.45,
+    "text": "và khi mà khai báo 1 con trỏ trong 1 ước chính xì với C++ như nhau nhé"
+  },
+  {
+    "start": 182.45,
+    "end": 185.01,
+    "text": "OK, cái này bạn dùng cho xì hay xì cũng cộng đều được"
+  },
+  {
+    "start": 185.01,
+    "end": 190.61,
+    "text": "thì các bạn sẽ khai báo là int, sound, ptr, OK"
+  },
+  {
+    "start": 190.61,
+    "end": 194.09,
+    "text": "Nếu mà bạn muốn sử dụng 1 con trỏ integer"
+  },
+  {
+    "start": 194.09,
+    "end": 197.69,
+    "text": "thì còn con trỏ long long con trỏ double của con trỏ float hay là con trỏ cấu trúc"
+  },
+  {
+    "start": 197.69,
+    "end": 199.69,
+    "text": "Thì các bạn thay báo cái kiểu dự liệu tương ứng"
+  },
+  {
+    "start": 199.69,
+    "end": 202.69,
+    "text": "Nhưng mà các bạn chỉ cần cho 1 cái dấu sao ở trước tên con trỏ là được"
+  },
+  {
+    "start": 202.69,
+    "end": 205.69,
+    "text": "Đúng không nhỉ? Ok, ý dụ nhé"
+  },
+  {
+    "start": 205.69,
+    "end": 207.69,
+    "text": "Mình có 1 cái biến là A bằng 100 này"
+  },
+  {
+    "start": 207.69,
+    "end": 211.76,
+    "text": "Ok, bây giờ mình thay báo 1 cái con trỏ Peterer nhé"
+  },
+  {
+    "start": 211.76,
+    "end": 214.11,
+    "text": "Như thế này này"
+  },
+  {
+    "start": 214.11,
+    "end": 216.11,
+    "text": "Thì bạn chỉ cần thêm 1 cái dấu sao ở trước"
+  },
+  {
+    "start": 216.11,
+    "end": 219.11,
+    "text": "Tên con trỏ là được, cái dấu xa này bạn cũng để bên in cũng được"
+  },
+  {
+    "start": 219.11,
+    "end": 221.11,
+    "text": "Hoặc là để bên Peterer cũng được"
+  },
+  {
+    "start": 221.11,
+    "end": 225.11,
+    "text": "Ok, bây giờ mình thử in ra cái giá trị của Peterer nhé"
+  },
+  {
+    "start": 225.11,
+    "end": 237.2,
+    "text": "à mình kiểm tra nhé, nếu, ptr, mà bằng nun, ptr, tức là con trỏ nun thì mình sẽ cl ra là con trỏ nun"
+  },
+  {
+    "start": 237.2,
+    "end": 247.57,
+    "text": "ok, thì khi mà bạn khai báo một cái biến con trỏ integer như thế này nhé, ok"
+  },
+  {
+    "start": 247.57,
+    "end": 256.0,
+    "text": "nó chạy lâu thế nhỉ, nó cũng chưa kết thúc trình trình"
+  },
+  {
+    "start": 256.0,
+    "end": 269.7,
+    "text": "chạy lại trước nhé, nó sẽ in ra là con trỏ nun, đúng không? tức là cái con trỏ mình khai báo ở dòng 7 này này"
+  },
+  {
+    "start": 269.7,
+    "end": 277.68,
+    "text": "là con trỏ-interger và là con trỏ new, khác nhập con trỏ new, đfficient nhưng là cái con trỏ mà không quản lý bên khác"
+  },
+  {
+    "start": 277.68,
+    "end": 282.68,
+    "text": "conviction có giá trị để lưu một địa chỉ với bên khác, người ta gọi là con trỏ new"
+  },
+  {
+    "start": 282.68,
+    "end": 288.14,
+    "text": "contributed nó là con trỏ mà chưa trỏ vào đâu được discınız reaching"
+  },
+  {
+    "start": 288.14,
+    "end": 291.28,
+    "text": "con trò-new khác mình không có được nhỏ financing"
+  },
+  {
+    "start": 292.58,
+    "end": 296.1,
+    "text": "Cada một manga canvi darson này là con trỏ new"
+  },
+  {
+    "start": 296.1,
+    "end": 298.58,
+    "text": "nôn, viết hoa hết như thế này, thì người ta gọi là con tròn nôn"
+  },
+  {
+    "start": 298.58,
+    "end": 302.02,
+    "text": "hoặc là từ xì cũng cộng 11 thì bạn có cái biến là nôn"
+  },
+  {
+    "start": 302.02,
+    "end": 304.55,
+    "text": "nôn Peter là như mình vừa viết ấy"
+  },
+  {
+    "start": 304.55,
+    "end": 308.44,
+    "text": "thì hai cái thằng này nó đều là con tròn nôn nhé, nè nè"
+  },
+  {
+    "start": 308.44,
+    "end": 311.88,
+    "text": "nôn Peter là như thế này hoặc là nôn viết hoa hết thì nó là con tròn nôn"
+  },
+  {
+    "start": 311.88,
+    "end": 314.36,
+    "text": "tức là một con trò nhưng mà chưa quản lý một cái biến khác"
+  },
+  {
+    "start": 314.36,
+    "end": 315.96,
+    "text": "chưa trò đến một cái biến khác"
+  },
+  {
+    "start": 315.96,
+    "end": 319.16,
+    "text": "thì còn cái ký tự nôn ấy thì nó lại là cái ký tự viết thường này nè"
+  },
+  {
+    "start": 319.16,
+    "end": 321.64,
+    "text": "nó là cái ký tự cuối cùng của một cái sâu ký tự ấy"
+  },
+  {
+    "start": 321.64,
+    "end": 324.12,
+    "text": "đúng nhỉ, nó có cái masky là không ấy"
+  },
+  {
+    "start": 324.12,
+    "end": 328.88,
+    "text": "Cái tự nôn đây, bạn phải rõ ràng giữa con trỏ nôn và cái tự nôn nhé"
+  },
+  {
+    "start": 328.88,
+    "end": 333.88,
+    "text": "Khi mà các bạn khai báo 1 cái biến con trỏ giá mà bạn chưa cho nó quản lý 1 cái biến khác"
+  },
+  {
+    "start": 333.88,
+    "end": 338.48,
+    "text": "Thì nó cũng như là cái biến A của các bạn khai báo ra mà các bạn không khai báo cho nó 1 cái giá trị"
+  },
+  {
+    "start": 338.48,
+    "end": 341.0,
+    "text": "Thì cái biến A này thường nó có 1 cái giá trị giác đúng không?"
+  },
+  {
+    "start": 341.0,
+    "end": 345.92,
+    "text": "Nhưng mà đối với con trỏ ấy thì thường nó sẽ là con trỏ nôn, nó chưa quản lý 1 cái biến đâu cả"
+  },
+  {
+    "start": 345.92,
+    "end": 349.4,
+    "text": "Ok, thì đây chính là cái cách khai báo 1 cái con trỏ nhé"
+  },
+  {
+    "start": 349.4,
+    "end": 356.8,
+    "text": "tương nhiên, bạn cũng có thể khai báo ra lần lòng đất bầu float hay là các câu chúc, sinh viên, giao viên gì đó mà các bạn có thể tự xây dựng"
+  },
+  {
+    "start": 356.8,
+    "end": 357.62,
+    "text": "ok"
+  },
+  {
+    "start": 357.62,
+    "end": 363.84,
+    "text": "rồi, vậy thì khi mà các bạn có một cái biến an này, thì các bạn biết, các bạn nào học xí cũng cậu thì chưa biết cái này"
+  },
+  {
+    "start": 363.84,
+    "end": 368.14,
+    "text": "nhưng mà bạn nào mà học xí thì các bạn sẽ biết đến một cái gọi là cái toán tử địa chỉ"
+  },
+  {
+    "start": 368.14,
+    "end": 368.7,
+    "text": "đúng không?"
+  },
+  {
+    "start": 368.7,
+    "end": 371.5,
+    "text": "cái là bạn có thể in ra cái địa chỉ của cái biến an này trong bụi nhớ ấy"
+  },
+  {
+    "start": 371.5,
+    "end": 374.4,
+    "text": "mà chính là cái biến an này"
+  },
+  {
+    "start": 374.4,
+    "end": 375.24,
+    "text": "ok"
+  },
+  {
+    "start": 375.24,
+    "end": 379.54,
+    "text": "cái dấu vài như thế này thì có nghĩa là cái toán tử địa chỉ nhá, toán tử địa chỉ"
+  },
+  {
+    "start": 379.54,
+    "end": 382.78,
+    "text": "nó sẽ lấy ra cái địa chỉ của bộ nhớ trong bộ nhớ, bây giờ mình thử chạy nhé"
+  },
+  {
+    "start": 382.78,
+    "end": 386.54,
+    "text": "thì nó sẽ in ra cái ra chỉ của cái địa chỉ của bộ nhớ trong bộ nhớ"
+  },
+  {
+    "start": 386.54,
+    "end": 391.02,
+    "text": "và thông thường thì cái địa chỉ của bộ nhớ thì nó được lưu ở cái số là số hét xa"
+  },
+  {
+    "start": 391.02,
+    "end": 401.62,
+    "text": "ok, đây là cái số hét xa vậy nhé, các bạn không có gì phải thấy nó"
+  },
+  {
+    "start": 401.62,
+    "end": 403.82,
+    "text": "ờ, đây"
+  },
+  {
+    "start": 403.82,
+    "end": 407.3,
+    "text": "thì cái địa chỉ bộ nhớ của nó ở trong bộ nhớ của nó đây này"
+  },
+  {
+    "start": 407.3,
+    "end": 413.58,
+    "text": "hệ 10 này, nó là 7,339,548, đây là chính là địa chỉ nhé"
+  },
+  {
+    "start": 413.58,
+    "end": 416.98,
+    "text": "Nói chung các bạn nhìn thấy cái hệ HXA này cũng chả có gì, nó cũng làm một con số rồi mà"
+  },
+  {
+    "start": 416.98,
+    "end": 422.06,
+    "text": "OK, thì địa chỉo nhớ của nó đây này, 7.339.548"
+  },
+  {
+    "start": 422.06,
+    "end": 429.34,
+    "text": "OK, thì các bạn biết thêm một cái khái niệm nữa chính là cái khái niệm về cái địa chỉ nhá, toán tử địa chỉ của một biến"
+  },
+  {
+    "start": 429.34,
+    "end": 433.7,
+    "text": "rồi, vậy thì khi mà bạn khai bám một cái con trò Peterer ra như thế này"
+  },
+  {
+    "start": 433.7,
+    "end": 438.22,
+    "text": "mà bạn muốn cho con trò Peterer này nó quản lý thằng A"
+  },
+  {
+    "start": 438.22,
+    "end": 441.66,
+    "text": "hay nói cái khác là mình cho con trò Peterer nó trỏ đến thằng A"
+  },
+  {
+    "start": 441.66,
+    "end": 446.42,
+    "text": "Thì các bạn chỉ cần gắn cái địa chỉ của thằng A cho cái giá trị của con trỏ Peterer này thôi"
+  },
+  {
+    "start": 446.42,
+    "end": 449.86,
+    "text": "Ok, đúng không nhỉ? Mình có một cái bên A như thế này đúng không?"
+  },
+  {
+    "start": 449.86,
+    "end": 457.0,
+    "text": "Ví dụ con A bên A này có giá trị là 100, địa chỉ của nó là 102, sau đó mình khai bám một cái con trỏ Peterer ở đây"
+  },
+  {
+    "start": 457.0,
+    "end": 463.12,
+    "text": "Đấy, bây giờ nó đang là con trỏ Nu, đúng không? Nhưng mà bạn chỉ cần gắn cái giá trị địa chỉ của con 100 để 2 này này"
+  },
+  {
+    "start": 463.12,
+    "end": 468.2,
+    "text": "của cái bên A này cho con trỏ Peterer này thôi, thì khi đó con trỏ Peterer này nó sẽ trỏ vào bên A"
+  },
+  {
+    "start": 468.2,
+    "end": 470.2,
+    "text": "như thế này, ok"
+  },
+  {
+    "start": 470.2,
+    "end": 475.55,
+    "text": "vậy thì ở đây để cho con trò peterer nó trò vào bên A thì bạn có một câu lệnh đấy chính là"
+  },
+  {
+    "start": 475.55,
+    "end": 479.55,
+    "text": "in a tê sao peterer bằng và A đúng không?"
+  },
+  {
+    "start": 479.55,
+    "end": 482.55,
+    "text": "mình vừa nói địa chỉ của bên A nó sẽ là và A đúng không? ok"
+  },
+  {
+    "start": 482.55,
+    "end": 484.55,
+    "text": "vậy thì cái câu lệnh này nó chính là gì nhỉ?"
+  },
+  {
+    "start": 484.55,
+    "end": 486.55,
+    "text": "gán địa chỉ của cái bên A cho con trò peterer"
+  },
+  {
+    "start": 486.55,
+    "end": 490.55,
+    "text": "và từ câu lệnh này trò đi thì con trò peterer nó sẽ trò vào cái bên A như thế này"
+  },
+  {
+    "start": 490.55,
+    "end": 492.58,
+    "text": "đúng không? ok"
+  },
+  {
+    "start": 492.58,
+    "end": 494.58,
+    "text": "và thông qua con trò peterer này nhá"
+  },
+  {
+    "start": 494.58,
+    "end": 496.58,
+    "text": "bạn có thể thay được cái giá trị của cái bên A này"
+  },
+  {
+    "start": 496.58,
+    "end": 521.64,
+    "text": "và dàiọc,ığı lecture on how to solve."
+  },
+  {
+    "start": 521.64,
+    "end": 523.64,
+    "text": "Thì các bạn thấy nó sẽ giống nhau"
+  },
+  {
+    "start": 523.64,
+    "end": 527.64,
+    "text": "Bởi vì mình đã gán cái giá trị của con trò PTR ở trên này này"
+  },
+  {
+    "start": 527.64,
+    "end": 532.66,
+    "text": "Đây này, nó bằng và E rồi, thành ra là địa chỉ của 2, địa chỉ của biến E"
+  },
+  {
+    "start": 532.66,
+    "end": 535.66,
+    "text": "Hay là cái giá trị của con trò PTR nó là 1, đúng không nhỉ?"
+  },
+  {
+    "start": 535.66,
+    "end": 538.66,
+    "text": "Bởi vì con trò PTR của mình đã trò vào biến E rồi"
+  },
+  {
+    "start": 538.66,
+    "end": 542.66,
+    "text": "Ok, tất nhiên là các bạn cũng có thể khai báo thành 2 câu lệnh như thế này cũng được nhé"
+  },
+  {
+    "start": 542.66,
+    "end": 545.66,
+    "text": "Ok, cũng được, cái này thì là khai báo đúng không?"
+  },
+  {
+    "start": 545.66,
+    "end": 546.66,
+    "text": "Sau đó dưới này mình khởi tạo"
+  },
+  {
+    "start": 546.66,
+    "end": 549.66,
+    "text": "Hay nó khai khác là cho con trò PTR trò vào biến E đấy"
+  },
+  {
+    "start": 549.66,
+    "end": 552.78,
+    "text": "Mình khởi tạo cái giá trị của con trỏ PTR bằng địa chỉ của bên A"
+  },
+  {
+    "start": 552.78,
+    "end": 559.18,
+    "text": "Ok, đây chính là cách mà bạn khá đá một con trỏ sau đó thì mình cho nó trò vào một cái biến nhé"
+  },
+  {
+    "start": 559.18,
+    "end": 563.26,
+    "text": "Rồi, sau khi mà mình đã cho con trỏ A nó trò vào biến rồi nhé"
+  },
+  {
+    "start": 563.26,
+    "end": 571.34,
+    "text": "Thì thông qua con trỏ A, bạn có thể biết cái giá trị mà con trò PTR nó đang trò tới"
+  },
+  {
+    "start": 571.34,
+    "end": 576.62,
+    "text": "Mình dụ, ở đây mình CL ra được gì, sao PTR như thế này này"
+  },
+  {
+    "start": 576.62,
+    "end": 581.84,
+    "text": "dấu sao ở chỗ ptr này, nó lại khác cái dấu sao ở đây"
+  },
+  {
+    "start": 581.84,
+    "end": 585.68,
+    "text": "dấu sao khi mà bạn khai báo là inertial ptr này, thì có nghĩa là"
+  },
+  {
+    "start": 585.68,
+    "end": 591.68,
+    "text": "chỉ ra rằng con trò ptr này là một con trò, ai sẽ lỗi mà là một cái biến con trò kiểu integer"
+  },
+  {
+    "start": 591.68,
+    "end": 599.36,
+    "text": "Thế còn cái dấu sao ở đây, trước cái biến ptr này này, thì nó lại là cái toán từ giải tham chiếu mà các bạn hay dùng khi làm việc với iterator đấy"
+  },
+  {
+    "start": 599.36,
+    "end": 605.04,
+    "text": "ok, đó, thì cái dấu sao này nó chính là cái giải tham chiếu hay nó cái khác là cái sao ptr này"
+  },
+  {
+    "start": 605.04,
+    "end": 609.28,
+    "text": "Nó sẽ truy cập vào cái giá trị của cái biến mà con trỏ Peterer đang trò tới"
+  },
+  {
+    "start": 609.28,
+    "end": 612.2,
+    "text": "và trong trường hợp này nó chính là cái giá trị của biến A, đúng không nhỉ?"
+  },
+  {
+    "start": 612.2,
+    "end": 614.0,
+    "text": "Mình dụ mình trò A bằng 1.000 nhé"
+  },
+  {
+    "start": 614.0,
+    "end": 617.92,
+    "text": "Thì khi đó á, bạn in ra là sao Peterer thì nó cũng bằng 1.000"
+  },
+  {
+    "start": 617.92,
+    "end": 623.29,
+    "text": "Đấy, ok, vậy thì là gì nhỉ?"
+  },
+  {
+    "start": 623.29,
+    "end": 625.85,
+    "text": "Khi mà bạn đã cho con trỏ nó trò vào một cái biến rồi ấy"
+  },
+  {
+    "start": 625.85,
+    "end": 628.49,
+    "text": "thì cái giá trị của con trỏ nó trò tới ấy"
+  },
+  {
+    "start": 628.49,
+    "end": 630.81,
+    "text": "giá trị của con trỏ nó trò tới"
+  },
+  {
+    "start": 630.81,
+    "end": 633.25,
+    "text": "nó cũng chính là cái giá trị mà bạn vừa"
+  },
+  {
+    "start": 633.25,
+    "end": 636.54,
+    "text": "giá trị của biến mà bạn vừa gán địa chỉ cho con trỏ đúng không?"
+  },
+  {
+    "start": 636.54,
+    "end": 644.14,
+    "text": "ok, thì từ sau cái câu lệnh này này, sau câu lệnh thứ 8 này, câu lệnh mà bạn gán cái địa chỉ của BNA cho Ctrl ấy, để cho Ctrl nó quản lý BNA"
+  },
+  {
+    "start": 644.14,
+    "end": 652.38,
+    "text": "thì khi mà bạn in ra A nhá, hay là bạn in ra cái sao của PTR, thì hai cái này tương đương như nhau"
+  },
+  {
+    "start": 652.38,
+    "end": 658.84,
+    "text": "ok, ví dụ nhé, bạn có thể cho là sao của PTR này, cộng cộng chẳng ạ"
+  },
+  {
+    "start": 658.84,
+    "end": 666.04,
+    "text": "ok, sau đó mình xe ra cái ra chỉ của BNA nhá"
+  },
+  {
+    "start": 666.04,
+    "end": 669.56,
+    "text": "thì bạn thấy là gì nhỉ, mình cho sao PTR cộng cộng"
+  },
+  {
+    "start": 669.56,
+    "end": 673.08,
+    "text": "Thì sau đó mình immer cái giá trị bên A thì biến A cũng bị tăng lên một thân vị"
+  },
+  {
+    "start": 673.08,
+    "end": 676.72,
+    "text": "Bởi vì như mình nói đấy, sau khi mà bạn cho con trỏ bên A nó trỏ bên A rồi"
+  },
+  {
+    "start": 676.72,
+    "end": 682.68,
+    "text": "Thì chỗ nào bạn dùng cái biến A với lại ở sau bên A thì nó như nhau và nó sẽ thay đổi đến thằng quần lạ"
+  },
+  {
+    "start": 682.68,
+    "end": 686.2,
+    "text": "Ok? Mình thay đổi A thì cái giá trị của sau bên A nó cũng thay đổi"
+  },
+  {
+    "start": 686.2,
+    "end": 689.88,
+    "text": "Mà mình thay đổi sau bên A thì cái giá trị của A nó cũng bị thay đổi"
+  },
+  {
+    "start": 689.88,
+    "end": 691.88,
+    "text": "Ok? Rất rõ ràng như thế nhá"
+  },
+  {
+    "start": 691.88,
+    "end": 696.2,
+    "text": "Và tất nhiên là có thể có nhiều con trỏ cùng trỏ vào một cái biến"
+  },
+  {
+    "start": 696.2,
+    "end": 702.44,
+    "text": "Ví dụ, mình có 1 con trỏ nữa là cell, ptr2, ok, mình cũng gán bằng và e"
+  },
+  {
+    "start": 702.44,
+    "end": 711.47,
+    "text": "Sau đó mình CL ra cái, ờ, không gì nhỉ, mình in ra thử, in ra 3 cái nhé, thế nhất là địa chỉ của cái nè"
+  },
+  {
+    "start": 711.47,
+    "end": 716.26,
+    "text": "Chỗ này là và e đúng không?"
+  },
+  {
+    "start": 716.26,
+    "end": 723.63,
+    "text": "Rồi cái thứ 2 đấy chính là cái giá trị của con trỏ ptr, ok"
+  },
+  {
+    "start": 723.63,
+    "end": 732.26,
+    "text": "Các bạn phải rõ ràng giữa cái giá trị của con trỏ ptr với cái giá trị của biến mà nó đang trỏ tới nhé, ok"
+  },
+  {
+    "start": 732.26,
+    "end": 735.94,
+    "text": "giá trị của con trỏ Peterer thì nó là cái địa chỉ của biến mà nó đang trỏ tới"
+  },
+  {
+    "start": 735.94,
+    "end": 739.14,
+    "text": "cái còn cái giá trị của biến mà nó đang trỏ tới thì hàn toàn khác, đúng không?"
+  },
+  {
+    "start": 739.14,
+    "end": 741.26,
+    "text": "nó chính là cái giá trị của biến A này"
+  },
+  {
+    "start": 741.26,
+    "end": 748.1,
+    "text": "đây là giá trị của con trỏ Peterer 2, ok"
+  },
+  {
+    "start": 748.1,
+    "end": 761.6,
+    "text": "ok, thì bạn thấy là cả 3 cái phang này nó để nó như nhau, nó như kiểu như thế này này"
+  },
+  {
+    "start": 761.6,
+    "end": 765.44,
+    "text": "còn đây con trỏ Peterer đúng không? bạn khai báo thêm 1 cái con trỏ Peterer 2 nữa"
+  },
+  {
+    "start": 765.44,
+    "end": 768.08,
+    "text": "đúng không? sau đó bạn cũng trỏ trỏ vào biến A như thế này"
+  },
+  {
+    "start": 768.08,
+    "end": 770.88,
+    "text": "cái giá trị của con trỏ Peterer 2 nó cũng là địa chỉ của tầng A này"
+  },
+  {
+    "start": 770.88,
+    "end": 776.04,
+    "text": "và tất nhiên, thông qua thằng PTR2 này, bạn cũng có thể thay đổi giá trị của biển A đúng không?"
+  },
+  {
+    "start": 776.04,
+    "end": 778.8,
+    "text": "và khi đó, cả giá trị của biển A cũng thay đổi"
+  },
+  {
+    "start": 778.8,
+    "end": 781.88,
+    "text": "mà cái giá trị của con trỏ PTR này đang trò tới"
+  },
+  {
+    "start": 781.88,
+    "end": 783.88,
+    "text": "nó cũng thay đổi thực chất nó vẫn là thằng A thôi mà"
+  },
+  {
+    "start": 783.88,
+    "end": 786.88,
+    "text": "bởi vì ba thằng này nó theo tác cùng với một cái ô nhớ, đúng nhỉ?"
+  },
+  {
+    "start": 786.88,
+    "end": 788.64,
+    "text": "Thay đổi tại cái ô nhớ này này"
+  },
+  {
+    "start": 788.64,
+    "end": 797.12,
+    "text": "Thành ra là, mọi thay đổi trên con trỏ PTR2 hoặc biển A thì nó làm đều thay đổi cái giá trị của cái ô nhớ mà thằng A này nó đang nằm"
+  },
+  {
+    "start": 797.12,
+    "end": 801.12,
+    "text": "khi đó thì một thằng thay đổi thì những thằng khác còn bị thay đổi theo"
+  },
+  {
+    "start": 801.12,
+    "end": 806.12,
+    "text": "và tất nhiên là chỗ này bạn có thể gán như thế này cũng được nhé"
+  },
+  {
+    "start": 806.12,
+    "end": 811.12,
+    "text": "nếu mà bạn gán sao ptr2 bằng an được hoặc là bạn gán nó bằng ptr cũng được"
+  },
+  {
+    "start": 811.12,
+    "end": 819.12,
+    "text": "thì cái câu lệnh này nè, sao ptr2 bằng ptr thì nó cũng không khác gì so với câu lệnh vừa rồi"
+  },
+  {
+    "start": 819.12,
+    "end": 823.22,
+    "text": "thực chất là khi mà bạn khai báo là gì, kết quả đúng nhau nhé"
+  },
+  {
+    "start": 823.22,
+    "end": 826.74,
+    "text": "kết quả là các bạn khai báo là int tesa petero bằng petero"
+  },
+  {
+    "start": 826.74,
+    "end": 831.82,
+    "text": "thì như kiểu bạn gán cái giá trị của con trỏ petero cho con trỏ petero 2 này thôi mà đúng không"
+  },
+  {
+    "start": 831.82,
+    "end": 835.16,
+    "text": "và cái giá trị của con trỏ petero 2 này nó đang là 112"
+  },
+  {
+    "start": 835.16,
+    "end": 836.64,
+    "text": "nó chính là ô nhớ của thằng A"
+  },
+  {
+    "start": 836.64,
+    "end": 841.34,
+    "text": "hình như là khi đó cái giá trị của cái biến petero 2 này cũng là 112 và cũng là địa trị của cái E thôi"
+  },
+  {
+    "start": 841.34,
+    "end": 845.02,
+    "text": "ok, hình như là các bạn nhìn hình này thì cũng đừng có gì"
+  },
+  {
+    "start": 845.02,
+    "end": 848.34,
+    "text": "thực ra nó là những phép gán 2 con trỏ cho nhau thôi mà"
+  },
+  {
+    "start": 848.34,
+    "end": 851.94,
+    "text": "ok, thì đây chính là cái ví dụ về con trỏ nhé"
+  },
+  {
+    "start": 851.94,
+    "end": 854.84,
+    "text": "Mà cái cách khai báo, cách truy cập, thay đổi, các thứ"
+  },
+  {
+    "start": 854.84,
+    "end": 858.84,
+    "text": "Các bạn cần phải nhớ được cái toán tử giải tham chiếu, nhá"
+  },
+  {
+    "start": 858.84,
+    "end": 862.74,
+    "text": "Nó khác với cái cách mà dấu sao khi mà bạn khai báo, nhá"
+  },
+  {
+    "start": 862.74,
+    "end": 867.34,
+    "text": "Đây thì là khai báo, còn ở đây thì là truy cập, ok, hay là giải tham chiếu đấy"
+  },
+  {
+    "start": 867.34,
+    "end": 873.75,
+    "text": "Và thông qua nhá, thông qua cái con trỏ này mình có thể thay đổi cái giá trị của một hàm đúng không?"
+  },
+  {
+    "start": 873.75,
+    "end": 876.35,
+    "text": "Xin lỗi của một cái biến sau khi mà cái hàm nó kết thúc"
+  },
+  {
+    "start": 876.35,
+    "end": 878.15,
+    "text": "Thông thường trước giờ các bạn cốt đấy"
+  },
+  {
+    "start": 878.15,
+    "end": 884.07,
+    "text": "Thì khi mà một cái giá trị của một cái tham số, sau khi cái hàm nó kết thúc với cái giá trị của tham số, nó sẽ không bị thay đổi đúng không?"
+  },
+  {
+    "start": 884.07,
+    "end": 889.23,
+    "text": "Ngoại trừ là, bạn chuyển tham chiếu, hoặc là cái tham số của bạn nó làm một cái mạng, đúng không nhỉ?"
+  },
+  {
+    "start": 889.23,
+    "end": 896.67,
+    "text": "Ok, nhưng mà từ bây giờ có thể sử dụng con chỏ để bạn, tất nhiên là sử dụng tham chiếu thì nó sẽ dễ hơn, dễ cốt hơn, đúng nhỉ?"
+  },
+  {
+    "start": 896.67,
+    "end": 903.07,
+    "text": "Ví dụ bạn có một cái hàm là void, string, và nó đắp bồ như thế này."
+  },
+  {
+    "start": 903.07,
+    "end": 906.47,
+    "text": "In là tới x, sau đó chỗ này bạn cho x x bằng 2 trả nạn, đúng nhỉ?"
+  },
+  {
+    "start": 906.47,
+    "end": 910.67,
+    "text": "dọ dàng là sau hám đắp bồ này, cái giá trị của một tham số ích nhờ nó sẽ không bị thay đổi, đúng không?"
+  },
+  {
+    "start": 910.67,
+    "end": 919.41,
+    "text": "Ok, ví dụ, người tên nờ bằng một nhìn sau đó bạn gọi hám đắp bồ, mạng truyền, nờ vào, ok, let's get out of the nờ"
+  },
+  {
+    "start": 919.41,
+    "end": 922.66,
+    "text": "Thì cái giá trị của nờ nó không bị thay đổi, nó vẫn là một nhìn"
+  },
+  {
+    "start": 922.66,
+    "end": 927.82,
+    "text": "Nó bị chung tên, mình đây là đắp bồ 1 nhé"
+  },
+  {
+    "start": 927.82,
+    "end": 930.62,
+    "text": "Thì cái giá trị của nờ nó không bị thay đổi, đúng nhỉ?"
+  },
+  {
+    "start": 930.62,
+    "end": 932.62,
+    "text": "Ok, bởi vì bản chất là nói chí gì nhỉ?"
+  },
+  {
+    "start": 932.62,
+    "end": 936.78,
+    "text": "Nó chỉ gán cái giá trị của cái biến đối số này"
+  },
+  {
+    "start": 936.78,
+    "end": 940.62,
+    "text": "cái đối số hay người ta còn gọi là cái tham số chính thức đúng hả?"
+  },
+  {
+    "start": 940.62,
+    "end": 945.1,
+    "text": "là 1 nghìn cho cái tham số của hàm của các bạn thôi, là x thôi"
+  },
+  {
+    "start": 945.1,
+    "end": 947.82,
+    "text": "và bạn thay đổi trên thằng x nó trả thay đổi gì đến thằng nò cả"
+  },
+  {
+    "start": 947.82,
+    "end": 952.78,
+    "text": "như kiểu là thằng x với thằng nò này là 2 thằng riêng biệt í, hiểu nông na như thế, ok?"
+  },
+  {
+    "start": 952.78,
+    "end": 957.1,
+    "text": "và mọi thay đổi trên cái thằng x này trải làm gì đến thằng nò cả, đúng nhỉ?"
+  },
+  {
+    "start": 957.1,
+    "end": 960.94,
+    "text": "bởi vì nó chỉ copy cái nội dung của nở cho x và thay đổi trên x thôi"
+  },
+  {
+    "start": 960.94,
+    "end": 966.62,
+    "text": "Nhưng mà nếu mà các bạn sử dụng là void, double, 1, double, 2, in a tv, x đúng không?"
+  },
+  {
+    "start": 966.62,
+    "end": 969.9,
+    "text": "Sao chỗ này bạn cho x, sao bằng 2 thì cái này nó là hàn ra khác"
+  },
+  {
+    "start": 969.9,
+    "end": 971.9,
+    "text": "Bởi vì ở đây mình đã chuyển tham chiêu đúng không?"
+  },
+  {
+    "start": 971.9,
+    "end": 974.7,
+    "text": "Mọi thay đổi trên cái biến x này ở cái hám double 2 này"
+  },
+  {
+    "start": 974.7,
+    "end": 978.38,
+    "text": "Nó cũng sẽ làm thay đổi cái tham số thực sự của các bạn nhỉ?"
+  },
+  {
+    "start": 978.38,
+    "end": 981.18,
+    "text": "Trong trường hợp này nếu mà mình gọi là hám double 2 thì nó sẽ"
+  },
+  {
+    "start": 981.18,
+    "end": 984.54,
+    "text": "Nhân cái giá trị của nó lên 2 và thành 1, 2,000"
+  },
+  {
+    "start": 984.54,
+    "end": 988.73,
+    "text": "Ok, và bây giờ các bạn cũng có thể sử dụng con trỏ nhé"
+  },
+  {
+    "start": 988.73,
+    "end": 994.94,
+    "text": "Voi đắp bộ 3, int txx, ok"
+  },
+  {
+    "start": 994.94,
+    "end": 999.1,
+    "text": "Cái mà bạn chuyển vào đây, nó là 1 con trò x, chứ không phải là 1 cái biến x nữa"
+  },
+  {
+    "start": 999.1,
+    "end": 1001.42,
+    "text": "Ok, thì ở đây bạn sẽ cho là gì?"
+  },
+  {
+    "start": 1001.42,
+    "end": 1005.94,
+    "text": "Bạn sẽ cho là sao x nhé, sau đó là sao bằng 2"
+  },
+  {
+    "start": 1005.94,
+    "end": 1009.29,
+    "text": "Ở đây các bạn phải rõ ràng dựa cái này"
+  },
+  {
+    "start": 1009.29,
+    "end": 1013.09,
+    "text": "Nhiều bạn không biết là cái dấu sao này này, với cái dấu sao này nó khác gì nhau"
+  },
+  {
+    "start": 1013.09,
+    "end": 1017.77,
+    "text": "Nhớ, cái dấu sao này này, khi mà 1 cái biến nó ở cái danh sách tham số ấy"
+  },
+  {
+    "start": 1017.77,
+    "end": 1020.49,
+    "text": "Thì nó chỉ ra rằng cái biến x này là 1 cái biến con trò"
+  },
+  {
+    "start": 1020.49,
+    "end": 1029.01,
+    "text": "Nhưng mà trong các câu lệnh thao tác mà mình sử dụng biến dấu sao này, thì có nghĩa đấy chính là cái giá trị của biến con trỏ x này đang trỏ tới"
+  },
+  {
+    "start": 1029.01,
+    "end": 1031.45,
+    "text": "Chính là cái toán tử giải tham chiếu ấy, ok"
+  },
+  {
+    "start": 1031.45,
+    "end": 1034.85,
+    "text": "Toán tử giải tham chiếu, nó tên là gì nhỉ?"
+  },
+  {
+    "start": 1034.85,
+    "end": 1040.96,
+    "text": "Như là hình như là the reference"
+  },
+  {
+    "start": 1040.96,
+    "end": 1042.44,
+    "text": "Như này thì phải, ok"
+  },
+  {
+    "start": 1042.44,
+    "end": 1046.12,
+    "text": "Thế còn ở đây, innerT6x thì x là con trỏ nhá"
+  },
+  {
+    "start": 1046.12,
+    "end": 1048.6,
+    "text": "Các bạn phải rõ ràng cái vấn đề đấy, được chưa?"
+  },
+  {
+    "start": 1048.6,
+    "end": 1055.4,
+    "text": "Như thế này thì có nghĩa là, lấy cái giá trị, mình sẽ nhân đôi cái giá trị của cái biến mà con trỏ ít nó đang trỏ tới, ok?"
+  },
+  {
+    "start": 1055.4,
+    "end": 1061.8,
+    "text": "Và khi mà bạn gọi cái ham double ba này này, nhớ, thì cái tham số của nó là một con trỏ đúng không?"
+  },
+  {
+    "start": 1061.8,
+    "end": 1065.0,
+    "text": "Ok, và bạn muốn thay đổi cái giá trị của cái biến nờ này đúng không?"
+  },
+  {
+    "start": 1065.0,
+    "end": 1071.56,
+    "text": "Thì khi đó bạn phải truyền cái địa chỉ của biến nờ này, cho cái ham double ba này, chứ không được truyền biến nờ đâu, bạn phải truyền cái địa chỉ"
+  },
+  {
+    "start": 1071.56,
+    "end": 1076.12,
+    "text": "Bởi vì cái tham số của cái ham double ba này nó là một cái con trò mà, đúng không?"
+  },
+  {
+    "start": 1076.12,
+    "end": 1081.6,
+    "text": "Ok, cho này bạn phải truyền cái địa chỉ của biến nở vào, và bạn gọi cái biến hàm đắp bố ba"
+  },
+  {
+    "start": 1081.6,
+    "end": 1084.86,
+    "text": "thì khi đó cái giá trị của biến nở cũng sẽ bị thay đổi theo, ok?"
+  },
+  {
+    "start": 1084.86,
+    "end": 1089.67,
+    "text": "Bởi vì khi đó nó sẽ thao tác trực tiếp trên cái ô nhớ của thằng nở ấy, đúng nhỉ?"
+  },
+  {
+    "start": 1089.67,
+    "end": 1096.19,
+    "text": "Ok, ví dụ như thằng nở có thao tác, có địa chỉ là 5.000 đi, đúng không?"
+  },
+  {
+    "start": 1096.19,
+    "end": 1100.11,
+    "text": "Thì bạn truyền cái địa ô nhớ địa chỉ 5.000 cho cái hàm đắp bố ba này, đúng không?"
+  },
+  {
+    "start": 1100.11,
+    "end": 1101.79,
+    "text": "Sau đó cái câu lệnh này là gì?"
+  },
+  {
+    "start": 1101.79,
+    "end": 1106.03,
+    "text": "Câu lệnh này là truy cập đến cái giá trị của cái ô nhớ mà có địa chỉ là 5.000 đấy"
+  },
+  {
+    "start": 1106.03,
+    "end": 1113.15,
+    "text": "Nên là đại trị của bí ế, trị bí nò, bí nò sẽ bị thay đổi"
+  },
+  {
+    "start": 1113.15,
+    "end": 1117.39,
+    "text": "Các bạn có thể sử dụng hàm để hoán vị 2 thằng"
+  },
+  {
+    "start": 1117.39,
+    "end": 1121.87,
+    "text": "Thường hoán vị thì mình web luôn, sử dụng hàm có sẵn luôn, các bạn cũng có thể tự viết được"
+  },
+  {
+    "start": 1121.87,
+    "end": 1128.07,
+    "text": "int tx, int txx"
+  },
+  {
+    "start": 1128.07,
+    "end": 1130.95,
+    "text": "Cái này các bạn dùng hàm có sẵn được nha"
+  },
+  {
+    "start": 1130.95,
+    "end": 1134.47,
+    "text": "hoặc là các bạn có thể sử dụng thường, mình sẽ dùng hàm có sẵn luôn, mình nó dễ mà"
+  },
+  {
+    "start": 1134.47,
+    "end": 1138.15,
+    "text": "hoặc là các bạn có thể dùng tham chiếu hoặc là ở đây mình sẽ hướng dẫn dùng con trò nhá"
+  },
+  {
+    "start": 1138.15,
+    "end": 1141.11,
+    "text": "Thì bạn dùng cho mình cái biến tạm nó bán xao x"
+  },
+  {
+    "start": 1141.11,
+    "end": 1144.83,
+    "text": "sau đó là bạn cho xao x, bán xao y"
+  },
+  {
+    "start": 1144.83,
+    "end": 1149.29,
+    "text": "sau đó bạn cho xao y bằng tạm"
+  },
+  {
+    "start": 1149.29,
+    "end": 1154.69,
+    "text": "Ok, thì đây cái trăm trình hợp này cũng khoán vị 2 cái giá trị của 2 cái biến x và y cho nhau"
+  },
+  {
+    "start": 1154.69,
+    "end": 1160.41,
+    "text": "ok, chú ý nhé, đây là con trỏ x, đây là con trỏ y, con đây là giá trị của con trỏ x đang trở tới"
+  },
+  {
+    "start": 1160.41,
+    "end": 1162.97,
+    "text": "đây là giá trị của biến mà con trỏ y đang trở tới"
+  },
+  {
+    "start": 1162.97,
+    "end": 1165.01,
+    "text": "phải rõ ràng như thế nhé, ok"
+  },
+  {
+    "start": 1165.01,
+    "end": 1169.97,
+    "text": "nó cũng như là cái việc mà bạn khai bám con trỏ với lại sử dụng cái tóa tử giải tham chiếu ở bên dưới, hoàn toàn cắt nhau"
+  },
+  {
+    "start": 1169.97,
+    "end": 1173.73,
+    "text": "ok, ở dưới này thì bạn có thể swap hai thằng được một cách thoải mái"
+  },
+  {
+    "start": 1173.73,
+    "end": 1177.29,
+    "text": "ví dụ như là vầng tìm và vầng thang hì, sau đó bạn swap"
+  },
+  {
+    "start": 1177.29,
+    "end": 1181.01,
+    "text": "nhưng mà nhớ, hàm có tham số là con trỏ thì phải truyền địa chỉ vào nhỉ"
+  },
+  {
+    "start": 1181.01,
+    "end": 1186.14,
+    "text": "tham số là địa trí đẹp, mình sẽ cl ra, nò, nò, nò"
+  },
+  {
+    "start": 1186.14,
+    "end": 1191.46,
+    "text": "ok, rồi, thì bây giờ cái thằng 1 thằng sẽ là 2000, 1 thằng sẽ là 1000"
+  },
+  {
+    "start": 1191.46,
+    "end": 1200.61,
+    "text": "ok, thì đây chính là cái cách mình sử dụng 1 cái thèm mà nó có tham số là con trỏ nhé"
+  },
+  {
+    "start": 1200.61,
+    "end": 1208.89,
+    "text": "ok, rồi sau khi mà bạn đã biết cái khái hiệm của con trỏ và cái cách 2 báo con trỏ các thứ rồi"
+  },
+  {
+    "start": 1208.89,
+    "end": 1212.05,
+    "text": "Ví dụ, mình có 1 câu chúc"
+  },
+  {
+    "start": 1212.05,
+    "end": 1214.61,
+    "text": "Ví dụ mình có 1 struct sinh viên như thế này"
+  },
+  {
+    "start": 1214.61,
+    "end": 1219.76,
+    "text": "trong này có string, tên, tuổi, lệ chỉ"
+  },
+  {
+    "start": 1219.76,
+    "end": 1226.64,
+    "text": "Ok, thì bạn cũng có thể khai bám 1 con trỏ sinh viên"
+  },
+  {
+    "start": 1226.64,
+    "end": 1233.15,
+    "text": "và việc mà bạn truy cập từng thành phần của 1 con trỏ sinh viên nào đó"
+  },
+  {
+    "start": 1233.15,
+    "end": 1237.45,
+    "text": "Ok, thì mình sẽ sử dụng mũ tên thay ví dâu chấm"
+  },
+  {
+    "start": 1237.45,
+    "end": 1242.21,
+    "text": "trước đây là các bạn, khi mà truy cập vào một thành phần nào đó của một struct thì mình sẽ dùng dâu chấm đúng không?"
+  },
+  {
+    "start": 1242.21,
+    "end": 1249.19,
+    "text": "nhưng mà trong trường hợp cái biến struct đấy mà nó là con trỏ ấy, thì các bạn truy cập vào cái từng thành phần đấy thông qua cái dấu mũ tên"
+  },
+  {
+    "start": 1249.19,
+    "end": 1255.89,
+    "text": "các bạn đã làm quen ở cái phần class rồi đấy, khi mà bạn muốn truy cập vào các cái thành phần của một cái class ấy"
+  },
+  {
+    "start": 1255.89,
+    "end": 1261.29,
+    "text": "các cái attribute hoặc là các cái của một class thì các bạn dùng cái con trò zits thôi, ok?"
+  },
+  {
+    "start": 1261.29,
+    "end": 1272.04,
+    "text": "Ví dụ như thế này nhé, khi mà bạn khai bám một cái biến sinh viên như thế này, một biến sinh viên x chẳng hả?"
+  },
+  {
+    "start": 1272.04,
+    "end": 1287.06,
+    "text": "Ok, sau đó là bạn cho x chấm tên, để bằng huyện văn tèo, rồi là x chấm tuổi, này mình gọi để tuổi là string, int tên nhé, tuổi nhé, ok"
+  },
+  {
+    "start": 1287.06,
+    "end": 1296.79,
+    "text": "Tuổi là bằng 18, còn địa chỉ, thì bằng 2 dương, ok"
+  },
+  {
+    "start": 1296.79,
+    "end": 1306.96,
+    "text": "và đây, các bạn, skype 1 con trỏ sinh viên, ok, sinh viên, cell, ptr, sau đó bạn gán cho nó bằng cái địa chỉ của thằng viên ích"
+  },
+  {
+    "start": 1306.96,
+    "end": 1317.06,
+    "text": "ok, thì để mà truy cập vào từng thành phần của cái con trò ptr này nó đang trò tới ấy"
+  },
+  {
+    "start": 1317.06,
+    "end": 1321.66,
+    "text": "xin lỗi, cái truy cập vào từng thành phần của cái struct mà con trò ptr nó đang trò tới, các bạn có thể dùng mũi tên"
+  },
+  {
+    "start": 1321.66,
+    "end": 1341.59,
+    "text": "cout,udos,竹, crl, ptr, tên, tene, tuệ, ptr, dị trị"
+  },
+  {
+    "start": 1341.59,
+    "end": 1344.91,
+    "text": "Các bạn thấy là nó cũng sẽ ra nguyên vân tèo 18 và Hải Dương đúng không?"
+  },
+  {
+    "start": 1344.91,
+    "end": 1349.53,
+    "text": "Chú ý về trăm trường hợp và cái biến con trỏ của mình là strap nhá"
+  },
+  {
+    "start": 1349.53,
+    "end": 1353.02,
+    "text": "ok, còn ra một đối tượng nhá"
+  },
+  {
+    "start": 1353.02,
+    "end": 1356.78,
+    "text": "và chú ý như thế này hoặc là các bạn có thể làm như thế này cũng được"
+  },
+  {
+    "start": 1356.78,
+    "end": 1364.17,
+    "text": "Đấy là, bạn có thể dùng cái thám tử giải tham chiếu chỗ này được, tức là bạn sẽ cho là"
+  },
+  {
+    "start": 1364.17,
+    "end": 1371.44,
+    "text": "sao vtr, sau đó bạn chấm tên nhé, sao vtr bạn chấm tên"
+  },
+  {
+    "start": 1371.44,
+    "end": 1375.68,
+    "text": "Còn 2 cái thuộc tính tuổi với địa chí thì bạn có thể dùng giống mũi tên luôn, được"
+  },
+  {
+    "start": 1375.68,
+    "end": 1379.61,
+    "text": "Nha, máy mình ngay nó hơi chậm"
+  },
+  {
+    "start": 1379.61,
+    "end": 1389.5,
+    "text": "Đấy, như nhau nhé, ok"
+  },
+  {
+    "start": 1389.5,
+    "end": 1394.02,
+    "text": "Một là các bạn có thể dùng mũi tên để truy cập trực tiếp vào các cái thuộc tính của cái đối tượng đấy"
+  },
+  {
+    "start": 1394.02,
+    "end": 1398.54,
+    "text": "hoặc là các bạn giải tham chiếu ptr trước để nó ra cái sinh viên ích"
+  },
+  {
+    "start": 1398.54,
+    "end": 1403.38,
+    "text": "đúng là cái chỗ này nó khi mà bạn dùng sao ptr ấy thì nó ra cái ống sinh viên ích, nó bạn chấm"
+  },
+  {
+    "start": 1403.38,
+    "end": 1409.18,
+    "text": "thì khi đó nó cái sao ptr này nó làm một cái struct bình thường nó, bạn có thể chấm đến các cái thuộc tính của nó"
+  },
+  {
+    "start": 1409.18,
+    "end": 1419.57,
+    "text": "ok, thì đấy là trong trường hợp mà cái đối tượng miến con trỏ các bạn nó là struct thì có thể dùng mũ tên để truy cập vào các cái thuộc tính của nó nhé"
+  },
+  {
+    "start": 1419.57,
+    "end": 1428.37,
+    "text": "Rồi, và khi mà các bạn làm việc với con trò ấy, thì con trò này có mối con hệ giữa con trò với mạng ấy, ok?"
+  },
+  {
+    "start": 1428.37,
+    "end": 1434.29,
+    "text": "Thực ra cái mạng của bạn này, ví dụ như này này, thì cái thằng A người ta gọi nó là một cái hằng con trò, nhớ?"
+  },
+  {
+    "start": 1434.29,
+    "end": 1439.52,
+    "text": "Thằng A, ví dụ như xeo ra A, chắc là các bạn chưa bao giờ xeo ra A đúng không?"
+  },
+  {
+    "start": 1439.52,
+    "end": 1447.0,
+    "text": "Nhưng mà thực ra khi mà mình xeo ra A thì nó in ra cái địa chỉ đầu tiên của cái phần tử ở trong mạng A này, ok?"
+  },
+  {
+    "start": 1447.0,
+    "end": 1454.68,
+    "text": "hay nó khác là cái giá trị của thằng A luôn í, thằng A thật chất nó chính là cái địa chỉ của cái biến đầu tiên, xin lỗi của cái phần cử đầu tiên ở trong mạng"
+  },
+  {
+    "start": 1454.68,
+    "end": 1457.68,
+    "text": "ví dụ bạn khai bán một cái mảng A có 5 phần cử đúng không?"
+  },
+  {
+    "start": 1457.68,
+    "end": 1461.68,
+    "text": "và là 4 nữa nhé, 4 nước 5 gì được"
+  },
+  {
+    "start": 1461.68,
+    "end": 1465.48,
+    "text": "như thế này, ok, đây là cái mảng A của các bạn đúng không?"
+  },
+  {
+    "start": 1465.48,
+    "end": 1471.04,
+    "text": "thì cái giá trị của cái biến A này này, nó thực chất nó là cái địa chỉ của cái ô nhớ đầu tiên ở trong mạng của nó"
+  },
+  {
+    "start": 1471.04,
+    "end": 1477.92,
+    "text": "ví dụ ô nhớ này có 100.2, ô này là 116, 110, 114"
+  },
+  {
+    "start": 1477.92,
+    "end": 1502.12,
+    "text": "118, ở đây cái mạng của mình là mạng integer, thành ra là mỗi phần tử nó chiếm 4b, khi đó, O, A0 này thì nó là 1 lẻ 2, còn cái phần tử đường sau nó là 1 lẻ 6, cứ cộng 4b, cộng 4b, cộng 4b, nhá, ok, cái địa chỉ của nó thì cứ tăng lên 4b, bởi vì là mỗi thằng integer là nó 4b mà, tương tự như vậy long thì mỗi phần tử trong cái mạng có vẻ nó sẽ cách địa chỉ của 2O, 2 phần tử kể nhau nó sẽ cách nhau 8b"
+  },
+  {
+    "start": 1502.12,
+    "end": 1513.82,
+    "text": "Thì trong trường hợp này, cái thằng A này, cái tên biến A này, cái tên màng là biến A này, nó có giá trị, nó chính là cái địa chỉ của cái ô nhớ đầu tiên của cái mạng mà nó quản lý"
+  },
+  {
+    "start": 1513.82,
+    "end": 1516.82,
+    "text": "Ví dụ này, mình chạy nhé, thì các bạn sẽ thấy được cái địa chỉ của nó"
+  },
+  {
+    "start": 1516.82,
+    "end": 1521.68,
+    "text": "Cái giá trị của cái biến A, nó chính là một cái hàng địa chỉ đúng không?"
+  },
+  {
+    "start": 1521.68,
+    "end": 1525.84,
+    "text": "Ok, ví dụ mình khai bám một cái mạng A có 5 phần tử nhé"
+  },
+  {
+    "start": 1525.84,
+    "end": 1528.84,
+    "text": "Bây giờ nhé, mình xia ra cái giá trị của biến A đúng không?"
+  },
+  {
+    "start": 1528.84,
+    "end": 1530.84,
+    "text": "Bây giờ mình duyệt qua từng phần tử trong mảng A nhé"
+  },
+  {
+    "start": 1530.84,
+    "end": 1534.28,
+    "text": "OIN ở đây còn không cho y này có 50,,cộng cộng nữa"
+  },
+  {
+    "start": 1534.6,
+    "end": 1537.66,
+    "text": "sau đó bạn ị, bạn CL da trong mình cái nhé"
+  },
+  {
+    "start": 1539.47,
+    "end": 1544.75,
+    "text": "bạn CL da trong mình cái giá trị của ở đây mình mình dùng green đi, để cho nó in ra"
+  },
+  {
+    "start": 1545.23,
+    "end": 1547.37,
+    "text": "green, đây là một câu lệnh ở trong C nhé"
+  },
+  {
+    "start": 1547.87,
+    "end": 1550.61,
+    "text": "không có gì đâu, các bạn không cần biết cũng được"
+  },
+  {
+    "start": 1550.61,
+    "end": 1555.19,
+    "text": "mình in ra cái giá trị của biến theo số, nhìn cho nó dễ nhìn"
+  },
+  {
+    "start": 1555.25,
+    "end": 1556.61,
+    "text": "ở đây mình sẽ in ra"
+  },
+  {
+    "start": 1556.61,
+    "end": 1562.88,
+    "text": "C++, jestream, int đến inmates"
+  },
+  {
+    "start": 1562.88,
+    "end": 1566.56,
+    "text": "Create a入."
+  },
+  {
+    "start": 1566.56,
+    "end": 1568.08,
+    "text": "C++, hao ch durable"
+  },
+  {
+    "start": 1568.08,
+    "end": 1591.26,
+    "text": "Dashboard"
+  },
+  {
+    "start": 1591.26,
+    "end": 1594.46,
+    "text": "Các phần tử đầu tiên sẽ có giá trị 7, 3, 3, 9, 5, 2, 0, đúng không?"
+  },
+  {
+    "start": 1594.46,
+    "end": 1598.52,
+    "text": "Thế, phần tử tiếp, đây này, bạn thấy cái giá trị của BNA này."
+  },
+  {
+    "start": 1598.52,
+    "end": 1602.92,
+    "text": "Và cái địa chỉ của phần tử đầu tiên trong mạng của các bạn này, nó là giống nhau."
+  },
+  {
+    "start": 1602.92,
+    "end": 1604.92,
+    "text": "Nhưng mình nói đấy, ok."
+  },
+  {
+    "start": 1604.92,
+    "end": 1611.12,
+    "text": "Thì các bạn nhớ cho là cái mạng A của mình, cái mạng của các bạn này thực chất nó là một hàng địa trị nhé."
+  },
+  {
+    "start": 1611.12,
+    "end": 1612.32,
+    "text": "Nó là một hàng địa trị."
+  },
+  {
+    "start": 1612.32,
+    "end": 1616.92,
+    "text": "Và cái giá trị của nó chính là cái địa trị của phần tử đầu tiên ở trong mạng đây."
+  },
+  {
+    "start": 1616.92,
+    "end": 1619.92,
+    "text": "Và các bạn thấy giữa các phần tử trong cái mạng A của các bạn này,"
+  },
+  {
+    "start": 1619.92,
+    "end": 1625.92,
+    "text": "các phần tử nó sẽ cách nhau 4, 3 này, 20 này, 24 này, 28 này, 32 và 36, đúng như cái mà mình vừa nói này này"
+  },
+  {
+    "start": 1625.92,
+    "end": 1629.92,
+    "text": "đúng nhờ, đó, tương tự nhớ, nếu mà các mạng của bạn nó là lòng lòng ấy"
+  },
+  {
+    "start": 1629.92,
+    "end": 1634.79,
+    "text": "thì khi đó mỗi phần tử ở trong mạng của bạn nó lại cách nhau 8, 8 cứ"
+  },
+  {
+    "start": 1634.79,
+    "end": 1638.79,
+    "text": "hoặc là boon thì nó là 1, 3, hoặc là chair thì nó là 1, 3"
+  },
+  {
+    "start": 1638.79,
+    "end": 1640.79,
+    "text": "các bạn thấy nó không tác, sau đó nó lên 12"
+  },
+  {
+    "start": 1640.79,
+    "end": 1643.79,
+    "text": "12, 20, 28, người là 36, ok"
+  },
+  {
+    "start": 1643.79,
+    "end": 1648.79,
+    "text": "vậy thì các bạn phải nhớ được là thực chất 1 cái mạng air của bạn nó là 1 hằng Ctrl"
+  },
+  {
+    "start": 1648.79,
+    "end": 1650.79,
+    "text": "ok"
+  },
+  {
+    "start": 1650.79,
+    "end": 1661.0,
+    "text": "và như thế nhé, bạn có thể thay vì bạn sử dụng là ai, trước giờ bạn hãy nhập cái mạng của mình là kiểu là nhập mạng ai đúng không như thế này"
+  },
+  {
+    "start": 1661.0,
+    "end": 1668.45,
+    "text": "innerTan là đúng không, xác bạn vượt for innerT and come in hôm nay cậu cận xác bạn xin cho ai đúng không"
+  },
+  {
+    "start": 1668.45,
+    "end": 1670.45,
+    "text": "đây mình sẽ cho nó vòng 10 đi"
+  },
+  {
+    "start": 1670.45,
+    "end": 1673.06,
+    "text": "ok, vòng 5 đi cho nó ngắn"
+  },
+  {
+    "start": 1673.06,
+    "end": 1677.25,
+    "text": "ok, thì bây giờ cái chỗ nào có thay vòng ai ấy"
+  },
+  {
+    "start": 1677.25,
+    "end": 1682.17,
+    "text": "bởi vì thằng A nó là một hằng con trỏ rồi, được chứ?"
+  },
+  {
+    "start": 1682.17,
+    "end": 1688.45,
+    "text": "Thành ra là khi đó bạn có mà cái thằng con trỏ này nó có thể sử dụng cái toàn tử dấu cậu nữa"
+  },
+  {
+    "start": 1688.45,
+    "end": 1691.8,
+    "text": "tăng lên một đơn vị hoặc là giảm lên một đơn vị"
+  },
+  {
+    "start": 1691.8,
+    "end": 1696.24,
+    "text": "các bạn dùng hồi màn học vector mình có sử dụng iterator"
+  },
+  {
+    "start": 1696.24,
+    "end": 1698.24,
+    "text": "iterator nó tương tự như con trỏ"
+  },
+  {
+    "start": 1698.24,
+    "end": 1704.48,
+    "text": "khi đó nhé, cái thằng A này thực chất là nó có vãi trị là A cộng không"
+  },
+  {
+    "start": 1704.48,
+    "end": 1707.43,
+    "text": "Ok, thế là cái A0 của các bạn ạ"
+  },
+  {
+    "start": 1707.43,
+    "end": 1711.11,
+    "text": "Bạn có thể thay nó là con trò A0 không?"
+  },
+  {
+    "start": 1711.11,
+    "end": 1713.11,
+    "text": "A1 thì bạn thay nó là A1"
+  },
+  {
+    "start": 1713.11,
+    "end": 1719.27,
+    "text": "Ok, tương tự như vậy, cái A2 bạn có thể thay nó là con trò A2 đúng chứ?"
+  },
+  {
+    "start": 1719.27,
+    "end": 1723.91,
+    "text": "Đây là A3 này, đây là A3 đúng không?"
+  },
+  {
+    "start": 1723.91,
+    "end": 1725.91,
+    "text": "Và đây là A4"
+  },
+  {
+    "start": 1725.91,
+    "end": 1727.97,
+    "text": "Đây là A4, ok"
+  },
+  {
+    "start": 1727.97,
+    "end": 1733.28,
+    "text": "Vậy thì bây giờ nhé, thay vì bạn dùng chỉ số là A0, A1, A2, A3, A4 này"
+  },
+  {
+    "start": 1733.28,
+    "end": 1735.9,
+    "text": "Bạn có thể thông qua con trỏ"
+  },
+  {
+    "start": 1736.66,
+    "end": 1738.66,
+    "text": "Bạn có thể thông qua con trỏ là A"
+  },
+  {
+    "start": 1741.15,
+    "end": 1743.65,
+    "text": "A0, A1, A2, A4"
+  },
+  {
+    "start": 1743.65,
+    "end": 1746.81,
+    "text": "OK, trong đó đây là các chỉ số tượng ứng nhé"
+  },
+  {
+    "start": 1746.81,
+    "end": 1748.61,
+    "text": "Để mình nhập giá trị cho cái biến A"
+  },
+  {
+    "start": 1748.61,
+    "end": 1749.21,
+    "text": "OK"
+  },
+  {
+    "start": 1749.71,
+    "end": 1753.21,
+    "text": "Ở đây, chỗ AI này"
+  },
+  {
+    "start": 1753.71,
+    "end": 1758.61,
+    "text": "Thì, như mình nói đấy, đây là A, Cộng I thì nó sẽ trỏ vào phần từ AI đúng không?"
+  },
+  {
+    "start": 1758.61,
+    "end": 1760.41,
+    "text": "Vậy thì cái giá trị của..."
+  },
+  {
+    "start": 1761.1,
+    "end": 1763.7,
+    "text": "Đây, ở đây từ nhé, mình sẽ y ra cho các bạn này"
+  },
+  {
+    "start": 1763.7,
+    "end": 1765.7,
+    "text": "xiao ra e này"
+  },
+  {
+    "start": 1765.7,
+    "end": 1768.7,
+    "text": "và chỗ này từ từng nhìn in là print để nó"
+  },
+  {
+    "start": 1768.7,
+    "end": 1773.39,
+    "text": "ở đây mình sẽ print ra"
+  },
+  {
+    "start": 1773.39,
+    "end": 1776.39,
+    "text": "cái phần print này nó in ra cái giá trị thôi nhé, không có gì đó"
+  },
+  {
+    "start": 1776.39,
+    "end": 1779.39,
+    "text": "chỗ này là mình sẽ ra là a, y"
+  },
+  {
+    "start": 1779.39,
+    "end": 1787.01,
+    "text": "ở dưới này thì mình là in ra theo kiểu, đây chính là"
+  },
+  {
+    "start": 1787.01,
+    "end": 1790.01,
+    "text": "mình in ra là ai, ok, xin lỗi"
+  },
+  {
+    "start": 1790.01,
+    "end": 1792.01,
+    "text": "và ai"
+  },
+  {
+    "start": 1792.01,
+    "end": 1796.13,
+    "text": "thì hai phòng phó này nó in ra giống nhau nhé"
+  },
+  {
+    "start": 1796.13,
+    "end": 1799.13,
+    "text": "bởi vì cái việc mà bạn sử dụng là a, y"
+  },
+  {
+    "start": 1799.13,
+    "end": 1805.53,
+    "text": "con trỏ trỏ đến phần tử ai, và ai là địa chỉ của phần tử ai"
+  },
+  {
+    "start": 1805.53,
+    "end": 1808.53,
+    "text": "2 thằng là 1, thánh ra là"
+  },
+  {
+    "start": 1808.53,
+    "end": 1813.53,
+    "text": "từ bây giờ nếu mà sử dụng ai thì bạn có thể thông qua con trỏ là a, i"
+  },
+  {
+    "start": 1813.53,
+    "end": 1819.03,
+    "text": "phần tử a của mình, a màng a của mình thì phần tử đầu tiên là a, 0"
+  },
+  {
+    "start": 1819.03,
+    "end": 1822.03,
+    "text": "là a, 0, a, 1, vân vân"
+  },
+  {
+    "start": 1822.03,
+    "end": 1824.12,
+    "text": "vậy thì nhé"
+  },
+  {
+    "start": 1824.12,
+    "end": 1838.08,
+    "text": "Ở chỗ này này, thay vì bạn sử dụng là bạn c in cho ai, ok, thì bạn có thể nhập cho, đấy chính là gì nhỉ, mình có thể nhập ra cho cái giá trị của con trỏ là a, i"
+  },
+  {
+    "start": 1838.08,
+    "end": 1854.02,
+    "text": "Ok, đây sẽ làm được in ra các bản thử cho bạn nhé, đấy, mình dụng mình nhập là 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 1854.02,
+    "end": 1855.26,
+    "text": "Đấy bạn thấy là gì nhỉ?"
+  },
+  {
+    "start": 1855.26,
+    "end": 1860.06,
+    "text": "Việc mà bạn xị in cho AI, hay là bạn xị in cho sao của AI cộng y, nó là một"
+  },
+  {
+    "start": 1860.06,
+    "end": 1864.06,
+    "text": "Bởi vì là AI cộng y là một con chỏ quản lý cái AI đúng không?"
+  },
+  {
+    "start": 1864.06,
+    "end": 1866.26,
+    "text": "Ok, hay là chỏ đến cái phần tử AI đúng không?"
+  },
+  {
+    "start": 1866.26,
+    "end": 1870.06,
+    "text": "Vậy thì cái dấu sao này nó chính là cái giá trị của phần tử AI cộng y đấy, ok?"
+  },
+  {
+    "start": 1870.06,
+    "end": 1871.18,
+    "text": "Hay là OAI nhỉ?"
+  },
+  {
+    "start": 1871.18,
+    "end": 1874.58,
+    "text": "Vậy thì các bạn có thêm một cái chú ý như thế nhé nhé?"
+  },
+  {
+    "start": 1874.58,
+    "end": 1877.14,
+    "text": "Đó, và thêm một cái chú ý như thế này này"
+  },
+  {
+    "start": 1877.14,
+    "end": 1881.26,
+    "text": "Đấy chính là, nếu mà các bạn khai bán một cái mảng A nhé"
+  },
+  {
+    "start": 1881.26,
+    "end": 1885.14,
+    "text": "sau đó là bạn nhập vào mạng A nè, ok, bạn nhập vào mạng A nè"
+  },
+  {
+    "start": 1885.14,
+    "end": 1888.72,
+    "text": "sau đó bạn khai bá cho mình 1 con trò B"
+  },
+  {
+    "start": 1888.72,
+    "end": 1890.84,
+    "text": "và bạn gán nó bằng A"
+  },
+  {
+    "start": 1890.84,
+    "end": 1898.0,
+    "text": "ok, thì nói tương tự như thế này nè, đây bạn đang có 1 cái mạng A có 5 phần tử như này, 1, 2, 3, 4, 5 đúng không, bạn nhập từ bàn phím"
+  },
+  {
+    "start": 1898.0,
+    "end": 1901.32,
+    "text": "sau đó bạn lại khai bá 1 con trò B, sau đó bạn gán nó bằng A"
+  },
+  {
+    "start": 1901.32,
+    "end": 1904.48,
+    "text": "thì khi đó thằng B này nè, nó cũng trỏ vào cái phần tử này"
+  },
+  {
+    "start": 1904.48,
+    "end": 1909.0,
+    "text": "hay nó cách khác là cái giá trị của B nó chính là cái địa chỉ của cái ô nhớ đầu tiên trong cái mạng A"
+  },
+  {
+    "start": 1909.0,
+    "end": 1910.48,
+    "text": "cái phần tử đầu tiên trong mạng A"
+  },
+  {
+    "start": 1910.48,
+    "end": 1915.44,
+    "text": "vật như thế nhé, b cộng 0 hay b cộng 1 hay b cộng 2, b cộng 3 hay b cộng 4"
+  },
+  {
+    "start": 1915.44,
+    "end": 1918.94,
+    "text": "thì nó cũng đều là a, cộng 0, a, cộng 1, a, cộng 2, a, cộng 4"
+  },
+  {
+    "start": 1918.94,
+    "end": 1925.04,
+    "text": "hay nói cách khác là khi mà bạn đã cho con trò b nó gắn giá trị của nó bằng biến a này là biến mạng này"
+  },
+  {
+    "start": 1925.04,
+    "end": 1928.6,
+    "text": "thì việc mà bạn sử dụng b i hay là a i nó giống nhau, nhé"
+  },
+  {
+    "start": 1928.6,
+    "end": 1931.14,
+    "text": "ok, và mọi thao tác trên cái thằng b này này"
+  },
+  {
+    "start": 1931.14,
+    "end": 1933.58,
+    "text": "thì nó cũng sẽ làm thay đổi trên cái mạng a ban đầu"
+  },
+  {
+    "start": 1933.58,
+    "end": 1940.3,
+    "text": "ok, mình sẽ xiao ra là b i, ok"
+  },
+  {
+    "start": 1942.7,
+    "end": 1944.7,
+    "text": "Cắt"
+  },
+  {
+    "start": 1944.7,
+    "end": 1949.58,
+    "text": "Năm"
+  },
+  {
+    "start": 1949.58,
+    "end": 1951.58,
+    "text": "1, 2, 3, 4, 5"
+  },
+  {
+    "start": 1951.58,
+    "end": 1955.58,
+    "text": "Thì bạn thấy là cái mảng B đúng không? Tự nhiên mình truy cập vào cái mảng B nó cũng là 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 1955.58,
+    "end": 1957.58,
+    "text": "Đấy, nhớ nhá"
+  },
+  {
+    "start": 1957.58,
+    "end": 1963.58,
+    "text": "Thì nếu mà bạn khai báo sĩ Inete, sao A bằng B thì cái việc mà hai cái mảng A và B khi đó nó giống nhau"
+  },
+  {
+    "start": 1963.58,
+    "end": 1965.58,
+    "text": "Mặc dù B nó là con trỏ đấy, đúng không?"
+  },
+  {
+    "start": 1965.58,
+    "end": 1967.58,
+    "text": "Nhưng bạn có thể sử dụng nó như là một cái mảng luôn"
+  },
+  {
+    "start": 1967.58,
+    "end": 1971.58,
+    "text": "Hoặc là bạn có thể sử dụng sao B cộng y cũng được, không vấn đề gì"
+  },
+  {
+    "start": 1971.58,
+    "end": 1973.58,
+    "text": "Nếu mà bạn muốn truy cập"
+  },
+  {
+    "start": 1973.58,
+    "end": 1980.98,
+    "text": "Nói chung là cái này thì nó sẽ dài dòng hơn, nhưng mà ít nhất là mình cũng biết một chút ngối quan hệ giữa cái mạng và cái con trỏ"
+  },
+  {
+    "start": 1980.98,
+    "end": 1981.98,
+    "text": "OK"
+  },
+  {
+    "start": 1981.98,
+    "end": 1982.98,
+    "text": "rồi"
+  },
+  {
+    "start": 1982.98,
+    "end": 1988.58,
+    "text": "và cái điều cuối cùng về mình có chú ý về phần con trỏ này, đấy chính là cái việc mà bạn cấp phát động"
+  },
+  {
+    "start": 1988.58,
+    "end": 1989.38,
+    "text": "OK"
+  },
+  {
+    "start": 1989.38,
+    "end": 1991.98,
+    "text": "trước đây các bạn hay khai báo là một cái mạng A là"
+  },
+  {
+    "start": 1991.98,
+    "end": 1995.78,
+    "text": "như nơi kê A nói như thế này đúng không? 100 như thế này, cái này nó là cấp phát tĩnh"
+  },
+  {
+    "start": 1995.78,
+    "end": 1998.58,
+    "text": "đúng nhỉ? và tất nhiên là khi mà bạn cấp phát tĩnh ấy"
+  },
+  {
+    "start": 1998.58,
+    "end": 2003.18,
+    "text": "thì nó hay bị tràn bộ nhớ stack đúng không? ví dụ các bạn khai báo một cái mạng A có 1 triệu phần tứ"
+  },
+  {
+    "start": 2003.18,
+    "end": 2006.26,
+    "text": "trong hẳn bên như thế này, là nó sẽ bị tràn bộ như stack"
+  },
+  {
+    "start": 2010.19,
+    "end": 2015.77,
+    "text": "Đấy, nó sẽ bị tràn bộ như stack và cái return value của bạn giờ nó sẽ giam 1 cái số 525 gì đấy"
+  },
+  {
+    "start": 2015.77,
+    "end": 2017.91,
+    "text": "725 gì đấy, rợm chút nhé"
+  },
+  {
+    "start": 2017.91,
+    "end": 2019.77,
+    "text": "Máy của mình nó hơi trậm"
+  },
+  {
+    "start": 2019.77,
+    "end": 2041.1,
+    "text": "Cái ham vừa rồi nó vẫn chưa chạy xong, mình cắt nó đi rồi"
+  },
+  {
+    "start": 2041.1,
+    "end": 2044.99,
+    "text": "Cái thằng 0.0"
+  },
+  {
+    "start": 2044.99,
+    "end": 2052.95,
+    "text": "OK, nó chạy ở đâu, mình chạy lại"
+  },
+  {
+    "start": 2052.95,
+    "end": 2056.59,
+    "text": "Chưa thấy nó return value, không đợm chút, máy của mình nó hơi trậm"
+  },
+  {
+    "start": 2056.59,
+    "end": 2058.59,
+    "text": "Thì khi đó nó sẽ bị tràn bộ nhớ stack nhá"
+  },
+  {
+    "start": 2058.59,
+    "end": 2059.59,
+    "text": "OK"
+  },
+  {
+    "start": 2059.59,
+    "end": 2060.59,
+    "text": "Và..."
+  },
+  {
+    "start": 2062.16,
+    "end": 2065.16,
+    "text": "Sao đây mình sẽ hướng dẫn các bạn cái cách mà cấp phát động"
+  },
+  {
+    "start": 2065.16,
+    "end": 2067.16,
+    "text": "Nhớ, đây là cấp phát tĩnh"
+  },
+  {
+    "start": 2067.16,
+    "end": 2071.16,
+    "text": "OK, đây này bạn thấy cái return value của nó là dễ nằm 725 như thế này"
+  },
+  {
+    "start": 2071.16,
+    "end": 2073.16,
+    "text": "Thế là bạn bị tràn bộ nhớ stack rồi này"
+  },
+  {
+    "start": 2073.16,
+    "end": 2074.16,
+    "text": "OK"
+  },
+  {
+    "start": 2074.16,
+    "end": 2075.16,
+    "text": "Rồi"
+  },
+  {
+    "start": 2075.16,
+    "end": 2078.16,
+    "text": "Tức là khi mà các bạn khai báo mạng không có các bạn"
+  },
+  {
+    "start": 2078.16,
+    "end": 2080.16,
+    "text": "Không thể khai báo một cái mạng thoải mái được đâu"
+  },
+  {
+    "start": 2080.16,
+    "end": 2083.16,
+    "text": "Nó sẽ bị như dưới hạn bộ nhớ stack"
+  },
+  {
+    "start": 2083.16,
+    "end": 2084.16,
+    "text": "Vậy thì bây giờ nhá"
+  },
+  {
+    "start": 2084.16,
+    "end": 2091.52,
+    "text": "ở đây mình sẽ có 1 cái cách khác để mình cấp phát được 1 cái mảng có 1 triệu phần tự, đây chính là sử dụng cấp phát động"
+  },
+  {
+    "start": 2091.52,
+    "end": 2098.52,
+    "text": "cấp phát động thì nó sẽ sử dụng toán tử, new, hay tử khóa new, mình không rõ lắm, chắc là tử toán tử"
+  },
+  {
+    "start": 2098.52,
+    "end": 2105.52,
+    "text": "cú phát của nó sẽ như sau, đây chính là inote sau a nhé, ok, bằng new inote"
+  },
+  {
+    "start": 2105.52,
+    "end": 2112.52,
+    "text": "và đây trong này thì bạn sẽ truyền cái số lượng phần tử mà bạn muốn cấp phát động vào đây, dụ như mình muốn cấp phát 1 cái mảng có 1 triệu phần tự"
+  },
+  {
+    "start": 2112.52,
+    "end": 2114.52,
+    "text": "Ok, đó, như thế này"
+  },
+  {
+    "start": 2114.52,
+    "end": 2116.52,
+    "text": "Thì bây giờ nó lại không có vấn đề gì cả"
+  },
+  {
+    "start": 2116.52,
+    "end": 2118.12,
+    "text": "Đó"
+  },
+  {
+    "start": 2118.12,
+    "end": 2121.12,
+    "text": "Thì khi đó nhá, bạn sẽ có, mặc dù là inert sao a nhá"
+  },
+  {
+    "start": 2121.12,
+    "end": 2125.12,
+    "text": "Nhưng mà sau cái câu lệnh này, bạn có thể sử dụng cái thằng a này như là một cái mạng thông thường"
+  },
+  {
+    "start": 2125.12,
+    "end": 2127.12,
+    "text": "Bạn có thể nhập các phần tử cho cái mạng a này nhá"
+  },
+  {
+    "start": 2127.12,
+    "end": 2129.12,
+    "text": "Ok"
+  },
+  {
+    "start": 2129.12,
+    "end": 2131.12,
+    "text": "Sử dụng mình có thể nhập 5 phần tử đầu tiên thế này"
+  },
+  {
+    "start": 2131.12,
+    "end": 2132.12,
+    "text": "Ok"
+  },
+  {
+    "start": 2132.12,
+    "end": 2134.76,
+    "text": "Đấy"
+  },
+  {
+    "start": 2134.76,
+    "end": 2136.76,
+    "text": "Đấy chứ hả, không vấn đề gì nhá"
+  },
+  {
+    "start": 2136.76,
+    "end": 2141.58,
+    "text": "Thì đây chính là cái cách cứu pháp mà các phát động"
+  },
+  {
+    "start": 2141.58,
+    "end": 2142.58,
+    "text": "Đấy"
+  },
+  {
+    "start": 2142.58,
+    "end": 2145.58,
+    "text": "Và tất nhiên nhá, khi mà các bạn khai báo tĩnh ấy, các phát tĩnh ấy"
+  },
+  {
+    "start": 2145.58,
+    "end": 2152.58,
+    "text": "Các o nhớ trong bộ nhớ cấp phát của mình, nó yêu cầu là các o nhớ liền nhau, dù cái mạng A của bạn 5 phần tử như thế này"
+  },
+  {
+    "start": 2152.58,
+    "end": 2156.78,
+    "text": "Các o nhớ này phải liền nhau, nhưng mà khi bạn cấp phát động như thế này"
+  },
+  {
+    "start": 2156.78,
+    "end": 2161.78,
+    "text": "Các o nhớ mà nó cấp phát cho cái mạng A này, hay con trò A để quản lý cái mạng đấy"
+  },
+  {
+    "start": 2161.78,
+    "end": 2164.78,
+    "text": "Thì nó không cần thiết phải cần nhau, ok?"
+  },
+  {
+    "start": 2164.78,
+    "end": 2167.78,
+    "text": "Và như thế thì nó cấp phát đến bao giờ hết bộ nhớ RAM thì thôi"
+  },
+  {
+    "start": 2167.78,
+    "end": 2168.98,
+    "text": "Được không nhỏ?"
+  },
+  {
+    "start": 2168.98,
+    "end": 2173.88,
+    "text": "Chứ nó còn không phụ thuộc vào bộ nhớ stack như là mình cấp phát tịch nữa, ok?"
+  },
+  {
+    "start": 2173.88,
+    "end": 2179.0,
+    "text": "trong trường hợp này bạn có thể cấp phát đến 1 triệu, hoặc là 100 triệu, chắc cũng có thể"
+  },
+  {
+    "start": 2179.0,
+    "end": 2181.48,
+    "text": "bao giờ hết bụng như RAM"
+  },
+  {
+    "start": 2181.48,
+    "end": 2188.05,
+    "text": "1,2,3,4,5, mình có thể cấp phát đến 1 cái mạng có 100 triệu phần tử"
+  },
+  {
+    "start": 2188.05,
+    "end": 2192.61,
+    "text": "nhưng mà nếu mà bạn cấp phát tỉnh thì cấp phát đến 1 triệu là nó bị chàn bụng như stack rồi"
+  },
+  {
+    "start": 2192.61,
+    "end": 2196.93,
+    "text": "đây chính là cái cú phát cấp phát động trong lập trình xỉn cộng"
+  },
+  {
+    "start": 2196.93,
+    "end": 2204.67,
+    "text": "và cái cấp phát động này thì thường được hay dùng khi mà bạn code các cấu trúc giữ liệu"
+  },
+  {
+    "start": 2204.67,
+    "end": 2210.89,
+    "text": "dành xét link-ed, ok, thường thì nhiều trường vẫn dành xét link-ed, ok"
+  },
+  {
+    "start": 2210.89,
+    "end": 2218.89,
+    "text": "và khi mà bạn muốn giải phóng cái ô nhớ, cái địa chỉ, cái bộ nhớ mà cái thằng A này nó quản lý thì các bạn dùng toàn tử là delete nhá"
+  },
+  {
+    "start": 2218.89,
+    "end": 2224.37,
+    "text": "từ khóa delete, như thế này thì bạn, sau đó bạn chuyển A như thế này, ok"
+  },
+  {
+    "start": 2224.37,
+    "end": 2229.65,
+    "text": "Nó sẽ giải phóng cái vị trí của con trỏ A nó xin cấp phát lúc nãy"
+  },
+  {
+    "start": 2229.65,
+    "end": 2232.37,
+    "text": "Vậy thì bạn sẽ xin cấp phát bằng nưu nhé"
+  },
+  {
+    "start": 2232.37,
+    "end": 2233.89,
+    "text": "Và giải phóng bằng delete"
+  },
+  {
+    "start": 2233.89,
+    "end": 2238.53,
+    "text": "Thì nó tương tự như với mallop với lại free trong một nữ đập trình C"
+  },
+  {
+    "start": 2238.53,
+    "end": 2240.13,
+    "text": "Bạn dùng cách nào cũng được"
+  },
+  {
+    "start": 2240.13,
+    "end": 2242.69,
+    "text": "Bởi vì C cũng cậu thì nó chấp nhận cốt của C mà"
+  },
+  {
+    "start": 2242.69,
+    "end": 2245.17,
+    "text": "Cậu cậu bạn cốt bằng C vẫn thẳng đấy"
+  },
+  {
+    "start": 2245.17,
+    "end": 2248.69,
+    "text": "Nhiều cái mình thấy cốt bằng C nó tiện thì mình vẫn cốt bằng C bình thường"
+  },
+  {
+    "start": 2248.69,
+    "end": 2259.36,
+    "text": "Đây chính là cái cách mà bạn cấp phát động nhé"
+  },
+  {
+    "start": 2259.36,
+    "end": 2262.46,
+    "text": "Nếu cấp phát động thì nó sẽ nằm trong một bộ nhớ HIP"
+  },
+  {
+    "start": 2262.46,
+    "end": 2267.36,
+    "text": "mà nó sẽ không cần phải các ô nhớ liền kề nhau, thì các bạn cấp phát tương đối lạnh nhiều"
+  },
+  {
+    "start": 2267.36,
+    "end": 2269.36,
+    "text": "Với phát tĩnh thì khác"
+  },
+  {
+    "start": 2269.36,
+    "end": 2273.66,
+    "text": "Vậy thì các khái niệm đầu tiên với con trỏ thì mình sẽ dừng ở đây"
+  },
+  {
+    "start": 2273.66,
+    "end": 2277.76,
+    "text": "Các bạn chỉ cần nắm được, hiểu được nó một chút thôi"
+  },
+  {
+    "start": 2277.76,
+    "end": 2281.06,
+    "text": "Nói chung là những kiến thương mà mình cấp ở đây, các bạn có thể đủ để"
+  },
+  {
+    "start": 2281.06,
+    "end": 2285.76,
+    "text": "Có mà cô có thể cốt được các câu chúc lưỡng liệu ô như kiểu là danh sách liên kết"
+  },
+  {
+    "start": 2285.76,
+    "end": 2289.26,
+    "text": "hoặc là sau này các bạn học cây, các bạn có thể cốt vùng thường"
+  },
+  {
+    "start": 2289.26,
+    "end": 2294.82,
+    "text": "Nó cũng không có gì to tác lên các bạn đừng có thần thanh hóa cái con trỏ này nhé"
+  },
+  {
+    "start": 2294.82,
+    "end": 2301.66,
+    "text": "Ok, mình thấy là, hiện tại nhiều chiều đại học vẫn đang dạy những cái danh xách niên kết để cho làm một cái cấu trúc dữ liệu về hải thuật"
+  },
+  {
+    "start": 2301.66,
+    "end": 2304.74,
+    "text": "Nhưng mà mình nghĩ cái đấy nó không còn phù hợp nữa, ok"
+  },
+  {
+    "start": 2304.74,
+    "end": 2308.22,
+    "text": "Ví dụ như là trong đề thi lại có một cái bài đấy là cài đặt danh xách niên kết"
+  },
+  {
+    "start": 2308.22,
+    "end": 2311.1,
+    "text": "Mình thấy nó rất là đơn giản và cái cấu trúc dữ liệu thì về"
+  },
+  {
+    "start": 2311.1,
+    "end": 2314.14,
+    "text": "Và giải thuật thì bây giờ các bạn phải học những cái khác nó khó hơn"
+  },
+  {
+    "start": 2314.14,
+    "end": 2318.38,
+    "text": "Chứ không thể học những cái kiến thức vẫn từ ngày xưa đến bây giờ vẫn danh xách niên kết"
+  },
+  {
+    "start": 2318.38,
+    "end": 2323.62,
+    "text": "màng dcciones cho Joan hát môn cầu chúc đ życia và phát triển pace"
+  },
+  {
+    "start": 2323.62,
+    "end": 2328.02,
+    "text": "Cái đập Partnerscreen reasonsh tuyệt re half- animales"
+  },
+  {
+    "start": 2328.02,
+    "end": 2346.7,
+    "text": "Cemploy choreography make parents unipart"
+  }
+]

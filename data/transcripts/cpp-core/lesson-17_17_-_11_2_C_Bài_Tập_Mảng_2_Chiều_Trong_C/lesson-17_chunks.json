@@ -1,0 +1,602 @@
+[
+  {
+    "chunk_id": "chunk_0_62",
+    "start_sec": 0,
+    "end_sec": 62,
+    "start_label": "00:00",
+    "end_label": "01:02",
+    "raw_text": "Cái bên này thì mình dưỡng dẫn các bạn bài tiếp theo về phần mạng 2 chiều nhé, mình sẽ bắt đầu với mạng Maximum Pathum, ok? Mình sẽ cho mình 1 cái má trận, nhưng mà sau đó yêu cầu mình là tìm cái tổng đường dẫn lớn nhất trong má trận, trong đó đường dẫn là đây là tổng các phần tử của các phần tử. Tổng của tất cả các phần tử từ hàng đầu tiên đến hàng cuối cùng mà bạn chỉ được phép di chuyển xuống, hoặc theo đường chéo, sang trái hoặc sang phái. Thế là từ 1 OEG nào đó đúng không? Bạn có thể đi di chuyển xuống dưới thôi Đây, từ cái OEG này này, bạn có thể di chuyển xuống dưới Sáng xuống dưới trái, hoặc là xuống dưới theo cái đường chéo này này, ok? Sau đó thì bạn sẽ phải tìm đường dẫn mà, cái đường dẫn đến nó bắt đầu từ cái hàng đầu tiên và nó sẽ kết thúc ở cái hàng cuối cùng sau cho tổng các phần tử trên cái đường dẫn đến nó là lớn nhất Input dòng đầu tiên sẽ là sứng bộ tét nhé Bộ tét thì bao gồm 2 số nào và mà vợ yêu cầu mình in ra cái tổng lớn nhất của cái đường dẫn tìm được Thế các bạn thấy là mình sẽ sử dụng thêm 1 cái mạng nữa nhé"
+  },
+  {
+    "chunk_id": "chunk_46_109",
+    "start_sec": 46,
+    "end_sec": 109,
+    "start_label": "00:46",
+    "end_label": "01:49",
+    "raw_text": "Input dòng đầu tiên sẽ là sứng bộ tét nhé Bộ tét thì bao gồm 2 số nào và mà vợ yêu cầu mình in ra cái tổng lớn nhất của cái đường dẫn tìm được Thế các bạn thấy là mình sẽ sử dụng thêm 1 cái mạng nữa nhé Mình sẽ sử dụng thêm 1 cái mạng nữa Hoặc là bạn có thể sử dụng trên trực tiếp cái mạng ban đầu cũng được Thì mình thấy là cái hàng đầu tiên của cái ma chặn này này Thế cái mình sẽ sử dụng luôn cái... Mình tạm gọi là 1 cái mạng DP đi, ok Tạm gọi cái mạng DP Easy đi Nó sẽ được dùng để lưu... Ờm... gì nhỉ? lưu tổng lớn nhất nhé, nó sẽ được lưu dùng để lưu để tổng lớn nhất của cái đường dẫn bắt đầu từ cái hàng đầu tiên và đi qua cái OEG này và mình sẽ xây dựng đến cái DP, tất cả các phần tử, các vị trí ở trong cái ma chận này và cái đáp án của cái câu trả lời của mình nó sẽ là DP, cái phần tử lớn nhất trong các cái hàng cuối cùng của cái ma chận DP này"
+  },
+  {
+    "chunk_id": "chunk_94_156",
+    "start_sec": 94,
+    "end_sec": 156,
+    "start_label": "01:34",
+    "end_label": "02:36",
+    "raw_text": "và mình sẽ xây dựng đến cái DP, tất cả các phần tử, các vị trí ở trong cái ma chận này và cái đáp án của cái câu trả lời của mình nó sẽ là DP, cái phần tử lớn nhất trong các cái hàng cuối cùng của cái ma chận DP này Ok, ví dụ như cái má trận là 10120204, 10120204 Rồi cái hàng dưới thì nó sẽ là 1003025 Hàng tiếp theo thì là 0140020, 0140020 và hàng cuối cùng thì là 10022004, ok Bây giờ bạn sẽ xây dựng cái mảng DP đấy nhé, trong đó cái mảng DP đó, cái dòng đầu tiên thì nó giống ý hết cái ma chặn ban đầu"
+  },
+  {
+    "chunk_id": "chunk_140_204",
+    "start_sec": 140,
+    "end_sec": 204,
+    "start_label": "02:20",
+    "end_label": "03:24",
+    "raw_text": "và hàng cuối cùng thì là 10022004, ok Bây giờ bạn sẽ xây dựng cái mảng DP đấy nhé, trong đó cái mảng DP đó, cái dòng đầu tiên thì nó giống ý hết cái ma chặn ban đầu Nhưng mà từ cái dòng thứ 2 này trở đi ấy, thì cái phần tử DP-EZ nào đó của cái mảng này này, nó sẽ tinh toán như sau đấy là nó sẽ dựa vào 3 cái thằng đứng ở trên nó ấy Để xem là với cái phần tử ví dụ như thằng 1 này này, bình thường thì nó sẽ xét 3 vị trí đứng trên nó như thế này này xem thằng nào là thằng lớn nhất thì khi đó cái giá trị của cái O này này, nó sẽ bằng tổng của cái thằng lớn nhất trong 3 thằng đứng trên nó, cộng với chính nó bởi vì là nếu mà bạn muốn tìm đường dẫn lớn nhất í, thì là từ 1 cái hàng nào đó là lớn trên thì bạn sẽ phải chọn cái thằng lớn nhất và bạn đi xuống dưới cái O lớn dưới đúng không? trong trường hợp này, 10 với 10 lớn nhất là 10 đúng không? Cộng với 1 thì nó sẽ là 11 O này thì nó sẽ xét 3 thằng đứng trước, nó là 11 và 12, sau đó nó chọn cái o lớn nhất để nó chọn cái đường đi từ cái o đến đi xuống dưới o này"
+  },
+  {
+    "chunk_id": "chunk_183_245",
+    "start_sec": 183,
+    "end_sec": 245,
+    "start_label": "03:03",
+    "end_label": "04:05",
+    "raw_text": "bởi vì là nếu mà bạn muốn tìm đường dẫn lớn nhất í, thì là từ 1 cái hàng nào đó là lớn trên thì bạn sẽ phải chọn cái thằng lớn nhất và bạn đi xuống dưới cái O lớn dưới đúng không? trong trường hợp này, 10 với 10 lớn nhất là 10 đúng không? Cộng với 1 thì nó sẽ là 11 O này thì nó sẽ xét 3 thằng đứng trước, nó là 11 và 12, sau đó nó chọn cái o lớn nhất để nó chọn cái đường đi từ cái o đến đi xuống dưới o này thì nó sẽ là 10, cộng với 0 thì là 10 O này thì nó sẽ chọn 3 thằng đứng trên nó này để nó lựa chọn thằng lớn nhất và cái đường đi của mình từ gióng trên xuống tầm dưới mà đi qua o này thì mình sẽ lấy cái từ thằng 10 để đi xuống chứ mình không đi từ thằng 2 thằng không để đi xuống o này nhé thì nó là 10, cộng không là 10 này tương tự như vậy, ông này thì ông ấy sẽ chọn 3 cái thằng đứng trên nó này thằng nào lớn nhất thì nó sẽ đi từ cái ồ đấy đi xuống ồ này, đi như thế này này cái là 10, cộng với 30 thì nó là 50, ok? không phải là 30 không nhỉ? ok, thằng 2 này cộng thế nó sẽ chọn cái thằng lớn nhất, trên nó là 20, cộng 12 là 22 thằng 5 này thì chỉ có 2 thằng đấy là 20 và 4 thì nó sẽ chọn thằng 20 đi xuống nó đúng không?"
+  },
+  {
+    "chunk_id": "chunk_230_292",
+    "start_sec": 230,
+    "end_sec": 292,
+    "start_label": "03:50",
+    "end_label": "04:52",
+    "raw_text": "cái là 10, cộng với 30 thì nó là 50, ok? không phải là 30 không nhỉ? ok, thằng 2 này cộng thế nó sẽ chọn cái thằng lớn nhất, trên nó là 20, cộng 12 là 22 thằng 5 này thì chỉ có 2 thằng đấy là 20 và 4 thì nó sẽ chọn thằng 20 đi xuống nó đúng không? thì nó sẽ là 25 rồi bạn cứ thế, cứ xây dựng sang xuống cái dòng này, xuống cái dòng này sau đó bạn chỉ cần tìm cái phần tử lớn nhất của cái dòng cuối cùng này, là mình sẽ biết tỏng cái phần tử lớn nhất trên một cái rừng dẫn từ cái hàng đầu tiên tới hàng cuối cùng rồi, ok? Thương tự như vậy nhé, ở chỗ này thằng này nó sẽ chọn thằng 11 đi xuống nó nhé, thì thành 11 thằng 10 này thì nó sẽ chọn là thằng 11 đi xuống nó thì thành là 21 ok, chọn này là 21 nhé thằng 4 này thì nó sẽ chọn thằng 50 thì là 54 này, thằng 0 này nó sẽ chọn là 50 thì nó sẽ là 50 này thằng 2 này nó sẽ chọn là 50, tiếp là 52 này thằng 0 này nó sẽ chọn là 25, tức là 25 này ok, dòng cuối cùng này cũng thế, thằng này nó sẽ chọn thắng 21, cùng với 1 là 22 thằng không này nó sẽ chọn thắng 54, cùng với không là 54"
+  },
+  {
+    "chunk_id": "chunk_272_335",
+    "start_sec": 272,
+    "end_sec": 335,
+    "start_label": "04:32",
+    "end_label": "05:35",
+    "raw_text": "thằng 4 này thì nó sẽ chọn thằng 50 thì là 54 này, thằng 0 này nó sẽ chọn là 50 thì nó sẽ là 50 này thằng 2 này nó sẽ chọn là 50, tiếp là 52 này thằng 0 này nó sẽ chọn là 25, tức là 25 này ok, dòng cuối cùng này cũng thế, thằng này nó sẽ chọn thắng 21, cùng với 1 là 22 thằng không này nó sẽ chọn thắng 54, cùng với không là 54 thằng 2 này thì nó sẽ chọn là thằng 54, cùng với 2 thì là 56 thằng 20 này thì nó sẽ chọn thằng lớn nhất trong 3, thằng đấy là 50, 50, 50, 50, 50, 50, 50, cùng với 20, tức là 74 ok, thằng không này cũng thế, nó sẽ chọn thằng 52 thì thành 52 thằng 4 thì nó sẽ chọn 52, thành 56 và bạn chỉ cần tìm cái phần tử lớn nhất ở trên cái dòng cuối cùng này là 97 cái đường dẫn của bạn sẽ là 20, 50, 54, 74 2 cách khác cái đường của mình sẽ là 20, 30, 34, 24, 20, 74 ok, mấu chốt là như thế nhá, từ 1 cái OEG nào đó"
+  },
+  {
+    "chunk_id": "chunk_314_375",
+    "start_sec": 314,
+    "end_sec": 375,
+    "start_label": "05:14",
+    "end_label": "06:15",
+    "raw_text": "cái đường dẫn của bạn sẽ là 20, 50, 54, 74 2 cách khác cái đường của mình sẽ là 20, 30, 34, 24, 20, 74 ok, mấu chốt là như thế nhá, từ 1 cái OEG nào đó ok, thì mình sẽ tính cái giá trị của cái đường dẫn đi qua cái OEG này xa cho giá trị lớn nhất theo hướng đi của mình, từ 1 OEG, bạn có thể đi xuống dưới, đi xanh trái, đi xanh phải, đúng không? tức là cái OEG này, thì sẽ có 3 O ở trên nó, có thể đi xuống dưới nó, tức là từ thằng này, thằng đường xuống, từ 1 O, thằng trái này, đi xuống dưới này, đúng không? hoặc là 1 O, thằng trái này, đi xuống dưới nó, thì mình sẽ lựa chọn thằng lưỡng nhất trong 3 thằng này, để mình tìm đường dẫn đi qua cái OEG này, thì thông qua cái thằng lưỡng nhất ở trên này, ok? C++ như sau nhưng mà chú ý nhé, đây là 2 cái cận ở bên trái này, và cận ở bên phải, nó sẽ không, tức là nó chỉ có 2 cái thằng đứng trên nó thôi, đúng không nhỉ?"
+  },
+  {
+    "chunk_id": "chunk_357_429",
+    "start_sec": 357,
+    "end_sec": 429,
+    "start_label": "05:57",
+    "end_label": "07:09",
+    "raw_text": "hoặc là 1 O, thằng trái này, đi xuống dưới nó, thì mình sẽ lựa chọn thằng lưỡng nhất trong 3 thằng này, để mình tìm đường dẫn đi qua cái OEG này, thì thông qua cái thằng lưỡng nhất ở trên này, ok? C++ như sau nhưng mà chú ý nhé, đây là 2 cái cận ở bên trái này, và cận ở bên phải, nó sẽ không, tức là nó chỉ có 2 cái thằng đứng trên nó thôi, đúng không nhỉ? Ví dụ như là cái thằng 5 này này, thì bạn lựa chọn cái đường đi qua ôm ôm 5 này này, thì mình sẽ chỉ được lựa chọn trong qua thằng 20 và thằng 4 thôi, bởi vì là nó là cận bên phải rồi, nên các bạn chú ý cái chỗ đấy là được Ok, các bạn cút như sau này, ở đây mình sẽ nhập vào số tiết cây này YT chừng chứ nhé, sau đó mình sẽ nhập vào một cái map trận, con cỡ là mở nên mở Ok, sau đó thì các bạn có thể xây dựng trực tiết trên cái map trận A kia cũng được nhé"
+  },
+  {
+    "chunk_id": "chunk_405_465",
+    "start_sec": 405,
+    "end_sec": 465,
+    "start_label": "06:45",
+    "end_label": "07:45",
+    "raw_text": "Ok, sau đó thì các bạn có thể xây dựng trực tiết trên cái map trận A kia cũng được nhé xây dựng luôn trên map trận A kia không cần phải xây dựng một cái mả mới đâu Rồi, nhưng mà nhớ cái dòng đầu tiên thì mình sẽ không xây dựng gì cả nhé bởi vì cái dòng đầu tiên thì đằng trên nó không có phần tử nào ý Đường dẫn đi qua các phần tử ở dòng đầu tiên thì là chỉ nó luôn, mình chỉ dựa từ dòng thứ 1 trở đi thôi Rồi, sau đó mình dựa qua các cột nhé Nhưng mà bạn nhớ cái trường hợp mà nếu mà nó là cái cột đầu tiên ấy, cái cột đầu tiên này này Ví dụ như cái đường dẫn đi qua cái phần này, ông 1 này này, ông không để ông 1 này này"
+  },
+  {
+    "chunk_id": "chunk_447_511",
+    "start_sec": 447,
+    "end_sec": 511,
+    "start_label": "07:27",
+    "end_label": "08:31",
+    "raw_text": "Rồi, sau đó mình dựa qua các cột nhé Nhưng mà bạn nhớ cái trường hợp mà nếu mà nó là cái cột đầu tiên ấy, cái cột đầu tiên này này Ví dụ như cái đường dẫn đi qua cái phần này, ông 1 này này, ông không để ông 1 này này Thì nó chỉ có 2 cái thằng đứng trên nó thôi nhé, tức là nếu mà bạn kiểm tra là... ıı.. nhảm bạn chỉ kisse chìm chè nếu mà cái cột đầu tiên í, tức là ghi mà bằng không í nó, thì bạn sẽ có cái gì? bạn sẽ có a của iz nó sẽ bằng cộng bằng, mình cộng luôn nhé, mình sẽ lựa chọn 2 cái thằng đứng trên nó ok đây trong trình pháp này này đây cái o iz đây này, nó thì cái ổn này là ổn cái cột đầu tiên hình ra là 2 cái phần tử đứng trên nó là 2 cái ổn này Nó không có thẳng đứng trước, chỗ này, chỗ này nó sẽ là e1g"
+  },
+  {
+    "chunk_id": "chunk_494_555",
+    "start_sec": 494,
+    "end_sec": 555,
+    "start_label": "08:14",
+    "end_label": "09:15",
+    "raw_text": "đây trong trình pháp này này đây cái o iz đây này, nó thì cái ổn này là ổn cái cột đầu tiên hình ra là 2 cái phần tử đứng trên nó là 2 cái ổn này Nó không có thẳng đứng trước, chỗ này, chỗ này nó sẽ là e1g Thế còn ông này thì là ông e1g c1, đúng không? Thì bạn chỉ cần chọn thằng số lớn hơn trong 2 thằng này, xác bạn cộng với thằng ai g là được Tức là mắc của e1g Mắc của ai e1g và ai e1e c1, g c1, nhá, ok Đây là trường hợp mà nó là cận bên trái nhé còn nếu mà nó là cận bên phải, tức là g nó bằng em ở chiều 1, thì bạn sẽ có a, eg nó sẽ bằng cái gì? nó sẽ cộng bằng mắc của nó nè, nó tương tự như vậy khi mà cái phần tử của bạn nó ở cột bên trái này này, đây, thằng eg đây thì nó chỉ có 2 thằng đứng trên nó thôi đúng không? nó không có thằng bên phải này thì thằng này nó sẽ là gì nhỉ? thằng này nó cũng sẽ là e chiều 1, g đúng không?"
+  },
+  {
+    "chunk_id": "chunk_539_600",
+    "start_sec": 539,
+    "end_sec": 600,
+    "start_label": "08:59",
+    "end_label": "10:00",
+    "raw_text": "nó sẽ cộng bằng mắc của nó nè, nó tương tự như vậy khi mà cái phần tử của bạn nó ở cột bên trái này này, đây, thằng eg đây thì nó chỉ có 2 thằng đứng trên nó thôi đúng không? nó không có thằng bên phải này thì thằng này nó sẽ là gì nhỉ? thằng này nó cũng sẽ là e chiều 1, g đúng không? con thằng này thì nó sẽ là e chiều 1 và g chiều 1 đấy thì bạn chỉ cần lựa chọn thằng lớn hơn trong 2 thằng này để bạn đi từ cái ô đấy xuống dưới ô eg này dè mình cho is bằng mắt, is 1 d1, 1, and, a, 1, d, 1. Dè con, nếu mà nó không là 2 trường họp ở 2 biên, khi đó mỗi phần từ is nào đó, nó sẽ có 3 cái thằng đứng trên nó. Is thì nó sẽ có cái ông đứng trên này thì là is 1 d, ok. Ông này thì là is 1 d c1, thì còn ông bên chái này thì là is 1, is 1, Bạn chỉ cần lựa chọn thằng lớn hơn trong 3 thằng này, sau đó mình đi từ O đến xuống dưới O này"
+  },
+  {
+    "chunk_id": "chunk_583_650",
+    "start_sec": 583,
+    "end_sec": 650,
+    "start_label": "09:43",
+    "end_label": "10:50",
+    "raw_text": "Is thì nó sẽ có cái ông đứng trên này thì là is 1 d, ok. Ông này thì là is 1 d c1, thì còn ông bên chái này thì là is 1, is 1, Bạn chỉ cần lựa chọn thằng lớn hơn trong 3 thằng này, sau đó mình đi từ O đến xuống dưới O này Thế là mình sẽ cho aiz cộng bằng mắc của 3 thằng đúng không? Thằng thứ nhất là aiz chứ 1z này Và thằng thứ 2 là thằng lớn hơn trong 2 số là aiz chứ 1z chứ 1 Và aiz chứ 1z cộng 1 cái Ok, rồi bây giờ bạn chỉ cần tìm cái thằng lớn nhất ở trong cái hàng cuối cùng Bạn có thể sử dụng ham mac element luôn cũng được ok CL, mắc, element, hàn cuối cùng, nó sẽ là A của n l chiều một, và n l chiều một, cộng mờ ok, sau đó bạn CL, ở dạy tiến thôi mình sẽ tìm được cái thằng lớn nhất ở dòng cuối cùng, nó chính là đường dẫn từ dòng đầu tiên đến dòng cuối cùng"
+  },
+  {
+    "chunk_id": "chunk_624_687",
+    "start_sec": 624,
+    "end_sec": 687,
+    "start_label": "10:24",
+    "end_label": "11:27",
+    "raw_text": "CL, mắc, element, hàn cuối cùng, nó sẽ là A của n l chiều một, và n l chiều một, cộng mờ ok, sau đó bạn CL, ở dạy tiến thôi mình sẽ tìm được cái thằng lớn nhất ở dòng cuối cùng, nó chính là đường dẫn từ dòng đầu tiên đến dòng cuối cùng ok, mình sẽ chọn thằng lớn nhất rồi mình sẽ copy tết cây này In cho bạn là bày tư Cái chỗ này, bạn lấy ra phần tửa cái dòng cuối cùng thì bạn sẽ chuyển và cái thạm số đầu tiên nó chính là cái dòng cuối cùng nhé, nó chính là N1 Sau bạn lấy N1, cộng mờ thì nó sẽ chạy từ cái dòng cuối cùng đến hết mờ, phần tửa với dàn đấy, còn không thì các bạn có thể làm bình thường thế này cũng được Rồi một cái biến REST là lớn nhất đúng không, biến là tên min đi, ok Sau đó bạn vượt qua cái dòng cuối cùng từ cột không cho tới cột mờ nhé"
+  },
+  {
+    "chunk_id": "chunk_671_731",
+    "start_sec": 671,
+    "end_sec": 731,
+    "start_label": "11:11",
+    "end_label": "12:11",
+    "raw_text": "Sau bạn lấy N1, cộng mờ thì nó sẽ chạy từ cái dòng cuối cùng đến hết mờ, phần tửa với dàn đấy, còn không thì các bạn có thể làm bình thường thế này cũng được Rồi một cái biến REST là lớn nhất đúng không, biến là tên min đi, ok Sau đó bạn vượt qua cái dòng cuối cùng từ cột không cho tới cột mờ nhé và bạn sẽ cho REST sẽ bằng map của REST và cái thằng A của nờ chữ 1i đúng không? bởi vì cái dòng cuối cùng mà xong bạn xe ra thường REST cũng được, kết quả bệnh thế thôi đấy là bài đầu tiên nhé, ok nói chung là cái dạng bài này thì nó có thể đi từ cái O đằng trên xuống dưới theo nhiều cách nào đó nhưng mà cách làm nó chung là như nhau bài hai này nó cũng là một cái ví dụ như thế này để chính là nó sẽ cho mình một cái cỡ mát chận là Nó nhận là nhận mờ bao gồm cách số không ấm và bị yêu cầu mình tìm đường đi với cái tỏng nhỏ nhất từ O11 cho tới O-M-R O-M-R đấy, mình tiết nhằm đấy. Thế là ví dụ như đây người ta sẽ tìm đường đi từ cái O này này."
+  },
+  {
+    "chunk_id": "chunk_713_782",
+    "start_sec": 713,
+    "end_sec": 782,
+    "start_label": "11:53",
+    "end_label": "13:02",
+    "raw_text": "bài hai này nó cũng là một cái ví dụ như thế này để chính là nó sẽ cho mình một cái cỡ mát chận là Nó nhận là nhận mờ bao gồm cách số không ấm và bị yêu cầu mình tìm đường đi với cái tỏng nhỏ nhất từ O11 cho tới O-M-R O-M-R đấy, mình tiết nhằm đấy. Thế là ví dụ như đây người ta sẽ tìm đường đi từ cái O này này. Ok, sang cái O này. Mỗi bước đi thì bạn sẽ có thể di chuyển xuống dưới hoặc sang phải. Thành ra là nó vẫn là cái bài trên này thôi nhưng mà cái nước đi nó khác thôi. Input thì vẫn như vậy bạn sẽ phải nhập vào suối tiết cây, mỗi tiết cây thì bao gồm nờ và mờ là suối lượng hàng vào cột của nai chặn, sau đó mình sẽ phải tìm cái đường đi ngại, đường đi có tỏng nhỏ nhất từ cái ô một một này cho tới ô mờ này Trong đó mình sẽ được đi xuống dưới hoặc đi sang phái đúng không? Đi xuống dưới hoặc đi sang phái ạ Ok, thế thì các bạn làm đi thông thường thôi ok Nó có một o đầu tiên thôi. O đầu tiên này thì là mình sẽ tính toán các đường đi nhé. Nói chung là ở mỗi oezy nào đó thì mình sẽ tính là khoảng cách ngắn nhất đi từ o11 đi qua oezy là bao nhiêu."
+  },
+  {
+    "chunk_id": "chunk_762_826",
+    "start_sec": 762,
+    "end_sec": 826,
+    "start_label": "12:42",
+    "end_label": "13:46",
+    "raw_text": "Ok, thế thì các bạn làm đi thông thường thôi ok Nó có một o đầu tiên thôi. O đầu tiên này thì là mình sẽ tính toán các đường đi nhé. Nói chung là ở mỗi oezy nào đó thì mình sẽ tính là khoảng cách ngắn nhất đi từ o11 đi qua oezy là bao nhiêu. Và cái đáp án của mình sẽ là khoảng cách ngắn nhất từ o11 cho tới o nơi chiều 1 và mơi chiều 1 này. Ok, trong khi đó các bạn có thể sử dụng DP cũng được, hay là sử dụng trực tiếp trên cái mảng ban đầu cũng được. Ví dụ mình sẽ sử dụng DP-EG Nó sẽ lưu cái gì? Nó sẽ lưu cái khoảng cách nhỏ nhất tính từ O11 cũng được nhé OK, đến cái O hiện tại là OEG Và mình sẽ xây dựng tất cả các cái OEG đấy, và đáp án của mình nó sẽ là DP của NRVM Tức là cái đường đi ngắn nhất từ cái O, sẽ nói là đường đi mà có tổng nhỏ nhất từ cái O11 tới ONR OK, thì các bạn làm tương tự như bài trước thôi đúng không? Ví dụ, ở đây, đi xuống dưới đúng không?"
+  },
+  {
+    "chunk_id": "chunk_805_868",
+    "start_sec": 805,
+    "end_sec": 868,
+    "start_label": "13:25",
+    "end_label": "14:28",
+    "raw_text": "Và mình sẽ xây dựng tất cả các cái OEG đấy, và đáp án của mình nó sẽ là DP của NRVM Tức là cái đường đi ngắn nhất từ cái O, sẽ nói là đường đi mà có tổng nhỏ nhất từ cái O11 tới ONR OK, thì các bạn làm tương tự như bài trước thôi đúng không? Ví dụ, ở đây, đi xuống dưới đúng không? Đi sang phải, rất là ví dụ, bạn chuẩn bị đi đến cái OEG này này Ok, thì nó có 2 cách đi, cái thứ nhất đấy chính là bạn đi từ cái O đằng trên xuống dưới này Cái thứ 2 là bạn đi từ 1 cái O sang trái, sang, bởi vì người ta cho mình đi 2 nước đúng không? 1 là đi xuống dưới, 2 là đi sang phải, thật ra là từ 1 cái OEG nào đó thì nó sẽ có thể có đường đi là từ cái O thẳng đằng trên xuống dưới nó, hoặc là từ 1 cái O bên trái nhảy sang nó đúng không? thì bạn sẽ lựa chọn thằng nhỏ hơn trong hai thằng này để mình lựa chọn đi từ cái O đấy qua cái OEG này Đấy Bí dụ như là cái thằng 5 này nhé Thằng 5 này này, ok Thì nó có hai lựa chọn, từ từ mình xây dựng từ thằng 1 này nhé"
+  },
+  {
+    "chunk_id": "chunk_851_915",
+    "start_sec": 851,
+    "end_sec": 915,
+    "start_label": "14:11",
+    "end_label": "15:15",
+    "raw_text": "thì bạn sẽ lựa chọn thằng nhỏ hơn trong hai thằng này để mình lựa chọn đi từ cái O đấy qua cái OEG này Đấy Bí dụ như là cái thằng 5 này nhé Thằng 5 này này, ok Thì nó có hai lựa chọn, từ từ mình xây dựng từ thằng 1 này nhé Đấy chứ à? Mình đi sang O3 này thì là khi đó cái đường đi của mình mất 4 đơn vị đúng không? Còn thằng này đi xuống đây là mất 2 đơn vị này Tức là khi đó đi sang O này nó sẽ là 1, 4 và đây là 1, 2 rồi đúng không? Thì khi đó mà đi sang cái O5 này này Thì bạn sẽ phải đi đường nào. Sao cho cái khoảng cách nó đi từ O11 đến O5 này là nhỏ nhất, thì mình sẽ lựa chọn cái số nhỏ hơn trong số này và số này để mình đi, ok? Ở đây cái match của mình là 131, 151, 4, 2, 1, 1, 3, 1, 1, 5, 1, 4, 2, 1, đúng không? Ok, vậy thì nhé. Mình sẽ xây dựng cái match đến như sau. Đầu tiên cái O11 này có mộ chính nói là mình cho cái kết quả, cái ODP cũng là 1 này."
+  },
+  {
+    "chunk_id": "chunk_891_956",
+    "start_sec": 891,
+    "end_sec": 956,
+    "start_label": "14:51",
+    "end_label": "15:56",
+    "raw_text": "Ở đây cái match của mình là 131, 151, 4, 2, 1, 1, 3, 1, 1, 5, 1, 4, 2, 1, đúng không? Ok, vậy thì nhé. Mình sẽ xây dựng cái match đến như sau. Đầu tiên cái O11 này có mộ chính nói là mình cho cái kết quả, cái ODP cũng là 1 này. sau đó cái o này nhé thì nó chỉ có thằng đứng trước nó thôi đúng không, nó không có thằng đứng trên nó thì bắt buộc là cái đường đi của bạn nó sẽ phải đi từ o1 này sang o3 thì khi đó cái tộc đường đi đến cái o3 này này nó sẽ là 4 o1 này cũng thế, ông ấy không có cái thằng ở trên, thằng ra là bắt buộc là bạn phải đi từ 1 sang 3 sau đó đi từ 3 sang 1 thì tổng đường đi của mình thì nó sẽ là 5 o1 này thì bạn chỉ có thể đi trong trên, được trên dưới bởi vì nó không có thằng bên trái thằng ra là đi từ cái o1 này đến o1, o này này thì chí phí con nó sẽ là 2 đúng không, đây Bây giờ bạn sẽ đi sang cái O này này, xoay dựng cái O mà có vị trí ra năm bắt đầu này, thì bạn sẽ đi đường nào? Bạn sẽ phải lựa chọn cái đường đi mà 1 là cái O đứng trên nó này, 2 là cái O đứng bên trái này nó này, thằng nào nhỏ hơn thì mình sẽ đi theo đường đấy"
+  },
+  {
+    "chunk_id": "chunk_937_998",
+    "start_sec": 937,
+    "end_sec": 998,
+    "start_label": "15:37",
+    "end_label": "16:38",
+    "raw_text": "thằng ra là đi từ cái o1 này đến o1, o này này thì chí phí con nó sẽ là 2 đúng không, đây Bây giờ bạn sẽ đi sang cái O này này, xoay dựng cái O mà có vị trí ra năm bắt đầu này, thì bạn sẽ đi đường nào? Bạn sẽ phải lựa chọn cái đường đi mà 1 là cái O đứng trên nó này, 2 là cái O đứng bên trái này nó này, thằng nào nhỏ hơn thì mình sẽ đi theo đường đấy Thế là mình sẽ đi theo cái đường là 1 này, 2 này xong rồi nhảy sang đây, thì khi đó cái chi phí của mình nó sẽ là 1, 1, 1, viên 5, thì là 7, đúng không? Còn nếu mà bạn đi theo cái đường là 1, 3, 5 thì khoảng cách mình nó sẽ là 5, 3, 1, 1 nữa là 9 đúng không? Cứ như thế, sau độ ôn ảnh thế, bạn sẽ đi theo cái đường nào, bạn sẽ lựa chọn thằng lớn hơn là nhỏ hơn trong 2 thằng này để mình đi Thì trong thương pháp này mình sẽ đi theo, kiểu này này là 1, 4, 5, cho đi xuống dưới đây thì là xáu Còn nếu bạn đi theo cái đường này 1, 2, 1, 5, 1 này thì khi chi phi của nó sẽ là bao nhiêu nhỉ? 5,3 là 8 cơc, chứ không phải là 6 Tương tự như vậy, mình cũng sẽ xây dẫn cái dăm cuối cùng này Ở đây thì bạn chỉ có thể đi xuống dưới thôi đúng không? Thành ra là cái ôm 4 này bạn không có lựa chọn, bạn chỉ có thể đi từ trên xuống dưới thôi"
+  },
+  {
+    "chunk_id": "chunk_981_1043",
+    "start_sec": 981,
+    "end_sec": 1043,
+    "start_label": "16:21",
+    "end_label": "17:23",
+    "raw_text": "Còn nếu bạn đi theo cái đường này 1, 2, 1, 5, 1 này thì khi chi phi của nó sẽ là bao nhiêu nhỉ? 5,3 là 8 cơc, chứ không phải là 6 Tương tự như vậy, mình cũng sẽ xây dẫn cái dăm cuối cùng này Ở đây thì bạn chỉ có thể đi xuống dưới thôi đúng không? Thành ra là cái ôm 4 này bạn không có lựa chọn, bạn chỉ có thể đi từ trên xuống dưới thôi trí phí của mình sẽ là 2, 14 là 6 hôm nay thì nó có lựa chọn đúng không, nó có thể đi thông qua ông 7 này hoặc ông 6 này thì nó chọn ông 6 này thôi, sau cũng 2 là 8 ông này ở chỗ này thì cũng có 2 lựa chọn, 1 là bạn đi từ ông 6 này xuống 2 là bạn đi từ ông 8 cái đường mà đi sang 8 này này thì đó nó sẽ chọn đường đi sông 6 đúng không, qua 6 thì đó trí phí của mình sau cũng 1 là 7, và cái đường đi của bạn nó sẽ đi như thế này ok, và các đạo an của bạn nó sẽ chính là cái giá trị của cái ONR chứa 1, mờ chứa 1 này cuối cùng góc bên phải này mỗi bước các bạn làm như thế nhé mình sẽ lựa chọn đường đi ngắn hơn trong 2 đường đi 1 là o bên trên 2 là o bên trái này để lựa chọn xem là mình nên đi theo cái đường nào để đến cái oindy hiện tại các bạn làm như sau này"
+  },
+  {
+    "chunk_id": "chunk_1027_1092",
+    "start_sec": 1027,
+    "end_sec": 1092,
+    "start_label": "17:07",
+    "end_label": "18:12",
+    "raw_text": "cuối cùng góc bên phải này mỗi bước các bạn làm như thế nhé mình sẽ lựa chọn đường đi ngắn hơn trong 2 đường đi 1 là o bên trên 2 là o bên trái này để lựa chọn xem là mình nên đi theo cái đường nào để đến cái oindy hiện tại các bạn làm như sau này mình sẽ nhập nào vào mờ ok cái phần này thì mình để yên nhé sau đó thì mình sẽ xây dựng 1 cái mảng dp cũng có nào vào mờ phần tự sau đó mình sẽ cho int, int int, int int int int int 你好 Color, depending of color, se heels, iostream, Sprites, Messi etc. OEG, tầm các phần tử trên đường đi từ O11 đến OEG hiện tại, mình sẽ cộng bằng, không phải là cộng bằng mà nó sẽ bằng số nhỏ hơn trong 2 số"
+  },
+  {
+    "chunk_id": "chunk_1070_1130",
+    "start_sec": 1070,
+    "end_sec": 1130,
+    "start_label": "17:50",
+    "end_label": "18:50",
+    "raw_text": "你好 Color, depending of color, se heels, iostream, Sprites, Messi etc. OEG, tầm các phần tử trên đường đi từ O11 đến OEG hiện tại, mình sẽ cộng bằng, không phải là cộng bằng mà nó sẽ bằng số nhỏ hơn trong 2 số Thứ nhất là cái tầm cái đường đi từ O11, ban đầu cho tới O là O, đúng là bên trên nó, đây này, O bên trên nó đây, cái thằng, đây là oiz, đúng không? đấy, thì nó có 2 lựa chọn là đi từ trên thường dưới hoặc là đi từ phải, trái xong phải thì bạn sẽ chọn thằng nhỏ hơn trong 2 thằng này, thằng này nó sẽ là e1z này còn thằng này sẽ có o là oiz, à, sẽ là oiz1 đấy, bạn sẽ chọn thằng nhỏ hơn trong 2 thằng này hay nó cách khác là mình sẽ chọn cái đường đi ngắn hơn trong 2 cái đường đi này có tỏng nhỏ hơn, nó sẽ là dp của e1z và dp của e1z"
+  },
+  {
+    "chunk_id": "chunk_1114_1231",
+    "start_sec": 1114,
+    "end_sec": 1231,
+    "start_label": "18:34",
+    "end_label": "20:31",
+    "raw_text": "còn thằng này sẽ có o là oiz, à, sẽ là oiz1 đấy, bạn sẽ chọn thằng nhỏ hơn trong 2 thằng này hay nó cách khác là mình sẽ chọn cái đường đi ngắn hơn trong 2 cái đường đi này có tỏng nhỏ hơn, nó sẽ là dp của e1z và dp của e1z ok, sau mình cộng thêm cái thằng, cái thằng O hiện tại thôi, đấy là O-A-E-G sau đó đáp án của bạn nó sẽ chính là DP của I chứ 1, à, xin lỗi là chứ 1, mở chứ 1 ok, nó chính là cái giá trị của cái O bên phải cùng ok, rồi mình sẽ nhập input này và này cũng tương tựng đúng là dễ, nó cũng tương tựng như bài trên thôi ok, sao nó ra chín nhỉ? 1, 2, 3, 4, 5, 6 đi đường nào mà chín nhỉ? 1, 2 3, từ từ xón 7x9 nhé, 5x12 chứ, rồi mình xé lại nè, cin, az, dp, az thì nó sẽ bằng, cái đường này nó đi theo kiểu 12 là 1, 2, 3, 6, 12 đúng á, dp của i chứ 1, zi, đúng rồi và o, i, zi chứ 1, cộng với az, có gì sai nhỉ, i chứ này mà không, mình xé nè, thôi mình thử ít ra ôn cái mảng dp nhé, chưa nhìn ra"
+  },
+  {
+    "chunk_id": "chunk_1169_1236",
+    "start_sec": 1169,
+    "end_sec": 1236,
+    "start_label": "19:29",
+    "end_label": "20:36",
+    "raw_text": "3, từ từ xón 7x9 nhé, 5x12 chứ, rồi mình xé lại nè, cin, az, dp, az thì nó sẽ bằng, cái đường này nó đi theo kiểu 12 là 1, 2, 3, 6, 12 đúng á, dp của i chứ 1, zi, đúng rồi và o, i, zi chứ 1, cộng với az, có gì sai nhỉ, i chứ này mà không, mình xé nè, thôi mình thử ít ra ôn cái mảng dp nhé, chưa nhìn ra lỗi xa, a tự tự"
+  },
+  {
+    "chunk_id": "chunk_1169_1242",
+    "start_sec": 1169,
+    "end_sec": 1242,
+    "start_label": "19:29",
+    "end_label": "20:42",
+    "raw_text": "3, từ từ xón 7x9 nhé, 5x12 chứ, rồi mình xé lại nè, cin, az, dp, az thì nó sẽ bằng, cái đường này nó đi theo kiểu 12 là 1, 2, 3, 6, 12 đúng á, dp của i chứ 1, zi, đúng rồi và o, i, zi chứ 1, cộng với az, có gì sai nhỉ, i chứ này mà không, mình xé nè, thôi mình thử ít ra ôn cái mảng dp nhé, chưa nhìn ra lỗi xa, a tự tự ok, nó còn có trường hợp là cái cận"
+  },
+  {
+    "chunk_id": "chunk_1169_1246",
+    "start_sec": 1169,
+    "end_sec": 1246,
+    "start_label": "19:29",
+    "end_label": "20:46",
+    "raw_text": "3, từ từ xón 7x9 nhé, 5x12 chứ, rồi mình xé lại nè, cin, az, dp, az thì nó sẽ bằng, cái đường này nó đi theo kiểu 12 là 1, 2, 3, 6, 12 đúng á, dp của i chứ 1, zi, đúng rồi và o, i, zi chứ 1, cộng với az, có gì sai nhỉ, i chứ này mà không, mình xé nè, thôi mình thử ít ra ôn cái mảng dp nhé, chưa nhìn ra lỗi xa, a tự tự ok, nó còn có trường hợp là cái cận tức là cái, đây, xin lỗi"
+  },
+  {
+    "chunk_id": "chunk_1169_1249",
+    "start_sec": 1169,
+    "end_sec": 1249,
+    "start_label": "19:29",
+    "end_label": "20:49",
+    "raw_text": "3, từ từ xón 7x9 nhé, 5x12 chứ, rồi mình xé lại nè, cin, az, dp, az thì nó sẽ bằng, cái đường này nó đi theo kiểu 12 là 1, 2, 3, 6, 12 đúng á, dp của i chứ 1, zi, đúng rồi và o, i, zi chứ 1, cộng với az, có gì sai nhỉ, i chứ này mà không, mình xé nè, thôi mình thử ít ra ôn cái mảng dp nhé, chưa nhìn ra lỗi xa, a tự tự ok, nó còn có trường hợp là cái cận tức là cái, đây, xin lỗi nó còn có trường hợp nó là cái cột đầu tiên ấy"
+  },
+  {
+    "chunk_id": "chunk_1231_1307",
+    "start_sec": 1231,
+    "end_sec": 1307,
+    "start_label": "20:31",
+    "end_label": "21:47",
+    "raw_text": "lỗi xa, a tự tự ok, nó còn có trường hợp là cái cận tức là cái, đây, xin lỗi nó còn có trường hợp nó là cái cột đầu tiên ấy cái cột đầu tiên này các phần tửa cái cột đầu tiên thì nó không có cái cột ở bên trái mà mình vẫn cứ cho đi từ bên trái, nó bị xa ok, bạn có phải cái trường hợp nữa, đây là trường hợp mà rồi, đây là cái trường hợp nó là cột đầu tiên ấy thì mình sẽ phải xử lý riêng Elip, cột đầu tiên rất là ghi bằng không, thì nó sẽ chỉ có thể đi từ trên dưới thôi Đp, iz, thì nó sẽ bằng dp của cái thằng đứng trên, nó là i chứ 1, ghi, cộng 1 cái thằng hiện tại là a, ghi Thế là còn, cái gì nữa nhỉ, cột bên trái Dòng đầu tiên, đúng không? Dòng đầu tiên thì nó chỉ đi được sang phải thôi, đúng không? Elip int1, negate"
+  },
+  {
+    "chunk_id": "chunk_1291_1353",
+    "start_sec": 1291,
+    "end_sec": 1353,
+    "start_label": "21:31",
+    "end_label": "22:33",
+    "raw_text": "int1, negate izi thì nó sẽ bằng mắt của DP1 g và DPof print of print như thế này 58 нуc asing t Mercantile casting If our DPurable throughout O đứng trước nó này, cộng thêm cái giá trị của O hiện tạng Thế còn nếu mà nó là những cái O quột tiên này này Thì nó không có đi từ bên phải được, thế nghĩa là Bạn chỉ có thể đi từ O trên dùng dưới thôi, ok?"
+  },
+  {
+    "chunk_id": "chunk_1336_1397",
+    "start_sec": 1336,
+    "end_sec": 1397,
+    "start_label": "22:16",
+    "end_label": "23:17",
+    "raw_text": "If our DPurable throughout O đứng trước nó này, cộng thêm cái giá trị của O hiện tạng Thế còn nếu mà nó là những cái O quột tiên này này Thì nó không có đi từ bên phải được, thế nghĩa là Bạn chỉ có thể đi từ O trên dùng dưới thôi, ok? Mình chỉ có thể đi từ O trên dùng dưới thôi Thế nghĩa là khi đó DP-EZ nó sẽ bằng cái O đứng trên nó Và chính là DP của I chữ 1-G đấy, sau đó cộng với O hiện tạng Thế còn nếu mà bạn chỉ đi được từ sang trái, từ trái sang thì nó sẽ là DP của EZ chữ 1 cộng bởi O hiện tại, còn nếu bạn có thể đi từ trái xang hoặc từ trên xuống thì mình sẽ dựa chọn cái số chỗ này là min nhé cái số nhỏ hơn, trong 2 cái O đấy, o trên, bận trên hoặc bên trái cho nó mình đi sang cái O hiện tại thì nó sẽ ra đợi ăn của mình là 12 nhé, ok, mình có thể để cái link của bài này ở dưới, các bạn có thể sắp mít thử nhé"
+  },
+  {
+    "chunk_id": "chunk_1376_1440",
+    "start_sec": 1376,
+    "end_sec": 1440,
+    "start_label": "22:56",
+    "end_label": "24:00",
+    "raw_text": "cái số nhỏ hơn, trong 2 cái O đấy, o trên, bận trên hoặc bên trái cho nó mình đi sang cái O hiện tại thì nó sẽ ra đợi ăn của mình là 12 nhé, ok, mình có thể để cái link của bài này ở dưới, các bạn có thể sắp mít thử nhé cố thử sau đó sắp mít vài tiếp theo đấy là bài giá trị lớn nhất người ta cho mình giả sử 1 cái mạch trận là hiệu giữa tỏng các số trên đường chèo chính và tỏng các số trên đường chèo phụ cho kích thức, cho maa chận E có kích thức là nò nhân nò và hãy tìm maa chận con của E sao cho maa chận con để cầu giá trị lớn nhất Input sau đầu tiên sẽ là số nò nằm trong khoảng thứ 2 cho tới 400 nò dòng tiếp theo ghi các số của maa chận E trong các đoạn từ trường 1.000 các số trong đoạn từ trường 1.000 đến 1.000 tức là nó cho mình một cái maa chận vuông nữa, sau đó mình sẽ phải tìm một cái maa chận vuông con của E sao cho giá trị của maa chận là lớn nhất, trong đó giá trị của maa chận ở đây được định nghĩa là hiệu giữa tỏng các số trên đường cháo chính và tỏng các số trên đường cháo phụ"
+  },
+  {
+    "chunk_id": "chunk_1423_1486",
+    "start_sec": 1423,
+    "end_sec": 1486,
+    "start_label": "23:43",
+    "end_label": "24:46",
+    "raw_text": "các số trong đoạn từ trường 1.000 đến 1.000 tức là nó cho mình một cái maa chận vuông nữa, sau đó mình sẽ phải tìm một cái maa chận vuông con của E sao cho giá trị của maa chận là lớn nhất, trong đó giá trị của maa chận ở đây được định nghĩa là hiệu giữa tỏng các số trên đường cháo chính và tỏng các số trên đường cháo phụ ví dụ họ cho 1 cỡ ma trận 4 như thế này và đáp án của mình là 26 thì nó chính là cái đường cháo chính là 9, trừ 2 này 6, 9 thì nó sẽ là bao nhiêu nhỉ? 928, 6 là 24, 24 trừ 2 là 22, sau đó trừ đi các phần từ đường trên đường cháo phụ là không là trừ 4 đúng không? 22 trừ đi trừ 4 là thành 26 Vậy thì nếu mà các bạn làm bài này một cách thông thường thì đấy chính là mình sẽ sao nhỉ? đây, ví dụ bạn có một cái ma chặn như thế này đúng không? là cái ma chặn cỡ bốn nhần bốn như thế này, vẽ lúc nãy rồi thì mình dùng luôn nhá sau đó thì bạn sẽ phải tìm cái ở đây mình sẽ lấy luôn cái thẳng kia nhá, 9 chứ 2 chứ 8 không sau đó là chứ 6 chứ 2009"
+  },
+  {
+    "chunk_id": "chunk_1468_1529",
+    "start_sec": 1468,
+    "end_sec": 1529,
+    "start_label": "24:28",
+    "end_label": "25:29",
+    "raw_text": "là cái ma chặn cỡ bốn nhần bốn như thế này, vẽ lúc nãy rồi thì mình dùng luôn nhá sau đó thì bạn sẽ phải tìm cái ở đây mình sẽ lấy luôn cái thẳng kia nhá, 9 chứ 2 chứ 8 không sau đó là chứ 6 chứ 2009 tiếp theo thì là 4 chứ 5 1 và cuối cùng thì là 1, 3, 4, 9 ở đây chắc là người ta chỉ ma xếp cái ma chặn vuông mà có cỡ từ 2 trả lên thôi đúng không? Thì nếu mà làm thông thường thì mình sẽ phải xét tất cả các ma chận vuông có thể ở trên cái 2 chiều này đúng không? Ok, ví dụ như từ O chữ 2 này này, thì bạn có thể xây dựng được cái ma chận vuông là chín chữ 2, chữ 6, chữ 2 thì bạn sẽ tính tổng các phần tử trên đường trao chính, rồi là tính tổng các phần tử trên đường trao phụ. Ok, sau mình chứ đi và mình cập nhật kết quả thôi, hoặc là thằng 6 này này, thì bạn có thể xây dựng được cái ma chận vuông như thế này, có cỡ là 3 nhìn 3 như thế này,"
+  },
+  {
+    "chunk_id": "chunk_1507_1569",
+    "start_sec": 1507,
+    "end_sec": 1569,
+    "start_label": "25:07",
+    "end_label": "26:09",
+    "raw_text": "Ok, ví dụ như từ O chữ 2 này này, thì bạn có thể xây dựng được cái ma chận vuông là chín chữ 2, chữ 6, chữ 2 thì bạn sẽ tính tổng các phần tử trên đường trao chính, rồi là tính tổng các phần tử trên đường trao phụ. Ok, sau mình chứ đi và mình cập nhật kết quả thôi, hoặc là thằng 6 này này, thì bạn có thể xây dựng được cái ma chận vuông như thế này, có cỡ là 3 nhìn 3 như thế này, tính tỏng các phần thứ trên đường cho chính, trừ đi tỏng các phần thứ trên đường cho phụ, sau đó mình cập nhật kết quả, đúng không? hoặc là cái chỗ vị trí 6 này bạn cũng có thể làm một cái hình trữ nhật, à, một cái ma trận vuông cỡ như này nhá, 2x2 như này nhá ok, không phải là cái ma trận vuông thì cái giá trị của ma trận nó sẽ lớn đúng không? ra là bạn sẽ phải set tất cả các cái ma trận có thể tạo thành được tệ bởi mình tạm gọi về cái góc bên phải cùng ấy, bên phải cùng ấy, oezy chẳng hả? Ví dụ như góc bên phải cùng là 6 này thì nó có thể tạo thành cái ma trận như thế này, đúng không? Hoặc nó cũng có thể tạo thành cái ma trận như thế này. Bạn xinh ra được bao nhiêu ma trận thì mình sẽ tính tỏng các phần tử trên đường cháu chính, rồi chờ đi tỏng các phần tử trên đường cháu phụ, ok?"
+  },
+  {
+    "chunk_id": "chunk_1545_1606",
+    "start_sec": 1545,
+    "end_sec": 1606,
+    "start_label": "25:45",
+    "end_label": "26:46",
+    "raw_text": "ra là bạn sẽ phải set tất cả các cái ma trận có thể tạo thành được tệ bởi mình tạm gọi về cái góc bên phải cùng ấy, bên phải cùng ấy, oezy chẳng hả? Ví dụ như góc bên phải cùng là 6 này thì nó có thể tạo thành cái ma trận như thế này, đúng không? Hoặc nó cũng có thể tạo thành cái ma trận như thế này. Bạn xinh ra được bao nhiêu ma trận thì mình sẽ tính tỏng các phần tử trên đường cháu chính, rồi chờ đi tỏng các phần tử trên đường cháu phụ, ok? Nhưng mà mỗi lần mình sẽ ăn một cái ma trận mà mình lại tý tính tỏng các phần tử trên đường cháu chính và đường cháu phụ thì thì nó sẽ rất là lâu. Thay vì đó thì các bạn nên tính sẵn trước đi nhé, mình sẽ tính sẵn sẵn trước cái tỏng ở chỗ này là bao nhiêu nhỉ? là chín quá, mình sẽ tính sẵn trước tổng các phần tử trên đường cháu chính này, rồi trên đường cháu phụ hết của cái 3 chặn này luôn. Thì nữa thì mình sẽ tính toán cho nó nhanh, nó tương tự như cái bài prefix sum, 2D trên bà 2 chiều mình đơn giản ấy. Đây, mình có có cốt sẵn rồi, mình chỉ giải thích cốt thôi nhá. Bởi vì cốt lại thì nó hơi mất thời gian, video thì nó sẽ gãy dài. Công việc đầu tiên đấy là các bạn xây dựng cho mình 1 cái mạng để lưu"
+  },
+  {
+    "chunk_id": "chunk_1588_1664",
+    "start_sec": 1588,
+    "end_sec": 1664,
+    "start_label": "26:28",
+    "end_label": "27:44",
+    "raw_text": "Thì nữa thì mình sẽ tính toán cho nó nhanh, nó tương tự như cái bài prefix sum, 2D trên bà 2 chiều mình đơn giản ấy. Đây, mình có có cốt sẵn rồi, mình chỉ giải thích cốt thôi nhá. Bởi vì cốt lại thì nó hơi mất thời gian, video thì nó sẽ gãy dài. Công việc đầu tiên đấy là các bạn xây dựng cho mình 1 cái mạng để lưu cái giá trị của tất cả các phần tử trên đường cháu chính. không phải là tất cả các phần từ trên đường cháu chính mà mình sẽ tính toán 1 cái mai trận mà nó lưu tầm các phần từ trên đường cháu chính của tất cả các vị trí Easy có thể ví dụ như ở cái chỗ chữ 2 này này, thằng 9 này thì nó là chính nó nhé, nhưng mà tại cái O chữ 2 này này, mình sẽ thay cái O chữ 2 này bằng tầm các phần tử mà bắt đầu từ cái O chữ chín này, xong chạy xuống dưới này này, cái đường cháu chính là chín với chữ 2, thế là mình sẽ lưu với giá trị 7 ở đây O6 sẽ lưu tổng các phần tử từ O1, chạy xuống nó, 7, 6, 13, O9 sẽ lưu tổng các phần tử từ O9, chứ 269 thì nó bằng bao nhiêu nhỉ? Lưu là bằng 22 đúng không? Ok. Tương tự như vậy nha, ví dụ như ở O0 này, O2 này thì mình sẽ lưu trình nó, O8 mình cũng lưu trình nó, O0 thì mình lưu trình nó, nhưng mà O2 này thì mình sẽ tính tổng các phần tử trên đường treo chính, tứ bắt đầu từ O2 này xuống nó này."
+  },
+  {
+    "chunk_id": "chunk_1646_1726",
+    "start_sec": 1646,
+    "end_sec": 1726,
+    "start_label": "27:26",
+    "end_label": "28:46",
+    "raw_text": "Lưu là bằng 22 đúng không? Ok. Tương tự như vậy nha, ví dụ như ở O0 này, O2 này thì mình sẽ lưu trình nó, O8 mình cũng lưu trình nó, O0 thì mình lưu trình nó, nhưng mà O2 này thì mình sẽ tính tổng các phần tử trên đường treo chính, tứ bắt đầu từ O2 này xuống nó này. OOPV, OOPV, OOPV, O order, O injections, OFD, release, Đó bạn tính cái giá trị của cái ma trận cỡ 3x3 mà tạo bởi cái O phải cùng này là O1 này"
+  },
+  {
+    "chunk_id": "chunk_1722_1784",
+    "start_sec": 1722,
+    "end_sec": 1784,
+    "start_label": "28:42",
+    "end_label": "29:44",
+    "raw_text": "Đó bạn tính cái giá trị của cái ma trận cỡ 3x3 mà tạo bởi cái O phải cùng này là O1 này Thì mình chỉ cần lấy tấm phần tử trên đường cháu chính, chưa đi tấm phần tử trên đường cháu phụ lại được Thế mình không phải dùng gòng 4 để duyệt nữa Đói, nó tiện như thế Đúng không? Hay lại như thế này nhé Đây chính là giả sử như mình các bạn muốn một cái ma trận là Đây, ví dụ như cái ma trận này Đói Thì cái ma trận này thì bình thường mình ở cái O9 này này thì mình sẽ lưu tầm các phần tử từ cái O tận O1 này đến tận O9 này đúng không? nhưng mà bây giờ mình chỉ xét cái map chận có cửa là 3x3, nó bắt đầu từ 2009 rồi chứ 5, 6, 1, 3, 4, 9 như thế này đúng không? tức là bạn sẽ phải chín lấy tổng cấp phần tử là 2, 6 và 9 thôi đúng không? thì rất đơn giản thôi, bạn chỉ cần lấy tổng cấp phần tử trên đường trao chính bắt được tổng cấp phần tử ông 9 này đến tận ông 9 này này mình chứ đi cái đường chéo, tổng cấp phần tử trên đường chéo bắt đầu từ O9 này đến chính nó ở cái phần này này đây, hay nhỏ hơn 1 tí nhé, cho bạn dễ hiểu hơn nhé đây, ví dụ như bạn tính cái giá trị của cái ô này Thì khi đó, phần tử trên đường trao chính của mình chỉ là 6, 9 thôi, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1768_1829",
+    "start_sec": 1768,
+    "end_sec": 1829,
+    "start_label": "29:28",
+    "end_label": "30:29",
+    "raw_text": "mình chứ đi cái đường chéo, tổng cấp phần tử trên đường chéo bắt đầu từ O9 này đến chính nó ở cái phần này này đây, hay nhỏ hơn 1 tí nhé, cho bạn dễ hiểu hơn nhé đây, ví dụ như bạn tính cái giá trị của cái ô này Thì khi đó, phần tử trên đường trao chính của mình chỉ là 6, 9 thôi, đúng không? Thì bạn sẽ lấy tổng phần tử trên đường trao chính là trừ 9, là trừ 9, là trừ 2, 6, 9 Mình chưa đi tổng phần tử trên đường trao chính này, thế đó xong, đúng không? O này mình cũng tính được rồi mà, đúng không? Ví dụ như ở O này mình sẽ lưu là 7 đúng không? O này nó sẽ là 13 này, và O này cộng với 9 thì là 22 đúng không? Vậy thì bây giờ mình xét cái tạm giác O là 6, 1, 4, 9 này này Thì bạn chỉ cần lấy cái giá trị của cái O này này Nó chính là 22, tức là tổng các phần tử 9, chứ 2, 6, chứ 9 nữa hông? Bây giờ bạn chỉ muốn tính tháng 6 với tháng 9 này thì bạn chùm đi tổng các phần tử ở trên cái ồn từ chứ 9 đến chứ 2 này, nó chính là giá trị của ồn này này là 7 thì nó sẽ bằng là 15, thì bạn có phải là tính được 9, cũng 6 Tương tự như vậy cái đường cháo phụ cũng thế nhá Thực ra là mình tính được các phần tử trên đường cháo chứng và đường cháo phụ thì nó rất là nhanh"
+  },
+  {
+    "chunk_id": "chunk_1813_1875",
+    "start_sec": 1813,
+    "end_sec": 1875,
+    "start_label": "30:13",
+    "end_label": "31:15",
+    "raw_text": "tổng các phần tử ở trên cái ồn từ chứ 9 đến chứ 2 này, nó chính là giá trị của ồn này này là 7 thì nó sẽ bằng là 15, thì bạn có phải là tính được 9, cũng 6 Tương tự như vậy cái đường cháo phụ cũng thế nhá Thực ra là mình tính được các phần tử trên đường cháo chứng và đường cháo phụ thì nó rất là nhanh Nó cũng như là prefix sum, nhưng mà ở bên đây mình sẽ app dụng trên 1 cái đường cháo Ok, không biết là các bạn có hiểu tư tưởng của nó không nhỉ? Hay là O này cũng thế này? Dạ, xử như mình tính hình trữ nhật này đúng không? Thì cái O4 này nè, mảng đường trao chính nhé, nó sẽ lưu tổng các phần tử là 6, chữ 5 với 4, thì nó là bằng chữ 7 đúng không? Ok, nhưng mà cái O3 này nè, thì nó sẽ lưu tổng các phần tử đường trao chính này cơ? Ctrl, 9, 18 bây giờ tính rá trị này thì bạn sẽ phải lấy rá trị của ô chú 7 này, bạn chư đi thằng chú 6 này thì nó sẽ ra được tộng có phần thử là chú 5, 54 là chú 1 mình cũng có lưu được có đây rồi là chú 6 rồi mà, Đúng hông?"
+  },
+  {
+    "chunk_id": "chunk_1856_1917",
+    "start_sec": 1856,
+    "end_sec": 1917,
+    "start_label": "30:56",
+    "end_label": "31:57",
+    "raw_text": "Ok, nhưng mà cái O3 này nè, thì nó sẽ lưu tổng các phần tử đường trao chính này cơ? Ctrl, 9, 18 bây giờ tính rá trị này thì bạn sẽ phải lấy rá trị của ô chú 7 này, bạn chư đi thằng chú 6 này thì nó sẽ ra được tộng có phần thử là chú 5, 54 là chú 1 mình cũng có lưu được có đây rồi là chú 6 rồi mà, Đúng hông? hay là bà Đây mình tính đường tráo phụ là 3, với 6 thì bạn sẽ lấy rá trị của ô này, là 9, con 16, con 3 là 18, mình chư đi thằng của ô này, là 9 mình sẽ ra được rá trị của đường tráo phụ là 3, con 6 là 9 tính giá trị thôi, ok? tư tưởng là nó là như thế nhé ở đây mình sẽ lưu các cái mạng này, các cái thần tử ở trong mạng này từ O1 cho tới Oner và từ cột 1 cho tới cột mờ nhé ok, hai cái màa chặn mình cũng sẽ sử dụng hai cái màa chặn đường trao chính và đường trao phụ để lưu tương tự như thế, ok? mình cũng sẽ sử dụng hai cái màa chặn đường trao chính và đường trao phụ để lưu như thế ví dụ này, mà này hơi khó 1 tí nó chỉ hơi khó cài đặt thôi"
+  },
+  {
+    "chunk_id": "chunk_1902_1963",
+    "start_sec": 1902,
+    "end_sec": 1963,
+    "start_label": "31:42",
+    "end_label": "32:43",
+    "raw_text": "hai cái màa chặn đường trao chính và đường trao phụ để lưu tương tự như thế, ok? mình cũng sẽ sử dụng hai cái màa chặn đường trao chính và đường trao phụ để lưu như thế ví dụ này, mà này hơi khó 1 tí nó chỉ hơi khó cài đặt thôi đấy, mình sẽ cũng có sẽ có 1 cái đường có một cái mạng, tạm gọi là cái mạng đường chèo chính nhé và mình sẽ xây dựng cho cái mạng chèo chính cho các bạn xem Ở cái O đầu tiên thì nó sẽ là chính nó, 9 này O thứ 2 cũng là chính nó này, chứ 2 này, chứ 8 này, và không tất phần tử trên đường chèo chính của cái dòng đầu tiên này hay là cái cột đầu tiên thì nó là chính nó, nhé chứ 6 này, 4 này, 1, ok Thế còn ở cái O này thì nó sẽ là thằng này cộng với chính nó là 9, chứ đi 2 là chứ 7, là 7 O này thì nó sẽ là thằng chữ 2, cộng vời không thì là chữ 2 O này thì nó sẽ là chữ 8, cộng 9 là 1 O này thì nó sẽ là chữ 6, chữ đi chữ 5 là bằng chữ 11"
+  },
+  {
+    "chunk_id": "chunk_1944_2005",
+    "start_sec": 1944,
+    "end_sec": 2005,
+    "start_label": "32:24",
+    "end_label": "33:25",
+    "raw_text": "Thế còn ở cái O này thì nó sẽ là thằng này cộng với chính nó là 9, chứ đi 2 là chứ 7, là 7 O này thì nó sẽ là thằng chữ 2, cộng vời không thì là chữ 2 O này thì nó sẽ là chữ 8, cộng 9 là 1 O này thì nó sẽ là chữ 6, chữ đi chữ 5 là bằng chữ 11 O này thì nó sẽ là bằng nhìn nhé, 7, cộng 16 là 13 đúng không? O này thì nó sẽ là chữ đi 2, cộng với 1 thì là chữ 1 đúng không? Tiếp tục như thế nhé, chỗ này là 4, cộng với 3 là 7 này chỗ này là chữ 11, cộng với 14 thì là chữ 7 này và chỗ này thì là 13, cộng 19 là 22, đây là cái đường treo chính nhé, main tương tự như vậy, các bạn xây dựng cho mình một cái bản đường cháu phụ để lưu các phần tửa trên đường cháu phụ đấy, cũng là 4x4 luôn á rồi ok, mình sẽ xây dựng con đường cháu phụ thì cái hàng đầu tiên thì nó như cái hàng đầu tiên vào cái cột bên phải cùng này thì nó không thay đổi"
+  },
+  {
+    "chunk_id": "chunk_1990_2053",
+    "start_sec": 1990,
+    "end_sec": 2053,
+    "start_label": "33:10",
+    "end_label": "34:13",
+    "raw_text": "đấy, cũng là 4x4 luôn á rồi ok, mình sẽ xây dựng con đường cháu phụ thì cái hàng đầu tiên thì nó như cái hàng đầu tiên vào cái cột bên phải cùng này thì nó không thay đổi đây là 9 này, chứa 2 này, chứa 8 này, không và 9, 1, 9 đúng không? cái đường cháu, cái thang này thì nó, cái phần bên cột bên phải này nó không có thằng đứng trước không có thằng đứng ở chéo trên ấy, thằng gà nó mang chính nó Cây bọng đã xây dựng cởi ôn này thì bạn sẽ lấy là 0, cộng với 0 là 0 nè Đúng không? Ôn này thì bạn sẽ lấy chữ 8, chữ 8, cộng với chữ 2 là chữ 10 nè Ôn này thì bạn sẽ lấy chữ 2, cộng với chữ 6 là chữ 8 nè Tiếp như thế nhá Ở chỗ này là 9, cộng với 6 là 15 nè Ôn này là 0, cộng với chữ 5 là chữ 5 nè Ôn này sẽ là chữ 10, cộng với 14 là chữ 6 nè Ôn này thì sẽ là chữ 5, cộng với 11 là chữ 4 nè Ôn này thì nó sẽ là 6, em 15 Cộng với 3 là 15, 18 nè con o này thì nó sẽ là 1, 14 là 5, đấy, thì mình cũng có đường cháu, chính với đường cháu phụ rồi đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2036_2097",
+    "start_sec": 2036,
+    "end_sec": 2097,
+    "start_label": "33:56",
+    "end_label": "34:57",
+    "raw_text": "Ôn này sẽ là chữ 10, cộng với 14 là chữ 6 nè Ôn này thì sẽ là chữ 5, cộng với 11 là chữ 4 nè Ôn này thì nó sẽ là 6, em 15 Cộng với 3 là 15, 18 nè con o này thì nó sẽ là 1, 14 là 5, đấy, thì mình cũng có đường cháu, chính với đường cháu phụ rồi đúng không? ok, dạ sửa bây giờ bạn xét cái, cái ma chặn này cái ma chặn này, thì cái giá trị của ma chặn này rất đơn giản thôi bạn chỉ cần lấy cái giá trị của cái đường cháu chính là 22 đúng không? bạn chưa đi cái giá trị của đường cháu chính ở cái vị trí này, chín này đúng không? thì ra được cái tổng cất phần tử trên đường cháu chính nói chính là chứ 2, 16, 9, và bạn chưa đi cấp phần tử trên đường cháu phụ O của VAO chỗ này nó sẽ là 18, 15, 9 thì nó chính là 18 luôn, chứ đi 18 Thì khi đó bạn sẽ tính được ngay cái giá trị của cái ma chặn đó Ok, hay là một cái ma chặn nhỏ hơn cho nó dễ hiểu hơn Ví dụ như cái ma chặn này"
+  },
+  {
+    "chunk_id": "chunk_2077_2139",
+    "start_sec": 2077,
+    "end_sec": 2139,
+    "start_label": "34:37",
+    "end_label": "35:39",
+    "raw_text": "O của VAO chỗ này nó sẽ là 18, 15, 9 thì nó chính là 18 luôn, chứ đi 18 Thì khi đó bạn sẽ tính được ngay cái giá trị của cái ma chặn đó Ok, hay là một cái ma chặn nhỏ hơn cho nó dễ hiểu hơn Ví dụ như cái ma chặn này Thì khi đó cái giá trị của ma chặn này thì bạn sẽ lấy cái giá trị của đường chéo ở cái O bên phải cùng của cái ma chặn này Cái góc bên phải cùng này nó sẽ là 22 đúng không? Mình chứ đi cái gì? Mình chứ đi cái phần này này bởi vì khi đó phần còn lại chính là tầm có phần tử trên đường chéo chính như là 22 trừ đi, chỗ này là bằng 7 đúng không? thì các bạn phải có thể ra là 9, 6, 15 đúng không? mình cộng với các phần tử trên đường chéo phụ ở chỗ này thằng này đằng trước này nó sẽ không có, cái ồn này nó không có nên ra là bạn sẽ lấy là 4 luôn trừ đi 4 thì nó sẽ là 22 trừ đi 7 là bằng 15, 15 trừ 4 là 11 thành ra cái giá trị của cái ma trận nóng buông 22 này nó sẽ là 11 Để mà dễ dàng thì các bạn lưu cái map trận men này, các phần tửa trên cái cột này nó sẽ bằng không hết nhé"
+  },
+  {
+    "chunk_id": "chunk_2124_2184",
+    "start_sec": 2124,
+    "end_sec": 2184,
+    "start_label": "35:24",
+    "end_label": "36:24",
+    "raw_text": "trừ đi 4 thì nó sẽ là 22 trừ đi 7 là bằng 15, 15 trừ 4 là 11 thành ra cái giá trị của cái ma trận nóng buông 22 này nó sẽ là 11 Để mà dễ dàng thì các bạn lưu cái map trận men này, các phần tửa trên cái cột này nó sẽ bằng không hết nhé hay là trên cái đường chéo phụ, cột này nó cũng bằng không hết này bên này cũng thế, các bạn lưu cho mình, và trên này sẽ là không hết này cái dòng không ấy, ok, và cái cột nò bên phải này này cũng là không hết ok, các bạn lưu là không hết, bởi vì là tại sao mình lại lưu ở chỗ này là không Bí dụ nha, khi mà bạn tính cái chỗ, cái đường trẻ cả cái, tức là mình sẽ set cái cả cái hình vuông, cái ma chận vuông to này này thì khi đó tính tổng các phần tử trên đường chéo chính nó chính là thằng này đúng không? Ok, thì khi đó mình sẽ làm sao nhỉ? Mình sẽ lấy cái thằng 2, 2 này này, đúng không? Mình chưa đi tổng các phần tử trên đường chéo ở cái chỗ này này, nó sẽ là không, thì nó tiện, đúng không? Mình sẽ không phải íp el nó dài nữa, tương tự như vậy, vừa sửa như cái phần này này"
+  },
+  {
+    "chunk_id": "chunk_2168_2232",
+    "start_sec": 2168,
+    "end_sec": 2232,
+    "start_label": "36:08",
+    "end_label": "37:12",
+    "raw_text": "thì khi đó tính tổng các phần tử trên đường chéo chính nó chính là thằng này đúng không? Ok, thì khi đó mình sẽ làm sao nhỉ? Mình sẽ lấy cái thằng 2, 2 này này, đúng không? Mình chưa đi tổng các phần tử trên đường chéo ở cái chỗ này này, nó sẽ là không, thì nó tiện, đúng không? Mình sẽ không phải íp el nó dài nữa, tương tự như vậy, vừa sửa như cái phần này này Khi mà bạn tính cái phần này, khi đường cháo phụ của mình sẽ bằng thằng này đúng không? Mình chử đi cái o chỗ này, cái giá trị của cái o chỗ này nó cũng sẽ là không luôn, thì nó sẽ tổng các phần tử này, thì nó tiện Để chính là cái cách mình xây dựng cái mai trận đường cháo chính và đường cháo phụ để có thể tính toán cái giá trị của một cái mai trận nào đó nhanh Thì hướng dẫn các bạn cốt của bài này nhé Nó có 2 cái chú ý khi mà xây dựng cái đường cháu chính và đường cháu phụ thôi Để chính là mình đường cháu chính ý Thì các bạn nên lưu các phần tựa hàng không và cột không này này Nó bằng không hết Nó cũng như là cái prefix xăm ấy, bây giờ các bạn cũng để prefix không của không"
+  },
+  {
+    "chunk_id": "chunk_2216_2288",
+    "start_sec": 2216,
+    "end_sec": 2288,
+    "start_label": "36:56",
+    "end_label": "38:08",
+    "raw_text": "Nó có 2 cái chú ý khi mà xây dựng cái đường cháu chính và đường cháu phụ thôi Để chính là mình đường cháu chính ý Thì các bạn nên lưu các phần tựa hàng không và cột không này này Nó bằng không hết Nó cũng như là cái prefix xăm ấy, bây giờ các bạn cũng để prefix không của không Trong trường hợp mà cái chỉ số left và chỉ số right của các bạn nó bắt đầu từ 1 ấy Thì mình chứ đi cái chỉ số không thì nó tiện, nó không vĩ íp L Tương tự như vậy, đối với phần đường cháu phụ như thế này này thì bạn sẽ lưu các phần tửa trên cái hàng không này này, đúng không? và cái phần tửa trên cái cột là cột cuối cùng này này, cột mr này này, à, sẽ nỗi cột mr này này, nó cũng là không hết. Thì khi mà bạn lấy cái giá trị của cái cột này bạn chứ đi, các cái giá trị ở cái trên cái cột này nó bằng không hết thì nó tiện. Ok? Bài này thì các bạn chỉ cần chú ý cho bạn nhát ra giấy, để cái cách mà bạn xây dựng một cái giá trị của cái ma chặn, tức là mình sẽ xét tất cả các cái oezy nhá, là cái o bên phải cùng của cái ma chặn này như thế này này. Thì mình sẽ xét cái OEG này này, liệu rằng từ cái OEG này nó sẽ xây dựng được bao nhiêu cái ma chặn Ok, đó, mình sẽ xóa cái phần này đi nhé, xóa cái phần cho cái giữ lại cái ma chặn đừng chéo lúc này cho nó đẹp"
+  },
+  {
+    "chunk_id": "chunk_2270_2330",
+    "start_sec": 2270,
+    "end_sec": 2330,
+    "start_label": "37:50",
+    "end_label": "38:50",
+    "raw_text": "Thì mình sẽ xét cái OEG này này, liệu rằng từ cái OEG này nó sẽ xây dựng được bao nhiêu cái ma chặn Ok, đó, mình sẽ xóa cái phần này đi nhé, xóa cái phần cho cái giữ lại cái ma chặn đừng chéo lúc này cho nó đẹp Đấy, sau khi mà xây dựng được xong cái ma chặn đấy thì mình sẽ xét tất cả các vị trí EG ở trên cái ma chặn của mình và xem là từ cái OEG đấy của mình thì mình sẽ xây dựng được bao nhiêu, bao nhiêu cái ma chặn vua, tính với cái OEG là cái O bên phải cùng ok, bên dưới cũng, bên phải cùng ở bên dưới, hàng cuối cùng í hấy, sau đó mình sẽ cập nhật kết quả, nè đây chính là cái bài mình mới nói cốt này mình sẽ sử dụng 2 cái map trận là map trận major và map trận minor này là cái map trận đường chiều chính này và đường chiều phụ nhé ở đây input thì, cái số dòng của mình nó lên đến 400, mình sẽ khai báo 2 cái map trận đường chiều chính và đường chiều phụ có cửa là 400 x 400 và khởi tạ tức cả bằng không nhé"
+  },
+  {
+    "chunk_id": "chunk_2315_2381",
+    "start_sec": 2315,
+    "end_sec": 2381,
+    "start_label": "38:35",
+    "end_label": "39:41",
+    "raw_text": "mình sẽ sử dụng 2 cái map trận là map trận major và map trận minor này là cái map trận đường chiều chính này và đường chiều phụ nhé ở đây input thì, cái số dòng của mình nó lên đến 400, mình sẽ khai báo 2 cái map trận đường chiều chính và đường chiều phụ có cửa là 400 x 400 và khởi tạ tức cả bằng không nhé ok, sau đó thì mình sẽ nhập vào số tiết cây, ở đây tiết cây bằng 1 thì ra mình đặt là tiết cây bằng 1 đây, cái phần này là phần nhập map trận này Mát trận này là mát trận vuông, có cỡ là nờ nhưng mà mình sẽ lưu là nờ cộng 1, nờ cộng 1 để mình có thể lưu các chỉ số của cái mát trận này ở o1, 1 cho tới o, nờ Ok, từ hàng 1 cho tới hàng nờ vào cột 1 cho tới cột nờ, ok Sau đó bây giờ mình sẽ xây dựng cái phần tửa trên đường chèo chính Đây này, nói chính là cái phần xây dựng cái này tháng mên này này Bằng cách như sau, mình sẽ duyệt qua cái đường chèo chính này thì khi xây dựng thì các bạn sẽ xây dựng từ trên xuống dưới và từ trái sang phải đúng không? bởi vì 1 OEG nào đó chỗ này thì bạn sẽ cộng bằng o ở chỗ này, từ 1 OEG nào đó thì bạn sẽ tính của nó bằng tỏng của o chỗ này, y chứ 1 và y chứ 1 ở chỗ này"
+  },
+  {
+    "chunk_id": "chunk_2359_2422",
+    "start_sec": 2359,
+    "end_sec": 2422,
+    "start_label": "39:19",
+    "end_label": "40:22",
+    "raw_text": "Bằng cách như sau, mình sẽ duyệt qua cái đường chèo chính này thì khi xây dựng thì các bạn sẽ xây dựng từ trên xuống dưới và từ trái sang phải đúng không? bởi vì 1 OEG nào đó chỗ này thì bạn sẽ cộng bằng o ở chỗ này, từ 1 OEG nào đó thì bạn sẽ tính của nó bằng tỏng của o chỗ này, y chứ 1 và y chứ 1 ở chỗ này cộng thêm với giá trị của o hiện tại thật ra mình sẽ xây dựng từ trên xuống dưới bởi từ trái có phải, cái công thức của nó như thế này nếu mà nó là cái hàng đầu tiên, hoặc là nó là cái cột đầu tiên, như lúc đấy mình nói thì cái giá trị của cái đường châu chính này sẽ không thay đổi Mà Trận ban đầu, 9 chứa 2 chứa 8, 0, 9 chứa 6, 4, 1, đúng không? Thình ra mình để là nếu như là cột đầu tiên và là cột cuối cùng, ok? Nói xin lỗi, cái hàng đầu tiên và cái hàng cuối cùng thì mình sẽ... Cái hàng đầu tiên và cái cột đầu tiên thì mình sẽ để phần tửa trên đường trao chính nó chính xác là các phần tửa trên Mà Trận ban đầu Còn không nhé? Các phần tửa, tổng các phần tửa trên đường trao chính kết thúc tại oezy ấy, thấy chưa?"
+  },
+  {
+    "chunk_id": "chunk_2407_2468",
+    "start_sec": 2407,
+    "end_sec": 2468,
+    "start_label": "40:07",
+    "end_label": "41:08",
+    "raw_text": "Nói xin lỗi, cái hàng đầu tiên và cái hàng cuối cùng thì mình sẽ... Cái hàng đầu tiên và cái cột đầu tiên thì mình sẽ để phần tửa trên đường trao chính nó chính xác là các phần tửa trên Mà Trận ban đầu Còn không nhé? Các phần tửa, tổng các phần tửa trên đường trao chính kết thúc tại oezy ấy, thấy chưa? thì nó sẽ bằng, không phải kết thúc tại oezy mà bắt đầu từ o11 và kết thúc ở oezy, đây chính là phần vừa nè trên đường chéo này này ví dụ nhé, trên đường chéo này chỗ này nhé, thì bạn lại phải tính các phần tử trên đường chéo này đây nhé hiểu hả, chỗ này thì bạn phải phải trở về trở mấy chín nữa nhé thì mình sẽ cho là nó sẽ bằng aezy cộng với major của e1e1, nó chính là các phần tử trên đường chéo chính ở o chéo của nó đây này oezy đây đúng không, oe1e1 đây Ok, thế là xam cho phần tính đường cháu chính nhé, các phần thử trên đường cháu chính nhé Tương tự như vậy, khi mà xây dựng đường cháu phụ, đường cháu phụ thì các bạn thấy là nó sẽ chạy từ bên phải xa đúng không? Thì ra là bạn không thể xây dựng như đường cháu chính được, và mình sẽ phải xây dựng từ cái dòng đầu tiên cho tới dòng cuối cùng, nhưng mà cột thì bạn phải chạy từ bên phải xa đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2450_2512",
+    "start_sec": 2450,
+    "end_sec": 2512,
+    "start_label": "40:50",
+    "end_label": "41:52",
+    "raw_text": "Ok, thế là xam cho phần tính đường cháu chính nhé, các phần thử trên đường cháu chính nhé Tương tự như vậy, khi mà xây dựng đường cháu phụ, đường cháu phụ thì các bạn thấy là nó sẽ chạy từ bên phải xa đúng không? Thì ra là bạn không thể xây dựng như đường cháu chính được, và mình sẽ phải xây dựng từ cái dòng đầu tiên cho tới dòng cuối cùng, nhưng mà cột thì bạn phải chạy từ bên phải xa đúng không? Ví dụ như là tính cái thằng chứa nam này thì bạn phải tính nó thông qua thằng bên phải nó ở đây này đúng không? tức là từ oiz này này, khi mà bạn tính đường cháo phụ thì mình sẽ thông qua cái thằng này tức là oiz chú 1 và z cộng 1 đấy, ok? tương tự như vậy, nếu mà khi mà bạn xây dựng đường cháo phụ thì cái hàng đầu tiên và cái cột cuối cùng ấy thì các phần tử trong cái đường cháo phụ này này, nó sẽ có giá trị tương tự như là cái match-up bàn đỏ 9 chứ 280 này và 0919, ok? nếu y bằng 1 và y bằng n thì mình sẽ chơi gán là minor của isi bằng a isi luôn còn không thì minor của isi, tống các phần từ đường chéo ở isi này sẽ bằng minor của isi 1, isi cộng 1, nó chính là o này"
+  },
+  {
+    "chunk_id": "chunk_2496_2558",
+    "start_sec": 2496,
+    "end_sec": 2558,
+    "start_label": "41:36",
+    "end_label": "42:38",
+    "raw_text": "nếu y bằng 1 và y bằng n thì mình sẽ chơi gán là minor của isi bằng a isi luôn còn không thì minor của isi, tống các phần từ đường chéo ở isi này sẽ bằng minor của isi 1, isi cộng 1, nó chính là o này sau đó cộng với giá trị của isi hiện tại đây chính là cách mà bạn xây dựng đường chéo chính và đường chéo phụ Rồi, sau khi mà xây dựng được đình cháo chính và đình cháo phụ rồi, thì mình sẽ tiến hành là mình sẽ xét tất cả các o easy ở trên cái ma chặn này Mình sẽ xét từ o đầu tiên mà mình sẽ xét, nói chính là o này Chỗ này các bạn cần phải nhắc ra giấy để biết được là cái text xét, cái text xét tất cả các ma chặn nó như thế nào Ví dụ khi mà bạn xét cái O cuối cùng này, là ONN này, đúng không? Thì nó sẽ có những cái ma chận này có thể tạo thành nhở, nó chính là cái ma chận 4x4 này này Đấy, hoặc là 3x3 này này Hoặc là 2x2 đúng không? Đấy thì bạn sẽ xét tất cả các ma chận đấy"
+  },
+  {
+    "chunk_id": "chunk_2534_2596",
+    "start_sec": 2534,
+    "end_sec": 2596,
+    "start_label": "42:14",
+    "end_label": "43:16",
+    "raw_text": "Chỗ này các bạn cần phải nhắc ra giấy để biết được là cái text xét, cái text xét tất cả các ma chặn nó như thế nào Ví dụ khi mà bạn xét cái O cuối cùng này, là ONN này, đúng không? Thì nó sẽ có những cái ma chận này có thể tạo thành nhở, nó chính là cái ma chận 4x4 này này Đấy, hoặc là 3x3 này này Hoặc là 2x2 đúng không? Đấy thì bạn sẽ xét tất cả các ma chận đấy Nhưng mà chú ý nhá, đấy là giả sử như bạn xét cái ma chận mà kết thúc có cái O phải cùng là O3 này này Thì khi đó cái ma chận của mình, nó chỉ cỡ, có thể cỡ là 2x2 thôi Đúng không? Bởi vì nó phụ thuộc, nó còn phụ thuộc vào cái phần tử izi của bạn nằm ở hàng i cột di này, thì cái thằng nhỏ hơn trong hàng i và cột di nó là bao nhiêu? ví dụ như nó nằm ở o44 này này, đúng không? Thằng 9 này này thì khi đó cái ma chận lớn nhất của bạn có thể tạo thành được, nó có thể là có cỡ là 4 nhưng nếu mà phần tử của bạn nó nằm ở cái này này, tức là hàng 4, 2 này này thì khi đó cái ma chận vuông mà có thể tạo thành lớn nhất, bởi cái ov3 này là ov phải cùng ấy mà chỉ có cỡ 2 nhưng 2 này thôi, đúng không? Mà chỉ phụ thuộc có cái thằng nhỏ hơn ấy"
+  },
+  {
+    "chunk_id": "chunk_2581_2642",
+    "start_sec": 2581,
+    "end_sec": 2642,
+    "start_label": "43:01",
+    "end_label": "44:02",
+    "raw_text": "thì khi đó cái ma chận lớn nhất của bạn có thể tạo thành được, nó có thể là có cỡ là 4 nhưng nếu mà phần tử của bạn nó nằm ở cái này này, tức là hàng 4, 2 này này thì khi đó cái ma chận vuông mà có thể tạo thành lớn nhất, bởi cái ov3 này là ov phải cùng ấy mà chỉ có cỡ 2 nhưng 2 này thôi, đúng không? Mà chỉ phụ thuộc có cái thằng nhỏ hơn ấy Thành ra là gì? Mình sẽ xét tất cả các ma trận có thể tạo thành, có cỡ từ gì nhỉ? Cỡ từ min, easy, ok, về đến 2 Trong trường hợp này không biết là nó có trong 1 hay không? Đối với mỗi phần tử mình dùng 2 vòng 4 để xét tất cả các vị trí easy nhé Và mình dùng 1 biến tem, nó sẽ là cái số nhỏ hơn trong 2 cái số i và z Nó chính là cái cỡ lớn nhất có thể của cái ma trận vuông ấy, trong đó easy là cái o bên phải cùng Ok, mình vừa thích cái đấy rồi, đúng không? Sau đó nhé, bạn sẽ dùng cái cái chỉ số hàng là i trừ team cái chỗ này thì i trừ đi team, ví dụ như là cái o44 nhé"
+  },
+  {
+    "chunk_id": "chunk_2624_2684",
+    "start_sec": 2624,
+    "end_sec": 2684,
+    "start_label": "43:44",
+    "end_label": "44:44",
+    "raw_text": "Nó chính là cái cỡ lớn nhất có thể của cái ma trận vuông ấy, trong đó easy là cái o bên phải cùng Ok, mình vừa thích cái đấy rồi, đúng không? Sau đó nhé, bạn sẽ dùng cái cái chỉ số hàng là i trừ team cái chỗ này thì i trừ đi team, ví dụ như là cái o44 nhé đây, y bằng 4, y bằng 4 này, cái o44 này này thì mình sẽ dùng cái chỉ số hàng nó sẽ là khi đó team nó sẽ bằng 4 nhé, đúng không? Mình sẽ dùng cái chỉ số hàng đấy là cái chỉ số hàng là 4 trừ đi 4 là 0, nó chính là cái hàng 0 này này và cái chỉ số cột của nó cũng sẽ là ghi trừ tèo cũng là 4 trừ 4, tụi là cái cột không này này ok, sau đó thì khi mà mình có cái chỉ số hàng và chỉ số cột rồi thì mình sẽ bắt đầu từ cái hàng đấy và cái cột đấy mình cứ dịch dần lên nhé thì khi đó cái ma chận của mình thì nó sẽ bắt đầu từ cái hàng khi mà hàng bằng không và cột bằng không thì mình sẽ xây dựng được cái ma chận là 9 cái ma chận con này này đấy, sau đó thì ở cái bước tiếp theo thì mình sẽ tăng cái chỉ"
+  },
+  {
+    "chunk_id": "chunk_2666_2744",
+    "start_sec": 2666,
+    "end_sec": 2744,
+    "start_label": "44:26",
+    "end_label": "45:44",
+    "raw_text": "bắt đầu từ cái hàng đấy và cái cột đấy mình cứ dịch dần lên nhé thì khi đó cái ma chận của mình thì nó sẽ bắt đầu từ cái hàng khi mà hàng bằng không và cột bằng không thì mình sẽ xây dựng được cái ma chận là 9 cái ma chận con này này đấy, sau đó thì ở cái bước tiếp theo thì mình sẽ tăng cái chỉ mình sẽ dùng một cái chỉ số K để chạy nhé sau đó thì sau khi mà xây dựng xong cái ma chận này này, thì mình sẽ xây dựng cái ma chận tiếp theo là cái ma chận này bằng cách là mình tăng cái trị số K lên thì khi đó cái trị số hàng của mình cũng tăng theo và cái trị số cột của mình nó tăng theo, ok? Thì ra đây mình dùng một cái trị số K chạy từ không cho tới min của i chứ di Thế là mình sẽ xây dựng tất cả các cái ma chận mà có cỡ là từ min của i và di cho về đến 2 đấy Ok, khi mà K bằng không nhé, thì có nghĩa là mình sẽ xây dựng cái ma chận có cỡ là, có cỡ là tem mean của betheless, trong trường hợp này sẽ là 4 khi mà cao bằng 0, agree, button phii NRLS,"
+  },
+  {
+    "chunk_id": "chunk_2718_2782",
+    "start_sec": 2718,
+    "end_sec": 2782,
+    "start_label": "45:18",
+    "end_label": "46:22",
+    "raw_text": "khi mà cao bằng 0, agree, button phii NRLS, Các bạn sẽ có được tỏng các phần tử trên đường cháu chính như thế này Thì nó sẽ là bao nhiêu nhỉ? 22 chứ đi không thì là bằng 0 Bằng 22 sẽ là bằng cộng các phần tử trên đường cháu phụ Đường cháu phụ khi đó, cái o mà bạn sẽ cộng một cháu phụ nó chính là o này Thì nó chính là cái trị số là minor của i và cot, cộng k, cộng 1 Các bạn phải tự tìm hiểu nhé, các bạn tự tự nháp ra giấy để tại sao tìm được cái giá trị này Ok, cũng dễ thôi, mình thông qua cái chỉ số để mình tìm cái O này thôi nè Sau đó bạn cũng phải trừ đi cái minor của hàng cộng K và G, cộng 1 nó chính là cái O này nè"
+  },
+  {
+    "chunk_id": "chunk_2763_2823",
+    "start_sec": 2763,
+    "end_sec": 2823,
+    "start_label": "46:03",
+    "end_label": "47:03",
+    "raw_text": "Thì nó chính là cái trị số là minor của i và cot, cộng k, cộng 1 Các bạn phải tự tìm hiểu nhé, các bạn tự tự nháp ra giấy để tại sao tìm được cái giá trị này Ok, cũng dễ thôi, mình thông qua cái chỉ số để mình tìm cái O này thôi nè Sau đó bạn cũng phải trừ đi cái minor của hàng cộng K và G, cộng 1 nó chính là cái O này nè Đấy, ok, trong trường hợp này nó sẽ là bao nhiêu nhỉ, nó sẽ là trừ 4 nè, chỗ này là không nhé, O chỗ này là không nhé Thì là trừ đi, trừ 4, trừ đi không đúng không, tức là 22 cộng với 4 là bằng 26 Hình ra khi đó cái hình trữ nhật mà, tâm giác quân này nè có giá trị là 26 khi mà ca mà tăng lên 1, thì có nghĩa là bạn sẽ xây dựng cái ma chận vuông có o phài cùng này nhưng mà cỡ của mình là 3x3 thôi khi mà ma chận vuông mà mình vừa khoanh, nó có giá trị là 22"
+  },
+  {
+    "chunk_id": "chunk_2801_2865",
+    "start_sec": 2801,
+    "end_sec": 2865,
+    "start_label": "46:41",
+    "end_label": "47:45",
+    "raw_text": "khi mà ca mà tăng lên 1, thì có nghĩa là bạn sẽ xây dựng cái ma chận vuông có o phài cùng này nhưng mà cỡ của mình là 3x3 thôi khi mà ma chận vuông mà mình vừa khoanh, nó có giá trị là 22 chứ đi cái giá trị của o này là 9 ... ... Vì sao vậy? Vì sao, ở�� نè Hoa exact, 2 mà th亭 ra cái cột bên phải cùng nó cũng sẽ bằng không hết. Đó cái giá trị của mình nó sẽ là 18, chứ đi cái ô chỗ này là không,"
+  },
+  {
+    "chunk_id": "chunk_2842_2902",
+    "start_sec": 2842,
+    "end_sec": 2902,
+    "start_label": "47:22",
+    "end_label": "48:22",
+    "raw_text": "Hoa exact, 2 mà th亭 ra cái cột bên phải cùng nó cũng sẽ bằng không hết. Đó cái giá trị của mình nó sẽ là 18, chứ đi cái ô chỗ này là không, đáp án của mình nó sẽ là 22 chứ đen 9 là bằng 3 đúng không? Là sao nó ra được 3? 22 chứ đen 9 thì nó phải bằng 13 chứ đúng không? 13 chứ đen 18 là bằng chứ 5, có ra cái ma trận này này. Có giá trị là chứ 5. Bạn cứ xinh ra tất cả ma trận sau đó mình cập nhập thôi, OK? Vì vậy thì không khó nhé, nó chỉ hơi vướng một chút ở cái chỗ mà bạn tìm cái công thức để chia sát này thôi Bạn có thể tìm công thức khác nhé, ở đây thì mình nghĩ đơn giản là mình sẽ xây dựng cái ma trận từ cứ thu nhỏ thu nhỏ dần cho tới có cỡ làm cái số nhỏ hơn trong hai chỉ số isi và mình thu gọn lại cái cỡ là hai thôi"
+  },
+  {
+    "chunk_id": "chunk_2885_2949",
+    "start_sec": 2885,
+    "end_sec": 2949,
+    "start_label": "48:05",
+    "end_label": "49:09",
+    "raw_text": "Vì vậy thì không khó nhé, nó chỉ hơi vướng một chút ở cái chỗ mà bạn tìm cái công thức để chia sát này thôi Bạn có thể tìm công thức khác nhé, ở đây thì mình nghĩ đơn giản là mình sẽ xây dựng cái ma trận từ cứ thu nhỏ thu nhỏ dần cho tới có cỡ làm cái số nhỏ hơn trong hai chỉ số isi và mình thu gọn lại cái cỡ là hai thôi Ok, sau đó mình lần ra các cái giá trị của hàng bọc cột mà mình cần phải cộng trường Thế còn bản chất các bài này thì bạn chỉ cần xây dựng được hai cái ma trận mà đừng tra chính, mà đừng tra phụ này thôi Bước này thì tuy các bạn có thể cài đặt như thế nào cũng được nhé Ok, hoặc thì đây chính là cái bài mà giá trị lớn nhất của ma trận Mày tiếp theo nhé, đấy là bài biến đổi nhị phân Mày ta cho mình một cái ma trận an ở nhân mà bao gồm các cái số 0,1 và hãy sửa đùa các phần tử của ma trận Thì hàng nguyên tác đấy là nếu phần tử A, I, Z, 1, 1 thì mình sẽ thay tất cả phần tử hàng I, I, Z, bởi 1 Bài này tương đối là dễ đúng không? Rồi đầu tiên sẽ là số lượng tiết cây, mỗi tiết cây vào hồn nào vào mờ là số lượng dòng và số lượng cục có mái chận và yêu cầu Mình sẽ phải in ra cái mái chận sau khi bị thay đổi Thì các bạn chỉ cần, nhưng mà nhớ nhá, để làm bài này, các bạn nên xây dựng một cái mái chận tạm ra"
+  },
+  {
+    "chunk_id": "chunk_2933_2995",
+    "start_sec": 2933,
+    "end_sec": 2995,
+    "start_label": "48:53",
+    "end_label": "49:55",
+    "raw_text": "Bài này tương đối là dễ đúng không? Rồi đầu tiên sẽ là số lượng tiết cây, mỗi tiết cây vào hồn nào vào mờ là số lượng dòng và số lượng cục có mái chận và yêu cầu Mình sẽ phải in ra cái mái chận sau khi bị thay đổi Thì các bạn chỉ cần, nhưng mà nhớ nhá, để làm bài này, các bạn nên xây dựng một cái mái chận tạm ra Bởi vì là gì, nếu mà bạn làm thay đổi ngay trên cái mái chận bàn đấu Bài này bạn chỉ cần set các phần tử ở trong mạng mà phần tử nào là easy thì mình sẽ set tất cả phần tử ở trên cái cột ấy Cột i và cái hàng z đấy sau đó mình cho nó tất cả bằng một Đúng không? Bởi vì là nếu mà 1 phần tử bằng 1 thì mình sẽ thay thế tất cả phần tử ở trên cái hàng i và con ghi đấy bằng 1, ok? Nhưng mà nếu mà mình thay trực tiếp trên cái má chận ban đầu ấy, đúng không? Thì nó sẽ ảnh hưởng đến kết quả đấy nhé, ok? Bởi vì là khi mà bạn thay các phần tử ở trên, ví dụ như cái này này, đây, đúng không? 1001 này, ví dụ mình có cái má chận này là 1001 này, sau đó là 0010, rồi là 0000, đúng không? Thì khi mà duyệt qua thằng này, thì nếu mà bạn thay đổi ngay trên cái mai trận ban đầu ấy"
+  },
+  {
+    "chunk_id": "chunk_2979_3041",
+    "start_sec": 2979,
+    "end_sec": 3041,
+    "start_label": "49:39",
+    "end_label": "50:41",
+    "raw_text": "1001 này, ví dụ mình có cái má chận này là 1001 này, sau đó là 0010, rồi là 0000, đúng không? Thì khi mà duyệt qua thằng này, thì nếu mà bạn thay đổi ngay trên cái mai trận ban đầu ấy Thì làm sao nhỉ, nó sẽ thay đổi tất cả những thằng này thành 1 này, thằng này cũng thành 1 này Thằng này cũng thành 1 này, thằng này cũng thành 1 đúng không? Và vô tình khi đó ấy, khi mà bạn duyệt qua cái phần tử thứ 2 này này, nó lại là 1 rồi Thì bạn lại vô tình, bạn lại xét tất cả các phần tử trên cái cột này là 1 Đúng không? Như thế nó sẽ bị sai đúng không? Hình ra là mình sẽ phải thay đổi nó trên một cái mai trận khác mình sẽ lưu lại cái ma trận khác, chứ mình không thay đổi trực tiếp trên cái ma trận ăn đầu, đúng không? bởi vì khi mà mình thay đổi trực tiếp trên cái ma trận ăn đầu thì các cái giá trị của cái hàng i của di nó bị thay đổi thằng ra là các bạn sẽ sử dụng cho mình một cái ma trận khác đây, mình sẽ sử dụng thêm một cái ma trận, cũng có cỡ là b, b là n, d, m, nhé, sau đó đêm"
+  },
+  {
+    "chunk_id": "chunk_3022_3083",
+    "start_sec": 3022,
+    "end_sec": 3083,
+    "start_label": "50:22",
+    "end_label": "51:23",
+    "raw_text": "bởi vì khi mà mình thay đổi trực tiếp trên cái ma trận ăn đầu thì các cái giá trị của cái hàng i của di nó bị thay đổi thằng ra là các bạn sẽ sử dụng cho mình một cái ma trận khác đây, mình sẽ sử dụng thêm một cái ma trận, cũng có cỡ là b, b là n, d, m, nhé, sau đó đêm mình sẽ nhập vào cái ma trận A và mình lưu lại luôn cái ma trận b, cũng có giá trị là i, thế như A Bây giờ mình sẽ rượt qua các phần tử có má trận E và kiểm tra nếu mà oiz nó đó bằng bột í, thì mình sẽ tiến hành rượt tất cả các cột Các cái hàng đấy sẽ lỗi rượt tất cả các cái hàng y và đánh dấu cái hàng y đấy có xác trị là một Sau đó mình cũng sẽ rượt tất cả các cái cột Ừ, rượt tất cả các cái cột đúng không nhỉ? Đây là rượt gì nhỉ? Đây là rượt cột chứ đúng không? Rượt qua tất cả phần tử ở cái cột đấy nè Ừ, rượt qua tất cả các cột, tức là mình sẽ đánh dấu cái hàng đấy bằng một đúng không? còn đây mình sẽ đánh dấu cái cột tới bằng 1 ok nhưng mà mình sẽ thay đổi trên cái ma chận B nhé chứ đừng thay đổi trên cái ma chận A để tý nữa"
+  },
+  {
+    "chunk_id": "chunk_3068_3129",
+    "start_sec": 3068,
+    "end_sec": 3129,
+    "start_label": "51:08",
+    "end_label": "52:09",
+    "raw_text": "Đây là rượt cột chứ đúng không? Rượt qua tất cả phần tử ở cái cột đấy nè Ừ, rượt qua tất cả các cột, tức là mình sẽ đánh dấu cái hàng đấy bằng một đúng không? còn đây mình sẽ đánh dấu cái cột tới bằng 1 ok nhưng mà mình sẽ thay đổi trên cái ma chận B nhé chứ đừng thay đổi trên cái ma chận A để tý nữa mình có thể xét được cái giá trị AeG là cái giá trị của ma chận bắt đầu thế thôi sau đó là bạn ít ra cái ma chận B bài này thì không có gì khó khăn cả ok và tiếp theo là bài ma chận nhị phân người ta cho mình 1 cái ma chận A có nò hàng và 3 cột trong đó các cái giá trị của mà chận này nó sẽ là giá trị nhị phân Vì nhị phân tức là 0, 1 và yêu cầu mình đếm xem có bao nhiêu hàng mà số lượng số 1 nhiều hơn số lượng số 0, quá đơn giản đúng không? Bạn này thì hơi dễ em chút, nếu các bạn chỉ cần duyệt qua các hàng thôi, sau đó tính tổng các phần tử trên các cây hàng, nếu mà tổng nó lớn hơn là bằng 2 thì mình sẽ tính đếm số hàng đấy là có số lượng số 1 nhiều hơn số không, bởi vì nó có 3 cột mà, ok?"
+  },
+  {
+    "chunk_id": "chunk_3110_3170",
+    "start_sec": 3110,
+    "end_sec": 3170,
+    "start_label": "51:50",
+    "end_label": "52:50",
+    "raw_text": "Bạn này thì hơi dễ em chút, nếu các bạn chỉ cần duyệt qua các hàng thôi, sau đó tính tổng các phần tử trên các cây hàng, nếu mà tổng nó lớn hơn là bằng 2 thì mình sẽ tính đếm số hàng đấy là có số lượng số 1 nhiều hơn số không, bởi vì nó có 3 cột mà, ok? mình ra đây mình sẽ nhập vào n là 1 cái số hàng của cái ma chận đấy, sau đó mình sẽ khai báo 1 cái ma chận A có nờ hàng qua 3 cột nhé sau đó mình sẽ sử dụng 1 cái bí nan ở S để đếm xem là có bao nhiêu hàng có số lượng số 1 nhiều và số không, sau đó mình rượt qua cái ma chận đấy thôi ở đây cái phòng phong này là rượt từ không cho đến nờ nhé sau đó mình rượt từ cột không cho tới cột 3 thôi và mình nhập vào cái IZ ở đây mình tính luôn, mình vừa nhập vào mình tính luôn, sau đó mình tính tỏng các phần tửa trên cái hàng I đấy, ok nếu mà cái tổng ở trên cái hàng y đế mà lớn hơn là bằng 2, tức là số lượng số 1 ở trong cái hàng đấy nó là 2 hoặc 3, thì có nghĩa là số lượng số 1 có nhiều, dấu không đúng không? thì mình sẽ tăng miếng đến lên, ok, à, này thì dễ quá"
+  },
+  {
+    "chunk_id": "chunk_3147_3210",
+    "start_sec": 3147,
+    "end_sec": 3210,
+    "start_label": "52:27",
+    "end_label": "53:30",
+    "raw_text": "sau đó mình rượt từ cột không cho tới cột 3 thôi và mình nhập vào cái IZ ở đây mình tính luôn, mình vừa nhập vào mình tính luôn, sau đó mình tính tỏng các phần tửa trên cái hàng I đấy, ok nếu mà cái tổng ở trên cái hàng y đế mà lớn hơn là bằng 2, tức là số lượng số 1 ở trong cái hàng đấy nó là 2 hoặc 3, thì có nghĩa là số lượng số 1 có nhiều, dấu không đúng không? thì mình sẽ tăng miếng đến lên, ok, à, này thì dễ quá bài phần tử nhỏ thứ k, người ta cho mình một cái ma chận A cấp nờ sau đó là các phần tử của ma chận A này đã được sắp xếp theo hàng và theo cột và mình sẽ phải tìm cái phần tử nhỏ nhất thứ k của ma chận ok, tức là cái ma chận này nó sẽ có n là bình phương phần tử đúng không? Để bài này làm đơn giản nhất, các bạn cứ sắp xếp cái má trận này nhé Đây cái cốt này là... Cô này đơn giản thôi, mình sẽ nhập vào cái má trận của cỡ lại, em đó bình phương, sau đó mình sọt cái má trận đấy và mình in ra cái phần tử ở vị trí K thôi Ok Thực ra, bài này bạn có 2 cách làm nữa cơ"
+  },
+  {
+    "chunk_id": "chunk_3193_3253",
+    "start_sec": 3193,
+    "end_sec": 3253,
+    "start_label": "53:13",
+    "end_label": "54:13",
+    "raw_text": "Đây cái cốt này là... Cô này đơn giản thôi, mình sẽ nhập vào cái má trận của cỡ lại, em đó bình phương, sau đó mình sọt cái má trận đấy và mình in ra cái phần tử ở vị trí K thôi Ok Thực ra, bài này bạn có 2 cách làm nữa cơ Nhưng mà để mà đơn giản, các bạn cứ làm như thế này thôi nhé Còn nếu mà làm phức tạp hơn thì các bạn có thể sử dụng tìm kiếm nhị phân Ok, tìm kiếm nhị phân hoặc là bạn có thể tìm, bài này nó có 1 paper nói về cái bài toán này mà có độ phức tạp lỗ nở ok, còn cái cái kài đắp như thế này thì đây cái độ phức tạp của nó sẽ là ONR bình phương, lốc của ONR bình phương đấy nhá lốc của nó bình phương, ok, nhưng mà nó đơn giản bạn có thể cải tiến nó thêm bằng cách là bạn có thể tìm hiểu cái bài toán này trên mạng nhá đây chính là, bạn có thể tìm bài toán là tìm phần tử tứ kai trên một cái mai trận mà đã được sắp xếp theo hàng vào cột thì nó sẽ ra cách mà bạn tìm, tìm kiếm nhị phân, hoặc là"
+  },
+  {
+    "chunk_id": "chunk_3238_3274",
+    "start_sec": 3238,
+    "end_sec": 3274,
+    "start_label": "53:58",
+    "end_label": "54:34",
+    "raw_text": "bạn có thể tìm hiểu cái bài toán này trên mạng nhá đây chính là, bạn có thể tìm bài toán là tìm phần tử tứ kai trên một cái mai trận mà đã được sắp xếp theo hàng vào cột thì nó sẽ ra cách mà bạn tìm, tìm kiếm nhị phân, hoặc là cao ra theo một cái paper nào đó mà có độ phức tạp lỗ u n hả? còn đơn giản thì các bạn cứ sắp xếp nó tất cho là ít ra cái phần tử tử u n nào trừ ca trừ một ra được, ok? rồi thì nấy xong cái bài 19 nhá mấy bài sau thì mình sẽ để một cái video khác và này thì tương đối ra dài rồi"
+  }
+]

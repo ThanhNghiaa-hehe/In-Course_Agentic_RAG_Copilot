@@ -1,0 +1,6392 @@
+[
+  {
+    "start": 0.0,
+    "end": 2.83,
+    "text": "Quay lùi."
+  },
+  {
+    "start": 2.83,
+    "end": 7.44,
+    "text": "Quay lùi thì hôm trước các bạn đã được ôn phần về đệ quy rồi."
+  },
+  {
+    "start": 7.44,
+    "end": 13.65,
+    "text": "Chắc là học phần quay lùi nó cũng dễ thôi."
+  },
+  {
+    "start": 13.65,
+    "end": 19.46,
+    "text": "Này mình khả năng là chưa hẹn, chưa nói được đến phần nhánh cận đâu."
+  },
+  {
+    "start": 19.46,
+    "end": 23.18,
+    "text": "Sa phần quay lùi trước."
+  },
+  {
+    "start": 23.18,
+    "end": 27.79,
+    "text": "Quay lùi thì nó mạnh hơn phương Pháp Xinh."
+  },
+  {
+    "start": 27.79,
+    "end": 34.77,
+    "text": "Độ phức tạp thì nó cũng tương đường nhưng mà nó có, nó có thể tối dư bằng nhánh và cận."
+  },
+  {
+    "start": 34.77,
+    "end": 37.65,
+    "text": "Rồi, thế thì thuật toán quay lùi nó dùng trong những trường hợp nè."
+  },
+  {
+    "start": 37.65,
+    "end": 66.08,
+    "text": "thì nhìn chung thuật toán quay lưu của các bạn, nó cũng dùng trong các bài toán liên quan đến liệt kê hoặc là đến cấu hình giống như thuật toán sinh, vết cạn, nhưng mà có điều thằng đệ quy ở thằng quay lưu này thì nó không, nó tổng quát hơn, tức là các bạn hình dụng các bài toán mà đến cấu hình hay liệt kê cấu hình là thằng đệ quy này sử lý được hết, chứ nó không cần phải có phương pháp sinh rồi xác định cấu hình đầu tiên, cấu hình cuối cùng nữa, thế thì thuật toán sinh nó sẽ hoạt động như nè,"
+  },
+  {
+    "start": 66.08,
+    "end": 75.07,
+    "text": "Thuật toán sinh các bạn hình dùng nhé, bây giờ mình có một bài toán và các bạn muốn liệt kê tất cả các cấu hình của bài toán đó, ví dụ như mấy bài hôm trước các bạn học ấy"
+  },
+  {
+    "start": 75.07,
+    "end": 81.57,
+    "text": "Thì mình gọi cái cấu hình đấy nó sẽ gồm thành phần là x1, x2, x3 cho tới xn đi"
+  },
+  {
+    "start": 81.57,
+    "end": 87.36,
+    "text": "Để chơi nhỉ, thì ý tưởng của Thuật toán sinh đấy, đấy chính là ví dụ nhé, các bạn sẽ xem là x1 í"
+  },
+  {
+    "start": 87.36,
+    "end": 92.56,
+    "text": "Nó có thể gán được những cái giá trị nào, thì các bạn sẽ gán hết những cái giá trị đấy cho x1"
+  },
+  {
+    "start": 92.56,
+    "end": 102.88,
+    "text": "Gán cho x1 x2, gán cho x2, gán cho x3, gán cho xn, có đủ 1 cấu hình"
+  },
+  {
+    "start": 102.88,
+    "end": 108.59,
+    "text": "Nên là số lượng lời gọi địa quy của phương pháp quay lùi rất lớn"
+  },
+  {
+    "start": 108.59,
+    "end": 111.55,
+    "text": "và số lượng cấu hình tương tự như là phương phép nhân"
+  },
+  {
+    "start": 111.55,
+    "end": 112.91,
+    "text": "Hình dùng"
+  },
+  {
+    "start": 112.91,
+    "end": 117.27,
+    "text": "Giả sứ bây giờ mình có 1 cấu hình có 3 thằng"
+  },
+  {
+    "start": 117.27,
+    "end": 119.69,
+    "text": "đây là x1, x2, x3"
+  },
+  {
+    "start": 119.69,
+    "end": 124.33,
+    "text": "x1 của mình có thể nhận 3 giá trị là e, b, c"
+  },
+  {
+    "start": 124.33,
+    "end": 133.33,
+    "text": "x2 của mình có thể nhận 1 hoặc 2, x3 của mình có thể nhận 2 giá trị, u và v"
+  },
+  {
+    "start": 133.33,
+    "end": 138.33,
+    "text": "khi đó các bạn có thể xác định xem là x1, x2, x3 của mình có tất cả bao nhiêu cấu hình"
+  },
+  {
+    "start": 138.33,
+    "end": 140.33,
+    "text": "bằng cách là sử dụng quy tắc nhân"
+  },
+  {
+    "start": 140.33,
+    "end": 143.33,
+    "text": "x1 có 3 thằng, x2 có 2 thằng, x3 có 3 thằng"
+  },
+  {
+    "start": 143.33,
+    "end": 148.33,
+    "text": "3 có 3 thằng, vậy thì tất cả nó sẽ có 3x2x2 là bằng 12 cấu hình tất cả"
+  },
+  {
+    "start": 148.33,
+    "end": 154.68,
+    "text": "Thì cái phương pháp sinh, xin lỗi cái thuật toán quay lùi để bạn em in ra được 12 cấu hình này này"
+  },
+  {
+    "start": 154.68,
+    "end": 158.83,
+    "text": "Đầu tiên nó sẽ gọi đệ quy đến x1"
+  },
+  {
+    "start": 158.83,
+    "end": 163.83,
+    "text": "Đấy, thế đệ quy của các bạn, x1 của các bạn sẽ phải set 3 trường hợp là abc"
+  },
+  {
+    "start": 163.83,
+    "end": 169.41,
+    "text": "A, b, c, đều chơi nhỉ, nó abc"
+  },
+  {
+    "start": 169.41,
+    "end": 173.86,
+    "text": "Sau khi mà các bạn gán x1 bằng abc thì mình sẽ cdc dựng x2"
+  },
+  {
+    "start": 173.86,
+    "end": 178.52,
+    "text": "X2 của bạn có thể nhận giá trị là 1, 2, để đấy, mình đã gán lần được là 1, 2"
+  },
+  {
+    "start": 178.52,
+    "end": 180.25,
+    "text": "Đấy chưa?"
+  },
+  {
+    "start": 180.25,
+    "end": 182.99,
+    "text": "Sau khi mà các bạn gán X2 xong thì mình gán X3"
+  },
+  {
+    "start": 182.99,
+    "end": 186.04,
+    "text": "Vì X3 của mình có thể nhận 2 giá trị là U và V"
+  },
+  {
+    "start": 186.04,
+    "end": 192.67,
+    "text": "Đấy, các bạn thấy hình dùng nó vẽ, nó thành cái cây như thế này này, đó, được chưa?"
+  },
+  {
+    "start": 192.67,
+    "end": 194.23,
+    "text": "Bên này cũng thế, nhé?"
+  },
+  {
+    "start": 194.23,
+    "end": 197.85,
+    "text": "Bên này nếu mà X1 của bạn bằng B thì nó lại tồn tại X2"
+  },
+  {
+    "start": 197.85,
+    "end": 200.97,
+    "text": "Đấy, sau đó là X2 của bạn lại trẻ ra làm 2 thằng"
+  },
+  {
+    "start": 200.97,
+    "end": 204.15,
+    "text": "Đấy, là 1 và 2 này, sau đó các bạn lại gọi Xb"
+  },
+  {
+    "start": 204.15,
+    "end": 206.15,
+    "text": "tương hương với 2 thằng là UV"
+  },
+  {
+    "start": 206.15,
+    "end": 208.15,
+    "text": "cái này cũng thế, X3, UV"
+  },
+  {
+    "start": 208.15,
+    "end": 214.33,
+    "text": "bên này nếu mà X1 của bạn bằng C, cái nhánh đệ quy này nếu mà X1 bằng C thì các bạn có X2"
+  },
+  {
+    "start": 214.33,
+    "end": 218.33,
+    "text": "thì X2 của bạn thì nó cũng lại có 2 nhánh là 1, 2, đúng không?"
+  },
+  {
+    "start": 218.33,
+    "end": 220.33,
+    "text": "sau đó thì nó xây dựng X3 thôi các bạn"
+  },
+  {
+    "start": 220.33,
+    "end": 226.33,
+    "text": "nấy, thì nó giống như kiểu là các bạn làm cái bài nào về đệ quy nhỉ"
+  },
+  {
+    "start": 226.33,
+    "end": 230.44,
+    "text": "đây, đó"
+  },
+  {
+    "start": 230.44,
+    "end": 234.44,
+    "text": "thì cứ mỗi lần mà X1, X2, X3 này nó sẽ là một lời gọi đệ quy"
+  },
+  {
+    "start": 234.44,
+    "end": 238.56,
+    "text": "Thì trong trường hợp này, cái đệ quy này, chắc là các bạn biết nó chạy như thế nào rồi, đúng không?"
+  },
+  {
+    "start": 238.56,
+    "end": 242.66,
+    "text": "Nó không có chạy xong xong, nó chẽ đều nhé, mà nó sẽ chạy từng nhánh 1"
+  },
+  {
+    "start": 242.66,
+    "end": 245.96,
+    "text": "Đấy, đầu tiên là các bạn phải nhát xét nhánh x1 bằng A"
+  },
+  {
+    "start": 245.96,
+    "end": 248.38,
+    "text": "Xong x1 bằng A, xong nó gọi đến x2"
+  },
+  {
+    "start": 248.38,
+    "end": 250.98,
+    "text": "X2 các bạn gán bằng 1, thì bắt đầu nó gọi đến x3"
+  },
+  {
+    "start": 250.98,
+    "end": 256.16,
+    "text": "Xong x3 gán, các bạn gán bằng U thì nó mới xong 1 cái câu hình, khi đó là A1U"
+  },
+  {
+    "start": 256.16,
+    "end": 257.3,
+    "text": "Đấy"
+  },
+  {
+    "start": 257.3,
+    "end": 261.86,
+    "text": "Bên này là x3 bằng V, thì các bạn câu hình là A1V"
+  },
+  {
+    "start": 261.86,
+    "end": 266.5,
+    "text": "sau đó x3 bên này thì bắt đầu nó messang đây nó gán x2 bằng 2"
+  },
+  {
+    "start": 266.5,
+    "end": 269.7,
+    "text": "x2 bằng 2, các bạn lại gán x3 bằng u hợp v"
+  },
+  {
+    "start": 269.7,
+    "end": 271.9,
+    "text": "nó đã được cấu hình là A2u"
+  },
+  {
+    "start": 271.9,
+    "end": 276.42,
+    "text": "A2v, nấy được chờ cứ như thế"
+  },
+  {
+    "start": 276.42,
+    "end": 279.82,
+    "text": "thế thôi, đấy cái thuật toán đị quy nó chỉ đơn giản thế thôi"
+  },
+  {
+    "start": 279.82,
+    "end": 282.42,
+    "text": "là nó xem là x1 ông gán những giã trị nào"
+  },
+  {
+    "start": 282.42,
+    "end": 284.3,
+    "text": "x2 ông gán giã trị nào"
+  },
+  {
+    "start": 284.3,
+    "end": 287.94,
+    "text": "sau đó thì cứ mỗi lần mà xét x1, x2, x3 cho tới xn nói"
+  },
+  {
+    "start": 287.94,
+    "end": 292.74,
+    "text": "nó sẽ xét từng trường hợp, từng trường hợp có thể gán cho cái thằng x đó"
+  },
+  {
+    "start": 292.74,
+    "end": 300.34,
+    "text": "Và bao giờ các bạn xây dựng đến xnr, mình xây dựng đến phần tử cuối cùng trong cấu hình thì các bạn sẽ có 1 bộ từ x1 cho từ xnr"
+  },
+  {
+    "start": 300.34,
+    "end": 302.82,
+    "text": "Thì khi đó mình in ra cấu hình thôi, nhá"
+  },
+  {
+    "start": 302.82,
+    "end": 305.98,
+    "text": "Thì đây nó tạo thành cái cây quay lui như thế này"
+  },
+  {
+    "start": 305.98,
+    "end": 308.62,
+    "text": "Cây quay lui này các bạn biết nó chạy như thế nào rồi đúng không?"
+  },
+  {
+    "start": 308.62,
+    "end": 310.76,
+    "text": "Đấy đầu tiên nó có phải nhánh này đã"
+  },
+  {
+    "start": 310.76,
+    "end": 316.04,
+    "text": "Đấy, xong bắt đầu nó xuống thế này, xuống này, nó quay lại đây, đi nhánh này, xong đây xong đây xong đây"
+  },
+  {
+    "start": 316.04,
+    "end": 320.2,
+    "text": "Xong bắt đầu quay lại đây, quay lại đây xong bắt đầu mới đi sang cái nhánh thứ 2 này, đúng không nhỉ?"
+  },
+  {
+    "start": 320.2,
+    "end": 327.13,
+    "text": "Thì bây giờ mình sẽ ví dụ cho các bạn về cái bài dễ nhất. Đấy chính là quay lùi sinh sâu nhị phần."
+  },
+  {
+    "start": 327.13,
+    "end": 332.28,
+    "text": "Nói, quay lùi sinh sâu nhị phần."
+  },
+  {
+    "start": 332.28,
+    "end": 338.06,
+    "text": "Thì ở đây, các bạn sẽ viết cho mình 1 cái hào là backtracking hoặc là ham-tri."
+  },
+  {
+    "start": 338.06,
+    "end": 340.3,
+    "text": "Người ta hay đặt tên là ham-tri, tức là thử."
+  },
+  {
+    "start": 340.3,
+    "end": 347.51,
+    "text": "Ở đây, cái ham-tri-e này này, nó sẽ dựng đi thử xe, đi gán xe nữa."
+  },
+  {
+    "start": 347.51,
+    "end": 357.16,
+    "text": "Thì khi đó các bạn phân tích xem là xe, tức là phân tử thứ y ở trong cấu hình của các bạn, nó được nhận những cái giá trị nào."
+  },
+  {
+    "start": 357.16,
+    "end": 359.16,
+    "text": "Thì các bạn xét hết, mà các bạn gán"
+  },
+  {
+    "start": 359.16,
+    "end": 363.6,
+    "text": "Thì đối với sinh sâu nhị phần ấy, thì xe của bạn chỉ có thể nhận giá trị không hoặc là 1"
+  },
+  {
+    "start": 363.6,
+    "end": 367.04,
+    "text": "Thì mà em sẽ làm cái vòng foi chạy từ ghi vòng không cho tới ghi nhỏ hơn là vòng 1"
+  },
+  {
+    "start": 367.04,
+    "end": 369.54,
+    "text": "Thì mình xét 2 giá trị thôi, là không hoặc là 1"
+  },
+  {
+    "start": 369.54,
+    "end": 373.0,
+    "text": "Sau đó thì các bạn gán xe vòng ghi"
+  },
+  {
+    "start": 373.0,
+    "end": 374.58,
+    "text": "Nấy"
+  },
+  {
+    "start": 374.58,
+    "end": 378.62,
+    "text": "Sau khi mà gán xe vòng ghi, nếu mà e của bạn nó bằng n thì các bạn sẽ tiến hành in ra cấu hình"
+  },
+  {
+    "start": 378.62,
+    "end": 381.62,
+    "text": "Các bạn duyệt cái vòng foi để mình viết một cái hàm in kết quả nhé"
+  },
+  {
+    "start": 381.62,
+    "end": 382.94,
+    "text": "Voi in kết quả"
+  },
+  {
+    "start": 382.94,
+    "end": 385.62,
+    "text": "Các bạn làm cái vòng foi chạy từ 1 cho tới n"
+  },
+  {
+    "start": 385.62,
+    "end": 387.62,
+    "text": "và các bạn clxie"
+  },
+  {
+    "start": 387.62,
+    "end": 390.23,
+    "text": "sau đó thì mình xuống dòng ở đây"
+  },
+  {
+    "start": 390.23,
+    "end": 392.8,
+    "text": "đây"
+  },
+  {
+    "start": 392.8,
+    "end": 394.22,
+    "text": "đấy"
+  },
+  {
+    "start": 394.22,
+    "end": 396.22,
+    "text": "hôm nay bạn em sẽ in kết quả này"
+  },
+  {
+    "start": 396.22,
+    "end": 400.21,
+    "text": "ok, còn nếu mà i của mình nó chưa đến nờ thì các bạn phải quay lùi tiếp"
+  },
+  {
+    "start": 400.21,
+    "end": 402.21,
+    "text": "các bạn phải try đến i cộng 1 thế thôi"
+  },
+  {
+    "start": 402.21,
+    "end": 403.21,
+    "text": "rất đơn giản"
+  },
+  {
+    "start": 403.21,
+    "end": 404.21,
+    "text": "đấy"
+  },
+  {
+    "start": 404.21,
+    "end": 406.21,
+    "text": "sau đó thì ở dưới này các bạn"
+  },
+  {
+    "start": 406.21,
+    "end": 408.2,
+    "text": "nhập nờ"
+  },
+  {
+    "start": 408.2,
+    "end": 410.2,
+    "text": "và các bạn em chỉ cần try từ 1"
+  },
+  {
+    "start": 410.2,
+    "end": 412.2,
+    "text": "tức là mình đi xây dựng từ x1, là được"
+  },
+  {
+    "start": 412.2,
+    "end": 414.2,
+    "text": "ở đây mình sẽ lấy nờ vòng 4 nhá"
+  },
+  {
+    "start": 414.2,
+    "end": 416.2,
+    "text": "đấy, nó sẽ in cho các bạn đủ 16 cấu hình"
+  },
+  {
+    "start": 416.2,
+    "end": 417.2,
+    "text": "nó dễ không?"
+  },
+  {
+    "start": 417.2,
+    "end": 419.62,
+    "text": "chỉ cần viết 1 cái hàm try có tham số là i"
+  },
+  {
+    "start": 460.34,
+    "end": 466.06,
+    "text": "2 vòng fo, fo, z bằng 0 và z bằng 1, đây là cái vòng fo thứ nhất nha"
+  },
+  {
+    "start": 466.06,
+    "end": 468.61,
+    "text": "Cái nhánh này tương ứng với cái vòng fo thứ nhất"
+  },
+  {
+    "start": 468.61,
+    "end": 474.12,
+    "text": "Thì bao giờ cái vòng fo thứ nhất này nó xét hết các lời gọi địa quy này"
+  },
+  {
+    "start": 474.12,
+    "end": 476.41,
+    "text": "Thì nó mới được sang đây"
+  },
+  {
+    "start": 476.41,
+    "end": 478.91,
+    "text": "Nói hy vọng là các bạn nắm được cái đó"
+  },
+  {
+    "start": 478.91,
+    "end": 483.41,
+    "text": "Thế thì khi mà x cái nhánh thứ nhất này nó tương ứng với là z bằng 0"
+  },
+  {
+    "start": 483.41,
+    "end": 486.81,
+    "text": "Nói bọn em gán x y bằng z, tức là mình gán x1 bằng 0, đúng không nhỉ?"
+  },
+  {
+    "start": 486.81,
+    "end": 488.81,
+    "text": "Nói các bạn là gán được x1 bằng 0"
+  },
+  {
+    "start": 488.81,
+    "end": 493.25,
+    "text": "Sau khi gán ở x1 và 0, các bạn kiểm tra i bằng nờ thì chưa, tại vì nờ ở đây bằng bè"
+  },
+  {
+    "start": 493.25,
+    "end": 499.13,
+    "text": "thì khi đó các bạn sẽ tiến hành gọi đến tròi y cộng 1, là tròi 2, ở đây, để quý tròi 2 đây"
+  },
+  {
+    "start": 499.13,
+    "end": 502.09,
+    "text": "Tròi 2 của bạn, cái vòng phone nó cũng lại có 2 nhánh"
+  },
+  {
+    "start": 502.09,
+    "end": 505.29,
+    "text": "nhánh thứ nhất đây là y bằng 0 và nhánh thứ 2 là y bằng 1"
+  },
+  {
+    "start": 505.29,
+    "end": 509.09,
+    "text": "thì cái nhánh y bằng 1 này nó sẽ chưa chạy, các bạn phải chạy cái nhánh này trước"
+  },
+  {
+    "start": 509.09,
+    "end": 511.81,
+    "text": "thì đó các bạn sẽ gán x2 bằng 0"
+  },
+  {
+    "start": 511.81,
+    "end": 518.1,
+    "text": "sau đó mình kiểm tra i là 2 nó chưa bằng nờ thì các bạn gọi đến tròi của y cộng 1 thì nó là tròi bè"
+  },
+  {
+    "start": 518.1,
+    "end": 523.86,
+    "text": "Tray 3 của bạn thì cũng 2 vòng 4, vòng 4 thứ nhất là ghi vòng 0, thì các bạn gán x3 vòng 0"
+  },
+  {
+    "start": 523.86,
+    "end": 528.98,
+    "text": "Sau khi mà gán x3 vòng 0, các bạn kiểm tra eventer nó bằng nhau, nên các bạn sẽ in nó kết quả"
+  },
+  {
+    "start": 528.98,
+    "end": 534.58,
+    "text": "Và mình sẽ được kết quả là 0, 0, 0, tại vì x1 vòng 0, x2 vòng 0 và x3 vòng 0"
+  },
+  {
+    "start": 534.58,
+    "end": 538.18,
+    "text": "Sau khi mà in kết quả xong, các bạn tăng ghi lên, đúng không?"
+  },
+  {
+    "start": 538.18,
+    "end": 542.58,
+    "text": "Vì nó sẽ sang cái vòng 4 này, đấy là cái trường hợp mà các bạn sẽ gán x3 vòng 1"
+  },
+  {
+    "start": 542.58,
+    "end": 549.45,
+    "text": "Cái vòng tròi ban này có 2 vòng fo, vòng fo thứ nhất là z vòng 0, các bạn gán x3 vòng 0 này"
+  },
+  {
+    "start": 549.45,
+    "end": 553.89,
+    "text": "Các bạn kiểm tra 3 với nở bằng nhau, các bạn y kết quả, in xong thì nó quay lại lên tăng z lên 1"
+  },
+  {
+    "start": 553.89,
+    "end": 561.05,
+    "text": "Đó các bạn lại gán x3 vòng 1, đây này, các bạn kiểm tra y bằng nở, các bạn y kết quả thì nó sẽ được là 0, 0, 1"
+  },
+  {
+    "start": 561.05,
+    "end": 566.41,
+    "text": "Sau đó các bạn y kết quả, sau đó các bạn tăng z thì z lên 2, nên cái vòng fo nó chạy xong"
+  },
+  {
+    "start": 566.41,
+    "end": 569.05,
+    "text": "Vòng fo chạy xong thì cái hàm tròi ban này chạy xong"
+  },
+  {
+    "start": 569.05,
+    "end": 572.49,
+    "text": "tròi ban này chạy xong thì khi đó cái nhánh đệ quy này nó sẽ chạy xong"
+  },
+  {
+    "start": 572.49,
+    "end": 574.09,
+    "text": "bây giờ các bạn sẽ sang nhánh đệ quy này"
+  },
+  {
+    "start": 574.09,
+    "end": 574.89,
+    "text": "đó"
+  },
+  {
+    "start": 574.89,
+    "end": 575.77,
+    "text": "ok"
+  },
+  {
+    "start": 575.77,
+    "end": 578.57,
+    "text": "cái nhánh đệ quy này các bạn lại gán x2"
+  },
+  {
+    "start": 578.57,
+    "end": 580.97,
+    "text": "khi đó là x2 bằng 1"
+  },
+  {
+    "start": 580.97,
+    "end": 583.21,
+    "text": "từng cái vòng 4 thứ 2 ở trong hàm tròi 2"
+  },
+  {
+    "start": 583.21,
+    "end": 586.89,
+    "text": "sau khi mà gán x2 bằng 1 xong thì các bạn lại gọi đệ quy đến tròi 3"
+  },
+  {
+    "start": 586.89,
+    "end": 588.57,
+    "text": "xong cũng lại 2 vòng 4"
+  },
+  {
+    "start": 588.57,
+    "end": 589.37,
+    "text": "đấy"
+  },
+  {
+    "start": 589.37,
+    "end": 590.89,
+    "text": "vò thứ nhất vòng 4 thứ 2"
+  },
+  {
+    "start": 590.89,
+    "end": 592.09,
+    "text": "cái thôi"
+  },
+  {
+    "start": 592.09,
+    "end": 594.81,
+    "text": "sau đó tròi 3 chạy xong thì tròi 2 chạy xong"
+  },
+  {
+    "start": 594.81,
+    "end": 597.29,
+    "text": "tròi 2 chạy xong thì cái nhánh đệ quy này chạy xong này"
+  },
+  {
+    "start": 597.29,
+    "end": 601.29,
+    "text": "các bạn sẽ sang những đệ quy này. Thì nó lại tiếp tục xinh ra cho các bạn các cấu hình còn lại."
+  },
+  {
+    "start": 601.29,
+    "end": 604.29,
+    "text": "Thì đấy là cái cách mà cái hàm đệ quy này nó chạy."
+  },
+  {
+    "start": 604.29,
+    "end": 608.02,
+    "text": "Được chứ? Các bạn nào có câu hỏi gì không?"
+  },
+  {
+    "start": 608.02,
+    "end": 613.02,
+    "text": "Có câu hỏi gì về cái đệ quy sinh nhị phần này không? Rất dễ."
+  },
+  {
+    "start": 613.02,
+    "end": 616.02,
+    "text": "Quang trọng là bạn em phải hiểu nó chạy như thế nào cơ."
+  },
+  {
+    "start": 616.02,
+    "end": 621.28,
+    "text": "Các bạn cứ vẽ cái cây quay lui ra. Các bạn dễ hình dụng nó chạy như thế nào."
+  },
+  {
+    "start": 621.28,
+    "end": 624.28,
+    "text": "Và cái này mình còn nói rõ cho các bạn ở cái phần mà ôn lại về đệ quy"
+  },
+  {
+    "start": 624.28,
+    "end": 641.53,
+    "text": "bài tòan thứ 2 là sinh tổ hợp chấp kê của ở"
+  },
+  {
+    "start": 641.53,
+    "end": 643.53,
+    "text": "Các bạn có thể xinh ra sâu nhị phần rất là ngặn"
+  },
+  {
+    "start": 643.53,
+    "end": 645.53,
+    "text": "Đây là bài toán đầu tiên"
+  },
+  {
+    "start": 649.03,
+    "end": 652.1,
+    "text": "Còn cái bài toán thứ 2 là xinh tổ hợp chấp K của N"
+  },
+  {
+    "start": 652.1,
+    "end": 656.1,
+    "text": "Đối với bài toán xinh tổ hợp chấp K của N, tập con đấy, thì"
+  },
+  {
+    "start": 656.1,
+    "end": 658.96,
+    "text": "ở đây mình sẽ y đến K"
+  },
+  {
+    "start": 658.96,
+    "end": 660.96,
+    "text": "Vì khi đó các bạn sát lệnh íc y này"
+  },
+  {
+    "start": 660.96,
+    "end": 663.92,
+    "text": "Hôm trước ấy, các bạn học rồi"
+  },
+  {
+    "start": 663.92,
+    "end": 667.92,
+    "text": "Cái giá trị ở phần tử thứ Y trong cái cấu hình tổ hợp chấp K của N"
+  },
+  {
+    "start": 667.92,
+    "end": 669.92,
+    "text": "nó không được vượt quán ở chữ K cộng y"
+  },
+  {
+    "start": 669.92,
+    "end": 671.92,
+    "text": "Đây là cái giá trị tối đa mà các bạn có thể gán cho nó"
+  },
+  {
+    "start": 671.92,
+    "end": 676.92,
+    "text": "Một cái giá trị tối thiểu thì nó sẽ dựa vào cái thằng đứng trước ở trong cấu hình"
+  },
+  {
+    "start": 676.92,
+    "end": 680.92,
+    "text": "Tại vì các bạn biết là cấu hình sinh tập con bao giờ nó cũng tăng dần"
+  },
+  {
+    "start": 680.92,
+    "end": 683.92,
+    "text": "Nên mình các bạn hình dùng nếu mà các bạn đã có ích 1 bằng 2"
+  },
+  {
+    "start": 683.92,
+    "end": 690.98,
+    "text": "Thì cái ích 3 của bạn ấy, xin lỗi ích 2 của bạn, khi mà các bạn đệ quy đến ích 2, nó phải từ 3 nó chạy lên"
+  },
+  {
+    "start": 690.98,
+    "end": 695.98,
+    "text": "Tại vì nó tăng dần mà, cái cấu hình của mình là nó cứ tăng dần nên khi mà các bạn xây dựng ích ấy"
+  },
+  {
+    "start": 695.98,
+    "end": 698.98,
+    "text": "Cái giá trị tối đe mà nó có thể nhận được là nở trừ ca cộng y"
+  },
+  {
+    "start": 698.98,
+    "end": 702.98,
+    "text": "Còn cái giá trị tối thiểu mà nó có thể nhận được ấy, nó chính là xe chứ 1, cộng 1"
+  },
+  {
+    "start": 702.98,
+    "end": 705.98,
+    "text": "Đúng không? Nó phải bằng cái thằng đứng ngay trước nó trong cấu hình ấy"
+  },
+  {
+    "start": 705.98,
+    "end": 708.98,
+    "text": "Là xe chứ 1 này bọn em cộng thêm 1 tươn vị"
+  },
+  {
+    "start": 708.98,
+    "end": 710.98,
+    "text": "Tại vì tối thiểu nó phải lớn hơn thằng đứng trước nó mà"
+  },
+  {
+    "start": 710.98,
+    "end": 715.98,
+    "text": "Thế nên ở đây các bạn sẽ làm cái vòng 4 chuyệt từ z bằng x của y chứ 1, cộng 1"
+  },
+  {
+    "start": 715.98,
+    "end": 720.98,
+    "text": "Nói xong các bạn diệt tới z nhỏ hơn hoặc bằng nở chứ kê, cộng y, z cộng cộng và các bạn gán"
+  },
+  {
+    "start": 720.98,
+    "end": 722.98,
+    "text": "y bằng y thôi"
+  },
+  {
+    "start": 722.98,
+    "end": 727.98,
+    "text": "nếu mà y của bạn, y của bạn nó bằng k, thì các bạn in kết quả"
+  },
+  {
+    "start": 727.98,
+    "end": 729.98,
+    "text": "tại vì ở đây nó là cấu hình là k"
+  },
+  {
+    "start": 729.98,
+    "end": 731.98,
+    "text": "còn không thì các bạn try đến y cộng 1"
+  },
+  {
+    "start": 731.98,
+    "end": 736.04,
+    "text": "đấy, thì thế thôi, ở đây mình sẽ nhập nờ vào k thôi"
+  },
+  {
+    "start": 736.04,
+    "end": 738.97,
+    "text": "ví dụ như 5 và 3"
+  },
+  {
+    "start": 738.97,
+    "end": 748.82,
+    "text": "đấy, nó sẽ in cho các bạn người cấu hình"
+  },
+  {
+    "start": 748.82,
+    "end": 753.18,
+    "text": "được chưa, rồi thì bây giờ mình xem cái ham try này nó chạy ra cái cây quay lùi như thế nào nhé"
+  },
+  {
+    "start": 753.18,
+    "end": 763.14,
+    "text": "cái trăm trường hợp này cái ham try này khi mà nó chạy thì nó tạo ra cái cây quay lùi nó lại hơi đặc biệt một chút"
+  },
+  {
+    "start": 763.14,
+    "end": 769.96,
+    "text": "hơi đặc biệt một chút là khi mà các bạn set xe thì cái giá trị khởi đầu nó sẽ phụ thuộc vào cái thẳng đứng trước nó ở trong cấu hình"
+  },
+  {
+    "start": 769.96,
+    "end": 772.96,
+    "text": "nên các bạn phải lưu y đến cái thẳng đứng trước của nó ở trong cấu hình"
+  },
+  {
+    "start": 772.96,
+    "end": 777.36,
+    "text": "đây cũng là trường hợp với nờ bằng 5 và kê bằng 3 này các bạn"
+  },
+  {
+    "start": 777.36,
+    "end": 779.58,
+    "text": "nờ bằng 5 và kê bằng 3"
+  },
+  {
+    "start": 779.58,
+    "end": 786.56,
+    "text": "thì trong bên các bạn gọi tròi 1 đúng không? đây tròi 1"
+  },
+  {
+    "start": 786.56,
+    "end": 792.45,
+    "text": "thì với nờ bằng 5 và kê bằng 3 thì khi đó các bạn chạy từ ích không cộng 1 là 1"
+  },
+  {
+    "start": 792.45,
+    "end": 795.89,
+    "text": "cho tới 5 chứ 3 cộng 1 là bằng 3"
+  },
+  {
+    "start": 795.89,
+    "end": 799.33,
+    "text": "các bạn sẽ xuyệt từ 1 đến 3, nên nó sẽ trẻ ra 3 vòng 4, đúng không?"
+  },
+  {
+    "start": 799.33,
+    "end": 803.57,
+    "text": "tương ứng với x1 vòng 1, x1 vòng 2 và x1 vòng 3, mình sẽ xét x1 trước, nhá"
+  },
+  {
+    "start": 803.57,
+    "end": 808.45,
+    "text": "rồi, sau khi mà các bạn gán x1 vòng 1, thì các bạn kiểm tra i vòng k, thì chưa phải"
+  },
+  {
+    "start": 808.45,
+    "end": 811.35,
+    "text": "nên các bạn sẽ gọi try 2 ở đây, đây, nó ở đây"
+  },
+  {
+    "start": 811.35,
+    "end": 816.79,
+    "text": "try 2 của các bạn khi đó, cái z của các bạn, nó sẽ chạy từ xe chứ 1, tức là x1"
+  },
+  {
+    "start": 816.79,
+    "end": 820.87,
+    "text": "x1 khi nó ra là 1 rồi, các bạn cộng thêm 1 đơn vị nó sẽ là 2"
+  },
+  {
+    "start": 820.87,
+    "end": 825.19,
+    "text": "còn tối đe của nó là 5 chứ 3, cộng 2 là 4, đúng không?"
+  },
+  {
+    "start": 825.19,
+    "end": 828.95,
+    "text": "Nên khi đó cái hàm x2 này của bạn, cái vòng x4 nó sẽ chạy từ 2 đến 4, đây"
+  },
+  {
+    "start": 828.95,
+    "end": 830.95,
+    "text": "2, 3, 4"
+  },
+  {
+    "start": 830.95,
+    "end": 835.43,
+    "text": "Thì mình lại lần lượt gán x2 bằng 2, x3 bằng 3 và x2 bằng 4 nhá"
+  },
+  {
+    "start": 835.43,
+    "end": 839.27,
+    "text": "Thì cái nhánh đầu tiên, cái vòng x4 đầu tiên trong hàm x2 của bạn là x2 bằng 2"
+  },
+  {
+    "start": 839.27,
+    "end": 843.04,
+    "text": "Rồi sau khi mà gán x2 bằng 2 thì mình em"
+  },
+  {
+    "start": 843.04,
+    "end": 845.04,
+    "text": "try đến i cộng 1 là try 3"
+  },
+  {
+    "start": 845.04,
+    "end": 849.43,
+    "text": "Try 3 thì khi đó các bạn sẽ bắt đầu từ z bằng xe chứ 1"
+  },
+  {
+    "start": 849.43,
+    "end": 852.63,
+    "text": "Tức là x2 cộng 1 đúng không?"
+  },
+  {
+    "start": 852.63,
+    "end": 859.63,
+    "text": "Mình đang xây dựng xb mà, thì mình phải dựa vào x2, khi đó đang là 2 rồi, các bạn cộng 1 nó sẽ là bè"
+  },
+  {
+    "start": 859.63,
+    "end": 864.63,
+    "text": "Và các bạn chạy tới nờ chứ kè cộng bè, tức là 5 chứ bè cộng bè là bằng 5"
+  },
+  {
+    "start": 864.63,
+    "end": 868.63,
+    "text": "Nên là cái vòng for ở trong thầm try 3 khi đó, nó sẽ chạy từ bè đến 5, đây nè"
+  },
+  {
+    "start": 868.63,
+    "end": 871.63,
+    "text": "3, 4, 5, 3 vòng for, nhá"
+  },
+  {
+    "start": 871.63,
+    "end": 876.63,
+    "text": "Vòng for thứ nhất là các bạn gán xb vòng bè, thì khi đó i với kè nó bằng nhau rồi"
+  },
+  {
+    "start": 876.63,
+    "end": 881.63,
+    "text": "Nên các bạn sẽ in ra kết quả khi đó nó sẽ là x1 vòng 1, x2 vòng 2 và xb vòng bè, nó được cấu hình là 1, 2b"
+  },
+  {
+    "start": 881.63,
+    "end": 886.32,
+    "text": "sau khi mà in kết quả xong, nó tăng ghi lên, ghi lên 4 này nè"
+  },
+  {
+    "start": 886.32,
+    "end": 890.52,
+    "text": "các bạn sẽ gian x3 vòng 4, và các bạn lại in kết quả thì nó sẽ được 1, 2, 4"
+  },
+  {
+    "start": 890.52,
+    "end": 893.32,
+    "text": "sau nó quay đây tăng ghi lên, ghi lên 5"
+  },
+  {
+    "start": 893.32,
+    "end": 896.52,
+    "text": "các bạn gian x3 vòng 5 thì mình in ra thì nó được 1, 2, 5"
+  },
+  {
+    "start": 896.52,
+    "end": 901.02,
+    "text": "in sau các bạn tăng lên thì ghi của mình lên 6, thì cái vòng 4 này nó chạy xong"
+  },
+  {
+    "start": 901.02,
+    "end": 903.32,
+    "text": "nên cái hàm tròi bè của bạn nó chạy xong"
+  },
+  {
+    "start": 903.32,
+    "end": 908.02,
+    "text": "cái tròi bè này nó chạy xong, đồng nghĩa với cái vòng 4 thứ nhất trong hàm tròi 2 nó chạy xong"
+  },
+  {
+    "start": 908.02,
+    "end": 909.82,
+    "text": "thì nó phải sang cái vòng 4 thứ 2"
+  },
+  {
+    "start": 909.82,
+    "end": 915.2,
+    "text": "vòng for thứ 2 này là x2 vòng 3, và các bạn lại tròi bê, đúng không?"
+  },
+  {
+    "start": 915.2,
+    "end": 918.36,
+    "text": "nhưng mà khi đó cái hàm tròi bê này của các bạn nó sẽ dựa vào cái x2 này này,"
+  },
+  {
+    "start": 918.36,
+    "end": 923.68,
+    "text": "cái thẳng đứng trước ở trong cấu hình của mình là bê nhé, các bạn cộng thêm 1 là 4, và tối đe là 5."
+  },
+  {
+    "start": 923.68,
+    "end": 929.84,
+    "text": "nên khi đó cái hàm tròi bê ở trong trường hợp này nó chỉ chạy được 2 vòng 4 thôi, tương ứng với x3 vòng 4 và x3 vòng 5."
+  },
+  {
+    "start": 929.84,
+    "end": 934.84,
+    "text": "đấy, x3 vòng 4, các bạn có cấu hình là 1 và 4, x3 vòng 5, các bạn có cấu hình là 1 và 5."
+  },
+  {
+    "start": 934.84,
+    "end": 941.84,
+    "text": "sau khi hàm tròi bè chạy xong, tương ứng với vòng phô thứ 2 trong hàm tròi 2 chạy xong, bây giờ mình xem vòng phô thứ 3"
+  },
+  {
+    "start": 941.84,
+    "end": 947.84,
+    "text": "khi các bạn gán x2 vòng 4, trong trường hợp này x2 vòng 4 xong các bạn tròi bè"
+  },
+  {
+    "start": 947.84,
+    "end": 951.84,
+    "text": "khi đó, x3 của bạn sẽ bắt đầu từ thằng 4 này cộng với 1 là 5"
+  },
+  {
+    "start": 951.84,
+    "end": 958.84,
+    "text": "tối đe của nó là cộng y cũng là 5 luôn, nên vòng phô chỉ lạc được đúng 1 lần với gì bằng 5 thôi"
+  },
+  {
+    "start": 958.84,
+    "end": 962.72,
+    "text": "Đấy, thế nên là chỗ này các bạn thấy là cái chỗ này nó chỉ có ích 3 một năm thôi"
+  },
+  {
+    "start": 962.72,
+    "end": 965.72,
+    "text": "Mình lại có cấu hình là 1, 4 năm, đúng không?"
+  },
+  {
+    "start": 965.72,
+    "end": 967.28,
+    "text": "Sao đó tròi ban nó chạy xăm"
+  },
+  {
+    "start": 967.28,
+    "end": 970.78,
+    "text": "Tròi ban nó chạy xăm thì các bạn thấy ở trong cái hàm tròi 2 của mình ạ"
+  },
+  {
+    "start": 970.78,
+    "end": 974.86,
+    "text": "Đó có 3 vòng fo thì bây giờ cả 3 vòng fo đến nó chạy xăm rồi, đây"
+  },
+  {
+    "start": 974.86,
+    "end": 977.5,
+    "text": "Thì bây giờ tương ứng với cái hàm tròi 2 này nó chạy xăm"
+  },
+  {
+    "start": 977.5,
+    "end": 981.34,
+    "text": "Cái hàm tròi 2 này chạy xăm tương ứng cái vòng fo thứ nhất của hàm tròi 1 chạy xăm"
+  },
+  {
+    "start": 981.34,
+    "end": 983.82,
+    "text": "Thì bây giờ mình biết đầu được sang cái vòng fo thứ 2"
+  },
+  {
+    "start": 983.82,
+    "end": 986.86,
+    "text": "Đấy là khi mà các bạn cố gắng gán íc 1 bằng 2"
+  },
+  {
+    "start": 986.86,
+    "end": 990.82,
+    "text": "Thế thôi, tại tương tự như vậy, íc 1 bằng 2 xong các bạn tròi 2"
+  },
+  {
+    "start": 990.82,
+    "end": 995.5,
+    "text": "Nhưng mà khi đó thì cái tròi 2 này của bạn nó sẽ bắt đầu từ cái thằng 2 này cộng với 1 là 3"
+  },
+  {
+    "start": 995.5,
+    "end": 1000.7,
+    "text": "Và tối đe thì là 4 nô, nên nó chỉ lập được 2 vòng lập là íc 2 vòng 3 và íc 2 vòng 4 nô"
+  },
+  {
+    "start": 1000.7,
+    "end": 1004.38,
+    "text": "Và quả trình này cứ tiếp tục nó tương tự như vậy, mà nó yên ra cho các bạn hết cấu hình"
+  },
+  {
+    "start": 1004.38,
+    "end": 1009.92,
+    "text": "Đấy chưa, thì nó sẽ xinh ra cái cây cho cái tổ hợp chấp ca của nào"
+  },
+  {
+    "start": 1009.92,
+    "end": 1016.83,
+    "text": "Cây thôi, thì các bạn nhìn cái cây như kìa thì các bạn sẽ rõ ràng được hơn cái quá trình mà cái hàm try kìa nó chạy, nhá"
+  },
+  {
+    "start": 1016.83,
+    "end": 1022.75,
+    "text": "Cứ mỗi lần mà một cái dấu đóng mỏng hoặc vua của các bạn, nó sẽ tương ứng với một lời đệ quy, nhá"
+  },
+  {
+    "start": 1022.75,
+    "end": 1027.63,
+    "text": "Mỗi một nhánh tương ứng với một vòng fo trong cái hàm try kìa"
+  },
+  {
+    "start": 1027.63,
+    "end": 1036.69,
+    "text": "Các bạn nào có câu hỏi gì không? Có câu hỏi gì về cái sinh tổ hợp chấp ca của nó này không?"
+  },
+  {
+    "start": 1036.69,
+    "end": 1042.43,
+    "text": "nhưng tổ hợp chấp ca của nó"
+  },
+  {
+    "start": 1042.43,
+    "end": 1064.9,
+    "text": "Ok, thì đấy là hai cái bài đầu tiên, nó dễ dễ hơn một chút, tại vì cái cách xác định cái giá trị gán cho Xe nó rõ ràng"
+  },
+  {
+    "start": 1064.9,
+    "end": 1071.53,
+    "text": "Với còn cái bài tiếp theo thì nó cũng rõ ràng thôi, nhưng mà nó lại có thêm một yêu cầu"
+  },
+  {
+    "start": 1071.53,
+    "end": 1074.53,
+    "text": "Đấy là cái bài quay lưu hán vị"
+  },
+  {
+    "start": 1074.53,
+    "end": 1078.53,
+    "text": "Thì cái quay lưu hán vị nó sẽ đặc biệt hơn một chút so với hai cái cấu hình mà các bạn vừa học"
+  },
+  {
+    "start": 1078.53,
+    "end": 1081.53,
+    "text": "Đây là quay lưu hán vị của các bạn ấy"
+  },
+  {
+    "start": 1081.53,
+    "end": 1086.82,
+    "text": "khi mà các bạn xây dựng xe này này, thì mình có thể riệt từ 1 cho đến n"
+  },
+  {
+    "start": 1086.82,
+    "end": 1090.39,
+    "text": "mình có thể riệt từ 1 cho đến n"
+  },
+  {
+    "start": 1090.39,
+    "end": 1096.19,
+    "text": "hoán vị mà các bạn nên xe nó có thể nhận bất cứ 1 giá trị nào trong khoảng từ 1 cho đến n"
+  },
+  {
+    "start": 1096.19,
+    "end": 1105.22,
+    "text": "nhưng mà nó lại không thể nhận được các cái giá trị mà các bạn đã nhận ở trong những phần tử đứng trước ở trong cấu hình"
+  },
+  {
+    "start": 1105.22,
+    "end": 1111.22,
+    "text": "có nghĩa là khi mà các bạn xây dựng xe thì các bạn đã có x1, x2, x3 cho tới xe chứ 1 rồi"
+  },
+  {
+    "start": 1111.22,
+    "end": 1117.98,
+    "text": "Khi đó, x1, x2, x3, x2, x3, x1 của mình đã nhận những cái giá trị nào rồi, thì đến x3 các bạn không được nhận, đến xe các bạn không được nhận nữa"
+  },
+  {
+    "start": 1117.98,
+    "end": 1119.98,
+    "text": "Tại vì hoán vị nó không có lập lại mà"
+  },
+  {
+    "start": 1119.98,
+    "end": 1121.98,
+    "text": "Thì nên các bạn phải dùng một cái mảng đánh dấu"
+  },
+  {
+    "start": 1121.98,
+    "end": 1126.7,
+    "text": "Các bạn đánh dấu xem cái giá trị từ 1 cho tới nờ, nó đã được dùng ở trong cấu hình chưa, nhé"
+  },
+  {
+    "start": 1126.7,
+    "end": 1130.2,
+    "text": "Mấy thì ở đây các bạn sẽ có một cái mảng mình đặt là ưu"
+  },
+  {
+    "start": 1130.2,
+    "end": 1137.86,
+    "text": "Ở đây nè, trước khi mà các bạn gán xe bằng di thì các bạn phải kiểm tra là ưu của di nó bằng không"
+  },
+  {
+    "start": 1137.86,
+    "end": 1145.15,
+    "text": "Tức là, những cái thẳng ở trong cấu hình mà các bạn đang đi xây dựng ấy, nó chưa có thằng nào được dùng cái giá trị G này"
+  },
+  {
+    "start": 1145.15,
+    "end": 1147.85,
+    "text": "thì các bạn mới được gán cho Xe, đúng không?"
+  },
+  {
+    "start": 1147.85,
+    "end": 1149.77,
+    "text": "Đấy, khi đó mình sẽ gán Xe bằng G"
+  },
+  {
+    "start": 1149.77,
+    "end": 1152.45,
+    "text": "Đồng thời các bạn phải cho iu của G bằng 1"
+  },
+  {
+    "start": 1152.45,
+    "end": 1156.57,
+    "text": "Để từ cái lời gọi cho i này, các bạn gọi đến cho i cộng 1 ấy"
+  },
+  {
+    "start": 1156.57,
+    "end": 1159.27,
+    "text": "thì cái thằng i cộng 1 sẽ không dùng thằng G này nữa"
+  },
+  {
+    "start": 1159.27,
+    "end": 1160.29,
+    "text": "Được chưa?"
+  },
+  {
+    "start": 1160.29,
+    "end": 1163.35,
+    "text": "Đấy, các bạn kiểm tra ip i bằng n thì các bạn in kết quả"
+  },
+  {
+    "start": 1163.35,
+    "end": 1168.64,
+    "text": "Còn nếu mà i của bạn nó chưa bằng n thì các bạn sẽ try đến i cộng 1"
+  },
+  {
+    "start": 1168.64,
+    "end": 1170.83,
+    "text": "Nấy, thế thôi"
+  },
+  {
+    "start": 1170.83,
+    "end": 1172.83,
+    "text": "Nó có thêm một cái mảng đánh dấu nữa"
+  },
+  {
+    "start": 1172.83,
+    "end": 1177.33,
+    "text": "Trước khi mà mình muốn gán cái giá trị G cho thằng Xe thì bạn em phải kiểm tra xem là à nó dùng chưa"
+  },
+  {
+    "start": 1177.33,
+    "end": 1178.83,
+    "text": "Nếu mà chưa dùng mình dùng luôn"
+  },
+  {
+    "start": 1178.83,
+    "end": 1181.83,
+    "text": "Còn nếu mà dùng rồi thì không được dùng lại nữa"
+  },
+  {
+    "start": 1181.83,
+    "end": 1182.83,
+    "text": "Tại vì hoán vị mà"
+  },
+  {
+    "start": 1182.83,
+    "end": 1185.83,
+    "text": "Nhưng mà khi mà các bạn đã chấp nhận là Xe bằng G rồi"
+  },
+  {
+    "start": 1185.83,
+    "end": 1188.33,
+    "text": "Thì các bạn phải đánh dấu là nó đã được sử dụng"
+  },
+  {
+    "start": 1188.33,
+    "end": 1190.33,
+    "text": "Tức là mình phải cho yêu của G bằng 1"
+  },
+  {
+    "start": 1190.33,
+    "end": 1192.56,
+    "text": "Né, yêu của G bằng 1"
+  },
+  {
+    "start": 1192.56,
+    "end": 1203.56,
+    "text": "Nhưng mà ở chỗ này nè, sau khi mà các bạn hình dung nhé, ở đây các bạn kiểm trai yêu của Di bằng không, các bạn gán, xong các bạn có thể gọi đệ quy hoặc là in ra kết quả"
+  },
+  {
+    "start": 1203.56,
+    "end": 1210.56,
+    "text": "Sau khi mà cái nhánh để đệ quy nó chạy xong thì ở dòng số 30, các bạn phải trẻ lại cái giá trị cho thằng Di"
+  },
+  {
+    "start": 1210.56,
+    "end": 1221.0,
+    "text": "Mình phải cho yêu của Di bằng không ở chỗ này, nó bách check lại, các bạn hình dung, cái chỗ này nó rất là giống cái phần bài tập mà các bạn loang ở trên mảng 2 chiều ấy"
+  },
+  {
+    "start": 1221.0,
+    "end": 1224.72,
+    "text": "Các bạn hình dung câu lệnh số 30 như thế này cho nó dễ hiểu"
+  },
+  {
+    "start": 1224.72,
+    "end": 1228.18,
+    "text": "khi mà các bạn đi trong bảng 2 chiều"
+  },
+  {
+    "start": 1228.18,
+    "end": 1231.68,
+    "text": "ví dụ như các bạn từ O này xuống O này, xong xuống O này, đúng không nhỉ?"
+  },
+  {
+    "start": 1231.68,
+    "end": 1235.08,
+    "text": "thì khi mà các bạn quay lại, quay lại, đó"
+  },
+  {
+    "start": 1235.08,
+    "end": 1239.52,
+    "text": "để từ O này mình đi cái O bên phải hoặc đi cái nhánh khác"
+  },
+  {
+    "start": 1239.52,
+    "end": 1241.02,
+    "text": "tức là bách trách lại đó"
+  },
+  {
+    "start": 1241.02,
+    "end": 1246.66,
+    "text": "thì trong xinh hoán vị này cũng thế này"
+  },
+  {
+    "start": 1246.66,
+    "end": 1250.86,
+    "text": "các bạn hình dung là khi mà các bạn gán x1, x2, đúng không nhỉ?"
+  },
+  {
+    "start": 1250.86,
+    "end": 1253.3,
+    "text": "cho tới xnr mà nó đủ 1 cấu hình rồi"
+  },
+  {
+    "start": 1253.3,
+    "end": 1256.02,
+    "text": "Thì nếu nó không có câu lệnh số 30 này này"
+  },
+  {
+    "start": 1256.02,
+    "end": 1260.94,
+    "text": "thì khi đó tất cả các giá trị của bạn từ 1 cho tới nờ nó sẽ không được dùng lại nữa đâu"
+  },
+  {
+    "start": 1260.94,
+    "end": 1264.46,
+    "text": "và nó chỉ in cho các bạn độc nhất 1 cấu hình từ 1 cho tới nờ thôi"
+  },
+  {
+    "start": 1264.46,
+    "end": 1267.14,
+    "text": "còn nó sẽ không sinh ra thêm bất cứ 1 cấu hình nào nữa"
+  },
+  {
+    "start": 1267.14,
+    "end": 1271.48,
+    "text": "tại vì các bạn hình dung ở trên cái cây quay lui nha"
+  },
+  {
+    "start": 1271.48,
+    "end": 1274.6,
+    "text": "đây cái cây quay lui mà xinh hoán vị này này"
+  },
+  {
+    "start": 1274.6,
+    "end": 1278.6,
+    "text": "nếu mà các bạn không có câu lệnh bác trách đấy, cái câu lệnh yêu của G bằng không"
+  },
+  {
+    "start": 1278.6,
+    "end": 1280.72,
+    "text": "thì nó chỉ cần 1 cấu hình đầu tiên thôi"
+  },
+  {
+    "start": 1280.72,
+    "end": 1284.24,
+    "text": "khi mà các bạn gán ích 1 bằng 1 này, các bạn đánh dấu là 1 đã dùng rồi này"
+  },
+  {
+    "start": 1284.24,
+    "end": 1288.32,
+    "text": "và các bạn gọi cho 2 các bạn gán ích 2 bằng 2, các bạn đánh dấu là 2 đã dùng này"
+  },
+  {
+    "start": 1288.32,
+    "end": 1291.84,
+    "text": "sau khi mà các bạn gọi cho cho 3 các bạn gán ích 3 bằng 3, các bạn đánh dấu là 3 đã dùng này"
+  },
+  {
+    "start": 1291.84,
+    "end": 1293.8,
+    "text": "thì các bạn nghe ra cấu hình là 1, 2, 3 đúng không?"
+  },
+  {
+    "start": 1293.8,
+    "end": 1295.84,
+    "text": "thì tất cả các cái nhánh đệ quy còn lại này này"
+  },
+  {
+    "start": 1295.84,
+    "end": 1298.38,
+    "text": "nó làm gì có dùng được thành 1, 2, 3 nữa?"
+  },
+  {
+    "start": 1298.38,
+    "end": 1299.22,
+    "text": "có đúng không?"
+  },
+  {
+    "start": 1299.22,
+    "end": 1301.03,
+    "text": "nó không dùng được nữa"
+  },
+  {
+    "start": 1301.03,
+    "end": 1303.87,
+    "text": "nên nó sẽ không thể yên thêm 1 cấu hình nào nữa"
+  },
+  {
+    "start": 1303.87,
+    "end": 1306.57,
+    "text": "nếu không có cái câu lệnh đó"
+  },
+  {
+    "start": 1306.57,
+    "end": 1311.13,
+    "text": "cái câu lệnh yêu của G nó bằng 0 này này là các bạn hình dùng nhé"
+  },
+  {
+    "start": 1312.09,
+    "end": 1317.32,
+    "text": "Đi cái nhánh này này, giả sử các bạn đang ở tròi ba, các bạn giả sử các bạn đang ở tròi ba"
+  },
+  {
+    "start": 1317.32,
+    "end": 1319.32,
+    "text": "Đấy chưa? Đây, tròi ba đây"
+  },
+  {
+    "start": 1319.32,
+    "end": 1324.32,
+    "text": "Các bạn gán x3 bằng ba, sau đó làm sao? Thôi các bạn đánh dấu là ưu của ba bằng 1 đúng không?"
+  },
+  {
+    "start": 1324.32,
+    "end": 1327.73,
+    "text": "Sau đó các bạn in sau cấu hình là 1, 2 ba"
+  },
+  {
+    "start": 1327.73,
+    "end": 1334.73,
+    "text": "Thì cái hàm tròi ba nó chạy xong, đúng không? Tương ứng với cái vòng 4 này nó chạy xong này"
+  },
+  {
+    "start": 1334.73,
+    "end": 1336.73,
+    "text": "Cái vòng 4 thứ nhất ở trong hàm tròi 2 nó chạy xong ấy"
+  },
+  {
+    "start": 1336.73,
+    "end": 1340.2,
+    "text": "Thì khi đó, các bạn phải trẻ lại cái giá trị thằng XB này này"
+  },
+  {
+    "start": 1340.2,
+    "end": 1343.13,
+    "text": "và các bạn trẻ lại luôn cái giá trị X2 này này"
+  },
+  {
+    "start": 1343.13,
+    "end": 1347.13,
+    "text": "Đấy, là 2 với 3, là không được dùng nữa, xin lỗi lại có thể dùng nữa"
+  },
+  {
+    "start": 1347.13,
+    "end": 1351.13,
+    "text": "Để tý nữa mà các bạn đi sang cái nhánh này, thì mình mới lại dùng được giá trị 2 và 3"
+  },
+  {
+    "start": 1351.13,
+    "end": 1354.89,
+    "text": "Tức là mình cứ quay lại, mình quay lại cái đường nào, mình đi cái nhánh khác, thì mình phải trẻ lại"
+  },
+  {
+    "start": 1354.89,
+    "end": 1357.13,
+    "text": "Các bạn hình dùng thế không? Đây nha, anh ví dụ này"
+  },
+  {
+    "start": 1357.13,
+    "end": 1361.13,
+    "text": "Ở khi mà bọn em vào hàm cho ai nha, bọn em gán X2 bằng 2"
+  },
+  {
+    "start": 1361.13,
+    "end": 1364.13,
+    "text": "thì khi đó mình sẽ đánh dấu lợi yêu của 2 bằng 1"
+  },
+  {
+    "start": 1364.13,
+    "end": 1367.64,
+    "text": "Đúng không? Thì có nghĩa là cái nhánh đệ quy này này"
+  },
+  {
+    "start": 1367.64,
+    "end": 1372.44,
+    "text": "Tất cả những cái nhánh đệ quy mà phát triển ở cái mũi tên này nó sẽ không dùng được thằng hai nữa"
+  },
+  {
+    "start": 1372.44,
+    "end": 1376.28,
+    "text": "Nhưng mà khi mà các cái nhánh đệ quy ở bên dưới này nó chạy xong ấy"
+  },
+  {
+    "start": 1376.28,
+    "end": 1380.12,
+    "text": "Đúng không? Thì có phải là các bạn sẽ đi sang cái nhánh đệ quy này không?"
+  },
+  {
+    "start": 1380.12,
+    "end": 1382.12,
+    "text": "Thì cái thằng hai này này phải được trái lại"
+  },
+  {
+    "start": 1382.12,
+    "end": 1384.82,
+    "text": "Đấy, để các cái nhánh ở bên này nó còn dùng thằng hai"
+  },
+  {
+    "start": 1384.82,
+    "end": 1387.62,
+    "text": "Đấy, đấy là backtrack đấy các bạn, backtrack là mình đi quay lại"
+  },
+  {
+    "start": 1387.62,
+    "end": 1389.62,
+    "text": "Hàm đệ quy bên trên mình đi cái nhánh khác đúng không?"
+  },
+  {
+    "start": 1389.62,
+    "end": 1392.26,
+    "text": "Ờ thì trong quá trình mà em quay lại đi cái nhánh khác"
+  },
+  {
+    "start": 1392.26,
+    "end": 1395.22,
+    "text": "Thì các bạn phải trẻ lại cái giá trị mà các bạn là đánh dấu"
+  },
+  {
+    "start": 1395.22,
+    "end": 1398.58,
+    "text": "Và nếu mà không trẻ lại thì nó chỉ in ra được 1 cấu hình, nhé"
+  },
+  {
+    "start": 1398.58,
+    "end": 1402.18,
+    "text": "Đấy, đây mình vý dụ cho các bạn xem cái chỗ đó"
+  },
+  {
+    "start": 1402.18,
+    "end": 1406.28,
+    "text": "Nào bằng năm nhé, thì nó in ra đủ"
+  },
+  {
+    "start": 1406.28,
+    "end": 1410.08,
+    "text": "Năm là bao nhiêu, năm là 120 cấu hình đúng không?"
+  },
+  {
+    "start": 1410.08,
+    "end": 1415.65,
+    "text": "Nhấy, nhưng mà các bạn bỏ câu lệnh đi nhé, nó chỉ in đúng là 1, 2 năm thôi"
+  },
+  {
+    "start": 1415.65,
+    "end": 1417.32,
+    "text": "Mà 2 vào 1 năm thôi"
+  },
+  {
+    "start": 1417.32,
+    "end": 1427.88,
+    "text": "ok, rồi, đây mình sẽ lấy ví dụ cho các bạn cái việc mà cái câu lệnh số 30, nó bách check lại, nó quay lùi lại"
+  },
+  {
+    "start": 1427.88,
+    "end": 1449.04,
+    "text": "đây, ở đây mình vẫn có nờ bằng 3, đúng không? nờ bằng 3"
+  },
+  {
+    "start": 1449.04,
+    "end": 1453.07,
+    "text": "cái giá trị 1, 2, 3, ban đầu yêu là không nhé"
+  },
+  {
+    "start": 1453.07,
+    "end": 1457.14,
+    "text": "rồi, ban đầu các bạn vào ham try 1"
+  },
+  {
+    "start": 1457.14,
+    "end": 1462.14,
+    "text": "thì các bạn chạy từ 1 trở tới nờ là từ 1 đến 3, nó có 3 vòng fought, nó rõ ràng rồi nhé, 1, 2, 3"
+  },
+  {
+    "start": 1462.14,
+    "end": 1465.02,
+    "text": "Đầu tiên các bạn check ưu của di, tức là ưu của 1"
+  },
+  {
+    "start": 1465.02,
+    "end": 1466.86,
+    "text": "nhánh này là di bằng 1 này"
+  },
+  {
+    "start": 1466.86,
+    "end": 1467.9,
+    "text": "thì nó chưa dùng"
+  },
+  {
+    "start": 1467.9,
+    "end": 1470.86,
+    "text": "các bạn sẽ gán íc 1 bằng 1 đây, íc 1 bằng 1 đây"
+  },
+  {
+    "start": 1470.86,
+    "end": 1475.42,
+    "text": "đồng thời các bạn cho ưu của 1 bằng 1, íc 1 bằng 1"
+  },
+  {
+    "start": 1475.42,
+    "end": 1476.83,
+    "text": "rồi"
+  },
+  {
+    "start": 1476.83,
+    "end": 1479.81,
+    "text": "sao các bạn kiểm tra ưu bằng i bằng nở chưa đúng không?"
+  },
+  {
+    "start": 1479.81,
+    "end": 1483.25,
+    "text": "thì chưa in kết quả được nhưng mà các bạn sẽ gọi tròi đến"
+  },
+  {
+    "start": 1483.25,
+    "end": 1486.42,
+    "text": "y cộng 1 tức là các bạn gọi cái hàm tròi 2 này này"
+  },
+  {
+    "start": 1486.42,
+    "end": 1488.29,
+    "text": "thì các bạn hình dung ấy"
+  },
+  {
+    "start": 1488.29,
+    "end": 1490.8,
+    "text": "bao giờ cái hàm tròi 2 này nó chạy xong nhé"
+  },
+  {
+    "start": 1490.8,
+    "end": 1493.31,
+    "text": "là bạn em xuống câu lệ này cả đúng không?"
+  },
+  {
+    "start": 1493.31,
+    "end": 1498.31,
+    "text": "Cái hàm try2 này nó chạy xong có nghĩa là tất cả những lời gọi địa quy ở dưới cái nhánh này mới chạy xong này"
+  },
+  {
+    "start": 1498.31,
+    "end": 1501.94,
+    "text": "Đấy, là các bạn sang cái nhánh địa quy này"
+  },
+  {
+    "start": 1501.94,
+    "end": 1506.97,
+    "text": "Thì khi đó các bạn phải cho yêu của thằng G vừa xong ấy là 1 nhé, nó trở thành số 0 đấy"
+  },
+  {
+    "start": 1506.97,
+    "end": 1510.23,
+    "text": "Các bạn hình dùng chỗ đây không? Đây nói lại chỗ đây nhé"
+  },
+  {
+    "start": 1510.23,
+    "end": 1513.73,
+    "text": "Đây, các bạn gán x1 bằng 1 này"
+  },
+  {
+    "start": 1513.73,
+    "end": 1515.86,
+    "text": "Các bạn em cho yêu của 1 bằng 1 này"
+  },
+  {
+    "start": 1515.86,
+    "end": 1520.36,
+    "text": "Sao mà em kiểm tra y bằng nờ không phải thì các bạn gọi try2 chỗ này đúng không? Đây, try2 đây"
+  },
+  {
+    "start": 1520.36,
+    "end": 1524.48,
+    "text": "Thì có phải tìm nữa cái hàm, nếu mà cái hàm DEQUIT try2 này chạy xong nó xuống câu lệnh này không?"
+  },
+  {
+    "start": 1524.48,
+    "end": 1530.96,
+    "text": "Câu UZ bằng không, lúc đấy là nó sẽ trẻ lại cái giá trị Z là 1 này này, trở thành xuống không?"
+  },
+  {
+    "start": 1530.96,
+    "end": 1532.56,
+    "text": "Để các bạn đi sang cái nhánh này."
+  },
+  {
+    "start": 1532.56,
+    "end": 1537.32,
+    "text": "Thì khi mà các bạn đi sang cái nhánh này, cái giá trị 1 nó lại tự do, nó lại dùng được, nha."
+  },
+  {
+    "start": 1537.32,
+    "end": 1540.04,
+    "text": "Dưới này mình gán x cái giá trị bằng 1 được."
+  },
+  {
+    "start": 1540.04,
+    "end": 1544.63,
+    "text": "Thì các bạn chú ý cái câu lệnh đấy là được."
+  },
+  {
+    "start": 1544.63,
+    "end": 1549.91,
+    "text": "Rồi, thì bây giờ các bạn vào try2, try2 thì các bạn cũng chạy từ 1 cho tới nờ."
+  },
+  {
+    "start": 1549.91,
+    "end": 1557.5,
+    "text": "Nhưng mà khi mà các bạn set G bằng 1 í, cái yêu của G khi nó bằng 1 rồi nên không có set được vòng for nên mình bỏ cái nhánh đây đi rồi nhé"
+  },
+  {
+    "start": 1557.5,
+    "end": 1558.9,
+    "text": "Cái nhánh G bằng 1 í"
+  },
+  {
+    "start": 1558.9,
+    "end": 1565.24,
+    "text": "Các bạn set G bằng 2 thì được tại vì yêu của 2 bằng 0, mình sẽ gán ích 2 bằng 2 đây"
+  },
+  {
+    "start": 1565.24,
+    "end": 1568.64,
+    "text": "Các bạn đánh dấu là yêu của 2 bằng 1 rồi"
+  },
+  {
+    "start": 1568.64,
+    "end": 1574.72,
+    "text": "Các bạn kiểm tra E bằng n chưa phải, các bạn gọi tròi E cộng 1 là tròi B đúng không?"
+  },
+  {
+    "start": 1574.72,
+    "end": 1580.03,
+    "text": "Rồi các bạn vào hàm tròi B, các bạn cũng làm cái vòng for chạy từ 1 tới 3"
+  },
+  {
+    "start": 1580.03,
+    "end": 1585.27,
+    "text": "Nhưng mà khi mà các bạn set G bằng 1 thì nó dùng rồi, G bằng 2 nó dùng rồi, G bằng 3 thì chưa dùng"
+  },
+  {
+    "start": 1585.27,
+    "end": 1590.43,
+    "text": "Mình sẽ gán x3 bằng 3 đây, mà các bạn phải cho U của 3 bằng 1, đây, U vào 3 bằng 1 đây"
+  },
+  {
+    "start": 1590.43,
+    "end": 1597.55,
+    "text": "Sau khi mà các bạn cho U của 3 bằng 1 này, các bạn kiểm tra Y bằng nờ, các bạn in kết quả luôn, đúng không?"
+  },
+  {
+    "start": 1597.55,
+    "end": 1599.75,
+    "text": "Thì nó sẽ được là 1, 2, 3, đây"
+  },
+  {
+    "start": 1599.75,
+    "end": 1604.48,
+    "text": "Nó xong in kết quả xuống thì nó sẽ xuống câu lệnh này, tại vì nó không có rơi vào L, đúng không?"
+  },
+  {
+    "start": 1604.48,
+    "end": 1608.28,
+    "text": "Nó rơi vào íp rồi, nên nó không rơi vào L, thì nó xuống câu lệnh này, nó làm cái gì?"
+  },
+  {
+    "start": 1608.28,
+    "end": 1611.08,
+    "text": "nó cho yêu của Di bằng không, có phải nó trẻ lại cái giá trị của ba không?"
+  },
+  {
+    "start": 1611.08,
+    "end": 1613.8,
+    "text": "Ồ, thì cái đó là yêu của ba các bạn phải thành bằng số không."
+  },
+  {
+    "start": 1613.8,
+    "end": 1616.28,
+    "text": "Nấy, ok chưa?"
+  },
+  {
+    "start": 1616.28,
+    "end": 1617.65,
+    "text": "Đấy thôi."
+  },
+  {
+    "start": 1617.65,
+    "end": 1622.55,
+    "text": "Sau khi mà các bạn cho yêu của ba bằng không này, thì cái hàm try ba của bạn nó chạy xong."
+  },
+  {
+    "start": 1622.55,
+    "end": 1628.79,
+    "text": "Nha, tại vì khi đó Di của bạn nó cũng bằng ba rồi mà, các bạn tăng Di lên Di bằng 4 thì cái hàm try ban nó chạy xong."
+  },
+  {
+    "start": 1628.79,
+    "end": 1635.99,
+    "text": "Thì các bạn hình dung này, lúc nãy nhá, trong cái hàm try 2 của bạn em lưu lại cái hàm, nhớ lại cái hàm try 2 này một lúc."
+  },
+  {
+    "start": 1635.99,
+    "end": 1646.42,
+    "text": "tuy criminals, tiên, dit, Fruit rkeep, Coins"
+  },
+  {
+    "start": 1646.42,
+    "end": 1647.64,
+    "text": "threwnteer"
+  },
+  {
+    "start": 1647.64,
+    "end": 1659.96,
+    "text": "Trential, dith, c ninguna"
+  },
+  {
+    "start": 1659.96,
+    "end": 1665.96,
+    "text": "Xong bắt đầu các bạn mới tăng ghi lên để các bạn sang cái vòng fo này, là ghi vòng 3"
+  },
+  {
+    "start": 1665.96,
+    "end": 1671.96,
+    "text": "Tức là các bạn hình dùng, các bạn cứ đi quay lại cái đệ quy, các bạn đi sang cái nhánh khác, bắt chắc lại"
+  },
+  {
+    "start": 1671.96,
+    "end": 1675.96,
+    "text": "thì các bạn phải trẻ lại cái giá trị của thằng ghi ở cái nhánh đó mà các bạn đã dùng"
+  },
+  {
+    "start": 1675.96,
+    "end": 1681.96,
+    "text": "Nói thế thì ở trong trường hợp này khi mà các bạn sang bên này các bạn set cái vòng fo với ghi vòng 3"
+  },
+  {
+    "start": 1681.96,
+    "end": 1685.96,
+    "text": "thì các bạn set 3 nó mới ok này, thì các bạn sẽ gán ích 2 vòng 3"
+  },
+  {
+    "start": 1685.96,
+    "end": 1687.96,
+    "text": "Các bạn đánh dấu lợi yêu của bè vòng 1"
+  },
+  {
+    "start": 1687.96,
+    "end": 1691.12,
+    "text": "Sao bạn cho gọi ánh tròi bè?"
+  },
+  {
+    "start": 1691.12,
+    "end": 1696.12,
+    "text": "Tròi bè thì nó lại xét bè vòng form 1, 2 bè nhưng mà 1 dùng rồi, bè dùng rồi nó chỉ gọi được 2 thôi"
+  },
+  {
+    "start": 1696.12,
+    "end": 1698.12,
+    "text": "nên nó mới gán ích bè vòng 2 này"
+  },
+  {
+    "start": 1698.12,
+    "end": 1700.12,
+    "text": "Sao nó đánh dấu lợi yêu của 2 vòng 1 này?"
+  },
+  {
+    "start": 1700.12,
+    "end": 1702.37,
+    "text": "Ê, ok chưa?"
+  },
+  {
+    "start": 1702.37,
+    "end": 1704.37,
+    "text": "Sao đó nó in ra cấu hình là 1, bè 2"
+  },
+  {
+    "start": 1704.37,
+    "end": 1706.37,
+    "text": "Sau khi mà in ra cấu hình ở chỗ này này"
+  },
+  {
+    "start": 1706.37,
+    "end": 1708.37,
+    "text": "Nên sẽ xuống dưới này nó đánh dấu yêu của Z"
+  },
+  {
+    "start": 1708.37,
+    "end": 1710.37,
+    "text": "Z khi đó nó là 2 này này"
+  },
+  {
+    "start": 1710.37,
+    "end": 1712.37,
+    "text": "Đấy, nó trở thành xuống không?"
+  },
+  {
+    "start": 1712.37,
+    "end": 1715.56,
+    "text": "Nói, nó sẽ trở lại cho các bạn cái giá trị của 2 vòng không?"
+  },
+  {
+    "start": 1715.56,
+    "end": 1717.56,
+    "text": "Được chìa?"
+  },
+  {
+    "start": 1717.56,
+    "end": 1720.08,
+    "text": "Thế thôi."
+  },
+  {
+    "start": 1720.08,
+    "end": 1723.08,
+    "text": "Thì tương tự như vậy ở trong cái ham try 2 của các bạn này này."
+  },
+  {
+    "start": 1723.08,
+    "end": 1725.08,
+    "text": "Đúng không? Các bạn gán ít 2 vàng bè ở đây này,"
+  },
+  {
+    "start": 1725.08,
+    "end": 1728.08,
+    "text": "xong các bạn gọi try bè ở đây thì try bè nó vừa chạy xong ở đây."
+  },
+  {
+    "start": 1728.08,
+    "end": 1732.08,
+    "text": "Thì các bạn sẽ trẻ lại cái yêu của zi chỗ này là bè này này, thành số không."
+  },
+  {
+    "start": 1732.08,
+    "end": 1735.08,
+    "text": "Cứ quay lại là tôi trẻ lại thôi."
+  },
+  {
+    "start": 1735.08,
+    "end": 1740.56,
+    "text": "Sau đó ham try 2 nó chạy xong, ham try 2 nó chạy xong thì cái vòng 4 thứ nhất này này."
+  },
+  {
+    "start": 1740.56,
+    "end": 1742.81,
+    "text": "Nó chạy xong, đúng không?"
+  },
+  {
+    "start": 1742.81,
+    "end": 1745.81,
+    "text": "Thì khi đó, cái nhánh này nó tương ứng với ít 1 vàng 1 này này."
+  },
+  {
+    "start": 1745.81,
+    "end": 1748.89,
+    "text": "Các bạn hình dung cái ham try 1 lúc nãy của bạn nó gọi try 2 chỗ này"
+  },
+  {
+    "start": 1748.89,
+    "end": 1751.19,
+    "text": "Bây giờ cái ham try 2 vừa chạy xong"
+  },
+  {
+    "start": 1751.19,
+    "end": 1754.41,
+    "text": "Bây giờ nó phải xuống dưới này, nó cho yêu cái z này này, là yêu 1 này này"
+  },
+  {
+    "start": 1754.41,
+    "end": 1758.81,
+    "text": "Trở thành số 0, thì các bạn trả lại yêu của 1, nó thành số 0 để các bạn đi nhánh khác"
+  },
+  {
+    "start": 1758.81,
+    "end": 1761.29,
+    "text": "Thì bây giờ các bạn đã tiếp tục ca cái nhánh còn lại"
+  },
+  {
+    "start": 1761.29,
+    "end": 1765.73,
+    "text": "Nói chung là mình ví dụ các bạn cái nhánh này này"
+  },
+  {
+    "start": 1765.73,
+    "end": 1768.01,
+    "text": "Khi mà cái nhánh này này"
+  },
+  {
+    "start": 1768.01,
+    "end": 1770.33,
+    "text": "Nói các bạn cho x1 và 1 đúng không?"
+  },
+  {
+    "start": 1770.33,
+    "end": 1774.45,
+    "text": "Thì tất cả những lời gọi địa quy ở cái nhánh này nó không bao giờ dùng được thằng 1 nữa"
+  },
+  {
+    "start": 1774.45,
+    "end": 1777.89,
+    "text": "Nhưng mà nếu mà các bạn sang nhánh này thì dùng được, và sang nhánh này cũng thể dùng được"
+  },
+  {
+    "start": 1777.89,
+    "end": 1782.77,
+    "text": "Nên là các bạn mà quay vòng lại, các bạn đi cái nhánh khác thì các bạn phải trẻ lại cái giá trị yêu cho thằng gì"
+  },
+  {
+    "start": 1782.77,
+    "end": 1784.69,
+    "text": "Nói mới là cái backjack, nha"
+  },
+  {
+    "start": 1784.69,
+    "end": 1790.21,
+    "text": "Thì khi đó, cái câu lệnh số 30 của bạn nó làm cái chức năng đó đấy, có lệnh số 30 này này"
+  },
+  {
+    "start": 1790.21,
+    "end": 1795.4,
+    "text": "Ok, thì là các bạn sẽ có sinh hoán vị"
+  },
+  {
+    "start": 1795.4,
+    "end": 1803.14,
+    "text": "Nói chung là để quy các bạn cứ hiểu quay lưu của mình đấy chính là mình sẽ thử đi một cái đường nào đó"
+  },
+  {
+    "start": 1803.14,
+    "end": 1810.62,
+    "text": "hoặc là thử gán một cái giá trị nào đó, nhưng khi mà các bạn đã không thử nữa, mình ví dụ ở chỗ đoạn này là các bạn thử này, thử gán này"
+  },
+  {
+    "start": 1810.62,
+    "end": 1816.26,
+    "text": "sau đó các bạn tiếp tục in ra kết quả hoặc là các bạn gọi địa quy, nhưng mà sau khi mà các bạn in kết quả xong"
+  },
+  {
+    "start": 1816.26,
+    "end": 1822.9,
+    "text": "hoặc là cái lời gọi địa quy nó chạy xong ấy, là mình không muốn thử nữa mà mình tăng di lên để mình xét cái trường hợp khác để mình thử"
+  },
+  {
+    "start": 1822.9,
+    "end": 1830.38,
+    "text": "thì khi đó các bạn phải xem là cái việc mà cái giá trị mà mình vừa thử, ví dụ như trong trường hợp này đã di, mình có cần phải làm gì với nó không"
+  },
+  {
+    "start": 1830.38,
+    "end": 1836.62,
+    "text": "Mình có cần phải, ví dụ như đường đi, mình có thể bỏ, mình có cần bỏ cái nước đi mà mình vừa ghi nhận hay không"
+  },
+  {
+    "start": 1836.62,
+    "end": 1840.86,
+    "text": "hoặc là một cái giá trị mình dùng có cần phải mở lại cái giá trị cho nó hay không"
+  },
+  {
+    "start": 1840.86,
+    "end": 1843.98,
+    "text": "thì nó chính là câu lệnh số 30 này, rất là quan trọng nha các bạn"
+  },
+  {
+    "start": 1843.98,
+    "end": 1847.82,
+    "text": "Đây là thử đúng không? Đây là kiểm tra trước này xem có dùng được không này?"
+  },
+  {
+    "start": 1847.82,
+    "end": 1849.02,
+    "text": "Sau đó mình thử"
+  },
+  {
+    "start": 1849.02,
+    "end": 1852.78,
+    "text": "Thử xong là mình gọi đệ quy rồi mình in kết quả từ lừa ra"
+  },
+  {
+    "start": 1852.78,
+    "end": 1859.1,
+    "text": "Thì bắt đầu nó mới xuống dòng số 2, 30, xong bắt đầu mà các bạn mới tăng di lên để mình thử cái giá trị khác đúng không?"
+  },
+  {
+    "start": 1859.1,
+    "end": 1864.56,
+    "text": "Ừ, thì mình xem cái giá trị mà mình vừa thử là tháng di này này, nó có cần làm gì không? Mình có phải trẻ lại giá trị cho nói không?"
+  },
+  {
+    "start": 1864.56,
+    "end": 1871.46,
+    "text": "Hay là mình có cần phải xóa cái đường đi mà vừa vừa ghi nhận hay không? Thì các bạn sẽ làm ở cái bước này, cái chỗ đoạn này, nhé?"
+  },
+  {
+    "start": 1871.46,
+    "end": 1877.12,
+    "text": "Thế mình gọi là backtrack đấy, đấy nó mới rõ ràng cái backtrack ở chỗ đó các bạn, nhé?"
+  },
+  {
+    "start": 1877.12,
+    "end": 1882.59,
+    "text": "Đấy là xinh... xinh hoán vị các bạn, đó."
+  },
+  {
+    "start": 1882.59,
+    "end": 1889.0,
+    "text": "Ngoài ra thì nó sẽ có thể yêu cầu các bạn in ra cái đường đi ở trên cái mảng 2 chiều."
+  },
+  {
+    "start": 1889.0,
+    "end": 1891.14,
+    "text": "Các bạn học lọc cho những phần quay lùi"
+  },
+  {
+    "start": 1900.38,
+    "end": 1904.26,
+    "text": "Đây, nó có mấy cái bài kiểu nó cho các bạn em bán 2 triều cái mạch ận ấy"
+  },
+  {
+    "start": 1904.26,
+    "end": 1907.66,
+    "text": "sau nó bắt các bạn tìm cái đường đi từ ồ thứ 1 đến ồ thứ 2"
+  },
+  {
+    "start": 1907.66,
+    "end": 1909.56,
+    "text": "và nó sẽ cho các bạn cái cách di chuyển"
+  },
+  {
+    "start": 1909.56,
+    "end": 1911.7,
+    "text": "Các bạn này thì nó sẽ cho các bạn em"
+  },
+  {
+    "start": 1911.7,
+    "end": 1915.08,
+    "text": "cái O đây là ồ bắt đầu, ở đây là ồ kết thúc"
+  },
+  {
+    "start": 1915.08,
+    "end": 1918.56,
+    "text": "Mỗi lần đi thì các bạn chỉ được đi qua các cái ồ số 1 thôi"
+  },
+  {
+    "start": 1918.56,
+    "end": 1921.58,
+    "text": "và chỉ được đi sang phải và đi xuống dưới"
+  },
+  {
+    "start": 1921.58,
+    "end": 1925.78,
+    "text": "Nếu mà các bạn đi sang phải thì nó sẽ là cái ghi nhận cái nước đi đấy là Rye"
+  },
+  {
+    "start": 1925.78,
+    "end": 1929.42,
+    "text": "Còn các bạn đi xuống dưới thì cái nước đi nó là đeo, ví dụ các bạn đi nhìn như thế này"
+  },
+  {
+    "start": 1930.25,
+    "end": 1940.21,
+    "text": "Thì cái đường đi nó sẽ là, từ đây xong đây là rai, từ đây xong đây là rai, từ đây xuống đây là đeo, từ đây xong đây là rai,"
+  },
+  {
+    "start": 1940.81,
+    "end": 1943.37,
+    "text": "Thông từ đây xuống đây là đeo, đấy thì đây chính là cái kết quả"
+  },
+  {
+    "start": 1943.65,
+    "end": 1945.97,
+    "text": "Nó sẽ bắt các bạn in ra tất cả các cách đi như vậy"
+  },
+  {
+    "start": 1946.97,
+    "end": 1953.49,
+    "text": "Thì ở đây các bạn sẽ gọi địa quy đến giống tương tự như thật toán loang ấy, các bạn sẽ gọi địa quy đến một cái OEG nào đó"
+  },
+  {
+    "start": 1953.49,
+    "end": 1955.97,
+    "text": "Try đến OEG nào đó"
+  },
+  {
+    "start": 1955.97,
+    "end": 1958.77,
+    "text": "Sau đó thì các bạn set O bên phải và O bên dưới"
+  },
+  {
+    "start": 1958.77,
+    "end": 1960.37,
+    "text": "Tức là cái vòng for này này"
+  },
+  {
+    "start": 1960.37,
+    "end": 1962.61,
+    "text": "Các bạn sẽ set O bên phải và O bên dưới"
+  },
+  {
+    "start": 1962.61,
+    "end": 1964.53,
+    "text": "Hoặc là các bạn dùng 2 cái ip cũng được"
+  },
+  {
+    "start": 1964.53,
+    "end": 1968.69,
+    "text": "Tức là bình thường đệ quy thì các bạn sẽ dùng vòng for để set các trường hợp, đúng không?"
+  },
+  {
+    "start": 1968.69,
+    "end": 1971.57,
+    "text": "Thì trong trường hợp này các bạn có thêm 1 cái OZ như thế này"
+  },
+  {
+    "start": 1971.57,
+    "end": 1975.97,
+    "text": "Thì trong vòng for này các bạn có thể dùng vòng for Ấn được bằng cách là set 2O liền kê"
+  },
+  {
+    "start": 1975.97,
+    "end": 1977.65,
+    "text": "Mà mình đã hướng dẫn cái cách làm đấy"
+  },
+  {
+    "start": 1977.65,
+    "end": 1980.53,
+    "text": "Hai là các bạn có thể ip L từng cái 1 cũng được"
+  },
+  {
+    "start": 1980.53,
+    "end": 1984.85,
+    "text": "Các bạn ếp cái O bên phải, rồi ếp cái O ở bên dưới"
+  },
+  {
+    "start": 1984.85,
+    "end": 1990.77,
+    "text": "Nói xem là cái O bên phải, nó có là số 1 không, hoặc là O bên dưới có là số 1 không"
+  },
+  {
+    "start": 1990.77,
+    "end": 1994.77,
+    "text": "Thế nếu mà các bạn dùng vòng 4 thì thực ra nó cũng được, không sao cả"
+  },
+  {
+    "start": 1994.77,
+    "end": 1997.73,
+    "text": "Ở đây mình sẽ dùng 1 cái sâu để mình lưu lại kết quả"
+  },
+  {
+    "start": 1997.73,
+    "end": 2003.89,
+    "text": "Còn các bạn dùng cái cái cái mảng cũng được, nếu mà các bạn dùng mảng thì các bạn sẽ dùng mảng tre"
+  },
+  {
+    "start": 2003.89,
+    "end": 2005.73,
+    "text": "Các bạn dùng mảng tre"
+  },
+  {
+    "start": 2005.73,
+    "end": 2009.57,
+    "text": "Còn không thì các bạn có thể dùng 1 cái sâu để các bạn lưu cái đường đi"
+  },
+  {
+    "start": 2009.57,
+    "end": 2011.87,
+    "text": "mình sẽ dùng 1 cái sâu là S, nhé"
+  },
+  {
+    "start": 2013.27,
+    "end": 2018.97,
+    "text": "Thế thì ở trong ham-trial này này, đầu tiên mình sẽ set cái O, mình sẽ xem là nó đi đến O cuối chưa"
+  },
+  {
+    "start": 2018.97,
+    "end": 2021.47,
+    "text": "Mình sẽ kiểm tra là ipi bằng n và ghi bằng n"
+  },
+  {
+    "start": 2021.97,
+    "end": 2025.27,
+    "text": "Thì mình sẽ in ra cái đường đi đang lưu ở trong sâu S"
+  },
+  {
+    "start": 2026.25,
+    "end": 2028.35,
+    "text": "Nói, nếu mà nó đi đến cuối"
+  },
+  {
+    "start": 2028.65,
+    "end": 2030.75,
+    "text": "Còn không thì các bạn sẽ set O bên phải"
+  },
+  {
+    "start": 2031.34,
+    "end": 2033.84,
+    "text": "Và O bên dưới, các bạn set O nào trước cũng được"
+  },
+  {
+    "start": 2034.04,
+    "end": 2038.84,
+    "text": "Nhưng mà các bạn sẽ ưu tiên cái O bên dưới, tại vì O bên dưới là cái nước đi nó là chữ D"
+  },
+  {
+    "start": 2038.84,
+    "end": 2041.28,
+    "text": "con open phải, cái nước đi nó là chữ R"
+  },
+  {
+    "start": 2041.28,
+    "end": 2043.8,
+    "text": "nên nếu mà các bạn cứ u tiên cái OD trước"
+  },
+  {
+    "start": 2043.8,
+    "end": 2047.36,
+    "text": "thì cái đệ quy của bạn sẽ xinh ra cái đường đi mà chữ D nó đứng trước chữ R"
+  },
+  {
+    "start": 2047.36,
+    "end": 2050.16,
+    "text": "và nó sẽ tạo ra cái đường đi theo thứ tự tự điển"
+  },
+  {
+    "start": 2050.16,
+    "end": 2054.84,
+    "text": "nhá, nên là đây mình sẽ u tiên cái O bên dưới trước"
+  },
+  {
+    "start": 2054.84,
+    "end": 2058.42,
+    "text": "O bên dưới là chữ đào đấy"
+  },
+  {
+    "start": 2058.42,
+    "end": 2061.98,
+    "text": "thì mình sẽ kiểm tra O bên dưới là O, I, Z, Cộng 1 đúng không nhỉ?"
+  },
+  {
+    "start": 2061.98,
+    "end": 2063.42,
+    "text": "A sin O, I, Cộng 1, Z"
+  },
+  {
+    "start": 2063.42,
+    "end": 2065.42,
+    "text": "thì mình phải check I, Cộng 1 nhỏ bằng N"
+  },
+  {
+    "start": 2065.42,
+    "end": 2102.84,
+    "text": "Mình có một cái mảng A, mình sẽ phải check cái O, bên dưới xem là nó còn hợp lệ không, tại vì các bạn hình dung là cái O đấy các bạn đang đệ quy mà các bạn đang ở O này, các bạn set O bên dưới, nó không có hợp lệ, nó đừng có nhảy vào O này, nhá, nên mình phải check là i共 1 nhỏ bằng n, và cái O ai, i共 1 di đấy nó là số 1, thì các bạn sẽ cho cái SOF của các bạn là cái đường đi ấy, nó cộng thêm cái nước đi là D, rồi chờ, xong các bạn gọi đệ quy đến cái O này thì các bạn sẽ cho cái SOF của các bạn là cái đường đi ấy, nó cộng thêm cái nước đi là D, rồi chờ,"
+  },
+  {
+    "start": 2102.84,
+    "end": 2104.84,
+    "text": "Để nó đi tiếp"
+  },
+  {
+    "start": 2104.84,
+    "end": 2107.2,
+    "text": "Và sau khi mà đi xong"
+  },
+  {
+    "start": 2107.2,
+    "end": 2110.2,
+    "text": "Ở cái dòng số 27 này các bạn phải xóa cái chữ D đi đi"
+  },
+  {
+    "start": 2110.2,
+    "end": 2114.2,
+    "text": "Mà cách là dùng hàm cốt bác để xóa cái chữ D mà các bạn đã ghi nhận ở trên đi"
+  },
+  {
+    "start": 2114.2,
+    "end": 2117.2,
+    "text": "Tại vì các bạn hình dùng là các bạn đi từ OEG, các bạn đi xuân dưới"
+  },
+  {
+    "start": 2117.2,
+    "end": 2120.2,
+    "text": "Thì mà em cộng thêm chữ D vào cái phương án"
+  },
+  {
+    "start": 2120.2,
+    "end": 2123.2,
+    "text": "Nhưng mà khi mà cái O bên dưới đến nó chạy xong rồi"
+  },
+  {
+    "start": 2123.2,
+    "end": 2125.2,
+    "text": "Các bạn từ OEG, các bạn sẽ ra cái nhanh khác"
+  },
+  {
+    "start": 2125.2,
+    "end": 2127.2,
+    "text": "Thì mình phải xóa cái chữ D đi nha"
+  },
+  {
+    "start": 2127.2,
+    "end": 2129.2,
+    "text": "Cái dòng 27 nó bách trách lại"
+  },
+  {
+    "start": 2129.2,
+    "end": 2131.2,
+    "text": "Chứ các bạn mà không xóa dòng số 27"
+  },
+  {
+    "start": 2131.2,
+    "end": 2135.68,
+    "text": "Các bạn hình dụng là nó cứ dồn đống, dồn đống hết vào với nhau đấy"
+  },
+  {
+    "start": 2135.68,
+    "end": 2137.68,
+    "text": "Nên phải có backjack ở chỗ đó nhá"
+  },
+  {
+    "start": 2137.68,
+    "end": 2140.96,
+    "text": "Nên có bây giờ các bạn set open phải, thì mà em check là z cộng 1"
+  },
+  {
+    "start": 2140.96,
+    "end": 2145.87,
+    "text": "Nhỏ ăn bằng n và aiz cộng 1 của mình nó bằng số 1"
+  },
+  {
+    "start": 2145.87,
+    "end": 2148.99,
+    "text": "Thì các bạn sẽ cho anh s cộng bằng chi error"
+  },
+  {
+    "start": 2148.99,
+    "end": 2152.19,
+    "text": "Sau đó các bạn try đến cái o đó là iz cộng 1"
+  },
+  {
+    "start": 2152.19,
+    "end": 2154.19,
+    "text": "Sau đó các bạn dùng s chấm pop back được không?"
+  },
+  {
+    "start": 2154.19,
+    "end": 2158.14,
+    "text": "Nói, thế thôi"
+  },
+  {
+    "start": 2158.14,
+    "end": 2162.59,
+    "text": "Thì trong bên các bạn thì tiến hành nhập n, sau đó các bạn nhập cái mảng 2 chiều đấy"
+  },
+  {
+    "start": 2162.59,
+    "end": 2167.48,
+    "text": "từ hàng 1 cho tới hàng n này, từ cột 1 cho tới cột n này"
+  },
+  {
+    "start": 2167.48,
+    "end": 2170.71,
+    "text": "các bạn xin cho aezy đúng hả?"
+  },
+  {
+    "start": 2170.71,
+    "end": 2174.09,
+    "text": "cho đó các bạn chỉ cần gọi try từ o1 1 là được"
+  },
+  {
+    "start": 2174.09,
+    "end": 2176.29,
+    "text": "nãy là nó in cho các bạn hết đường đi thôi"
+  },
+  {
+    "start": 2176.29,
+    "end": 2182.44,
+    "text": "còn nếu mà các bạn không muốn xét chữ D trước, chữ write sau cũng được"
+  },
+  {
+    "start": 2182.44,
+    "end": 2185.76,
+    "text": "thì ở cái chỗ này các bạn đừng có in ra cái đường đi vội"
+  },
+  {
+    "start": 2185.76,
+    "end": 2188.92,
+    "text": "mà các bạn sẽ loo cái đường đi đấy vào trong 1 cái vector"
+  },
+  {
+    "start": 2188.92,
+    "end": 2194.05,
+    "text": "1 cái vector string ý, sau đó tý nữa các bạn sort cái vector string là các cái đường đi đấy"
+  },
+  {
+    "start": 2194.05,
+    "end": 2196.05,
+    "text": "theo thứ tự tự điển rồi mình hãy in"
+  },
+  {
+    "start": 2196.05,
+    "end": 2213.66,
+    "text": "bài đường, 467, liệt kê các đường đi trên mạng 2 chiều"
+  },
+  {
+    "start": 2213.66,
+    "end": 2219.24,
+    "text": "nhưng đường đi chỉ được đi sang phải hoặc là đi xuống dưới"
+  },
+  {
+    "start": 2219.24,
+    "end": 2224.24,
+    "text": "chỗ này khó hiểu, ở chỗ đoạn mà các bạn đi xuống dưới thì các bạn cộng thêm chữ D"
+  },
+  {
+    "start": 2224.24,
+    "end": 2227.24,
+    "text": "các bạn quay lại, các bạn pop back đúng không?"
+  },
+  {
+    "start": 2227.24,
+    "end": 2229.24,
+    "text": "Ví dụ cho các bạn nhé"
+  },
+  {
+    "start": 2229.24,
+    "end": 2237.09,
+    "text": "Ví dụ cho các bạn"
+  },
+  {
+    "start": 2237.09,
+    "end": 2240.54,
+    "text": "Ví dụ như bây giờ các bạn có 1 cái mảng 1 chiều nó như thế này"
+  },
+  {
+    "start": 2240.54,
+    "end": 2243.54,
+    "text": "Nó ngắn thôi, mình sẽ mảng 2 chiều chứ"
+  },
+  {
+    "start": 2243.54,
+    "end": 2262.83,
+    "text": "Đây, ví dụ mình có cái mảng 2 chiều như thế này"
+  },
+  {
+    "start": 2262.83,
+    "end": 2266.83,
+    "text": "Thì ở trong bên, bọn em gọi từ try, try từ o11 này đúng không?"
+  },
+  {
+    "start": 2266.83,
+    "end": 2269.89,
+    "text": "Ừ, cái đường đi của mình khi đó S nó đang ở sâu rộng nhé"
+  },
+  {
+    "start": 2269.89,
+    "end": 2274.31,
+    "text": "Rồi, các bạn try vào o11, rồi anh chấm cái"
+  },
+  {
+    "start": 2274.31,
+    "end": 2278.82,
+    "text": "Thì đầu tiên nó sẽ set o bên dưới"
+  },
+  {
+    "start": 2278.82,
+    "end": 2280.9,
+    "text": "tức là nó sẽ xét đệ quy đến O này trước"
+  },
+  {
+    "start": 2280.9,
+    "end": 2285.7,
+    "text": "thì O này cũng ok, tại vì O này cũng là số 1 và nó nằm trong bảng, đúng không?"
+  },
+  {
+    "start": 2285.7,
+    "end": 2289.5,
+    "text": "thì mình gọi đệ quy đến O này, cái ếp của bạn em khi đó nó sẽ có thêm chữ D"
+  },
+  {
+    "start": 2289.5,
+    "end": 2292.04,
+    "text": "ếp của em nó sẽ có thêm chữ D"
+  },
+  {
+    "start": 2292.04,
+    "end": 2297.53,
+    "text": "sau đó bây giờ các bạn xét đệ quy ở O này, thì các bạn lại xét O bên dưới của nó trước"
+  },
+  {
+    "start": 2297.53,
+    "end": 2300.57,
+    "text": "thì O này cũng ok, mình lại nhảy đệ quy đến O này"
+  },
+  {
+    "start": 2300.57,
+    "end": 2302.57,
+    "text": "thì đó cái đường đi của bạn nó cộng thêm chữ D"
+  },
+  {
+    "start": 2302.57,
+    "end": 2307.49,
+    "text": "rồi, khi mà các bạn xét O này, các bạn lại xét O bên dưới trước"
+  },
+  {
+    "start": 2307.49,
+    "end": 2309.49,
+    "text": "cái ít này nó chưa được xét đúng không nhỉ?"
+  },
+  {
+    "start": 2309.49,
+    "end": 2313.61,
+    "text": "O bên dưới cũng ok, nên các bạn cộng thêm chữ D vào và các bạn gọi địa quy đến O bên dưới"
+  },
+  {
+    "start": 2314.43,
+    "end": 2321.11,
+    "text": "Khi mà các bạn gọi địa quy đến O này này, là O41 này này, thì các bạn xét O bên dưới, cái íp này này là nó không hợp lệ"
+  },
+  {
+    "start": 2322.04,
+    "end": 2325.88,
+    "text": "Cái íp bên phải này này, nó cũng không hợp lệ, tại vì cái O bên phải nó là số 0"
+  },
+  {
+    "start": 2325.88,
+    "end": 2330.44,
+    "text": "Còn cái íp này thì là do cái í, cộng 1 của bạn nó vượt quá nờ rồi nên nó sẽ không xét O dưới này nữa"
+  },
+  {
+    "start": 2330.64,
+    "end": 2336.65,
+    "text": "Thì có phải là khi đó mọi em hình dung nhé, cái try của í cộng 1, g này nó chạy xăm không?"
+  },
+  {
+    "start": 2336.65,
+    "end": 2340.01,
+    "text": "Tức là các bạn hình dùng cái lời đệ quy ở O này, nó gọi đệ quy đến O này"
+  },
+  {
+    "start": 2340.01,
+    "end": 2342.11,
+    "text": "Thì cái lời gọi đệ quy đến O này chạy xong"
+  },
+  {
+    "start": 2342.11,
+    "end": 2345.47,
+    "text": "Thì nó sẽ phải quay lại cái O này nó đi sang phải, nó xét cái íp dưới"
+  },
+  {
+    "start": 2345.47,
+    "end": 2349.87,
+    "text": "Thì có phải là khi đó cái đường đi của em nó đang là đào nhé, đào nhé, đào nhé"
+  },
+  {
+    "start": 2349.87,
+    "end": 2352.91,
+    "text": "Bây giờ mình quay lại cái O này mình đi, mình phải xóa cái chữ D này đi không?"
+  },
+  {
+    "start": 2352.91,
+    "end": 2355.17,
+    "text": "Thì nó ở đây này, đó"
+  },
+  {
+    "start": 2355.17,
+    "end": 2357.91,
+    "text": "Các bạn hình dùng cái chỗ đấy không?"
+  },
+  {
+    "start": 2357.91,
+    "end": 2361.87,
+    "text": "Bọn em đang ở O, đây nhé, bọn em ở O 3.1 này này"
+  },
+  {
+    "start": 2361.87,
+    "end": 2365.17,
+    "text": "Đấy, các bạn cộng thêm chữ D vào để các bạn đi xuống dưới"
+  },
+  {
+    "start": 2365.17,
+    "end": 2370.05,
+    "text": "nhưng mà cái O đệ quy này này, cái O41 này nó không đi được đâu nữa, thì nó chạy xong đúng không?"
+  },
+  {
+    "start": 2370.05,
+    "end": 2373.86,
+    "text": "Cái ip này nó không vào, cái ip này không vào, cái ip này không vào nó chạy xong,"
+  },
+  {
+    "start": 2373.86,
+    "end": 2378.66,
+    "text": "thì có phải là nó sẽ xuống câu lạch x.popac này ở trong cái hàm try 3.1 không của đệ quy này không?"
+  },
+  {
+    "start": 2378.66,
+    "end": 2383.94,
+    "text": "Ờ, khi đó các bạn phải xóa chữ D này đi, đấy, tại vì các bạn không có đi cái đường đấy nữa,"
+  },
+  {
+    "start": 2383.94,
+    "end": 2385.78,
+    "text": "các bạn không có đi từ O này xuống này nữa,"
+  },
+  {
+    "start": 2385.78,
+    "end": 2388.1,
+    "text": "mà các bạn quay lại O này, các bạn đi sang đây đúng không?"
+  },
+  {
+    "start": 2388.1,
+    "end": 2394.5,
+    "text": "Ờ, thì bây giờ nó mới sẽ xét cái ip này này, thấy ok, các bạn cho x cộng write vào là cộng cái O này vào, write nha."
+  },
+  {
+    "start": 2425.01,
+    "end": 2436.81,
+    "text": "v rising file luy, o, dat, alirol, emtergon."
+  },
+  {
+    "start": 2436.81,
+    "end": 2443.91,
+    "text": "Lời gọi đệ quy đến o này, nó chạy xong thì nó phải quay lại o này, nó đi sang phãi"
+  },
+  {
+    "start": 2443.91,
+    "end": 2444.91,
+    "text": "Được chứ à?"
+  },
+  {
+    "start": 2444.91,
+    "end": 2446.91,
+    "text": "Nhưng mà o sang phãi không có đi được"
+  },
+  {
+    "start": 2446.91,
+    "end": 2452.91,
+    "text": "Nhưng mà trước đó nha, khi mà các bạn từ o này, các bạn quay lại các bạn đi sang đây này, thì cái đường đi của bạn nó bị xoá chữ D này đi"
+  },
+  {
+    "start": 2452.91,
+    "end": 2454.91,
+    "text": "Đấy, thì mình phải xoá chữ D này đi"
+  },
+  {
+    "start": 2454.91,
+    "end": 2459.91,
+    "text": "Xong o này nó không đi được sang phãi thì nó cũng chạy xong, nó chạy xong thì các bạn lại phải quay lại set o này"
+  },
+  {
+    "start": 2459.91,
+    "end": 2461.91,
+    "text": "Thì cái đường đi này này, lại phải xoá đi chữ R rồi"
+  },
+  {
+    "start": 2461.91,
+    "end": 2464.91,
+    "text": "Đấy, các bạn cứ quay lại các bạn đi đường nào thì các bạn xoá cái nước đi đi"
+  },
+  {
+    "start": 2464.91,
+    "end": 2465.91,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 2465.91,
+    "end": 2468.13,
+    "text": "nấy, sau đó nó quay lại O này"
+  },
+  {
+    "start": 2468.13,
+    "end": 2470.33,
+    "text": "thì nó lại phải xóa chữ R đi, sau đó nó quay lại O này"
+  },
+  {
+    "start": 2470.33,
+    "end": 2472.33,
+    "text": "thì nó lại phải xóa chữ R đi, đúng không?"
+  },
+  {
+    "start": 2472.33,
+    "end": 2474.13,
+    "text": "sau đó từ O này nó quay lại O này"
+  },
+  {
+    "start": 2474.13,
+    "end": 2475.73,
+    "text": "thì nó các bạn phải xóa chữ D đi"
+  },
+  {
+    "start": 2475.73,
+    "end": 2479.33,
+    "text": "nấy, xong từ ở đây, xong đây, để mà em cộng chữ R vào"
+  },
+  {
+    "start": 2479.33,
+    "end": 2482.73,
+    "text": "từ đây, xuống đây, thì các bạn lại cộng chữ đèo vào"
+  },
+  {
+    "start": 2482.73,
+    "end": 2485.53,
+    "text": "xong từ đây, xong đây các bạn lại cộng chữ R vào, cứ thế nha"
+  },
+  {
+    "start": 2485.53,
+    "end": 2487.73,
+    "text": "thế thôi, nó cứ quay lại nãy O đấy, xong nó đi thôi"
+  },
+  {
+    "start": 2487.73,
+    "end": 2490.65,
+    "text": "ở đây các bạn có 2 nhánh, 1 là đi xuống dưới, 2 là đi sang phả"
+  },
+  {
+    "start": 2490.65,
+    "end": 2492.45,
+    "text": "thì mình luôn U tien O dưới luôn"
+  },
+  {
+    "start": 2492.45,
+    "end": 2495.89,
+    "text": "nên là bao giờ mà các bạn đi xuống dưới mà các bạn không đi đứng nữa, các bạn quay lại ô này"
+  },
+  {
+    "start": 2495.89,
+    "end": 2497.21,
+    "text": "thì mình đi sang ô bên phải"
+  },
+  {
+    "start": 2497.21,
+    "end": 2500.85,
+    "text": "nhưng mà khi mà các bạn từ những ô bên dưới các bạn quay lại thì các bạn phải xóa cái chữ D này"
+  },
+  {
+    "start": 2500.85,
+    "end": 2503.21,
+    "text": "ở trong cái sâu kết quả đi, sâu S đi"
+  },
+  {
+    "start": 2504.41,
+    "end": 2506.33,
+    "text": "thì đấy là cách mà nó đi hết mọi ô, nhé"
+  },
+  {
+    "start": 2506.33,
+    "end": 2509.77,
+    "text": "chứ các bạn em mà không có cái câu S chấm podcast ở sau cái ham try đệ quy kia"
+  },
+  {
+    "start": 2509.77,
+    "end": 2513.25,
+    "text": "có phải cái đường đi của mình nó cứ rồn đóng hết các cái câu hình vào với nhau không?"
+  },
+  {
+    "start": 2513.25,
+    "end": 2514.25,
+    "text": "đấy"
+  },
+  {
+    "start": 2514.25,
+    "end": 2516.97,
+    "text": "thì quay lùi lại đi hướng khác thì mình phải xóa cái chữ D đấy đi"
+  },
+  {
+    "start": 2516.97,
+    "end": 2519.09,
+    "text": "chữ ghi, mà mình đã ghi nhận đấy đi"
+  },
+  {
+    "start": 2519.09,
+    "end": 2544.56,
+    "text": "Thế thôi, còn nếu mà các bạn em không muốn in ra, các bạn xét cái thực ra, các bạn xét nhánh nào trước cũng được, dưới cũng trước cũng được, mà phải trước cũng được, nhưng mà nếu mà các bạn không xét theo thứ tự từ điển, thì cái chỗ này các bạn không được in ra luôn, mà các bạn phải lưu nó vào trong cấu hình, lưu vào trong 1 cái vector string, sau đó mình xót cái vector string các cái đường đi đấy cho mình in ra, thì cái thứ tự đường đi nó mới theo thứ tự từ điển"
+  },
+  {
+    "start": 2544.56,
+    "end": 2554.88,
+    "text": "Sao lại ô lưu, ô ưu tiền ô dưới đúng không? Tại vì cái đường đi của bọn em ý, nó yêu cầu là các bạn sẽ in ra cái cái đường đi theo thứ tự tự điển"
+  },
+  {
+    "start": 2554.88,
+    "end": 2561.28,
+    "text": "nên là bọn em hình dung nhé, nếu mà bây giờ đang ở oezy mà bọn em xét ô dưới trước thì cái đường đi của mình nó được cộng chữ D"
+  },
+  {
+    "start": 2561.28,
+    "end": 2568.68,
+    "text": "đúng không? Thì bao giờ nó cũng, xong là từ ô dưới nó lại cộng chữ D, cộng chữ D, thì bao giờ cái cấu hình của bọn em ý, chữ D nó bao giờ nó cũng đứng trước"
+  },
+  {
+    "start": 2568.68,
+    "end": 2576.36,
+    "text": "nếu em xét ORI trước lại chữ R, thì có phải cấu hình của em, bao giờ cũng ưu tiên rò rò rò, xong bắt đầu mới đến D, đúng không?"
+  },
+  {
+    "start": 2576.36,
+    "end": 2580.84,
+    "text": "Thì khi đó các bạn hình dung cấu hình của mình sẽ theo thư tự tự điển giám dần, chứ không phải tăng dần"
+  },
+  {
+    "start": 2580.84,
+    "end": 2588.36,
+    "text": "nên đây mình sẽ ưu tiên O dưới trước, để cái chữ D nó sẽ luôn xuất hiện trước trong cấu hình"
+  },
+  {
+    "start": 2588.36,
+    "end": 2592.76,
+    "text": "và khi đó cấu hình của bạn nó in ra những cái cấu hình nào đầu tiên"
+  },
+  {
+    "start": 2592.76,
+    "end": 2598.2,
+    "text": "thì là những cái cấu hình mà nó có chữ D đứng trước thì nó sẽ có thư tự tự điển nhỏ hơn, ít thôi"
+  },
+  {
+    "start": 2598.2,
+    "end": 2601.48,
+    "text": "còn thực ra 2 cái nhánh ít kia thì em xét nhánh nào trước cũng được"
+  },
+  {
+    "start": 2601.48,
+    "end": 2605.96,
+    "text": "nhưng mà nếu mà xét nhánh không theo thứ tự thì ở chỗ này không được in ra đâu"
+  },
+  {
+    "start": 2605.96,
+    "end": 2609.8,
+    "text": "vì các bạn in ra chỗ này là thứ tự nó đâu phải thứ tự tự điển"
+  },
+  {
+    "start": 2609.8,
+    "end": 2612.52,
+    "text": "mà khi đó mình phải tạo ra 1 cái vector string đúng không?"
+  },
+  {
+    "start": 2612.52,
+    "end": 2616.48,
+    "text": "về sau đó chỗ này, bạn em push back cái thằng S vào"
+  },
+  {
+    "start": 2616.48,
+    "end": 2621.34,
+    "text": "sau đó tí nữa mình sọt cái vector đấy, sau mình bị in ra nhé"
+  },
+  {
+    "start": 2621.34,
+    "end": 2623.34,
+    "text": "thì đấy là trong trường hợp mà"
+  },
+  {
+    "start": 2623.34,
+    "end": 2626.51,
+    "text": "các bạn tìm được đi"
+  },
+  {
+    "start": 2626.51,
+    "end": 2637.08,
+    "text": "Bây giờ chúng ta làm cho các vài số 2, cho các bạn đi theo bốn nánh, chúng ta phải ít bốn trường hợp"
+  },
+  {
+    "start": 2637.08,
+    "end": 2646.7,
+    "text": "Bốn cách đi, đi sang phải, là chữ write, xuống dưới là đào, ra trái là lab, đi lên trên là up, up, u, u, r, d"
+  },
+  {
+    "start": 2646.7,
+    "end": 2651.92,
+    "text": "Thì các bạn thích xét nánh nào trước cũng được, bốn nánh, chắc là các bạn sẽ biết"
+  },
+  {
+    "start": 2651.92,
+    "end": 2662.06,
+    "text": "Mí dụ như đây, các bạn đang ở OEJ, nếu mà các bạn muốn set O bên trên, O này là Oe chùm 1 G, chúng ta em phải check E chùm 1, nó phải lớn bằng 1"
+  },
+  {
+    "start": 2662.62,
+    "end": 2667.1,
+    "text": "Mình em set bên dưới là OE chùm 1 G thì em phải check E chùm 1 nhỏ bằng n"
+  },
+  {
+    "start": 2667.28,
+    "end": 2670.8,
+    "text": "Không biết là nhiều bạn không hiểu tại sao anh lại check E chùm 1 nhỏ bằng n"
+  },
+  {
+    "start": 2671.3,
+    "end": 2676.24,
+    "text": "Tại vì mà em hình dùng, mình đang ở OEJ mà mình muốn set O bên dưới, O bên dưới thì it là O hàng E chùm 1"
+  },
+  {
+    "start": 2676.54,
+    "end": 2679.98,
+    "text": "Mình phải checks E chùm 1, nó phải nhỏ bằng n, chứ không nó nhảy ra ngoài mẻng, đúng không?"
+  },
+  {
+    "start": 2679.98,
+    "end": 2684.98,
+    "text": "con o bên trái là oiz1, con em phải check oiz1 lớn bằng 1"
+  },
+  {
+    "start": 2684.98,
+    "end": 2690.98,
+    "text": "con o bên phải là oiz1, con em phải check oiz1 nhỏ hơn hoặc bằng nờ"
+  },
+  {
+    "start": 2690.98,
+    "end": 2694.08,
+    "text": "các bạn set 4 cái nhánh này"
+  },
+  {
+    "start": 2694.08,
+    "end": 2698.08,
+    "text": "sau đó thì các bạn có thể sọt cái"
+  },
+  {
+    "start": 2698.08,
+    "end": 2703.08,
+    "text": "còn nếu mà các bạn không muốn sọt thì các bạn set cái thứ tự nhánh đe trước"
+  },
+  {
+    "start": 2703.08,
+    "end": 2706.08,
+    "text": "sau đó đến lab, xong đến rò, rồi đến u"
+  },
+  {
+    "start": 2706.08,
+    "end": 2712.76,
+    "text": "để mình xét cái hướng đi mà nó có cái thứ tự tự điển nhỏ hơn, cái chữ có thứ tự điển nhỏ hơn trước là D"
+  },
+  {
+    "start": 2712.76,
+    "end": 2715.88,
+    "text": "và các bạn xuống lab xong đến R rồi hãy đến U, nhé"
+  },
+  {
+    "start": 2715.88,
+    "end": 2717.68,
+    "text": "các bạn làm cho anh cái bài số 3 này xem nào"
+  },
+  {
+    "start": 2717.68,
+    "end": 2721.79,
+    "text": "nhưng mà cái bài 3 này nó nguy hiểm nhé, tại sao bài 3 này nó nguy hiểm?"
+  },
+  {
+    "start": 2721.79,
+    "end": 2724.03,
+    "text": "bài 3 nó có thể quay lòng vòng lại"
+  },
+  {
+    "start": 2724.03,
+    "end": 2729.84,
+    "text": "bài 3 nó quay vòng lại, bài trước thì các bạn hình dung bọn em ở đệ quy nhé"
+  },
+  {
+    "start": 2729.84,
+    "end": 2734.58,
+    "text": "bài trước ví dụ anh cho chỗ này là số 1 này"
+  },
+  {
+    "start": 2734.58,
+    "end": 2737.54,
+    "text": "các bạn tự giả sứ các bạn đang đệ quy đến O này"
+  },
+  {
+    "start": 2737.54,
+    "end": 2740.02,
+    "text": "Các bạn sẽ xét O bên dưới, đúng không?"
+  },
+  {
+    "start": 2740.02,
+    "end": 2742.69,
+    "text": "Nhưng mà O bên dưới này nó chỉ xét bên phải và bên trái thôi,"
+  },
+  {
+    "start": 2742.69,
+    "end": 2744.89,
+    "text": "nó không có quay vòng lên cho nó quay lại O này được."
+  },
+  {
+    "start": 2744.89,
+    "end": 2748.11,
+    "text": "Nhưng mà bà này nó để, bà thứ 2 này đi theo 4 hướng được."
+  },
+  {
+    "start": 2748.11,
+    "end": 2750.79,
+    "text": "Nên là các bạn đang ở UISI này, bọn em gọi xuống dưới,"
+  },
+  {
+    "start": 2750.79,
+    "end": 2753.51,
+    "text": "gọi sang phải, gọi bên trên, gọi sang trái được ấy,"
+  },
+  {
+    "start": 2753.51,
+    "end": 2754.95,
+    "text": "nó gọi lại O này được ấy."
+  },
+  {
+    "start": 2754.95,
+    "end": 2758.03,
+    "text": "Nên là các bạn phải dùng thêm 1 cái mảng đánh dấu nữa,"
+  },
+  {
+    "start": 2758.03,
+    "end": 2760.03,
+    "text": "hoặc là dùng luôn mảng E ấy."
+  },
+  {
+    "start": 2760.03,
+    "end": 2761.97,
+    "text": "Đấy, các bạn đi qua O nào,"
+  },
+  {
+    "start": 2761.97,
+    "end": 2764.97,
+    "text": "thì bọn em phải đánh dấu cái O đấy là tôi đã đi qua trong cái nhánh đệ quy này."
+  },
+  {
+    "start": 2764.97,
+    "end": 2769.09,
+    "text": "Khi đó, nó phát triển, nó quay vòng lại, nó đi qua rồi đấy, nó cũng không gọi đệ quy"
+  },
+  {
+    "start": 2769.09,
+    "end": 2772.73,
+    "text": "Còn các bạn mà không đánh dấu là nó sẽ tạo ra đệ quy vĩnh viện đấy"
+  },
+  {
+    "start": 2772.73,
+    "end": 2774.77,
+    "text": "Các bạn hình dung không?"
+  },
+  {
+    "start": 2774.77,
+    "end": 2776.29,
+    "text": "Bây giờ nó đi theo 4 hướng được mà"
+  },
+  {
+    "start": 2776.29,
+    "end": 2781.77,
+    "text": "Nên là từ OEG em em đi xuống dưới, xong đi sang phá, đi lên trên, đi sang trái, nó lại quay lại đúng OEG đó"
+  },
+  {
+    "start": 2781.77,
+    "end": 2786.21,
+    "text": "Các bạn trước thì nó không bao giờ quay lại OEG đâu, tại vì nó chỉ có đi sang phá và đi xuống dưới, đúng không?"
+  },
+  {
+    "start": 2786.21,
+    "end": 2789.45,
+    "text": "Nên nó sẽ không cần phải đánh dấu, khi mà các bạn đi qua một ôn ở đó"
+  },
+  {
+    "start": 2789.45,
+    "end": 2798.21,
+    "text": "Nhưng bài này mà các bạn không đánh dấu, không đánh dấu là oeasy đã bị chiếm chỗ ấy, là nó sẽ quay vòng lại o đấy, nó có thể tạo ra cái đệ quy vĩnh viễn"
+  },
+  {
+    "start": 2798.21,
+    "end": 2801.21,
+    "text": "Thì các bạn làm cho mình cái bài số 3 này xem nè"
+  },
+  {
+    "start": 2801.21,
+    "end": 2808.89,
+    "text": "Đây, cái bài trước đây cho bạn em tham khảo, nha"
+  },
+  {
+    "start": 2808.89,
+    "end": 2812.05,
+    "text": "Bây giờ các bạn xét thêm các cái nhánh còn lại thôi, nha"
+  },
+  {
+    "start": 2812.05,
+    "end": 2816.94,
+    "text": "Nhưng mà phải có thêm cái đánh dấu nữa nha"
+  },
+  {
+    "start": 2816.94,
+    "end": 2822.23,
+    "text": "Có, không đánh dấu là nó quay vòng lại oeasy là chiết dở đấy"
+  },
+  {
+    "start": 2822.23,
+    "end": 2826.9,
+    "text": "nhanh sau đó thì anh sẽ hướng dẫn sang cái bài nờqueen"
+  },
+  {
+    "start": 2826.9,
+    "end": 2831.3,
+    "text": "và hướng dẫn cho các bạn một số kỹ thuật khi mà các bạn quay lùi trên giải số"
+  },
+  {
+    "start": 2831.3,
+    "end": 2834.5,
+    "text": "tại vì nó có một số bài yêu cầu các bạn quay lùi trên giải số"
+  },
+  {
+    "start": 2834.5,
+    "end": 2836.5,
+    "text": "mình sẽ hướng dẫn cái đó nữa"
+  },
+  {
+    "start": 2836.5,
+    "end": 3368.49,
+    "text": "lùi trên giải số"
+  },
+  {
+    "start": 3368.49,
+    "end": 3371.69,
+    "text": "ok, mình sẽ check code cho bạn này của an"
+  },
+  {
+    "start": 3371.69,
+    "end": 3376.63,
+    "text": "huy hả?"
+  },
+  {
+    "start": 3376.63,
+    "end": 3377.9,
+    "text": "ban huy"
+  },
+  {
+    "start": 3377.9,
+    "end": 3383.64,
+    "text": "này phải xọc chứ nhỉ?"
+  },
+  {
+    "start": 3383.64,
+    "end": 3385.38,
+    "text": "nếu mà"
+  },
+  {
+    "start": 3385.38,
+    "end": 3388.82,
+    "text": "đây là ra u thì không cần phải xọc"
+  },
+  {
+    "start": 3388.82,
+    "end": 3396.46,
+    "text": "bàn này các bạn không có đường đi không?"
+  },
+  {
+    "start": 3396.46,
+    "end": 3404.46,
+    "text": "không có đường đi các bạn í dợm 1 này, hình như anh không cho test, không có đường đi bài này thì phải"
+  },
+  {
+    "start": 3404.46,
+    "end": 3417.94,
+    "text": "bài này của hai bạn của Ann với lại qua huy xài là do cái code của màn em nó quay lại O11"
+  },
+  {
+    "start": 3417.94,
+    "end": 3427.66,
+    "text": "tại vì các cái O khác thì các bạn đều cho khi mà các bạn chuẩn bị quay lùi đến cái O đấy thì mình sẽ cho A của O đấy bằng không"
+  },
+  {
+    "start": 3427.66,
+    "end": 3431.22,
+    "text": "để nó tránh đi lại O đấy trong lời gọi địa quy đúng không? tiếp theo"
+  },
+  {
+    "start": 3431.22,
+    "end": 3436.46,
+    "text": "nhưng mà có O 1 1 là cái O khỏi đầu này này, nấy, là bọn em sẽ quay lại"
+  },
+  {
+    "start": 3436.46,
+    "end": 3437.9,
+    "text": "đúng không?"
+  },
+  {
+    "start": 3437.9,
+    "end": 3443.02,
+    "text": "nên là khi nó sẽ dẫn đến cái đường đi của mà em nó sẽ bị dư thừa bất 1 cái nước đi, đây nè"
+  },
+  {
+    "start": 3443.02,
+    "end": 3450.62,
+    "text": "cái đường đi đúng nó là ride, dow, dow, dow, ride đúng không? còn của em nó có chữ U này, đây là do em đi là"
+  },
+  {
+    "start": 3450.62,
+    "end": 3454.51,
+    "text": "em đi từ đây xuống đây là dow này, đúng không?"
+  },
+  {
+    "start": 3454.51,
+    "end": 3459.65,
+    "text": "đây sau đó là nó do em không có bịp cái O này lại"
+  },
+  {
+    "start": 3459.65,
+    "end": 3467.09,
+    "text": "Nên là khi mà em gọi để quy đến o này này, nó sẽ set o bên trên thì thấy o bên trên là o số 1 vẫn hợp lệ nên nó sẽ gọi đến o bên trên"
+  },
+  {
+    "start": 3467.09,
+    "end": 3470.01,
+    "text": "Thành ra là nó cân nước chữ app này, thấy không?"
+  },
+  {
+    "start": 3470.01,
+    "end": 3475.99,
+    "text": "Thế là nó quay lại luôn cái o này bằng cái nước đi từ o dưới lên trên, nên cái đường đi của em nó bị dư mất một chữ o này"
+  },
+  {
+    "start": 3475.99,
+    "end": 3476.95,
+    "text": "Đấy chưa?"
+  },
+  {
+    "start": 3476.95,
+    "end": 3483.35,
+    "text": "Và từ đó thì nó sẽ dẫn đến cái việc là từ cái o này em lại set o bên này các thứ, nó sẽ dẫn đến cái đường đi của mình nó bị sai"
+  },
+  {
+    "start": 3483.35,
+    "end": 3489.19,
+    "text": "Nên là trong trường hợp này thì các bạn sẽ phải bịt cái o 1 1 lại trước khi mà quay lùi, ok?"
+  },
+  {
+    "start": 3489.19,
+    "end": 3502.61,
+    "text": "nếu mà cốt như này thì cũng được, các bạn set d này, 1 nhánh này, r rồi đúng không, anh có thêm thằng u ở cuối"
+  },
+  {
+    "start": 3502.61,
+    "end": 3510.16,
+    "text": "đầu tiên là d, d là các bạn đi xuống dưới thì khi đó các bạn phải beat oai, 1, ghi lại"
+  },
+  {
+    "start": 3510.16,
+    "end": 3515.76,
+    "text": "khi mà các bạn có gọi đệ quy đến i, 1, ghi này này, nó không có quay lại cái o này nữa"
+  },
+  {
+    "start": 3515.76,
+    "end": 3520.4,
+    "text": "sau khi mà các bạn đệ quy sau khi các bạn trẻ lại giá trị ban đầu cho nó, rồi"
+  },
+  {
+    "start": 3520.4,
+    "end": 3523.04,
+    "text": "ở đây cũng thế các bạn, như thế này là"
+  },
+  {
+    "start": 3523.04,
+    "end": 3525.36,
+    "text": "d rồi đến lab là đi sang trái đúng không?"
+  },
+  {
+    "start": 3525.36,
+    "end": 3528.88,
+    "text": "đi sang trái thì là các bạn phải check z chữ 1 lớn hơn ở bằng 1"
+  },
+  {
+    "start": 3528.88,
+    "end": 3534.4,
+    "text": "đấy, các bạn check ai của z chữ 1 bằng 1 cho anh"
+  },
+  {
+    "start": 3534.4,
+    "end": 3537.42,
+    "text": "ở đây các bạn sẽ cộng là chữ lab"
+  },
+  {
+    "start": 3537.42,
+    "end": 3542.59,
+    "text": "sau đó thì các bạn phải cho cái o đấy, là oiz chữ 1 của mình nó bằng 0"
+  },
+  {
+    "start": 3542.59,
+    "end": 3544.19,
+    "text": "ở đây các bạn sẽ trẻ ngược lại"
+  },
+  {
+    "start": 3544.19,
+    "end": 3549.65,
+    "text": "a của iz chữ 1 của mình bằng 1"
+  },
+  {
+    "start": 3549.65,
+    "end": 3553.57,
+    "text": "arrive thì không có gì khác nhưng mà các bạn phải có thêm"
+  },
+  {
+    "start": 3553.57,
+    "end": 3565.48,
+    "text": "aiz cộng 1 bằng 0, và chỗ này các bạn trái lại là aiz cộng 1 bằng 1, còn ô cuối là up, thì các bạn sẽ set là từ từ"
+  },
+  {
+    "start": 3565.48,
+    "end": 3576.38,
+    "text": "up là các bạn đi lên trên, tức là các bạn phải set zi chữ 1 lớn hơn bằng 1, và các bạn check là ô aiz chữ 1 đúng không?"
+  },
+  {
+    "start": 3576.38,
+    "end": 3584.87,
+    "text": "ài cộng 1 chứ nhỉ? ài chữ 1, xin lỗi ô bên trên mà, i chữ 1, i chữ 1 zi các bạn"
+  },
+  {
+    "start": 3584.87,
+    "end": 3596.44,
+    "text": "đây các bạn sẽ cho o, a, i, 1, z, bằng không, ở chỗ này các bạn đổi lại a, quay lùi xong các bạn trái lại, cái gì bằng 1, thế thôi"
+  },
+  {
+    "start": 3596.44,
+    "end": 3604.44,
+    "text": "sau đó trong bên thì các bạn sẽ cho a, 1, 1, các bạn phải check nha, nếu mà làm đầy đủ mà xử lý được cả cái test mà không có đường đi, bạn em phải check"
+  },
+  {
+    "start": 3604.44,
+    "end": 3610.21,
+    "text": "là a, 1, 1 này, và a, n, n của mình nó phải đều là số 1 thì hãy quay lùi"
+  },
+  {
+    "start": 3610.21,
+    "end": 3612.89,
+    "text": "nhưng trước đó các bạn cho em 1.1.0"
+  },
+  {
+    "start": 3612.89,
+    "end": 3616.49,
+    "text": "để nó tránh nó đi lại cái O này khi mà các bạn try từ O 1.1.0"
+  },
+  {
+    "start": 3616.49,
+    "end": 3620.28,
+    "text": "Đấy, ok, còn không là nó sẽ không có đường đi đâu"
+  },
+  {
+    "start": 3620.28,
+    "end": 3627.16,
+    "text": "Sau khi mà quay lui xong thì các bạn sẽ check là nếu mà v.side của mình nó lớn hơn không là nó có đường đi"
+  },
+  {
+    "start": 3627.16,
+    "end": 3629.56,
+    "text": "thì các bạn sẽ tiến hành sort cái vector v"
+  },
+  {
+    "start": 3629.56,
+    "end": 3633.01,
+    "text": "là vector các cái đường đi các bạn"
+  },
+  {
+    "start": 3633.01,
+    "end": 3634.81,
+    "text": "theo thứ tự tử điển tăng dần"
+  },
+  {
+    "start": 3634.81,
+    "end": 3642.32,
+    "text": "không cần xoạt tại vì trong quá trình xét thì anh đã ưu tiên cái d trước rồi đến r rồi đến u đúng không?"
+  },
+  {
+    "start": 3642.32,
+    "end": 3645.32,
+    "text": "các bạn duệt for string x hay trầm v các bạn in ra là được"
+  },
+  {
+    "start": 3645.32,
+    "end": 3649.23,
+    "text": "còn nếu mà không thì các bạn sẽ in ra ấm 1"
+  },
+  {
+    "start": 3649.23,
+    "end": 3651.39,
+    "text": "nếu mà làm chặt chẽ thì các bạn làm"
+  },
+  {
+    "start": 3651.39,
+    "end": 3655.07,
+    "text": "cái con này các bạn bị sai là do các bạn em không để ý cái việc là"
+  },
+  {
+    "start": 3655.07,
+    "end": 3657.79,
+    "text": "các bạn em chưa cho cái em 1 1 nó bằng số"
+  },
+  {
+    "start": 3657.79,
+    "end": 3659.69,
+    "text": "số 0"
+  },
+  {
+    "start": 3659.69,
+    "end": 3661.95,
+    "text": "tại vì các bạn gọi để quy bắt đầu từ o đó mà"
+  },
+  {
+    "start": 3661.95,
+    "end": 3665.39,
+    "text": "các bạn không bịt lại là nó quay lại o đấy đấy"
+  },
+  {
+    "start": 3665.39,
+    "end": 3672.37,
+    "text": "các bạn nào thích thấy cái này nó hơi dài dòng thì mình có thể xử lý thêm một chút"
+  },
+  {
+    "start": 3672.37,
+    "end": 3674.93,
+    "text": "mình xét bố nô xung quanh chung cạnh"
+  },
+  {
+    "start": 3674.93,
+    "end": 3678.85,
+    "text": "ồ chết rồi, có vấn đề rồi thì phải"
+  },
+  {
+    "start": 3678.85,
+    "end": 3681.57,
+    "text": "chắc là sai cái chỗ bạn này"
+  },
+  {
+    "start": 3681.57,
+    "end": 3688.96,
+    "text": "y cộng 1, y cộng 1, y chữ 1, y cộng 1, y chữ 1 đúng không?"
+  },
+  {
+    "start": 3688.96,
+    "end": 3697.49,
+    "text": "nó chỗ nào sai không nhỉ các bạn nhỉ?"
+  },
+  {
+    "start": 3698.26,
+    "end": 3701.14,
+    "text": "mà sao cái đường đi của mình lại dở như thế này"
+  },
+  {
+    "start": 3701.14,
+    "end": 3710.16,
+    "text": "d, d là v, d là u"
+  },
+  {
+    "start": 3710.16,
+    "end": 3716.02,
+    "text": "các bạn xem mà mình xem nó sai chỗ nè"
+  },
+  {
+    "start": 3716.02,
+    "end": 3720.72,
+    "text": "o bên dưới là i cộng 1g này"
+  },
+  {
+    "start": 3720.72,
+    "end": 3723.72,
+    "text": "i cộng 1g, i cộng 1g, i cộng 1g này"
+  },
+  {
+    "start": 3723.72,
+    "end": 3728.72,
+    "text": "o bên trái là iz chứ 1, iz chứ 1, iz chứ 1, iz chứ 1"
+  },
+  {
+    "start": 3728.72,
+    "end": 3735.53,
+    "text": "hình như do gọi lại tròi sai đó anh, chỗ nèo"
+  },
+  {
+    "start": 3735.53,
+    "end": 3739.53,
+    "text": "chắc là cái tròi này nhỉ, do cái tròi này anh gọi không đúng"
+  },
+  {
+    "start": 3739.53,
+    "end": 3746.53,
+    "text": "y chỗ này phải eg chứa 1, chứa này là eg cộng 1, chứa này là eg chứa 1g"
+  },
+  {
+    "start": 3746.53,
+    "end": 3755.38,
+    "text": "mình chưa đổi lại cái đó"
+  },
+  {
+    "start": 3755.38,
+    "end": 3759.93,
+    "text": "ok, các bạn lấy các bạn nộp là xong thôi"
+  },
+  {
+    "start": 3759.93,
+    "end": 3763.93,
+    "text": "còn nếu mà các bạn thích set bố nô xung quanh chung cạnh bằng vòng 4 cũng được"
+  },
+  {
+    "start": 3763.93,
+    "end": 3765.93,
+    "text": "mình sẽ hướng dẫn cho bạn cái cách đó"
+  },
+  {
+    "start": 3765.93,
+    "end": 3772.6,
+    "text": "bình thường các bạn set oeg và các bạn muốn try đến bố nô xung quanh chung cạnh là mình hay dùng bố nô ghi chuyển đúng không?"
+  },
+  {
+    "start": 3772.6,
+    "end": 3775.6,
+    "text": "rồi, thì đây các bạn thích thì các bạn làm như thế"
+  },
+  {
+    "start": 3775.6,
+    "end": 3786.68,
+    "text": "Đấy, mình sẽ làm 1 cái vòng for inotk bằng 0k nhỏ hơn 4k cộng cộng này"
+  },
+  {
+    "start": 3786.68,
+    "end": 3796.58,
+    "text": "Mình tính ra i1 bằng i cộng với dx, y1 bằng y cộng với dx, sau đó các bạn check cái o này nó hợp lệ"
+  },
+  {
+    "start": 3796.58,
+    "end": 3806.62,
+    "text": "Được không nhỉ? Khi mà nó hợp lệ rồi mà em check thêm là nó bằng 1, thì mình sẽ gọi đệ quy đến o này"
+  },
+  {
+    "start": 3806.62,
+    "end": 3813.02,
+    "text": "Nhưng mà khi mình gọi đệ quy đến o này thì mình phải biết o đấy là bên dưới thì mình cộng chữ đào, đúng không nhỉ?"
+  },
+  {
+    "start": 3813.02,
+    "end": 3817.22,
+    "text": "Thì bây giờ các bạn xem cái mảng DXDI này của mình, cái O đầu tiên là chữ 1.0"
+  },
+  {
+    "start": 3817.22,
+    "end": 3819.16,
+    "text": "Mình sẽ dùng một cái soak path"
+  },
+  {
+    "start": 3819.16,
+    "end": 3823.78,
+    "text": "Mình sẽ lưu 4 kí tự url để theo cái thứ tự ở trong DXDI"
+  },
+  {
+    "start": 3823.78,
+    "end": 3826.34,
+    "text": "chữ 1.0 là O bên trên, là up"
+  },
+  {
+    "start": 3826.34,
+    "end": 3829.4,
+    "text": "0 chữ 1 là O bên trái, là left"
+  },
+  {
+    "start": 3829.4,
+    "end": 3831.46,
+    "text": "0 1 là O dưới là down"
+  },
+  {
+    "start": 3831.46,
+    "end": 3834.26,
+    "text": "và O 1.0 là O bên phải right đấy"
+  },
+  {
+    "start": 3834.26,
+    "end": 3839.98,
+    "text": "Thì bây giờ mình có thể cho SOF của mình cộng bằng với path của ca"
+  },
+  {
+    "start": 3839.98,
+    "end": 3849.78,
+    "text": "Mình tiện thế, khi đó mình duyệt cái chỉ số K nào ở trong mảng DXDI thì mình cộng luôn cái ký tự ở trong Sopath tại cái chỉ số đó"
+  },
+  {
+    "start": 3849.78,
+    "end": 3851.58,
+    "text": "Đấy, thì nó tiện"
+  },
+  {
+    "start": 3851.58,
+    "end": 3855.58,
+    "text": "Sau đó các bạn cho A của Emote G1 của mình nó bằng không"
+  },
+  {
+    "start": 3855.58,
+    "end": 3858.18,
+    "text": "Sau các bạn try đến O Emote G1"
+  },
+  {
+    "start": 3858.18,
+    "end": 3863.82,
+    "text": "Ở dưới này thì các bạn cho A Emote G1 nó trở lại cái giá trị ban đầu của nó là bằng 1"
+  },
+  {
+    "start": 3863.82,
+    "end": 3867.82,
+    "text": "Và các bạn xóa cái nước đi mà các bạn đang ghi nhận ở trên"
+  },
+  {
+    "start": 3867.82,
+    "end": 3870.26,
+    "text": "Đây là cho trường hợp mà bạn em thích dùng vòng 4"
+  },
+  {
+    "start": 3870.26,
+    "end": 3873.94,
+    "text": "thì bạn em cũng set 4 nô xung quanh chung cạnh của nó như bình thường"
+  },
+  {
+    "start": 3873.94,
+    "end": 3876.38,
+    "text": "sau đó mình gọi đệ quy, đúng không?"
+  },
+  {
+    "start": 3876.38,
+    "end": 3881.74,
+    "text": "Thì tuy các bạn thôi, các bạn thích set bằng 4 cái íp cũng được mà set bằng 4 vòng 4 như thế nào cũng được"
+  },
+  {
+    "start": 3881.74,
+    "end": 3888.47,
+    "text": "Thì set khi mà set 4 vòng 4 này thì mình tiện thể mình tạo ra một cái sâu lưu 4 cái kí tự đó"
+  },
+  {
+    "start": 3888.47,
+    "end": 3891.83,
+    "text": "để nó thể hiện với 4 cái di chuyển ở trong cái mảng DXDE này"
+  },
+  {
+    "start": 3891.83,
+    "end": 3901.11,
+    "text": "Thì mình thông qua cái chỉ số kè mà mình riệt màng DXDI thì mọi em có thể lấy luôn cái chỉ số kè trong Sopath, mình lấy ra cái ký tự tương ứng với cái bước di chuyển đó."
+  },
+  {
+    "start": 3901.11,
+    "end": 3904.55,
+    "text": "Thì đấy là cái bài, con chuột di chuyển trong Mekong."
+  },
+  {
+    "start": 3904.55,
+    "end": 3914.78,
+    "text": "Ok. Thưa chết rồi. Mình xa ra xa ra đây."
+  },
+  {
+    "start": 3914.78,
+    "end": 3919.3,
+    "text": "Em, đúng rồi mà nhỉ? Mình có xọt cái đường đi rồi mà nhỉ?"
+  },
+  {
+    "start": 3919.3,
+    "end": 3930.55,
+    "text": "V.DX, đúng rồi mà nhỉ?"
+  },
+  {
+    "start": 3930.55,
+    "end": 3950.94,
+    "text": "đây là open chain, trái, đường đi nó lại đèo đèo, lab, bà sao nhỉ"
+  },
+  {
+    "start": 3950.94,
+    "end": 3955.17,
+    "text": "cái đoạn này thì không có gì rồi đúng không? bây giờ chỉ nói ở trong mạng này thôi"
+  },
+  {
+    "start": 3955.17,
+    "end": 3983.48,
+    "text": "es cộng bằng path của shaky, A của Ex, Y1 pom pom9, Y1 pom pom9 and dasher from F-1."
+  },
+  {
+    "start": 3983.48,
+    "end": 3985.32,
+    "text": "cuốn xuống"
+  },
+  {
+    "start": 3986.48,
+    "end": 3988.48,
+    "text": "1 0 là xuân dưới à?"
+  },
+  {
+    "start": 3988.74,
+    "end": 3991.22,
+    "text": "hình như thứ tự của anh bị sai"
+  },
+  {
+    "start": 3991.22,
+    "end": 3993.5,
+    "text": "chứ này roe, đeo, đúng à?"
+  },
+  {
+    "start": 3993.5,
+    "end": 3994.78,
+    "text": "do thứ tự của anh bị sai"
+  },
+  {
+    "start": 3994.78,
+    "end": 3995.76,
+    "text": "không phải đâu"
+  },
+  {
+    "start": 3995.76,
+    "end": 4000.18,
+    "text": "còn nếu chỗ AIZ này, bạn nào tưởng thận, em có thể viết lại AI1G1 bằng 1 cũng được"
+  },
+  {
+    "start": 4000.44,
+    "end": 4003.16,
+    "text": "còn thực tế, em viết là và và của AI"
+  },
+  {
+    "start": 4003.16,
+    "end": 4006.64,
+    "text": "E1G1 thì nó sẽ tự trách giá trị E1G1 khác hani"
+  },
+  {
+    "start": 4008.28,
+    "end": 4012.8,
+    "text": "nếu em không thích dùng mảng A, bạn có thể dùng thêm 1 mảng Visa tật nữa"
+  },
+  {
+    "start": 4012.8,
+    "end": 4015.88,
+    "text": "thích thì các bạn có thể dùng thêm một cái màng visited nữa để"
+  },
+  {
+    "start": 4015.88,
+    "end": 4020.52,
+    "text": "ở chỗ này mà các bạn đi vào oe1g1 thì các bạn cho visited của e1g1 bằng 1"
+  },
+  {
+    "start": 4020.52,
+    "end": 4023.44,
+    "text": "xong đó thì, à, bằng không, xong tí nữa mà em mở lại nhé"
+  },
+  {
+    "start": 4023.44,
+    "end": 4030.81,
+    "text": "ok, thế thì khi mà các bạn làm bài tập về quay lưu ý thì nó hay có cái bài mà nó bắt các bạn xây dựng"
+  },
+  {
+    "start": 4030.81,
+    "end": 4035.25,
+    "text": "tức là mình phải quay lưu để mình chọn ra các cái giáy số ở trong màng 1 triều ấy"
+  },
+  {
+    "start": 4035.25,
+    "end": 4037.65,
+    "text": "thì các bạn sẽ làm cái bài đấy như thế này"
+  },
+  {
+    "start": 4037.65,
+    "end": 4048.8,
+    "text": "Ví dụ như anh xem cái bài combination xam này trước đi xem nào"
+  },
+  {
+    "start": 4048.8,
+    "end": 4057.41,
+    "text": "Nè không, này nó không có mạng bài nào hết giờ"
+  },
+  {
+    "start": 4057.41,
+    "end": 4086.42,
+    "text": "Hay là mình nên anh dấu visited i1.1 được không? Được"
+  },
+  {
+    "start": 4086.42,
+    "end": 4092.16,
+    "text": "Dùng thêm là anh lời, anh lời dùng visited nên anh dùng luôn màng e đấy"
+  },
+  {
+    "start": 4092.16,
+    "end": 4098.45,
+    "text": "Tạm kìa, bài này không phải là chọn giải số, xáp xét xam này thì dễ hơn"
+  },
+  {
+    "start": 4098.45,
+    "end": 4102.56,
+    "text": "Bài số 14 đi, nha"
+  },
+  {
+    "start": 4102.56,
+    "end": 4106.84,
+    "text": "Đây, bài số 14 này đi"
+  },
+  {
+    "start": 4106.84,
+    "end": 4108.84,
+    "text": "Bài này nó cho các bạn 1 cái số nguyên e"
+  },
+  {
+    "start": 4108.84,
+    "end": 4115.93,
+    "text": "dãy số nguyên e cùng nờ số phân biệt và số x, nhậm vụ bạn là tìm các tổ hợp"
+  },
+  {
+    "start": 4115.93,
+    "end": 4118.57,
+    "text": "các số trong màng e sao cho có tổng màng x"
+  },
+  {
+    "start": 4118.57,
+    "end": 4121.05,
+    "text": "các số trong màng e có thể sử dụng được nhiều lần"
+  },
+  {
+    "start": 4121.05,
+    "end": 4125.29,
+    "text": "mỗi tổ hợp trong màng e được in ra theo thứ tự không giảm"
+  },
+  {
+    "start": 4125.29,
+    "end": 4130.65,
+    "text": "ví dụ như có 1 cái màng 2468 mà x bằng 8 thì các bạn có thể tạo ra cái tổng màng 8"
+  },
+  {
+    "start": 4130.65,
+    "end": 4132.25,
+    "text": "mà cách là sử dụng 4 số 2 này"
+  },
+  {
+    "start": 4132.25,
+    "end": 4136.81,
+    "text": "2 số 2 với 1 số 4 này, số 2 với số 6 này, số 4 với số 4 này và số 8"
+  },
+  {
+    "start": 4136.81,
+    "end": 4142.95,
+    "text": "Các cái cấu hình của các bạn thì nó được injert theo thứ tự tử điển tăng dần của tổ hợp dãy số đúng không?"
+  },
+  {
+    "start": 4144.21,
+    "end": 4151.54,
+    "text": "Khi mà các bạn gặp cái dạng bài tập này á, đầu tiên mà em sẽ đem mà em sắp xếp cái tăng cái bản để tăng dần."
+  },
+  {
+    "start": 4153.39,
+    "end": 4158.51,
+    "text": "Anh ví dụ cho các bạn một cái dãy số mà nó có 2, 4, 5, 6, 8 đi."
+  },
+  {
+    "start": 4158.77,
+    "end": 4161.07,
+    "text": "Các bạn đem, các bạn sắp xếp cái dãy số để tăng dần."
+  },
+  {
+    "start": 4161.65,
+    "end": 4168.05,
+    "text": "Khi mà các bạn gặp một cái bài quay lưu ở trên dãy số mà các bạn vướng, các bạn không biết nó cốt như nào thì các bạn nhìn vào đáp N ấy."
+  },
+  {
+    "start": 4168.05,
+    "end": 4174.56,
+    "text": "mình ví dụ ở đây nó cho các bạn ích bằng 8, thì cái cấu hình đầu tiên là 2, 2, 2, 2, 2, là 4 số đúng không?"
+  },
+  {
+    "start": 4174.56,
+    "end": 4190.28,
+    "text": "Xong cấu hình tiếp theo là 2, 2, 4, cấu hình tiếp theo có thể là 26, đấy, đây trên nhỉ, mình xem thêm số 3 đi, đấy, rồi, cấu hình tiếp theo là các bạn sẽ là 3 năm"
+  },
+  {
+    "start": 4190.28,
+    "end": 4202.84,
+    "text": "Thì các bạn thấy nè, khi mà các bạn chọn ra 1 phần tửa trong cấu hình, 1 phần tửa trong màng N này, thì các bạn không được lấy lại những thằng đứng trước nó."
+  },
+  {
+    "start": 4202.84,
+    "end": 4215.29,
+    "text": "Mình ví dụ nha, nếu các bạn lấy cái thằng thứ 1 ở trong cấu hình của bạn là số 4, thì cái thằng thứ 2, thằng thứ 3, thằng thứ 4 mà các bạn tiếp tục chọn ra để ra nó có tổng măng ích này nè, là các bạn chỉ chọn được những thằng đứng sau thôi."
+  },
+  {
+    "start": 4215.29,
+    "end": 4219.42,
+    "text": "Đúng không? Các bạn mà chọn lại từ đầu ấy, nó sẽ xinh ra các cái hoán vị của nhau."
+  },
+  {
+    "start": 4219.42,
+    "end": 4221.42,
+    "text": "Các bạn hiểu cái đấy không nhỉ?"
+  },
+  {
+    "start": 4221.42,
+    "end": 4228.24,
+    "text": "Đấy, thế nên là để tránh cái việc là mình chọn ra các tổ hợp đảo hán vị của nhau, thì các bạn phải"
+  },
+  {
+    "start": 4228.24,
+    "end": 4236.04,
+    "text": "cái ham try của các bạn ấy, nó phải có thêm 1 cái tham số nữa, để nó duy trì cái chỉ số mà các bạn bắt đầu chọn"
+  },
+  {
+    "start": 4236.04,
+    "end": 4238.04,
+    "text": "ra các phần tửa trong mà nghe."
+  },
+  {
+    "start": 4238.04,
+    "end": 4244.04,
+    "text": "Đấy, ví dụ các bạn ở trong mê đấy, các bạn try ban đầu ấy, thì các bạn sẽ phải có 1 cái chỉ số bắt đầu."
+  },
+  {
+    "start": 4244.04,
+    "end": 4249.04,
+    "text": "Tức là các bạn được phép chọn những cái phần tửa chỉ số nào, ví dụ như trong trường hợp này là mình bắt đầu từ chỉ số không,"
+  },
+  {
+    "start": 4249.04,
+    "end": 4252.56,
+    "text": "thì mình sẽ tròi từ không, nhưng mà mình ví dụ trong quán trình mà các bạn quay lùi á"
+  },
+  {
+    "start": 4252.56,
+    "end": 4258.0,
+    "text": "đấy, mà các bạn trọn ra một cái thằng ví dụ như các bạn trọn x3 bằng số 4 rồi nha"
+  },
+  {
+    "start": 4258.0,
+    "end": 4261.43,
+    "text": "thì khi mà các bạn xây dựng x4 ấy"
+  },
+  {
+    "start": 4261.43,
+    "end": 4266.39,
+    "text": "các bạn cũng phải được cái hàm tròi của các bạn nó phải bắt đầu từ số 4 nó xét về cuối"
+  },
+  {
+    "start": 4266.39,
+    "end": 4268.39,
+    "text": "chứ nó không trọn lại được thằng 2 và thằng 3 nữa"
+  },
+  {
+    "start": 4268.39,
+    "end": 4271.43,
+    "text": "đấy, khi đó mình phải có thêm một cái chỉ số nữa"
+  },
+  {
+    "start": 4271.43,
+    "end": 4276.55,
+    "text": "để nó quy định những cái vị trí ở trong mảng A mà các bạn có thể trọn để gán cho phần tử ở trong cấu hình"
+  },
+  {
+    "start": 4276.55,
+    "end": 4284.27,
+    "text": "và tất nhiên là các bạn phải có một biến tổng để các bạn có thể lưu xem là tổng những số mà các bạn đã chọn trong cấu hình ấy"
+  },
+  {
+    "start": 4284.27,
+    "end": 4288.91,
+    "text": "nó bằng bao nhiêu, nếu mà nó ra được thẳng ích thì các bạn sẽ tiến hành, ghi nhận lại cấu hình đó"
+  },
+  {
+    "start": 4288.91,
+    "end": 4292.91,
+    "text": "bài này các bạn có thể lưu cấu hình ở trong mạng cũng được, mà trong vector cũng được"
+  },
+  {
+    "start": 4292.91,
+    "end": 4295.91,
+    "text": "trong mạng cũng được, và trong vector cũng được"
+  },
+  {
+    "start": 4295.91,
+    "end": 4300.11,
+    "text": "nếu các bạn thích cốt bằng mạng thì cốt bằng mạng mà cốt cấu hình ở trong vector thì"
+  },
+  {
+    "start": 4300.11,
+    "end": 4305.63,
+    "text": "tại vì các bạn hay cốt cấu hình ở trong mạng đúng không nhỉ, nhưng mà lưu cấu hình ở trong vector thì mình nghĩ là nó dễ hơn"
+  },
+  {
+    "start": 4305.63,
+    "end": 4316.2,
+    "text": "Đúng rồi, ở đây mình sẽ xem là mình có những cái biến là mảng A này, nờ này đúng không?"
+  },
+  {
+    "start": 4316.2,
+    "end": 4324.72,
+    "text": "Bà 1 cái biến x, mình cứ viết 1 cái hạm nhập trước, ở đây mình sẽ lưu cái mảng A từ vị trí không cho tới nờ nhé."
+  },
+  {
+    "start": 4324.72,
+    "end": 4332.76,
+    "text": "Xin cho AI, ở đây mình sẽ nhập cái biến x kìa đây."
+  },
+  {
+    "start": 4332.76,
+    "end": 4346.37,
+    "text": "Rồi, thế thì bây giờ khi mà bạn em quay lùi á, mình try, thì mình sẽ viết 1 cái hạm try nó có những cái tham số như sao ở đây, các bạn không cần tham số y nữa."
+  },
+  {
+    "start": 4346.37,
+    "end": 4351.85,
+    "text": "nếu mà các bạn em muốn lưu cấu hình thì các bạn có thể lưu, ở đây mình sẽ lưu là tổng ép đi, cho nó khác đi"
+  },
+  {
+    "start": 4351.85,
+    "end": 4354.29,
+    "text": "tại vì các bạn hay lưu cấu hình ở trong mảng ích mà, đúng không?"
+  },
+  {
+    "start": 4354.29,
+    "end": 4359.29,
+    "text": "bạn nào mà muốn lưu cấu hình ở trong mảng thì các bạn khai báo ra trong một cái mảng ích nữa để các bạn gán, nha"
+  },
+  {
+    "start": 4359.29,
+    "end": 4360.45,
+    "text": "đấy"
+  },
+  {
+    "start": 4360.45,
+    "end": 4364.53,
+    "text": "nhưng mà khi đó cái hạm try của mình thì sẽ có nhiều tham số đấy, đấy chứ"
+  },
+  {
+    "start": 4364.53,
+    "end": 4369.46,
+    "text": "đó, đúng rồi"
+  },
+  {
+    "start": 4369.46,
+    "end": 4373.38,
+    "text": "ở đây mình sẽ có một cái tham số đấy là cái chỉ số, mình gọi là stat"
+  },
+  {
+    "start": 4373.38,
+    "end": 4375.74,
+    "text": "hoặc là pause cũng được, stat đi"
+  },
+  {
+    "start": 4375.74,
+    "end": 4380.76,
+    "text": "và 1 biến xam để lưu tỏng quắc phần tử trong cấu hình"
+  },
+  {
+    "start": 4380.76,
+    "end": 4385.45,
+    "text": "Thế thì cứ mỗi lần mà các bạn try, các bạn sẽ lựa chọn các phần tử từ"
+  },
+  {
+    "start": 4385.45,
+    "end": 4388.25,
+    "text": "cái chỉ số stat này ở trong bảng A cho tới cuối"
+  },
+  {
+    "start": 4388.25,
+    "end": 4395.31,
+    "text": "các bạn em làm cái vòng 4 trở từ ghi bằng stat cho tới ghi nhỏ hơn ghi cộng cộng"
+  },
+  {
+    "start": 4395.31,
+    "end": 4400.35,
+    "text": "Khi đó mình sẽ chọn cái thằng A ghi để mình đưa vào cái tập con"
+  },
+  {
+    "start": 4400.35,
+    "end": 4402.75,
+    "text": "mà các bạn chọn cái tổ hợp mà các bạn chọn"
+  },
+  {
+    "start": 4402.75,
+    "end": 4404.75,
+    "text": "Nên trên nhờ"
+  },
+  {
+    "start": 4404.75,
+    "end": 4409.37,
+    "text": "Khi đó cái biến xam của các bạn ấy, nó sẽ cộng thêm 1 cái lượng là az"
+  },
+  {
+    "start": 4409.37,
+    "end": 4411.57,
+    "text": "Nếu mà các bạn lưu ở trong"
+  },
+  {
+    "start": 4411.57,
+    "end": 4414.87,
+    "text": "Trong trong trong mảng ích y thì các bạn lại phải có 1 cái tham số y ở đây"
+  },
+  {
+    "start": 4414.87,
+    "end": 4416.87,
+    "text": "Và các bạn gán là xy bằng y"
+  },
+  {
+    "start": 4416.87,
+    "end": 4418.37,
+    "text": "Bằng az, xin lỗi"
+  },
+  {
+    "start": 4418.37,
+    "end": 4421.57,
+    "text": "Và các bạn cho xam cộng bằng az, đây là lưu ở trong mảng nhé"
+  },
+  {
+    "start": 4421.57,
+    "end": 4422.27,
+    "text": "Nấy"
+  },
+  {
+    "start": 4422.27,
+    "end": 4426.97,
+    "text": "Và trong trường hợp này thì khi mà bạn em update cấu hình ấy thì nó không phải là"
+  },
+  {
+    "start": 4426.97,
+    "end": 4430.07,
+    "text": "Giống như mấy bài trước nữa là nó có đủ nờ thằng hoặc đủ ca thằng"
+  },
+  {
+    "start": 4430.07,
+    "end": 4435.35,
+    "text": "trong trường hợp này, update, cấu hình khi mà xam, in là cấu hình khi mà xam của bạn nó bằng nghệ liền x"
+  },
+  {
+    "start": 4435.35,
+    "end": 4437.35,
+    "text": "thì bạn em sẽ in là cấu hình"
+  },
+  {
+    "start": 4437.35,
+    "end": 4445.11,
+    "text": "mình sẽ làm cái vòng foi chạy từ index bằng 1 cho tới index"
+  },
+  {
+    "start": 4445.11,
+    "end": 4449.34,
+    "text": "nhỏ hơn hoặc bằng i, index cộng cộng"
+  },
+  {
+    "start": 4449.34,
+    "end": 4453.27,
+    "text": "sau đó thì các bạn CL ra x tại index"
+  },
+  {
+    "start": 4453.27,
+    "end": 4458.1,
+    "text": "sau đó hết 1 cấu hình thì các bạn xuống dòng"
+  },
+  {
+    "start": 4458.1,
+    "end": 4460.1,
+    "text": "trong trường hợp này lại update như thế"
+  },
+  {
+    "start": 4460.1,
+    "end": 4465.42,
+    "text": "Thế còn nếu mà cái xam của bạn nó chưa bằng ét thì các bạn sẽ tiếp tục gọi tròi, đúng không?"
+  },
+  {
+    "start": 4465.42,
+    "end": 4469.54,
+    "text": "Nhưng mà khi đó, bạn em sẽ check thêm một điều kiện là cái xam của mình nó nhỏ hơn ét thì h h tròi"
+  },
+  {
+    "start": 4469.54,
+    "end": 4473.26,
+    "text": "Và có thể lúc đấy cái xam của mình nó vượt quá ét rồi thì các bạn cũng không quay tròi nữa"
+  },
+  {
+    "start": 4473.26,
+    "end": 4475.98,
+    "text": "Tại vì các bạn hình dung nếu cái xam của mình nó lớn hơn ét rồi"
+  },
+  {
+    "start": 4475.98,
+    "end": 4478.54,
+    "text": "Thế là cái tập con bỏ em đang lưu ở trong cái mảng ích ấy"
+  },
+  {
+    "start": 4478.54,
+    "end": 4482.78,
+    "text": "Nó vượt qua cái tổng ét rồi thì các bạn thêm các phần tử vào"
+  },
+  {
+    "start": 4482.78,
+    "end": 4484.86,
+    "text": "Bạn quay lưu tiếp nó cũng không bao giờ ra ét được"
+  },
+  {
+    "start": 4484.86,
+    "end": 4488.54,
+    "text": "nên ở đây mình chỉ quay lùi khi mà cái xam của bạn nó chưa đạt đến F"
+  },
+  {
+    "start": 4488.54,
+    "end": 4493.22,
+    "text": "thì mình sẽ tiếp tục try đến y cộng 1 và mình sẽ start từ đâu?"
+  },
+  {
+    "start": 4493.22,
+    "end": 4494.9,
+    "text": "mình sẽ start từ z"
+  },
+  {
+    "start": 4494.9,
+    "end": 4497.66,
+    "text": "đấy, chứ không phải là bắt đầu từ start nhé"
+  },
+  {
+    "start": 4497.66,
+    "end": 4498.9,
+    "text": "các bạn hình dung là gì?"
+  },
+  {
+    "start": 4498.9,
+    "end": 4502.1,
+    "text": "ở đây em đã gán xy bằng az rồi, tức là mình chọn cái thằng az rồi"
+  },
+  {
+    "start": 4502.1,
+    "end": 4504.02,
+    "text": "thì khi mà các bạn try đến y cộng 1"
+  },
+  {
+    "start": 4504.02,
+    "end": 4506.9,
+    "text": "em chỉ được phép bắt đầu từ z và chọn từ z đến cuối"
+  },
+  {
+    "start": 4506.9,
+    "end": 4509.66,
+    "text": "còn cái chỗ này nhé, mà các bạn bắt đầu từ đâu?"
+  },
+  {
+    "start": 4509.66,
+    "end": 4511.22,
+    "text": "các bạn bắt đầu từ không ấy"
+  },
+  {
+    "start": 4511.22,
+    "end": 4514.46,
+    "text": "là các bạn hình dung ví dụ bọn em đã chọn thẳng ở vị trí thứ 4 rồi"
+  },
+  {
+    "start": 4514.46,
+    "end": 4518.14,
+    "text": "thì cái lời gọi địa quy tiếp theo nó lại quay lại đầu dãy, nó lại chọn những cái thằng ở đầu dãy"
+  },
+  {
+    "start": 4518.14,
+    "end": 4520.14,
+    "text": "nó sẽ sinh ra các khán vị của nhau"
+  },
+  {
+    "start": 4520.14,
+    "end": 4523.14,
+    "text": "như thế thì nó không đúng với yêu cầu của đề bài, nhá"
+  },
+  {
+    "start": 4523.14,
+    "end": 4524.14,
+    "text": "đấy"
+  },
+  {
+    "start": 4524.14,
+    "end": 4530.22,
+    "text": "còn nếu mà bạn em muốn sinh ra tất cả các khán vị của nhau thì các bạn cứ quay lại từ đầu dãy, nó sinh ra các khán vị của nhau thôi"
+  },
+  {
+    "start": 4530.22,
+    "end": 4531.22,
+    "text": "đấy"
+  },
+  {
+    "start": 4531.22,
+    "end": 4533.27,
+    "text": "và đây các bạn chuyển xam vào"
+  },
+  {
+    "start": 4533.27,
+    "end": 4533.87,
+    "text": "nhá"
+  },
+  {
+    "start": 4533.87,
+    "end": 4535.87,
+    "text": "ở dưới này các bạn sẽ phải backcheck lại đấy"
+  },
+  {
+    "start": 4535.87,
+    "end": 4539.43,
+    "text": "dưới này các bạn phải backcheck lại là các em phải cho xam trừ bằng az đấy"
+  },
+  {
+    "start": 4539.43,
+    "end": 4545.13,
+    "text": "Tại vì ở trên này các bạn cộng vào mà, dưới các bạn không có dùng thằng Azi nữa, thì các bạn phải trừ nó đi"
+  },
+  {
+    "start": 4545.13,
+    "end": 4548.53,
+    "text": "Nói, sau đó trong bên thì các bạn sẽ tiến hành nhập cái mẻ một chiều vào"
+  },
+  {
+    "start": 4548.53,
+    "end": 4551.53,
+    "text": "Sau đó thì các bạn sẽ try bắt đầu từ 1 này"
+  },
+  {
+    "start": 4551.53,
+    "end": 4555.93,
+    "text": "Sạ start thì các bạn em cho bắt đầu từ không, còn sum thì bắt đầu nó cũng bằng không"
+  },
+  {
+    "start": 4555.93,
+    "end": 4558.73,
+    "text": "Nói, thì nó sẽ in ra cho các bạn các cấu hình"
+  },
+  {
+    "start": 4558.73,
+    "end": 4563.05,
+    "text": "Đây, toàn á, nhé"
+  },
+  {
+    "start": 4563.05,
+    "end": 4575.54,
+    "text": "Chết rồi nó nhiều quá, mình nó in ra kết nhiều quá thế"
+  },
+  {
+    "start": 4575.54,
+    "end": 4595.77,
+    "text": "tử tử các bạn, cái đệ quy của mình nó đang, nó đang bị lập vĩnh viễn, nó in ra kết quả đấy, chết rồi, in ra kết quả"
+  },
+  {
+    "start": 4595.77,
+    "end": 4612.52,
+    "text": "nhập n, s đúng không nhỉ, e bằng 0 cho tới e nhỏ hơn đấy, cộng cộng sin cho ai, start, xe bằng, đúng rồi mà nhỉ"
+  },
+  {
+    "start": 4612.52,
+    "end": 4624.31,
+    "text": "try từ e bằng 1, a ở đây, khổ thế đấy, kêu cái chỗ ít đấy cộng cộng này, bây giờ cái file này của mình nó nặng quá rồi"
+  },
+  {
+    "start": 4624.31,
+    "end": 4637.82,
+    "text": "mở nó lại rồi nè, nó nặng quá, bây giờ mở cái file lên có khi lại lapped"
+  },
+  {
+    "start": 4637.82,
+    "end": 4654.73,
+    "text": "ừ, anh thiếu mất cái chỗ in đấy, cộng cộng này nên là nó in ra, in ra cấu hình nhiều quá"
+  },
+  {
+    "start": 4654.73,
+    "end": 4661.2,
+    "text": "sao để xóa được cái file này đây, cái file này là output chân txt"
+  },
+  {
+    "start": 4661.2,
+    "end": 4672.62,
+    "text": "bạn đợi chút nha, để anh xóa luôn cái file đi, mấy lần bảo cái xcansion mà lửa quá"
+  },
+  {
+    "start": 4672.62,
+    "end": 4675.26,
+    "text": "trầm mấy..."
+  },
+  {
+    "start": 4675.26,
+    "end": 4684.3,
+    "text": "đi lít mà điên"
+  },
+  {
+    "start": 4684.3,
+    "end": 4686.3,
+    "text": "đúng rồi cái thêm ích tàn sin có thể"
+  },
+  {
+    "start": 4686.3,
+    "end": 4688.3,
+    "text": "check luôn các cái test ở trên"
+  },
+  {
+    "start": 4688.3,
+    "end": 4690.74,
+    "text": "các cái web.by"
+  },
+  {
+    "start": 4690.74,
+    "end": 4694.31,
+    "text": "mấy người lưới"
+  },
+  {
+    "start": 4694.31,
+    "end": 4696.31,
+    "text": "đây, rồi các bạn đợi chút thì mình"
+  },
+  {
+    "start": 4696.31,
+    "end": 4713.51,
+    "text": "mở lại cái file đấy"
+  },
+  {
+    "start": 4713.51,
+    "end": 4715.64,
+    "text": "nó ok"
+  },
+  {
+    "start": 4715.64,
+    "end": 4718.22,
+    "text": "đúng rồi, không phải check test"
+  },
+  {
+    "start": 4718.22,
+    "end": 4720.22,
+    "text": "mà kiểu nó tự động nó lấy test"
+  },
+  {
+    "start": 4720.22,
+    "end": 4722.22,
+    "text": "sau nó chạy vào nó xót xánh xem có đúng không"
+  },
+  {
+    "start": 4722.22,
+    "end": 4724.22,
+    "text": "mấy xót xánh thời gian đấy"
+  },
+  {
+    "start": 4724.22,
+    "end": 4727.05,
+    "text": "anh phải xót cái mảng A trước nha các bạn"
+  },
+  {
+    "start": 4727.05,
+    "end": 4737.3,
+    "text": "bàn này mình phải xót cái mảng e trước để cái cấu hình của mình nó sắp xếp là 234 thì khi mà nó quay lùi thì nó sẽ tạo ra cái cấu hình tăng dần về tư điển"
+  },
+  {
+    "start": 4737.3,
+    "end": 4740.3,
+    "text": "mình sẽ xót e và e cộng nơ"
+  },
+  {
+    "start": 4740.3,
+    "end": 4755.21,
+    "text": "chẳng hỏi là nếu như kia thì mình có dùng số 2 rồi thì mình không dùng lại mà các xét số tiếp theo thì nó sẽ không có cái cấu hình đấy"
+  },
+  {
+    "start": 4755.21,
+    "end": 4760.21,
+    "text": "ở đây là anh dùng lại, đây thì các bạn thấy nó sẽ ra kết quả như thế này"
+  },
+  {
+    "start": 4760.21,
+    "end": 4770.06,
+    "text": "Vì dụ như bạn em có cái mảng là 234568 chẳng hạn, đây là đôi 46 thẳng đúng không?"
+  },
+  {
+    "start": 4770.06,
+    "end": 4779.4,
+    "text": "Rồi các bạn chạy, nó sẽ ra hết những cấu hình này, in ra hết đúng không?"
+  },
+  {
+    "start": 4779.4,
+    "end": 4785.71,
+    "text": "Còn nếu mà cái chỗ try này mà bạn em không có trọn thứ gì mà bạn em trọn thứ gì cộng 1,"
+  },
+  {
+    "start": 4785.71,
+    "end": 4791.71,
+    "text": "nó sẽ không, cấu hình của mình sẽ không lấy 1 số nhiều lần đâu, nó sẽ không lấy 1 phần tử nhiều lần đâu."
+  },
+  {
+    "start": 4791.71,
+    "end": 4797.67,
+    "text": "thì ở đây nó chỉ in ra được các cấu hình như là 28 này, 235 này, rồi là 46 thôi"
+  },
+  {
+    "start": 4797.67,
+    "end": 4802.15,
+    "text": "chứ nó không có những cái cấu hình mà các cái phần tử trong cấu hình của mình nó trùng nhau"
+  },
+  {
+    "start": 4802.15,
+    "end": 4808.87,
+    "text": "do bạn em hình dung là em đã chọn cái phần tử ở chỉ số di rồi thì cái lời với đệ quý tiếp theo đằng sau em đâu có chọn từ di nữa"
+  },
+  {
+    "start": 4808.87,
+    "end": 4811.55,
+    "text": "em chọn từ di cộng 1 đúng không? đây các bạn thấy đây"
+  },
+  {
+    "start": 4811.55,
+    "end": 4819.35,
+    "text": "nó chỉ ra các cái cấu hình mà nó không lấy lại cái thằng thằng đằng trước"
+  },
+  {
+    "start": 4819.35,
+    "end": 4823.95,
+    "text": "và không lấy thằng mà đã lấy ở trong cấu hình, thế là nó không thể lấy trùng"
+  },
+  {
+    "start": 4823.95,
+    "end": 4829.02,
+    "text": "còn chỗ này mà các bạn bắt đầu lại từ không ấy, thì nó sẽ sinh ra cả các khán vị của nhau luôn"
+  },
+  {
+    "start": 4829.02,
+    "end": 4833.82,
+    "text": "nó quay lại, nó chọn lại từ đầu luôn, đúng không?"
+  },
+  {
+    "start": 4833.82,
+    "end": 4836.82,
+    "text": "đấy, các bạn thấy là nó sẽ sinh ra cả các khán vị của nhau"
+  },
+  {
+    "start": 4841.74,
+    "end": 4848.07,
+    "text": "đây là bài tổ hợp quân tổng bằng ích à, ghi bằng i"
+  },
+  {
+    "start": 4848.07,
+    "end": 4855.85,
+    "text": "thì đây cái biến i này của em nó chính là start đây gần gì nữa"
+  },
+  {
+    "start": 4855.85,
+    "end": 4860.97,
+    "text": "i của em này chính là chỉ số bắt đầu cái stat của anh đây cần gì nữa"
+  },
+  {
+    "start": 4860.97,
+    "end": 4863.97,
+    "text": "còn cái current sum này chính là cái sum đấy cần gì nữa"
+  },
+  {
+    "start": 4863.97,
+    "end": 4864.97,
+    "text": "đúng không?"
+  },
+  {
+    "start": 4864.97,
+    "end": 4869.06,
+    "text": "cái i này của em không phải là cái stat hả?"
+  },
+  {
+    "start": 4869.06,
+    "end": 4877.82,
+    "text": "em bắt đầu từ ghi bằng i, xong dưới này em try từ az em chuyển ghi vào cho ghi, thì cái i là stat đấy cần gì nữa"
+  },
+  {
+    "start": 4877.82,
+    "end": 4882.57,
+    "text": "chứ à?"
+  },
+  {
+    "start": 4882.57,
+    "end": 4884.57,
+    "text": "thế còn nếu mà..."
+  },
+  {
+    "start": 4884.57,
+    "end": 4887.57,
+    "text": "nếu mà..."
+  },
+  {
+    "start": 4887.57,
+    "end": 4889.57,
+    "text": "bạn em mà lưu vào trong vét tơ cũng được"
+  },
+  {
+    "start": 4889.57,
+    "end": 4890.57,
+    "text": "nhá?"
+  },
+  {
+    "start": 4890.57,
+    "end": 4895.94,
+    "text": "nếu mà bạn em không luôn lưu vào trong vector, màng x này là các bạn em tạo cho anh 1 cái vector ở đây này"
+  },
+  {
+    "start": 4895.94,
+    "end": 4902.28,
+    "text": "đấy, trong đó chỗ này các bạn, thay vì các bạn gán x, y bằng az, bạn em cho v, pushback, az vào"
+  },
+  {
+    "start": 4902.28,
+    "end": 4906.12,
+    "text": "trong dưới này các bạn, khi mà diệt cấu hình thì bạn em diệt cái vector mà in"
+  },
+  {
+    "start": 4906.12,
+    "end": 4909.98,
+    "text": "for, in, tx, 2, v, các bạn em se out the x ở đây"
+  },
+  {
+    "start": 4909.98,
+    "end": 4915.85,
+    "text": "đấy, còn chỗ này thì, nhưng mà nếu mà lưu vào trong vector là các bạn phải xóa đấy"
+  },
+  {
+    "start": 4915.85,
+    "end": 4922.65,
+    "text": "các bạn phải xóa cái phần tửa trên mà bọn em nhém vào trong vector á, cũng được"
+  },
+  {
+    "start": 4922.65,
+    "end": 4929.88,
+    "text": "Thì khi đọc mình đỡ phải cái i này, đỡ phải cái thằng i để lưu thứ tự"
+  },
+  {
+    "start": 4929.88,
+    "end": 4932.46,
+    "text": "nó vẫn ra kết quả bình thường"
+  },
+  {
+    "start": 4932.46,
+    "end": 4936.46,
+    "text": "Bạn em có thể lựa chọn xinh ra cấu hình và lưu vào trong mạng 1 chiều như lúc nãy"
+  },
+  {
+    "start": 4936.46,
+    "end": 4940.38,
+    "text": "hoặc là bạn em có thể lựa chọn là xinh ra cấu hình và lưu vào trong vector"
+  },
+  {
+    "start": 4940.38,
+    "end": 4946.86,
+    "text": "Các bạn try từ 0 và từ z và xam nó được"
+  },
+  {
+    "start": 4946.86,
+    "end": 4952.78,
+    "text": "Thì nên khi mà làm bài tập ấy thì phải để ý xem khi mà nó quay lưu trên dãi số nó chọn ở trên dãi số"
+  },
+  {
+    "start": 4952.78,
+    "end": 4955.22,
+    "text": "thì xem là nó có lấy lại các cái phần tử đã chọn không này"
+  },
+  {
+    "start": 4955.22,
+    "end": 4958.22,
+    "text": "sau mà bắt đầu nó có, có, có"
+  },
+  {
+    "start": 4958.22,
+    "end": 4964.66,
+    "text": "ví dụ nó lấy lại thì khi mà bọn em tiếp tục quay lui thì bọn em có thể chạy lại từ cái chỉ số mà các bạn đã chọn ở bước hiện tại"
+  },
+  {
+    "start": 4964.66,
+    "end": 4967.82,
+    "text": "và nếu nó không lấy lại thì bọn em sẽ bắt đầu từ đằng sau, nhé"
+  },
+  {
+    "start": 4967.82,
+    "end": 4974.13,
+    "text": "đấy, thì nó có một vài bài nữa, nó cũng quay lùi trên dãy số thì bọn em có thể về, bọn em làm thêm, nhé"
+  },
+  {
+    "start": 4974.13,
+    "end": 4985.56,
+    "text": "rồi, quay là mình đã xong cái phần quay lui, quay lùi sâu nhị phân đúng không"
+  },
+  {
+    "start": 4985.56,
+    "end": 5002.73,
+    "text": "tập con, với lại là hoán vị, với lại là quay lui, đường đi trong mai trận, với lại là quay lui trên mạng 1 triều"
+  },
+  {
+    "start": 5002.73,
+    "end": 5008.33,
+    "text": "Bây giờ mình sẽ sang cái bài toán là nờ quynh, nờ con hậu"
+  },
+  {
+    "start": 5008.33,
+    "end": 5016.95,
+    "text": "Trong lập trình nó có một cái bài toán rất là nổi tiếng là bài toán nờ quynh, nờ quân hậu"
+  },
+  {
+    "start": 5016.95,
+    "end": 5022.15,
+    "text": "Về, bọn em thử cốt xinh phần hoạch bằng quay lui xem các bạn đó làm được không?"
+  },
+  {
+    "start": 5022.15,
+    "end": 5025.25,
+    "text": "xinh phần hoạch, chứ không chứ bạn em cốt xinh phần hoạch, đúng không?"
+  },
+  {
+    "start": 5025.25,
+    "end": 5029.55,
+    "text": "Bây giờ các bạn về, các bạn thử cốt và quay lùi đi, xem các bạn cốt như thế nào, nhé."
+  },
+  {
+    "start": 5029.55,
+    "end": 5039.69,
+    "text": "Các bạn có thể viết các cái cấu hình mà các bạn xinh ra, sau đó mình xem là nếu mà mình quay lùi thì mình sẽ triển khai như thế nào, thì nó để được các cái cấu hình như vậy."
+  },
+  {
+    "start": 5039.69,
+    "end": 5047.78,
+    "text": "Bài toán nờ quân hậu là nó sẽ cho các bạn một cái bàn cờ vua, gồm nờ con hậu, đấy, bàn cờ thì có cử là nờ hàng nờ cột."
+  },
+  {
+    "start": 5047.78,
+    "end": 5056.46,
+    "text": "sau đó thì nó yêu cầu các bạn là tìm ra các cái cách mà các bạn đặt con hậu trên bàn cờ, nờ con hậu trên bàn cờ sao cho không có 2 con hậu nào được ăn nhau"
+  },
+  {
+    "start": 5056.46,
+    "end": 5058.66,
+    "text": "nhé, không có 2 con hậu nào được ăn nhau"
+  },
+  {
+    "start": 5058.66,
+    "end": 5074.63,
+    "text": "thế thì các bạn hình dung í, là ở đây cái cấu hình của mình sẽ là từ x1 cho từ xn, trong đó x1 thì bạn em sẽ đặt con hậu nằm ở cột, ở hàng thứ nhất í, nằm ở cột bao nhiêu"
+  },
+  {
+    "start": 5074.63,
+    "end": 5080.63,
+    "text": "Đấy, tức là cái cấu hình của mình ở đây mình tiện thì mình sẽ xây dựng luôn là mỗi con hậu nằm ở một hàng"
+  },
+  {
+    "start": 5080.63,
+    "end": 5083.63,
+    "text": "Mình sẽ xây dựng từ hàng 1 cho tới hàng n"
+  },
+  {
+    "start": 5083.63,
+    "end": 5088.63,
+    "text": "Ví dụ như cái hình ở bên phải này nè, thì đây là một cách đặt con hậu nó ok đúng không?"
+  },
+  {
+    "start": 5088.63,
+    "end": 5090.63,
+    "text": "nờ con hậu nó ok 8, 8 con"
+  },
+  {
+    "start": 5090.63,
+    "end": 5094.63,
+    "text": "Thì cái cấu hình đấy nó sẽ tương ứng với x1 này của con em bằng 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 5094.63,
+    "end": 5097.95,
+    "text": "Tức là con hậu ở hàng thứ nhất này nằm ở cột 5"
+  },
+  {
+    "start": 5097.95,
+    "end": 5099.95,
+    "text": "Con hậu thứ 2 thì là nằm ở cột 7"
+  },
+  {
+    "start": 5099.95,
+    "end": 5109.95,
+    "text": "x7, x3 thì bằng 1, x4 bằng 4, x5 bằng 2, x6 bằng 8, x... đây là x7 bằng 6, còn đây là x8 thì bằng 3"
+  },
+  {
+    "start": 5109.95,
+    "end": 5112.95,
+    "text": "Đấy là 1 cái cấu hình 8 con hậu này nó không có ăn nhau"
+  },
+  {
+    "start": 5112.95,
+    "end": 5116.95,
+    "text": "Đấy thì đầu tiên các bạn phải hiểu là cái bài toán con hậu nó sẽ lưu cấu hình gì"
+  },
+  {
+    "start": 5116.95,
+    "end": 5123.95,
+    "text": "Đấy là x1, x2, x3 cho tới xn nhưng nó tương ứng với con hậu nào mở hàng 1, hàng 2 cho tới hàng n nó nằm ở cột nào"
+  },
+  {
+    "start": 5123.95,
+    "end": 5131.5,
+    "text": "Thế thì, bây giờ bạn em thấy, để con hậu, trên cái bàn cầu vua thì nó có thể ăn ngang ăn dọc, hoặc là ăn chéo"
+  },
+  {
+    "start": 5131.5,
+    "end": 5135.0,
+    "text": "nên các bạn không thể đặt 2 con hậu nào mà cùng hàng, cái này thì không lo"
+  },
+  {
+    "start": 5135.0,
+    "end": 5140.5,
+    "text": "tại vì là mình đặt mỗi con hậu ở 1 hàng, nên là mình sẽ không cần phải check hàng, đúng không?"
+  },
+  {
+    "start": 5140.5,
+    "end": 5143.5,
+    "text": "Nhưng mà mỗi cột là chỉ được phép đặt 1 con hậu thôi"
+  },
+  {
+    "start": 5143.5,
+    "end": 5146.5,
+    "text": "Đặt 2 con hậu ở cùng 1 hàng nó sẽ ăn nhau đúng không?"
+  },
+  {
+    "start": 5146.5,
+    "end": 5149.0,
+    "text": "Nên các bạn thấy cái cấu hình của mình là mỗi con nào mà 1 cột"
+  },
+  {
+    "start": 5149.0,
+    "end": 5151.5,
+    "text": "ngoài ra là mỗi con nó phải nằm ở 1 đường chéo"
+  },
+  {
+    "start": 5151.5,
+    "end": 5154.0,
+    "text": "thì cái bàn cờ này nó sẽ có 2 loại đường chéo"
+  },
+  {
+    "start": 5154.0,
+    "end": 5160.96,
+    "text": "2 cái đường chéo nó cắt nhau như này, những cái đường chéo nó như thế này, đây là 1 đường chéo này, 2 đường chéo này, 3 đường chéo này"
+  },
+  {
+    "start": 5160.96,
+    "end": 5165.64,
+    "text": "đây là cái loại đường chéo mà mình kéo từ trên xuống dưới này nhé, thế còn cái đường chéo nó ngược lại như này này"
+  },
+  {
+    "start": 5165.64,
+    "end": 5170.84,
+    "text": "đấy thì nó có 2 loại đường chéo, và khi mà các bạn đặt 1 con hậu nằm ở đâu đó trên cái mảng"
+  },
+  {
+    "start": 5170.84,
+    "end": 5176.64,
+    "text": "trên bàn cờ này nó sẽ, mình ví dụ nhé, các bạn mà đặt con hậu này này, nó nằm ở đây này"
+  },
+  {
+    "start": 5176.64,
+    "end": 5183.24,
+    "text": "thì các bạn phải chặn cái cột này lại, không được cho con hậu nằm ở cột này nữa"
+  },
+  {
+    "start": 5183.24,
+    "end": 5187.19,
+    "text": "và cái đường chéo thứ nhất mà nó đi qua này, chặn hết lại"
+  },
+  {
+    "start": 5187.19,
+    "end": 5190.35,
+    "text": "cái đường chéo thứ 2 mà nó đi qua này cũng chặn hết lại"
+  },
+  {
+    "start": 5190.35,
+    "end": 5197.75,
+    "text": "đấy, để khi mà các bạn xây dựng những con hậu ở hàng tiếp dưới, các bạn không được đặt vào những vùng đó đó"
+  },
+  {
+    "start": 5197.75,
+    "end": 5202.4,
+    "text": "thế nên là khi mà các bạn làm bài này, các bạn phải có 3 cái mảng đánh dấu"
+  },
+  {
+    "start": 5202.4,
+    "end": 5206.78,
+    "text": "1 cái mảng đánh dấu để mình đánh dấu xem cái cụt nó còn chống hay không"
+  },
+  {
+    "start": 5206.78,
+    "end": 5210.5,
+    "text": "mảng thứ 2 là mình sẽ đánh dấu những cái đường chéo gọi đường chéo xui"
+  },
+  {
+    "start": 5210.5,
+    "end": 5214.5,
+    "text": "đây, dụ những cái đường chéo này mình gọi đường chéo xui, nó kéo xui này"
+  },
+  {
+    "start": 5214.5,
+    "end": 5217.28,
+    "text": "Còn cái đường chéo này thì mình gọi đường chéo ngược, đấy"
+  },
+  {
+    "start": 5217.28,
+    "end": 5223.08,
+    "text": "Thế nên là mỗi lần mà các bạn đặt con hậu vào một cái OEG nào đó, các bạn phải xác định cho mình 3 cái"
+  },
+  {
+    "start": 5223.08,
+    "end": 5225.76,
+    "text": "Thế nhất là xem nó chém chiếm cụt nào"
+  },
+  {
+    "start": 5225.76,
+    "end": 5231.56,
+    "text": "Nó chém đường chéo xui nào, và nó chém đường chéo cụt, xin lỗi đường chéo ngược nào"
+  },
+  {
+    "start": 5231.56,
+    "end": 5235.56,
+    "text": "Xem là cái O đấy nó có an toàn không, nếu có thì mình đặt nó vào"
+  },
+  {
+    "start": 5235.56,
+    "end": 5243.07,
+    "text": "Nếu mà đặt vào thì các bạn lại bị 3 cái đường chéo xui, đường chéo ngược và cái cụt đi qua con hậu đấy lại"
+  },
+  {
+    "start": 5243.07,
+    "end": 5248.67,
+    "text": "nơi giống như hoán vị, hoán vị là bạn em phải check cái giá trị đấy nó dùng chưa, mình mới được gán"
+  },
+  {
+    "start": 5248.67,
+    "end": 5252.17,
+    "text": "đúng không, xong dùng rồi là mình phải gán nó lại, xin lỗi bịt nó lại"
+  },
+  {
+    "start": 5252.17,
+    "end": 5256.67,
+    "text": "đánh dấu là nó dùng rồi, nhưng mà ti nữa không dùng nữa thì mình lại thả nó ra"
+  },
+  {
+    "start": 5256.67,
+    "end": 5259.04,
+    "text": "thì cái quan hậu này cũng thế"
+  },
+  {
+    "start": 5259.04,
+    "end": 5262.44,
+    "text": "khi mà các bạn đặt quan hậu ở hàng y vào cột thứ d"
+  },
+  {
+    "start": 5262.44,
+    "end": 5266.64,
+    "text": "thì các bạn sẽ bịt cái cột d rồi, cái đấy dễ nhé, cái cột d đúng không"
+  },
+  {
+    "start": 5266.64,
+    "end": 5270.04,
+    "text": "ví dụ các bạn đặt cái quan hậu ở hàng thứ 4 nào mà cột 4 cái gì là x4 bằng 4"
+  },
+  {
+    "start": 5270.04,
+    "end": 5272.6,
+    "text": "thì các bạn chỉ cần cho cái cột 4 bằng 0"
+  },
+  {
+    "start": 5272.6,
+    "end": 5277.76,
+    "text": "tí nữa, cột bốn bằng một là không còn chống nữa không không, tí nữa nó các bạn không dùng người cột bốn nữa"
+  },
+  {
+    "start": 5277.76,
+    "end": 5284.16,
+    "text": "đấy, bây giờ các bạn chỉ cần đi xác định cái đường chéo xui và đường chéo ngược nữa là xong, đấy là xong bài toán"
+  },
+  {
+    "start": 5284.16,
+    "end": 5290.45,
+    "text": "thì cái bàn cờ của các bạn nó sẽ có, nếu bàn cờ của bạn có cỡ nờ dòng nờ cột í"
+  },
+  {
+    "start": 5290.45,
+    "end": 5295.69,
+    "text": "thì nó sẽ có 2 nờ chứ 1 đường chéo xui và 2 nờ đường chéo ngược, đây là mình gọi là đường chéo xui"
+  },
+  {
+    "start": 5295.69,
+    "end": 5300.92,
+    "text": "cái bên trái á, là đường chéo xui"
+  },
+  {
+    "start": 5300.92,
+    "end": 5302.92,
+    "text": "cái này không loại trường hợp ăn ngang"
+  },
+  {
+    "start": 5302.92,
+    "end": 5310.68,
+    "text": "không phải là nó không loại trường hợp ăn ngang, mà do em xây dựng mỗi hàng một con con hậu nên nó sẽ không cần phải kiểm tra hàng nữa"
+  },
+  {
+    "start": 5310.68,
+    "end": 5314.88,
+    "text": "hiểu không? tức là ví dụ như íc 1 là mình đặt con hậu ở hàng 1"
+  },
+  {
+    "start": 5314.88,
+    "end": 5318.96,
+    "text": "sau mình xây dựng íc 2 đúng không? vậy thì mình có đặt con hậu ở hàng 1 nữa đâu mà cần phải check hàng"
+  },
+  {
+    "start": 5318.96,
+    "end": 5322.38,
+    "text": "nên là nó không cần phải loại trừ hàng, đúng chưa?"
+  },
+  {
+    "start": 5322.38,
+    "end": 5325.8,
+    "text": "thế là mình xây dựng íc 1 là mình đặt con hậu ở hàng 1 rồi"
+  },
+  {
+    "start": 5325.8,
+    "end": 5330.32,
+    "text": "thì sau khi mà try 1, sau khi em try 2 là em xây dựng hàng 2 thì mình có đặt ở hàng 1 nữa đâu"
+  },
+  {
+    "start": 5330.32,
+    "end": 5337.28,
+    "text": "Mỗi con ở một hàng nên là mình bỏ loại được cái việc là mình phải kiểm tra hàng"
+  },
+  {
+    "start": 5337.28,
+    "end": 5342.48,
+    "text": "Thì đây, cái đường cháo xui của các bạn là mình kẻ như này là đường cháo xui nha"
+  },
+  {
+    "start": 5342.48,
+    "end": 5345.92,
+    "text": "Đường cháo như thế là đường cháo xui, còn đường cháo ngược thì nó ngược lại như thế này"
+  },
+  {
+    "start": 5345.92,
+    "end": 5348.0,
+    "text": "Mình phân loại ra là đường cháo xui, đường cháo ngược"
+  },
+  {
+    "start": 5348.0,
+    "end": 5351.28,
+    "text": "Thì nó sẽ có 2 nờ đường cháo xui và 2 nờ đường cháo ngược"
+  },
+  {
+    "start": 5351.28,
+    "end": 5353.52,
+    "text": "Thì các bạn nhìn thấy 15 cái đường cháo xui không?"
+  },
+  {
+    "start": 5353.52,
+    "end": 5356.64,
+    "text": "Đấy, mình đánh số thứ tự nha"
+  },
+  {
+    "start": 5356.64,
+    "end": 5358.64,
+    "text": "Đây là đường cháo xui thứ nhất này"
+  },
+  {
+    "start": 5358.64,
+    "end": 5361.79,
+    "text": "Đây là đường cháo xui thứ 2 này, nó cháo vào cái đích số ấy"
+  },
+  {
+    "start": 5361.79,
+    "end": 5363.79,
+    "text": "3 này, 4 này"
+  },
+  {
+    "start": 5363.79,
+    "end": 5367.07,
+    "text": "5 thì thế, nói đến đường cháo số 15 đây"
+  },
+  {
+    "start": 5367.07,
+    "end": 5369.63,
+    "text": "14 này, 13 đây, OK chưa?"
+  },
+  {
+    "start": 5369.63,
+    "end": 5371.63,
+    "text": "Còn đường cháo ngực thì cũng thế thôi"
+  },
+  {
+    "start": 5371.63,
+    "end": 5374.13,
+    "text": "Đường cháo ngực thì nó ngược lại lên thôi"
+  },
+  {
+    "start": 5374.13,
+    "end": 5377.63,
+    "text": "cũng 1 này, 2 này, 3 này, 4 này"
+  },
+  {
+    "start": 5377.63,
+    "end": 5378.63,
+    "text": "5 này"
+  },
+  {
+    "start": 5378.63,
+    "end": 5381.43,
+    "text": "Bây giờ các bạn chỉ cần đi tìm hiểu cho mình"
+  },
+  {
+    "start": 5381.43,
+    "end": 5384.97,
+    "text": "là ví dụ như các bạn đặt con hậu ở hàng i và cột di"
+  },
+  {
+    "start": 5384.97,
+    "end": 5389.46,
+    "text": "thì nó chiếm đường cháo sưu ơi, con số thứ tự như thế nào"
+  },
+  {
+    "start": 5389.46,
+    "end": 5390.66,
+    "text": "nó mối liên hệ gì"
+  },
+  {
+    "start": 5390.66,
+    "end": 5392.36,
+    "text": "đấy, là được"
+  },
+  {
+    "start": 5392.36,
+    "end": 5395.26,
+    "text": "Đây là đường chéo xui đúng không?"
+  },
+  {
+    "start": 5395.26,
+    "end": 5403.7,
+    "text": "Đây là hàng 1, 2, 3, 4, 5, 6, 7, 8"
+  },
+  {
+    "start": 5403.7,
+    "end": 5410.15,
+    "text": "Còn đây là cột 1, 2, 3, 4, 5, 6, 7, 8"
+  },
+  {
+    "start": 5410.15,
+    "end": 5414.15,
+    "text": "Thì nữa mình sẽ có xe bằng zi, mình sẽ gán xe bằng zi"
+  },
+  {
+    "start": 5414.15,
+    "end": 5417.79,
+    "text": "Tức là mình đặt con hậu ở hàng y và cột zi"
+  },
+  {
+    "start": 5417.79,
+    "end": 5420.79,
+    "text": "Thì bây giờ mình sẽ lấy ra một vài ví dụ cho các bạn"
+  },
+  {
+    "start": 5420.79,
+    "end": 5426.89,
+    "text": "và đây mình đầu tiên rút ra nhận xét nhé, mình gọi cái đường cháo xuôi này nè, đường cháo xuôi á"
+  },
+  {
+    "start": 5426.89,
+    "end": 5434.02,
+    "text": "nó sẽ phải có một cái mối liên hệ gì đấy với cái số thứ tự hàng là i và cái cột là di đúng không?"
+  },
+  {
+    "start": 5434.02,
+    "end": 5437.02,
+    "text": "hàng là i và cột là di nhé, con hậu nào ở hàng i và cột di á"
+  },
+  {
+    "start": 5437.02,
+    "end": 5441.78,
+    "text": "xi bằng di có nghĩa là con hậu ở hàng i, bạn đặt vào cột di"
+  },
+  {
+    "start": 5441.78,
+    "end": 5447.39,
+    "text": "thì các bạn thấy nè, đây là cái chiều tăng của i, i nó tăng từ trên xuống dưới"
+  },
+  {
+    "start": 5447.39,
+    "end": 5450.9,
+    "text": "thì mà em thấy cái đường cháo xuôi của bạn nó cũng tăng theo"
+  },
+  {
+    "start": 5450.9,
+    "end": 5460.6,
+    "text": "Vậy thì nếu mà các bạn tìm cái mối liên hệ giữa i và gì thì nó là, gọi là, i tăng thì đường chéo xuôi cũng tăng, có đúng không?"
+  },
+  {
+    "start": 5460.6,
+    "end": 5467.83,
+    "text": "Nên là, khi mà các bạn biểu diễn cái số thứ tự của đường chéo xuôi thông qua tăng i thì nó phải là dấu cộng ở đằng trước, đấy."
+  },
+  {
+    "start": 5467.83,
+    "end": 5475.14,
+    "text": "Nhưng mà theo cái chiều tăng của gì này, thì cái đường chéo xuôi của các bạn nó lại giảm từ 15 về 8."
+  },
+  {
+    "start": 5475.14,
+    "end": 5481.32,
+    "text": "Tức là, nếu cái đường chéo xuôi của bạn nó tăng, à, xin lỗi cái gì của bạn nó tăng thì cái đường chéo xuôi nó lại giảm."
+  },
+  {
+    "start": 5481.32,
+    "end": 5484.12,
+    "text": "Tức là cái mối quan hệ của nó là một thằng tăng thì một thằng lại giảm"
+  },
+  {
+    "start": 5484.12,
+    "end": 5489.92,
+    "text": "Nên nếu mà các bạn biểu diễn cái số thứ tự đường cháo xui thông qua cái cột là dì thì nó phải có cái dấu trừ đằng trước"
+  },
+  {
+    "start": 5489.92,
+    "end": 5491.58,
+    "text": "Nó bạn hiểu cái này không?"
+  },
+  {
+    "start": 5491.58,
+    "end": 5497.51,
+    "text": "i tăng thì đường cháo xui tăng, nhưng mà dì tăng thì đường cháo xui nó lại giảm"
+  },
+  {
+    "start": 5497.51,
+    "end": 5501.11,
+    "text": "Nên em bây giờ các bạn muốn tìm số thứ tự đường cháo xui á"
+  },
+  {
+    "start": 5501.11,
+    "end": 5504.11,
+    "text": "Thông qua cái hàng là i và cột là dì của con hậu ấy"
+  },
+  {
+    "start": 5504.11,
+    "end": 5507.91,
+    "text": "Cái các bạn phải viết là i chữ dì nhưng mà nó chưa ra kết quả chính xác đâu"
+  },
+  {
+    "start": 5507.91,
+    "end": 5509.51,
+    "text": "Đấy là mối tương quan trước thôi"
+  },
+  {
+    "start": 5509.51,
+    "end": 5514.51,
+    "text": "Bắt đầu mình mới tìm ra một vài o mình lấy quy luật và mình sẽ giúp ra công thức cuối cùng nhé"
+  },
+  {
+    "start": 5514.51,
+    "end": 5516.51,
+    "text": "Mình ví dụ các bạn đặt quan hậu ở đây"
+  },
+  {
+    "start": 5516.51,
+    "end": 5520.89,
+    "text": "Thì khi đó là i bằng mấy, i bằng hai"
+  },
+  {
+    "start": 5520.89,
+    "end": 5522.89,
+    "text": "Và g của mình là bằng bảy"
+  },
+  {
+    "start": 5522.89,
+    "end": 5525.89,
+    "text": "Các bạn lấy i chứ g thì nó sẽ tương đường với âm 5"
+  },
+  {
+    "start": 5525.89,
+    "end": 5528.89,
+    "text": "Thì thằng này nó nằm vào đường cháo xuôi số 3 thấy không"
+  },
+  {
+    "start": 5528.89,
+    "end": 5533.26,
+    "text": "Lấy thêm o này"
+  },
+  {
+    "start": 5533.26,
+    "end": 5535.26,
+    "text": "O này là hàng 6 cột 5"
+  },
+  {
+    "start": 5535.26,
+    "end": 5537.26,
+    "text": "i bằng 6"
+  },
+  {
+    "start": 5537.26,
+    "end": 5540.26,
+    "text": "và cột là bằng 5 thì i chứ g của bạn khi đó là 1"
+  },
+  {
+    "start": 5540.26,
+    "end": 5542.26,
+    "text": "Các bạn xem nó nằm ở đường chéo xui thứ bao nhiêu?"
+  },
+  {
+    "start": 5542.26,
+    "end": 5545.26,
+    "text": "Đây, đường chéo xui số 9"
+  },
+  {
+    "start": 5545.26,
+    "end": 5549.45,
+    "text": "Lấy thêm 1 vài ô nữa là xong thôi"
+  },
+  {
+    "start": 5549.45,
+    "end": 5552.96,
+    "text": "Mình lấy ô này đi"
+  },
+  {
+    "start": 5552.96,
+    "end": 5555.96,
+    "text": "Đây là hàng 7 cột 3, y vầng 7 và y vầng 3"
+  },
+  {
+    "start": 5555.96,
+    "end": 5559.89,
+    "text": "Thì y chứ gì của bạn nó sẽ bằng 4 đúng không?"
+  },
+  {
+    "start": 5559.89,
+    "end": 5561.89,
+    "text": "Các bạn thấy nó nằm ở đường chéo xui số 12"
+  },
+  {
+    "start": 5561.89,
+    "end": 5565.23,
+    "text": "Lấy thêm 1 ô này nữa nhé"
+  },
+  {
+    "start": 5565.23,
+    "end": 5567.39,
+    "text": "Đây là hàng 4 cột 8"
+  },
+  {
+    "start": 5567.39,
+    "end": 5572.54,
+    "text": "Thì khi đó y chứ gì của bạn nó bằng ấm 4"
+  },
+  {
+    "start": 5572.54,
+    "end": 5575.54,
+    "text": "Thì nó sẽ nằm vào đường chéo là đường chéo thứ 4, thấy không?"
+  },
+  {
+    "start": 5575.54,
+    "end": 5580.08,
+    "text": "nò này là vòng 8, số hàng số cột vòng 8"
+  },
+  {
+    "start": 5580.08,
+    "end": 5586.08,
+    "text": "5 thì ra 3, chí m1 thì ra 9, 4 thì ra 12,"
+  },
+  {
+    "start": 5586.08,
+    "end": 5590.24,
+    "text": "âm 4 thì ra 4 thì có phải là nó là i chứ gì cộng nò không?"
+  },
+  {
+    "start": 5590.24,
+    "end": 5594.21,
+    "text": "Vậy là các bạn đã xác định được"
+  },
+  {
+    "start": 5594.21,
+    "end": 5599.73,
+    "text": "cái số thứ tự đường chéo xui mà con hậu nằm ở hàng i và cột di nó chiếm chỗ"
+  },
+  {
+    "start": 5599.73,
+    "end": 5604.53,
+    "text": "Tí nữa các bạn mà muốn đặt xe vòng di thì các bạn phải check cái đường chéo xui kia"
+  },
+  {
+    "start": 5604.53,
+    "end": 5606.53,
+    "text": "Xem nó có an toàn không là được"
+  },
+  {
+    "start": 5609.87,
+    "end": 5613.87,
+    "text": "Đấy là cách mà các bạn xuy luận ra số thứ tự đường cháo xuy"
+  },
+  {
+    "start": 5613.87,
+    "end": 5619.83,
+    "text": "mà con hậu nó chiếm chỗ"
+  },
+  {
+    "start": 5619.83,
+    "end": 5630.67,
+    "text": "Đấy chà, đúng rồi"
+  },
+  {
+    "start": 5630.67,
+    "end": 5634.67,
+    "text": "Thế còn đường cháo ngược thì tương tự thôi các bạn"
+  },
+  {
+    "start": 5634.67,
+    "end": 5644.87,
+    "text": "Cháo ngược thì các bạn em cũng tìm hiểu tương tự như vậy"
+  },
+  {
+    "start": 5644.87,
+    "end": 5647.03,
+    "text": "Đường cháo ngược nhé"
+  },
+  {
+    "start": 5647.03,
+    "end": 5649.03,
+    "text": "Thì ở đây đường cháo ngược số thứ tự nó đánh như này"
+  },
+  {
+    "start": 5649.03,
+    "end": 5651.65,
+    "text": "các bạn thấy nè, theo cái chiều tăng của i á"
+  },
+  {
+    "start": 5651.65,
+    "end": 5656.88,
+    "text": "hàng ấy, nó đang từ trên xuống dưới thì cái đường chéo xuôi ở chiều ngược của các bạn nó cũng tăng"
+  },
+  {
+    "start": 5656.88,
+    "end": 5662.88,
+    "text": "và theo cái chiều tăng của gì thì cái số thứ tự đường chéo ngược nó cũng tăng luôn"
+  },
+  {
+    "start": 5662.88,
+    "end": 5668.44,
+    "text": "đó, vậy là mối tương quan là cả 2 và i và gì đều là dấu cộng ở đằng trước đúng không?"
+  },
+  {
+    "start": 5668.44,
+    "end": 5671.44,
+    "text": "đấy, bây giờ mình sẽ tìm một vài o"
+  },
+  {
+    "start": 5671.44,
+    "end": 5676.06,
+    "text": "lấy o này đi nhá, o này, o này"
+  },
+  {
+    "start": 5676.06,
+    "end": 5678.06,
+    "text": "O này đi"
+  },
+  {
+    "start": 5678.06,
+    "end": 5680.06,
+    "text": "O đầu tiên này là"
+  },
+  {
+    "start": 5680.06,
+    "end": 5682.06,
+    "text": "hàng ba cột hai, đúng không?"
+  },
+  {
+    "start": 5682.06,
+    "end": 5684.06,
+    "text": "Đây là hàng ba nhưng các bạn chừng phải hàng hai đâu"
+  },
+  {
+    "start": 5684.06,
+    "end": 5686.06,
+    "text": "Đây là cái số tư tự đừng chéo xui nha"
+  },
+  {
+    "start": 5686.06,
+    "end": 5687.06,
+    "text": "là đừng chéo ngược nha"
+  },
+  {
+    "start": 5687.06,
+    "end": 5689.06,
+    "text": "Đây là i bằng ba và di bằng hai"
+  },
+  {
+    "start": 5689.06,
+    "end": 5691.06,
+    "text": "thì i cộng di của bạn là 5"
+  },
+  {
+    "start": 5691.06,
+    "end": 5693.06,
+    "text": "thì thằng này nó chiếm cái đường chéo xui số 4"
+  },
+  {
+    "start": 5693.06,
+    "end": 5697.89,
+    "text": "O này là hàng ba và cột"
+  },
+  {
+    "start": 5697.89,
+    "end": 5700.82,
+    "text": "5"
+  },
+  {
+    "start": 5700.82,
+    "end": 5702.82,
+    "text": "thì ba cộng 5 là 8"
+  },
+  {
+    "start": 5702.82,
+    "end": 5705.82,
+    "text": "thì các bạn thấy là nó sẽ chiếm cái đường chéo xui số 7 thấy không?"
+  },
+  {
+    "start": 5705.82,
+    "end": 5712.45,
+    "text": "O này là hàng 5 cột 7, 5 cộng 7 thì nó sẽ ra 12"
+  },
+  {
+    "start": 5712.45,
+    "end": 5717.05,
+    "text": "thì các bạn thấy nó chiếm chỗ đường trèo xuôi số 12, nó nằm ở đường trèo xuôi số 12"
+  },
+  {
+    "start": 5717.05,
+    "end": 5724.54,
+    "text": "ố, o này là, ở đâu?"
+  },
+  {
+    "start": 5724.54,
+    "end": 5727.4,
+    "text": "đây là hàng 6, đúng không các bạn?"
+  },
+  {
+    "start": 5727.4,
+    "end": 5730.9,
+    "text": "mình nhầm, đây là cái số thứ tự đường trèo, đây là 6 các bạn"
+  },
+  {
+    "start": 5730.9,
+    "end": 5739.22,
+    "text": "6 cộng 7 là 13, thì là nó sẽ nằm ở cái đường trèo xuôi số 12 ca đúng không? đây này"
+  },
+  {
+    "start": 5739.22,
+    "end": 5746.95,
+    "text": "Thế còn o này thì là hàng 8 cột 3 đúng không các bạn?"
+  },
+  {
+    "start": 5746.95,
+    "end": 5753.55,
+    "text": "Hàng 8 cột 3, 8 cộng 3 là 11, thì mình em thấy là nó sẽ chiếm cái đường chéo ngược số 10"
+  },
+  {
+    "start": 5753.55,
+    "end": 5763.35,
+    "text": "Mình đã nói đường chéo xui, đấy, 5 ra 4, 8 ra 7, 13 ra 12, 11 ra 10 thì khi đó nó chính là í cộng ghi chữ 1, ok hông?"
+  },
+  {
+    "start": 5763.35,
+    "end": 5766.49,
+    "text": "Vậy là các bạn đã xác định được đủ rồi nhé"
+  },
+  {
+    "start": 5766.49,
+    "end": 5771.81,
+    "text": "là khi mà các bạn đặt con hậu ở hàng y vào cột y, thì nó chiếm chỗ"
+  },
+  {
+    "start": 5771.81,
+    "end": 5777.85,
+    "text": "thứ nhất là cột y rồi, thứ hai là cái đường chéo xui, có số thứ tự là y chứ y cộng n"
+  },
+  {
+    "start": 5777.85,
+    "end": 5781.09,
+    "text": "còn nó sẽ chiếm chỗ cái đường chéo ngược là y cộng y chứ 1"
+  },
+  {
+    "start": 5781.09,
+    "end": 5785.65,
+    "text": "thì khi mà các bạn quay lùi á, các bạn mà muốn đặt con hậu xy vàng y đấy"
+  },
+  {
+    "start": 5785.65,
+    "end": 5790.73,
+    "text": "con hậu ở hàng y vào cột y thì nhớ check 3 cái thông số đấy, xem nó còn trống hay không, hãy đặt"
+  },
+  {
+    "start": 5790.73,
+    "end": 5796.04,
+    "text": "và nếu mà check mà nó trống rồi mình đặt vào rồi thì mình lại, mình lại phải"
+  },
+  {
+    "start": 5796.04,
+    "end": 5801.04,
+    "text": "Đánh dấu những cái đường chéo xui đường chéo ngược với cột đấy là không được dùng nữa"
+  },
+  {
+    "start": 5801.04,
+    "end": 5805.33,
+    "text": "Thì các bạn sẽ làm như sau bài này mình sẽ đếm nhé, bài này mình sẽ đếm..."
+  },
+  {
+    "start": 5805.33,
+    "end": 5808.23,
+    "text": "Bài này mình sẽ đếm..."
+  },
+  {
+    "start": 5808.23,
+    "end": 5811.36,
+    "text": "Đếm đếm số lượng cấu hình, khỏa mạn"
+  },
+  {
+    "start": 5811.36,
+    "end": 5816.36,
+    "text": "Mình có nờ là số lượng kích cỡ của bàn cờ này"
+  },
+  {
+    "start": 5816.36,
+    "end": 5823.43,
+    "text": "Mình sẽ dùng một cái biến cao để đến số lượng cấu hình"
+  },
+  {
+    "start": 5823.43,
+    "end": 5828.62,
+    "text": "Khi mà ở đây mình sẽ có những cái mạng thứ nhất là cột để đánh dấu cột đường chéo xui"
+  },
+  {
+    "start": 5828.62,
+    "end": 5836.62,
+    "text": "Đánh dấu đường chéo xui, đường chéo ngược, đường chéo ngược, sau đó thì các bạn sẽ tiến hành quay lùi như sao, try, i đúng không?"
+  },
+  {
+    "start": 5836.62,
+    "end": 5858.4,
+    "text": "Ở đây các bạn sẽ duyệt từ cột 1 cho tới cột nờ. Nấy, lưu ý cho mình nhá, x, i, bằng di có nghĩa là đặt con hậu, đặt con hậu ở hàng i vào cột di các bạn ạ."
+  },
+  {
+    "start": 5858.4,
+    "end": 5863.5,
+    "text": "đây các bạn sẽ gán là, nhưng mà trước khi đặt xe bằng di thì các bạn phải check"
+  },
+  {
+    "start": 5863.5,
+    "end": 5868.79,
+    "text": "thứ nhất là, tiên là các bạn phải check cái cột di nó chống này"
+  },
+  {
+    "start": 5868.79,
+    "end": 5876.87,
+    "text": "thứ hai là cái đường chéo xui, i cộng, i chữ di cộng nò của mình là nó còn chống này"
+  },
+  {
+    "start": 5876.87,
+    "end": 5886.46,
+    "text": "và cái đường chéo ngược, i cộng di chữ 1 của bạn nó còn chống này, đấy thì mới đặt được đúng không?"
+  },
+  {
+    "start": 5886.46,
+    "end": 5888.96,
+    "text": "đấy phải check cả 3 thằng, cả 3 thằng đều chống"
+  },
+  {
+    "start": 5888.96,
+    "end": 5891.46,
+    "text": "thì mình mới đặt con hậu ở hàng i và cột di được"
+  },
+  {
+    "start": 5891.46,
+    "end": 5898.36,
+    "text": "Thì khi đó các bạn đặt ích y bằng dì, đồng thời các bạn phải, các bạn phải gì?"
+  },
+  {
+    "start": 5898.36,
+    "end": 5912.18,
+    "text": "Các bạn phải cho cái đường chéo, phải cho cột dì bằng 1, đường chéo xuy, i, chữ dì, cộng nờ, và đường chéo ngược, i, cộng dì, chữ 1 nó bằng số 1"
+  },
+  {
+    "start": 5912.18,
+    "end": 5920.78,
+    "text": "Nó mạnh em kiểm tra ích y bằng nờ, là nó xây dựng được đến cái dằm cuối cùng thì các bạn sẽ tăng cái số lượng cấu hình hoặc là các bạn có thể in ra đáp án"
+  },
+  {
+    "start": 5920.78,
+    "end": 5926.72,
+    "text": "còn l thì các bạn sẽ try đến i cộng 1"
+  },
+  {
+    "start": 5926.72,
+    "end": 5929.04,
+    "text": "và dưới này các bạn phải backcheck lại nha"
+  },
+  {
+    "start": 5929.04,
+    "end": 5935.28,
+    "text": "trên các bạn đặt con hậu vào hàng i vào cột g thì nó sẽ chiếm những cái chỗ này"
+  },
+  {
+    "start": 5935.28,
+    "end": 5938.72,
+    "text": "nhưng mà dưới này mình có đặt nữa đâu đúng không? mình quay lùi lại mình đi cái nhánh khác"
+  },
+  {
+    "start": 5938.72,
+    "end": 5941.76,
+    "text": "thì khi đó bạn em phải trẻ lại cái giá trị ban đầu cho nó vắng không"
+  },
+  {
+    "start": 5941.76,
+    "end": 5946.51,
+    "text": "trong bên thì các bạn sẽ tiến hành nhập nờ"
+  },
+  {
+    "start": 5946.51,
+    "end": 5948.52,
+    "text": "các bạn try từ 1"
+  },
+  {
+    "start": 5948.52,
+    "end": 5951.32,
+    "text": "sau đó các bạn sẽ tiến hành sia cho anh cố cấu hình"
+  },
+  {
+    "start": 5951.32,
+    "end": 5953.77,
+    "text": "Được chưa?"
+  },
+  {
+    "start": 5953.77,
+    "end": 5963.6,
+    "text": "Ở đây, ví dụ như các bạn có nở bằng 8, thì nó có 9-2 cấu hình hay sao ấy đúng không?"
+  },
+  {
+    "start": 5963.6,
+    "end": 5972.76,
+    "text": "Ok, thế còn nếu mà, người ta muốn in ra chi tiết của từng cấu hình thì bạn em lại cứ duyệt từ hàng 1 cho tới hàng nở thôi"
+  },
+  {
+    "start": 5972.76,
+    "end": 5976.76,
+    "text": "Thì đó mình sẽ có í bằng gì thì là con hậu ở hàng in là vào cột gì, nhá"
+  },
+  {
+    "start": 5976.76,
+    "end": 5982.28,
+    "text": "Thì đấy là bài nở quên đi các bạn"
+  },
+  {
+    "start": 5982.28,
+    "end": 5985.02,
+    "text": "Đây của huy nó cốt kiểu gì"
+  },
+  {
+    "start": 5985.02,
+    "end": 5988.14,
+    "text": "Nó bài này nhầm à, ai đâu"
+  },
+  {
+    "start": 5988.14,
+    "end": 5990.65,
+    "text": "Nó có bài nở quên đi, đây này"
+  },
+  {
+    "start": 5990.65,
+    "end": 5996.0,
+    "text": "bắt các bạn in dà cấu hình"
+  },
+  {
+    "start": 5996.0,
+    "end": 6000.6,
+    "text": "bắt các bạn in dà cấu hình"
+  },
+  {
+    "start": 6000.6,
+    "end": 6005.85,
+    "text": "bắt các bạn in dà cấu hình"
+  },
+  {
+    "start": 6005.85,
+    "end": 6028.92,
+    "text": "bắt các bạn in dà cấu hình"
+  },
+  {
+    "start": 6028.92,
+    "end": 6032.92,
+    "text": "thử làm một bài về quay lùi ở trên dãy số"
+  },
+  {
+    "start": 6032.92,
+    "end": 6039.64,
+    "text": "thử làm cho bài dãy con tăng dần"
+  },
+  {
+    "start": 6039.64,
+    "end": 6044.35,
+    "text": "thử làm cho bài dãy con tăng dần"
+  },
+  {
+    "start": 6044.35,
+    "end": 6047.23,
+    "text": "Các cái dãy con tăng dần theo thứ tự tự điển về chuỗi nhé"
+  },
+  {
+    "start": 6047.23,
+    "end": 6049.73,
+    "text": "Mà đây anh lưu quên về chuỗi"
+  },
+  {
+    "start": 6049.73,
+    "end": 6088.59,
+    "text": "Ờ các bạn thử làm bài này đi"
+  },
+  {
+    "start": 6088.59,
+    "end": 6098.85,
+    "text": "Xong khóa này bà em học cơ sở dữ liệu cũng được"
+  },
+  {
+    "start": 6098.85,
+    "end": 6117.59,
+    "text": "Giờ đến tết thì chắc là học được cơ sở dữ liệu một khóa lập trình web nào đó"
+  },
+  {
+    "start": 6117.59,
+    "end": 6139.12,
+    "text": "Bài này thì khi mà bà em chọn các cái phần tử và đưa vào cấu hình thì cái số hiện tạng là phải lớn hơn cái số đứng trước ấy"
+  },
+  {
+    "start": 6139.12,
+    "end": 6141.56,
+    "text": "Đó phải lớn hơn cái số đứng trước ở trong cấu hình"
+  },
+  {
+    "start": 6141.56,
+    "end": 6145.88,
+    "text": "Và đây các bạn thấy là nó chỉ có, bác em hình dung nha, ví dụ như thằng 4 này nè"
+  },
+  {
+    "start": 6145.88,
+    "end": 6149.93,
+    "text": "Thì nó sẽ chọn những cái thằng lớn hơn đứng sau nó thôi nha"
+  },
+  {
+    "start": 6149.93,
+    "end": 6152.21,
+    "text": "Ví dụ như 4 với 8 này, 46 này"
+  },
+  {
+    "start": 6152.21,
+    "end": 6155.81,
+    "text": "Nói hoặc là 46 thì nó có 467 này, với lại 4 năm thôi"
+  },
+  {
+    "start": 6155.81,
+    "end": 6159.52,
+    "text": "Chứ khi mà em xét, ví dụ em xét thằng đầu tiên là thằng 3 nha"
+  },
+  {
+    "start": 6159.52,
+    "end": 6162.68,
+    "text": "Thì em sẽ xét là 3 năm thôi, chứ em không được quay lại đầu dãy em xét"
+  },
+  {
+    "start": 6162.68,
+    "end": 6165.8,
+    "text": "3, 4, 3, 8, 3, 6, 3, 7 đâu, nó không lấy như mấy cái dãy đấy đâu"
+  },
+  {
+    "start": 6165.8,
+    "end": 6168.76,
+    "text": "Tức là bọn em chỉ được nhặt các cái phần tử theo thứ tự xuất hiện thôi"
+  },
+  {
+    "start": 6168.76,
+    "end": 6171.28,
+    "text": "Chứ không được quay vòng lại để nhặt lại những số đứng đằng trước"
+  },
+  {
+    "start": 6172.28,
+    "end": 6176.84,
+    "text": "Tức là các dãi con mà mình chọn ra ở đây, nó phải xuất hiện theo cái thứ tựa trong mạng ban đầu"
+  },
+  {
+    "start": 6180.02,
+    "end": 6181.58,
+    "text": "Nếu các bạn thể cốt bài về một thời gian nào"
+  },
+  {
+    "start": 6190.48,
+    "end": 6192.0,
+    "text": "Đúng rồi, học..."
+  },
+  {
+    "start": 6194.92,
+    "end": 6196.92,
+    "text": "Mọi em chắc còn cỡ..."
+  },
+  {
+    "start": 6196.92,
+    "end": 6198.96,
+    "text": "Như bọn em học, chắc phải hết tháng..."
+  },
+  {
+    "start": 6199.8,
+    "end": 6200.52,
+    "text": "Hết tháng 7"
+  },
+  {
+    "start": 6201.81,
+    "end": 6202.89,
+    "text": "Mọi bạn phải hết tháng 7 nữa"
+  },
+  {
+    "start": 6203.21,
+    "end": 6204.41,
+    "text": "Nó phải cỡ tháng dưỡi nữa"
+  },
+  {
+    "start": 6205.72,
+    "end": 6206.28,
+    "text": "Thì sao?"
+  },
+  {
+    "start": 6213.45,
+    "end": 6215.09,
+    "text": "Thì sao mình sẽ hướng dẫn..."
+  },
+  {
+    "start": 6216.82,
+    "end": 6217.7,
+    "text": "Chia và chị"
+  },
+  {
+    "start": 6217.7,
+    "end": 6229.4,
+    "text": "Cái phần quay lùi này có 25 bài, thì về bạn em là hoàn thành luôn 25 bài đi nha, cho nó gọn"
+  },
+  {
+    "start": 6229.4,
+    "end": 6233.81,
+    "text": "Tức là trong khóa học thì nó có một số phần khó hơn"
+  },
+  {
+    "start": 6233.81,
+    "end": 6239.8,
+    "text": "ví dụ như là các phần về đồ thị ở quy hệc động, nó sẽ khó hơn"
+  },
+  {
+    "start": 6239.8,
+    "end": 6249.12,
+    "text": "và những phần dễ hơn như là sắp xếp tỉnh kiếm với lại quay lùi sinh thì bạn em nên làm gọn những phần dễ lại"
+  },
+  {
+    "start": 6249.12,
+    "end": 6252.13,
+    "text": "con phần khó thì mình làm dần dần xong được"
+  },
+  {
+    "start": 6252.13,
+    "end": 6400.2,
+    "text": "bây giờ này các bạn phải lưu cấu hình vào trong chuỗi"
+  },
+  {
+    "start": 6400.2,
+    "end": 6402.04,
+    "text": "sau đó bắt đầu các bạn đem xọt đấy"
+  },
+  {
+    "start": 6402.04,
+    "end": 6409.83,
+    "text": "bởi vì xọt theo thứ tự vector, thứ tự giảy số thì nó không đúng đâu"
+  },
+  {
+    "start": 6409.83,
+    "end": 6415.62,
+    "text": "mà các bạn phải xọt theo thứ tự tự điển đấy"
+  },
+  {
+    "start": 6415.62,
+    "end": 6416.82,
+    "text": "về chuỗi"
+  },
+  {
+    "start": 6416.82,
+    "end": 6432.95,
+    "text": "bây giờ này bạn nên viết một hẻm backcheck"
+  },
+  {
+    "start": 6432.95,
+    "end": 6437.75,
+    "text": "nó có cái post là cái vị trí để quay lùi này"
+  },
+  {
+    "start": 6437.75,
+    "end": 6446.47,
+    "text": "nếu mà v.size lớn hơn 1, tức là nó có từ 2 thằng trở lên, thì bạn nên ném cái vector v vào trong cái vector, các cái vector chứa kết quả"
+  },
+  {
+    "start": 6446.47,
+    "end": 6451.53,
+    "text": "còn không thì bạn nên bắt đầu từ vị trí là POS cộng 1 cho tới nhỏ hân nờ"
+  },
+  {
+    "start": 6451.53,
+    "end": 6456.88,
+    "text": "thì bạn nên push back vào, xong lại backcheck từ thằng i"
+  },
+  {
+    "start": 6456.88,
+    "end": 6464.29,
+    "text": "nếu mà chọn ai, đúng không? ở đây mình check là ai lớn v.back, tức là nó lớn hơn cái thằng cuối cùng vào trong cấu hình, mình quay lui"
+  },
+  {
+    "start": 6464.29,
+    "end": 6468.29,
+    "text": "chính xác các bạn, dưới này tròi thì chắc là gọi từ chứ 1 à"
+  },
+  {
+    "start": 6468.29,
+    "end": 6482.43,
+    "text": "v.clear, v.boostback, ai, đưa cái mạng"
+  },
+  {
+    "start": 6482.43,
+    "end": 6486.83,
+    "text": "bàn này có 1 lưu ý cho các bạn là các bạn lưu cấu hình vào trong chuỗi thôi"
+  },
+  {
+    "start": 6486.83,
+    "end": 6491.76,
+    "text": "đây có 1 số bạn cốt rồi, xem của bạn"
+  },
+  {
+    "start": 6491.76,
+    "end": 6494.48,
+    "text": "leven khái trên nào"
+  },
+  {
+    "start": 6494.48,
+    "end": 6497.22,
+    "text": "cốt như khái này, ok nè"
+  },
+  {
+    "start": 6497.22,
+    "end": 6504.24,
+    "text": "backpack của bạn ấy có 1 cái biến y và cái biến post, cái biến y thì là lưu xy rồi"
+  },
+  {
+    "start": 6504.24,
+    "end": 6507.84,
+    "text": "còn biến post là lấy cái chỉ số bắt đầu để quay lưu đi các bạn"
+  },
+  {
+    "start": 6507.84,
+    "end": 6511.04,
+    "text": "bàn này thì bạn ấy sẽ lưu vào trong bảng x"
+  },
+  {
+    "start": 6511.04,
+    "end": 6516.04,
+    "text": "dùa từ z bằng port cho tới z nhỏ bằng nó, z cộng cộng ở đây, mang bạn lưu từ 1 cho tới nở nhé"
+  },
+  {
+    "start": 6516.04,
+    "end": 6518.04,
+    "text": "nên chỗ này bạn dùa tới z nhỏ bằng nó"
+  },
+  {
+    "start": 6518.04,
+    "end": 6522.04,
+    "text": "sau các bạn chạy, bạn đi check lại, az nó lớn hơn xe chứ 1, tức là"
+  },
+  {
+    "start": 6522.04,
+    "end": 6528.27,
+    "text": "cái thẳng hiện tại mình đang set nó lớn hơn cái phần từ trước đó ở trong cấu hình là xe chứ 1"
+  },
+  {
+    "start": 6528.27,
+    "end": 6532.27,
+    "text": "thì các bạn sẽ gán xe bằng az, tại vì cấu hình của mình nó phải tăng dần mà"
+  },
+  {
+    "start": 6532.27,
+    "end": 6539.27,
+    "text": "nếu mà e lớn hơn bằng 2 thì bạn ấy sẽ gọi cái hàm green e để lưu cái cấu hình lại vào trong 1 cái vector rest"
+  },
+  {
+    "start": 6539.27,
+    "end": 6543.52,
+    "text": "Bạn này thì bạn ấy sẽ chuyển sâu thành string, sau đó thì rom nó lại"
+  },
+  {
+    "start": 6543.52,
+    "end": 6550.59,
+    "text": "Bạn không thì backtrack tới y cộng 1 và quay lưu từ cái chỉ số y cộng 1, chuyệt những cái thằng đứng sau thôi"
+  },
+  {
+    "start": 6550.59,
+    "end": 6555.59,
+    "text": "Bạn ấy backtrack và sort các sâu kết quả về in ra"
+  },
+  {
+    "start": 6555.59,
+    "end": 6558.59,
+    "text": "Bạn này có cốt như này là rõ ràng dành mặt, các bạn có thể tham khéo nhé"
+  },
+  {
+    "start": 6558.59,
+    "end": 6563.6,
+    "text": "Cốt một khải"
+  },
+  {
+    "start": 6563.6,
+    "end": 6567.72,
+    "text": "Ok, hôm nay tạm thời học đến đây thôi các bạn"
+  },
+  {
+    "start": 6567.72,
+    "end": 6569.72,
+    "text": "Vậy sau mình học tiếp nhé"
+  },
+  {
+    "start": 6569.72,
+    "end": 6571.72,
+    "text": "Về bạn em tranh thủ làm bài tập"
+  },
+  {
+    "start": 6571.72,
+    "end": 6574.9,
+    "text": "xinh với quay lùi cho nó gọi"
+  },
+  {
+    "start": 6574.9,
+    "end": 6581.21,
+    "text": "Này buổi số 9 rồi, bạn em có khoảng tháng dưỡi nữa"
+  },
+  {
+    "start": 6581.21,
+    "end": 6588.88,
+    "text": "Ok, bữa nay các bạn nghĩ đây nha, về chịu khỏi làm bài tập nha các bạn"
+  },
+  {
+    "start": 6588.88,
+    "end": 6590.68,
+    "text": "Bởi sao thì học tiếp?"
+  },
+  {
+    "start": 6590.68,
+    "end": 6600.93,
+    "text": "Ừ các bạn nghĩ đi"
+  },
+  {
+    "start": 6600.93,
+    "end": 6601.93,
+    "text": "Ừ ừ"
+  }
+]

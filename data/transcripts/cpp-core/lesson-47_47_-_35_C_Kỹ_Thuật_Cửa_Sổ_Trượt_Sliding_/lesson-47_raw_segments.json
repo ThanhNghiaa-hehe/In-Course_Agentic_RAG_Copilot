@@ -1,0 +1,2527 @@
+[
+  {
+    "start": 1.97,
+    "end": 15.85,
+    "text": "Trong việc này thì mình xử dẫn các bạn một kiến thức, nhưng đây chính là một kỹ kỹ thuật. Sau khi mình học các cấu trúc dữ liệu, các quần tay nơi có sẵn rồi thì mình sẽ học đến cách sử dụng một vài kỹ thuật, ok?"
+  },
+  {
+    "start": 15.85,
+    "end": 20.18,
+    "text": "Đầu tiên chính là kỹ thuật về cửa sầu chiệt nhá, ok?"
+  },
+  {
+    "start": 20.18,
+    "end": 31.1,
+    "text": "Là sử dụ như bạn có một cái bài truán như thế này, đây chính là người ta sẽ yêu cầu mình tính tỏng các dạy con lên tiếp mà có độ dài ca của một cái mạc nào đó, ok?"
+  },
+  {
+    "start": 31.1,
+    "end": 33.1,
+    "text": "Mình dụ như mình có một cái màng như sau"
+  },
+  {
+    "start": 33.1,
+    "end": 37.34,
+    "text": "Đấy là cận"
+  },
+  {
+    "start": 37.34,
+    "end": 42.94,
+    "text": "Bạn là 4, 3, 1, 2, 8, 6, ok"
+  },
+  {
+    "start": 42.94,
+    "end": 48.94,
+    "text": "Và người ta yêu cầu mình là mình sẽ phải tính cho họ tất cả những cái dạy con liên tiếp mà có độ dài là 3"
+  },
+  {
+    "start": 48.94,
+    "end": 51.94,
+    "text": "Ok của cái mạng này, tức là cái dạy con 4, 3, 1 này"
+  },
+  {
+    "start": 51.94,
+    "end": 55.94,
+    "text": "Dù là 3, 1, 2, dù là 1, 2, 1, 8, 2, 8, 6 này này, ok"
+  },
+  {
+    "start": 55.94,
+    "end": 59.01,
+    "text": "Thì nếu mà làm như làm thông thường ấy"
+  },
+  {
+    "start": 59.01,
+    "end": 67.05,
+    "text": "thì mình sẽ bắt đầu với từ chỉ số đầu tiên đúng không? cho tới cái chỉ số này là chỉ số n chứ k đúng không? ok"
+  },
+  {
+    "start": 67.05,
+    "end": 71.01,
+    "text": "nó là cái chỉ số cuối cùng của cái dạy con có độ dạy k cuối cùng"
+  },
+  {
+    "start": 71.01,
+    "end": 77.53,
+    "text": "sau đó mình sẽ dùng cái vòng for con chạy thứ không cho thứ k để tính tỏng các con tử trong cái dạy con lên tiếp đấy đúng không? ok"
+  },
+  {
+    "start": 77.53,
+    "end": 81.06,
+    "text": "mình tạm gọi là cái cửa số nhá ok"
+  },
+  {
+    "start": 81.06,
+    "end": 85.1,
+    "text": "như vậy thì bạn thấy là cái độ phức tạp của nó sẽ tư tối là lớn đúng không?"
+  },
+  {
+    "start": 85.1,
+    "end": 89.3,
+    "text": "Nó sẽ là sắp dì vào dơi khoảng owner, nhân vi cay"
+  },
+  {
+    "start": 89.3,
+    "end": 93.34,
+    "text": "Nhưng mà người ta có thể sử dụng một kỹ thuật gọi là kỹ thuật cửa số chượt"
+  },
+  {
+    "start": 93.34,
+    "end": 98.94,
+    "text": "Mà người ta có thể tính được tổng của tất cả các cái cửa số đấy trong độ phức tạp và owner thôi, ok?"
+  },
+  {
+    "start": 98.94,
+    "end": 104.43,
+    "text": "Thế là như thế này, khi mà bạn tính cái cửa số đầu tiên, có tổng là 4, 3 và 1 đúng không?"
+  },
+  {
+    "start": 104.43,
+    "end": 105.51,
+    "text": "Tức là 8 nữa không ạ?"
+  },
+  {
+    "start": 105.51,
+    "end": 110.67,
+    "text": "Nếu mà sang cái cửa số tiếp theo là cái cửa số có độ dài 3 là 3, 1, 2 này này"
+  },
+  {
+    "start": 110.67,
+    "end": 113.87,
+    "text": "Nếu mà bạn tính gãi từ đầu bạn lấy 3, 1, 2 thì nó tiêu đối vào phí"
+  },
+  {
+    "start": 113.87,
+    "end": 119.63,
+    "text": "bởi vì là trong cái cửa số 312 này, nó có 2 phần tử thuộc cái cửa số đằng trước đã biết được tấm rồi"
+  },
+  {
+    "start": 119.63,
+    "end": 121.47,
+    "text": "ok, rất là 3 vào 1 này"
+  },
+  {
+    "start": 121.47,
+    "end": 124.75,
+    "text": "thế ra bạn chỉ cần lấy tính cái phần 312 này mà cách là"
+  },
+  {
+    "start": 124.75,
+    "end": 130.43,
+    "text": "mình sẽ lấy cái cửa số đằng trước của tổng là 8, mình chưa đi cái phần tử mà nó vừa đi ra hoạt cửa số là 4, ok"
+  },
+  {
+    "start": 130.43,
+    "end": 133.47,
+    "text": "và mình cộng theo cái phần tử mà vừa được thêm vào mới cửa số"
+  },
+  {
+    "start": 133.47,
+    "end": 135.39,
+    "text": "thế nó sẽ ra được 6, ok"
+  },
+  {
+    "start": 135.39,
+    "end": 137.79,
+    "text": "vậy thì có đoạn nghĩa là cái cửa số này có nghĩa là được 6"
+  },
+  {
+    "start": 137.79,
+    "end": 143.79,
+    "text": "Thì bạn thấy là từ cái cửa số đứng trước, thì mà nó tính được cái cửa số hiện tại chỉ với một phép tính, đúng không?"
+  },
+  {
+    "start": 143.79,
+    "end": 147.23,
+    "text": "Thì chỉ bắt ôm một thôi, dài cái độ phức thả của mình sẽ là ôm nở."
+  },
+  {
+    "start": 147.23,
+    "end": 150.67,
+    "text": "Tương tự như vậy, khi mà bạn tính cái cửa số tiếp theo là 1, 3, 2, 8, nè."
+  },
+  {
+    "start": 150.67,
+    "end": 154.47,
+    "text": "Thì bạn cũng lấy cái cửa số đứng từ trước nó, đấy là 3, 1, 2, 6, đúng không?"
+  },
+  {
+    "start": 154.47,
+    "end": 157.47,
+    "text": "Mình chưa đi cái phần tử đứng ở ngoài, cửa số vừa bị loại, ok?"
+  },
+  {
+    "start": 157.47,
+    "end": 160.47,
+    "text": "Mình cậu thêm cái phần tử vừa được thêm vào cửa số tạm."
+  },
+  {
+    "start": 160.47,
+    "end": 164.6,
+    "text": "Thì nó sẽ bằng 11 đúng không? Nó chính là tầm của 1, 2, 8, cứ như thế"
+  },
+  {
+    "start": 164.6,
+    "end": 168.6,
+    "text": "Ok, thì đấy chính là cái cách mà mình sử dụng kỹ thuật của số chiệt nhá"
+  },
+  {
+    "start": 168.6,
+    "end": 175.6,
+    "text": "Thì kỹ thuật của số chiệt này nó có thể áp dụng khi mà người ta yêu cầu bạn tính tầm lớn nhất của một cái dạy con của ca phản tử liên tiếp"
+  },
+  {
+    "start": 175.6,
+    "end": 181.86,
+    "text": "hoặc là tầm nhỏ nhất, tầm lớn nhất hoặc là trung bình lớn nhất hay gì đó vân vân"
+  },
+  {
+    "start": 181.86,
+    "end": 190.98,
+    "text": "Ok, mình sẽ bắt đầu với một cái ví dụ đầu tiên nhá để mình hoại cho cái kỹ thuật này"
+  },
+  {
+    "start": 190.98,
+    "end": 196.36,
+    "text": "cái là bài tấn kế bản của cái thần..."
+  },
+  {
+    "start": 196.36,
+    "end": 202.34,
+    "text": "kỹ thuật cân sầu chiệt này, một cái mạng xuống nguyên có n vài phần tử quan sử nguyên dương k, sau đó thì"
+  },
+  {
+    "start": 202.34,
+    "end": 207.79,
+    "text": "yêu cầu mình tìm cái giải con liên tiếp của mạng có độ giải kAD, sau cho tổng có phần tử trong giải cả lớn nhất"
+  },
+  {
+    "start": 207.79,
+    "end": 213.69,
+    "text": "giải yêu cầu mình diet kê cái giải con đó. Nếu có nhiều giải con có cùng tổng lớn nhất, mình sẽ ind ra cái giải con đầu tiên"
+  },
+  {
+    "start": 213.69,
+    "end": 219.03,
+    "text": "dụ ở đây, ta cho mình một test k, đây là nó và K, của các người là vào ba, sau đó thì"
+  },
+  {
+    "start": 219.03,
+    "end": 224.03,
+    "text": "dạy con, liên tiếp, có độ dài 3, mà có tổng các phản thử lớn nhất, nó chính là dạy con 7, 9 thế này"
+  },
+  {
+    "start": 224.03,
+    "end": 228.53,
+    "text": "có tổng nó sẽ là 24, và họ yêu cầu mình yên ra cái tổng, cái dạy con đấy"
+  },
+  {
+    "start": 228.53,
+    "end": 231.26,
+    "text": "và cái dạy con đấy luôn"
+  },
+  {
+    "start": 231.26,
+    "end": 233.76,
+    "text": "dù ok, vậy thì cái bài này mình cốt như sau này"
+  },
+  {
+    "start": 233.76,
+    "end": 239.09,
+    "text": "sẽ dùng cái đến tê nhé"
+  },
+  {
+    "start": 240.72,
+    "end": 242.72,
+    "text": "sau đó thì mình sẽ nhập vào nào vào ca"
+  },
+  {
+    "start": 242.72,
+    "end": 250.69,
+    "text": "và mình sẽ khai đá một cái mảng A vào tối đa là 1 nhìn 1 chân là 1 phản thử này"
+  },
+  {
+    "start": 250.69,
+    "end": 252.69,
+    "text": "mảng cho tối đa là 1 nhìn đúng không?"
+  },
+  {
+    "start": 252.69,
+    "end": 260.7,
+    "text": "dù ok"
+  },
+  {
+    "start": 260.7,
+    "end": 271.2,
+    "text": "nếu mà làm, mình cứ làm thật từ nhé, đây chính là mình sẽ tính cái cửa số đầu tiên, tức là cái cửa số mà nó bắt đầu từ chỉ số 0, và kết thúc ở chỉ số K chứa 1 đấy, ok"
+  },
+  {
+    "start": 271.2,
+    "end": 276.2,
+    "text": "từ không cái K chứa 1 nó sẽ là K còn từ nhé, mình sẽ dùng 1 cái biến là biến sâm"
+  },
+  {
+    "start": 276.2,
+    "end": 283.29,
+    "text": "sau mình dựa từ 4, i dựa tới 1, 0, y nhỏ 1, K, y cộng cộng, và mình sẽ cho sâm cộng bằng AI"
+  },
+  {
+    "start": 283.29,
+    "end": 288.48,
+    "text": "ok, vậy thì bây giờ cái biến sâm của mình nó lưu cái cửa số đầu tiên, đúng không?"
+  },
+  {
+    "start": 288.48,
+    "end": 292.6,
+    "text": "cà này có sang... cà này có thể sang lông lông được nhất"
+  },
+  {
+    "start": 292.6,
+    "end": 297.75,
+    "text": "rồi sau đó thì mình sẽ khai đá một cái biến REST"
+  },
+  {
+    "start": 297.75,
+    "end": 302.39,
+    "text": "hiện tại bây giờ mình sẽ cập nhật cái kỷ lục nó chính là cái niên sang kia, cái là cái cửa số đầu tiên, đúng không?"
+  },
+  {
+    "start": 302.39,
+    "end": 305.75,
+    "text": "và mình sẽ liu thêm một cái biến nữa để làm một cái biến..."
+  },
+  {
+    "start": 305.75,
+    "end": 308.67,
+    "text": "gọi là biến index đi"
+  },
+  {
+    "start": 308.67,
+    "end": 314.47,
+    "text": "cái biến index này được dùng để lưu cái chỉ số đầu tiên của cái cửa số nhá, ok?"
+  },
+  {
+    "start": 314.47,
+    "end": 321.19,
+    "text": "thì bây giờ hiện tại sau khi mình tính được cái cửa số đầu tiên thì mình sẽ coi cái cửa số của tổng lớn nhất ở trong cái mạng này"
+  },
+  {
+    "start": 321.19,
+    "end": 325.35,
+    "text": "Nói chính là cái cửa số hiện tạ, cái cửa số đầu tiên, có bắt đầu chỉ số tự không, ok?"
+  },
+  {
+    "start": 325.35,
+    "end": 329.27,
+    "text": "Và có độ giải ca nhé, sau đó bạn sẽ duyệt từ cái cửa số tiếp theo cho đi"
+  },
+  {
+    "start": 329.27,
+    "end": 336.23,
+    "text": "Thì mình sẽ duyệt từ cái cửa số của chiều thứ y bằng ca cho tới y nó hơn là nhé, y cầm cậu"
+  },
+  {
+    "start": 336.23,
+    "end": 343.8,
+    "text": "Ở đây thì mình sẽ duyệt từ chỉ số ca nhé, tức là mình, ví dụ như bạn tính sang cái cửa số đầu tiên là 4, 3, 1 này này"
+  },
+  {
+    "start": 343.8,
+    "end": 349.32,
+    "text": "thì mình sẽ siết từ cái chỉ số ca này này, thế là cái đó không 1, 2, 3, ca, 3 đúng không, mình sẽ bắt đầu từ 3"
+  },
+  {
+    "start": 349.32,
+    "end": 354.63,
+    "text": "Thì khi đó, bạn sẽ phải chứa đi phần tửa chỗ này nè"
+  },
+  {
+    "start": 354.63,
+    "end": 357.83,
+    "text": "phần tửa chỗ này nó sẽ chính là cái chỉ số là i chứa đi kè"
+  },
+  {
+    "start": 357.83,
+    "end": 361.43,
+    "text": "0, 1, 2, 3 đúng không? 3 chứa 3 là không"
+  },
+  {
+    "start": 361.43,
+    "end": 364.79,
+    "text": "và bạn cộng thêm cái chỉ số, à, cái phần tửa chỉ số i, ok?"
+  },
+  {
+    "start": 364.79,
+    "end": 369.12,
+    "text": "Thế thôi, và khi mà cái chỉ số i của bạn là cái thằng này nè"
+  },
+  {
+    "start": 369.12,
+    "end": 371.52,
+    "text": "thì nó sẽ là đến cái cửa số cuối cùng đúng không?"
+  },
+  {
+    "start": 371.52,
+    "end": 376.08,
+    "text": "Thực ra, đây các bạn chú ý cái chỉ số i này chính là cái chỉ số kết thúc của cái cửa số nha"
+  },
+  {
+    "start": 376.08,
+    "end": 377.92,
+    "text": "Ok, chứ không phải cửa chỉ số bắt đầu đâu"
+  },
+  {
+    "start": 377.92,
+    "end": 383.76,
+    "text": "Các bạn dùng chỉ số bắt đầu cũng được, khi đó bạn lấy rượt từ i bằng 1 cho tới i nhỏ hơn là nghe nói chứ kê thôi"
+  },
+  {
+    "start": 383.76,
+    "end": 393.12,
+    "text": "Khi mà đến cái cửa số mới thì mình sẽ tiến hành tính cái cửa tầm của cửa số hiện tại thì mình sẽ cho xam bằng xam, chứ đi, ai, chứ kê"
+  },
+  {
+    "start": 393.12,
+    "end": 397.12,
+    "text": "Nó chính là cái phần tửa ở cái cửa số đầu tiên của cái cửa số trước ấy"
+  },
+  {
+    "start": 397.12,
+    "end": 400.96,
+    "text": "Nó sẽ bị loại ra khỏi ở cái cửa số hiện tại và mình sẽ cộng cái ai"
+  },
+  {
+    "start": 400.96,
+    "end": 406.12,
+    "text": "Nó chính là cái phần tửa ở cửa số hiện tại và mình kiểm tra là nó mà xam lớn hơn cái kỷ lục"
+  },
+  {
+    "start": 406.12,
+    "end": 409.88,
+    "text": "Mình sẽ cập nhật kỷ lục thôi"
+  },
+  {
+    "start": 409.88,
+    "end": 414.64,
+    "text": "Mình sẽ cập nhật kỷ index, nhưng nó sẽ bằng"
+  },
+  {
+    "start": 414.64,
+    "end": 416.64,
+    "text": "i cho ca cộng mồ, đúng không?"
+  },
+  {
+    "start": 416.64,
+    "end": 418.64,
+    "text": "Ok, để chỉ số bắt đầu nhé"
+  },
+  {
+    "start": 418.64,
+    "end": 425.24,
+    "text": "Thì nữa mình dùng cái chỉ số bắt đầu, thì mình dễ ít ra kết quả hơn"
+  },
+  {
+    "start": 425.24,
+    "end": 428.24,
+    "text": "Thế nên mình sẽ sia ra rest, là tầm lớn nhất"
+  },
+  {
+    "start": 428.24,
+    "end": 431.24,
+    "text": "Sau đó thì mình sẽ duyệt từ cái chỉ số index kì kìa"
+  },
+  {
+    "start": 431.24,
+    "end": 435.24,
+    "text": "For, in, t, d, c, d, nhỏ hơn, ca, d, cộng cộng"
+  },
+  {
+    "start": 435.24,
+    "end": 438.24,
+    "text": "Sau đó mình sẽ in từ cái thằng index che kia trở đi"
+  },
+  {
+    "start": 438.24,
+    "end": 440.24,
+    "text": "Ca phần tử lên tiếp nhé"
+  },
+  {
+    "start": 440.24,
+    "end": 544.48,
+    "text": "cesial, ea, index, tool g, al, slider,illa, c automotive, and unit positions is shown from here"
+  },
+  {
+    "start": 544.48,
+    "end": 546.74,
+    "text": "Máy không ra"
+  },
+  {
+    "start": 546.74,
+    "end": 550.79,
+    "text": "Rồi, ok."
+  },
+  {
+    "start": 550.79,
+    "end": 555.8,
+    "text": "Mình sẽ nhập cái input để vào nha."
+  },
+  {
+    "start": 555.8,
+    "end": 564.59,
+    "text": "Thì nó sẽ ra được cái tổng nó nhất là 24 nha."
+  },
+  {
+    "start": 564.59,
+    "end": 567.59,
+    "text": "Và cái dạy con đấy nó sẽ là dạy con 789."
+  },
+  {
+    "start": 567.59,
+    "end": 569.59,
+    "text": "Ok, nó sẽ là dạy đầu tiên nha."
+  },
+  {
+    "start": 569.59,
+    "end": 571.59,
+    "text": "Vì chỗ này mình chỉ so sánh lớn hơn thôi mà."
+  },
+  {
+    "start": 571.59,
+    "end": 575.59,
+    "text": "Thì đây chính là một cái ví dụ đầu tiên về cái kỹ thuật cửa sổ trượt này nha."
+  },
+  {
+    "start": 575.59,
+    "end": 583.1,
+    "text": "Các bạn có thể ăn dụng với tổng nó nhất, tổng nó nhất hoặc là trung bình nó nhất, trung bình nó nhất thì thực chất nó vẫn là cái bài đoán cơ bản này thôi."
+  },
+  {
+    "start": 583.1,
+    "end": 585.71,
+    "text": "Ok, rất là đơn giản."
+  },
+  {
+    "start": 585.71,
+    "end": 587.71,
+    "text": "Bây giờ mình sẽ sang cái ví dụ thứ 2 nhé"
+  },
+  {
+    "start": 588.71,
+    "end": 592.71,
+    "text": "Bà này thì ví dụ thứ 2 thì nó giấu điểm tí thôi"
+  },
+  {
+    "start": 592.71,
+    "end": 594.71,
+    "text": "Ok, còn nó vẫn là cái kỹ thuật cười sửa trưởng"
+  },
+  {
+    "start": 594.71,
+    "end": 597.71,
+    "text": "Người ta cho mình một cái mảng A gồm xuống nguyên"
+  },
+  {
+    "start": 597.71,
+    "end": 601.71,
+    "text": "và xuống nguyên dương ca, sau đó nhiệm vụ của bạn là hãy sắp tập các lại các phản tử trong mảng"
+  },
+  {
+    "start": 601.71,
+    "end": 604.71,
+    "text": "sau cho các cái số nhỏ hơn là bằng K đến cạnh nhau"
+  },
+  {
+    "start": 604.71,
+    "end": 610.71,
+    "text": "Ví dụ với cái mảng A bằng 21563, ca bằng 3 thì ta chỉ cần thực hiện một phép đồ chỗ để có mảng là 21365"
+  },
+  {
+    "start": 610.71,
+    "end": 614.77,
+    "text": "Ca bằng 3 đúng không? Tức là những phản tử mà nhỏ hơn 3 thì bao gồm có 2 này"
+  },
+  {
+    "start": 614.77,
+    "end": 624.77,
+    "text": "1 và 3 thì nhiệm vụ của bạn sẽ phải xếp. Những thằng này đứng cạnh nhau đúng không? Bằng số lần độ chỗ ít nhất, thì đó bạn sẽ đổ chỗ 5 với 3 đúng không? Thì mình sẽ được là 2, 1, 3, 6, 5, ok?"
+  },
+  {
+    "start": 626.0,
+    "end": 632.38,
+    "text": "Input thì bạn thấy là nè, là 10 mũ 7 này. Các phần tử nằm trong khoảng từ 1, 1, 2, 7 và cao nó là 1 mũ 7."
+  },
+  {
+    "start": 632.38,
+    "end": 635.38,
+    "text": "Số đầu tiên thì vẫn như tưởng lệ là số tiết cây nhá, mũ tiết cây thì còn 2 dòng."
+  },
+  {
+    "start": 635.38,
+    "end": 638.38,
+    "text": "Rồi đầu tiên là nè, vào cao dòng thứ 2 đã có phần tử trong mẹ."
+  },
+  {
+    "start": 638.38,
+    "end": 640.92,
+    "text": "Thì thật chất ạ"
+  },
+  {
+    "start": 648.17,
+    "end": 650.17,
+    "text": "Để là mai này thì mình thấy là"
+  },
+  {
+    "start": 650.17,
+    "end": 653.17,
+    "text": "muốn đưa các phần tử mà nó nhỏ hơn vàng ca nó đứng cạnh nhau ấy"
+  },
+  {
+    "start": 653.17,
+    "end": 655.17,
+    "text": "thì đầu tiên bạn sẽ phải biết là"
+  },
+  {
+    "start": 655.17,
+    "end": 657.17,
+    "text": "cái mạng này có bao nhiêu phần tử mà nhỏ hơn vàng ca đúng không?"
+  },
+  {
+    "start": 657.17,
+    "end": 659.52,
+    "text": "Như dụng mình có một cái mạng là"
+  },
+  {
+    "start": 659.52,
+    "end": 664.52,
+    "text": "8, 1, 2, 6, 4, 3, 5, 1, 2"
+  },
+  {
+    "start": 664.52,
+    "end": 666.52,
+    "text": "Chẳng hạn, và ca của mình nó bằng 3 nhá"
+  },
+  {
+    "start": 666.52,
+    "end": 670.52,
+    "text": "Thì khi đó bạn thấy có tất cả là 1, 2, 3, 4, 5"
+  },
+  {
+    "start": 670.52,
+    "end": 672.52,
+    "text": "5 phần tử nhỏ hơn vàng ca đúng không?"
+  },
+  {
+    "start": 672.52,
+    "end": 683.88,
+    "text": "Vậy thì chắc chắn khi đó, nếu mà muốn 5 phần tử này đứng cạnh nhau thì mình sẽ phải xem là hiện tại bây giờ, những cái thẳng này nó nhỏ hơn mà bằng bé, nó đứng cạnh nhau nhiều nhất là bao nhiêu, trong trường hợp này là có 2 thẳng hơn"
+  },
+  {
+    "start": 683.88,
+    "end": 694.28,
+    "text": "Đây, cái nhóm này thì 2, nhóm này thì 1, nhóm này thì 2, thì chắc chắn là khi đó bạn sẽ phải rồn, rồn, ví dụ như rồn thằng cái nhóm này và cái nhóm này để dịch lại cái ốc 1, 2 này"
+  },
+  {
+    "start": 694.28,
+    "end": 697.3,
+    "text": "Ví dụ như hoàn vị 6 với 3 thì nó thành 2, 1, 3, đúng không?"
+  },
+  {
+    "start": 697.3,
+    "end": 700.3,
+    "text": "Sau đó là hoàn vị cái chỗ 4 với chỗ 5 này này"
+  },
+  {
+    "start": 700.3,
+    "end": 703.9,
+    "text": "Xin lỗi, chỗ 4 với chỗ 3 này này thành 1 cái 2"
+  },
+  {
+    "start": 703.9,
+    "end": 706.9,
+    "text": "Thì khi đó, những cái thang này nó sẽ đứng cạnh nhau, đúng không?"
+  },
+  {
+    "start": 706.9,
+    "end": 712.45,
+    "text": "Hoặc là giả sứ thêm 1 cái ví dụ khác đi, cho nó rõ ràng hơn đi"
+  },
+  {
+    "start": 712.45,
+    "end": 717.88,
+    "text": "Mình cho chỗ này là 3 nhá"
+  },
+  {
+    "start": 717.88,
+    "end": 721.06,
+    "text": "Thì hiện tại bây giờ của bạn có 1, 2, 3 này"
+  },
+  {
+    "start": 721.06,
+    "end": 724.2,
+    "text": "4, 5, 6, 6 hơn tử nhỏ hơn là 1, 3, đúng không?"
+  },
+  {
+    "start": 724.2,
+    "end": 727.66,
+    "text": "Bây giờ bạn muốn đưa nó đứng cạnh nhau thì khi đó mình sẽ chắc chắn"
+  },
+  {
+    "start": 727.66,
+    "end": 731.34,
+    "text": "nhìn vào đây thì các bạn phải biết là mình sẽ đưa cái 2 cái nhóm nhỏ hơn đây nè"
+  },
+  {
+    "start": 731.34,
+    "end": 737.22,
+    "text": "để rồn lại cái ông mà đang có ca phần tử, có 3 phần tử mà nó nhỏ hơn 3 đứng tạnh nhau này nè, đúng không?"
+  },
+  {
+    "start": 737.22,
+    "end": 738.94,
+    "text": "Cái số lần đổi chỗ của mình sẽ ít nhất"
+  },
+  {
+    "start": 738.94,
+    "end": 740.94,
+    "text": "Đầu tiên bạn sẽ đổi chỗ 3 với 4 nhá"
+  },
+  {
+    "start": 740.94,
+    "end": 744.66,
+    "text": "nè"
+  },
+  {
+    "start": 744.66,
+    "end": 747.06,
+    "text": "sẽ đổi chỗ 3 với 4"
+  },
+  {
+    "start": 747.06,
+    "end": 748.94,
+    "text": "ok, đó"
+  },
+  {
+    "start": 748.94,
+    "end": 751.46,
+    "text": "sau đó thì bạn sẽ đổi chỗ thằng 4 với thằng 1 này"
+  },
+  {
+    "start": 751.46,
+    "end": 754.06,
+    "text": "hoặc là bạn đổi chỗ 1 với 8 được không ấn đề gì"
+  },
+  {
+    "start": 754.06,
+    "end": 757.97,
+    "text": "chỗ này mình sẽ đổi chỗ 1 với 4, thì chỗ này nó thành 1"
+  },
+  {
+    "start": 757.97,
+    "end": 761.49,
+    "text": "đổi chỗ 2 với 5 thì 2 cái số cuối sẽ thành 4 năm đúng không?"
+  },
+  {
+    "start": 761.49,
+    "end": 763.49,
+    "text": "2 cái số này sẽ thành 1, 2"
+  },
+  {
+    "start": 763.49,
+    "end": 766.65,
+    "text": "Thì bạn thấy là 3 phép đổi chỗ đúng không?"
+  },
+  {
+    "start": 766.65,
+    "end": 772.85,
+    "text": "Thì khi đó, 2 cái phần tử, 3 cái phần tử còn lại nhỏ hơn 1 kè của mình nó sẽ đứng cạnh 3 cái đằng đứng trước nó"
+  },
+  {
+    "start": 772.85,
+    "end": 774.35,
+    "text": "Vậy thì mối số là gì nhận?"
+  },
+  {
+    "start": 774.35,
+    "end": 776.93,
+    "text": "Bạn sẽ phải xác định được xem là"
+  },
+  {
+    "start": 776.93,
+    "end": 782.83,
+    "text": "hiện tại thì có bao nhiêu phần tử mà nhỏ hơn 1 kè đứng cạnh nhau"
+  },
+  {
+    "start": 782.83,
+    "end": 787.15,
+    "text": "mà cái số lượng phần tử nó là lớn nhất đúng không?"
+  },
+  {
+    "start": 787.15,
+    "end": 789.15,
+    "text": "ok"
+  },
+  {
+    "start": 789.15,
+    "end": 791.15,
+    "text": "nhưng như thế thì chết chất đã đúng"
+  },
+  {
+    "start": 791.15,
+    "end": 794.3,
+    "text": "ok, bởi vì là"
+  },
+  {
+    "start": 794.3,
+    "end": 798.4,
+    "text": "đâu để mình xem có cái tiếp kênh nào như thế, nó không đúng 1, 2, 3"
+  },
+  {
+    "start": 798.4,
+    "end": 811.26,
+    "text": "ừ đúng không, như thế chết chất đã đúng nếu mà mình"
+  },
+  {
+    "start": 811.26,
+    "end": 813.26,
+    "text": "tức là bạn sẽ đếm nhé"
+  },
+  {
+    "start": 813.26,
+    "end": 816.26,
+    "text": "đếm xem là cái số lượng phần tử mà nhỏ hơn màng ca của trong cái mạng của mình"
+  },
+  {
+    "start": 816.26,
+    "end": 818.26,
+    "text": "hiện tại nó là bao nhiêu phần tử đã nhé, ok"
+  },
+  {
+    "start": 818.26,
+    "end": 822.26,
+    "text": "thấy sau đó thì nếu mà nhiều bạn chủ quan bạn bạn là chỉ cần đếm"
+  },
+  {
+    "start": 822.26,
+    "end": 825.26,
+    "text": "xem là cái giải con liên tiếp mà nó có"
+  },
+  {
+    "start": 825.26,
+    "end": 833.26,
+    "text": "Các phần tử mà nhỏ hơn bằng ca và dài nhất là bao nhiêu, sau đó mình sẽ lấy số lượng phần tử nhỏ hơn bằng ca của tất cả trong máng ấy mình chưa đi"
+  },
+  {
+    "start": 833.26,
+    "end": 837.26,
+    "text": "Nó ra số phép án vị như thế là sẽ bị ở sai nhé, ok"
+  },
+  {
+    "start": 837.26,
+    "end": 847.53,
+    "text": "Ví dụ như là mình có 1 cái thét cây như thế này, đây 8, 1, 2, 5, 1, 2"
+  },
+  {
+    "start": 847.53,
+    "end": 858.19,
+    "text": "Núm nhỉ, ừ, 7, 4 đi, ok"
+  },
+  {
+    "start": 858.19,
+    "end": 862.19,
+    "text": "Và ca vòng 3 đi, trong trường hợp này cái mạng của bạn có 4, phần tử mà nhỏ hơn là vòng 3 đúng không?"
+  },
+  {
+    "start": 862.19,
+    "end": 865.51,
+    "text": "Ví dụ trong trường hợp này thì bạn sẽ tính ra là 2 thì nó sẽ bị sai nhé"
+  },
+  {
+    "start": 865.51,
+    "end": 868.35,
+    "text": "Bài này bạn chỉ cần phép 1 đội chỗ 52 là xong rồi"
+  },
+  {
+    "start": 868.35,
+    "end": 870.67,
+    "text": "Ok? Vậy thì thức chất là như thế này"
+  },
+  {
+    "start": 870.67,
+    "end": 872.35,
+    "text": "Đấy là"
+  },
+  {
+    "start": 872.35,
+    "end": 875.79,
+    "text": "Sau khi bạn đã biết được số lượng phần tử mà nhỏ hơn là ca trong màng ấy"
+  },
+  {
+    "start": 875.79,
+    "end": 878.03,
+    "text": "Các bạn sẽ xác định cho mình xem là"
+  },
+  {
+    "start": 878.03,
+    "end": 883.19,
+    "text": "Bất cả mọi cái cửa số trong cái màng này có cỡ là ca"
+  },
+  {
+    "start": 883.19,
+    "end": 886.11,
+    "text": "Đấy, xem trong cái cửa số cỡ ca của cái màng này này"
+  },
+  {
+    "start": 886.11,
+    "end": 889.03,
+    "text": "Nó có bao nhiêu phần tử mà nhỏ hơn là ca rồi"
+  },
+  {
+    "start": 889.03,
+    "end": 893.23,
+    "text": "Mình sẽ tìm cái cửa số mà nó chứa nhiều cái phần tử nhỏ hơn là bằng ca nhất đấy"
+  },
+  {
+    "start": 893.23,
+    "end": 894.07,
+    "text": "Ok?"
+  },
+  {
+    "start": 894.07,
+    "end": 895.07,
+    "text": "Đó"
+  },
+  {
+    "start": 895.07,
+    "end": 900.11,
+    "text": "Sau đó thì mình sẽ gom những cái thằng mà nó nhỏ hơn là bằng ca ở chỗ khác trong cái cửa số đấy"
+  },
+  {
+    "start": 900.11,
+    "end": 906.39,
+    "text": "Thì khi mà cái cửa số của bạn hiện tại có nhiều cái số nhỏ hơn là bằng ca nhất đấy thì khi đó cái số hán vị của nó sẽ là tối thiểu"
+  },
+  {
+    "start": 906.39,
+    "end": 910.35,
+    "text": "Vì việc mà đưa các phần tử nhỏ hơn là bằng ca về trong cái cửa số này thì nó sẽ là tối thiểu"
+  },
+  {
+    "start": 910.35,
+    "end": 916.15,
+    "text": "Bởi vì cùng lắm là khi đó mình cũng sẽ cần một cái cửa số có cỡ là cái số lượng phần tử nhỏ hơn là bằng ca thôi đúng không?"
+  },
+  {
+    "start": 916.15,
+    "end": 916.95,
+    "text": "Đấy"
+  },
+  {
+    "start": 916.95,
+    "end": 922.72,
+    "text": "Ví dụ như lúc nãy, khi mà cái tét cây của mình đây này, đây đúng không?"
+  },
+  {
+    "start": 922.72,
+    "end": 929.76,
+    "text": "Thì mình sẽ đếm được cái số lượng phần tử mà nhỏ hơn ở bằng K của mình, nó sẽ là 1, 2, 3, 4, 5, 6 đúng không?"
+  },
+  {
+    "start": 929.76,
+    "end": 935.16,
+    "text": "Thì bạn sẽ xét cho mình tất cả các cửa số có cỡ là 6, ok?"
+  },
+  {
+    "start": 935.16,
+    "end": 943.2,
+    "text": "Thì xem là cái cửa số này mà nó chứa nhiều cái số nhỏ hơn ở bằng 3 đấy, trong trời hợp này cái cửa số đầu tiên đây, đúng không?"
+  },
+  {
+    "start": 943.2,
+    "end": 951.2,
+    "text": "đôi, bốn, sáu, thì nó chứa được bốn, vần tử, nhỏ nguồn ba, thì mình vi nhận cái kỷ lục này là cái cửa số mà có nhiều số nhỏ hơn một ba nhất này"
+  },
+  {
+    "start": 951.2,
+    "end": 957.2,
+    "text": "tiếp theo bạn sẽ xé cái cửa số là một, hai, ba, bốn, ba năm, thằng này cũng có bốn này, đúng không?"
+  },
+  {
+    "start": 957.2,
+    "end": 962.62,
+    "text": "cửa số tiếp theo là hai, ba, bốn, ba năm thì nó có ba này, đúng không?"
+  },
+  {
+    "start": 962.62,
+    "end": 968.62,
+    "text": "và cửa số cuối cùng là ba, bốn, ba, năm một, hai thì nó cũng có bốn này, đấy vậy thì mình thấy là"
+  },
+  {
+    "start": 968.62,
+    "end": 973.62,
+    "text": "cái cửa số có cửa là 6, tức là cái số lượng phần cửa nhỏ hơn là bằng ca của mình"
+  },
+  {
+    "start": 973.62,
+    "end": 977.62,
+    "text": "cái cửa số mà nó chứa nhiều cái số nhỏ hơn là 3 nhất, nó chỉ là 4"
+  },
+  {
+    "start": 977.62,
+    "end": 979.62,
+    "text": "thì khi đó mình sẽ cố gắng là sao?"
+  },
+  {
+    "start": 979.62,
+    "end": 985.29,
+    "text": "mình sẽ cố gắng là tập trung những cái số nhỏ hơn là bằng 6 này này"
+  },
+  {
+    "start": 985.29,
+    "end": 988.29,
+    "text": "vào cái cửa số mà nó chứa nhiều cái số nhỏ hơn là 3 nhất"
+  },
+  {
+    "start": 988.29,
+    "end": 996.42,
+    "text": "có thể là cái cửa số này, có thể là cái cửa số 81, 8123, 43 này"
+  },
+  {
+    "start": 996.42,
+    "end": 1002.12,
+    "text": "Ok, bằng cách là bạn sẽ hoán vị 200 cái 2 số trong cái cửa số hiện tại này này"
+  },
+  {
+    "start": 1002.12,
+    "end": 1004.04,
+    "text": "với 2 cái số nhỏ hơn là 1, 3 còn lại"
+  },
+  {
+    "start": 1004.04,
+    "end": 1006.72,
+    "text": "bạn có thể hoán vị 1 cái 8, đúng không?"
+  },
+  {
+    "start": 1006.72,
+    "end": 1009.44,
+    "text": "sau đó bạn hoán vị ca 24, hay?"
+  },
+  {
+    "start": 1009.44,
+    "end": 1011.44,
+    "text": "hoặc là ngược lại cũng được, không vấn đề gì cả"
+  },
+  {
+    "start": 1011.44,
+    "end": 1016.44,
+    "text": "hoặc bạn cũng có thể lựa chọn cái cửa số đây chính là 1, 2, 3, 4, 3, 5 này cũng được"
+  },
+  {
+    "start": 1016.44,
+    "end": 1020.36,
+    "text": "Ok, 1, 2, 3, 4, 3, 5 này cũng được, sau đó bạn hoán vị 1 với 3, 5 với 2"
+  },
+  {
+    "start": 1020.36,
+    "end": 1023.88,
+    "text": "thì khi đó tất cả những cái số đó bằng 3 nó cũng sẽ nhảy với cái cửa số đấy thôi, ok?"
+  },
+  {
+    "start": 1023.88,
+    "end": 1027.88,
+    "text": "Nói chung là những cái cửa sổ nào đó có cùng cái thước lớn nhất đấy thì mình chọn cái cửa sổ nào cũng được"
+  },
+  {
+    "start": 1027.88,
+    "end": 1032.38,
+    "text": "Vậy thì bàn này yêu cầu của mình đấy chính là tìm cái số phép đồ chỗ ít nhất đúng không?"
+  },
+  {
+    "start": 1032.38,
+    "end": 1035.88,
+    "text": "Hay nói cái khác là mình sẽ phải tìm cái cửa sổ mà có cỡ là..."
+  },
+  {
+    "start": 1035.88,
+    "end": 1040.92,
+    "text": "Ở đây mình gọi tạm gọi là D nhé, là số lượng phần tử mà nhỏ hơn là một ca trong màng ấy"
+  },
+  {
+    "start": 1040.92,
+    "end": 1045.42,
+    "text": "thì mình sẽ phải tìm cái cửa sổ, tất cả các cửa sổ có cỡ là D đấy"
+  },
+  {
+    "start": 1045.42,
+    "end": 1048.92,
+    "text": "xem là cái cửa sổ nào nó chứa nhiều cái số nhỏ hơn là một ca nhất, ok?"
+  },
+  {
+    "start": 1048.92,
+    "end": 1058.6,
+    "text": "Thì khi đó, số lượng phép đổ chỗ của mình là đề chứ đi số lượng nhỏ hơn bằng K trong cái cửa số đó"
+  },
+  {
+    "start": 1058.6,
+    "end": 1061.6,
+    "text": "Nếu còn trong truyền hợp mà nó đứng cạnh nhau thì quá phì vời"
+  },
+  {
+    "start": 1061.6,
+    "end": 1069.48,
+    "text": "Nếu dụ bạn có một cái này này, 1, 2, 1, 5, 6, 7, chân hạn và K của bạn bằng 2 chân hạn"
+  },
+  {
+    "start": 1069.48,
+    "end": 1073.56,
+    "text": "Thì các bạn đấy là số lượng phần tử mà nhỏ hơn bằng K của mình thì nó sẽ là 4"
+  },
+  {
+    "start": 1073.56,
+    "end": 1077.38,
+    "text": "Và bạn chắc chắn sẽ tìm được một cái cửa số như thế này, nó có cỡ là 4"
+  },
+  {
+    "start": 1077.38,
+    "end": 1082.38,
+    "text": "ok, thì mình sẽ cập nhật kỷ lục, đấy là cái cửa sồn mà nó chưa cắt vần cửa mình nhỏ hơn 4, nhiều nhất nó là 4"
+  },
+  {
+    "start": 1082.38,
+    "end": 1086.38,
+    "text": "thì khi đó cái số phép đủ chỗ của mình nó sẽ là không, ok"
+  },
+  {
+    "start": 1086.38,
+    "end": 1088.38,
+    "text": "thì bàn này mình sẽ cốt như sau"
+  },
+  {
+    "start": 1088.38,
+    "end": 1091.44,
+    "text": "ở đây thì mình sẽ nhập vào nó vào ca đúng không?"
+  },
+  {
+    "start": 1091.44,
+    "end": 1097.69,
+    "text": "rồi, sau đó mình sẽ khai ra một cái mảnh A của nó vào phần tử này"
+  },
+  {
+    "start": 1097.69,
+    "end": 1099.69,
+    "text": "mình nhập rồi, ok"
+  },
+  {
+    "start": 1099.69,
+    "end": 1109.77,
+    "text": "sau đó thì các bạn tiện thể các bạn đếm cho mình xem là các bạn như phần tử mình nhỏ hơn màng ca nhé"
+  },
+  {
+    "start": 1109.77,
+    "end": 1116.19,
+    "text": "tax, vawn, vawn, incoming, new, in Middle, in AllNotes,"
+  },
+  {
+    "start": 1116.19,
+    "end": 1138.59,
+    "text": "in Dawn, in"
+  },
+  {
+    "start": 1138.59,
+    "end": 1140.59,
+    "text": "xa cái này các bạn có thể viết vào một ổng phỏ nha"
+  },
+  {
+    "start": 1141.59,
+    "end": 1143.59,
+    "text": "và mình kiểm tra là ip ai"
+  },
+  {
+    "start": 1144.72,
+    "end": 1146.72,
+    "text": "nhỏ màng ca thì mình sẽ cộng cộng cao lên"
+  },
+  {
+    "start": 1147.72,
+    "end": 1151.72,
+    "text": "vậy thì mình đã đến được xem cái cửa số đầu tiên có bao nhiêu số nhỏ màng ca rồi đúng không"
+  },
+  {
+    "start": 1151.72,
+    "end": 1153.72,
+    "text": "thì mình sẽ cập nhập kỷ lục nó chính là cái miến cao này"
+  },
+  {
+    "start": 1155.07,
+    "end": 1158.07,
+    "text": "ok, sau đó bạn sẽ riêng từ cái cửa số thứ 2 trở đây đi"
+  },
+  {
+    "start": 1158.07,
+    "end": 1161.07,
+    "text": "mình sẽ bắt đầu từ chỉ số là i bằng đe nhé, i nhỏ hơn một lần"
+  },
+  {
+    "start": 1162.07,
+    "end": 1163.07,
+    "text": "và bạn đúng sao nhỉ"
+  },
+  {
+    "start": 1163.07,
+    "end": 1166.07,
+    "text": "bạn kiểm tra xem cái số mà vừa vừa bị loại bỏ ra khỏi cửa số"
+  },
+  {
+    "start": 1166.07,
+    "end": 1168.07,
+    "text": "tức là ip ai mà"
+  },
+  {
+    "start": 1169.07,
+    "end": 1173.07,
+    "text": "ai trừ đế mà nó nhỏ hơn là bằng ca"
+  },
+  {
+    "start": 1173.07,
+    "end": 1177.07,
+    "text": "tức là cái phần tử mà vừa bị loại ra khỏi cửa số của mình nó nhỏ hơn là ca"
+  },
+  {
+    "start": 1177.07,
+    "end": 1181.07,
+    "text": "thì chúng ta là mình sẽ phải trừ đến ca của mình đi đúng không?"
+  },
+  {
+    "start": 1181.07,
+    "end": 1185.07,
+    "text": "và mình sẽ xeo xeo cái thằng phần tử mà đưa vừa được vào cửa số nếu mà nó nhỏ hơn là ca"
+  },
+  {
+    "start": 1185.07,
+    "end": 1187.07,
+    "text": "thì mình sẽ cộng thẳm ca lên"
+  },
+  {
+    "start": 1187.07,
+    "end": 1191.07,
+    "text": "và bạn sẽ kiểm tra kỷ lục nrs là bằng mắc của nrs và ca"
+  },
+  {
+    "start": 1191.07,
+    "end": 1195.07,
+    "text": "ok, vậy thì sau cái vòng form này mình sẽ tìm được cái cửa số vô cỡ là đê"
+  },
+  {
+    "start": 1195.07,
+    "end": 1197.07,
+    "text": "mà nó chưa nhiều cái phần tử mình nhỏ hơn là ca nhất đúng không?"
+  },
+  {
+    "start": 1197.07,
+    "end": 1202.75,
+    "text": "Thì cái số đáp án của mình, cái phép án vị, các phần tử, nó về chung cái cửa sổ này, nó chỉ là"
+  },
+  {
+    "start": 1202.75,
+    "end": 1208.75,
+    "text": "cái số lượng phần tử của nhỏ hơn bằng K trong nảng của mình, chứa đi cái"
+  },
+  {
+    "start": 1208.75,
+    "end": 1211.43,
+    "text": "các số nhỏ bằng K trong cái cửa sổ lớn nhất đấy"
+  },
+  {
+    "start": 1211.43,
+    "end": 1214.27,
+    "text": "Mình sẽ see out ra đấy, chính là"
+  },
+  {
+    "start": 1214.27,
+    "end": 1217.87,
+    "text": "D, chứa đi, chứa đi, An, F, ok"
+  },
+  {
+    "start": 1217.87,
+    "end": 1222.24,
+    "text": "Thì nó sẽ là bài cái tòa bài, tương đối là dễ đúng không?"
+  },
+  {
+    "start": 1222.24,
+    "end": 1225.57,
+    "text": "Sẽ lấy cái input"
+  },
+  {
+    "start": 1225.57,
+    "end": 1231.83,
+    "text": "1 và 1 và 1 và 2 nhỉ"
+  },
+  {
+    "start": 1231.83,
+    "end": 1233.83,
+    "text": "ở đây 5 nè"
+  },
+  {
+    "start": 1233.83,
+    "end": 1235.83,
+    "text": "cốt mình bị sai rồi"
+  },
+  {
+    "start": 1235.83,
+    "end": 1238.25,
+    "text": "dọc nờ và k, sau đó là"
+  },
+  {
+    "start": 1238.25,
+    "end": 1241.25,
+    "text": "ip ai nhỏ hơn màu cộng đe đúng không?"
+  },
+  {
+    "start": 1241.25,
+    "end": 1244.62,
+    "text": "i nhỏ hơn màu đe"
+  },
+  {
+    "start": 1244.62,
+    "end": 1248.26,
+    "text": "cao cộng cộng anf màu cao"
+  },
+  {
+    "start": 1248.26,
+    "end": 1255.09,
+    "text": "4i màu đe, i nhỏ hơn nởi cộng cộng ip i trừ đe"
+  },
+  {
+    "start": 1255.09,
+    "end": 1259.28,
+    "text": "mà nhỏ hơn màu cao thì mình sẽ cho ca trừ trừ đúng không?"
+  },
+  {
+    "start": 1259.28,
+    "end": 1263.14,
+    "text": "click subscribe cmd, like, comment associations"
+  },
+  {
+    "start": 1264.42,
+    "end": 1267.14,
+    "text": "pick link"
+  },
+  {
+    "start": 1267.84,
+    "end": 1273.4,
+    "text": "pick link"
+  },
+  {
+    "start": 1273.4,
+    "end": 1273.94,
+    "text": "Click Live"
+  },
+  {
+    "start": 1274.66,
+    "end": 1274.68,
+    "text": "Click papa"
+  },
+  {
+    "start": 1274.68,
+    "end": 1279.28,
+    "text": "click get"
+  },
+  {
+    "start": 1307.86,
+    "end": 1308.36,
+    "text": "click scrape"
+  },
+  {
+    "start": 1312.51,
+    "end": 1314.27,
+    "text": "click select"
+  },
+  {
+    "start": 1314.35,
+    "end": 1314.91,
+    "text": "click record"
+  },
+  {
+    "start": 1315.23,
+    "end": 1316.03,
+    "text": "click R Keep"
+  },
+  {
+    "start": 1316.19,
+    "end": 1316.83,
+    "text": "click связanking"
+  },
+  {
+    "start": 1316.83,
+    "end": 1317.15,
+    "text": "click record"
+  },
+  {
+    "start": 1317.43,
+    "end": 1318.15,
+    "text": "click record"
+  },
+  {
+    "start": 1318.15,
+    "end": 1328.26,
+    "text": "uh! sao nhỉ? sao lại có Er religious?"
+  },
+  {
+    "start": 1328.26,
+    "end": 1355.78,
+    "text": "iplenor,f"
+  },
+  {
+    "start": 1355.78,
+    "end": 1373.65,
+    "text": "Nó chả khác gì cả, ok?"
+  },
+  {
+    "start": 1373.65,
+    "end": 1379.25,
+    "text": "Được, vậy mình sẽ xan bài tiếp theo nhé, đấy là bài sửa đèn"
+  },
+  {
+    "start": 1379.25,
+    "end": 1384.25,
+    "text": "Mười ta cho mình một cái tuyến đường gian biển của thành phố Hailean này có đời chức đèn"
+  },
+  {
+    "start": 1384.25,
+    "end": 1388.25,
+    "text": "Ông Mai Cân Bảo vừa rồi đã làm hỏng B chức đèn để khóc phục sự cố"
+  },
+  {
+    "start": 1388.25,
+    "end": 1391.25,
+    "text": "và nhanh tráng khu vực lại hoạt động, du lịch thế chính quyền"
+  },
+  {
+    "start": 1391.25,
+    "end": 1394.25,
+    "text": "Hình phố đã quyết định sửa tạm thời một số đèn, đường, hỏng"
+  },
+  {
+    "start": 1394.25,
+    "end": 1398.25,
+    "text": "sao cho có ít nhất một khu vực có ca chức đèn liên tiếp hoạt động"
+  },
+  {
+    "start": 1398.25,
+    "end": 1402.25,
+    "text": "Bà này xa định xem là số đèn đường cần phải sửa chứa ít nhất là bao nhiêu ở đây"
+  },
+  {
+    "start": 1402.25,
+    "end": 1408.25,
+    "text": "Input trong đầu tiên là 3 số nguyên dương nRKB, trong đó nR là số lượng chiếc đen"
+  },
+  {
+    "start": 1408.25,
+    "end": 1414.5,
+    "text": "B là số lượng đen bị hỏng, đúng không?"
+  },
+  {
+    "start": 1414.5,
+    "end": 1419.5,
+    "text": "Và K là số lượng đen liên tiếp cần phải hoạt động"
+  },
+  {
+    "start": 1419.5,
+    "end": 1424.82,
+    "text": "Bí dụ như ở đây 16 và 5 tức lật có tất cả 10 cái đen đúng không?"
+  },
+  {
+    "start": 1424.82,
+    "end": 1435.82,
+    "text": "trò cái bị hỏng và người ta yêu cầu mình là phải tìm số lượng đen cần phải sửa chứa ít nhất sao cho có ít nhất 1 cái khu vực mà nó có 5 cái đen nguyên tiếp hạc động"
+  },
+  {
+    "start": 1435.82,
+    "end": 1441.82,
+    "text": "Ở đây các số đen bị sửa đấy là 2, 11, 5, 9 bị hỏng cái lối"
+  },
+  {
+    "start": 1441.82,
+    "end": 1443.82,
+    "text": "2, 11, 5, 9 đó"
+  },
+  {
+    "start": 1443.82,
+    "end": 1444.82,
+    "text": "Đôi"
+  },
+  {
+    "start": 1444.82,
+    "end": 1451.31,
+    "text": "Úi sao lại có thiếu mất 1 tiết cây à?"
+  },
+  {
+    "start": 1451.31,
+    "end": 1455.25,
+    "text": "Đôi 5"
+  },
+  {
+    "start": 1455.25,
+    "end": 1457.25,
+    "text": "B gióng tiếp theo"
+  },
+  {
+    "start": 1457.25,
+    "end": 1459.25,
+    "text": "Rồi xin lỗi, B nó nhập sau đúng không? K đây"
+  },
+  {
+    "start": 1459.25,
+    "end": 1465.93,
+    "text": "K là 6, bê là 5, có 5 cái đèn bị hỏng là 2159, ở đây mình sẽ liệt 10 cái đèn cho các bạn nhé"
+  },
+  {
+    "start": 1465.93,
+    "end": 1476.09,
+    "text": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ok, nó sẽ hỏng 5 cái đèn là 2159"
+  },
+  {
+    "start": 1476.09,
+    "end": 1490.12,
+    "text": "Bây giờ bạn sẽ phải tìm, bạn sẽ phải sửa chữa số lượng đèn ít nhất, sao cho ít nhất là có 6 cái đèn đúng không?"
+  },
+  {
+    "start": 1522.13,
+    "end": 1524.13,
+    "text": "có ca cái đèn liên tiếp hạt động đúng không?"
+  },
+  {
+    "start": 1524.13,
+    "end": 1527.13,
+    "text": "Thì bạn xem là tất cả các cái cửa số cỡ ca của các bạn"
+  },
+  {
+    "start": 1527.13,
+    "end": 1532.13,
+    "text": "xem là cái cửa số nào mà nó đang có cái số lượng đèn bị hóng là ít nhất"
+  },
+  {
+    "start": 1532.13,
+    "end": 1537.26,
+    "text": "Đấy, ok, ví dụ như cái cửa số đầu tiên có cỡ là 5 ấy, nó là 1, 2, 3, 4, 5 này"
+  },
+  {
+    "start": 1537.26,
+    "end": 1540.26,
+    "text": "thì cái cửa số này có những 3 thằng bị hóng đúng không?"
+  },
+  {
+    "start": 1540.26,
+    "end": 1546.26,
+    "text": "Ok, vậy thì khi đó nếu mà bạn muốn cái dãy 1, 2, 3, 4, 5 này sáng đèn hết thì bạn sẽ phải sửa 3 thằng"
+  },
+  {
+    "start": 1546.26,
+    "end": 1551.26,
+    "text": "Nhưng mà cái cửa số 45678 này, nó chỉ có 1 thằng bị hóng thôi"
+  },
+  {
+    "start": 1551.26,
+    "end": 1558.26,
+    "text": "Các bạn có thể làm như thế này, đây chính là mình sẽ sử dụng một cái mạng có nò f verge nhé nò cộng một f verge ok, được không nhờ ?"
+  },
+  {
+    "start": 1558.26,
+    "end": 1561.26,
+    "text": "Ờ , rồi ok , đây nò là người mũ 5."
+  },
+  {
+    "start": 1561.26,
+    "end": 1578.57,
+    "text": "Bây giờ, mở thằng nè, x struggled, Unity hông nữa,"
+  },
+  {
+    "start": 1578.57,
+    "end": 1582.34,
+    "text": "tuần này pense V"
+  },
+  {
+    "start": 1582.34,
+    "end": 1586.58,
+    "text": "нуться thì từ Viv Enjoy"
+  },
+  {
+    "start": 1586.58,
+    "end": 1606.22,
+    "text": "an Gosh"
+  },
+  {
+    "start": 1606.22,
+    "end": 1612.3,
+    "text": "2"
+  },
+  {
+    "start": 1612.3,
+    "end": 1612.96,
+    "text": "và 2"
+  },
+  {
+    "start": 1612.96,
+    "end": 1614.76,
+    "text": "x"
+  },
+  {
+    "start": 1614.76,
+    "end": 1617.7,
+    "text": "Wallpaper"
+  },
+  {
+    "start": 1617.7,
+    "end": 1620.98,
+    "text": "cà đen, trị sổ, bị hỏng"
+  },
+  {
+    "start": 1620.98,
+    "end": 1626.38,
+    "text": "ok, rồi, bây giờ nhiệm vụ của mình đấy chính là mình sẽ xem cái cửa sổ cỡ là cá"
+  },
+  {
+    "start": 1626.38,
+    "end": 1628.9,
+    "text": "xem là cửa sổ nào nó chưa có phần tử mà"
+  },
+  {
+    "start": 1628.9,
+    "end": 1634.7,
+    "text": "ok, bây giờ mình sẽ xét thôi, mình sẽ dùng 1 cái biển cao, phần cao, phần không, sau đó thì"
+  },
+  {
+    "start": 1634.7,
+    "end": 1636.82,
+    "text": "mình sẽ xét cái cửa sổ đầu tiên"
+  },
+  {
+    "start": 1636.82,
+    "end": 1640.1,
+    "text": "là cái cửa sổ chạy từ 1 cho tới ca nhé"
+  },
+  {
+    "start": 1640.1,
+    "end": 1643.78,
+    "text": "ở đây mình đánh dấu, đánh dấu các vị trí rồi đúng không?"
+  },
+  {
+    "start": 1643.78,
+    "end": 1647.22,
+    "text": "đây, mình sẽ xét cái cửa sổ đầu tiên là từ 1 cho tới ca này này"
+  },
+  {
+    "start": 1647.22,
+    "end": 1649.35,
+    "text": "Chúng tôi sẽ đổi cao ở đây là 5 đúng không?"
+  },
+  {
+    "start": 1652.76,
+    "end": 1656.76,
+    "text": "Rồi, mình sẽ xem cái cửa, rồi đầu tiên này có bao nhiêu phần tử mà nó bị hóng nhá, cái đèn bị hóng nhá"
+  },
+  {
+    "start": 1656.76,
+    "end": 1660.76,
+    "text": "Thì nó chính là các phần tử là 1 ở trong cái đoạn từ 1 cho tới cao đấy"
+  },
+  {
+    "start": 1660.76,
+    "end": 1664.76,
+    "text": "Hoa, y, mở, tây, đồng, 1, y, nhỏ, hôm, 1, cao, y, cộng, cộng, và bạn sẽ cho"
+  },
+  {
+    "start": 1664.76,
+    "end": 1671.3,
+    "text": "ít, a, y, nà bằng 1 thì mình sẽ cho cộng cộng cao, hoặc bạn sẽ cho cao cộng, và ai luôn cũng được, ok?"
+  },
+  {
+    "start": 1671.3,
+    "end": 1677.75,
+    "text": "Rồi, sau đó mình sẽ cập nhập với cái biên an ở x mà sẽ bằng cái biên cao này"
+  },
+  {
+    "start": 1677.75,
+    "end": 1702.43,
+    "text": "nhìn gi enfant nhận địa c showc Woner Tak,"
+  },
+  {
+    "start": 1702.43,
+    "end": 1707.96,
+    "text": "xa lạng cập nhật kỳ nhật, min nữa, nở S và cao"
+  },
+  {
+    "start": 1707.96,
+    "end": 1711.96,
+    "text": "ở đây mình muốn tìm cái cửa sổ mà nó có số lượng đèn hồng nhỏ nhất đúng không?"
+  },
+  {
+    "start": 1711.96,
+    "end": 1713.2,
+    "text": "đúng nhỉ?"
+  },
+  {
+    "start": 1713.2,
+    "end": 1717.8,
+    "text": "sau đó thì bạn chỉ cần lấy cái cao không?"
+  },
+  {
+    "start": 1717.8,
+    "end": 1721.65,
+    "text": "cao bạn trừ đi cái cái cửa sổ ấy"
+  },
+  {
+    "start": 1721.65,
+    "end": 1725.41,
+    "text": "chưa là cái cửa sổ mà nó có chứa nhiều, ah chứa ít nhất cái phần tử bị hồng"
+  },
+  {
+    "start": 1725.41,
+    "end": 1728.45,
+    "text": "thì khi đó cái số lượng đèn mình cần phải sửa chữa nó sẽ là ít nhất"
+  },
+  {
+    "start": 1728.45,
+    "end": 1732.45,
+    "text": "và nó sẽ có cao phần tử liên tiếp khi đó nó sẽ đều là các cái đèn được sửa chữa"
+  },
+  {
+    "start": 1732.45,
+    "end": 1734.45,
+    "text": "ok, đây là đều sáng"
+  },
+  {
+    "start": 1734.45,
+    "end": 1740.52,
+    "text": "nó sẽ là 16 năm này"
+  },
+  {
+    "start": 1740.52,
+    "end": 1743.52,
+    "text": "rồi là 21-59"
+  },
+  {
+    "start": 1743.52,
+    "end": 1746.07,
+    "text": "21-59"
+  },
+  {
+    "start": 1746.07,
+    "end": 1748.07,
+    "text": "hỏi sao nó ra tận 5 nhỉ"
+  },
+  {
+    "start": 1748.07,
+    "end": 1754.88,
+    "text": "ở đây là mình đến cái đèn vị học đúng không?"
+  },
+  {
+    "start": 1754.88,
+    "end": 1758.23,
+    "text": "cộng cộng cao này"
+  },
+  {
+    "start": 1758.23,
+    "end": 1761.28,
+    "text": "nờ KB đúng không?"
+  },
+  {
+    "start": 1761.28,
+    "end": 1763.28,
+    "text": "mình sẽ cho mình nập nờ KB"
+  },
+  {
+    "start": 1763.28,
+    "end": 1766.99,
+    "text": "sau đó là mình sẽ xét cái cửa sổ đầu tiên"
+  },
+  {
+    "start": 1766.99,
+    "end": 1767.99,
+    "text": "rồi"
+  },
+  {
+    "start": 1767.99,
+    "end": 1771.68,
+    "text": "mình vượt cho"
+  },
+  {
+    "start": 1771.68,
+    "end": 1777.03,
+    "text": "nr, min, nr, keo, chứ đi ai thì chứ keo đúng không nhỉ?"
+  },
+  {
+    "start": 1777.03,
+    "end": 1803.56,
+    "text": "Ủa, 16nm, sao nó không ít ai gì nhỉ? 2, 4, 6, 2, 4, 2, 11nm, sao nó cứ ít thử là một số nhỉ?"
+  },
+  {
+    "start": 1803.56,
+    "end": 1815.73,
+    "text": "16nm, 2, 1, 1, 5, 9, ú, sao nó ít là tận 5 nhỉ?"
+  },
+  {
+    "start": 1815.73,
+    "end": 1819.8,
+    "text": "ở đây còn mình kai là 5, nó phải ít 5, 1 kìa"
+  },
+  {
+    "start": 1819.8,
+    "end": 1823.8,
+    "text": "số lượng đèn cần phải sửa chữ ít nhất là bao nhiêu"
+  },
+  {
+    "start": 1823.8,
+    "end": 1827.21,
+    "text": "rồi xin lỗi mình sẽ sửa cái đèn đấy luôn chứ đúng nhỉ?"
+  },
+  {
+    "start": 1827.21,
+    "end": 1829.21,
+    "text": "sẽ xia rồi đấy, ok"
+  },
+  {
+    "start": 1829.21,
+    "end": 1833.21,
+    "text": "tưởng là đến số lượng đèn hoạt động"
+  },
+  {
+    "start": 1833.21,
+    "end": 1836.4,
+    "text": "nó sẽ là 16 năm đúng không?"
+  },
+  {
+    "start": 1836.4,
+    "end": 1839.11,
+    "text": "rồi là 11, 2, 5, 9"
+  },
+  {
+    "start": 1839.11,
+    "end": 1846.78,
+    "text": "2, 11, 5, 9"
+  },
+  {
+    "start": 1846.78,
+    "end": 1851.16,
+    "text": "2, 11, 5, 9"
+  },
+  {
+    "start": 1851.16,
+    "end": 1866.71,
+    "text": "lnl của mình nó không á, có cỡ là 245, mình sẽ dựa từ 1 trời từ b, nrkb, b giám tiếp theo mỗi dựa bị hỏng"
+  },
+  {
+    "start": 1866.71,
+    "end": 1875.63,
+    "text": "thì mình sẽ đếm cái số lượng đèn bị hỏng ít nhất đúng không? trong 1 cái cửa sổ và cái đó mình sẽ y ra để có kết quả luôn đúng không?"
+  },
+  {
+    "start": 1875.63,
+    "end": 1887.3,
+    "text": "từ mình sẽ ăn cốt ở đây nhé, nhớ cốt sai chỗ nào, chắc là mình cũng làm thế đâu"
+  },
+  {
+    "start": 1887.3,
+    "end": 1900.4,
+    "text": "ng"
+  },
+  {
+    "start": 1900.4,
+    "end": 1909.79,
+    "text": "average"
+  },
+  {
+    "start": 1909.79,
+    "end": 1918.45,
+    "text": "k"
+  },
+  {
+    "start": 1918.45,
+    "end": 1922.07,
+    "text": "perm"
+  },
+  {
+    "start": 1922.07,
+    "end": 1935.07,
+    "text": "cơ sổ chung nhau, người ta cho mình một cái mạng gồm nó phần tử của xung nguyên dương ca và yêu cầu mình kiểm tra xem có tổn tại cơ sổ cơ ca nào của mạng bàn đầu chưa 2 phần tử giống nhau hay không"
+  },
+  {
+    "start": 1935.07,
+    "end": 1945.92,
+    "text": "thì các bạn làm sử dụng xét nhé, ok, bạn sẽ xét cho mình tất cả cơ sổ, dụ như 1, 2, 3 này, 1, 3 này, 2, 3, 1, 3"
+  },
+  {
+    "start": 1945.92,
+    "end": 1949.28,
+    "text": "và người ta yêu cầu mình là có cửa là ba đúng không?"
+  },
+  {
+    "start": 1949.28,
+    "end": 1954.12,
+    "text": "Thế là mình sẽ phải xét các cửa số có, tất cả các cửa số có cửa là ba xem có 2 phần tử nào giống nhau hay không đúng không?"
+  },
+  {
+    "start": 1954.12,
+    "end": 1957.92,
+    "text": "Đây, thì đầu tiên bạn lưu cái cửa số 1, 2, 3 này vào, đúng không?"
+  },
+  {
+    "start": 1957.92,
+    "end": 1962.51,
+    "text": "Trong quá trình mà lưu cái cửa số này thì bạn insert 1 vào cái cửa số nhá."
+  },
+  {
+    "start": 1962.51,
+    "end": 1966.83,
+    "text": "Sau duyệt qua 2 thì bạn sẽ xem 2 có nằm trong cái, các cái số nằm trong xét hay không?"
+  },
+  {
+    "start": 1966.83,
+    "end": 1971.51,
+    "text": "Nếu mà 2 nằm thì nó sẽ là có phần tử chung nhau, 3 như thế nhưng mà 3 không có đúng không?"
+  },
+  {
+    "start": 1971.51,
+    "end": 1975.27,
+    "text": "Sau đó thì bạn xét cái cửa số tiếp theo là 2, 3, 1 này, đúng không?"
+  },
+  {
+    "start": 1975.27,
+    "end": 1981.84,
+    "text": "Thì bạn cũng xóa thằng 2 này đi, xin lỗi xóa thằng 1 này đi nhé"
+  },
+  {
+    "start": 1981.84,
+    "end": 1989.34,
+    "text": "Xóa bạn thêm mới thằng 1 vào nhưng mà khi chuẩn bị thêm mới thằng 1 thì bạn sẽ kiểm tra xem là trong cái cửa số vùng 2 và 3 này có chứa thằng 1 hay không?"
+  },
+  {
+    "start": 1989.34,
+    "end": 1994.34,
+    "text": "Nếu có thì khi đó mình sẽ kết loạn là nó có một cái cửa số và nó chứa 2 cần từ chúng nhau"
+  },
+  {
+    "start": 1994.34,
+    "end": 1996.34,
+    "text": "Đúng không? Thực ra thì nó cũng dễ thôi"
+  },
+  {
+    "start": 1996.34,
+    "end": 2002.39,
+    "text": "Thì ở đây mình sẽ làm như sau này, mình sẽ nhập vào một cái biến là bí nở, int, nở, vector"
+  },
+  {
+    "start": 2002.39,
+    "end": 2010.06,
+    "text": "Xóa bạn cho mình một cái mạng A có nở cần từ nhé"
+  },
+  {
+    "start": 2010.06,
+    "end": 2016.8,
+    "text": "rõ nhau và hổ kết"
+  },
+  {
+    "start": 2016.8,
+    "end": 2022.32,
+    "text": "Bây giờ bạn sẽ return just now đúng không?"
+  },
+  {
+    "start": 2022.32,
+    "end": 2024.32,
+    "text": "Bài này có số dụng bộ tiết không?"
+  },
+  {
+    "start": 2024.32,
+    "end": 2031.28,
+    "text": "Rồi đây mình sẽ dụng một ký biến ok để check"
+  },
+  {
+    "start": 2031.28,
+    "end": 2034.27,
+    "text": "Sao bạn skype cho mình một cái set?"
+  },
+  {
+    "start": 2034.27,
+    "end": 2036.77,
+    "text": "Ở đây bạn dùng set được nhé, không cần phải 1 tí set à?"
+  },
+  {
+    "start": 2036.77,
+    "end": 2038.77,
+    "text": "Rồi bạn dựa cái cửa sổ đầu tiên"
+  },
+  {
+    "start": 2038.77,
+    "end": 2041.86,
+    "text": "Nếu thế vẫn không y nó hơn cay, cộng cộng"
+  },
+  {
+    "start": 2041.86,
+    "end": 2044.34,
+    "text": "Và mình sẽ cho"
+  },
+  {
+    "start": 2044.34,
+    "end": 2048.34,
+    "text": "Mình kiểm tra là ifset.y của ai trên lỗi"
+  },
+  {
+    "start": 2048.34,
+    "end": 2050.34,
+    "text": "mà khác không, khác không đúng không?"
+  },
+  {
+    "start": 2050.34,
+    "end": 2056.34,
+    "text": "Thì mình sẽ cho ok bằng choose, sau đó mình sẽ break"
+  },
+  {
+    "start": 2056.34,
+    "end": 2060.34,
+    "text": "Cái này mình viết hèm đi cho nó tiện, ok, bởi vì nó mình return to phone mà"
+  },
+  {
+    "start": 2060.34,
+    "end": 2072.04,
+    "text": "Copy ở đây nhé, mình viết hèm đi cho nó tiện, thấy đây mình return ấy mà"
+  },
+  {
+    "start": 2072.04,
+    "end": 2080.02,
+    "text": "Cái này mình sẽ return luôn, buồn nhé, ok"
+  },
+  {
+    "start": 2080.02,
+    "end": 2084.14,
+    "text": "Cái này mình sẽ return to luôn"
+  },
+  {
+    "start": 2084.14,
+    "end": 2089.3,
+    "text": "nếu mà mình phát hiện ra một phần tử nào đó, nó đã làm trong các phần tử mà trong cái cửa số hiện tại"
+  },
+  {
+    "start": 2089.3,
+    "end": 2092.24,
+    "text": "mình sẽ return true luôn, ok, còn không thì mình insert nó vào"
+  },
+  {
+    "start": 2092.24,
+    "end": 2093.58,
+    "text": "mình sẽ cho"
+  },
+  {
+    "start": 2093.58,
+    "end": 2097.14,
+    "text": "mình sẽ cho s.insert ai vào"
+  },
+  {
+    "start": 2097.14,
+    "end": 2100.42,
+    "text": "đây là cái cửa số đầu tiên nhé, ok"
+  },
+  {
+    "start": 2100.42,
+    "end": 2104.2,
+    "text": "bây giờ mình sẽ set từ cái cửa số thứ 2 cho đi, coin, tê rồi, không"
+  },
+  {
+    "start": 2104.2,
+    "end": 2109.39,
+    "text": "azero y bằng k, y nhỏ hơn là, đúng không?"
+  },
+  {
+    "start": 2109.39,
+    "end": 2113.83,
+    "text": "sau đó thì mình sẽ xóa cái phần tử đứng ở cái cửa số, bị loại ra khỏi cửa số ấy, đây là"
+  },
+  {
+    "start": 2113.83,
+    "end": 2118.37,
+    "text": "s.inways, đây là vì nhỏ ai, chi, k đúng không? ok"
+  },
+  {
+    "start": 2118.37,
+    "end": 2127.97,
+    "text": "Kọc represents SFX, Zicootic 170"
+  },
+  {
+    "start": 2127.97,
+    "end": 2135.61,
+    "text": "Vì như các phần thử trước, chúng cóumping nó ở trong cái phần xo"
+  },
+  {
+    "start": 2135.61,
+    "end": 2140.28,
+    "text": "Wort PMO Yesterday"
+  },
+  {
+    "start": 2140.28,
+    "end": 2145.02,
+    "text": "Nhưng Dennis Sth Far Orange"
+  },
+  {
+    "start": 2145.02,
+    "end": 2150.45,
+    "text": "yippsow, xxl, yes, xxl, null"
+  },
+  {
+    "start": 2158.43,
+    "end": 2162.75,
+    "text": "mình có để link lít code ở dưới, các bạn có thể làm tương tự nhưng phải sửa đồ đi một chút đấy."
+  },
+  {
+    "start": 2162.75,
+    "end": 2167.43,
+    "text": "mà tư tưởng là nó phải theo k, đúng không?"
+  },
+  {
+    "start": 2167.43,
+    "end": 2174.27,
+    "text": "mình theo k, k đây là la"
+  },
+  {
+    "start": 2174.27,
+    "end": 2178.15,
+    "text": "là cin, yes, lại vì... cái cường số 3 1 3 này có 2 phần tương trùng nhau"
+  },
+  {
+    "start": 2178.15,
+    "end": 2180.35,
+    "text": "ok, rồi... lấy ra cái bài đầu tiên nhé"
+  },
+  {
+    "start": 2180.35,
+    "end": 2183.51,
+    "text": "sao bài thứ 2 nó vẫn như vậy? đây là cường số trùng nhau 2"
+  },
+  {
+    "start": 2183.51,
+    "end": 2190.71,
+    "text": "và người ta yêu cầu mình là cho mạng xuống nguyên có nào phần tử và xuống nguyên dương, KBT và hãy kiểm tra xem độ dài"
+  },
+  {
+    "start": 2190.71,
+    "end": 2196.95,
+    "text": "có tồn tại cửa số cỡ K nào của mạng bàn đầu sẽ cho 2 phần tử mà có độ lạch không có vượt quá T hay không"
+  },
+  {
+    "start": 2196.95,
+    "end": 2206.72,
+    "text": "ví dụ như kết kê 1, 5, 8, 1, 9 và K bằng 3, T bằng 3 thì họ yêu cầu mình kiểm tra xem là có 1 cái cửa số nào cỡ là 3 mà trong đó có 2 khẩn tử mà"
+  },
+  {
+    "start": 2206.72,
+    "end": 2211.24,
+    "text": "cái độ lạch cái trị thiệt đối của số thứ nhất chứ đi số thứ 2 là nó nhỏ hơn là 3 hay không"
+  },
+  {
+    "start": 2211.24,
+    "end": 2214.88,
+    "text": "Ok, thì mình làm như thế này nhé"
+  },
+  {
+    "start": 2214.88,
+    "end": 2216.72,
+    "text": "Ở đây mình sẽ xét tất cả các cửa sổ đúng không?"
+  },
+  {
+    "start": 2216.72,
+    "end": 2221.92,
+    "text": "Sau đó thì đối với mỗi cửa sổ ấy thì bạn sẽ xét 2 cái thằng là thằng ai và thằng azi đúng không?"
+  },
+  {
+    "start": 2221.92,
+    "end": 2227.63,
+    "text": "Sao cho chị tuổi đối của azi, chứ ai nếu mà tồn tại 1 cái cặp mà nhỏ hơn làng tê thì mình sẽ bị tương trú đúng không?"
+  },
+  {
+    "start": 2227.63,
+    "end": 2229.79,
+    "text": "Ok, cái này thì có nghĩa là gì nhỉ?"
+  },
+  {
+    "start": 2229.79,
+    "end": 2236.19,
+    "text": "Thứ có nghĩa là chữ tê nhỏ hơn làng bằng ai, chữ đi azi và nhỏ hơn làng tê đúng không?"
+  },
+  {
+    "start": 2236.19,
+    "end": 2238.19,
+    "text": "Ok, mình sẽ đổi dấu cái càng này sang bên này nhé"
+  },
+  {
+    "start": 2238.19,
+    "end": 2243.73,
+    "text": "thì có nghĩa là ai sẽ lớn hơn hoặc bằng az chứ t đúng không?"
+  },
+  {
+    "start": 2243.73,
+    "end": 2247.52,
+    "text": "và nhỏ hơn hoặc bằng t cộng với az đúng không?"
+  },
+  {
+    "start": 2247.52,
+    "end": 2249.84,
+    "text": "OK, đây nó chính là cái mấu chốt ở chỗ này này."
+  },
+  {
+    "start": 2249.84,
+    "end": 2255.0,
+    "text": "Thì khi đó nhé, giả sứ trong cửa số của bạn nó đang tồn tại một số phần tử đúng chứ à?"
+  },
+  {
+    "start": 2255.0,
+    "end": 2261.47,
+    "text": "Nó chính là các số đã năm trong cửa số trước và bạn chuẩn bị thêm mới một cái phần tử trong cửa số ấy."
+  },
+  {
+    "start": 2261.47,
+    "end": 2266.19,
+    "text": "Thì bạn sẽ kiểm tra xem là liệu rằng trong các phần tử ở trước trong cửa số đấy rồi ấy."
+  },
+  {
+    "start": 2266.19,
+    "end": 2271.11,
+    "text": "Nó đã tồn tại một cái thằng nào mà nó lớn hơn hoặc bằng azjt, ok?"
+  },
+  {
+    "start": 2271.11,
+    "end": 2273.71,
+    "text": "Hiện tại mình đã xét là cái thằng az, ok?"
+  },
+  {
+    "start": 2273.71,
+    "end": 2277.01,
+    "text": "Mình đang xét là thằng az, mình chuẩn bị thêm thằng az vào trong cơn sổ"
+  },
+  {
+    "start": 2277.01,
+    "end": 2284.21,
+    "text": "Thì bạn xét xem là trong cơn sổ của mình đã tồn tại cái thằng nào mà nó lớn hơn hoặc bằng azjt, ok?"
+  },
+  {
+    "start": 2284.21,
+    "end": 2292.21,
+    "text": "Nếu mà tồn tại một thằng azjt, lớn hơn là bằng azjt, bạn kiểm tra xem cái thằng đấy nó có nhỏ hơn tê cộng ở az, hay không?"
+  },
+  {
+    "start": 2292.21,
+    "end": 2297.31,
+    "text": "nếu mà nhỏ hơn là bằng, thì khi đó cái cặp az và ai của mình là nó đã thoảm ảm"
+  },
+  {
+    "start": 2297.31,
+    "end": 2303.2,
+    "text": "ví dụ như thế này, ví dụ cái tiết cây là 1, 5, 8, 1, 5, 9 nhé"
+  },
+  {
+    "start": 2303.2,
+    "end": 2310.9,
+    "text": "ok, thì đầu tiên ấy bạn sẽ sử dụng cho mình 1 cái măn tây xét, bạn lưu cái phần tử 1 này vào"
+  },
+  {
+    "start": 2310.9,
+    "end": 2315.33,
+    "text": "ok, sau đó rượu qua thằng 5 này này, ở đây ca vòng 3 đúng không?"
+  },
+  {
+    "start": 2315.33,
+    "end": 2318.33,
+    "text": "thì bạn sẽ kiểm tra xem trong cái map này này, trong cái xét này này này"
+  },
+  {
+    "start": 2318.33,
+    "end": 2323.13,
+    "text": "có cái phần tử nào mà nó lớn hơn hoặc bằng, đấy là az chữ t đúng không, cứ là 5 chữ 3 hay không?"
+  },
+  {
+    "start": 2323.13,
+    "end": 2324.81,
+    "text": "tuy là lớn hơn phải lớn bằng 2"
+  },
+  {
+    "start": 2324.81,
+    "end": 2328.61,
+    "text": "thì ở đây không có, bởi vì cái set của bạn hiện tại cái cửa số của bạn có mỗi một thầm 1"
+  },
+  {
+    "start": 2328.61,
+    "end": 2330.89,
+    "text": "mình ra là mình sẽ cho thầm 5 và..."
+  },
+  {
+    "start": 2330.89,
+    "end": 2333.5,
+    "text": "sau đó đến thầm 8 là thầm thầm thứ 3 đúng không?"
+  },
+  {
+    "start": 2333.5,
+    "end": 2337.98,
+    "text": "thì khi đó bạn sẽ kiểm tra xem là trong map của mình nó có thầm nào mà lớn hơn một bằng 8"
+  },
+  {
+    "start": 2337.98,
+    "end": 2339.9,
+    "text": "trừ đi ba, tức là lớn bằng 5 hay không?"
+  },
+  {
+    "start": 2339.9,
+    "end": 2343.34,
+    "text": "thì làm sao? thì nó phát hiện ra là có một cái thầm 5 này lớn hơn một bằng..."
+  },
+  {
+    "start": 2343.34,
+    "end": 2344.7,
+    "text": "lớn hơn một bằng 5 rồi này"
+  },
+  {
+    "start": 2344.7,
+    "end": 2347.42,
+    "text": "thì bạn sẽ khi đó bạn sẽ kiểm tra cái thầm 5 này này, nếu mà làm sao?"
+  },
+  {
+    "start": 2347.42,
+    "end": 2350.23,
+    "text": "nó nhỏ hơn hoặc bằng cái thằng đấy là..."
+  },
+  {
+    "start": 2350.23,
+    "end": 2354.23,
+    "text": "A z cộng t, 8 cộng 3 bằng 11"
+  },
+  {
+    "start": 2354.23,
+    "end": 2356.23,
+    "text": "Thì khi đó mình đã thấy là gì nhỉ?"
+  },
+  {
+    "start": 2356.23,
+    "end": 2360.23,
+    "text": "Trong cái mạng của mình, nó tổn tại một cái thằng đến chính là tháng 5 này này"
+  },
+  {
+    "start": 2360.23,
+    "end": 2364.23,
+    "text": "Nó lớn hơn hoặc bằng 8 chứa đi 3 là 5 đúng không?"
+  },
+  {
+    "start": 2364.23,
+    "end": 2366.23,
+    "text": "Và nó nhỏ hơn là bằng 8 cộng 3 là 11"
+  },
+  {
+    "start": 2366.23,
+    "end": 2370.23,
+    "text": "Hay nói cách khác là khi đó cái hiệu của tháng 8 với tháng 5 này này"
+  },
+  {
+    "start": 2370.23,
+    "end": 2372.23,
+    "text": "nó sẽ có trị tổn hối nhỏ hơn là 3 đúng không?"
+  },
+  {
+    "start": 2372.23,
+    "end": 2374.23,
+    "text": "Chính là cái công thức của mình tìm ra đấy"
+  },
+  {
+    "start": 2374.23,
+    "end": 2377.23,
+    "text": "Để chính là A z chứa đi t phải nhỏ hơn là bằng A i"
+  },
+  {
+    "start": 2377.23,
+    "end": 2379.87,
+    "text": "và nhỏ hơn học bằng az cộng t"
+  },
+  {
+    "start": 2379.87,
+    "end": 2384.63,
+    "text": "trong trường hợp này az của bạn nó bằng 8, đúng không?"
+  },
+  {
+    "start": 2384.63,
+    "end": 2387.55,
+    "text": "ok, thì bạn sẽ tìm được cái thằng ai là 5"
+  },
+  {
+    "start": 2387.55,
+    "end": 2396.71,
+    "text": "rồi, vậy thì ở đây mình sẽ nhập vào số tiết cây, sau đó mỗi tiết cây thì mình sẽ nhập vào 2 cái biến, đấy là n, k và t đúng không?"
+  },
+  {
+    "start": 2396.71,
+    "end": 2400.38,
+    "text": "3 biến"
+  },
+  {
+    "start": 2400.38,
+    "end": 2405.22,
+    "text": "rồi sau đó thì các bạn nhập vào mạng nhé, sau đó bạn xử lụ cho mình cái man tí set"
+  },
+  {
+    "start": 2405.22,
+    "end": 2408.75,
+    "text": "bài này man-t-set có đủ không nhỉ?"
+  },
+  {
+    "start": 2408.75,
+    "end": 2410.75,
+    "text": "man-t-set là được đúng không?"
+  },
+  {
+    "start": 2410.75,
+    "end": 2415.26,
+    "text": "bởi vì nó có thể lưu các phần thử giống nhau ấy, đúng không?"
+  },
+  {
+    "start": 2415.26,
+    "end": 2418.78,
+    "text": "ok, chú ý cái đấy nhé, không có thì nó hơi phiền đấy"
+  },
+  {
+    "start": 2418.78,
+    "end": 2421.65,
+    "text": "để mình xem nào, thực ra thì..."
+  },
+  {
+    "start": 2421.65,
+    "end": 2423.9,
+    "text": "chắc là set cũng được đúng không?"
+  },
+  {
+    "start": 2423.9,
+    "end": 2428.13,
+    "text": "bài trước thì set chắc chắn là được đúng không?"
+  },
+  {
+    "start": 2428.13,
+    "end": 2432.82,
+    "text": "man-t-set"
+  },
+  {
+    "start": 2432.82,
+    "end": 2434.82,
+    "text": "man-t-set cũng được, rồi"
+  },
+  {
+    "start": 2434.82,
+    "end": 2437.2,
+    "text": "thì ở cái chỗ này này"
+  },
+  {
+    "start": 2437.2,
+    "end": 2444.6,
+    "text": "trước khi mà bạn thêm thằng A, một phần tử nào đó vào trong, ở chỗ này mình chuyển thằng G đi nhé, cho nó giống cái đường dưỡng nhé"
+  },
+  {
+    "start": 2444.6,
+    "end": 2451.92,
+    "text": "thì bạn kiểm tra, các bạn còn nhớ cái hàm lâu ở bao, cái hàm mà check xem là, nói chung là bây giờ bạn phải kiểm tra xem nhỉ"
+  },
+  {
+    "start": 2451.92,
+    "end": 2463.32,
+    "text": "kiểm tra xem trong mang cái set ấy, có phần tử A, I nào đó làm sao nhỉ, lớn hơn là bằng A, G, C, K, A, C, T hay không, A, G chứ T hay không, đây, có chính là cái chỗ này này"
+  },
+  {
+    "start": 2463.32,
+    "end": 2466.73,
+    "text": "Mình chuẩn bị thêm thằng az vào trong set nhé"
+  },
+  {
+    "start": 2466.73,
+    "end": 2470.21,
+    "text": "Thì mình sẽ kiểm tra trong set ấy, nó có thằng mà lớn hơn là bằng az chứ t, không?"
+  },
+  {
+    "start": 2470.21,
+    "end": 2478.05,
+    "text": "Thì bạn chỉ cần tìm auto, tìm cái lau bao thôi, auto, it bằng f.lau bao của cái gì nhỉ?"
+  },
+  {
+    "start": 2478.05,
+    "end": 2480.85,
+    "text": "của az chứ dt, nè"
+  },
+  {
+    "start": 2480.85,
+    "end": 2483.65,
+    "text": "Nếu mà cái thằng it thì nó khác, it chấm n í"
+  },
+  {
+    "start": 2483.65,
+    "end": 2488.08,
+    "text": "Nó khác, it chấm n í, tức là nó tìm thấy if"
+  },
+  {
+    "start": 2488.08,
+    "end": 2507.14,
+    "text": "g"
+  },
+  {
+    "start": 2507.14,
+    "end": 2519.33,
+    "text": "Azi, cộng, tê,akukan istit, insert, insert, current, az"
+  },
+  {
+    "start": 2519.33,
+    "end": 2527.33,
+    "text": "làm tương tự với các c newly, dz hướng, y có cộng"
+  },
+  {
+    "start": 2527.33,
+    "end": 2534.33,
+    "text": "xoá đi phần tựa ở chỉ số gchk, nhưng mà nhớ là phải xoá bằng y tơ y tơ nhé"
+  },
+  {
+    "start": 2534.33,
+    "end": 2544.45,
+    "text": "đường xoá bằng giá trị, mình sẽ cho f.ilways, f.fi của a gchk đúng không?"
+  },
+  {
+    "start": 2544.45,
+    "end": 2548.45,
+    "text": "ok, sau đó là bạn làm đơn tựa như thế này, bạn cũng tìm"
+  },
+  {
+    "start": 2548.45,
+    "end": 2552.61,
+    "text": "ok, sau đó chỗ này bạn cũng yên sớt cái thằng az vào"
+  },
+  {
+    "start": 2552.61,
+    "end": 2554.74,
+    "text": "ok, kết thúc"
+  },
+  {
+    "start": 2554.74,
+    "end": 2560.76,
+    "text": "Chạy nhé, bạn có thể làm cái bài dương tương tựa dưới nhé, nhưng mà bài này nó phải sửa đi một tí đấy"
+  },
+  {
+    "start": 2560.76,
+    "end": 2563.36,
+    "text": "Thì nó chỉ như this, ok"
+  }
+]

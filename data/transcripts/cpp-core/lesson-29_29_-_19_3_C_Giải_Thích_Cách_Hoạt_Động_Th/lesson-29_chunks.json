@@ -1,0 +1,618 @@
+[
+  {
+    "chunk_id": "chunk_0_64",
+    "start_sec": 0,
+    "end_sec": 64,
+    "start_label": "00:00",
+    "end_label": "01:04",
+    "raw_text": "Nơi video này mình sẽ ứng dẫn các bạn một thật toán sắp xếp, thật toán sắp xếp vôn đóng, hip sort. Thật toán sắp xếp vôn đóng này thì nó dựa trên một cái câu chúc dữ liệu, tương đối đang đặc biệt. Thì ta gọi là câu chúc dữ liệu hip. Các bạn đã từng sử dụng hip rồi đấy. Đây chính là các bạn sử dụng hàng đợi ưu tiên, priority queue ở trong thư vẹn ST. Thì đây chính là mắc hip. Thì cứ tư tư nhé. Trước khi mà bắt đầu với thật toán hip sort này thì mình sẽ giới thiệu một cái câu chúc dữ liệu Để các bạn có thể hiểu được Hipsoft là gì đã. Xin lỗi, Hip là gì đã. Thì mình sẽ bắt đầu với cái định nghĩa về cây nhị phân nhé. Có thể các bạn chưa học từng học cây nhị phân được không nhỉ? Thì các bạn vẫn có thể hiểu được bài này và cài đặt từ bài này nhé. Chứ không nhất thiết là bạn đã phải từng học cây nhị phân hay là từng cài đặt cái câu chúc dữ liệu về cây nhị phân, hay là cây nói chung, ok? Thì cái cây nhị phân ấy thì nói chính là cái cây mà mỗi nốt nó sẽ có tối đa là 2 nốt con. Ví dụ như là, bạn có một nốt là một nè Đúng không, bạn có một nốt một nè Thì cái nốt một này nè, nó chỉ được tối đen là nó có hai nốt con nữa"
+  },
+  {
+    "chunk_id": "chunk_48_108",
+    "start_sec": 48,
+    "end_sec": 108,
+    "start_label": "00:48",
+    "end_label": "01:48",
+    "raw_text": "Thì cái cây nhị phân ấy thì nói chính là cái cây mà mỗi nốt nó sẽ có tối đa là 2 nốt con. Ví dụ như là, bạn có một nốt là một nè Đúng không, bạn có một nốt một nè Thì cái nốt một này nè, nó chỉ được tối đen là nó có hai nốt con nữa Ví dụ thằng này là hai và thằng này là ba Ê, thì người ta gọi là cây nhị phân Cây nốt hai này nó cũng có thể có hai con Bốn nè Năm nè Thằng ba này thì cũng có thể có hai con Sáu nè Và bảy Ok, nhưng mà không được có ba con đúng không? Ví dụ không có được có ba con là tám như thế này Thì trong trường hợp này nó không phải là cây nhị phân nữa Nhưng mà như thế này thì là cây nhị phân này hoặc là nó có thể khuyết 1 node như thế nào cũng được thì cái thằng này nó gọi là node gốc, được chứ? và node mỗi node thì nó có thể có 2 node con là 1 node con bên trái, thằng này gọi là node con bên trái này 2 gọi là node con bên phái này, OK, left, right, right OK, 2 thằng này nó sẽ lại là node tra của 2 node đây là node con bên trái của nó này, và node con bên phái của nó OK hông nhờ?"
+  },
+  {
+    "chunk_id": "chunk_90_157",
+    "start_sec": 90,
+    "end_sec": 157,
+    "start_label": "01:30",
+    "end_label": "02:37",
+    "raw_text": "và node mỗi node thì nó có thể có 2 node con là 1 node con bên trái, thằng này gọi là node con bên trái này 2 gọi là node con bên phái này, OK, left, right, right OK, 2 thằng này nó sẽ lại là node tra của 2 node đây là node con bên trái của nó này, và node con bên phái của nó OK hông nhờ? thì đấy, nó chính là 1 cái cây đây là 1 ví dụ về cái cây nhị phân này các bạn có thể tưởng tượng nó cứ chẽ đôi chẽ đôi chẽ đôi ra cũng được sau khi mình hiểu cái cây nhị phân nó là gì rồi, thằng này được gọi là nốt gốc nhé thì còn những cái nốt mà nó không có con này này, thì người ta gọi là nốt lá, ok, lift thì là root, nốt gốc ở trên nhỉ, thế còn các cái nốt trung gian này thì những cái nốt trung gian như 2, 3 này thì nó có ít nhất là 1 con thì người ta gọi nốt trung gian, thế còn nốt gốc này và nốt lá thì nốt gốc thì các bạn thấy nó là nốt gốc của cái cây này rồi đúng không thì còn nốt lá là những cái nốt mà nó không có con ấy, đây này dụ như 4, 5, 6 nó không có con Vậy thì sau khi mình biết cái cây nhị phân nó như thế nào rồi, hay là biết một số định nghĩa của nó rồi ấy, thì mình sẽ, ở đây mình sẽ không nói rõ, mình sẽ không nói chi tiết về cây nhị phân đâu, ok?"
+  },
+  {
+    "chunk_id": "chunk_141_201",
+    "start_sec": 141,
+    "end_sec": 201,
+    "start_label": "02:21",
+    "end_label": "03:21",
+    "raw_text": "thì còn nốt lá là những cái nốt mà nó không có con ấy, đây này dụ như 4, 5, 6 nó không có con Vậy thì sau khi mình biết cái cây nhị phân nó như thế nào rồi, hay là biết một số định nghĩa của nó rồi ấy, thì mình sẽ, ở đây mình sẽ không nói rõ, mình sẽ không nói chi tiết về cây nhị phân đâu, ok? Nói chung là chỉ giới thiệu để cho các bạn biết cái cây nhị phân nó như thế nào, thì cái cây nhị phân hoàn chỉnh ở đây ấy, là cây nhị phân mà trong đó tất cả các level, các cái cấp của cây này này nó sẽ được lấp đầy, ok? và được điền từ bên trái, ví dụ như này là 1 cái cây nhị phân hoàn chỉnh này Cây nhị phân hoàn chỉnh, các cái level của nó ấy, đây là 1 level này Bạn có thể hiểu đơn giản nó có các cái tầng, từng tầng, từng tầng 1 ấy thì mình gọi nó là 1 cái level, ví dụ đây level này, 1 level này, 2 level này, level 3 này và tất nhiên nó có thể có level tiếp theo Thì khi đó, tất cả level nó sẽ được điền đầy Tức là ví dụ như level 1 này sẽ được điền đầy"
+  },
+  {
+    "chunk_id": "chunk_186_255",
+    "start_sec": 186,
+    "end_sec": 255,
+    "start_label": "03:06",
+    "end_label": "04:15",
+    "raw_text": "thì mình gọi nó là 1 cái level, ví dụ đây level này, 1 level này, 2 level này, level 3 này và tất nhiên nó có thể có level tiếp theo Thì khi đó, tất cả level nó sẽ được điền đầy Tức là ví dụ như level 1 này sẽ được điền đầy Level thứ 2 này thì tháng 2 và tháng 3 này cũng sẽ được điền đầy Sau đó thì bắt xuống các level tiếp theo, chứ không có chuyện đấy chính là gì Già sử như thế này thì không phải là một cái cây nhị phân hoàn chỉnh này Ví dụ mình có một cái thằng 4 này, có một thằng con là 8 cho hả? Ok, nhưng mà bây giờ, cái level thứ 2 này này, nó lại không có, không được điền đầy Cái level thứ 2 này này. Thì đây không phải là 1 cây nhị phần hoàn chỉnh OK Cây nhị phần hoàn chỉnh là có thể hiểu đương dản nó cứ điền đầy từng lớp, từng lớp, từng lớp Load Preview Cache Level� on... birable-level 3"
+  },
+  {
+    "chunk_id": "chunk_250_316",
+    "start_sec": 250,
+    "end_sec": 316,
+    "start_label": "04:10",
+    "end_label": "05:16",
+    "raw_text": "birable-level 3 ok, đó, thì đây không phải là một cái nhị phần hoàn chỉnh nhưng mà nếu mà mình xóa cái thang lái đi thì nó lại được gọi là một cái nhị phần hoàn chỉnh thấy chưa, như này thì không là một cái nhị phần hoàn chỉnh nhá ok, bởi vì là, ở cái level thứ 3 này chưa được điền đầy này ok, giả sử như trăm trường hợp này nếu mà cái muốn chuyển thành cái nhị phần hoàn chỉnh nghĩa thì cái node 6 này này nó sẽ phải là con của thằng bộ 2 này phải là con bên phải của thằng 2 này ok, và của mình sẽ cố gắng là điền đầy về bên trái nhé ok, tức là có một cái nốt nào đó mà nó chỉ có một thằng con thôi ví dụ như thằng ban này này, nó là có một thằng con là thằng 6 này đúng không? thì khi đó thằng 6 này sẽ phải là nốt con bên trái, chứ không phải là nốt con bên phải nếu mà bạn vẽ nó thành nốt con bên phải như thế này thì đây cũng không phải là một cái nhịp phần hoàn chính ok, đó, mà mình sẽ phải viện như thế này"
+  },
+  {
+    "chunk_id": "chunk_300_362",
+    "start_sec": 300,
+    "end_sec": 362,
+    "start_label": "05:00",
+    "end_label": "06:02",
+    "raw_text": "thì khi đó thằng 6 này sẽ phải là nốt con bên trái, chứ không phải là nốt con bên phải nếu mà bạn vẽ nó thành nốt con bên phải như thế này thì đây cũng không phải là một cái nhịp phần hoàn chính ok, đó, mà mình sẽ phải viện như thế này thế đây lại là một cái nhịp phần hoàn chính tức là nó có một cái tính chất đấy chính là gì nhỉ? tất cả các phần tử lá, nó đều nhiên vì bên trái cái thằng ở đây các bạn có 4, 5, 6 là phần tử lá đúng không? 4 với thằng 5 này thì nó là con của 2, không nói, nhưng mà thằng 6 này nó cũng là 1 nốt lá thì nó sẽ nhiên vì bên trái ok và thật nhiên là cái nốt lá cuối cùng thì nó có thể nó không có con, nó không có anh em của nó ví dụ như thằng 6 này là thằng mà nó không có anh em của nó đúng nhỉ? thằng 1 này là thằng cha đúng không? thằng 2 này là con bên trái và thằng 3 này là con bên phải Thì 2 cái node 2 và 3 nó được gọi là 2 cái node anh em, hoặc là sibling Ok? Thì trong trường hợp cái cái những phân hoàn chỉnh của mình, nghĩa thì tháng 6 này có thể nó không có cái thằng anh bên phạm của nó Ok? Không vấn đề gì nhé Hoặc là tháng 3 này nó không có con cũng được, nhé?"
+  },
+  {
+    "chunk_id": "chunk_343_403",
+    "start_sec": 343,
+    "end_sec": 403,
+    "start_label": "05:43",
+    "end_label": "06:43",
+    "raw_text": "đúng nhỉ? thằng 1 này là thằng cha đúng không? thằng 2 này là con bên trái và thằng 3 này là con bên phải Thì 2 cái node 2 và 3 nó được gọi là 2 cái node anh em, hoặc là sibling Ok? Thì trong trường hợp cái cái những phân hoàn chỉnh của mình, nghĩa thì tháng 6 này có thể nó không có cái thằng anh bên phạm của nó Ok? Không vấn đề gì nhé Hoặc là tháng 3 này nó không có con cũng được, nhé? Tháng 3 này nó không có con cũng được Thì nó vẫn là một cái những phân hoàn chỉnh thôi Ok? Rồi, thì đây các bạn có thể xem một cái ví dụ về cái những phân hoàn chỉnh này Đây 1 này là cha của 2 này và 3 này 2 thì là cha của 4 và 5 này 3 thì là cha của 6 này và 6 nó sẽ là con bên trái của 3 ok, cái đây là một cái ví dụ về kênh nhị phân hoàn chỉnh vậy thì mình đã có định nghĩa về cái kênh nhị phân hoàn chỉnh rồi đúng không mình có thể vẽ một vài cái kênh nhị phân hoàn chỉnh và các bạn có thể thấy nó cũng không có gì khó hiểu các bạn có thể xem kênh nhị phân hoàn chỉnh mà nó rất là lớn"
+  },
+  {
+    "chunk_id": "chunk_384_445",
+    "start_sec": 384,
+    "end_sec": 445,
+    "start_label": "06:24",
+    "end_label": "07:25",
+    "raw_text": "vậy thì mình đã có định nghĩa về cái kênh nhị phân hoàn chỉnh rồi đúng không mình có thể vẽ một vài cái kênh nhị phân hoàn chỉnh và các bạn có thể thấy nó cũng không có gì khó hiểu các bạn có thể xem kênh nhị phân hoàn chỉnh mà nó rất là lớn 4, 5, 6, 7, 8, 9, 10 đây là một cây nhị phân hoàn chỉnh đúng không? Mà thấy ở các cái mức của nó, các cái level của nó đều được điền đầy và những các cái nốt lá này sẽ được nguyên về bên trái, ok? Rồi, thì đấy là cái định nghĩa về cái cây và ví dụ về cái cây nhị phân hoàn chỉnh mà các bạn cần biết trước khi mà mình nói đến cây câu chức dự liệu HIP, ok? Và có một cái điều đặc biệt như thế này, đây là nó có một cái mối quan hệ giữa cái phần tửa trong mảng của mình với cái cây nhị phân hoàn chỉnh này Ví dụ mình có 1 cái mạng như sau nhé"
+  },
+  {
+    "chunk_id": "chunk_424_484",
+    "start_sec": 424,
+    "end_sec": 484,
+    "start_label": "07:04",
+    "end_label": "08:04",
+    "raw_text": "Rồi, thì đấy là cái định nghĩa về cái cây và ví dụ về cái cây nhị phân hoàn chỉnh mà các bạn cần biết trước khi mà mình nói đến cây câu chức dự liệu HIP, ok? Và có một cái điều đặc biệt như thế này, đây là nó có một cái mối quan hệ giữa cái phần tửa trong mảng của mình với cái cây nhị phân hoàn chỉnh này Ví dụ mình có 1 cái mạng như sau nhé xa này đi Ví dụ mình có 1 cái mạng như này Ở đây mình sẽ lấy 1 cái ví dụ 1 cái mạng là 2 này 3 này 7 này 1 này 4 này và 6, ok Và các phần tử này nó sẽ có chỉ số là 0 này 1 này, 2 này, 3 này, 4 này 5, ok Thì có 1 cái điều đặc biệt đấy chính là"
+  },
+  {
+    "chunk_id": "chunk_467_528",
+    "start_sec": 467,
+    "end_sec": 528,
+    "start_label": "07:47",
+    "end_label": "08:48",
+    "raw_text": "7 này 1 này 4 này và 6, ok Và các phần tử này nó sẽ có chỉ số là 0 này 1 này, 2 này, 3 này, 4 này 5, ok Thì có 1 cái điều đặc biệt đấy chính là nếu cái mạng của mình này này, mình có 1 cái mạng nhé mình có thể xây dựng được 1 cái cây nhị phân hoàn chỉnh từ cái mạng này, thông qua cái chỉ số này nè Ok, tức là khi mà 1 cái node i nào đó, nó có chỉ số là i đúng không? Thì cái phần tử là cái node con bên trái của nó, khi mà mình xây dựng cái cây nhị phân hoàn chỉnh nó sẽ có chỉ số là 2i, 1 Và cái thằng node con bên phải, đây là bên trái nhé, nó sẽ có chỉ số là i là 2i, 2 Vậy thì từ cái mạng này thì mình có thể xây dựng nhìn ra nó 1 cái cây nhị phân như sau nốt đầu tiên là nốt 2 này, nốt gốc này này, nó có chỉ số là 0 này đó thì nó chính là thằng 2 này đúng không, mà chỉ số 0 thì nó sẽ có 2 cái thằng quan bên trái đấy chính là cái thằng ở chỉ số 2 y cộng 1 và thằng ở 2 y cộng 2"
+  },
+  {
+    "chunk_id": "chunk_510_572",
+    "start_sec": 510,
+    "end_sec": 572,
+    "start_label": "08:30",
+    "end_label": "09:32",
+    "raw_text": "Vậy thì từ cái mạng này thì mình có thể xây dựng nhìn ra nó 1 cái cây nhị phân như sau nốt đầu tiên là nốt 2 này, nốt gốc này này, nó có chỉ số là 0 này đó thì nó chính là thằng 2 này đúng không, mà chỉ số 0 thì nó sẽ có 2 cái thằng quan bên trái đấy chính là cái thằng ở chỉ số 2 y cộng 1 và thằng ở 2 y cộng 2 tức là 2 y cộng cộng 1 là 1 và 2 y cộng 2 dễ lỗi 2 y cộng cộng 2 là 2 thì khi đó nó chính là thằng 3 này và thằng 7 này đấy thì các bạn có thể mình dùng nó như thế này đây là thằng này là thằng 3 này và thằng này là thằng 7 này, ok Thằng này thì ở chỉ số 1, và thằng này ở chỉ số 2 Tương tự như vậy, cái thằng ba này thì nó cũng sẽ có 2 thằng con của nó Để chính là cái thằng ở chỉ số 2, nhân với 1, cộng với 1, đúng không? 2i, cộng 1 mà, và 2i, cộng 2 Vậy thì khi đó, cái thằng con bên trái của nó sẽ là 2i, cộng 1 Tức là 2 nhân 1 là 1 Cộng với 1 là 3 đúng không? Tức là thằng 1 này này Thằng này nó có chỉ số là 3 Và cái thằng con ở bên phải của nó thì nó sẽ có chỉ số là 2 nhân 1, cộng 2, tức là chỉ số 4"
+  },
+  {
+    "chunk_id": "chunk_556_623",
+    "start_sec": 556,
+    "end_sec": 623,
+    "start_label": "09:16",
+    "end_label": "10:23",
+    "raw_text": "Vậy thì khi đó, cái thằng con bên trái của nó sẽ là 2i, cộng 1 Tức là 2 nhân 1 là 1 Cộng với 1 là 3 đúng không? Tức là thằng 1 này này Thằng này nó có chỉ số là 3 Và cái thằng con ở bên phải của nó thì nó sẽ có chỉ số là 2 nhân 1, cộng 2, tức là chỉ số 4 Nó chính là ông 4 này này 4 này có chỉ số là 4 ok, tương tự như vậy thằng 7 này nè nó đang có chỉ số là 2 đúng không? thì khi đó cái nốt tra của nó nó sẽ có chỉ số là ạ, sẽ lỗi cái nốt con bên trái của nó sẽ là 2 × 2 × 1 là 5 ok, và nốt con bên phải của nó là 2 × 2 × 2 là 6 nhưng mà cái chỉ số 6 đấy nó vượt ra ngoài mảng rồi đúng không? thì khi đó cái cây của bạn nó đã xong rồi đấy thì đây chính là cái cách mà bạn chuyển từ 1 cái mảng xa 1 cái cây những phần hoàn trình như thế này Ok. Thức là mình sẽ dựa vào cái thính chất như thế này. Đấy chính là khi một cái node i nào đó ấy, thì thằng con bên trái của nó sẽ nằm ở chỉ số là 2i, 1, và thằng con bên phải nó sẽ nằm ở chỉ số 2i, 2 Ok. Và từ một cái node i nào đó, bạn có thể tìm ngay ra chè của thằng i này. Mà công thức là i chi 1 trên 2 đúng không nhỉ?"
+  },
+  {
+    "chunk_id": "chunk_604_665",
+    "start_sec": 604,
+    "end_sec": 665,
+    "start_label": "10:04",
+    "end_label": "11:05",
+    "raw_text": "Ok. Thức là mình sẽ dựa vào cái thính chất như thế này. Đấy chính là khi một cái node i nào đó ấy, thì thằng con bên trái của nó sẽ nằm ở chỉ số là 2i, 1, và thằng con bên phải nó sẽ nằm ở chỉ số 2i, 2 Ok. Và từ một cái node i nào đó, bạn có thể tìm ngay ra chè của thằng i này. Mà công thức là i chi 1 trên 2 đúng không nhỉ? Ừm, i chi 1 trên 2 ngay. Ok. Ví dụ như là cái thằng 4 này nhé. Thằng 4 này này nó có chỉ số là 4 ấy. Chỉ số của nó nhé. i là 4, thì bạn có thể tìm ngay ra ngay cái chỉ số nốt tra của 4 khi mà mình nó tạo thành cái cây như thế này, nó chính là 4, chứ 1, chia cho 2 là 3, chia cho 2 là bằng 1, nó chính là cái ông 3 này này đúng không? đây nốt tra của nó, đây có chỉ số là 1 đấy, vậy thì các bạn thấy cái mối quan hệ giữa một cái mảng như thế này đúng không? mối 1 cái cây những phần hoàn chính này và mình sẽ làm việc trên cái mảng này luôn, chứ bạn không cần phải xây dựng cái cây này ok, nhưng mà mình vẫn hình dung nó như 1 cái cây như thế này nhé và cái mối quan hệ giữa chỉ số tre và hai cái thằng con bên trái và thằng con bên phải thì nó như thế này"
+  },
+  {
+    "chunk_id": "chunk_647_707",
+    "start_sec": 647,
+    "end_sec": 707,
+    "start_label": "10:47",
+    "end_label": "11:47",
+    "raw_text": "đấy, vậy thì các bạn thấy cái mối quan hệ giữa một cái mảng như thế này đúng không? mối 1 cái cây những phần hoàn chính này và mình sẽ làm việc trên cái mảng này luôn, chứ bạn không cần phải xây dựng cái cây này ok, nhưng mà mình vẫn hình dung nó như 1 cái cây như thế này nhé và cái mối quan hệ giữa chỉ số tre và hai cái thằng con bên trái và thằng con bên phải thì nó như thế này đây chính là chỉ số tre là i thì chỉ số tre, nốt con bên trái là 2y1 và nốt con bên phải là 2y2 ok, chú ý là các bạn sẽ phải điền đầy từ từng mức 1 nhé, đúng nhỉ bạn xét cái thằng 0 này trước sau đó đến 1 sau đến 2 ok, chứ bạn không xét 0, 1 sau dưới này bạn lại xét thằng 1 với thằng 4 này bởi vì hai cái thằng này thì nó ở mức dưới rồi, mình sẽ xét thằng 7 này trước Đó, thì đấy chính là cái cách mà mình diễn đổi một cái mạng này hình dung nó như một cái cây như thế này Đúng nhỉ, mình sẽ vẽ cái cây này thì nó rõ dễ hiểu hơn này Ok? Đây, người ta cũng có một cái ví dụ từ cái mạng này, sau bạn xây dựng cái cây, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_689_750",
+    "start_sec": 689,
+    "end_sec": 750,
+    "start_label": "11:29",
+    "end_label": "12:30",
+    "raw_text": "Đó, thì đấy chính là cái cách mà mình diễn đổi một cái mạng này hình dung nó như một cái cây như thế này Đúng nhỉ, mình sẽ vẽ cái cây này thì nó rõ dễ hiểu hơn này Ok? Đây, người ta cũng có một cái ví dụ từ cái mạng này, sau bạn xây dựng cái cây, đúng không? Thằng 1 này nó sẽ là cha của 12 với 9 12 là con bên trái và 9 là con bên phải Sau đó thì 12 sẽ có 2 con là 5 và 6, đúng không? 5 sẽ là con bên trái đây và 6 là con bên phải Thế con thằng 2 này nó sẽ có mỗi 1 thằng con bên trái thôi Thế chính là tháng 10 này, ok, bởi vì thằng con bên phải của nó thì, nếu mà nó có con bên phải thì cái mạng này phải có thêm 1 phần tử nữa Nhưng mà mạng này chỉ có 6 phần tử thôi, thành ra là cái node cũng 2 này này, nó chỉ có 1 thằng con bên trái, ok Vậy thì nói về cái câu chúc dữ liệu HIP nhé, sau khi mà mình đã hiểu được cái cách xây dựng 1 cái mạng và hình dung nó như là 1 cái cây nhị phân hoàn chỉnh rồi Đúng không? Thì mình sẽ nói đến cái câu chúc dữ liệu là HIP HIP nó sẽ là 1 cái câu cây nhị phân hoàn chỉnh nhé"
+  },
+  {
+    "chunk_id": "chunk_733_795",
+    "start_sec": 733,
+    "end_sec": 795,
+    "start_label": "12:13",
+    "end_label": "13:15",
+    "raw_text": "Vậy thì nói về cái câu chúc dữ liệu HIP nhé, sau khi mà mình đã hiểu được cái cách xây dựng 1 cái mạng và hình dung nó như là 1 cái cây nhị phân hoàn chỉnh rồi Đúng không? Thì mình sẽ nói đến cái câu chúc dữ liệu là HIP HIP nó sẽ là 1 cái câu cây nhị phân hoàn chỉnh nhé Nhưng nó có thêm một cái thuộc tính, à, một cái tính chất nữa Đấy chính là cái node ở góc í Bây giờ nó cũng lớn hơn hai cái node con bên trái và node con bên phải Thì trong trường hợp mà cái node ở dưỡi node góc í, xin lỗi, node tra đấy Nó lớn hơn cả thằng con bên trái và thằng con bên phải thì người ta gọi là mắc heap Ok, ngược lại, nếu mà cái thằng con thằng ở node góc thì nó nhỏ hơn cả thằng bên trái và thằng bên phải của nó ấy con bên trái và con bên phải của nó thì người ta gọi là min heap Ok, các bạn có thể hình dung như thế này này Khi mà bạn có một cái node nhá Bạn có một cái node như sao? như thế này này 1 này, mình nói 4 đi ok 2 này, thằng này thì là 1 này"
+  },
+  {
+    "chunk_id": "chunk_778_840",
+    "start_sec": 778,
+    "end_sec": 840,
+    "start_label": "12:58",
+    "end_label": "14:00",
+    "raw_text": "Bạn có một cái node như sao? như thế này này 1 này, mình nói 4 đi ok 2 này, thằng này thì là 1 này đó, thì bạn thấy là cái nốt gốc của đây có giá trị là 4, nốt trà đây có giá trị là 4, thằng con bên trái thì có giá trị là 2 và thằng con bên trái nó có giá trị là 1 ok, thì đây là 1 cái ví dụ mà cái nốt trái nó có giá trị lớn hơn cả 2 cái thằng con bên trái và thằng con bên trái ok, và nếu mà cái cây nhị phân hoàn chỉnh của các bạn ấy nốt nào, nó thoảm ảnh tất cả các nốt trẻ, nó đều lớn hơn, thằng con bên trái và thằng con bên phải của nó, thì nó sẽ là map hit ví dụ bạn có một cái map hit như thế này này ví dụ mình cho thằng này là 4 nhá ok, thằng nỗi xe xa, cho nó là 6 đi đây, thằng này là 6 nhá ok, thằng con bên trái, thằng này thì là 5 thằng con bên phải này có giá trị là 4"
+  },
+  {
+    "chunk_id": "chunk_823_885",
+    "start_sec": 823,
+    "end_sec": 885,
+    "start_label": "13:43",
+    "end_label": "14:45",
+    "raw_text": "ok, thằng nỗi xe xa, cho nó là 6 đi đây, thằng này là 6 nhá ok, thằng con bên trái, thằng này thì là 5 thằng con bên phải này có giá trị là 4 ông 5 này thì là có 2 giá trị con là 3 và 2 Bốn này thì có hai con vai trị là hai, ạ, xin lỗi Hai cũng được, nhưng mà anh để là một nha, và không Thì bạn thấy đây là một cái mark-hift, ok mark-hift Bởi vì bạn thấy này, cái thằng xáu này nó sẽ lớn hơn hai thằng con của nó, đấy là năm và bốn Thằng năm này cũng thế, nó sẽ lớn hơn hai thằng con của nó là ba và hai và thằng bốn này nó cũng sẽ lớn hơn hai thằng con của nó là một và không Đấy, thì bạn thấy tất cả những cái nốt mà nó không phải nốt lá, dụng như ba thằng này này Điều có tính chất đấy. Đấy là nó sẽ lớn hơn hai thằng con bên trái và con bên phải của nó Tất nhiên thằng bố này nó cũng có thể không có con hoặc là nó có một con nhé"
+  },
+  {
+    "chunk_id": "chunk_866_927",
+    "start_sec": 866,
+    "end_sec": 927,
+    "start_label": "14:26",
+    "end_label": "15:27",
+    "raw_text": "Thằng năm này cũng thế, nó sẽ lớn hơn hai thằng con của nó là ba và hai và thằng bốn này nó cũng sẽ lớn hơn hai thằng con của nó là một và không Đấy, thì bạn thấy tất cả những cái nốt mà nó không phải nốt lá, dụng như ba thằng này này Điều có tính chất đấy. Đấy là nó sẽ lớn hơn hai thằng con bên trái và con bên phải của nó Tất nhiên thằng bố này nó cũng có thể không có con hoặc là nó có một con nhé Hí dụ nó không có một con như này thì đây cũng vẫn là mắc hiếp Bởi vì đây cũng vẫn là một cái nhị phân hoàn chỉnh thẳm mạng cái tính chất mà mới nói Thế còn trong trường hợp mà, cái phần tửa nốt cha nó nhỏ hơn cả hai thằng con bên trái và thằng con bên phải Và đối với cái cây nhị phân của mình mà tất cả các cái nốt ấy không phải là nốt lá Nó thả mạng cái tính chất đấy thì người ta gọi là minh hit tức là giả sử như mình có một cái kênh nhị phần như này cái nốt ở góc này này, thằng này thì có giá trị là 1 thằng con bên trái nó có giá trị là 2, thằng này thì có giá trị là 3 thằng 2 này thì nó có 2 thằng con có giá trị là 4 và 5 thằng 3 này thì có giá trị là 6 thì bạn thấy là gì nhỉ, ở đây nó có 3 nốt, không phải nó nốt lái, ở đây là 1, 2 và 3"
+  },
+  {
+    "chunk_id": "chunk_909_972",
+    "start_sec": 909,
+    "end_sec": 972,
+    "start_label": "15:09",
+    "end_label": "16:12",
+    "raw_text": "cái nốt ở góc này này, thằng này thì có giá trị là 1 thằng con bên trái nó có giá trị là 2, thằng này thì có giá trị là 3 thằng 2 này thì nó có 2 thằng con có giá trị là 4 và 5 thằng 3 này thì có giá trị là 6 thì bạn thấy là gì nhỉ, ở đây nó có 3 nốt, không phải nó nốt lái, ở đây là 1, 2 và 3 thì bạn thấy nó đều thoảm ảnh tính chất là gì nhỉ, nó nhỏ hơn cả thằng con bên trái và nó nhỏ hơn cả thằng con bên phải của nó, đây này, 1 nhỏ hơn 2 1 nhỏ hơn 3 đúng không? 2 nhỏ hơn 4, 2 nhỏ hơn 5 và 3 nhỏ hơn 6 thì đây chính là một cái mark heap, ok, ảy xin lỗi min heap, ảy đúng nha, min heap ở đây thì mình sẽ sử dụng mark heap này nhiều nhá, ok thế còn min heap thì nó nược lại thôi và tất nhiên thằng thực ra thì cái thằng này, cái chỗ này này, ok, các bạn có thể cho thằng ba này và chỗ này cũng là ba cũng được tức là cái node nốt tra này nó cũng có thể bằng thằng nốt con của nó nhưng mà không được thằng nốt tra, không được lớn hơn nhé"
+  },
+  {
+    "chunk_id": "chunk_955_1018",
+    "start_sec": 955,
+    "end_sec": 1018,
+    "start_label": "15:55",
+    "end_label": "16:58",
+    "raw_text": "cái thằng này, cái chỗ này này, ok, các bạn có thể cho thằng ba này và chỗ này cũng là ba cũng được tức là cái node nốt tra này nó cũng có thể bằng thằng nốt con của nó nhưng mà không được thằng nốt tra, không được lớn hơn nhé nốt tra nó sẽ nhỏ hơn hoặc bằng nốt con của nó, thì nó cũng được con là mean heap thôi chưa, ngược lại như thế nhé, thì mình có mark heap ở đây các bạn có thể xem 1 cái ví dụ về mean heap và mark heap này đây, cái mark heap này bạn thấy thằng 12 nó sẽ lớn hơn left side và right side của nó con bên trái và con bên phại, 10 cũng thế lớn hơn 5 và 6 9 thì lớn hơn 1 đây là mean heap này 1 sẽ nhỏ hơn con bên trái là 5 và con bên phải là 9 5 thì cũng lại nhỏ hơn 2 con bên trái của nó là 10 và 6 và 9 thì nó sẽ nhỏ hơn con bên trái của nó là 12 tất nhiên là cái thứ tự của con bên trái và con bên phải không quan trọng tức là nhiều bạn lại tưởng là thằng con bên trái phải nhỏ hơn thằng con bên phải cái đấy là không đúng mình chỉ cần cái tính chất đấy chính là cái thằng nốt trang này nó nhỏ hơn nốt con bên trái mà nốt con bên phải thôi thì nó là mean heap"
+  },
+  {
+    "chunk_id": "chunk_1002_1065",
+    "start_sec": 1002,
+    "end_sec": 1065,
+    "start_label": "16:42",
+    "end_label": "17:45",
+    "raw_text": "tất nhiên là cái thứ tự của con bên trái và con bên phải không quan trọng tức là nhiều bạn lại tưởng là thằng con bên trái phải nhỏ hơn thằng con bên phải cái đấy là không đúng mình chỉ cần cái tính chất đấy chính là cái thằng nốt trang này nó nhỏ hơn nốt con bên trái mà nốt con bên phải thôi thì nó là mean heap Ok, còn không nhất thiết về cái thứ tự thằng con bên trái phải lớn hơn hay là nhỏ hơn đâu nha Ờ, thì đấy chính là 1 cái cấu trúc dữ liệu HIP, nó chính là cái private queue mà mình vẫn hay dùng đấy Đúng nhờ, thì nó có 2 loại là MAC HIP và MIN HIP như thế Thì sau khi mà mình biết cái cấu trúc dữ liệu HIP này, nó là 1 cái loại cây nhị phân hoàn chỉnh mà nó thỏa mạng cái tính chất này thì mình sẽ đi xây dựng một cái, một cái, mình sẽ có một cái mạng, sau đó mình sẽ xây dựng được một cái, mình sẽ áp dụng một cái thao tác, người ta gọi là thao tác, hippie-fi ok, đó, để mình xây dựng một cái mắc hippie, nhá, nó có một cái thao tác, để là thao tác hippie-fi"
+  },
+  {
+    "chunk_id": "chunk_1042_1105",
+    "start_sec": 1042,
+    "end_sec": 1105,
+    "start_label": "17:22",
+    "end_label": "18:25",
+    "raw_text": "xây dựng một cái, một cái, mình sẽ có một cái mạng, sau đó mình sẽ xây dựng được một cái, mình sẽ áp dụng một cái thao tác, người ta gọi là thao tác, hippie-fi ok, đó, để mình xây dựng một cái mắc hippie, nhá, nó có một cái thao tác, để là thao tác hippie-fi để mình xây dựng từ một cái mạng mình có thể xây dựng được một cái mắc hippie, ok, tất nhiên ở đây mình chưa cao đặt cây gì nhé, i. there is 1."
+  },
+  {
+    "chunk_id": "chunk_1103_1171",
+    "start_sec": 1103,
+    "end_sec": 1171,
+    "start_label": "18:23",
+    "end_label": "19:31",
+    "raw_text": "i. there is 1. i is the largest, i is the first number. The first number is 2i, the fourth first number is 2i, the first number, And the left one is 2i. it is the number i The second number is 1i. the third is 2i, 2i is the largest, and 1 is the number i. It will check the left and the right if it is bigger. The first number is the largest, con bên trái và con bên phải và nếu mà nó kiểm tra được rằng là cái chỉ số lớn của phần tử lớn nhất trong 3 thằng đấy nó không phải là cái nút trai, nó khác thằng i này này thì nó sẽ tiến hành swap, nó sẽ hoán vị cái thằng trai với cái thằng lớn nhất đấy để cho nó đảm bảo điều kiện là gì cái thằng trai nó sẽ luôn lớn hơn 2 thằng con ok, và tiếp tục nó gọi Hippify đến cái cây con ok, cái cây con với cái gốc chỉ số là luggage Các bạn có thể hiểu đơn giản như thế này này. Chính là mình có một cái giả sử bây giờ nhé. Mình có một cái nốt gốc, nốt tra, có chỉ số là, ví dụ như thế này, có chỉ số là 2 đi."
+  },
+  {
+    "chunk_id": "chunk_1154_1217",
+    "start_sec": 1154,
+    "end_sec": 1217,
+    "start_label": "19:14",
+    "end_label": "20:17",
+    "raw_text": "ok, cái cây con với cái gốc chỉ số là luggage Các bạn có thể hiểu đơn giản như thế này này. Chính là mình có một cái giả sử bây giờ nhé. Mình có một cái nốt gốc, nốt tra, có chỉ số là, ví dụ như thế này, có chỉ số là 2 đi. Khi đó cái nốt con bên trái của nó sẽ có chỉ số là 2 nhưng 2 cộng 1 đúng không? 2 y cộng 1 là 5 đúng không? Cái con cái thằng là chỉ số con bên phải của nó sẽ có chỉ số là 6. ok, giả sử như ông này này, ông có giá trị là 3, ông này có giá trị là 1, ông này có giá trị là 5 bây giờ để mà tạo ra một cái mark-hip thì làm sao nhỉ? thì tất cả các cái nốt mà không phải nốt lá nó đều phải thoả mạn cái tính chất đấy chính là cái nốt ở gốc, lớn hơn 2 thằng con đấy, vậy thì người ta làm như thế này, đấy là người ta sẽ dùng 1 cái biến lag edge để lưu cái chỉ số của cái nốt gốc này này trong trường hợp này là bằng 2 đúng không? bằng hai"
+  },
+  {
+    "chunk_id": "chunk_1197_1259",
+    "start_sec": 1197,
+    "end_sec": 1259,
+    "start_label": "19:57",
+    "end_label": "20:59",
+    "raw_text": "nó đều phải thoả mạn cái tính chất đấy chính là cái nốt ở gốc, lớn hơn 2 thằng con đấy, vậy thì người ta làm như thế này, đấy là người ta sẽ dùng 1 cái biến lag edge để lưu cái chỉ số của cái nốt gốc này này trong trường hợp này là bằng 2 đúng không? bằng hai sau đó là người ta tiến hành tiếp tục so sánh cái giá trị của cái biến nằm ở chỉ số Lagash này này, là ba này này với cái thằng con bên trái của nó là thằng một này này xem là thằng một này này, liệu dàn nó có lớn hơn cái thằng Lagash này không trong trường hợp này nó là ba đúng không, thằng một này nhỏ hơn thì khi đó cái phần tử giá trị của cái biến Lagash này nó vẫn là hai được chứ ạ? thì đấy là cái lúc mà nó so sánh cái phần tử ở gốc phần tử tra với con ở bên, thằng nốt con bên trái trái, sau đó thì nó tiếp tục nó so sánh cái nốt hiện tại bây giờ nó đang nắm cái chỉ số là lớn nhất này này, nó chính là Lagash này bằng 2 này với thằng con bên phải của nó thì thằng con bên phải của nó ở đây nó có tận có giá trị là 5 cơm, nó lớn hơn cái thằng 3 này"
+  },
+  {
+    "chunk_id": "chunk_1241_1301",
+    "start_sec": 1241,
+    "end_sec": 1301,
+    "start_label": "20:41",
+    "end_label": "21:41",
+    "raw_text": "phần tử tra với con ở bên, thằng nốt con bên trái trái, sau đó thì nó tiếp tục nó so sánh cái nốt hiện tại bây giờ nó đang nắm cái chỉ số là lớn nhất này này, nó chính là Lagash này bằng 2 này với thằng con bên phải của nó thì thằng con bên phải của nó ở đây nó có tận có giá trị là 5 cơm, nó lớn hơn cái thằng 3 này thì khi đó cái biến Lagash của mình nó sẽ chuyển thành cái chỉ số của cái nốt con bên phải này là 6 hay nhìn chung đấy chính là gì nhở, khi mà nó xét 1 cái chỉ số i nào đó á thì nó sẽ có 2 thằng con là 2i cộng 1 đúng không, và 2i cộng 2 đấy Thì nó sẽ có nhiệm vụ là gì? Nó sẽ có nhiệm vụ là tìm xem là cái thằng nào là thằng lớn nhất trong 3 thằng này, thằng tra, đúng không? Hai là thằng con bên trái, hai là thằng con bên phải Ok Sau khi mà nó tìm được cái chỉ số của thằng lớn nhất trong 3 thằng này rồi thì nó sẽ hoán vị cái thằng lớn nhất đấy với thằng ở gốc Để đảm bảo được rằng là cái thằng ở gốc cũng sẽ là thằng lớn nhất Thì trong trường hợp này, nó tìm được cái biến là gatch là 6 Cái là chỉ số của cái nốt con bên phải này này Thì khi đó nó sẽ tiến hành nó hoán vị 2 thằng"
+  },
+  {
+    "chunk_id": "chunk_1285_1366",
+    "start_sec": 1285,
+    "end_sec": 1366,
+    "start_label": "21:25",
+    "end_label": "22:46",
+    "raw_text": "Sau khi mà nó tìm được cái chỉ số của thằng lớn nhất trong 3 thằng này rồi thì nó sẽ hoán vị cái thằng lớn nhất đấy với thằng ở gốc Để đảm bảo được rằng là cái thằng ở gốc cũng sẽ là thằng lớn nhất Thì trong trường hợp này, nó tìm được cái biến là gatch là 6 Cái là chỉ số của cái nốt con bên phải này này Thì khi đó nó sẽ tiến hành nó hoán vị 2 thằng Đấy là thằng ở nốt gốc này này với thằng node ở bên con, bên phải trong trường hợp này, ông này sẽ thành 5 của ông là 3 đấy, ông này thành 5 và ông này thành 3 và sau cái thao tác swap đấy, bạn thấy là gì nhỉ? nó đã đảm bảo được rằng là phần tử gốc nó sẽ lớn hơn cái thằng con bên trái và con bên phải rồi ok, sau đó thì nó tiếp tục gọi đệ quy đến cái chỉ số lag action này hay là cái khác là nó sẽ tiếp tục set cái cây con mà nó có gốc là phần tử có chỉ số là 6 này này dạ sướng như thằng ba này này, nó có 2 thằng con nữa, đúng không? 2 thằng con nữa, ví dụ ở đây thì là, 4 đi, ở đây thì là 2 đi, đó, thì tiếp tục ông 6 này, ông ba này này, nó, thằng này có chỉ số 6 đúng không vậy thì ông này có xóa là xáu là nhân 2 là 13, xáu nhân 2 là 14, đấy, thì nó lại tiếp tục như thế, nó lại tiếp tục cái theo tác đệ quy thế, để nó xây dựng cái xem là cái thằng ba này này, đã là cái thằng lớn nhất chưa,"
+  },
+  {
+    "chunk_id": "chunk_1333_1395",
+    "start_sec": 1333,
+    "end_sec": 1395,
+    "start_label": "22:13",
+    "end_label": "23:15",
+    "raw_text": "dạ sướng như thằng ba này này, nó có 2 thằng con nữa, đúng không? 2 thằng con nữa, ví dụ ở đây thì là, 4 đi, ở đây thì là 2 đi, đó, thì tiếp tục ông 6 này, ông ba này này, nó, thằng này có chỉ số 6 đúng không vậy thì ông này có xóa là xáu là nhân 2 là 13, xáu nhân 2 là 14, đấy, thì nó lại tiếp tục như thế, nó lại tiếp tục cái theo tác đệ quy thế, để nó xây dựng cái xem là cái thằng ba này này, đã là cái thằng lớn nhất chưa, Ok, 3 này đã phải là thằng lớn nhất trong 3 thằng là nó, con bên trái và con bên phải chưa Thì trong trường hợp này chưa đúng không? Khi đó nó lại tiếp tục cập nhật thằng, nó hoán vị thằng 3 với thằng 4 thôi Thấy, mình sẽ viết thằng này thành 4 và thằng này thằng 3 để nó luôn đảm bảo được rằng là cái thằng ở nốt góc nó sẽ lớn hơn con bên trái, hơn con bên phải của nó Các bạn có thể xem cái ví dụ nhé, ở đây này"
+  },
+  {
+    "chunk_id": "chunk_1380_1443",
+    "start_sec": 1380,
+    "end_sec": 1443,
+    "start_label": "23:00",
+    "end_label": "24:03",
+    "raw_text": "Khi đó nó lại tiếp tục cập nhật thằng, nó hoán vị thằng 3 với thằng 4 thôi Thấy, mình sẽ viết thằng này thành 4 và thằng này thằng 3 để nó luôn đảm bảo được rằng là cái thằng ở nốt góc nó sẽ lớn hơn con bên trái, hơn con bên phải của nó Các bạn có thể xem cái ví dụ nhé, ở đây này mình có 1 cái mạng như thế này. Cái là 392145 392145 3 này, 9 này, 2 này, 1 này, 4 này, 5 đây chính là cái nhị phân biểu diện cái mạng của mình, đúng không? Cái nhị phân hoàn chỉnh, đây là trị số 0 này, trị số 1 này, trị số 2 này, trị số 3 này, trị số 4 và trị số 5 ok, sau đó thì giả sử như bây giờ mình sẽ thực hiện cái thao tác gọi thao tác hitify ở cái chỉ số của tháng 2 này, được chứ? Thì bạn thấy là gì nhỉ? Ở đây mình chỉ, mình không hướng dẫn kị nữa nhé, tháng 2 này này, tháng 2 này này"
+  },
+  {
+    "chunk_id": "chunk_1423_1485",
+    "start_sec": 1423,
+    "end_sec": 1485,
+    "start_label": "23:43",
+    "end_label": "24:45",
+    "raw_text": "ok, sau đó thì giả sử như bây giờ mình sẽ thực hiện cái thao tác gọi thao tác hitify ở cái chỉ số của tháng 2 này, được chứ? Thì bạn thấy là gì nhỉ? Ở đây mình chỉ, mình không hướng dẫn kị nữa nhé, tháng 2 này này, tháng 2 này này nó sẽ so sánh nó với cái thằng 2 thằng con của nó đúng không? Đấy là thằng con bên trái nhé, mà thằng con bên phải trong trường hợp nàn không có con bên phải thì nó chỉ so sánh nó với thằng con bên trái này thôi Các bạn thấy là thằng con, thằng nói, thằng hai này nè, nó nhỏ hơn thằng con bên trái của nó thì nó sẽ tiến hành swap hai thằng này với nhau Tức là thằng này sẽ thằng năm và thằng này sẽ thằng hai đấy, ok? Đây, thằng này thằng năm và thằng này thằng hai, thì đấy chính là cái thao tác hippify ở cái chỉ số hai này Vậy chứ? Đó, đây, các bạn thấy nè, nó xây dựng cái mảng của mình 392 đúng không? 3, 9, 2, 1, 4, 5, như mình đúng không, sau đó thì nó sẽ hippify ở cái nốt này, nốt 2 này"
+  },
+  {
+    "chunk_id": "chunk_1470_1534",
+    "start_sec": 1470,
+    "end_sec": 1534,
+    "start_label": "24:30",
+    "end_label": "25:34",
+    "raw_text": "Đó, đây, các bạn thấy nè, nó xây dựng cái mảng của mình 392 đúng không? 3, 9, 2, 1, 4, 5, như mình đúng không, sau đó thì nó sẽ hippify ở cái nốt này, nốt 2 này thì nó sẽ thấy là thằng con bên trái của nó là 5, lớn hơn nó thì nó sẽ hoán vị hai thằng này với nhau và khi đó thì nó sẽ tạo ra một cái cây như thế này, được chứ? và tiếp tục nhé, tiếp tục nó sẽ gọi đệ quy đến cái nốt con bên trái này này để tiếp tục nó hippify từ cái nốt này xuống các cây con gốc của hai này và, trong trình hợp này, thằng hại này, nó không có con, mình ra là thao tác всеpify, ở nốt 2 đã dừng rồi đây chính là thao tác heapify nha. ở đây thì có thể thao tác the, the heapify để quay thằng ra là các bạn , mình sẽ cho bây giờ vinh dụ nó dài hơi 1 tí nhé"
+  },
+  {
+    "chunk_id": "chunk_1518_1591",
+    "start_sec": 1518,
+    "end_sec": 1591,
+    "start_label": "25:18",
+    "end_label": "26:31",
+    "raw_text": "ở đây thì có thể thao tác the, the heapify để quay thằng ra là các bạn , mình sẽ cho bây giờ vinh dụ nó dài hơi 1 tí nhé Quý vị-jож mình có ở đây là 4, 3, 5, 4, 3, 2, 1, 2, 1, 2, 1. Thưa thưa mình biết lại, hơi nhỏ kây này. Sự bạn có 1 cái kây như thế này, đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1571_1641",
+    "start_sec": 1571,
+    "end_sec": 1641,
+    "start_label": "26:11",
+    "end_label": "27:21",
+    "raw_text": "Sự bạn có 1 cái kây như thế này, đúng không? Và mình sẽ điền nó như sau này. 1, 2, 3, ch climat này là 8, 9, 7 nhau. 8, 9, 10, 12, 8, 6, 9, 4, 3, 7"
+  },
+  {
+    "chunk_id": "chunk_1608_1672",
+    "start_sec": 1608,
+    "end_sec": 1672,
+    "start_label": "26:48",
+    "end_label": "27:52",
+    "raw_text": "8, 9, 10, 12, 8, 6, 9, 4, 3, 7 ok, xử bạn có 1 cái cây nhị phân như thế này và bạn gọi thà tác hippie5 từ cái nốt này hít write to,�� Avant boomb분, name hít write hít write to, y, founded, and again whiteளc hít write to"
+  },
+  {
+    "chunk_id": "chunk_1656_1717",
+    "start_sec": 1656,
+    "end_sec": 1717,
+    "start_label": "27:36",
+    "end_label": "28:37",
+    "raw_text": "hít write to, y, founded, and again whiteளc hít write to bây giờ giả sử như thế này bây giờ giả sử mình gọi hippify từ node i vào không này nhé thì nó sẽ tiến hành tìm cái thằng lớn nhất trong 2 thằng đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1709_1769",
+    "start_sec": 1709,
+    "end_sec": 1769,
+    "start_label": "28:29",
+    "end_label": "29:29",
+    "raw_text": "bây giờ giả sử như thế này bây giờ giả sử mình gọi hippify từ node i vào không này nhé thì nó sẽ tiến hành tìm cái thằng lớn nhất trong 2 thằng đúng không? thằng con bên cháu, con bên phải của nó thì nó thấy là gì nhỉ? cái thằng node qua bên cháu này nè nó lớn hơn cái thằng node ở gốc, node tre thì nó sẽ tiến hành swap 2 thằng này với nhau ở đây mình chỉ nói với thao tác swap này nhé thì thằng này sẽ thành 8 con thằng này sẽ là thành 12 sau đó là gì? nó vừa biết là cái gì? trong 3 thằng, thằng i này cộng 1 vào tháng 2i, cộng 2 thì tháng 2i, cộng 1 này là cái thằng lớn nhất tức là cái nốt con bên trái này là nốt con lớn nhất thì tiếp tục nó sẽ gọi, tiếp tục nó gọi hippie5 đến cái nốt này lúc nãy mình hippie5 nốt này đúng không? thì bây giờ nó tiếp tục hippie5 đến cái nốt này thì bây giờ cái nốt mà được hippie5 nói chính là nốt i bằng tỷ số 1 thì nó lại tiếp tục nó sẽ xét 2 thằng con bên trái và bên phải của nó, đây là thằng 6 và thằng 9 này và nó tìm ra là thằng 9 này là cái thằng lớn nhất trong 3 thằng thì nó sẽ tiến hành, nó sẽ hoán vị 2 thằng này với nhau Để cho cái nốt trang nó sẽ lớn nhất"
+  },
+  {
+    "chunk_id": "chunk_1753_1815",
+    "start_sec": 1753,
+    "end_sec": 1815,
+    "start_label": "29:13",
+    "end_label": "30:15",
+    "raw_text": "thì bây giờ cái nốt mà được hippie5 nói chính là nốt i bằng tỷ số 1 thì nó lại tiếp tục nó sẽ xét 2 thằng con bên trái và bên phải của nó, đây là thằng 6 và thằng 9 này và nó tìm ra là thằng 9 này là cái thằng lớn nhất trong 3 thằng thì nó sẽ tiến hành, nó sẽ hoán vị 2 thằng này với nhau Để cho cái nốt trang nó sẽ lớn nhất Đấy, ok không nhỉ? Thôi này phải lèm 1 cái số nhỏ hơn 1 tý 5 đi Và tiếp tục như thế, bây giờ cái nốt mà được hitbify nó chính là cái nốt này Và thằng này thì nó lại tìm 2 thằng con bên trái và 2 con thằng con bên phải thôi Trong trường hợp này nó chỉ còn có, thằng con bên trái là 4 đó Đúng không? Và thằng 4 này nó đã nhỏ hơn thằng 8 rồi Thì khi đó mình sẽ dừng khi thào tá hitbify ở đây được Ok, thế còn cái thằng 4 này này, mà nó lớn hơn thằng 8 này nhé Thì nó lại tiếp tục nó hoán vị hai thằng này với nhau và nó tiếp tục nó gọi hipify đến cái nốt này Đây, các bạn có thể nhìn cái theo tác của nó này, đúng không? Khởi tạo ba cái trị số của nốt tra này, nốt con bên trái và nốt con bên phải"
+  },
+  {
+    "chunk_id": "chunk_1799_1861",
+    "start_sec": 1799,
+    "end_sec": 1861,
+    "start_label": "29:59",
+    "end_label": "31:01",
+    "raw_text": "Ok, thế còn cái thằng 4 này này, mà nó lớn hơn thằng 8 này nhé Thì nó lại tiếp tục nó hoán vị hai thằng này với nhau và nó tiếp tục nó gọi hipify đến cái nốt này Đây, các bạn có thể nhìn cái theo tác của nó này, đúng không? Khởi tạo ba cái trị số của nốt tra này, nốt con bên trái và nốt con bên phải Sau đó thì nếu mà cái thằng là bên trái lớn hơn cái thằng lớn nhất thì mình sẽ cập nhật cái trị số lớn nhất là thằng bên trái Còn nếu mà thằng bên phải nó còn lớn hơn cái thằng lớn nhất thì mình lại cập nhật cái trị số lớn nhất là thằng con bên phải Và nếu mà cái trị số lớn nhất đấy nó không phải là cái nốt gốc, nó không phải là nốt tra thì nó sẽ swap hai cái thằng đấy, thằng là nốt chè với cái thằng lớn nhất đấy sau đó nó tiếp tục ngõ gọi hippie5 đến cái chỉ số lớn nhất đấy để nó tiếp tục có hippie5 cái cây con mà nó có gốc là thằng con bên trái hoặc là thằng con bên phải tuy, thằng nào là thằng lớn nhất thì nó sẽ hippie5 đến cái chỉ số đó ok không nhỉ? thì đấy chính là cái thao tác hippie5 nhé và để mà xây dựng được một cái markh hipp ấy khi mà mình cài đặt thực tuấn híp xó cái nó cần một cái thao tác đấy chính là mình sẽ phải xây dựng được một cái markh hipp từ cái mảng ban đầu Lúc nãy mình đã nói về cái mắc hip rồi đúng không?"
+  },
+  {
+    "chunk_id": "chunk_1841_1912",
+    "start_sec": 1841,
+    "end_sec": 1912,
+    "start_label": "30:41",
+    "end_label": "31:52",
+    "raw_text": "thằng con bên trái hoặc là thằng con bên phải tuy, thằng nào là thằng lớn nhất thì nó sẽ hippie5 đến cái chỉ số đó ok không nhỉ? thì đấy chính là cái thao tác hippie5 nhé và để mà xây dựng được một cái markh hipp ấy khi mà mình cài đặt thực tuấn híp xó cái nó cần một cái thao tác đấy chính là mình sẽ phải xây dựng được một cái markh hipp từ cái mảng ban đầu Lúc nãy mình đã nói về cái mắc hip rồi đúng không? Thì bây giờ để mà xây dựng được cái mắc hip từ cái nảng ban đầu đấy thì nó sẽ phải dựa tất cả các cái chỉ số không phải là nốt lá và nó gọi hippify đến các cái nốt không phải nốt lá đấy và nó sẽ xây dựng từ cái nốt mà không phải nốt lá mà nó có level bên dưới OK, level bên dưới Ví dụ như bạn có một cái mảng thế này mà bạn muốn xây dựng nó là một cái tạo thành nó một cái hippify Ví dụ như mình lấy luôn cái mảng này nhé, 129,560 Cái mạng của mình là 1, 12, 9, 5, 6, 10"
+  },
+  {
+    "chunk_id": "chunk_1889_1951",
+    "start_sec": 1889,
+    "end_sec": 1951,
+    "start_label": "31:29",
+    "end_label": "32:31",
+    "raw_text": "Cái mạng của mình là 1, 12, 9, 5, 6, 10 Đây có thêm 1 thằng nữa là thằng 10 ở cuối đây, ok? Thằng này có chi số là 0 này, 1 này, 2 này, 3 này, 4 này, 5 Thì bạn có thể hình dung cái cây nhị phân hoàn chỉnh từ cái mạng này, nó chính là gì nào? Nó chính là 1 này, đúng không? Thằng qua bên trái là 12 này, 12 này, 2 này thì là 9 này Thằng bên này thì là 5 này, còn thằng này bên này thì là 6 này, ok? Thần này thì nó có con 50, đấy, ok hông nhỏ? Đây là 0, đây là 1, 2, 3, 4, 5 Thì đây chính là cái nhị phân hoàn chính tại diện cho cái mảng này"
+  },
+  {
+    "chunk_id": "chunk_1936_1997",
+    "start_sec": 1936,
+    "end_sec": 1997,
+    "start_label": "32:16",
+    "end_label": "33:17",
+    "raw_text": "Thần này thì nó có con 50, đấy, ok hông nhỏ? Đây là 0, đây là 1, 2, 3, 4, 5 Thì đây chính là cái nhị phân hoàn chính tại diện cho cái mảng này Bây giờ để mà thao tác xây dựng cái mắc hip, tức là từ cái mảng này biến đổi thành mắc hip Thì bạn sẽ phải set tất cả những cái nốt không phải là nốt lá, đúng không? Trong trường hợp này có 3 nốt không phải là nốt lá, đây chính là nốt 0, nốt 1 và nốt 2 này này còn 3 node lá này vì mình không cần thể xếp, ok? bởi vì nó có con đâu, không cần thể xếp bởi vì cái tháp tác heapify của mình để chính là luôn cố gắng đưa cái thằng, đưa cái thằng node chá là cái thằng lớn nhất trong 3 thằng con bên trái, con bên phải và chính nó, đúng không? v cái node đầu tiên mà đều heapify nó chính là cái node này đấy, ông 9 này này, đúng không? thì ở đây mình sẽ hắn vị luôn nhé đúng không? bởi vì thằng 9 này nó nhỏ hơn thằng con của nó là 10 thì nó sẽ tiến hành hắn vị 2 cái này với nhau load hítViswhy build VM"
+  },
+  {
+    "chunk_id": "chunk_1982_2089",
+    "start_sec": 1982,
+    "end_sec": 2089,
+    "start_label": "33:02",
+    "end_label": "34:49",
+    "raw_text": "v cái node đầu tiên mà đều heapify nó chính là cái node này đấy, ông 9 này này, đúng không? thì ở đây mình sẽ hắn vị luôn nhé đúng không? bởi vì thằng 9 này nó nhỏ hơn thằng con của nó là 10 thì nó sẽ tiến hành hắn vị 2 cái này với nhau load hítViswhy build VM actual파mumbling load hítViswhy loadGeek loadIt всё af load it khi mà mình heapify đến một cái node mà nó không có con bên trái hoặc"
+  },
+  {
+    "chunk_id": "chunk_2085_2151",
+    "start_sec": 2085,
+    "end_sec": 2151,
+    "start_label": "34:45",
+    "end_label": "35:51",
+    "raw_text": "khi mà mình heapify đến một cái node mà nó không có con bên trái hoặc nếu xin lỗi nó không có con ấy, thì nó cũng sẽ dừng bao giờ một cái node con, node hiện tại, node y hiện tại nó có ít nhất một thằng con ấy đấy, có ít nhất một thằng con và nó không phải là cái thằng lớn nhất thằng node ở tre không phải là thằng lớn nhất thì khi đó cái thật tác heapify nó mới được cõi đệ quy đến các cái cây con bên dưới đúng nhỉ, thì đấy và sau khi mà bạn xây dựng cái heapify của mình ấy sau khi mình heapify cải cái mạng này này thì mình sẽ được một cái map heap như thế này 12, 6, 10, 5, 5, 1, 9. Bạn thấy là cái nút cha bao giờ cũng lớn hơn 2 cái nút con của nó, 12 với 60 này, 6 với 5, 1 này, 10 với 9, thì đây đã tạo thành một cái mắc hít rồi, và khi đó cái mảng của bạn nó không còn như thế này nữa đâu mà nó sẽ thành một cái mảng như thế này này, nó sẽ tạo thành một cái mắc hít như thế này này, 1, 2, 3, thằng đầu tiên nó sẽ là 12, ok, thằng thứ 2 nó sẽ là 6, thằng thứ 3 nó sẽ là 10, thằng thứ 4 nó sẽ là 5,"
+  },
+  {
+    "chunk_id": "chunk_2115_2175",
+    "start_sec": 2115,
+    "end_sec": 2175,
+    "start_label": "35:15",
+    "end_label": "36:15",
+    "raw_text": "12, 6, 10, 5, 5, 1, 9. Bạn thấy là cái nút cha bao giờ cũng lớn hơn 2 cái nút con của nó, 12 với 60 này, 6 với 5, 1 này, 10 với 9, thì đây đã tạo thành một cái mắc hít rồi, và khi đó cái mảng của bạn nó không còn như thế này nữa đâu mà nó sẽ thành một cái mảng như thế này này, nó sẽ tạo thành một cái mắc hít như thế này này, 1, 2, 3, thằng đầu tiên nó sẽ là 12, ok, thằng thứ 2 nó sẽ là 6, thằng thứ 3 nó sẽ là 10, thằng thứ 4 nó sẽ là 5, 1, 9, nấy OK, thì đấy chính là một cái khi mà bạn xây dựng xong cái mắc híp ấy, thì cái mạng của bạn nó thành như thế này này Đấy, mình không cần phải xây dựng cái cây này, đúng không? Mình chỉ hình dùng nó thôi và mình sẽ lưu luôn, mình sẽ thay đổi các cái vị trí của các phần tứa trong mạng này để nó trở thành cái mắc híp OK, thì đấy chính là cái thao tác xây mắc híp, một cái thao tác rất là quan trọng cho thuật toán 1 xò"
+  },
+  {
+    "chunk_id": "chunk_2159_2226",
+    "start_sec": 2159,
+    "end_sec": 2226,
+    "start_label": "35:59",
+    "end_label": "37:06",
+    "raw_text": "Đấy, mình không cần phải xây dựng cái cây này, đúng không? Mình chỉ hình dùng nó thôi và mình sẽ lưu luôn, mình sẽ thay đổi các cái vị trí của các phần tứa trong mạng này để nó trở thành cái mắc híp OK, thì đấy chính là cái thao tác xây mắc híp, một cái thao tác rất là quan trọng cho thuật toán 1 xò sau khi bạn xây dựng được xâm mắc híp rồi thì mình mới nói đến cái việc chạy thật toán híp xò ở đây thì ai xây lỗi mình chưa nói nhé, đây chính là cái nốt đầu tiên mà không phải là nốt lá, nó chính là cái chỉ số lá n, chia cho 2 chứ 1, đúng nhỉ? ví dụ như trong trường hợp này là 6 đúng không? vậy thì cái nốt lá đầu tiên nó sẽ là 6 chia cho 2 chứ đi 1, là bằng 2, nó chính là cái nốt này này đấy nó chính là cái nốt lá đầu tiên Ok, hãy xử lỗi, nốt không phải nốt lá, đầu tiên, và tất cả những cái chỉ số từ chỉ số nò chi cho 2 chiều 1 này này, trở về với không, đều là các cái nốt, không phải nốt lá, và mình sẽ hippify đến các cái nốt đấy Cái còn những cái chỉ số mà từ nòi trên 2 chiều 1 này này, lớn hơn nòi trên 2 chiều 1 đồ về cuối, đều là các cái nốt lá, ví dụ trong cái hợp này này, 3 này là nốt lá, còn 3 khả này không phải nốt lá"
+  },
+  {
+    "chunk_id": "chunk_2204_2265",
+    "start_sec": 2204,
+    "end_sec": 2265,
+    "start_label": "36:44",
+    "end_label": "37:45",
+    "raw_text": "Ok, hãy xử lỗi, nốt không phải nốt lá, đầu tiên, và tất cả những cái chỉ số từ chỉ số nò chi cho 2 chiều 1 này này, trở về với không, đều là các cái nốt, không phải nốt lá, và mình sẽ hippify đến các cái nốt đấy Cái còn những cái chỉ số mà từ nòi trên 2 chiều 1 này này, lớn hơn nòi trên 2 chiều 1 đồ về cuối, đều là các cái nốt lá, ví dụ trong cái hợp này này, 3 này là nốt lá, còn 3 khả này không phải nốt lá Và mình chỉ cần hippify đến 3 cái nốt không phải nốt lá này thôi, ok? đây thì các bạn có thể xem lại cái cách mà nó hít be fine ok đầu tiên cái mạng của mình là một cái xây dựng cái mạng 1, 12, 9, 5, 6, 10 thành một cái cây những phân hoàn chính như thế này đúng không 1, 12, 9, 5, 6, 10 sau đó nó sẽ hit be fine từ cái nốt đầu tiên không phải nốt lá, nó chính là âm mùa trị số 2 này thằng này là chín đúng không, con của nó là 10 thì nó sẽ sửa 2 thằng này với nhau ok thì khi đó cái mạng của bạn nó cũng sẽ bị thay đổi theo nhé Cái màn của bạn này, cái phần tựa chỉ số 2 này, nó sẽ không còn là 9 nữa mà nó là 10"
+  },
+  {
+    "chunk_id": "chunk_2248_2310",
+    "start_sec": 2248,
+    "end_sec": 2310,
+    "start_label": "37:28",
+    "end_label": "38:30",
+    "raw_text": "sau đó nó sẽ hit be fine từ cái nốt đầu tiên không phải nốt lá, nó chính là âm mùa trị số 2 này thằng này là chín đúng không, con của nó là 10 thì nó sẽ sửa 2 thằng này với nhau ok thì khi đó cái mạng của bạn nó cũng sẽ bị thay đổi theo nhé Cái màn của bạn này, cái phần tựa chỉ số 2 này, nó sẽ không còn là 9 nữa mà nó là 10 Cái phần tựa chỉ số 5 này, nó không còn là 10 nữa mà nó là 9 Chỉ số 2 bây giờ thành 10 này, còn chỉ số 5 bây giờ nó thành 9 Thì đấy, đấy chính là cái thao tác khi mà mình Hippify cái thằng là chỉ số 2 Tiếp tục nó lại, sau khi mà nó Hippify đến cái chỉ số 2 này thì nó sẽ nhảy sang cái Hippify chỉ số 1 này Thì thằng 1 này thì 12 với 56 thì nó đã được, nó đã được Hippify rồi Ok, bởi vì cái thằng 12 này nó lớn hơn 2 thằng trai, 2 thằng con bên trái với con bên phải của nó Nên là nó không có cái theo tác gì hoán vị ở đây kìa Đúng chưa? Thì cái bản của mình nó vẫn thế, nó vẫn là 1, 12, 15, 6, 9 Người ta đã bỏ tạm thời, người ta bỏ cái thằng, ừ, đúng rồi Đây, 12 này, 3 cái thằng màu xanh này, nó chính là"
+  },
+  {
+    "chunk_id": "chunk_2295_2360",
+    "start_sec": 2295,
+    "end_sec": 2360,
+    "start_label": "38:15",
+    "end_label": "39:20",
+    "raw_text": "Nên là nó không có cái theo tác gì hoán vị ở đây kìa Đúng chưa? Thì cái bản của mình nó vẫn thế, nó vẫn là 1, 12, 15, 6, 9 Người ta đã bỏ tạm thời, người ta bỏ cái thằng, ừ, đúng rồi Đây, 12 này, 3 cái thằng màu xanh này, nó chính là thằng trai này, thằng con bên trái, thằng con bên phải Ok Thì trong trường hợp mà thằng trai đã lớn hơn con bên trái và con bên phải rồi thì nó đã được xong rồi nhé Ok, nó không cần phải thực hiện các thao tác hoán vị hay là gọi Hippify đến các cây con bên dưới nữa Hề cuối cùng thôi, mình sẽ Hippify đến thằng này Thằng Hippify này thì nó hơi dài một chút bởi vì nó sẽ có cái thao tác gọi Hippify đến các cây con bên dưới của nó Ok, bởi vì mỗi cái thao tác bạn Hippify nó làm thay đổi, đúng nhỉ Bạn hoán vị, cái thằng nốt cha với cái thằng con bên trái hoặc thằng con bên phải của nó Thì khi đó các cây con mà nó có gốc là thằng con bên trái hoặc thằng con bên phải nó cũng bị thay đổi theo Đúng không? Ví dụ như trong trường hợp này, 1 này với 12 với 10 thì thằng lớn nhất trong 3 thằng đấy chính là 12, nó sẽ hoán vị Thằng này thành 12 và thằng này thành 1, đúng không? Vậy thì khi đó cái phần tửa chỉ số 0 này này, nó sẽ thành 12, đây này"
+  },
+  {
+    "chunk_id": "chunk_2343_2403",
+    "start_sec": 2343,
+    "end_sec": 2403,
+    "start_label": "39:03",
+    "end_label": "40:03",
+    "raw_text": "Thì khi đó các cây con mà nó có gốc là thằng con bên trái hoặc thằng con bên phải nó cũng bị thay đổi theo Đúng không? Ví dụ như trong trường hợp này, 1 này với 12 với 10 thì thằng lớn nhất trong 3 thằng đấy chính là 12, nó sẽ hoán vị Thằng này thành 12 và thằng này thành 1, đúng không? Vậy thì khi đó cái phần tửa chỉ số 0 này này, nó sẽ thành 12, đây này Đây, không nó sẽ thành 12, cái con phần tửa chỉ số 1 này nó sẽ thành 1, đấy, ok Và khi mà bạn đã hoán vị 2 thằng đấy với nhau ấy, thì cái cây con ở bên trái, ờ xin lỗi cái nốt con bên trái này này Cây con của nó, cái cây con gốc của nó ấy, nó cũng sẽ bị thay đổi theo HIPPIFI đến cái thằng này thôi Đúng không? Thì tiếp tục nó gọi HIPPIFI đến cái thằng này thôi Đúng nhạc, đây, các bạn thấy này Sau khi mà bạn hoán vị 1 với 12 thì nó cái mạng của mình nó ra như thế này Thì tiếp tục nó HIPPIFI đến cái node 1 này Thì nó cập nhật xuống cái cây con bên dưới, cái con bên dưới Còn nếu mà mình chỉ có hoán vị thằng 1 với 12 này Không thì chưa xong đâu Đúng không? Bởi vì như thế, rất có thể các cây con bên dưới này nó đã bị mất hết thứ tự rồi Nó không còn là mắc HIP nữa Thì trong trường hợp này thì nó lại HIPPIFI đến cái node này thôi HIPPFI đến nốt này thôi"
+  },
+  {
+    "chunk_id": "chunk_2387_2451",
+    "start_sec": 2387,
+    "end_sec": 2451,
+    "start_label": "39:47",
+    "end_label": "40:51",
+    "raw_text": "Thì nó cập nhật xuống cái cây con bên dưới, cái con bên dưới Còn nếu mà mình chỉ có hoán vị thằng 1 với 12 này Không thì chưa xong đâu Đúng không? Bởi vì như thế, rất có thể các cây con bên dưới này nó đã bị mất hết thứ tự rồi Nó không còn là mắc HIP nữa Thì trong trường hợp này thì nó lại HIPPIFI đến cái node này thôi HIPPFI đến nốt này thôi 1, 5, 6, 6 là lớn nhất đúng không? Hán vị 2 thằng này với nhau Thì khi đó, phần tửa chỉ số 1 sẽ thành 6 Còn phần tửa chỉ số 4 sẽ thành 1 Đây này, 4 sẽ thành 1, chỉ số 4 thành 1, còn chỉ số 1 thành 6 OK, đây, và khi đó cây của bạn là thành như thế này Đúng nhau, sau đó lại, tiếp tục có HIPPFI đến nốt 1 này này Nhưng mà cái nốt 1 này thì... Thật tá HIPPFI của nó sẽ bị dừng, bởi vì là... Nó không có con, đúng không? OK, không có con bên trái đâu, không có con bên phải và khi đó cái mạng của bạn nó sẽ hipify thành một cái mắc hip như thế này, đúng không? nó chính là 12, 6, 10, 5, 1, 9, như mình hướng dẫn bên này ok, đấy, vậy thì đấy chính là cái thao tác đầu tiên khi mà bạn muốn cà đặt thật toán hip sọc đây chính là mình sẽ xây dựng một cái mắc hip từ cái mạng ban đầu người ta cho"
+  },
+  {
+    "chunk_id": "chunk_2432_2502",
+    "start_sec": 2432,
+    "end_sec": 2502,
+    "start_label": "40:32",
+    "end_label": "41:42",
+    "raw_text": "và khi đó cái mạng của bạn nó sẽ hipify thành một cái mắc hip như thế này, đúng không? nó chính là 12, 6, 10, 5, 1, 9, như mình hướng dẫn bên này ok, đấy, vậy thì đấy chính là cái thao tác đầu tiên khi mà bạn muốn cà đặt thật toán hip sọc đây chính là mình sẽ xây dựng một cái mắc hip từ cái mạng ban đầu người ta cho sau khi mà mình xây dựng được cái mắc hip nhé, ok thì bạn thấy là gì? khi đó cái thằng là phần tử đầu tiên ấy, thằng là chỉ số không ấy, bao giờ nó cũng là thằng lớn nhất, thằng là nốt gốc ấy, đây này đúng không? Khiều gì nó cũng phải là thằng lớn nhất, thì cái tư tưởng của thuật toán hit xo ấy, đây chính là sau khi mà bạn đã bạn đã xây dựng được 1 cái mắc hit từ cái mảng đầu vào ấy, thì cái phần tử đầu tiên nó sẽ luôn là cái phần tử lớn nhất Đúng không? Thì nó sẽ tiến hành nó hoán vị, cái phần tử lớn nhất đấy, với cái phần tử nằm ở chỉ số cuối cùng trong mảng của mình Đấy, tức là trăm trừng hợp này này, đây cái mắc hit của các bạn sau khi mà bạn xây dựng xong cái mắc hit thì nó như thế nào nhỉ? Ờ gì nhỉ? 12, 60, 5, 9 đúng không? 12, 60 12, 6, 10, 5, 1, 9"
+  },
+  {
+    "chunk_id": "chunk_2486_2549",
+    "start_sec": 2486,
+    "end_sec": 2549,
+    "start_label": "41:26",
+    "end_label": "42:29",
+    "raw_text": "Ờ gì nhỉ? 12, 60, 5, 9 đúng không? 12, 60 12, 6, 10, 5, 1, 9 sau khi bạn xây dựng cái mắc híp từ mạng ban đầu thì nó thay thành 1 cái mắc híp như thế này cái tư tưởng của thuật toán híp xóa khi mà mắc híp mình đã được xây dựng xong thì phần tử ở nốt góc này, ở chỉ số 0 nó luôn là thằng lớn nhất Thì người ta sẽ hoán vị nó với thằng nốt, thằng là chỉ số cuối cùng Đây này, nó chính là thằng 9 này này. Thế là bây giờ ông này thằng 9 và ông này thằng 12 Thì bạn thấy là khi đó làm sao? Khi đó phần tử lớn nhất trong mạng của mình, nó đã về chỉ số cuối cùng rồi Ok, nó sẽ về chỉ số cuối cùng rồi"
+  },
+  {
+    "chunk_id": "chunk_2531_2592",
+    "start_sec": 2531,
+    "end_sec": 2592,
+    "start_label": "42:11",
+    "end_label": "43:12",
+    "raw_text": "Đây này, nó chính là thằng 9 này này. Thế là bây giờ ông này thằng 9 và ông này thằng 12 Thì bạn thấy là khi đó làm sao? Khi đó phần tử lớn nhất trong mạng của mình, nó đã về chỉ số cuối cùng rồi Ok, nó sẽ về chỉ số cuối cùng rồi Và tiếp theo cái thao tác của mình, sau khi mà mình hoán vị thằng 9 với thằng 12 này này Thì bạn tiếp tục hippify từ nốt gốc này Để nó lại xây dựng lại cái mắc hipp từ cái bảng Mà bạn loại bỏ đi cái phần từ cuối cùng này Để nó luôn đảm bảo được cái thằng ở đầu này nó sẽ là nốt lớn nhất này Thì khi đó nó hippify từ cái thằng này này À chú ý nhá, sau khi mà bạn đã hoán vị thằng ở nốt gốc của rồi là 12 với 9 này Người ta sẽ tạm thời bỏ cái nốt này đi Tức là người ta sẽ không xét thằng này nữa Bởi vì nó đã là cái thằng lớn nhất rồi đúng không? Mình sẽ không hiepify, sẽ không xây dựng mắc hiep từ phần 12 này nữa"
+  },
+  {
+    "chunk_id": "chunk_2576_2639",
+    "start_sec": 2576,
+    "end_sec": 2639,
+    "start_label": "42:56",
+    "end_label": "43:59",
+    "raw_text": "À chú ý nhá, sau khi mà bạn đã hoán vị thằng ở nốt gốc của rồi là 12 với 9 này Người ta sẽ tạm thời bỏ cái nốt này đi Tức là người ta sẽ không xét thằng này nữa Bởi vì nó đã là cái thằng lớn nhất rồi đúng không? Mình sẽ không hiepify, sẽ không xây dựng mắc hiep từ phần 12 này nữa bởi vì nó đã là phần tử cuối cùng sắp xếp rồi Thì bây giờ cái thao tác hiepify của mình nó chỉ áp dụng với thằng này này Thằng này, thằng này, thằng này, thằng này thôi Trong trường hợp này 9 với 10 thì phần hiepify thì thằng này thành 10 và thằng này thành 9 luôn á Vậy thì nên sao? Bây giờ phần tử lớn nhất sau khi mà phần hiepify cái nốt gốc này này cái thằng lớn nhất lại là thằng 10 Đúng không? Thì nó làm sao? Nó lại hoán vị thằng 10 đấy với cái node cuối cùng, cái thần tử cuối cùng trong cái cây của bạn bây giờ Nó chính là cái thằng ở chỉ số 4 này Thì bây giờ ông này thành 1, đúng không? Con ông này thành 10, đây là 1 đi Con ông này thành 10 Và sau khi mà ông hoán vị xong thì nó cũng tạm thời bỏ cái node này đi Bỏ cái node này đi Không xép nữa Ok Thì bạn thấy là khi đó cái mạng của mình ấy, nó đã có 2 cái phần tử được sắp xếp rồi đấy"
+  },
+  {
+    "chunk_id": "chunk_2624_2703",
+    "start_sec": 2624,
+    "end_sec": 2703,
+    "start_label": "43:44",
+    "end_label": "45:03",
+    "raw_text": "Con ông này thành 10, đây là 1 đi Con ông này thành 10 Và sau khi mà ông hoán vị xong thì nó cũng tạm thời bỏ cái node này đi Bỏ cái node này đi Không xép nữa Ok Thì bạn thấy là khi đó cái mạng của mình ấy, nó đã có 2 cái phần tử được sắp xếp rồi đấy Chính là cái thằng 12 và thằng 10 là 2 cái thằng lớn nhất đây, thằng này thì là thằng 12, thằng này là 10 sau đó tiếp tục nó hippify từ cái nốt gốc này nhưng mà bây giờ cái cây của bạn nó chỉ có 1, 5, 1, 6, 9 và 5 thôi ok, 1, 6, 9 và 5 thôi thì cái thảo tác hippify nó sẽ cập nhật như thế nào nhỉ? đấy là 9 với 1 đúng không? thay đổi thằng 1, 9, 9 và 1 thì thằng ở gốc bây giờ lại là thằng lớn nhất thì nó lại swap thằng 9 này với cái thằng nốt cuối cùng này, là 5 đúng không? and"
+  },
+  {
+    "chunk_id": "chunk_2675_2741",
+    "start_sec": 2675,
+    "end_sec": 2741,
+    "start_label": "44:35",
+    "end_label": "45:41",
+    "raw_text": "and phần tử lớn nhất trong cái mạng khi đó và sau khi mình biết được phần tử ở góc là phần tử lớn nhất rồi thì mình sẽ swap phần tử lớn nhất đấy, phần tử ở góc đấy với phần tử cuối cùng trong cây, đúng không, hiện tại để cho phần tử lớn nhất đấy nó trở về cuối mà người ta sẽ cắt cái nốt đấy đi, cắt cái nốt đấy đi thực ra thì ở đây chả có cắt gì đâu, mình trở nên thật là mình không xét trên cái chỉ số đây nữa là được ok, đấy, thì cứ mỗi bước như thế sau khi bạn đã swap phần tử ở góc với phần tử cuối cùng, thì thằng cuối cùng về vị trí sẽ trở thành cái nốt lớn nhất trong mẻ"
+  },
+  {
+    "chunk_id": "chunk_2724_2785",
+    "start_sec": 2724,
+    "end_sec": 2785,
+    "start_label": "45:24",
+    "end_label": "46:25",
+    "raw_text": "thực ra thì ở đây chả có cắt gì đâu, mình trở nên thật là mình không xét trên cái chỉ số đây nữa là được ok, đấy, thì cứ mỗi bước như thế sau khi bạn đã swap phần tử ở góc với phần tử cuối cùng, thì thằng cuối cùng về vị trí sẽ trở thành cái nốt lớn nhất trong mẻ thì người ta lại hippify từ cái nốt góc đấy để người ta xây dựng lại mắc hipp từ cái nốt góc đấy để nó cập nhật lại là cái phần tử lớn nhất, lớn nhất lại là cái thằng góc đấy, và cứ thế mỗi lần thì tôi lại lấy ra thằng góc, tôi hoán vị với thằng cuối, còn tôi hippify lại, đúng không? Đây chính là thao tác tư tửa tửa của thật tán HipSort Đầu tiên bạn phải xây dựng được cho mình 1 cái MacHip Ok, MacHip thì mình vừa dẫn xây dựng rồi Đây, các bạn có thể xem qua cái giải thoát HipSort Đây chính là đầu tiên mình sẽ phải xây dựng 1 cái MacHip Thì xây dựng MacHip bằng cách là gì nhỉ? Xét tất cả các cái nốt không phải nốt lá đúng không? Bắt đầu từ chỉ số nơi chi 2 chi 1 về không"
+  },
+  {
+    "chunk_id": "chunk_2767_2828",
+    "start_sec": 2767,
+    "end_sec": 2828,
+    "start_label": "46:07",
+    "end_label": "47:08",
+    "raw_text": "Đây, các bạn có thể xem qua cái giải thoát HipSort Đây chính là đầu tiên mình sẽ phải xây dựng 1 cái MacHip Thì xây dựng MacHip bằng cách là gì nhỉ? Xét tất cả các cái nốt không phải nốt lá đúng không? Bắt đầu từ chỉ số nơi chi 2 chi 1 về không Sau đó mình sẽ gọi Hippify đến các cái nốt đấy sau khi mình có bug heap rồi thì mình sẽ suy huyệt từ chỉ số cuối cùng cho tới chỉ số đầu tiên của mạng Ở mỗi bước, hiện tại cái mạng của bạn, hay là cái mạng của bạn đang là một cái bug heap rồi thì nó sẽ swap cái thằng A0, nó chính là cái thằng node gốc, với cái thằng Ae, nó chính là cái node cuối cùng Ok, trong cái heap của bạn, hay nó khác là một phần tử ở chỉ số cuối cùng mà chưa được sắp xếp Để cho phần tử lớn nhất ở nốt góc là error 0 kì kìa, nó sẽ về cuối bản ok Sau đó nó tiếp tục gọi đến hippify của ae0 Tức là nó sẽ gọi hippify đến nốt góc i này này"
+  },
+  {
+    "chunk_id": "chunk_2809_2876",
+    "start_sec": 2809,
+    "end_sec": 2876,
+    "start_label": "46:49",
+    "end_label": "47:56",
+    "raw_text": "Ok, trong cái heap của bạn, hay nó khác là một phần tử ở chỉ số cuối cùng mà chưa được sắp xếp Để cho phần tử lớn nhất ở nốt góc là error 0 kì kìa, nó sẽ về cuối bản ok Sau đó nó tiếp tục gọi đến hippify của ae0 Tức là nó sẽ gọi hippify đến nốt góc i này này với số lượng phần tử ở mạng của mình khi đó nó là i thôi bởi vì nó sẽ bị giảm đi 1 phần tử mà ok, đó bạn có thể xem hoạt động của nó như sau nhá Đây cái mạng của mình là 12, 6, 10, 5, 1, 9 này này Thì sau khi mà xây dựng được cái markhip thì nó sẽ thành như thế này đúng không? 12, 6, 10, 5, 9, ok, đây là cái mắc híp của bạn, sau khi mình xây dựng mắc híp xong rồi nhé thì khi đó làm sao? Nó sẽ swap cái thằng nút lớp, đây là 12 này, với cái nút cuối cùng, trong cái mảng hiện tạc, nó chính là thằng 9 này thì khi đó thằng này thì thành 12 còn thành 9, đây, sau khi mình hoán vị thằng 12 về cuối, nó nằm ở cái chỉ số 5 của mảng này"
+  },
+  {
+    "chunk_id": "chunk_2858_2919",
+    "start_sec": 2858,
+    "end_sec": 2919,
+    "start_label": "47:38",
+    "end_label": "48:39",
+    "raw_text": "thì khi đó làm sao? Nó sẽ swap cái thằng nút lớp, đây là 12 này, với cái nút cuối cùng, trong cái mảng hiện tạc, nó chính là thằng 9 này thì khi đó thằng này thì thành 12 còn thành 9, đây, sau khi mình hoán vị thằng 12 về cuối, nó nằm ở cái chỉ số 5 của mảng này Thì khi đó nó sẽ cắt cái... mình tưởng tượng đến là nó cắt cái nốt đấy đi, cắt cái nốt ấn nhận này đi hay cái khác là khi đó các cái thao tác hippify của bạn vì sau nó sẽ không xét cái nốt này nữa Thì thương giảng thôi, bạn chỉ cần giảm cái chỉ số mạng này, sẽ lỗi giảm số lượng phần tử của mạng của mình đi 1 là được thì nó sẽ không xét đến cái chỉ số này nữa đâu, ok? Thì khi đó cái hip, mắc hip của bạn nó trở thành như thế này, nó đã loại bỏ cái nốt cuối cùng là 12 rồi Thì bây giờ nó hippify lại từ cái nốt gốc này, 9 đây này thì nó sẽ hoán vị 9.10 đó, đây 10v9, phần tử lớn nhất sau khi hippie5 nốt góc, nó lại là 10 nó đã swap 10 với nốt cuối cùng trong mạng của mình như là hôm 4 khi đó, a4 của mình thành 1, thì còn a, ạ, xin lỗi, a4 của mình thành 10 đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2904_2969",
+    "start_sec": 2904,
+    "end_sec": 2969,
+    "start_label": "48:24",
+    "end_label": "49:29",
+    "raw_text": "10v9, phần tử lớn nhất sau khi hippie5 nốt góc, nó lại là 10 nó đã swap 10 với nốt cuối cùng trong mạng của mình như là hôm 4 khi đó, a4 của mình thành 1, thì còn a, ạ, xin lỗi, a4 của mình thành 10 đúng không? còn a0 của mình thành 1, ạ, bạn thấy là 10 này nó sẽ về đến chỉ số cuối cùng là 4, đúng không nhỉ? thì người ta tiếp tục lại cắt 10 đi và người ta hippie5 lại từ nốt góc, hippie5 là nốt góc 1 này Thì đó nó sẽ hoán vị thằng 1 với thằng 9 này thôi Thì tiếp tục như thế, lại swap thằng gout là 9 với thằng node, node, node cuối cùng hiện tại là 5 Thái bây giờ thằng 9 rồi là thằng 5 Ok, sau đó thì cắt thằng 9 này đi Và khi đó cái bản của mình nó đã có 3 phần từ được sắp xếp tới là 9, 12 Đúng nhỉ? Và tiếp tục như thế, lại tiếp tục swap thằng 5 này với thằng 1 này đúng không? xin lỗi, thằng 6 với thằng 5 chứ nhỉ, đấy sau khi mà Hippify lại thì thằng 6 nó về góc"
+  },
+  {
+    "chunk_id": "chunk_2951_3015",
+    "start_sec": 2951,
+    "end_sec": 3015,
+    "start_label": "49:11",
+    "end_label": "50:15",
+    "raw_text": "Và khi đó cái bản của mình nó đã có 3 phần từ được sắp xếp tới là 9, 12 Đúng nhỉ? Và tiếp tục như thế, lại tiếp tục swap thằng 5 này với thằng 1 này đúng không? xin lỗi, thằng 6 với thằng 5 chứ nhỉ, đấy sau khi mà Hippify lại thì thằng 6 nó về góc ok, và nó sẽ hoán vị 6 với 1 đây, thì cái bản của bạn nó sẽ thành như thế này cứ thật tác của mình cứ hoán đổi như thế sau đó Hippify như thế và cuối cùng thì cái bản của bạn nó sẽ được sắp xếp theo thứ tự tăng dần như thế này thì đây chính là cái thực tượng của thật toán HippSort ok, vậy thì bây giờ mình sẽ đi vào cài đặt thật toán HippSort này Ok, nó sẽ có 2 cái phần chính 1 tài đặt thao tác, ngồi lại là thao tác Hippify Ok, ở đây mình sẽ viết 1 cái hèm gọi là Hippify Một cái mảng A có n là phần tự, và mình sẽ Hippify từ cái chỉ số i Tức là mình sẽ Hippify cái nốt gốc và nốt i, đúng nhỉ? Ok, cái chỉ số i thì khi đó cái thằng LabChine nó sẽ là 2i cộng 1 và RightChine nó sẽ là 2i cộng 2 đúng không?"
+  },
+  {
+    "chunk_id": "chunk_2997_3058",
+    "start_sec": 2997,
+    "end_sec": 3058,
+    "start_label": "49:57",
+    "end_label": "50:58",
+    "raw_text": "Ok, ở đây mình sẽ viết 1 cái hèm gọi là Hippify Một cái mảng A có n là phần tự, và mình sẽ Hippify từ cái chỉ số i Tức là mình sẽ Hippify cái nốt gốc và nốt i, đúng nhỉ? Ok, cái chỉ số i thì khi đó cái thằng LabChine nó sẽ là 2i cộng 1 và RightChine nó sẽ là 2i cộng 2 đúng không? Ok, mình sẽ có 1 cái chỉ số Lab C++, include, cout, Refrigerator, class, struct, Freeform, Renew, ạ, renew, ạ, ạ, refrigerator,restart, Refrigerator, resources, controls, render, graphics, models, ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... Bây giờ, lép này có quan bên trái và con bên phải, ít phá là con y, nó vẫn nằm trong mạng Thằng ít nhất, nó có con bên trái và con bên phải"
+  },
+  {
+    "chunk_id": "chunk_3043_3105",
+    "start_sec": 3043,
+    "end_sec": 3105,
+    "start_label": "50:43",
+    "end_label": "51:45",
+    "raw_text": "... ... ... ... ... ... Bây giờ, lép này có quan bên trái và con bên phải, ít phá là con y, nó vẫn nằm trong mạng Thằng ít nhất, nó có con bên trái và con bên phải Vì vật có thể nốt ở chỉ số y, lép của nó là 2y6,... ... nó sẽ ngoài mạng rồi, sẽ tính là ít thằng y không có con trái và không có con phái Nếu lép nhỏ hơn là ít có con bên trái và con bên trái là lép lớn hơn thằng gi过 bằng lép, nếu con bên trái lớn hơn thằng gốc, cập nhật chỉ số lớn nhất, nói chính là con bên trái tương tự như vậy, nếu thằng i có con bên phải, con bên phải lớn hơn, thằng đang được con lớn nhất S, cái mình sẽ cập nhập larch bằng qua, đấy, vậy thì sau 2 cái ip này, mình đã có cái biến larch là cái thằng"
+  },
+  {
+    "chunk_id": "chunk_3087_3150",
+    "start_sec": 3087,
+    "end_sec": 3150,
+    "start_label": "51:27",
+    "end_label": "52:30",
+    "raw_text": "tương tự như vậy, nếu thằng i có con bên phải, con bên phải lớn hơn, thằng đang được con lớn nhất S, cái mình sẽ cập nhập larch bằng qua, đấy, vậy thì sau 2 cái ip này, mình đã có cái biến larch là cái thằng nó lưu cái chỉ số lớn nhất trong 3 thằng, đúng không? thằng nốt gốc y, thằng qua bên trái 2 y cộng 1 và thằng qua bên phải là 2 y cộng 2 và nếu mà, nếu mà cái biến larch nó khác y, ok đấy, tức là cái thằng ở nốt gốc chưa phải là thằng lớn nhất thì mình mới tiến hành swap nhá Mình tiễn hành swap 2 thằng đứt là a, i và aLargex và mình tiếp tục gọi hippify đến cái thằng màng a này, có n phần tử và chỉ số Largex Tiếp tục hippify đến thằng con bên trái và thằng con bên phải trong trường hợp thằng con bên trái và thằng con bên phải nó lớn hơn thằng gốc"
+  },
+  {
+    "chunk_id": "chunk_3127_3192",
+    "start_sec": 3127,
+    "end_sec": 3192,
+    "start_label": "52:07",
+    "end_label": "53:12",
+    "raw_text": "và mình tiếp tục gọi hippify đến cái thằng màng a này, có n phần tử và chỉ số Largex Tiếp tục hippify đến thằng con bên trái và thằng con bên phải trong trường hợp thằng con bên trái và thằng con bên phải nó lớn hơn thằng gốc Thế còn trong trường hợp Largex thì nó bằng i rồi nhé Tức là cái thằng non-gốc thì nó lớn hơn thằng con bên trái, thằng con bên phải thì mình sẽ không làm gì nữa Được nhờ, bây giờ nó khác, nó không phải là thằng lớn nhất thì mình mới swap của mình hippie-fi Bởi vì tí nữa khi mà xây dựng mark hippie thì các bạn xây dựng từ các cái level bên dưới dần dần lên Thành ra là nó luôn đảm bảo được rằng là các cái node ở bên dưới nó đã được hippie-fi rồi Ok, thì mình cần một cái thao tác như thế này Để ra kiểm tra nhớ, có thao tác kiểm tra này bởi vì khi mà các bạn Hippify thì mình sẽ xây dựng từ thằng này, thằng này sau đó mới set đến những cái thằng tra của nó, đúng không? Chứ mình không xây dựng từ trên xuống dưới, được không nhờ?"
+  },
+  {
+    "chunk_id": "chunk_3174_3237",
+    "start_sec": 3174,
+    "end_sec": 3237,
+    "start_label": "52:54",
+    "end_label": "53:57",
+    "raw_text": "Ok, thì mình cần một cái thao tác như thế này Để ra kiểm tra nhớ, có thao tác kiểm tra này bởi vì khi mà các bạn Hippify thì mình sẽ xây dựng từ thằng này, thằng này sau đó mới set đến những cái thằng tra của nó, đúng không? Chứ mình không xây dựng từ trên xuống dưới, được không nhờ? Vậy thì mình đã xong được cái thao tác Hippify rồi nhá, không có gì khói hiểu đúng không? Bây giờ mình sẽ vào thuật toán Hippsoft thuật toán Hippsoft ấy, mà an này, corner phần tử ấy, thì cái thao tác đầu tiên của các bạn đấy chính là phải xây dựng được một cái mắc Hipp Mình sẽ, như lúc nãy mình nói, các bạn phải duyệt từ chỉ số mà của các nốt không phải nốt lá đúng không? Bắt đầu từ đầu tiên này, nò chứ 2, nò trên 2 chứ 1 à, đúng không? Y lớn mà không, y chứ chứ, và bạn gọi cái ham là ham hitv5 mà mình vừa xây dựng ở trên ấy A, nò và chỉ số là y, đấy, ok. Trong trường hợp cái mạng này thì nó sẽ hitv5 từ đỉnh này, nốt này, nốt này, sau đấy nốt này"
+  },
+  {
+    "chunk_id": "chunk_3221_3284",
+    "start_sec": 3221,
+    "end_sec": 3284,
+    "start_label": "53:41",
+    "end_label": "54:44",
+    "raw_text": "Y lớn mà không, y chứ chứ, và bạn gọi cái ham là ham hitv5 mà mình vừa xây dựng ở trên ấy A, nò và chỉ số là y, đấy, ok. Trong trường hợp cái mạng này thì nó sẽ hitv5 từ đỉnh này, nốt này, nốt này, sau đấy nốt này Vậy thì sau cái vòng 4 này thì nó sẽ xây dựng được 1 cái MacHip rồi, đúng không? Xây dựng được 1 cái MacHip rồi Tha tác Hippify này thì đúng nha Nó có độ phức tạp là Logner, đúng không? Như kiểu là bạn mỗi lần và bạn sử dụng priority queue, mỗi lần mà nó cập nhật lại Cập nhật lại phần thứ lớn nhất ở đầu hàng đợi Rồi, sau khi mà mới xây dựng được MacHip rồi, thì các bạn làm cho mình như sau Đây chính là các bạn xét từ cái chỉ số cuối cùng trong chỉ số trong mạng của mình Tức là 4, in, t, i, bằng, n là chữ 1, i lớn, bằng không, i chữ chữ Để làm gì? Để mình sẽ swap 2 thằng, đấy là thằng nốt gốc hiện tại, nó chính là cái thằng lớn nhất"
+  },
+  {
+    "chunk_id": "chunk_3267_3327",
+    "start_sec": 3267,
+    "end_sec": 3327,
+    "start_label": "54:27",
+    "end_label": "55:27",
+    "raw_text": "Đây chính là các bạn xét từ cái chỉ số cuối cùng trong chỉ số trong mạng của mình Tức là 4, in, t, i, bằng, n là chữ 1, i lớn, bằng không, i chữ chữ Để làm gì? Để mình sẽ swap 2 thằng, đấy là thằng nốt gốc hiện tại, nó chính là cái thằng lớn nhất và cái thằng ở chỉ số i hiện tại, nó chính là cái phần tử cuối cùng trong mạng của mình Thì bạn sẽ tiến hành là swap 2 thằng, đấy là ai và a0 Thì khi đó, tức cái thằng a0 của mình, nó đang là cái thằng nốt gốc của MarkHit nó sẽ là cái thằng lớn nhất trong mạng của mình, nó sẽ được đề về cuối, đưa về cuối Đúng không? Thì khi đó mình sẽ được có một cái thằng cuối được đưa về rồi, đúng không? là thằng lớn nhất rồi Sau đó làm sao? Sau đó bạn Hippify Với cái node góc để nó cập nhật lại nhá Nó sẽ đi từ góc xuống, bắt đầu nó lại cập nhật lại một lần nữa Tức là mình sẽ cập nhật Hippify vào an, i và không Tức là mình sẽ Hippify từ node không Với cái số lượng phần tử của mạng, bây giờ nó chỉ còn là i thôi Đúng không?"
+  },
+  {
+    "chunk_id": "chunk_3309_3371",
+    "start_sec": 3309,
+    "end_sec": 3371,
+    "start_label": "55:09",
+    "end_label": "56:11",
+    "raw_text": "Với cái node góc để nó cập nhật lại nhá Nó sẽ đi từ góc xuống, bắt đầu nó lại cập nhật lại một lần nữa Tức là mình sẽ cập nhật Hippify vào an, i và không Tức là mình sẽ Hippify từ node không Với cái số lượng phần tử của mạng, bây giờ nó chỉ còn là i thôi Đúng không? bởi vì khi số lượng phần tử của máng bạn chỉ là i, thì nó sẽ không xét chỉ số cuối cùng mà bạn vừa xét nữa đúng không? Ví dụ bây giờ trong trường hợp này là i và nghe nói chứ 1 đúng không? Thì sau khi mà bạn đã đưa cái phần tử lớn nhất về cái chỉ số an nói chứ 1 rồi, thì cái mạng của bạn bây giờ nó chỉ còn i phần tử thôi, hay nó tích khác nó chỉ còn nói chứ 1 phần tử thôi thì nó chính là cái thao tác khi mà bạn loại bỏ cái này này, bạn loại bỏ bạn cho cái phần tử lớn nhất về cuối này này, như 2 này, về 5 này, thì bạn giảm cái chỉ số lượng phần tử của máng đi, bây giờ nó chỉ còn là 2, 4, 6, nó còn 5 thôi, thì tí nữa ấy các cái thao tác của bạn nó sẽ không xét cái thằng này nữa, thì thao tác hippie file của bạn nó sẽ không xét đến thằng cuốn này nữa ok, thằng ra chủ này đừng có gọi hippie file an là không nhé, bạn mới gọi hippie file an là không thì"
+  },
+  {
+    "chunk_id": "chunk_3353_3419",
+    "start_sec": 3353,
+    "end_sec": 3419,
+    "start_label": "55:53",
+    "end_label": "56:59",
+    "raw_text": "thì bạn giảm cái chỉ số lượng phần tử của máng đi, bây giờ nó chỉ còn là 2, 4, 6, nó còn 5 thôi, thì tí nữa ấy các cái thao tác của bạn nó sẽ không xét cái thằng này nữa, thì thao tác hippie file của bạn nó sẽ không xét đến thằng cuốn này nữa ok, thằng ra chủ này đừng có gọi hippie file an là không nhé, bạn mới gọi hippie file an là không thì khi đó nó lại cập nhật cái mảng của bạn nó lại về ban đầu đấy, thằng lớn nhất nó lại về cuối, nó không được sắp xếp đâu Mình đã đưa được phần tử của lớn nhất về cuối dẫy rồi, thì mình giảm số lượng phần tử của màng đi Thực chất ở đây, số lượng phần tử của màng mình vẫn là nờ, nhưng ở đây mình gọi Hippify tới AI0 để mình không set phần tử lớn nhất nữa Ok hông nhờ? Sau cái vòng 4 này, nó cứ lần lượt đưa phần tử cuối về dẫy, sau nó rại xóa đi, phần tử đấy, cái nốt đấy đúng không? CUNG, nr, cut, lvlm, c 숨, rình, load, vnlm, int, ОOP."
+  },
+  {
+    "chunk_id": "chunk_3399_3459",
+    "start_sec": 3399,
+    "end_sec": 3459,
+    "start_label": "56:39",
+    "end_label": "57:39",
+    "raw_text": "CUNG, nr, cut, lvlm, c 숨, rình, load, vnlm, int, ОOP. A, nò, dựa các hoạt động trong màn, xem có lý sắp xếp hay không Ok, đây là sắp xếp tăng dần nhé, còn nếu mà sắp xếp ra em dần thì các bạn thấy Set the mean hit, ok, chắc là không vấn đề gì đúng không? Được, mình sẽ chạy thật tấn hit sort này Cũng rất là ngắn, cái đặt rất là dễ nhưng mà, trước khi cái đặt nó phải hiểu được cấu trúc dữ liệu hit Ở đây mình sẽ lấy 10 phần tử nhé, 19, 18, 1, 2, 3, 7, 6, 5, 4, 10 Các bạn sẽ thành sắp xếp tăng gần 1,2,4,5,6,7,7,9,10 Đó chính là mình sử dụng mark-heap nhé, từ từ"
+  },
+  {
+    "chunk_id": "chunk_3438_3500",
+    "start_sec": 3438,
+    "end_sec": 3500,
+    "start_label": "57:18",
+    "end_label": "58:20",
+    "raw_text": "Cũng rất là ngắn, cái đặt rất là dễ nhưng mà, trước khi cái đặt nó phải hiểu được cấu trúc dữ liệu hit Ở đây mình sẽ lấy 10 phần tử nhé, 19, 18, 1, 2, 3, 7, 6, 5, 4, 10 Các bạn sẽ thành sắp xếp tăng gần 1,2,4,5,6,7,7,9,10 Đó chính là mình sử dụng mark-heap nhé, từ từ Mình cho lớn hơn 1 chút đi, dụng bằng 100 đi Mình đỡ cái cn, rồi đây mình random Cái này mình sẽ cho ai là 1 cái số 500 đi Ok, sau đó mình sẽ thử random các số để chạy để cho nó sắp xếp Thì các bạn cũng sẽ được sắp xếp 1, 2, 12, 18, 3, 7, 4, 1, 4, 8, 5, 5, 5 cho đến cái số lớn cuối cùng, đây là 491 Ok, chỗ này là 463 nha Rồi, thì đấy chính là thuật toán, hip saw"
+  },
+  {
+    "chunk_id": "chunk_3484_3546",
+    "start_sec": 3484,
+    "end_sec": 3546,
+    "start_label": "58:04",
+    "end_label": "59:06",
+    "raw_text": "để cho nó sắp xếp Thì các bạn cũng sẽ được sắp xếp 1, 2, 12, 18, 3, 7, 4, 1, 4, 8, 5, 5, 5 cho đến cái số lớn cuối cùng, đây là 491 Ok, chỗ này là 463 nha Rồi, thì đấy chính là thuật toán, hip saw Ok, các bạn có thể thử cai đặt nó xem là minhip sẽ có vấn đề gì không Nhưng mình nói đấy, các bạn chỉ cần hiểu được cái cầu chúc cây nhị phân hẳn trĩnh và cầu chúc dữ đậu hip Chứ còn bạn chưa cần phải xây dựng cây nhị phân, đúng nhỉ? Vậy thì tư tưởng của thật tác hipsoft là như thế, đúng không? Xây dựng MacHip, sau đó thì cứ hoán vị cái phần tử gốc của MacHip, với cái phần tử cuối cùng trong mạng của mình và Hippify lại từ đầu để cập nhật được cái phần tử gốc luôn là phần tử lớn nhất Nói chỉ có 2 thật tác như thế này thôi, cái đặt rất là ngắn Nhưng mà khi mà các bạn học hiếp xò thì hãy cố gắng hiểu được cái tát tác hiếp DeFi và cái cấu trúc dữ liệu hiếp, ok?"
+  },
+  {
+    "chunk_id": "chunk_3526_3551",
+    "start_sec": 3526,
+    "end_sec": 3551,
+    "start_label": "58:46",
+    "end_label": "59:11",
+    "raw_text": "và Hippify lại từ đầu để cập nhật được cái phần tử gốc luôn là phần tử lớn nhất Nói chỉ có 2 thật tác như thế này thôi, cái đặt rất là ngắn Nhưng mà khi mà các bạn học hiếp xò thì hãy cố gắng hiểu được cái tát tác hiếp DeFi và cái cấu trúc dữ liệu hiếp, ok? Nếu bạn có thắc mắc gì thì có thể comment bên dưới nhé, mình sẽ giải ra."
+  }
+]

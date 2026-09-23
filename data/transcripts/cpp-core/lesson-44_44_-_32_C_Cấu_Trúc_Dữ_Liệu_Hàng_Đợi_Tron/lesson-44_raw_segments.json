@@ -1,0 +1,4357 @@
+[
+  {
+    "start": 2.54,
+    "end": 9.06,
+    "text": "Vino này thì mình dẫn dẫn các bạn kiến thức tiếp theo. Mình một cấu trúc dữ liệu nữa sau stack thì nó là hàng đợi, ok."
+  },
+  {
+    "start": 9.06,
+    "end": 15.92,
+    "text": "Cấu trúc dữ liệu hay hàng đợi này thì cũng tương đối là dễ kài đặt mà cũng dễ sử dụng và dễ hiểu nữa, ok."
+  },
+  {
+    "start": 15.92,
+    "end": 22.38,
+    "text": "Thì hôm trước mình đã tìm hiểu về cấu trúc dữ liệu ngăn sếp rồi, ngăn sếp thì nó có cái thứ hoạt động là"
+  },
+  {
+    "start": 22.38,
+    "end": 29.58,
+    "text": "lifo đúng không? Lapt input out, vào trước thì lại, lại sẽ lỗi vào sau thì ra trước, ok."
+  },
+  {
+    "start": 29.58,
+    "end": 34.7,
+    "text": "còn cái thằng hàng đợi này thì nó có cái tức hoạt động là FIFO"
+  },
+  {
+    "start": 34.7,
+    "end": 39.15,
+    "text": "tức là first in, first out"
+  },
+  {
+    "start": 39.15,
+    "end": 43.95,
+    "text": "ok, bạn có thể tưởng tượng cái hàng đợi của mình như thế này này"
+  },
+  {
+    "start": 43.95,
+    "end": 47.79,
+    "text": "nó như là cái hàng đợi khi mà các bạn xếp hàng ấy, ok, nó sẽ có 2 đầu"
+  },
+  {
+    "start": 47.79,
+    "end": 55.78,
+    "text": "đầu này là đầu, tầm gọi là cái đầu hàng đợi đi, ok, con này là cuối hàng đợi nhé"
+  },
+  {
+    "start": 55.78,
+    "end": 59.38,
+    "text": "đây là đầu hàng đợi và mỗi nó cũng có 2 cái theo tác là tàu tác push"
+  },
+  {
+    "start": 59.38,
+    "end": 60.72,
+    "text": "ok"
+  },
+  {
+    "start": 60.72,
+    "end": 63.66,
+    "text": "và theo tác pop"
+  },
+  {
+    "start": 63.66,
+    "end": 67.18,
+    "text": "Thì cái tautopush này có nghĩa là đẩy 1 phần tử vào trong hàng đợi"
+  },
+  {
+    "start": 67.18,
+    "end": 70.94,
+    "text": "Thì cái việc mà bạn đẩy 1 phần tử vào trong hàng đợi thì bạn đẩy từ cuối, ok?"
+  },
+  {
+    "start": 70.94,
+    "end": 75.1,
+    "text": "Như kiểu là mình đi xếp vào 1 cái hàng thì mình sẽ phải đi vào cuối để xếp đúng không?"
+  },
+  {
+    "start": 75.1,
+    "end": 78.14,
+    "text": "Mình dụ mình đẩy 1 phần tử vào trong hàng đợi nhé, đẩy 1 nè"
+  },
+  {
+    "start": 78.14,
+    "end": 83.9,
+    "text": "Thì lần sau bạn đẩy 1 phần tử vào trong hàng đợi thì nó sẽ được đẩy vào cuối, nó xếp vào cuối này này"
+  },
+  {
+    "start": 83.9,
+    "end": 88.46,
+    "text": "Cứ thế, bạn đẩy thêm vào thì nó cứ thế được xếp thêm vào cuối của hàng đợi nhé"
+  },
+  {
+    "start": 88.46,
+    "end": 94.98,
+    "text": "nếu mà bạn pôp, bạn sẽ lấy ra một phần tử ở đầu hàng đợi, khi ông nào xếp đầu tiên, nó sẽ được đi ra trước"
+  },
+  {
+    "start": 94.98,
+    "end": 98.98,
+    "text": "thì ví dụ, bạn pôp một phần tử thì nó sẽ pôp thầm một ngày trước"
+  },
+  {
+    "start": 98.98,
+    "end": 102.84,
+    "text": "nếu bạn xoát pôp tiếp thì bạn nó lại xoát thầm hai, ok?"
+  },
+  {
+    "start": 102.84,
+    "end": 105.84,
+    "text": "thì đấy chính là hai cái thao tác chính của cái thằng hàng đợi này"
+  },
+  {
+    "start": 105.84,
+    "end": 111.42,
+    "text": "cứ chiếc các bạn chỉ cần nhớ, đấy chính là khi mà đẩy một phần tử vào thì nó sẽ đẩy vào cuối"
+  },
+  {
+    "start": 111.42,
+    "end": 114.42,
+    "text": "ok, đẩy vào cuối, đẩy vào cuối hàng đợi, thế còn đi thì"
+  },
+  {
+    "start": 114.42,
+    "end": 117.42,
+    "text": "nếu bạn muốn lấy ra thì nó sẽ lấy ra ở đầu hàng đợi"
+  },
+  {
+    "start": 117.42,
+    "end": 121.34,
+    "text": "này chính là 2 cổ t крас push vào POP của hàng đợi"
+  },
+  {
+    "start": 121.34,
+    "end": 127.34,
+    "text": "và bạn có thể truy cập vào một phần tử nó đánh đỉnh hàng đợi nha, đứng ở trước, x influenced"
+  },
+  {
+    "start": 128.62,
+    "end": 132.65,
+    "text": "trong stack thì mình sẽ truy cập vào TOOP đúng không?"
+  },
+  {
+    "start": 132.65,
+    "end": 139.58,
+    "text": "tại vì là hàng đợi thì nó sẽ có azure nog ansep thì nó có đỉnh mà, đúng không?"
+  },
+  {
+    "start": 139.58,
+    "end": 144.22,
+    "text": "và bạn muốn truy cập đến phần tử trên đỉnh hàng đợi, thì mình sẽ ăn ansep, mình sẽ sử dụng hằn TOOP"
+  },
+  {
+    "start": 144.22,
+    "end": 148.7,
+    "text": "còn trong trường hợp hàng đợi thì mình sẽ truy cập vào cái thằng là thằng run, ok?"
+  },
+  {
+    "start": 148.7,
+    "end": 152.38,
+    "text": "Đây là cách thức hoạt động của thằng ngăn xếp này nhé"
+  },
+  {
+    "start": 152.38,
+    "end": 154.62,
+    "text": "Và bạn sẽ có một vài hàm"
+  },
+  {
+    "start": 154.62,
+    "end": 158.81,
+    "text": "Cái hàm của ngăn xếp này thì nó đều có đứa phức tạp ở ôm 1"
+  },
+  {
+    "start": 158.81,
+    "end": 161.51,
+    "text": "Đấy có phức tạp ở ôm 1"
+  },
+  {
+    "start": 161.51,
+    "end": 163.51,
+    "text": "Hàm đầu tiên đây chính là hàm push"
+  },
+  {
+    "start": 163.51,
+    "end": 168.42,
+    "text": "Nó chính là công việc mà bạn đẩy 1 phần tử vào trong cuối hàng đợi nhé"
+  },
+  {
+    "start": 168.42,
+    "end": 169.62,
+    "text": "Hàm thứ 2 là hàm pop"
+  },
+  {
+    "start": 169.62,
+    "end": 173.3,
+    "text": "Đây là 1 hàm xoá 1 phần tử khỏi đầu hàng đợi"
+  },
+  {
+    "start": 173.3,
+    "end": 176.52,
+    "text": "Đẩy vào thì đẩy cuối nhưng mà xoá thì xoá đầu"
+  },
+  {
+    "start": 176.52,
+    "end": 181.52,
+    "text": "hàm empty, check siu một hàm đợi của rộng hay không"
+  },
+  {
+    "start": 181.52,
+    "end": 187.06,
+    "text": "hàm size để chỉ ra kích thước của hàm front"
+  },
+  {
+    "start": 187.06,
+    "end": 189.06,
+    "text": "để lấy ra thần tửa đầu hàm đợi"
+  },
+  {
+    "start": 189.06,
+    "end": 193.06,
+    "text": "đây là hàm chính của hàm thằng hàm đợi"
+  },
+  {
+    "start": 193.06,
+    "end": 197.06,
+    "text": "để khai báo hàm đợi, include, kill"
+  },
+  {
+    "start": 197.06,
+    "end": 201.96,
+    "text": "cách khai báo tương tự như stack, mình sẽ khai báo là kill"
+  },
+  {
+    "start": 201.96,
+    "end": 204.96,
+    "text": "kiểu dữ liệu, tên kill"
+  },
+  {
+    "start": 204.96,
+    "end": 208.96,
+    "text": "kiểu giữ liệu này thì tuy nhé, có thể là string, integer, long long, vân vân"
+  },
+  {
+    "start": 208.96,
+    "end": 216.45,
+    "text": "ví dụ mình đẩy 1 phần tử với trong hàng đợi nhé"
+  },
+  {
+    "start": 216.45,
+    "end": 223.06,
+    "text": "ok, sau đó mình đẩy thêm nhé"
+  },
+  {
+    "start": 223.06,
+    "end": 226.06,
+    "text": "vậy thì bây giờ trong cái hàng đợi của mình nó đang có 4 phần tử là 1, 2, 3, 4"
+  },
+  {
+    "start": 226.06,
+    "end": 229.06,
+    "text": "cứ thằng nào được đẩy vào trước thì nó sẽ xếp vào đầu nhé"
+  },
+  {
+    "start": 229.06,
+    "end": 232.06,
+    "text": "ok, những cái thằng mà đẩy vào sau thì nó cứ thế mà nó xếp sau"
+  },
+  {
+    "start": 232.06,
+    "end": 236.06,
+    "text": "thằng ra là cái hàng đợi của mình nó như thế này, bây giờ nó đang như thế này"
+  },
+  {
+    "start": 236.06,
+    "end": 241.7,
+    "text": "có, đấy là 1 này, 2 này, 3, 4, ok push, có"
+  },
+  {
+    "start": 241.7,
+    "end": 246.82,
+    "text": "Bây giờ nếu mình truy cập vào thằng đỉnh hàng đợi này thì bạn sẽ sử dụng hàm frang"
+  },
+  {
+    "start": 246.82,
+    "end": 256.62,
+    "text": "Ví dụ Michelle ra kill trong frang thì nó sẽ in ra cái thằng ở đỉnh hàng đợi bây giờ nó sẽ là 1"
+  },
+  {
+    "start": 256.62,
+    "end": 270.65,
+    "text": "Nếu bạn pop cái thằng này thì bạn xóa cái 1 phần tử nào đó ở trong hàng đợi đi"
+  },
+  {
+    "start": 270.65,
+    "end": 273.97,
+    "text": "Ví dụ kêu chấm pop để xóa cái phần tử ở trong hàng đợi đi"
+  },
+  {
+    "start": 273.97,
+    "end": 276.57,
+    "text": "Thì khi đó nó sẽ xóa cái thằng ở đỉnh hàng đợi"
+  },
+  {
+    "start": 276.57,
+    "end": 279.41,
+    "text": "Khi kiểu là cái thằng đến trước thì được phục vụ trước"
+  },
+  {
+    "start": 279.41,
+    "end": 284.39,
+    "text": "Bây giờ, nếu xiao ra queue.front, thì không còn là thằng 1 nữa"
+  },
+  {
+    "start": 284.39,
+    "end": 290.54,
+    "text": "bởi vì mình vừa xóa, mình vừa pop 1 phần tử rồi đúng không, thì nó pop thằng 2 này"
+  },
+  {
+    "start": 290.54,
+    "end": 295.34,
+    "text": "Thì bây giờ cái thằng mà đỉnh hàng đợi thì nó lại là 2 và xiao ra queue.front thì nó sẽ in ra thằng 2"
+  },
+  {
+    "start": 295.34,
+    "end": 304.55,
+    "text": "Ok, lúc đầu thì nó là 1, nhưng mà sau khi mình pop cái thằng là đỉnh hàng đợi thì nó sẽ chỉ..."
+  },
+  {
+    "start": 304.55,
+    "end": 307.95,
+    "text": "cái thằng là đỉnh hàng đợi khi đó nó sẽ là 2, đầu hàng đợi"
+  },
+  {
+    "start": 307.95,
+    "end": 312.55,
+    "text": "Bạn có thể xiao ra cái sai của nó, queue.side"
+  },
+  {
+    "start": 312.55,
+    "end": 318.38,
+    "text": "Thì nó sẽ in ra số lượng phần tử trong hàng đợi, lúc đó nó sẽ là 3, ok?"
+  },
+  {
+    "start": 319.38,
+    "end": 324.38,
+    "text": "Và là bạn không có thể check xem nó có rộng hay không bằng cách là sử dụng hàng MT"
+  },
+  {
+    "start": 324.38,
+    "end": 326.38,
+    "text": "Bây giờ mình nếu mình pop 3 lần nhé, kill.pop rồi"
+  },
+  {
+    "start": 326.38,
+    "end": 330.08,
+    "text": "Sao nó ra trên 1 lần nữa là kill.pop rồi"
+  },
+  {
+    "start": 330.08,
+    "end": 332.43,
+    "text": "và kill.pop rồi"
+  },
+  {
+    "start": 332.43,
+    "end": 335.43,
+    "text": "Và mình sẽ cl ra kill.mt thì nó sẽ in ra là chu"
+  },
+  {
+    "start": 335.43,
+    "end": 337.43,
+    "text": "tốt là 1 ạ"
+  },
+  {
+    "start": 337.43,
+    "end": 339.43,
+    "text": "bởi vì mình pop cả 3 thắng ra rồi mà"
+  },
+  {
+    "start": 339.43,
+    "end": 343.43,
+    "text": "Nhưng mà nhớ các bạn chú ý là trong trường hợp mà cái hàng đợi của bạn ạ"
+  },
+  {
+    "start": 343.43,
+    "end": 347.75,
+    "text": "trong trường hợp cái hàng đợi của bạn mà nó rộng í, mà bạn cố tình pô í"
+  },
+  {
+    "start": 347.75,
+    "end": 353.75,
+    "text": "hoặc là các bạn cố tình truy cập vào cái hàng front này là nó sẽ bị rỗi lý á, ở runtime, ok"
+  },
+  {
+    "start": 353.75,
+    "end": 357.75,
+    "text": "thế đây chính là 5 cái hàng chính của cái hàng đợi, và nó đều có độ phức tạp ông 1"
+  },
+  {
+    "start": 357.75,
+    "end": 359.75,
+    "text": "rất là nhanh đúng không? ok"
+  },
+  {
+    "start": 359.75,
+    "end": 363.75,
+    "text": "cái cách thư hoạt động của nó cũng rất là dễ, các bạn chỉ cần nhớ đây là"
+  },
+  {
+    "start": 363.75,
+    "end": 370.75,
+    "text": "nó sẽ có cái thằng đầu và cuối hàng đợi, như là cái hàng đợi trong cái cửa hàng hoặc là"
+  },
+  {
+    "start": 370.75,
+    "end": 373.95,
+    "text": "Khi mà đi xem phim, mình cũng sẽ phải hệ xếp hàng mua vẽ ấy"
+  },
+  {
+    "start": 373.95,
+    "end": 382.35,
+    "text": "Thế cứ ông nào mà vào thì ông ấy sẽ phải xếp vào cuối hàng đợi và ông nào mà đi giá, tức là ông được phục vụ đầu tiên ấy, thì ông đã đến sớm nhất, tức là ông ngồi đỉnh hàng đợi"
+  },
+  {
+    "start": 382.35,
+    "end": 388.75,
+    "text": "Thì dạc cách thức hoạt động của nó là FIFO, FUD Info Out vào trước thì được phục vụ trước"
+  },
+  {
+    "start": 388.98,
+    "end": 397.74,
+    "text": "Nó khác với stack, stack thì là LIFO, còn hàng đợi thì nó sẽ là FIFO"
+  },
+  {
+    "start": 397.74,
+    "end": 401.18,
+    "text": "BladInfoDemm"
+  },
+  {
+    "start": 401.18,
+    "end": 404.62,
+    "text": "BladInfoDemm"
+  },
+  {
+    "start": 404.62,
+    "end": 409.11,
+    "text": "Ok"
+  },
+  {
+    "start": 409.11,
+    "end": 414.11,
+    "text": "Đây chính là các tháo pack chính của hàng đợi và cách sử dụng nó"
+  },
+  {
+    "start": 414.11,
+    "end": 417.11,
+    "text": "Tất nhiên là bạn cũng có thể đẩy các kiểu dữ liệu khác nhé"
+  },
+  {
+    "start": 417.11,
+    "end": 419.11,
+    "text": "Ví dụ như là string hoặc cái gì đó vào trong cái tháng hàng đợi này"
+  },
+  {
+    "start": 419.11,
+    "end": 425.34,
+    "text": "Tháng hàng đợi này thì nó được dùng trong thuật toán, trong đồ thị, theo đối nổi tiếng"
+  },
+  {
+    "start": 425.34,
+    "end": 428.34,
+    "text": "Đây chính là thuật toán bbs, giữa theo chiều dọn"
+  },
+  {
+    "start": 428.34,
+    "end": 429.34,
+    "text": "Ok"
+  },
+  {
+    "start": 429.34,
+    "end": 434.63,
+    "text": "sau đây thì mình sẽ hướng dẫn các bạn một vài cái bài làm quen với cái cấu trúc dự điện hàng đợi này nhé"
+  },
+  {
+    "start": 434.63,
+    "end": 437.83,
+    "text": "tất nhiên là nó chỉ mang cái tính chất để chính là làm quen thôi, ok"
+  },
+  {
+    "start": 437.83,
+    "end": 443.43,
+    "text": "còn để mà làm các bài tập về hàng đợi thì mình sẽ phải có một cái chuyên để riêng để làm các bài tập về hàng đợi"
+  },
+  {
+    "start": 443.43,
+    "end": 449.43,
+    "text": "ok, nói chung là trong cái khóa xịm cộng này thì mình chỉ mong muốn ấy chỉ là các bạn có thể"
+  },
+  {
+    "start": 449.43,
+    "end": 454.1,
+    "text": "tức là mình có thể nắm bắt được cái cách hoạt động của nó cũng như là sử dụng được nó"
+  },
+  {
+    "start": 454.1,
+    "end": 460.24,
+    "text": "Ok, ở mức cơ bản thôi, để mà gặp một cái bài toán nào đó mà nó có cái thằng sử dụng thằng hàng đợi thì mình có thể nắm bắt được cái thật toán đấy"
+  },
+  {
+    "start": 460.76,
+    "end": 461.26,
+    "text": "Ok"
+  },
+  {
+    "start": 464.02,
+    "end": 468.88,
+    "text": "Vì dụ nhé, mình có một cái bài toán như sau đấy chính là nó sẽ cho một số tự nhiên"
+  },
+  {
+    "start": 469.4,
+    "end": 472.22,
+    "text": "và yêu cầu mình yên ra tất cả các số nhị phân từ 1 cho tới nở ấy"
+  },
+  {
+    "start": 472.72,
+    "end": 474.78,
+    "text": "Thì mình có thể sử dụng thằng hàng đợi này nhé"
+  },
+  {
+    "start": 475.04,
+    "end": 475.54,
+    "text": "Ok"
+  },
+  {
+    "start": 478.33,
+    "end": 480.89,
+    "text": "Thì các bạn tưởng tượng như thế này"
+  },
+  {
+    "start": 481.41,
+    "end": 483.19,
+    "text": "Mình sẽ có một cái số"
+  },
+  {
+    "start": 483.45,
+    "end": 485.75,
+    "text": "nhị phân đầu tiên số 1 ấy, nó chính là số 1 đúng không?"
+  },
+  {
+    "start": 485.75,
+    "end": 492.27,
+    "text": "Next week, I invite people to sign event, this wasn't this on this week, so you should see theutes of the event"
+  },
+  {
+    "start": 492.27,
+    "end": 495.87,
+    "text": "Last week, I invite you to sign event partner app"
+  },
+  {
+    "start": 495.87,
+    "end": 498.47,
+    "text": "To ring event Meaning Autot Billboard"
+  },
+  {
+    "start": 498.47,
+    "end": 502.58,
+    "text": "Technology in maps"
+  },
+  {
+    "start": 502.58,
+    "end": 506.35,
+    "text": "Manufacturing content"
+  },
+  {
+    "start": 506.35,
+    "end": 509.17,
+    "text": "Content"
+  },
+  {
+    "start": 509.17,
+    "end": 510.47,
+    "text": "Content"
+  },
+  {
+    "start": 510.47,
+    "end": 513.05,
+    "text": "liken to content"
+  },
+  {
+    "start": 513.05,
+    "end": 516.28,
+    "text": "freedom"
+  },
+  {
+    "start": 516.28,
+    "end": 521.72,
+    "text": "Thằng 5 thì bạn có được bằng cách bạn thêm số 1 vào thằng 10"
+  },
+  {
+    "start": 521.72,
+    "end": 525.72,
+    "text": "Thương tự như vậy, thằng 6 có được bằng cách bạn thêm số 0 vào thằng 1, 0 này"
+  },
+  {
+    "start": 525.72,
+    "end": 529.39,
+    "text": "Thằng 7 có được bằng cách bạn thêm số 1 vào thằng 1, 1 này"
+  },
+  {
+    "start": 529.39,
+    "end": 533.39,
+    "text": "Thương tự như vậy, số 8 thì bạn sẽ thêm số 0 vào cái thằng 1, 0, 0"
+  },
+  {
+    "start": 533.39,
+    "end": 536.09,
+    "text": "Số 9 thì đây"
+  },
+  {
+    "start": 536.09,
+    "end": 538.09,
+    "text": "Ok, số 10 thì đây"
+  },
+  {
+    "start": 538.09,
+    "end": 539.09,
+    "text": "1, 0, 1, 0"
+  },
+  {
+    "start": 539.09,
+    "end": 541.09,
+    "text": "Số 11 thì là 1, 0, 1, 1 đúng không?"
+  },
+  {
+    "start": 541.09,
+    "end": 543.09,
+    "text": "Số 12 thì là"
+  },
+  {
+    "start": 543.09,
+    "end": 547.92,
+    "text": "Xin lỗi, đây là 8, cũng là 11, đúng rồi, đây là số 12 đúng không?"
+  },
+  {
+    "start": 547.92,
+    "end": 565.0,
+    "text": "Thế thì bạn thêm số 0 vào cái thằng 1, 1, 1, 0 này, 1, 1, 0 này này, 13 thì bạn sẽ thêm là 1, 1, 1, 1, 1, 14 thì bạn sẽ làm 1, 1, 1, 1, 0, và 15 thì bạn sẽ thấy là 1, 1, 1, 1, 1, đúng, ok, thế mình có thể sử dụng hàng đợi để làm cái này nhé, đó,"
+  },
+  {
+    "start": 565.0,
+    "end": 579.22,
+    "text": "bắt đầu bạn xuất phát với 1 cái thằng là thằng 1 thôi, ở mỗi bước các bạn sẽ làm như sao, đây, bắt đầu mình có 1 cái hàng đợi như thế này nhé, mình sẽ đẩy thằng 1 này vào thằng đầu tiên vào trong hàng đợi này, ok, sau đó mình lấy cái thằng 1 này ở hàng đợi,"
+  },
+  {
+    "start": 579.22,
+    "end": 582.1,
+    "text": "lấy thằng một hàng đợi ra, bốt, bốt thằng lấy ra"
+  },
+  {
+    "start": 582.1,
+    "end": 587.24,
+    "text": "ok, sau đó mình thực hiện hai thao tác, đấy là mình sẽ nối số 0 vào cái thằng 1 mà bạn vừa bốt ra"
+  },
+  {
+    "start": 587.24,
+    "end": 589.98,
+    "text": "thì nó tạo thành số 1 không, đúng không?"
+  },
+  {
+    "start": 589.98,
+    "end": 593.12,
+    "text": "sau đó bạn bày thằng 1 không này vào trong hàng đợi, này, này nó vào"
+  },
+  {
+    "start": 593.12,
+    "end": 597.24,
+    "text": "và thao tác thứ 2, đây chính là từ cái số 1 mà bạn vừa bốt ra khỏi hàng đợi"
+  },
+  {
+    "start": 597.24,
+    "end": 600.24,
+    "text": "thì bạn nối thêm số 1 vào cuối hằng này, thì nó tạo thành số 1 1, đúng không?"
+  },
+  {
+    "start": 600.24,
+    "end": 602.93,
+    "text": "bạn bày thằng 1 vào đây, đấy"
+  },
+  {
+    "start": 602.93,
+    "end": 607.01,
+    "text": "ok, bước tiếp theo nhá, bạn lại lấy cái thẳng ở trong đỉnh hàng đợi ra, tức là thằng ngài này"
+  },
+  {
+    "start": 607.01,
+    "end": 609.47,
+    "text": "đấy, bạn xóa thằng ngài đi"
+  },
+  {
+    "start": 609.47,
+    "end": 614.23,
+    "text": "Tất nhiên là ở mỗi bước bạn sẽ giữ lại các cái số mà bạn vừa đẩy vào hàng đợi nhé"
+  },
+  {
+    "start": 614.23,
+    "end": 616.11,
+    "text": "Đây, các cái số mà bạn tạo ra được đây"
+  },
+  {
+    "start": 616.11,
+    "end": 618.82,
+    "text": "Đầu tiên mình đẩy số 1 ra đúng không?"
+  },
+  {
+    "start": 618.82,
+    "end": 627.33,
+    "text": "Ok, sau đó thì bạn lưu lại cho mình thầm 1 này, ok, bạn lưu lại cho mình thầm 1 này"
+  },
+  {
+    "start": 627.33,
+    "end": 631.17,
+    "text": "Nó chính là số tự nhiên à, số những phần 1 đấy, sau đó bạn bốt thầm này ra"
+  },
+  {
+    "start": 631.17,
+    "end": 635.65,
+    "text": "Ok, bốt sau khi mà bốt ra bạn sẽ nối số 0 và số 1 vào đằng sau thầm này"
+  },
+  {
+    "start": 635.65,
+    "end": 641.73,
+    "text": "Thành 1 0 và 1 1 và bạn tiến hành đẩy 2 cái thầm này vào trong hàng đợi 1 0 và 1 1"
+  },
+  {
+    "start": 641.73,
+    "end": 656.1,
+    "text": "sau đó bạn cũng duy trì cho mình kết số 1, nó cứ tạo thành shape, là nó khó xóa"
+  },
+  {
+    "start": 656.1,
+    "end": 664.02,
+    "text": "1.0 này, tạo thành 1.0, bạn đẩy vào hàng đợi, cho nó vào danh set các số mà bạn tạo ra được, sau đó là 1.1, bạn đẩy vào hàng đợi, bạn cũng tạo ra cho mình các số"
+  },
+  {
+    "start": 664.02,
+    "end": 666.34,
+    "text": "như thế này, ok"
+  },
+  {
+    "start": 666.34,
+    "end": 669.7,
+    "text": "bước tiếp theo, bạn lại lấy thẳng ở đỉnh hàng đợi ra là 1.0"
+  },
+  {
+    "start": 669.7,
+    "end": 673.06,
+    "text": "sau đó bạn nối số 0 vào đây, tạo thành 1.0, đúng không?"
+  },
+  {
+    "start": 673.06,
+    "end": 675.94,
+    "text": "và bạn nối số 1 vào đây, tạm thành 101 đúng không?"
+  },
+  {
+    "start": 675.94,
+    "end": 678.5,
+    "text": "bạn pôp thầm 10nm nhé, 10nm nhé"
+  },
+  {
+    "start": 678.5,
+    "end": 682.34,
+    "text": "sau đó mình sẽ đẩy 2 cái thằng mà nó vừa tạo ra được vào trong hàng đợi, nhớ đẩy vào nhé"
+  },
+  {
+    "start": 682.34,
+    "end": 685.7,
+    "text": "thì khi nó sẽ đẩy vào 100 vào trước này, sau đó nó đẩy vào 101 vào sau"
+  },
+  {
+    "start": 685.7,
+    "end": 690.5,
+    "text": "thì bây giờ bạn cũng tạo ra thêm được 2 số, đấy chính là số 1, 0, 0 và 101 rồi"
+  },
+  {
+    "start": 690.5,
+    "end": 693.86,
+    "text": "và chính là 1, 2, 3, 4, 5, ok?"
+  },
+  {
+    "start": 693.86,
+    "end": 696.66,
+    "text": "đó, tiếp theo bạn lại lấy thằng 101 ở định hàng đợi ra"
+  },
+  {
+    "start": 696.66,
+    "end": 701.01,
+    "text": "và mình tiến hành là xoá thầm 1 này đây nhé, xoá đi nhé"
+  },
+  {
+    "start": 701.01,
+    "end": 705.97,
+    "text": "Nói số 0 và số 1 vào đuôi thằng này, tạo thành 1, 1, 0 đúng không?"
+  },
+  {
+    "start": 705.97,
+    "end": 710.37,
+    "text": "1, 1, 1, sau đó bạn đã đẩy 2 cái thằng mà bạn vừa tạo mới ra và trong hàng đợi"
+  },
+  {
+    "start": 710.37,
+    "end": 715.25,
+    "text": "và bạn cũng ghi nhận thêm 2 cái số mới, đấy là số 1, 1, 0 và số 1, 1, 1"
+  },
+  {
+    "start": 715.25,
+    "end": 718.98,
+    "text": "Bây giờ bạn đẩy thì nó lại vào cuối hàng đợi đúng không? Thì nó sẽ vào như thế này nè"
+  },
+  {
+    "start": 718.98,
+    "end": 723.26,
+    "text": "1, 1, 0 và 1, 1, 1, ok? Và cứ tiếp tục như thế"
+  },
+  {
+    "start": 723.26,
+    "end": 727.34,
+    "text": "bạn lại lấy cái thằng ở đỉnh hàng đợi ra là 1, 0, 0, sau đó mình đối số 0 và số 1 vào"
+  },
+  {
+    "start": 727.34,
+    "end": 731.54,
+    "text": "Được bao nhiêu thì mình sẽ cập nhật là thành 1.0.0.0"
+  },
+  {
+    "start": 731.54,
+    "end": 735.34,
+    "text": "Và 1.0.0.1, sau đó là bạn lại đẩy các số này vào trong hàng đợi"
+  },
+  {
+    "start": 735.34,
+    "end": 740.02,
+    "text": "Thì như thế mình thấy là nó sẽ duy trì được cái thứ tự từ bé đến lớn bởi vì là"
+  },
+  {
+    "start": 740.02,
+    "end": 743.02,
+    "text": "Ví dụ như là cái số 1.0.0 này này, đúng không?"
+  },
+  {
+    "start": 743.02,
+    "end": 747.02,
+    "text": "Mình sẽ tạo ra 2 cái số là 1.000 và 1.000 không chắc là 1"
+  },
+  {
+    "start": 747.02,
+    "end": 749.02,
+    "text": "Là 1.0.0 và 1.0.0 ấy"
+  },
+  {
+    "start": 749.02,
+    "end": 753.02,
+    "text": "Đúng không? Thì bạn sẽ luôn đẩy vào cuối hàng đợi để nó cho nó đi sau những cái số này này"
+  },
+  {
+    "start": 753.02,
+    "end": 754.02,
+    "text": "Ví dụ như cái số 1.0.1 này này"
+  },
+  {
+    "start": 754.02,
+    "end": 759.48,
+    "text": "Cách số 101 ở trong hệ nhị phần thì nó là số 5 đúng hông? ok"
+  },
+  {
+    "start": 759.48,
+    "end": 763.2,
+    "text": "Thì nó sẽ đi trước nhá, nó sẽ đi trước những cái thằng như là thằng 6, thằng 7"
+  },
+  {
+    "start": 763.2,
+    "end": 770.8,
+    "text": "Thì bạn thấy là, khi mà bạn tạo ra 2 cái số mới, từ số hiện tại bằng cách là nối số không là số 1 vào đuôi và nói thì mình đuôi đầy vào cuối hàng đợi"
+  },
+  {
+    "start": 770.8,
+    "end": 775.54,
+    "text": "Thì nó sẽ duy trì được cái thứ tự từ bể đến lớn như thế này này, 1 2 3 4 5 6 7 8 9, vẫn vẫn"
+  },
+  {
+    "start": 775.54,
+    "end": 780.24,
+    "text": "Thì đấy chính là cách mình xinh riêng ra số nhị phần từ 1 cho đến nờ vèn, sử dụng hàng đợi nhá"
+  },
+  {
+    "start": 780.24,
+    "end": 783.88,
+    "text": "Để làm bài này, các bạn nên làm như thế này cho nó phù hợp"
+  },
+  {
+    "start": 783.88,
+    "end": 790.53,
+    "text": "Đây chính là việc mà mình sẽ phải, các bạn đừng dùng số để lưu nhé, bạn sẽ phải dùng chuỗi, chuỗi để lưu"
+  },
+  {
+    "start": 790.53,
+    "end": 795.53,
+    "text": "Bởi vì là mình có cái theo tác đấy là cộng số 0 vào cuối và cộng số 1 vào cuối, đúng không?"
+  },
+  {
+    "start": 795.53,
+    "end": 804.63,
+    "text": "Thành ra là các bạn nên, mình sẽ nên nên, à gì nhỉ, lưu nó chuỗi"
+  },
+  {
+    "start": 804.63,
+    "end": 808.87,
+    "text": "Khi mà bạn cộng số 0 vào cuối và cộng số 1 vào cuối, bạn cộng chuỗi thì nó rất là dễ, ok?"
+  },
+  {
+    "start": 808.87,
+    "end": 816.58,
+    "text": "ở đây thì đầu dòng đầu tiên sẽ là số nụ mộ test, mộ test bao vô 1 cái số dự nhiên là nằm trong khoảng từ nhỏ hơn là vòng 10.000 đúng không?"
+  },
+  {
+    "start": 816.58,
+    "end": 820.5,
+    "text": "vậy thì mình sinh ra tất cả các số nhị phần từ 1 cho tới 10.000 luôn và lưu lại, ok?"
+  },
+  {
+    "start": 820.5,
+    "end": 829.54,
+    "text": "vậy thì mình cốt như thế nào nhỉ, mình sẽ sử dụng 1 cái để các hàm ở đây nhé, mình cũng dùng 1 cái string đi, ok?"
+  },
+  {
+    "start": 829.54,
+    "end": 833.86,
+    "text": "ThatArrest, 10,021, 1 phần tử nhé"
+  },
+  {
+    "start": 833.86,
+    "end": 841.32,
+    "text": "Mình viết 1 hàm thủ tục là init để xinh ra tất cả các số nhị phần tử 1 cho tới 1 nhị 10,000 luôn"
+  },
+  {
+    "start": 841.32,
+    "end": 853.04,
+    "text": "Đầu tiên, các bạn tạo cho mình queue, mình sẽ sử dụng 1 cái hàng đợi string nhé"
+  },
+  {
+    "start": 853.04,
+    "end": 859.6,
+    "text": "Sau đó thì các bạn đẩy cái thằng 1 ấy, đúng không? Mình sẽ bắt đầu từ số 1 nhé"
+  },
+  {
+    "start": 859.6,
+    "end": 867.08,
+    "text": "ok, mình sẽ đẩy cái chuỗi 1 này vào trong hàng đợi, mình sẽ bắt đầu từ thằng này"
+  },
+  {
+    "start": 867.08,
+    "end": 872.68,
+    "text": "và mình sẽ dùng thêm 1 cái biến cao nữa để đếm xem là nó xinh ra được bao nhiêu số nhiệm phân rồi nhé"
+  },
+  {
+    "start": 872.68,
+    "end": 882.26,
+    "text": "và ở đây thì mình sẽ lưu, mình sẽ lưu đầu tiên cái thằng mà xinh ra được cái nó chính là thầm 1"
+  },
+  {
+    "start": 882.26,
+    "end": 885.38,
+    "text": "ok, mình sẽ đặt ra REST 1 thì nó sẽ chính là 1"
+  },
+  {
+    "start": 885.38,
+    "end": 889.62,
+    "text": "tức là số nhiệm phân có giá trị là 1 thì nó chính là cái 1 này luôn đúng không?"
+  },
+  {
+    "start": 889.62,
+    "end": 891.78,
+    "text": "ok, trong hệnh những phần thầm 1 này cũng là 1 mà"
+  },
+  {
+    "start": 891.78,
+    "end": 898.55,
+    "text": "sau đó bạn lặp với điều kiện lặp, đấy chính là y, cao còn nhỏ hơn hoặc bằng 10.000"
+  },
+  {
+    "start": 898.55,
+    "end": 903.83,
+    "text": "tức là trừng nào mà khi mà bạn xây dựng đủ 10.000 số nhị phân ấy thì mình sẽ dừng"
+  },
+  {
+    "start": 903.83,
+    "end": 909.27,
+    "text": "ok, vậy thì đầu tiên khi mà bạn làm việc với các hàng đợi này thì mình sẽ lấy ra phần tử của đầu hàng đợi nhé"
+  },
+  {
+    "start": 909.27,
+    "end": 916.84,
+    "text": "ok, lấy ra phần tử đầu hàng đợi, mình sẽ dùng 1 string, tốt"
+  },
+  {
+    "start": 916.84,
+    "end": 919.64,
+    "text": "ở đầu hàng đợi bằng Q chấm phần"
+  },
+  {
+    "start": 919.64,
+    "end": 925.62,
+    "text": "sau khi mà lấy ra hai đứa thằng này thì bạn sẽ sinh ra hai cái số nhị phân liên tiếp sau cái thằng tốt này này"
+  },
+  {
+    "start": 925.62,
+    "end": 933.62,
+    "text": "bằng cách là mình cộng số 0 vào cuối thì nó sẽ sinh ra ngay thằng thằng sau, thôi còn cộng số 1 vào cuối thì nó sẽ sinh ra thằng lớn hơn thằng tốt này, hai đơn vị, ok?"
+  },
+  {
+    "start": 933.62,
+    "end": 944.21,
+    "text": "mình ra là mình sẽ cho đấy là, mình sẽ lưu lại hai cái số mà nó tạo ra nhé, mình sẽ cho res của cao này, cộng cộng, ok?"
+  },
+  {
+    "start": 944.21,
+    "end": 960.52,
+    "text": "cậuvre ra cộng cộng cao, stood, coo Testing"
+  },
+  {
+    "start": 962.52,
+    "end": 970.52,
+    "text": "cuckt bằng v Крас fairly Cravings"
+  },
+  {
+    "start": 970.52,
+    "end": 981.36,
+    "text": "Vậy thì khi nào mà nó sẽ, ok chỗ này là nhỏ hơn là đủ đúng không, bằng phát là dân được được rồi này, ok"
+  },
+  {
+    "start": 981.36,
+    "end": 988.36,
+    "text": "Thì khi đó mình sẽ sinh ra được 2 cái số mới, là 2 cái số liên tiếp tính sau thằng tốt này này, mà mình sẽ lưu lại vào cái mạng này nhé"
+  },
+  {
+    "start": 988.36,
+    "end": 998.36,
+    "text": "Hoặc là các bạn có thể dùng cái vector được cho nó tiện, đã phải, đấy nhé, đã phải lưu theo kiểu như này nhé, bạn sẽ dùng cho mình cái vector string như thế này này"
+  },
+  {
+    "start": 998.36,
+    "end": 1005.26,
+    "text": "Bạn push cho RedC into pushback, nguyên sâu 1"
+  },
+  {
+    "start": 1005.52,
+    "end": 1009.48,
+    "text": "Bạn push 2 số xinh ra được không?"
+  },
+  {
+    "start": 1010.21,
+    "end": 1016.82,
+    "text": "RedC into pushback, cộng 1 số 0"
+  },
+  {
+    "start": 1017.95,
+    "end": 1023.22,
+    "text": "RedC into pushback, cộng 1 số 1"
+  },
+  {
+    "start": 1023.58,
+    "end": 1029.4,
+    "text": "Trưng RedC simo hơn 1n, 1 heart, 1n, 1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1"
+  },
+  {
+    "start": 1029.4,
+    "end": 1032.8,
+    "text": "Thì khi nào maret chấm sai nó đủ 10k thì nó sẽ tự dừng"
+  },
+  {
+    "start": 1032.8,
+    "end": 1036.0,
+    "text": "Thứ là khi đó mình cũng đã xây dựng được 10k phần đầu tiên rồi, ok?"
+  },
+  {
+    "start": 1036.0,
+    "end": 1039.0,
+    "text": "Sau đó thì bạn sẽ làm 2 cái thao tác, về chính là bạn sẽ đẩy"
+  },
+  {
+    "start": 1039.0,
+    "end": 1042.8,
+    "text": "Sau khi mà bạn lấy thằng này ra nhé, bạn pop rồi ra"
+  },
+  {
+    "start": 1042.8,
+    "end": 1047.3,
+    "text": "Chú ý nhá, cái ham front thì nó chỉ truy cập, nó lấy ra cái thằng ở đỉnh hàng đợi thôi"
+  },
+  {
+    "start": 1047.3,
+    "end": 1050.4,
+    "text": "Thế còn nếu bạn muốn xoán đi thì bạn sẽ phải Q chấm pop, ok?"
+  },
+  {
+    "start": 1050.4,
+    "end": 1054.1,
+    "text": "Sau đó thì mình sẽ sinh ra 2 cái số mới và mình đẩy lại vào trong hàng đợi"
+  },
+  {
+    "start": 1054.1,
+    "end": 1056.1,
+    "text": "Tức là bạn sẽ cho Q chấm push"
+  },
+  {
+    "start": 1056.1,
+    "end": 1058.5,
+    "text": "Cái thằng top, cộng 1 tên dấu của số 0"
+  },
+  {
+    "start": 1058.5,
+    "end": 1067.69,
+    "text": "Q++, tốt, cộng, số 1"
+  },
+  {
+    "start": 1067.69,
+    "end": 1074.69,
+    "text": "từ số 0 thì bạn sẽ đẩy thầm 1 và đẩy thầm 1 vào trong ngay xác các số định nhiễu vận của mình"
+  },
+  {
+    "start": 1074.69,
+    "end": 1077.69,
+    "text": "sau đó mình sẽ sinh ra 2 số, đấy là số 1-0"
+  },
+  {
+    "start": 1077.69,
+    "end": 1079.69,
+    "text": "và số 1-1 sau đó bạn đẩy vào đỉnh hàng đợi"
+  },
+  {
+    "start": 1079.69,
+    "end": 1083.69,
+    "text": "sau đó là quay lại vàng qua, tiếp theo thì nó lại lấy số tiếp theo là số 1-0"
+  },
+  {
+    "start": 1083.69,
+    "end": 1085.69,
+    "text": "và nó sinh ra 2 số tiếp theo là 1-0-0"
+  },
+  {
+    "start": 1085.69,
+    "end": 1088.69,
+    "text": "và 1-0-1 thì nó tạo ra cái cây như vậy mình vẽ"
+  },
+  {
+    "start": 1088.69,
+    "end": 1091.69,
+    "text": "ok, nói chính là từ 1 thì tạo ra 1-0"
+  },
+  {
+    "start": 1091.69,
+    "end": 1108.97,
+    "text": "coil value 1.0,imos, count value 1.0e,"
+  },
+  {
+    "start": 1108.97,
+    "end": 1113.97,
+    "text": "Các bạn sẽ gọi 1 cái thủ tục init để nó sinh ra tất cả 10.000 số những phần đầu tiên"
+  },
+  {
+    "start": 1113.97,
+    "end": 1125.13,
+    "text": "Sau đó mình sẽ dùng tét kê tê thôi"
+  },
+  {
+    "start": 1125.13,
+    "end": 1127.13,
+    "text": "Sau đó thì bạn sẽ dựa từ 0 cho đến nở nhé"
+  },
+  {
+    "start": 1127.13,
+    "end": 1131.13,
+    "text": "Tại vì mình lưu cái số những phần đầu tiên ở chỉ số 0 mà"
+  },
+  {
+    "start": 1131.13,
+    "end": 1145.72,
+    "text": "Hình ra là nở số những phần đầu tiên thì nó sẽ chạy từ chỉ số 0 cho tới chỉ số nở chung 1"
+  },
+  {
+    "start": 1145.72,
+    "end": 1147.72,
+    "text": "Và hết tét kê thì mình sẽ dùng vào"
+  },
+  {
+    "start": 1147.72,
+    "end": 1153.43,
+    "text": "Ok, rất là đơn giản đúng không?"
+  },
+  {
+    "start": 1153.43,
+    "end": 1156.43,
+    "text": "Ví dụ nhé, mình dùng 2 tét kê này, ví dụ như từ 1 cho tới 10 đi"
+  },
+  {
+    "start": 1156.43,
+    "end": 1161.1,
+    "text": "Đây thì các bạn thấy đây là các số từ 1 cho tới 10 đúng không?"
+  },
+  {
+    "start": 1161.1,
+    "end": 1167.1,
+    "text": "từ 1 tới 9, 1, 2, 3, 4, 5, 6, 7, 8, 9"
+  },
+  {
+    "start": 1167.1,
+    "end": 1170.58,
+    "text": "1 1 1 0, 1 là 9 chứ nhỉ? từ từ"
+  },
+  {
+    "start": 1170.58,
+    "end": 1173.58,
+    "text": "à nhỏ hơn là mình lấy bà nhỏ hơn là cho 1, ok"
+  },
+  {
+    "start": 1173.58,
+    "end": 1180.45,
+    "text": "thắt cái này đi nhỉ"
+  },
+  {
+    "start": 1180.45,
+    "end": 1183.45,
+    "text": "thì bạn thấy là, nếu mà bạn muốn liệt kê 10 số những phần đầu tiên thì nó đây"
+  },
+  {
+    "start": 1183.45,
+    "end": 1187.45,
+    "text": "1 này, 2 này, 3 này, 4 này, 5 này, 6, 7, 8, 9, 10, ok"
+  },
+  {
+    "start": 1187.45,
+    "end": 1190.7,
+    "text": "hoặc là 2 tiết tệ cũng được"
+  },
+  {
+    "start": 1190.7,
+    "end": 1193.7,
+    "text": "dụ như bạn muốn liệt kê các số những phần từ 1 cho từ 10 này"
+  },
+  {
+    "start": 1193.7,
+    "end": 1196.98,
+    "text": "Lạy thì sẽ có hết"
+  },
+  {
+    "start": 1196.98,
+    "end": 1201.34,
+    "text": "Đây chính là cách mình xinh ra như thế nhá"
+  },
+  {
+    "start": 1204.07,
+    "end": 1205.67,
+    "text": "Mẫu chốt của mình đầy chính là"
+  },
+  {
+    "start": 1205.67,
+    "end": 1207.87,
+    "text": "mình cứ đẩy các số vào trong hàng đợi"
+  },
+  {
+    "start": 1207.87,
+    "end": 1210.81,
+    "text": "Cho số nhỏ đi trước, số lớn đi sau"
+  },
+  {
+    "start": 1210.81,
+    "end": 1212.65,
+    "text": "sẽ xinh ra được các sốいます"
+  },
+  {
+    "start": 1213.35,
+    "end": 1219.27,
+    "text": "Bài số Hai là bài bộ số, chứa, chi ch strugg của Min6, cho số không và chín"
+  },
+  {
+    "start": 1219.55,
+    "end": 1222.21,
+    "text": "2 số mình tạ thành là số 0, số 9"
+  },
+  {
+    "start": 1222.21,
+    "end": 1226.21,
+    "text": "Thì hôm trước mình đã giải cái bài này bằng cách là sử dụng sinh sâu nhị phân rồi đúng không?"
+  },
+  {
+    "start": 1226.21,
+    "end": 1233.91,
+    "text": "Nhưng mà hôm đấy mình cũng có nói đấy chứ là bạn có thể sử dụng hàng đợi để tăng cái hả năng tạo ra các cái số mà chỉ sứa số 0 và số 9 này một cách nhanh hơn"
+  },
+  {
+    "start": 1233.91,
+    "end": 1236.51,
+    "text": "Đây là trong khoảng từ 1 cho tới 100 nhé"
+  },
+  {
+    "start": 1236.51,
+    "end": 1240.61,
+    "text": "Vì ta sẽ yêu cầu mình tìm cái số được tạo bởi số 0 và số 9"
+  },
+  {
+    "start": 1240.61,
+    "end": 1242.41,
+    "text": "Nhỏ nhất mà chỉ hết cho nờ"
+  },
+  {
+    "start": 1242.41,
+    "end": 1244.91,
+    "text": "Vậy thì cái cách tạo ra các bạn cũng làm tương tự như vậy"
+  },
+  {
+    "start": 1244.91,
+    "end": 1246.51,
+    "text": "Đây là từ số 9 này"
+  },
+  {
+    "start": 1247.31,
+    "end": 1251.01,
+    "text": "Bạn xinh ra cho mình 2 số, đây là số 9-0 và số 9-9"
+  },
+  {
+    "start": 1251.01,
+    "end": 1256.05,
+    "text": "sau đó từ thằng 9 không này thì nó sẽ xinh ra cái số là 900 và 999"
+  },
+  {
+    "start": 1256.05,
+    "end": 1261.97,
+    "text": "ok, và thằng 990 thì nó xinh ra số 990 và số 999"
+  },
+  {
+    "start": 1261.97,
+    "end": 1266.69,
+    "text": "đấy thì bạn thấy là có phải như thế là mình đang tạo ra các cái số mà chỉ chứ không và chín tăng dặn không"
+  },
+  {
+    "start": 1266.69,
+    "end": 1272.37,
+    "text": "số mà chưa xứ không số 9 đầu tiên nó sẽ là 9 nữa không, đầu tiết theo lớn hơn thằng này nó sẽ là số 90 đúng không"
+  },
+  {
+    "start": 1272.37,
+    "end": 1276.63,
+    "text": "90 rồi đến 99 đi, 99 rồi đến 99"
+  },
+  {
+    "start": 1276.63,
+    "end": 1279.67,
+    "text": "99 đến 9% đúng hông?"
+  },
+  {
+    "start": 1279.67,
+    "end": 1283.01,
+    "text": "99 đến 9h9, rồi là 990"
+  },
+  {
+    "start": 1283.01,
+    "end": 1284.55,
+    "text": "hổ 999 đúng hông?"
+  },
+  {
+    "start": 1284.55,
+    "end": 1286.97,
+    "text": "thì bạn thấy là nó cũng tạo ra các cái số như thế"
+  },
+  {
+    "start": 1286.97,
+    "end": 1289.17,
+    "text": "thì mình cũng làm tương tự như vậy nhé"
+  },
+  {
+    "start": 1289.17,
+    "end": 1291.13,
+    "text": "đây là các bạn đẩy số 9 vào trong hàng đợp"
+  },
+  {
+    "start": 1291.13,
+    "end": 1295.02,
+    "text": "sau đó lấy số 9 này ra"
+  },
+  {
+    "start": 1295.02,
+    "end": 1297.62,
+    "text": "và cộng số 0 vào cuối và cộng số 9 vào cuối"
+  },
+  {
+    "start": 1297.62,
+    "end": 1299.22,
+    "text": "mình sẽ tạo ra số 9 rồi nhé"
+  },
+  {
+    "start": 1299.22,
+    "end": 1301.22,
+    "text": "sau đó là bạn lấy số 9 cộng rồi xuống không"
+  },
+  {
+    "start": 1301.22,
+    "end": 1303.32,
+    "text": "thì nó đã ra số 90 đúng hông?"
+  },
+  {
+    "start": 1303.32,
+    "end": 1306.06,
+    "text": "và cộng số 9 vào thì nó sẽ ra số 99"
+  },
+  {
+    "start": 1306.06,
+    "end": 1333.22,
+    "text": "Trong"
+  },
+  {
+    "start": 1333.22,
+    "end": 1334.72,
+    "text": "900 và 909"
+  },
+  {
+    "start": 1334.72,
+    "end": 1360.32,
+    "text": "倒 lại ở dạ 2 trong c 210"
+  },
+  {
+    "start": 1360.32,
+    "end": 1362.32,
+    "text": "0, 0, 9, cứ như thế"
+  },
+  {
+    "start": 1362.32,
+    "end": 1364.32,
+    "text": "từ số nhỏ mình sẽ sinh ra các số tiếp theo"
+  },
+  {
+    "start": 1364.32,
+    "end": 1366.32,
+    "text": "và mình luôn đẩy cái số nhỏ hơn vào trong hàng đợi"
+  },
+  {
+    "start": 1366.32,
+    "end": 1370.32,
+    "text": "thì khi đó bạn thấy là nó sẽ tạo ra các số theo vưu tự ăn dần lớn như thế này"
+  },
+  {
+    "start": 1370.32,
+    "end": 1372.58,
+    "text": "ok, đấy"
+  },
+  {
+    "start": 1372.58,
+    "end": 1374.58,
+    "text": "rồi, bây giờ thì mình sẽ cài đặt cái bài này nhé"
+  },
+  {
+    "start": 1374.58,
+    "end": 1376.58,
+    "text": "thì các bạn làm tương tự như hôm trước"
+  },
+  {
+    "start": 1376.58,
+    "end": 1378.58,
+    "text": "hôm trước mình đã từng làm bài này rồi đúng không"
+  },
+  {
+    "start": 1378.58,
+    "end": 1380.58,
+    "text": "nhưng mà hôm đến là nó lên đến tận 500"
+  },
+  {
+    "start": 1380.58,
+    "end": 1382.58,
+    "text": "và đây thì nó chỉ lên đến 100 thôi"
+  },
+  {
+    "start": 1382.58,
+    "end": 1386.58,
+    "text": "thì chắc là cái số mà 9,0 rồi là không 9 này này"
+  },
+  {
+    "start": 1386.58,
+    "end": 1388.58,
+    "text": "tầm có 10 trị số"
+  },
+  {
+    "start": 1388.58,
+    "end": 1393.82,
+    "text": "tầm 10 chữ số thì nó sẽ có đủ các cái số mà chia hết cho các cái số từ 1 cho tới 100"
+  },
+  {
+    "start": 1393.82,
+    "end": 1396.98,
+    "text": "mình sẽ sinh ra tất cả các cái bộ của các cái số từ 1 cho tới 100 nhé"
+  },
+  {
+    "start": 1396.98,
+    "end": 1403.48,
+    "text": "vậy thì ở đây mình sẽ viết 1 cái, ở đây thì mình sẽ dùng là vector lang long cho nó dễ"
+  },
+  {
+    "start": 1403.48,
+    "end": 1414.57,
+    "text": "mình sẽ để là lang long này, ok, mình vẫn sinh string nhé, mình vẫn sinh ra cái chuỗi nhé"
+  },
+  {
+    "start": 1414.57,
+    "end": 1423.94,
+    "text": "Ok, nhưng mà khi bạn lưu lại vào vector rest này thì các bạn nên, các bạn nên chuyển nó thành integer"
+  },
+  {
+    "start": 1423.94,
+    "end": 1431.29,
+    "text": "Ai, xin lỗi, lòng lòng, ok, đây, thì đầu tiên các bạn cũng tạo cho mình cái, một cái queue string"
+  },
+  {
+    "start": 1431.29,
+    "end": 1438.78,
+    "text": "Sau đó bạn push thằng 9 là, ok, sau đó là bạn lập, ok, bạn lập"
+  },
+  {
+    "start": 1438.78,
+    "end": 1450.34,
+    "text": "Mà bạn lập với điều kiện ở đây, như mình nói thì chắc là cái chiều dài của, chắc là cái chiều dài của cái số của mình, nó có khoảng tầm 10 chữ số thì nó sẽ đủ, ok"
+  },
+  {
+    "start": 1450.34,
+    "end": 1461.9,
+    "text": "Thành ra là mình kiểm tra là string này, tốt, bằng q.fun, ok"
+  },
+  {
+    "start": 1461.9,
+    "end": 1468.22,
+    "text": "Đấy ra cái thằng ở định hàng đợi nhé, chỗ này mình sẽ cho res.boostpack, thằng 9, ok"
+  },
+  {
+    "start": 1468.22,
+    "end": 1470.18,
+    "text": "Mình đẩy số đầu tiên vào là số 9"
+  },
+  {
+    "start": 1470.18,
+    "end": 1472.78,
+    "text": "Rồi, sau đó thêm bạn bốt vào đi"
+  },
+  {
+    "start": 1472.78,
+    "end": 1480.99,
+    "text": "Và bạn kiểm tra là ít, tốt.len, mà bằng 11, mình sẽ break, ok"
+  },
+  {
+    "start": 1480.99,
+    "end": 1486.15,
+    "text": "Cứ là bao giờ bạn xinh ra các số có số 0 và số 9 mà có 11 trị số, thì mình có thể dừng được rồi"
+  },
+  {
+    "start": 1486.15,
+    "end": 1487.15,
+    "text": "Đúng không nhỉ?"
+  },
+  {
+    "start": 1487.15,
+    "end": 1495.01,
+    "text": "Ở vậy thì ở đây bạn sẽ xinh sau khi mà bạn lấy cái thằng ở định hàng đợi ra thì bạn push 2 cái thằng và bạn sẽ tạo ra 2 số đúng không?"
+  },
+  {
+    "start": 1495.01,
+    "end": 1498.01,
+    "text": "Đây chính là mình sẽ cho red.bushback như lúc trước thôi"
+  },
+  {
+    "start": 1498.01,
+    "end": 1502.24,
+    "text": "Đấy là cái số tốt này, nhưng mà bạn nhớ là chuyển thằng này sang thằng số long long nhé"
+  },
+  {
+    "start": 1502.24,
+    "end": 1506.04,
+    "text": "Tức là xto là cái chuỗi là chuỗi tốt cộng với số 0"
+  },
+  {
+    "start": 1506.04,
+    "end": 1511.46,
+    "text": "Chính là bạn sẽ cộng số 0 và cuối xác bạn chuyển nó sang số long long và mình đẩy vào cái vector"
+  },
+  {
+    "start": 1511.46,
+    "end": 1513.46,
+    "text": "Ratch.push3"
+  },
+  {
+    "start": 1513.46,
+    "end": 1518.38,
+    "text": "STO là chuyển 1 sâu string sang số nhé"
+  },
+  {
+    "start": 1518.38,
+    "end": 1520.38,
+    "text": "Mình sẽ cho top cộng 10 số 9"
+  },
+  {
+    "start": 1520.38,
+    "end": 1528.18,
+    "text": "Ok, nó sẽ sinh ra được 2 cái số mới và mình chuyển 2 cái số đấy thành long long và đẩy vào cái tư"
+  },
+  {
+    "start": 1528.18,
+    "end": 1531.18,
+    "text": "Rồi bạn cũng push 2 cái số mới nó tạo ra được nhé"
+  },
+  {
+    "start": 1531.18,
+    "end": 1535.18,
+    "text": "Thứ này mình sẽ cho Q trong push là cái số top cộng 10, kí tự không"
+  },
+  {
+    "start": 1535.18,
+    "end": 1542.98,
+    "text": "Và mình cũng push thằng top cộng 10, kí tự 1, ok, thế thôi cứ để cho nó sinh ra như thế"
+  },
+  {
+    "start": 1542.98,
+    "end": 1548.3,
+    "text": "ello có thể xin ra từ 1 vần Sel, và nghe ra từ 10, hướng dường"
+  },
+  {
+    "start": 1548.3,
+    "end": 1548.66,
+    "text": "B sicher là, lần lần"
+  },
+  {
+    "start": 1548.66,
+    "end": 1551.54,
+    "text": "B idea, thêm 1 cái mẻan lần lần"
+  },
+  {
+    "start": 1551.54,
+    "end": 1555.13,
+    "text": "NOS, có 101 vần tử"
+  },
+  {
+    "start": 1555.13,
+    "end": 1564.56,
+    "text": "DР, xin ra từ 100"
+  },
+  {
+    "start": 1564.56,
+    "end": 1569.23,
+    "text": "DР, xin ra từ 1 xin ra từ 100"
+  },
+  {
+    "start": 1569.23,
+    "end": 1574.05,
+    "text": "DР, xin ra từ 1 xin ra từ 1, xin ra từ 100"
+  },
+  {
+    "start": 1574.05,
+    "end": 1577.21,
+    "text": "rồi sau đó thì mình sẽ rượt các số ở trong cái mạng REST kìa"
+  },
+  {
+    "start": 1577.21,
+    "end": 1579.51,
+    "text": "or lòng lòng x hay trấm REST"
+  },
+  {
+    "start": 1579.51,
+    "end": 1584.09,
+    "text": "và mình kiểm tra là ipnfs của i, và bằng 0"
+  },
+  {
+    "start": 1584.09,
+    "end": 1588.77,
+    "text": "và ipfnfyi đằng không"
+  },
+  {
+    "start": 1588.77,
+    "end": 1593.09,
+    "text": "thế là mình gặp cái bộ đầu tiên của i, nằm trong cái REST kìa"
+  },
+  {
+    "start": 1593.09,
+    "end": 1597.47,
+    "text": "thì mình sẽ gán nó nrf bằng REST, ok"
+  },
+  {
+    "start": 1597.47,
+    "end": 1604.38,
+    "text": "chỗ này không cần đúng không? chỗ này không cần ipnf này không đúng không?"
+  },
+  {
+    "start": 1604.38,
+    "end": 1613.73,
+    "text": "Mình chỉ cần kiểm tra ipx, phần trăm i vần 0, thì mình sẽ cho anrx của i vần rest, sau đó ra mình break"
+  },
+  {
+    "start": 1613.73,
+    "end": 1619.73,
+    "text": "Nói chung là mình sẽ đi tìm cái bội đầu tiên mà chia hết cho cái thằng các cái số i từ 1 cho tới 100, nằm trong cái vector rest này"
+  },
+  {
+    "start": 1619.73,
+    "end": 1625.73,
+    "text": "dành sách các số 09 mà mình tạo ra, ở đây mình thử xem nó có bao nhiêu số rồi nhé, mình dùng cái liếm cao phải thạo bài"
+  },
+  {
+    "start": 1625.73,
+    "end": 1629.89,
+    "text": "không, sau đó rỗ này thì mình sẽ cho cao cộng cộng"
+  },
+  {
+    "start": 1629.89,
+    "end": 1638.78,
+    "text": "nếu mà đủ 100, thì có nghĩa là bạn đã sinh ra đủ các số 3 bội của các 100 số đầu tiên rồi"
+  },
+  {
+    "start": 1638.78,
+    "end": 1641.78,
+    "text": "ok, ở trong này mình sẽ gọi hàm í nít xem là nó có đủ không nhé"
+  },
+  {
+    "start": 1641.78,
+    "end": 1652.9,
+    "text": "vector, ạ, trùm phải thôi"
+  },
+  {
+    "start": 1652.9,
+    "end": 1659.14,
+    "text": "n os, e bằng rest"
+  },
+  {
+    "start": 1659.14,
+    "end": 1661.14,
+    "text": "i bằng x, ok"
+  },
+  {
+    "start": 1661.14,
+    "end": 1668.3,
+    "text": "Ư, với được 98 số"
+  },
+  {
+    "start": 1668.3,
+    "end": 1671.3,
+    "text": "tức là mình phải tăng nhé, hỏi lên 1 tí nhỉ, ok"
+  },
+  {
+    "start": 1671.3,
+    "end": 1678.46,
+    "text": "Ok, 10% trường hợp mà cái chiều dài của cái sâu của mình ấy"
+  },
+  {
+    "start": 1678.46,
+    "end": 1680.46,
+    "text": "Chiều dài của cái số 0, 9 của mình ấy"
+  },
+  {
+    "start": 1680.46,
+    "end": 1683.9,
+    "text": "Nó là 12 thì bạn đã đủ 100 số đầu tiên rồi"
+  },
+  {
+    "start": 1683.9,
+    "end": 1686.14,
+    "text": "Thế là bạn đã có tất cả các bộ của 100 số đầu tiên rồi"
+  },
+  {
+    "start": 1686.14,
+    "end": 1688.14,
+    "text": "Đây mình thử i đây cho các bạn nhìn thấy nhá"
+  },
+  {
+    "start": 1688.14,
+    "end": 1692.59,
+    "text": "Mình sẽ duyệt cái bộ cho tới 100"
+  },
+  {
+    "start": 1692.59,
+    "end": 1695.59,
+    "text": "Và mình sẽ CL ra cái thằng lứa thằng i"
+  },
+  {
+    "start": 1695.59,
+    "end": 1699.04,
+    "text": "Và cái thằng là thằng aner s i"
+  },
+  {
+    "start": 1699.04,
+    "end": 1701.04,
+    "text": "Tức là cái i là thằng số nhá"
+  },
+  {
+    "start": 1701.04,
+    "end": 1703.84,
+    "text": "Còn aner s i là bộ của nó mà chưa 0, 9"
+  },
+  {
+    "start": 1703.84,
+    "end": 1717.94,
+    "text": "Đã thấy đây, số 1 thì là 9, số 2 thì là 9, 3 thì là 9, 4 thì là 900, 5 thì là 96, 9, 7, 900"
+  },
+  {
+    "start": 1717.94,
+    "end": 1722.22,
+    "text": "Ủa sao 7 lại có thằng 910 ở đây? Chứa đâu?"
+  },
+  {
+    "start": 1722.22,
+    "end": 1725.82,
+    "text": "Ah, đây, xin lỗi nhá số 9, và sao chỗ này cần 12"
+  },
+  {
+    "start": 1725.82,
+    "end": 1730.41,
+    "text": "Mình nghĩ 11 là đủ, BTK là 1 crome"
+  },
+  {
+    "start": 1730.41,
+    "end": 1739.84,
+    "text": "Ok, đó"
+  },
+  {
+    "start": 1739.84,
+    "end": 1742.56,
+    "text": "Mình để là 12 thì đủ, chắc là đủ rồi, ok"
+  },
+  {
+    "start": 1742.56,
+    "end": 1745.88,
+    "text": "12 thì sẽ xinh ra cho bạn xem đủ không?"
+  },
+  {
+    "start": 1745.88,
+    "end": 1750.24,
+    "text": "Đây 100 số rồi đúng không? Mình chắc là nghĩ là ngãn hơn cũng đủ đấy, dụ như là 11 hoặc là 10"
+  },
+  {
+    "start": 1750.24,
+    "end": 1756.26,
+    "text": "Mình thử số có tất cả các số không, tức là mình sẽ xây dựng cái số 09, để đến số 10 sẽ có đủ không nhé"
+  },
+  {
+    "start": 1756.26,
+    "end": 1761.53,
+    "text": "Nhưng số 10 chiều dài là 10 cũng đủ"
+  },
+  {
+    "start": 1761.53,
+    "end": 1765.79,
+    "text": "Ê các bạn tùy nhé, nếu mà nó 10 đủ, 10 không đủ thì bạn cho 9"
+  },
+  {
+    "start": 1765.79,
+    "end": 1769.13,
+    "text": "À sẽ nỗi 10 đủ thì bạn có thể cho 9 không cho 8, chắc là 9 đám số"
+  },
+  {
+    "start": 1769.13,
+    "end": 1774.13,
+    "text": "Cái số mà có 8 hoặc 9 diễn số chắc là đủ rồi đấy, ok, thế thôi"
+  },
+  {
+    "start": 1774.13,
+    "end": 1776.33,
+    "text": "sau đó thì trong hàng bên thì bạn sẽ nhập vào nờ thôi"
+  },
+  {
+    "start": 1776.33,
+    "end": 1784.0,
+    "text": "thì bạn chỉ cần CL ra An ở S của nờ là được, bởi vì mình đã xây dựng sạn hết rồi mà, ok"
+  },
+  {
+    "start": 1784.0,
+    "end": 1790.2,
+    "text": "thì đây chính là cách mà tìm cái bộ số 0,9 bằng hàng đợi mà nó nhanh hơn với cách để sử dụng sinh sâu nhị phân, ok"
+  },
+  {
+    "start": 1790.2,
+    "end": 1799.46,
+    "text": "ở đây nó sẽ có 2 số lên 5, 7 này"
+  },
+  {
+    "start": 1799.46,
+    "end": 1808.65,
+    "text": "thì bạn thấy là bộ số nhỏ nhất của 5 thì là 90, còn bộ số nhỏ nhất của 7 thì là 9, nhưng không cho là 9, ok"
+  },
+  {
+    "start": 1808.65,
+    "end": 1816.78,
+    "text": "Bài bạc, nói chung 3 cái bạc này thì nó đều có 1 cái mô tiếp chung để chính là mình sẽ sinh ra các cái số mà nó chứa 2 cái số gì đó"
+  },
+  {
+    "start": 1816.78,
+    "end": 1820.98,
+    "text": "Thằng đầu tiên thì chứa số 0 với số 1 để sinh ra cái số nhị phân từ 1 cho tới nờ"
+  },
+  {
+    "start": 1820.98,
+    "end": 1823.58,
+    "text": "Thằng thứ 2 chỉ chứa số 0 với số 9"
+  },
+  {
+    "start": 1823.58,
+    "end": 1826.98,
+    "text": "Thằng thứ 3 thì là số lộc pháp chứa số 6 với chữ số 8"
+  },
+  {
+    "start": 1826.98,
+    "end": 1830.78,
+    "text": "Ok, người ta cho mình 1 số lộc pháp nếu mà nó chỉ chứa 2 chữ số 6 và 8"
+  },
+  {
+    "start": 1830.78,
+    "end": 1834.98,
+    "text": "Vào đó là yêu cầu mình liệt cái các cái số lộc pháp có không quá nờ chữ số"
+  },
+  {
+    "start": 1834.98,
+    "end": 1842.98,
+    "text": "Ví dụ như ở đây có không quá 2 trị số thì bạn sẽ phải biết các số là 6, 8, 6, 6, 8, 6 rồi là 8, 8 nhưng mà theo tư tự giảm dần"
+  },
+  {
+    "start": 1842.98,
+    "end": 1846.43,
+    "text": "Thì nó khác bài kia một chút đấy chính là"
+  },
+  {
+    "start": 1846.43,
+    "end": 1850.43,
+    "text": "Mình sẽ phải bắt đầu từ 2 trị số nhé, bạn sẽ phải bắt đầu từ 2 trị số"
+  },
+  {
+    "start": 1850.43,
+    "end": 1854.43,
+    "text": "Tức là từ thằng 6 này thì bạn sẽ sinh ra được 2 thằng là 6, 6 và 6, 8"
+  },
+  {
+    "start": 1854.43,
+    "end": 1857.43,
+    "text": "Cứ từ một số bạn cộng thêm số 6 vào cuối và số 8 vào cuối"
+  },
+  {
+    "start": 1857.43,
+    "end": 1861.43,
+    "text": "Thế còn từ thằng 8 thì mình sẽ sinh ra 2 thằng đó là thằng 8, 6 và thằng 8"
+  },
+  {
+    "start": 1861.43,
+    "end": 1867.43,
+    "text": "và từ thằng 66 này thì bạn sẽ sinh ra 666 và 668"
+  },
+  {
+    "start": 1867.43,
+    "end": 1872.43,
+    "text": "68 thì bạn sẽ sinh ra 686 và 688, cứ như thế ok"
+  },
+  {
+    "start": 1872.43,
+    "end": 1877.98,
+    "text": "thì cách làm tương tự như vậy nhé, ở đây mình sẽ sinh ra tất cả các cái số mà"
+  },
+  {
+    "start": 1877.98,
+    "end": 1881.98,
+    "text": "nó có không có 15 ở đây nòi nhỏ hơn 15 đúng không"
+  },
+  {
+    "start": 1881.98,
+    "end": 1886.98,
+    "text": "vậy thì mình sẽ sinh ra đến cái số lục phát có chiều ra là 15 thì mình sẽ dừng ok"
+  },
+  {
+    "start": 1886.98,
+    "end": 1896.02,
+    "text": "đây mình sẽ tạo 1 biến rest này nha, ok, mình sẽ tạo 1 biến rest này"
+  },
+  {
+    "start": 1896.02,
+    "end": 1902.02,
+    "text": "sau đó thì mình sẽ viết 1 cái hàm init, và cái hàm init ở đây thì mình sẽ tạo như thế này, là mình sẽ cho queue string nhé, xóa bạn tao"
+  },
+  {
+    "start": 1902.02,
+    "end": 1909.02,
+    "text": "nói chung là bạn nên là, để là queue rồi string để mình cộng cho nó số, cho nó dễ, cộng số 6 vào cuối, số 8 vào cuối cho nó dễ, sau mình chuyển sang số cũng được"
+  },
+  {
+    "start": 1909.02,
+    "end": 1919.06,
+    "text": "sau đó bạn push cho mình 2 thằng đầu tiên là thằng số, số 6 nhé, ok, 1 queue chấm push, số 8"
+  },
+  {
+    "start": 1919.06,
+    "end": 1923.06,
+    "text": "nếu bạn đẩy 1 chút, bạn phải đẩy 2 thằng là thằng 6 và thằng 8 vào"
+  },
+  {
+    "start": 1923.06,
+    "end": 1928.06,
+    "text": "nếu bạn đẩy thằng 6 vào, nguyên thằng 6 vào thì nó chỉ sinh ra các số là 6, 6 rồi 6, 8"
+  },
+  {
+    "start": 1928.06,
+    "end": 1934.06,
+    "text": "rồi là 6, 6, 6 rồi là 6, 6, 8 thôi, chứ nó không sinh ra được các số là 8, 6, 8, 8"
+  },
+  {
+    "start": 1934.06,
+    "end": 1936.06,
+    "text": "hay là 8, 8, 8, 8, 8, 8, 8 đâu, ok"
+  },
+  {
+    "start": 1936.06,
+    "end": 1939.06,
+    "text": "ra mình sẽ hởi đầu với 2 số ở trong hãng đợi là 6 và 8"
+  },
+  {
+    "start": 1939.06,
+    "end": 1941.06,
+    "text": "ok, mình sẽ push 2 thằng này vào"
+  },
+  {
+    "start": 1941.06,
+    "end": 1943.06,
+    "text": "bạn lập điều kiện lập là y2 đi"
+  },
+  {
+    "start": 1943.06,
+    "end": 1946.06,
+    "text": "sau đó là bạn lấy ra cái thằng ở định hơn đợi"
+  },
+  {
+    "start": 1946.06,
+    "end": 1954.52,
+    "text": "Ip Q.iamo, q.d, up"
+  },
+  {
+    "start": 1957.04,
+    "end": 1964.3,
+    "text": "Ip top.lang, tiêu dài por個 sóc إلى menor than 15."
+  },
+  {
+    "start": 1964.3,
+    "end": 1971.02,
+    "text": "Ok, khi đó mình đã có tất cả các số lục vát có chiều dài từ bột cho tới, cho thứ 14 rồi, đây là đủ input của đó vài rồi"
+  },
+  {
+    "start": 1971.02,
+    "end": 1982.14,
+    "text": "Hòn không thì mình sẽ push cho 2 cái thằng mới vào, mình sẽ cho res.pushback, đây là thằng tốt cộng vời số số 6"
+  },
+  {
+    "start": 1982.14,
+    "end": 1987.38,
+    "text": "và mình sẽ cho res.pushback, thằng tốt cộng vời số 8"
+  },
+  {
+    "start": 1987.38,
+    "end": 1993.5,
+    "text": "Xón bạn lại đẩy 2 cái thằng này vào trong hàng đợi, chỗ này mình để là vector string là được"
+  },
+  {
+    "start": 1993.5,
+    "end": 2014.48,
+    "text": "ok, rồi, sau đó thì ở chỗ này bạn sẽ đẩy 2 thằng vài nhớ, kêu chấm push, tốt cộng với số số 6"
+  },
+  {
+    "start": 2014.48,
+    "end": 2021.48,
+    "text": "rồi, thế là xam, ok, vừa mỗi bước thì bạn sẽ cộng thêm số 6 và cộng thêm số 8, sau đó mình đẩy vào trong hàng đợi và cứ thể để nó lập thôi"
+  },
+  {
+    "start": 2021.48,
+    "end": 2029.8,
+    "text": "vậy thì ở trong hàng main thì mình chỉ cần gọi cái hàng init thôi, để nó sinh ra tất cả các cái số lập phát mà có từ 1 cho tới 14 trị số, ok"
+  },
+  {
+    "start": 2029.8,
+    "end": 2035.0,
+    "text": "Bây giờ thì người ta lại yêu cầu mình in ra cái số tự nhiên theo tụi tự giảm dần nào"
+  },
+  {
+    "start": 2035.0,
+    "end": 2040.71,
+    "text": "Cũng được, ok, mình sẽ nhập vào nò là số lượng số mà người ta yêu cầu này"
+  },
+  {
+    "start": 2040.71,
+    "end": 2043.91,
+    "text": "Sau đó bạn tạm cho mình 1 cái vector string ở đây"
+  },
+  {
+    "start": 2043.91,
+    "end": 2049.91,
+    "text": "Mình đã là tạm, sau đó thì bạn duyệt qua for string 2.x, ok"
+  },
+  {
+    "start": 2049.91,
+    "end": 2057.64,
+    "text": "Sau đó là bạn kiểm tra nếu mà x, lang mà bằng n là cộng 1"
+  },
+  {
+    "start": 2057.64,
+    "end": 2065.32,
+    "text": "separate"
+  },
+  {
+    "start": 2065.32,
+    "end": 2070.32,
+    "text": "còn không thì bạn sẽ đẩy cái số này vào trong cái biên tạng kia, chấm boost path, x"
+  },
+  {
+    "start": 2070.32,
+    "end": 2072.32,
+    "text": "rồi mình sẽ in ruộc lạc nhé"
+  },
+  {
+    "start": 2072.32,
+    "end": 2074.32,
+    "text": "bạn có thể reverse cái vector này"
+  },
+  {
+    "start": 2074.32,
+    "end": 2078.12,
+    "text": "vector tam hay xong mình in từ đầu thì nó tiện"
+  },
+  {
+    "start": 2078.12,
+    "end": 2081.12,
+    "text": "for string x, chấm tam, mình sẽ in ra tam"
+  },
+  {
+    "start": 2081.12,
+    "end": 2083.73,
+    "text": "sin in the x, ok"
+  },
+  {
+    "start": 2083.73,
+    "end": 2085.73,
+    "text": "và hết một tế cây thì mình sẽ xuống ra"
+  },
+  {
+    "start": 2085.73,
+    "end": 2089.01,
+    "text": "ok, nó có những thủ tục như thế"
+  },
+  {
+    "start": 2089.01,
+    "end": 2091.01,
+    "text": "đây là mình sẽ sinh ra tất cả các số nhị phân"
+  },
+  {
+    "start": 2091.01,
+    "end": 2093.65,
+    "text": "Các số lúc phát mà có chiều dài từ 1 đến 15"
+  },
+  {
+    "start": 2093.65,
+    "end": 2099.49,
+    "text": "Sau đó trong hàm mên người ta yêu cầu mình in ra các số nhị phân mà có độ dài nhỏ hơn đó"
+  },
+  {
+    "start": 2099.49,
+    "end": 2106.65,
+    "text": "Không có quán ở trị số thì bạn sẽ duyệt trong danh sách của mình bao giờ mà cái chiều dài của các số nhị phân 68"
+  },
+  {
+    "start": 2106.65,
+    "end": 2114.25,
+    "text": "Chiều dài của các số 68 mà mình sinh dãi nó còn nhỏ hơn 1 nờ thì mình sẽ đẩy nó vào trong 1 vector, sau đó từ cuối vector về"
+  },
+  {
+    "start": 2114.25,
+    "end": 2119.41,
+    "text": "Thành ra chỗ này bạn kiểm tra nếu mà ít chấm len mà bằng nờ cộng 1 thì mình sẽ break, ok?"
+  },
+  {
+    "start": 2119.41,
+    "end": 2128.88,
+    "text": "tức là chừng nào mà cái chiều dài của cái sâu của mình í, nó còn nó còn nhỏ hơn hoặc bằng nò thì mình cứ tiếp tục đẩy nó vào nhá"
+  },
+  {
+    "start": 2128.88,
+    "end": 2134.79,
+    "text": "Đấy, nó cũng không có gì khác 2 bài trước cả"
+  },
+  {
+    "start": 2134.79,
+    "end": 2136.79,
+    "text": "Đây thì mình sẽ nhập vào là 2 này"
+  },
+  {
+    "start": 2136.79,
+    "end": 2141.34,
+    "text": "Đấy, thì nó xịn ra là 88 này, 86 này"
+  },
+  {
+    "start": 2141.34,
+    "end": 2145.78,
+    "text": "Chết rồi, 3 này"
+  },
+  {
+    "start": 2145.78,
+    "end": 2149.78,
+    "text": "Nhưng mình chưa quên chưa đẩy 2 thằng là thằng 6 là thằng vector"
+  },
+  {
+    "start": 2149.78,
+    "end": 2150.78,
+    "text": "Đấy, chỗ này mình quên mất"
+  },
+  {
+    "start": 2150.78,
+    "end": 2153.97,
+    "text": "Mình chơi cho Rats.boostpack, thằng 6"
+  },
+  {
+    "start": 2153.97,
+    "end": 2158.57,
+    "text": "ok, and red.boot.tai.8, và thiếu mất 2 cái số đỏ"
+  },
+  {
+    "start": 2158.57,
+    "end": 2165.34,
+    "text": "thế thôi ok, đây chính là cách mà sinh ra các cái số mà lộc phát mà có chiều ra nhỏ bằng nào"
+  },
+  {
+    "start": 2165.34,
+    "end": 2176.4,
+    "text": "ok, đây đúng không, 888 này"
+  },
+  {
+    "start": 2176.4,
+    "end": 2187.9,
+    "text": "888, 886, 866, 688, 686, 666, 666, ok"
+  },
+  {
+    "start": 2187.9,
+    "end": 2214.95,
+    "text": "Ví dụ tiếp theo để chính là người ta sẽ mình cho mình 2 số nguyên, ok, F và T, cho đó F và T nằm trong khoảng từ 1 cho tới 10.000, và nó sẽ coi cho mình 2 thao tác, thao tác A để lại lấy chứ, F chứ đi 1, thao tác B là nhân F với 2, sau đó người ta yêu cầu mình dịch chuyển F thành T sao cho số đần thực hiện thao tác A và B là ít nhất, ví dụ như S, vàng 2 và T bằng 5 ấy, thì số các bước ít nhất để dịch chuyển F thành T thông qua 4 bước với ta"
+  },
+  {
+    "start": 2214.95,
+    "end": 2220.95,
+    "text": "2, 2, 4, 4, 1, 3, 3, 2, 2, 6, 6, 1, 5"
+  },
+  {
+    "start": 2220.95,
+    "end": 2227.95,
+    "text": "input thì số lượng tét k, 1 vét k thì vào dồn 2 số x và t và yêu cầu mình yên ra số lượng thao tác AB ít nhất"
+  },
+  {
+    "start": 2227.95,
+    "end": 2233.3,
+    "text": "thì cách này có 1 cách đấy chính là các bạn sẽ sử dụng đệ quy nhá"
+  },
+  {
+    "start": 2233.3,
+    "end": 2239.3,
+    "text": "để mình tìm cái cách thức mà từ số x này chuyển thành số t này sau cho số thao tác của mình nó là nhỏ nhất"
+  },
+  {
+    "start": 2239.3,
+    "end": 2242.3,
+    "text": "nhưng mà trong trường hợp đấy thì nó sẽ rất là lâu"
+  },
+  {
+    "start": 2242.3,
+    "end": 2251.3,
+    "text": "Bài thời này thì thật ra nó cũng nói chung là cái dạng bài toán mà nó yêu cầu mình chuyển từ 1 cái số hiện tại sang cái số tiếp theo ấy"
+  },
+  {
+    "start": 2251.3,
+    "end": 2257.3,
+    "text": "Từ 1 số an là đó sang 1 số b với các cái thao tác khác nhau ấy, thì các bạn nên sử dụng hàng đợi nhá, ok?"
+  },
+  {
+    "start": 2257.3,
+    "end": 2266.3,
+    "text": "Ví dụ như thằng từ thằng 2 nhá, sang thằng thằng 5 nhá, thì các bạn thấy là mình sẽ vẽ ra các cái cách mà nó có thể di chuyển từ thằng 2 sang thằng 5"
+  },
+  {
+    "start": 2266.3,
+    "end": 2272.3,
+    "text": "Đấy là từ số 2 này này. Bạn sẽ có 2 lựa chọn 1, là mình sẽ dẽ theo cái nhánh để chính là mình lấy S chứ đi 1."
+  },
+  {
+    "start": 2273.66,
+    "end": 2275.66,
+    "text": "Tức là mình sẽ xinh ra cái số là số 1 đúng không?"
+  },
+  {
+    "start": 2275.66,
+    "end": 2279.01,
+    "text": "Và cái nhanh thứ 2 đấy là bạn sẽ lấy 2 nhân với 2 đúng không?"
+  },
+  {
+    "start": 2279.01,
+    "end": 2281.01,
+    "text": "Thì sẽ ra là cái số 4."
+  },
+  {
+    "start": 2281.01,
+    "end": 2286.84,
+    "text": "Ok, sau đó từ số 1 này bạn là cũng có 2 cái lựa chọn đấy là các bạn sẽ nhân..."
+  },
+  {
+    "start": 2286.84,
+    "end": 2288.84,
+    "text": "Bạn chứ đi 1, này, và bạn nhân với 2."
+  },
+  {
+    "start": 2288.84,
+    "end": 2291.84,
+    "text": "Chỗ này cũng là chứ đi 1 và nhân với 2."
+  },
+  {
+    "start": 2291.84,
+    "end": 2293.84,
+    "text": "Chứ 1 chứ đi 1 là không này."
+  },
+  {
+    "start": 2293.84,
+    "end": 2297.13,
+    "text": "Thế còn 1 nhân với 2 thì là 2 này. Ok, đó."
+  },
+  {
+    "start": 2297.13,
+    "end": 2304.13,
+    "text": "và các bạn chú ý nhé, mình sẽ lưu lại cái 1 cái set hoặc là 1 cái map gì đó để đánh dấu các cái trạng thái của các cái số mà mình đã duyệt qua"
+  },
+  {
+    "start": 2304.13,
+    "end": 2310.13,
+    "text": "Ok? Ví dụ như ở đây cái nhánh này này, bạn duyệt qua 1 cái thằng là thằng 2 này nữa thì bạn sẽ không cắt cái nhánh này đi, không set nữa"
+  },
+  {
+    "start": 2310.13,
+    "end": 2313.13,
+    "text": "Ok? Vì bên bạn set lại thì nó lại quay lại cái nhánh này thôi mà"
+  },
+  {
+    "start": 2313.13,
+    "end": 2316.13,
+    "text": "Thì nó lại sinh ra 1 với 4 thì nó sinh ra rất nhiều cái trường hợp, nó bị trùng"
+  },
+  {
+    "start": 2316.13,
+    "end": 2321.13,
+    "text": "Thì đấy chính là cái trường hợp mà mình sử dụng để quy thì nó cũng hay bị trùng như thế đấy"
+  },
+  {
+    "start": 2321.13,
+    "end": 2324.13,
+    "text": "Ok? Tức là bạn sẽ sinh ra các cái số mà nó có thể bị lặp lại nhiều lần"
+  },
+  {
+    "start": 2324.13,
+    "end": 2327.41,
+    "text": "Còn từ thầm 4 này thì bạn sẽ sinh ra 2 cái theo tác để ra trừ đi 1"
+  },
+  {
+    "start": 2327.41,
+    "end": 2329.41,
+    "text": "Đó sẽ tạo ra là cái số 3 đúng không?"
+  },
+  {
+    "start": 2329.41,
+    "end": 2334.13,
+    "text": "Đấy và từ 4 bạn nhân V2 thì nó tạo ra cái số 8 đúng không?"
+  },
+  {
+    "start": 2334.13,
+    "end": 2337.22,
+    "text": "Bốn nhân V2 thì mình sinh ra 8 này đúng không?"
+  },
+  {
+    "start": 2337.22,
+    "end": 2340.3,
+    "text": "Tương tự như vậy thì thằng này là thằng không thì bạn sẽ check nhé"
+  },
+  {
+    "start": 2340.3,
+    "end": 2344.62,
+    "text": "Nếu mà cái số của bạn nó nhỏ hơn 1 rồi thì mình không xét nữa cái nhánh này cũng không xét nữa này"
+  },
+  {
+    "start": 2344.62,
+    "end": 2352.38,
+    "text": "Vì là cái nhánh mà bạn lấy không trừ đi 1 thì nó cũng xét ra là số 0 với sau đó không nhân V2 thì nó cũng ra không thì mình cũng xét rồi nhé"
+  },
+  {
+    "start": 2352.38,
+    "end": 2355.26,
+    "text": "bây giờ nó chỉ còn 2 cái nhánh này thôi là xét này"
+  },
+  {
+    "start": 2355.26,
+    "end": 2358.78,
+    "text": "thì 3A thì bạn lại có cái thật tác này ra chứ đi 1 đúng không, nó sinh ra 2"
+  },
+  {
+    "start": 2358.78,
+    "end": 2362.87,
+    "text": "thì còn 3 nhưng với 2 thì nó tạo ra 6, ok"
+  },
+  {
+    "start": 2362.87,
+    "end": 2366.51,
+    "text": "và cái nhánh này bạn cũng không xét nữa, bởi vì bạn đã từng xét 1 cái trạng thái"
+  },
+  {
+    "start": 2366.51,
+    "end": 2370.35,
+    "text": "1 cái số, nó là số 2 rồi, đúng không, thì bạn cũng xét không cần xét nữa"
+  },
+  {
+    "start": 2370.35,
+    "end": 2374.19,
+    "text": "không có là nó cũng lập lại các cái bước như lúc nãy, ok"
+  },
+  {
+    "start": 2374.19,
+    "end": 2377.71,
+    "text": "sau đó thằng 6 này thì là sinh ra 2 nhánh, đấy là 6 chứ đi 1 thì ra 5"
+  },
+  {
+    "start": 2377.71,
+    "end": 2382.19,
+    "text": "còn 6 nhưng 2 ra 12, thằng 8 này nó cũng sẽ sinh ra 2 nhánh, đây là 8 chứ đi 1 thì là"
+  },
+  {
+    "start": 2382.19,
+    "end": 2384.19,
+    "text": "8, đúng không?"
+  },
+  {
+    "start": 2384.19,
+    "end": 2386.19,
+    "text": "8 x 1 là 7"
+  },
+  {
+    "start": 2386.19,
+    "end": 2388.19,
+    "text": "8 x 2 là 16"
+  },
+  {
+    "start": 2388.19,
+    "end": 2390.19,
+    "text": "Nhưng mà thực ra có nhiều nhánh dụng như 8 x 2 này này"
+  },
+  {
+    "start": 2390.19,
+    "end": 2394.19,
+    "text": "thì nó xinh ra cái số mà ở đây tê nó bằng 5 đúng không?"
+  },
+  {
+    "start": 2394.19,
+    "end": 2396.19,
+    "text": "Nó lớn hơn 5 rồi thì các bạn cũng không cần phải xét cái nhánh này được không?"
+  },
+  {
+    "start": 2396.19,
+    "end": 2398.19,
+    "text": "Ok, không phải xét cái nhánh này nữa"
+  },
+  {
+    "start": 2398.19,
+    "end": 2403.06,
+    "text": "Thì bạn thấy là nó có một cái trạng thái nó xinh ra 5 này này"
+  },
+  {
+    "start": 2403.06,
+    "end": 2405.06,
+    "text": "Đấy, 6 x 5 này"
+  },
+  {
+    "start": 2405.06,
+    "end": 2409.06,
+    "text": "Thì mình có thể biết được cái số từ theo tác, từ 2 này xe, thằng 5 này là các bạn có theo tác thứ nhất"
+  },
+  {
+    "start": 2409.06,
+    "end": 2411.06,
+    "text": "Đấy chính là hả lấy 2 x 2 là 1 nhá"
+  },
+  {
+    "start": 2411.06,
+    "end": 2414.58,
+    "text": "Thao tác thứ 1 là 2x2x4"
+  },
+  {
+    "start": 2414.58,
+    "end": 2417.38,
+    "text": "Thao tác thứ 2 là từ 4, bạn chưa đi 1 ra 3 này"
+  },
+  {
+    "start": 2417.38,
+    "end": 2421.3,
+    "text": "Thao tác thứ 2 là bạn lấy ban, chưa đi, ban nhận với 2 là 6 này"
+  },
+  {
+    "start": 2421.3,
+    "end": 2424.42,
+    "text": "Thao tác thứ 4 lấy ra bạn 6, chưa đi 1 là 5 này"
+  },
+  {
+    "start": 2424.42,
+    "end": 2426.9,
+    "text": "Thì bạn thấy là cái số thao tác của mình là 1, 2, 3, 4"
+  },
+  {
+    "start": 2426.9,
+    "end": 2429.3,
+    "text": "Nó y hiểm như cái thao tác mà đầu vài hội mù tẻ này"
+  },
+  {
+    "start": 2429.3,
+    "end": 2430.66,
+    "text": "Ok?"
+  },
+  {
+    "start": 2430.66,
+    "end": 2436.1,
+    "text": "Vậy thì ở đây, mỗi cái bước mà từ 1 cái trạng thái ệ số ra đó đây này"
+  },
+  {
+    "start": 2436.1,
+    "end": 2437.7,
+    "text": "Bạn xinh ra được 2 cái số nhá"
+  },
+  {
+    "start": 2437.7,
+    "end": 2440.94,
+    "text": "Mình sẽ sẽ ăn như cái cây, mình sẽ ăn 2 nhánh"
+  },
+  {
+    "start": 2440.94,
+    "end": 2444.46,
+    "text": "Ok, và từ 2 cái cây đấy, mình sẽ tiếp tục chea là chea là các cái nhánh"
+  },
+  {
+    "start": 2444.46,
+    "end": 2449.52,
+    "text": "Thì cái số bước của mình ấy, nó chính là cái độ ca của cái cây đấy"
+  },
+  {
+    "start": 2449.52,
+    "end": 2453.54,
+    "text": "Ví dụ như từ thằng 2 đến thằng 5 này thì nó 1 cảnh, 2 cảnh, 3 cảnh, 4"
+  },
+  {
+    "start": 2453.54,
+    "end": 2454.88,
+    "text": "Đấy, nó chính là 4 bước"
+  },
+  {
+    "start": 2454.88,
+    "end": 2462.02,
+    "text": "Ok, vậy thì khi mà từ 1 cái trạng thái nào đó, từ 1 cái số S nào đó, bạn xinh ra 2 cái số là S chứa 1 và S nhìn với 2"
+  },
+  {
+    "start": 2462.02,
+    "end": 2467.88,
+    "text": "Ok, thì bạn sẽ lưu thêm 1 cái biến nữa đấy là số bước đi, số bước di chuyển ấy"
+  },
+  {
+    "start": 2467.88,
+    "end": 2473.04,
+    "text": "tính từ cái gốc ấy này, từ cái số F đến cái số hiện tại nó là bao nhiêu, ok?"
+  },
+  {
+    "start": 2473.04,
+    "end": 2478.04,
+    "text": "và cứ từ một cái trạng thái F là xinh ra 2 số là F1 và F2 thì cái thằng F1 và F2 này này"
+  },
+  {
+    "start": 2478.04,
+    "end": 2486.04,
+    "text": "nó sẽ có bước cái bước di chuyển hay là cái thao tác của mình bằng cái gốc, cái nút tra của nó này này, cái thằng F này này, đấy, cộng thêm 1"
+  },
+  {
+    "start": 2486.04,
+    "end": 2491.08,
+    "text": "ví dụ như ở đây này, cái thằng này nó sẽ bắt đầu từ 0 nhá, tức là cái số thao tác của nó di chuyển nó là 0"
+  },
+  {
+    "start": 2491.08,
+    "end": 2495.28,
+    "text": "thì 2 cái thằng 1 và 4 này nó sẽ có thao tác di chuyển là 1 này"
+  },
+  {
+    "start": 2495.28,
+    "end": 2498.2,
+    "text": "từ thầm 4 sang thằng không này thì thằng này là 2, thằng này cũng là 2"
+  },
+  {
+    "start": 2498.2,
+    "end": 2500.0,
+    "text": "thằng 4 sang thằng 3 thằng này sẽ là 2"
+  },
+  {
+    "start": 2500.0,
+    "end": 2501.4,
+    "text": "thằng 4 sang thằng 8 thằng này cũng là 2"
+  },
+  {
+    "start": 2501.4,
+    "end": 2503.76,
+    "text": "sau đó là từ 3 ra 6 thì là 3 đúng không?"
+  },
+  {
+    "start": 2503.76,
+    "end": 2505.68,
+    "text": "sau đó từ 6 ra 5 thì là 4"
+  },
+  {
+    "start": 2505.68,
+    "end": 2507.16,
+    "text": "và từ 6 ra 12 cũng là 4"
+  },
+  {
+    "start": 2507.16,
+    "end": 2511.76,
+    "text": "vì mình biết được là từ cái trạng thái ban đầu của thằng F này đến cái số hiện tại thì cần 3 cái bước"
+  },
+  {
+    "start": 2511.76,
+    "end": 2512.72,
+    "text": "ok, nào"
+  },
+  {
+    "start": 2512.72,
+    "end": 2515.28,
+    "text": "ở các bước dưới chuyển bạn duy trí thế nào đến nữa là được"
+  },
+  {
+    "start": 2515.28,
+    "end": 2518.57,
+    "text": "ok, vậy thì các bạn này mình làm giải như sau nhé"
+  },
+  {
+    "start": 2518.57,
+    "end": 2520.69,
+    "text": "mình viết 1 cái ham là"
+  },
+  {
+    "start": 2520.69,
+    "end": 2525.46,
+    "text": "Inerteso, sau đó mình cho 1-2 thằng để ra thằng F và thằng T"
+  },
+  {
+    "start": 2525.46,
+    "end": 2532.46,
+    "text": "Ok, rồi các bạn làm như thế nào? Các bạn khởi tạo cho mình một cái hàng đợi tiện này, thì các bạn khởi tạo cho mình một cái hàng đợi lưu hai số nhá"
+  },
+  {
+    "start": 2532.46,
+    "end": 2541.15,
+    "text": "Mình lưu các cái pe, được chứ? Trong đó cái pe này nó sẽ lưu hai thằng, cái nhất là cái chạng thái của cái số hiện tại"
+  },
+  {
+    "start": 2541.15,
+    "end": 2548.6,
+    "text": "Cái thứ hai là cái số bước, tính từ thằng F đến cái số hiện tại này là bao nhiêu bước? Ok, rồi mình thêm một cái thằng set nữa"
+  },
+  {
+    "start": 2548.6,
+    "end": 2554.6,
+    "text": "Để lưu các cái chạng thái của các cái số đã được duyệt rồi, để tránh cái việc và bạn sẽ duyệt lại các cái chạng thái mà đã mình đã từng duyệt"
+  },
+  {
+    "start": 2554.6,
+    "end": 2558.12,
+    "text": "Ví dụ như thằng 2 này đúng không? Mình đã từng duyệt nó rồi đúng không?"
+  },
+  {
+    "start": 2558.12,
+    "end": 2561.32,
+    "text": "Thì nữa bạn gặp thêm 1 cái thằng nào nữa là thằng 2, mình sẽ không xiát thằng nào đấy nữa."
+  },
+  {
+    "start": 2561.32,
+    "end": 2563.88,
+    "text": "Mình không push vào trong hàng đợi nữa, ok?"
+  },
+  {
+    "start": 2563.88,
+    "end": 2569.32,
+    "text": "Và cái cách làm này tương tự như 3 cái bài trước đấy là, từ thằng thằng 1 nhất là thằng 2 này, bạn đẩy nó vào trong hàng đợi."
+  },
+  {
+    "start": 2569.32,
+    "end": 2574.15,
+    "text": "Xong từ thằng 1, thằng 2 này bạn xinh ra được 2 thằng, đấy là 2 trở đi 1 là 1,"
+  },
+  {
+    "start": 2574.15,
+    "end": 2577.19,
+    "text": "và 2 nhưng với 2 là 4, xong bạn pốt thằng 2 này đi."
+  },
+  {
+    "start": 2577.19,
+    "end": 2583.83,
+    "text": "Vì vậy, và tiếp theo thì bạn lại đẩy 2 cái số mà nó tạo ra là số 1 này, và số 4 nó trong hàng đợi."
+  },
+  {
+    "start": 2583.83,
+    "end": 2590.09,
+    "text": "sau đó từ thầm 1 này bạn lấy POP thầm 1 đầy dài và xinh ra 2 cái số đấy là 1 trí đi 1 là 0 và 1 yên 2 là 0"
+  },
+  {
+    "start": 2590.09,
+    "end": 2591.59,
+    "text": "thầm 1 yên 2 là 2"
+  },
+  {
+    "start": 2591.59,
+    "end": 2595.25,
+    "text": "ok, sau lại bạn POP lại 2 cái thằng này lại vào trong hàng đợi"
+  },
+  {
+    "start": 2595.25,
+    "end": 2600.25,
+    "text": "nhưng mà cái thằng 2 này đã diệt rồi, thằng ra là mình không POP nữa nữa, không PUSH nó vào nữa nhé, ok"
+  },
+  {
+    "start": 2600.25,
+    "end": 2605.77,
+    "text": "thầm 0 này mình cũng sẽ không PUSH nó vào nữa đâu, ok"
+  },
+  {
+    "start": 2605.77,
+    "end": 2609.97,
+    "text": "thằng ra là bây giờ trong hàng đợi của mình nó không có thằng nào cả"
+  },
+  {
+    "start": 2609.97,
+    "end": 2614.73,
+    "text": "thằng 1 này nó xinh ra 2 cái số là số 0 và số 2 đều là 2 cái số mình sẽ không phát triển nữa"
+  },
+  {
+    "start": 2614.73,
+    "end": 2619.49,
+    "text": "1 thằng thì gặp rồi, còn 1 thằng thì phát triển thì nó xinh ra số không nguyên số, chứ 1 thì là"
+  },
+  {
+    "start": 2619.49,
+    "end": 2623.09,
+    "text": "nhưng cái số âm thì nó sẽ không tiến bao giờ tiến được hình tây, thì cái nhánh này thì không xét nữa"
+  },
+  {
+    "start": 2623.09,
+    "end": 2625.73,
+    "text": "Nhưng mà từ thằng bố này là xinh ra được 2 thằng đến là 3"
+  },
+  {
+    "start": 2625.73,
+    "end": 2629.14,
+    "text": "và thằng thứ 2, bố 2 là 6 thì bạn bố thằng bố này ra"
+  },
+  {
+    "start": 2629.14,
+    "end": 2632.78,
+    "text": "Cho bạn đẩy 2 cái thằng mà nó xinh ra được trong vào trong hàng đợi, đây là 36"
+  },
+  {
+    "start": 2632.78,
+    "end": 2637.18,
+    "text": "Vậy sau đó tiếp tục từ 3 nó phải phát triển ra thành 2 và 3 nhưng 2 là..."
+  },
+  {
+    "start": 2637.18,
+    "end": 2641.63,
+    "text": "Ủa xin lỗi, 4 nhưng 2 là 8 chứ, là 6 đúng không, cho nó cừng khiến nó phát triển ra"
+  },
+  {
+    "start": 2641.63,
+    "end": 2644.31,
+    "text": "Cứ phát triển ra được 2 số thì bạn lại đầy vào trong hàng đợi"
+  },
+  {
+    "start": 2644.31,
+    "end": 2646.95,
+    "text": "Ok, tương tự như hai bài trước nhá"
+  },
+  {
+    "start": 2646.95,
+    "end": 2652.91,
+    "text": "Rồi, vậy thì ở đây mình sẽ cho cái set này mình insert.s"
+  },
+  {
+    "start": 2652.91,
+    "end": 2654.55,
+    "text": "Mình sẽ bắt đầu từ thằng s mà đúng không?"
+  },
+  {
+    "start": 2654.55,
+    "end": 2658.55,
+    "text": "Sao vậy bạn thật cho quy, bạn put 1 cái cap đỉnh là đỉnh s và không"
+  },
+  {
+    "start": 2658.55,
+    "end": 2659.71,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 2659.71,
+    "end": 2661.79,
+    "text": "Trong đó s thì có nghĩa là cái số bắt đầu"
+  },
+  {
+    "start": 2661.79,
+    "end": 2666.15,
+    "text": "Thế còn không thì chính là cái số bước di chuyển từ cái số s đến chính nó thì là không đúng không?"
+  },
+  {
+    "start": 2666.15,
+    "end": 2668.03,
+    "text": "Ok, rồi bạn lập cái điều kiện là"
+  },
+  {
+    "start": 2668.03,
+    "end": 2674.63,
+    "text": "OK"
+  },
+  {
+    "start": 2674.63,
+    "end": 2676.07,
+    "text": "C mister Amen"
+  },
+  {
+    "start": 2676.07,
+    "end": 2678.55,
+    "text": "Color kính"
+  },
+  {
+    "start": 2678.55,
+    "end": 2678.89,
+    "text": "Color r diyorum"
+  },
+  {
+    "start": 2691.24,
+    "end": 2692.44,
+    "text": "Color flown"
+  },
+  {
+    "start": 2693.08,
+    "end": 2693.96,
+    "text": "Color zoom"
+  },
+  {
+    "start": 2693.96,
+    "end": 2695.72,
+    "text": "Color course"
+  },
+  {
+    "start": 2695.72,
+    "end": 2696.66,
+    "text": "Color展"
+  },
+  {
+    "start": 2696.66,
+    "end": 2697.6,
+    "text": "Color sequence"
+  },
+  {
+    "start": 2699.6,
+    "end": 2700.78,
+    "text": "Color run"
+  },
+  {
+    "start": 2700.78,
+    "end": 2705.38,
+    "text": "lưu số bước di chuyển từ đỉnh s cho đến đỉnh hiện tại mà đúng không, cái số hiện tại mà"
+  },
+  {
+    "start": 2705.38,
+    "end": 2709.58,
+    "text": "và nếu mà cái số hiện tại và bằng cái số lịch của mình là t thì mình sẽ return với cái số bước"
+  },
+  {
+    "start": 2709.58,
+    "end": 2711.98,
+    "text": "di chuyển là top.second, ok"
+  },
+  {
+    "start": 2711.98,
+    "end": 2721.94,
+    "text": "hoặc là mình có thể kiểm tra đấy là top.first, nhân v2, đoàn t hoặc là top.first"
+  },
+  {
+    "start": 2721.94,
+    "end": 2724.94,
+    "text": "trừ đi 1 mà bằng t thì mình cũng có thể kết loạn luôn"
+  },
+  {
+    "start": 2724.94,
+    "end": 2727.54,
+    "text": "bởi vì là nó chỉ cần thêm 1 cái theo tác nữa thôi đúng không"
+  },
+  {
+    "start": 2727.54,
+    "end": 2733.37,
+    "text": "thì bạn chỉ cần return về, return về top.second, rồi đó cộng cho 1"
+  },
+  {
+    "start": 2733.37,
+    "end": 2739.45,
+    "text": "thế là nếu mà cái số mà bạn sinh ra được rồi, nó nhân lên 2 nó bằng tê và nó chưa đi 1 nó bằng tê"
+  },
+  {
+    "start": 2739.45,
+    "end": 2743.05,
+    "text": "thì chứng tỏ là bạn chỉ cần 1 thêm 1 thao tác nữa là mình đã biết là"
+  },
+  {
+    "start": 2743.05,
+    "end": 2745.13,
+    "text": "từ cái số hiện tại nó nhảy ra được cái số tiếp theo đúng không?"
+  },
+  {
+    "start": 2745.13,
+    "end": 2748.57,
+    "text": "thì mình return về top.second cũng là 1 cộng thêm 1 nữa, ok?"
+  },
+  {
+    "start": 2748.57,
+    "end": 2755.7,
+    "text": "ví dụ như gặp số 6 này này, đúng không? ví dụ như top.first nó là số 6 này này"
+  },
+  {
+    "start": 2755.7,
+    "end": 2758.9,
+    "text": "Thì bạn biết là từ thằng 6 này, chưa đi 1 thì nó ra được thằng 5 đúng không?"
+  },
+  {
+    "start": 2758.9,
+    "end": 2764.46,
+    "text": "Thì bạn check được, nếu mà 6 chứ 1 năm thì mình chỉ cần đuy tên về cái số bước của thằng 6 này cộng thêm 1 bước nữa thôi"
+  },
+  {
+    "start": 2764.46,
+    "end": 2765.46,
+    "text": "Ok"
+  },
+  {
+    "start": 2765.46,
+    "end": 2775.56,
+    "text": "Thì còn nếu mà... nếu mà cái sr.fi của top.first, mà nó là sr.en"
+  },
+  {
+    "start": 2775.56,
+    "end": 2779.04,
+    "text": "Tức là cái trạng thái của số hiện tại nó chưa từng được duyệt ấy"
+  },
+  {
+    "start": 2779.04,
+    "end": 2782.16,
+    "text": "Có nếu mà nó được duyệt rồi thì thôi nhé, bạn được duyệt lại nữa"
+  },
+  {
+    "start": 2782.16,
+    "end": 2784.6,
+    "text": "đây mình sẽ sử dụng cái set để xác định xem là"
+  },
+  {
+    "start": 2784.6,
+    "end": 2786.38,
+    "text": "cái số đấy đã được duyệt hai chương"
+  },
+  {
+    "start": 2786.38,
+    "end": 2791.07,
+    "text": "và mình có là top.first"
+  },
+  {
+    "start": 2791.07,
+    "end": 2794.18,
+    "text": "nói dùm sao nhỉ, nếu mà mình muốn"
+  },
+  {
+    "start": 2794.18,
+    "end": 2796.56,
+    "text": "thực hiện cái thao tác là nhan với hai"
+  },
+  {
+    "start": 2796.56,
+    "end": 2798.06,
+    "text": "đúng nhỉ"
+  },
+  {
+    "start": 2798.06,
+    "end": 2800.32,
+    "text": "nhan với hai"
+  },
+  {
+    "start": 2800.32,
+    "end": 2805.51,
+    "text": "thì mình sẽ phải cho top.first"
+  },
+  {
+    "start": 2805.51,
+    "end": 2812.11,
+    "text": "nhỏ hôn tê đúng không, nếu mà nhỏ hôn tê thì mình có nhan với hai đúng không"
+  },
+  {
+    "start": 2812.11,
+    "end": 2815.03,
+    "text": "thì mình sẽ đẩy cái thằng là top.first, nhan với hai vào trong hàng đợi"
+  },
+  {
+    "start": 2815.03,
+    "end": 2818.23,
+    "text": "đây là bạn cho q.bush, cái thằng là top.first"
+  },
+  {
+    "start": 2818.23,
+    "end": 2840.88,
+    "text": "copy, Bali,"
+  },
+  {
+    "start": 2840.88,
+    "end": 2842.88,
+    "text": "Câu lệnh của nây gồt vào 1 cũng được nhé"
+  },
+  {
+    "start": 2842.88,
+    "end": 2846.88,
+    "text": "và top.first mà nó phải lớn hơn 1 thì mình mới thực hiện cái tha tác vào chứ đi 1"
+  },
+  {
+    "start": 2846.88,
+    "end": 2851.88,
+    "text": "u.push, cái cặp là top.first, chứ đi 1 và top.second cộng 1"
+  },
+  {
+    "start": 2851.88,
+    "end": 2856.68,
+    "text": "và bạn cũng insert cái trạng thái từ cái số hiện tại vào trong hàng đợi"
+  },
+  {
+    "start": 2856.68,
+    "end": 2858.68,
+    "text": "Ấy xin lỗi vào trong xếp"
+  },
+  {
+    "start": 2858.68,
+    "end": 2862.47,
+    "text": "Thỏ, ok"
+  },
+  {
+    "start": 2862.47,
+    "end": 2864.47,
+    "text": "Mỗi bước bạn làm 2 cái nhiều như thế nhé"
+  },
+  {
+    "start": 2864.47,
+    "end": 2868.47,
+    "text": "Chính là bạn sẽ đẩy cái trạng thái từ cái số hiện tại nhân với 2"
+  },
+  {
+    "start": 2868.47,
+    "end": 2870.47,
+    "text": "vào trong hàng đợi và cái trạng thái lên"
+  },
+  {
+    "start": 2870.47,
+    "end": 2873.78,
+    "text": "top.first chứ đi 1 vào trong hàng đợi"
+  },
+  {
+    "start": 2873.78,
+    "end": 2877.34,
+    "text": "ok, từ từ, chỗ này mình sẽ phải tìm kiếm là gì nhỉ?"
+  },
+  {
+    "start": 2877.34,
+    "end": 2879.34,
+    "text": "tốt chấm first như mấy hai chứ đúng không?"
+  },
+  {
+    "start": 2879.34,
+    "end": 2882.26,
+    "text": "thế còn chỗ này bạn phải tìm kiếm là tốt chấm first chứ đi một í"
+  },
+  {
+    "start": 2882.26,
+    "end": 2885.78,
+    "text": "đấy, tức là hai cái số mà mình chuẩn bị đầy vào đầy với trong hàng đợi nó chưa được xét"
+  },
+  {
+    "start": 2885.78,
+    "end": 2888.66,
+    "text": "thì mình mới... mình mới đẩy nó vào hàng đợi"
+  },
+  {
+    "start": 2888.66,
+    "end": 2891.38,
+    "text": "thế còn cái trạng thái của cái số đấy đã được xét rồi thì mình không xét nữa"
+  },
+  {
+    "start": 2891.38,
+    "end": 2895.22,
+    "text": "ok, và dưới này thì các bạn chỉ cần nhập vào s và t rồi này"
+  },
+  {
+    "start": 2895.22,
+    "end": 2904.24,
+    "text": "ok, sau đó bạn xin cho s và t, sau đó mình sẽ xieo ra cái hầm để vào hầm"
+  },
+  {
+    "start": 2904.24,
+    "end": 2909.07,
+    "text": "C++, ok, đây chính là cái bàn này"
+  },
+  {
+    "start": 2909.07,
+    "end": 2913.23,
+    "text": "Nói chung là cái bài trạng cái dạng bài mà nó từ 1 cái số nó chuyển sang cái số khác ấy"
+  },
+  {
+    "start": 2913.23,
+    "end": 2917.95,
+    "text": "và nó yêu cầu tìm cái số bước di chuyển ít nhất thì bạn nghĩ ngay đến hàng đợi nhá, ok"
+  },
+  {
+    "start": 2917.95,
+    "end": 2922.19,
+    "text": "Nói dụ như bàn, 2 và 5 thì nó sinh ra 4 nè, 3 và 7 thì nó sinh ra là 4 nè"
+  },
+  {
+    "start": 2922.19,
+    "end": 2925.51,
+    "text": "và 7 và 4 thì nó sinh ra là 3, ok"
+  },
+  {
+    "start": 2925.51,
+    "end": 2928.55,
+    "text": "Từ 1 cái trạng thái mình sẽ sinh ra được 2 cái trạng thái mới đúng không"
+  },
+  {
+    "start": 2928.55,
+    "end": 2930.91,
+    "text": "Nó như cái cây nó tạp hành cái cây ấy, đấy chưa"
+  },
+  {
+    "start": 2930.91,
+    "end": 2939.16,
+    "text": "và cái số bước di chuyển của mình nó chính là cái chiều cao của cái cây đầy, như thế này, ok"
+  },
+  {
+    "start": 2940.6,
+    "end": 2947.16,
+    "text": "như thế, thì nó sẽ đảm bảo cho mình được là cái chiều cao, ví dụ như từ thằng này đến thằng này đúng không? Thì cái số bước của mình nó sẽ làm 1, 2, đấy"
+  },
+  {
+    "start": 2947.48,
+    "end": 2952.64,
+    "text": "thế còn nếu mà nó chẽ ra tiếp thì cái chiều cao của nó cứ tăng lên, nó chính là cái số bước di chuyển của mình cũng tăng lên đấy, ok"
+  },
+  {
+    "start": 2953.4,
+    "end": 2960.04,
+    "text": "thì đây chính là cái trường hợp mà, một cái dạng bài toàn đấy là truyền trạng thái từ một cái số S là đó, sang một cái số T là đó, hay nói khác là"
+  },
+  {
+    "start": 2960.32,
+    "end": 2963.4,
+    "text": "nói là một cái trạng thái, từ một cái trạng thái nó, nó truyền ra cái trạng thái tiếp theo"
+  },
+  {
+    "start": 2963.4,
+    "end": 2971.4,
+    "text": "Thì thực trân nó là một cái dạng bài toán, một thuật toán BFS, ok, tìm kiếm theo trường dọng, vào trong đồ thị"
+  },
+  {
+    "start": 2971.4,
+    "end": 2983.48,
+    "text": "Ok, bài tiếp theo nhé, đấy chính là cái bài, cũng là một cái bài toán nó sử dụng hàng đợi, nhưng mà bài toán này thì nó liên quan đến phần đồ thị"
+  },
+  {
+    "start": 2983.48,
+    "end": 2987.48,
+    "text": "Thực ra thì bạn cũng chưa cần quan tâm đến đồ thị đâu, nhưng mà bạn cũng có thể làm bằng được bài này"
+  },
+  {
+    "start": 2987.48,
+    "end": 2994.77,
+    "text": "Bài này thì các bạn có thể cải tiến nó bằng cách là sau này các bạn học đồ thị thì các bạn có thể cải tiến cái bài tập này cho nó chạy nhanh hơn, nhé"
+  },
+  {
+    "start": 2994.77,
+    "end": 2997.21,
+    "text": "còn hiện tại bây giờ thì mình chỉ dùng sử dụng hán đợi thôi"
+  },
+  {
+    "start": 2997.21,
+    "end": 2999.93,
+    "text": "ok, mình chỉ dùng sử dụng hán đợi để làm bài này thôi"
+  },
+  {
+    "start": 2999.93,
+    "end": 3005.53,
+    "text": "xa nói các bạn học phần lý thuyết đầu thị thì bạn có thể giả bài này một cách nhanh hơn"
+  },
+  {
+    "start": 3005.53,
+    "end": 3012.25,
+    "text": "rồi, ở đây nhé, nó sẽ cho mình một cái match ận cỡ nở nhưng mà bao gồm xuống 01 và yêu cầu mình tìm đường đi ngắn nhất"
+  },
+  {
+    "start": 3012.25,
+    "end": 3015.25,
+    "text": "từ 1 cái phần tử bất đầu đến phần tử đích"
+  },
+  {
+    "start": 3015.25,
+    "end": 3018.25,
+    "text": "người ta sẽ cho mình cái tỏa độ bắt đầu vào tỏa độ đích"
+  },
+  {
+    "start": 3018.25,
+    "end": 3020.25,
+    "text": "và yêu cầu mình tìm cái đường đi ngắn nhất"
+  },
+  {
+    "start": 3020.25,
+    "end": 3024.57,
+    "text": "dụ như ở đây họ bắt đầu từ A00 này và kết thúc ở A44 thì cái đường đi của nó như thế này"
+  },
+  {
+    "start": 3024.57,
+    "end": 3043.61,
+    "text": "1, 5, 6, 7, 8, 9, 10, 11, 11, 12, 12, 22 nước thì nó là 11 bước đi đúng không? 12 vị trí thì nó là 11 bước đi, ok"
+  },
+  {
+    "start": 3043.61,
+    "end": 3049.85,
+    "text": "Với thì để làm bài này, hôm trước mình đã hướng dẫn cái cách mà bạn duyệt"
+  },
+  {
+    "start": 3049.85,
+    "end": 3054.23,
+    "text": "Ở đây người ta sẽ cho đi theo bốn hướng nhá, để là lên trên, xuống dưới, sang trái và sang phải đúng không?"
+  },
+  {
+    "start": 3054.23,
+    "end": 3060.11,
+    "text": "Thì mình đã từng hướng dẫn các bạn cái cách mà từ một cái o đó các bạn có thể đi sang bốn o xung quanh rồi đúng không?"
+  },
+  {
+    "start": 3060.11,
+    "end": 3063.95,
+    "text": "Bài này nó là một cái bài đồ thị cơ bản thôi, ở trên lưới thôi, ok?"
+  },
+  {
+    "start": 3063.95,
+    "end": 3069.27,
+    "text": "Sau này các bạn có thể giải bài này một cách rất đơn giản, nếu mà các bạn học thuật toán tình tiếng trên đồ thị"
+  },
+  {
+    "start": 3069.27,
+    "end": 3074.65,
+    "text": "Còn bây giờ chưa học thì nó hơi khó khăn 1 tý, nhưng mà nó cũng có thể sử dụng nguyên hàng đợi là cũng có thể làm được rồi"
+  },
+  {
+    "start": 3074.65,
+    "end": 3078.19,
+    "text": "Sao này các bạn có thể thả cải tiền nó hơn nhá, cho nó chạy nhanh hơn"
+  },
+  {
+    "start": 3078.19,
+    "end": 3085.25,
+    "text": "Rồi, cái cách làm bài này như thế này, đấy chính là từ 1 cái o nào đó nhá"
+  },
+  {
+    "start": 3085.25,
+    "end": 3091.98,
+    "text": "Ok, bình dụng như thế này, từ 1 cái o nào đó"
+  },
+  {
+    "start": 3091.98,
+    "end": 3095.98,
+    "text": "Ở đây từ cái oe z thì bạn có thể z chuyển sang 4 o xung quanh này đúng không?"
+  },
+  {
+    "start": 3095.98,
+    "end": 3100.46,
+    "text": "Thì mình chỉ cần làm 1 cái 2 cái mạng z chuyển thì mình có thể z chuyển sang 4 o xung quanh này đúng không?"
+  },
+  {
+    "start": 3100.46,
+    "end": 3104.34,
+    "text": "sau đó thì bạn dùng cho mình thêm 1 cái mạng 2 chiều nữa để lưu cái số bước đi"
+  },
+  {
+    "start": 3104.34,
+    "end": 3110.54,
+    "text": "thì từ 1 cái O nào đó bạn nhảy sang các cái O xung quanh ệ mà các cái O đó là 1"
+  },
+  {
+    "start": 3110.54,
+    "end": 3119.36,
+    "text": "ở đây nếu là, à ở đây nó còn yêu cầu mình di chuyển đến các cái O có giá trị là 1 nữa"
+  },
+  {
+    "start": 3119.36,
+    "end": 3123.24,
+    "text": "thế là bạn chỉ được di chuyển các cái O có giá trị 1 thôi không được di chuyển các O là không đúng không"
+  },
+  {
+    "start": 3123.24,
+    "end": 3128.24,
+    "text": "ví dụ như là cái từ cái O như này cái tư tưởng của nó chính là như thế này"
+  },
+  {
+    "start": 3128.24,
+    "end": 3136.68,
+    "text": "Ví dụ từ o nào đó là, ví dụ như ở đây, o này là o hàng 2, 3 đi, giả sử như thế nhé"
+  },
+  {
+    "start": 3136.68,
+    "end": 3143.67,
+    "text": "Ví dụ từ o hàng 2, 3 này bạn có thể đi sang o này, đúng không, còn anh đi sang o này, còn anh đi sang o này, còn anh đi sang o này"
+  },
+  {
+    "start": 3143.67,
+    "end": 3148.55,
+    "text": "Nếu mà 1 trong 4 cái o này nhé, nếu nó có thể đi từ thằng 2, 3 này này"
+  },
+  {
+    "start": 3148.55,
+    "end": 3153.59,
+    "text": "Giả sử như bạn bắt đầu từ cái o nào đó và đi đến o 2, 3 này thì bạn mất 3 nước đi"
+  },
+  {
+    "start": 3153.59,
+    "end": 3161.11,
+    "text": "Thì khi đó, tất cả 4 ô xung quanh của thằng 2 ban này, nó có thể đi đến ý, thì 4 thằng xung quanh này nó sẽ có số nước đi của mình là 4"
+  },
+  {
+    "start": 3161.11,
+    "end": 3166.8,
+    "text": "Mình giả sử thôi nhé, như này nó không hợp lý lắm, nhưng mà giả sử nó đi được sang 3 ô xung quanh này"
+  },
+  {
+    "start": 3166.8,
+    "end": 3175.0,
+    "text": "Thì khi đó, cái thằng ban này là nước đi ngắn nhất từ cái ô hiện tại, xin lỗi từ cái ô bắt đầu start đến cái ô 2 ban này"
+  },
+  {
+    "start": 3175.0,
+    "end": 3178.84,
+    "text": "Và từ ô 2 ban này bạn có thể đi sang các cái ô xung quanh nó như thế này nhé"
+  },
+  {
+    "start": 3178.84,
+    "end": 3188.84,
+    "text": "Thì khi đó, số lượng nước đi của thằng, từ o-stab đến các o xung quanh này này, nó sẽ bằng số lượng nước đi của o-stab đến o23 này này, cộng thêm 1 đơn vị nữa"
+  },
+  {
+    "start": 3188.84,
+    "end": 3194.84,
+    "text": "Ok, tức là ở mỗi bước bạn loang tốt nhất cho tất cả các o xung quanh ấy"
+  },
+  {
+    "start": 3194.84,
+    "end": 3200.84,
+    "text": "Thì từ khi đó nhé, ví dụ như từ o này này, sang o23 này này, thì bạn mất 3 nước đi, đúng không?"
+  },
+  {
+    "start": 3200.84,
+    "end": 3205.57,
+    "text": "Ai sẽ nói? Từ giả sử từ o này, bạn đi sang o này nhé"
+  },
+  {
+    "start": 3205.57,
+    "end": 3209.25,
+    "text": "Đi đến O này thì mất 2 nước đi, thì khi đó đi sang O này sẽ mất 3 nước đi"
+  },
+  {
+    "start": 3209.25,
+    "end": 3211.89,
+    "text": "Và từ thằng này nó sẽ loang sang các cái O xung quanh nó"
+  },
+  {
+    "start": 3211.89,
+    "end": 3214.93,
+    "text": "Và nó sẽ đánh dấu là các cái O xung quanh nó sẽ có nước đi là"
+  },
+  {
+    "start": 3214.93,
+    "end": 3216.61,
+    "text": "Từ nó cộng thêm 1 đơn vị thôi"
+  },
+  {
+    "start": 3216.61,
+    "end": 3218.45,
+    "text": "Ok, ý tưởng của nó là như thế"
+  },
+  {
+    "start": 3218.45,
+    "end": 3221.17,
+    "text": "Vậy thì bài này bạn sẽ sử dụng cho mình thêm 1 cái mạng nữa"
+  },
+  {
+    "start": 3221.17,
+    "end": 3224.29,
+    "text": "Để là mạng D, hoặc cái mạng gì đó để lưu cái khoảng cách ngắn nhất"
+  },
+  {
+    "start": 3224.29,
+    "end": 3227.01,
+    "text": "Từ đi từ cái O start đến cái O easy hiện tại"
+  },
+  {
+    "start": 3227.01,
+    "end": 3227.81,
+    "text": "Nha"
+  },
+  {
+    "start": 3227.81,
+    "end": 3233.09,
+    "text": "Và mỗi lần bạn duyệt qua 1 cái trạng thái easy nào đó, 1 cái O easy nào đó"
+  },
+  {
+    "start": 3233.09,
+    "end": 3234.93,
+    "text": "Thì mình sẽ đẩy thằng này vào trong hàng đợi"
+  },
+  {
+    "start": 3234.93,
+    "end": 3236.65,
+    "text": "ok, đẩy nó vào trong hàng đợi"
+  },
+  {
+    "start": 3236.65,
+    "end": 3240.49,
+    "text": "và mỗi khi mình lấy oeG nào đó ấy, thấy chưa"
+  },
+  {
+    "start": 3240.49,
+    "end": 3245.06,
+    "text": "thì bạn sẽ xét 4 cái o xung quanh nó nhé, xét cái 4 cái o xung quanh nó"
+  },
+  {
+    "start": 3245.06,
+    "end": 3246.82,
+    "text": "xét cái 4 cái o xung quanh nó"
+  },
+  {
+    "start": 3246.82,
+    "end": 3250.78,
+    "text": "và liệu rằng từ cái oeG này, bạn có thể đi sang được 4 cái o xung quanh này không"
+  },
+  {
+    "start": 3250.78,
+    "end": 3253.34,
+    "text": "nếu mà đi được sang 4 o xung quanh này nhé"
+  },
+  {
+    "start": 3253.34,
+    "end": 3256.54,
+    "text": "thì bạn sẽ tiến hành, mình sẽ đẩy 4 cái o xung quanh này vào trong hàng đợi"
+  },
+  {
+    "start": 3256.54,
+    "end": 3258.06,
+    "text": "và mình sẽ cập nhật đấy chính là"
+  },
+  {
+    "start": 3258.06,
+    "end": 3262.14,
+    "text": "cái khoảng cách từ cái o 23 này này đi đến sang cái 4 o xung quanh này này"
+  },
+  {
+    "start": 3262.14,
+    "end": 3265.26,
+    "text": "nó sẽ là khoảng cách của thằng 23 này cộng thêm 1 đơn vị nữa"
+  },
+  {
+    "start": 3265.26,
+    "end": 3272.86,
+    "text": "Vì dụ như thế này nhé, các bạn chưa học đồ thị mình đã nói nó hơi khó khăn 1 tí"
+  },
+  {
+    "start": 3272.86,
+    "end": 3275.42,
+    "text": "Nếu mà các bạn học đồ thị rồi thì bà này rất là dễ"
+  },
+  {
+    "start": 3275.42,
+    "end": 3283.28,
+    "text": "Vì dụ mình có là mình sẽ bắt đầu từ cái O này"
+  },
+  {
+    "start": 3283.28,
+    "end": 3287.12,
+    "text": "O này đi, ok, O này là O, giả sử O này là O 1 1 đi"
+  },
+  {
+    "start": 3287.12,
+    "end": 3293.76,
+    "text": "Và bạn đi đến cái O này, là O 2 1 2 3 4, 2 3 4, là O 2 4 luôn hả?"
+  },
+  {
+    "start": 3293.76,
+    "end": 3299.39,
+    "text": "Và giả sử cái đường đi của bạn nó như thế này"
+  },
+  {
+    "start": 3299.39,
+    "end": 3300.87,
+    "text": "ok, đó"
+  },
+  {
+    "start": 3300.87,
+    "end": 3305.11,
+    "text": "là sự người ta có các o1, 0 như thế này, chỗ này là 1 nhé"
+  },
+  {
+    "start": 3305.11,
+    "end": 3306.43,
+    "text": "chỗ này là 0, 1 nhé"
+  },
+  {
+    "start": 3306.43,
+    "end": 3308.83,
+    "text": "1 ở đây có nghĩa là được đi ấy, ok, nào"
+  },
+  {
+    "start": 3308.83,
+    "end": 3310.89,
+    "text": "thì từ cái o1, 1 này này"
+  },
+  {
+    "start": 3310.89,
+    "end": 3314.65,
+    "text": "bạn sẽ đi được sang cái 2 cái o xung quanh của nó, đây là o này, và o này"
+  },
+  {
+    "start": 3314.65,
+    "end": 3317.41,
+    "text": "và thằng này nó sẽ có cái khoảng cách đây là không đúng á"
+  },
+  {
+    "start": 3317.41,
+    "end": 3319.29,
+    "text": "đây mình hiểm viết cái khoảng cách ở trên đầu này này"
+  },
+  {
+    "start": 3319.29,
+    "end": 3323.29,
+    "text": "thì khi đó đi từ cái o1, 1 này sang 2 cái o xung quanh này, cái số bức đi của nó sẽ là 1"
+  },
+  {
+    "start": 3323.29,
+    "end": 3323.89,
+    "text": "đấy"
+  },
+  {
+    "start": 3323.89,
+    "end": 3327.13,
+    "text": "sau đó đẩy 2 cái o này vào nhé, đẩy 2 cái o này vào trong hàng đợi"
+  },
+  {
+    "start": 3327.13,
+    "end": 3331.25,
+    "text": "Sau từ o này, bạn sẽ nhảy ra cái o xung quanh này và bạn sẽ đánh dấu là"
+  },
+  {
+    "start": 3331.25,
+    "end": 3335.25,
+    "text": "cái khoảng cách đi từ cái o, bắt o start này, o 1 1 đến cái o hiện tại này này"
+  },
+  {
+    "start": 3335.25,
+    "end": 3338.55,
+    "text": "nó sẽ là cái khoảng cách 1 này, cộng thêm 1 đơn vị nữa là 2"
+  },
+  {
+    "start": 3338.55,
+    "end": 3342.25,
+    "text": "Sau từ thầm 1 này, bạn lại cũng cố gắng đi sang 4 cái o xung quanh nó, nhưng mà"
+  },
+  {
+    "start": 3342.25,
+    "end": 3345.93,
+    "text": "ở đây thì o này không đi được, các cái o xung quanh này giả sử như có nhá"
+  },
+  {
+    "start": 3345.93,
+    "end": 3351.35,
+    "text": "thì khi đó cái khoảng cách từ cái o start này đến cái o này cũng sẽ là 2, 11 là 3"
+  },
+  {
+    "start": 3351.35,
+    "end": 3354.65,
+    "text": "nói chung là ở các bước bạn sẽ loang ra tất cả các cái o xung quanh nó đấy"
+  },
+  {
+    "start": 3354.65,
+    "end": 3357.61,
+    "text": "Đấy và bạn sẽ tính khoảng cách từ ostart đến o đấy"
+  },
+  {
+    "start": 3357.61,
+    "end": 3362.41,
+    "text": "Tương tự như vậy, đi từ o này sang o này thì khoảng cách từ start đến o này nó sẽ là 3"
+  },
+  {
+    "start": 3362.41,
+    "end": 3366.01,
+    "text": "Và thằng này nó cũng sẽ thế, nó cũng sẽ cố gắng nó lang sang 4 o xung quanh nó"
+  },
+  {
+    "start": 3366.01,
+    "end": 3369.37,
+    "text": "Và tất cả các 4 o xung quanh nó, nếu mà có cái đường đi"
+  },
+  {
+    "start": 3369.37,
+    "end": 3373.13,
+    "text": "Thì khi đó, số đường đi từ ostart đến các 4 o xung quanh của ông này"
+  },
+  {
+    "start": 3373.13,
+    "end": 3374.81,
+    "text": "Sẽ bằng khoảng cách của nó"
+  },
+  {
+    "start": 3374.81,
+    "end": 3377.53,
+    "text": "Số nước đi của nó, từ ostart lại cộng thêm 1 đơn vị"
+  },
+  {
+    "start": 3377.53,
+    "end": 3380.49,
+    "text": "Thì ở đây, từ ostart đến o này nó mất 3 đơn vị rồi"
+  },
+  {
+    "start": 3380.49,
+    "end": 3382.01,
+    "text": "Thì xuống này nó sẽ là mất 1 đơn vị"
+  },
+  {
+    "start": 3382.01,
+    "end": 3382.89,
+    "text": "Đấy"
+  },
+  {
+    "start": 3382.89,
+    "end": 3386.56,
+    "text": "Thế thôi, và nếu mà bạn tìm thấy cái đường đích này thì mình sẽ dừng"
+  },
+  {
+    "start": 3386.56,
+    "end": 3390.34,
+    "text": "Ok, và mình sẽ tìm được cái số mức đi tối thiệp của mình là 4"
+  },
+  {
+    "start": 3390.34,
+    "end": 3392.06,
+    "text": "Ê, thì cách làm như thế"
+  },
+  {
+    "start": 3392.06,
+    "end": 3393.82,
+    "text": "Và này hơi khó cài đặt 1 tí"
+  },
+  {
+    "start": 3393.82,
+    "end": 3399.78,
+    "text": "Nếu mà bạn chưa học đồ thị, ok, ở đây thì mình sẽ sử dụng 1 cái mảng A"
+  },
+  {
+    "start": 3399.78,
+    "end": 3401.78,
+    "text": "Để lưu cái ma chận này nhé"
+  },
+  {
+    "start": 3401.78,
+    "end": 3410.64,
+    "text": "Mình xem cái cỡ của nó là bao nhiêu"
+  },
+  {
+    "start": 3410.64,
+    "end": 3414.44,
+    "text": "1 nghìn đúng không? Mình sẽ khai báo 1 cái ma chận A có 1 nghìn gì"
+  },
+  {
+    "start": 3414.44,
+    "end": 3416.84,
+    "text": "Và 1 cái ma chận D"
+  },
+  {
+    "start": 3416.84,
+    "end": 3420.33,
+    "text": "Ok, trong đó ấy, D, I, Z nhé"
+  },
+  {
+    "start": 3420.33,
+    "end": 3422.33,
+    "text": "trong đó D and easy, parler lưu đề mini, hơn , lưu nhỏ được cái gì Miss"
+  },
+  {
+    "start": 3422.33,
+    "end": 3438.6,
+    "text": "Lưu bước đi tuổi thiệu item, tijd tutteiques , Mass bump & O start"
+  },
+  {
+    "start": 3438.6,
+    "end": 3450.1,
+    "text": "đ inhale note, and in fact start until the end int"
+  },
+  {
+    "start": 3450.1,
+    "end": 3452.9,
+    "text": "Nó sẽ là start vào em"
+  },
+  {
+    "start": 3452.9,
+    "end": 3453.9,
+    "text": "Thôi"
+  },
+  {
+    "start": 3453.9,
+    "end": 3455.41,
+    "text": "Rồi"
+  },
+  {
+    "start": 3455.41,
+    "end": 3460.08,
+    "text": "Bây giờ mình sẽ viết thật toàn để mình viết 1 cái ham input nhá"
+  },
+  {
+    "start": 3460.08,
+    "end": 3462.08,
+    "text": "Hàm input này có nhiệm vụ nhập vào cái..."
+  },
+  {
+    "start": 3462.08,
+    "end": 3466.08,
+    "text": "Ở đây mình sẽ dùng 2 cái biến là novel mode nữa, tức là số hàng và số cột của cái ma chặn này"
+  },
+  {
+    "start": 3466.08,
+    "end": 3468.69,
+    "text": "Mình sẽ xin cho novel mode này"
+  },
+  {
+    "start": 3468.69,
+    "end": 3483.11,
+    "text": "Sau mình sẽ nhập cái ma chặn"
+  },
+  {
+    "start": 3483.11,
+    "end": 3488.23,
+    "text": "Sau dưới này thì mình sẽ memset cho cái mảng D có giá trị là không"
+  },
+  {
+    "start": 3488.23,
+    "end": 3490.23,
+    "text": "Vì vậy là bạn không cần memset cũng được"
+  },
+  {
+    "start": 3490.23,
+    "end": 3491.23,
+    "text": "Rồi"
+  },
+  {
+    "start": 3491.23,
+    "end": 3497.61,
+    "text": "Mình sẽ có cần memset không?"
+  },
+  {
+    "start": 3497.61,
+    "end": 3499.25,
+    "text": "Có cần đấy"
+  },
+  {
+    "start": 3499.25,
+    "end": 3500.25,
+    "text": "Rồi ok"
+  },
+  {
+    "start": 3500.25,
+    "end": 3505.39,
+    "text": "Từ từ, quả cân, ok"
+  },
+  {
+    "start": 3505.39,
+    "end": 3514.0,
+    "text": "Rồi bây giờ mình sẽ viết 1 cái hàm, đấy là hàm thủ tục để mình sẽ bắt đầu từ cái, mình sẽ viết thủ tục bắt đầu từ OEZ nhá"
+  },
+  {
+    "start": 3514.0,
+    "end": 3516.64,
+    "text": "Thực ra chỗ này bạn không cần OEZ cũng được"
+  },
+  {
+    "start": 3516.64,
+    "end": 3521.24,
+    "text": "Rồi tức là mình sẽ bắt đầu từ cái OEZ này nhá"
+  },
+  {
+    "start": 3521.24,
+    "end": 3526.28,
+    "text": "Nhiệu cái hàm sâu này nó có nhiệm vụ là nó bắt đầu từ cái OEZ hoặc là không bạn không cần bắt đầu từ OEZ cũng được"
+  },
+  {
+    "start": 3526.28,
+    "end": 3529.88,
+    "text": "Nhiệu vụ của mình là sẽ đi từ cái OSTART đến OEM, ok, đấy"
+  },
+  {
+    "start": 3529.88,
+    "end": 3544.12,
+    "text": "các bạn tạo cho mình 1 hằng đợi P, lưu các P, bởi vì ở đây, mỗi trạng thái mà bạn rượt qua, mỗi trạng thái mà cái hằng đợi nó lưu, đây chính là tạo độ Easy của 1 O, bạn sẽ tạo cho mình 1 QP"
+  },
+  {
+    "start": 3544.12,
+    "end": 3555.96,
+    "text": "rồi bạn push cái trạng thái bắt đầu vào, đây chính là start.first, start.second"
+  },
+  {
+    "start": 3555.96,
+    "end": 3561.93,
+    "text": "mình sẽ đẩy cái trạng thái của cái đỉnh đầu tiên này vào trong hằng đợi"
+  },
+  {
+    "start": 3561.93,
+    "end": 3565.73,
+    "text": "Lưu là ết cho nó ngắn nhé"
+  },
+  {
+    "start": 3565.73,
+    "end": 3568.94,
+    "text": "và ết nhé, ok, cho này là ết"
+  },
+  {
+    "start": 3568.94,
+    "end": 3576.1,
+    "text": "và mình sẽ lưu là ết của ết.first và ết.second"
+  },
+  {
+    "start": 3576.1,
+    "end": 3578.72,
+    "text": "nó sẽ bằng mật không"
+  },
+  {
+    "start": 3578.72,
+    "end": 3582.64,
+    "text": "tức là cái khoảng cách từ O ết cho tới O chính nó là không"
+  },
+  {
+    "start": 3582.64,
+    "end": 3587.04,
+    "text": "Đấy, để ưu dư thì mình sẽ lưu số bức tối thiểu đi từ O start đến O hiện tại đúng không"
+  },
+  {
+    "start": 3587.04,
+    "end": 3588.68,
+    "text": "mà O hiện tại là chính nó này"
+  },
+  {
+    "start": 3588.68,
+    "end": 3591.24,
+    "text": "Thì ra là khi đó mình sẽ cho nó đây còn không"
+  },
+  {
+    "start": 3591.24,
+    "end": 3595.72,
+    "text": "add.first là chỉ số y, add.second là chỉ số y"
+  },
+  {
+    "start": 3595.72,
+    "end": 3601.0,
+    "text": "từ từ hình như là họ nhập number và họ nhập và quả độ nữa, đúng không?"
+  },
+  {
+    "start": 3601.0,
+    "end": 3606.92,
+    "text": "hai tỏa độ bắt đầu và kết thúc thì mình sẽ phải see in cho add.first là add.second"
+  },
+  {
+    "start": 3606.92,
+    "end": 3613.16,
+    "text": "tỏa độ của điểm đầu tiên và add.first và add.second là tỏa độ của điểm thứ 2"
+  },
+  {
+    "start": 3613.16,
+    "end": 3621.74,
+    "text": "ok, sau đó thì các bạn tạo sau khi mà tạo hàng đợi thì các bạn lập cho mình cái điều kiện lập"
+  },
+  {
+    "start": 3621.74,
+    "end": 3624.22,
+    "text": "đây là y, hàng đợi còn chưa rộng"
+  },
+  {
+    "start": 3624.22,
+    "end": 3628.05,
+    "text": "trình nằm cái hàng đợi còn chưa rộng nhé"
+  },
+  {
+    "start": 3628.05,
+    "end": 3631.61,
+    "text": "thì mình sẽ lấy ra cái đỉnh ở đầu hàng đợi"
+  },
+  {
+    "start": 3631.61,
+    "end": 3641.56,
+    "text": "cái o của đầu hàng đợi mình sẽ đặt là pair, int, int tốt, bằng Q.front cho các bạn xoá nó đi"
+  },
+  {
+    "start": 3641.56,
+    "end": 3645.06,
+    "text": "và bạn kiểm tra ở chỗ này, bạn sẽ làm sao nhỉ?"
+  },
+  {
+    "start": 3645.06,
+    "end": 3649.74,
+    "text": "bạn sẽ cố gắng duyệt 4 o xung quanh nó nhé, ở đây mình sẽ dùng 2 cái mạng"
+  },
+  {
+    "start": 3649.74,
+    "end": 3656.0,
+    "text": "intdx có 4 phần tử, intdi cũng có 4 phần tử"
+  },
+  {
+    "start": 3656.0,
+    "end": 3661.3,
+    "text": "Đấy chính là cái khoảng cách di chuyển sang 4 ô xung quanh đấy, đúng không? Chứ mình có tương dẫn được này"
+  },
+  {
+    "start": 3661.3,
+    "end": 3670.41,
+    "text": "Thế là từ cái oiz này, bạn có thể di chuyển sang 4 ô xung quanh, o này thì nó sẽ là iz1 này, đúng không?"
+  },
+  {
+    "start": 3670.41,
+    "end": 3677.83,
+    "text": "O này thì nó là iz1 này, o này thì là oiz1z này, con o này là oiz1z"
+  },
+  {
+    "start": 3677.83,
+    "end": 3683.59,
+    "text": "Bạn chỉ cần dùng 4 cái ưu xung quanh, dùng 2 cái mạng để di chuyển kết tọa độ i và di thôi"
+  },
+  {
+    "start": 3683.59,
+    "end": 3691.02,
+    "text": "Ok, nó sẽ là chứa 1, 0, 0, 1, chứa 1, 0, 0, 1"
+  },
+  {
+    "start": 3691.02,
+    "end": 3693.02,
+    "text": "Còn để i thì nó là bao nhiêu?"
+  },
+  {
+    "start": 3693.02,
+    "end": 3699.1,
+    "text": "Nó sẽ là 0, chứa 1, 1, 0, 0, chứa 1, 1, 1, 1, 0"
+  },
+  {
+    "start": 3699.1,
+    "end": 3701.1,
+    "text": "Ok, đấy, sau đó thì ở đây nhá"
+  },
+  {
+    "start": 3701.1,
+    "end": 3706.1,
+    "text": "Khi mà bạn đã pop ra cái đỉnh hiện tại rồi ấy thì bạn sẽ làm sao, duyệt 4 ưu xung quanh"
+  },
+  {
+    "start": 3706.1,
+    "end": 3712.26,
+    "text": "dượt 4 ô xung quanh, ok, bằng cách vòng 4 kìa"
+  },
+  {
+    "start": 3712.26,
+    "end": 3717.55,
+    "text": "mình sẽ dượt từ 4, int, tk, 0, k, nhỏ hơn 4, k, cộng cộng"
+  },
+  {
+    "start": 3717.55,
+    "end": 3725.43,
+    "text": "và từ cuối tuận tọa độ isi hiện tại thì mình sẽ sinh ra cái 4 cái ô xung quanh tiếp theo nhé"
+  },
+  {
+    "start": 3725.43,
+    "end": 3728.55,
+    "text": "ở đây mình sẽ dùng cái biển isi bằng top.first"
+  },
+  {
+    "start": 3728.55,
+    "end": 3731.59,
+    "text": "và isi bằng top.second đi, ok"
+  },
+  {
+    "start": 3731.59,
+    "end": 3736.1,
+    "text": "thì từ cái tọa độ isi bạn sẽ sinh ra cái tọa độ isi mới"
+  },
+  {
+    "start": 3736.1,
+    "end": 3739.1,
+    "text": "i1 sẽ bằng i, cộng với dx của k"
+  },
+  {
+    "start": 3739.1,
+    "end": 3747.66,
+    "text": "và intd1 sẽ bằng i, cộng với dx của k"
+  },
+  {
+    "start": 3747.66,
+    "end": 3753.66,
+    "text": "và bạn kiểm tra là gì? Nếu, chỗ này mình biết mà hàm int t cho nó dễ nèo nhá"
+  },
+  {
+    "start": 3753.66,
+    "end": 3761.2,
+    "text": "nếu mà i1 ít mà bằng e chấm first và d1 ít mà bằng e chấm second"
+  },
+  {
+    "start": 3761.2,
+    "end": 3772.83,
+    "text": "tức là nó đã sinh ra được cái... nó đã sinh ra được cái... nó đã sinh ra được cái đỉnh cuối cùng ấy, nó đi đến đỉnh cuối cùng rồi ấy"
+  },
+  {
+    "start": 3772.83,
+    "end": 3780.83,
+    "text": "thì bạn sẽ return luôn lúc đó, tức là mình đã tìm đường đi đến đấy rồi ấy, thì bạn sẽ return về d của iz, cộng thêm 1 đúng không?"
+  },
+  {
+    "start": 3780.83,
+    "end": 3784.83,
+    "text": "OK, còn không ấy thì bạn push cái thằng này vào trong hàng đợi nhá, OK"
+  },
+  {
+    "start": 3784.83,
+    "end": 3786.77,
+    "text": "C plain name"
+  },
+  {
+    "start": 3786.77,
+    "end": 3788.19,
+    "text": "py"
+  },
+  {
+    "start": 3788.27,
+    "end": 3789.59,
+    "text": "flex"
+  },
+  {
+    "start": 3789.59,
+    "end": 3794.43,
+    "text": ","
+  },
+  {
+    "start": 3796.27,
+    "end": 3801.32,
+    "text": "Cho"
+  },
+  {
+    "start": 3801.32,
+    "end": 3803.42,
+    "text": "o"
+  },
+  {
+    "start": 3803.42,
+    "end": 3805.84,
+    "text": "i"
+  },
+  {
+    "start": 3805.84,
+    "end": 3808.33,
+    "text": "o"
+  },
+  {
+    "start": 3808.33,
+    "end": 3809.61,
+    "text": "a"
+  },
+  {
+    "start": 3809.61,
+    "end": 3812.89,
+    "text": "i"
+  },
+  {
+    "start": 3812.89,
+    "end": 3834.0,
+    "text": "O1 lớn mà không, y1 nhỏ hơn construction pond , changes to size"
+  },
+  {
+    "start": 3834.0,
+    "end": 3836.0,
+    "text": "Mình sẽ return luôn cái khoảng cách"
+  },
+  {
+    "start": 3836.0,
+    "end": 3841.0,
+    "text": "Đi từ đầu cho tới đồ cuối cùng, nó chính là cái khoảng cách từ OEG đến đây, cộng thêm 1 nữa, đúng không?"
+  },
+  {
+    "start": 3841.0,
+    "end": 3846.0,
+    "text": "Thao đó, còn nếu không thì bạn sẽ push cái trạng thái của cái OE1G1 tới vào trong hàng đợi"
+  },
+  {
+    "start": 3846.0,
+    "end": 3850.0,
+    "text": "Và bạn sẽ cập nhật, nấy ra đây của OE1G1 tệ nó sẽ bằng khoảng cách"
+  },
+  {
+    "start": 3850.0,
+    "end": 3856.0,
+    "text": "DG cộng thêm 1, tức là cái khoảng cách từ cái O đầu tiên, O start đến cái OE1G1 này này"
+  },
+  {
+    "start": 3856.0,
+    "end": 3860.0,
+    "text": "Nó sẽ bằng khoảng cách từ cái O start đi đến OEG cộng thêm 1 vị nữa"
+  },
+  {
+    "start": 3860.0,
+    "end": 3867.38,
+    "text": "ok, họ ở dưới này thì thử thử họ yêu cầu là, nếu không tìm được ra đáp án thì return chứ 1 đúng không?"
+  },
+  {
+    "start": 3867.38,
+    "end": 3876.86,
+    "text": "thế này các bạn có thể return chứ 1 ở chỗ này cũng được, thử thử"
+  },
+  {
+    "start": 3876.86,
+    "end": 3880.3,
+    "text": "có cách nào ngắn hơn không nhảy đến Mami Studio hả?"
+  },
+  {
+    "start": 3880.3,
+    "end": 3888.3,
+    "text": "hỏi là bạn viết cái hàm này nó void đi"
+  },
+  {
+    "start": 3888.3,
+    "end": 3893.07,
+    "text": "ok, return chứ 1 cũng được, nó hơi lâu một tí"
+  },
+  {
+    "start": 3893.07,
+    "end": 3897.33,
+    "text": "trong hàm main thì bạn sẽ input nhé, thở lại nhập input này"
+  },
+  {
+    "start": 3897.33,
+    "end": 3912.04,
+    "text": "App, app, eschomfirst, eschomsecond, venr..."
+  },
+  {
+    "start": 3914.64,
+    "end": 3926.99,
+    "text": "E Toronto. eform2 .com"
+  },
+  {
+    "start": 3928.15,
+    "end": 3932.18,
+    "text": "EcstasyM省n lùi"
+  },
+  {
+    "start": 3932.18,
+    "end": 3934.18,
+    "text": "ngồi dút ngắn đưa 1 tí nữa"
+  },
+  {
+    "start": 3934.18,
+    "end": 3936.18,
+    "text": "nói chung là ở đây thì"
+  },
+  {
+    "start": 3936.18,
+    "end": 3938.18,
+    "text": "sau này các bạn học"
+  },
+  {
+    "start": 3938.18,
+    "end": 3940.18,
+    "text": "phần đồ thị các bạn sẽ phố yêu cái thằng này hơn được"
+  },
+  {
+    "start": 3940.18,
+    "end": 3942.18,
+    "text": "và 1 thật thôi, nó cải tiến hơn"
+  },
+  {
+    "start": 3942.18,
+    "end": 3944.18,
+    "text": "ok, rồi chạy thử nha"
+  },
+  {
+    "start": 3944.18,
+    "end": 3949.57,
+    "text": "đây đậm ảnh của nó 5.1"
+  },
+  {
+    "start": 3949.57,
+    "end": 3952.28,
+    "text": "memset"
+  },
+  {
+    "start": 3952.28,
+    "end": 3954.28,
+    "text": "d0signoff"
+  },
+  {
+    "start": 3954.28,
+    "end": 3964.18,
+    "text": "d0signoff"
+  },
+  {
+    "start": 3964.18,
+    "end": 3966.18,
+    "text": "d0signoff"
+  },
+  {
+    "start": 3966.18,
+    "end": 3968.18,
+    "text": "nó không chạy ra"
+  },
+  {
+    "start": 3968.18,
+    "end": 3972.52,
+    "text": "input"
+  },
+  {
+    "start": 3972.52,
+    "end": 3975.99,
+    "text": "qchumpup"
+  },
+  {
+    "start": 3975.99,
+    "end": 3978.99,
+    "text": "f.first, f.second, f.first, f.second"
+  },
+  {
+    "start": 3978.99,
+    "end": 3983.14,
+    "text": "ok, e1z1"
+  },
+  {
+    "start": 3983.14,
+    "end": 3988.29,
+    "text": "à, rồi, ok, bạn sẽ phải cho ai 1 của e1, e1 nữa, đúng không?"
+  },
+  {
+    "start": 3988.29,
+    "end": 3991.29,
+    "text": "đánh dấu nó bằng không, để nó không duyệt lại nữa mà"
+  },
+  {
+    "start": 3991.29,
+    "end": 3997.75,
+    "text": "có thể nó duyệt vĩnh viện đấy"
+  },
+  {
+    "start": 3997.75,
+    "end": 4004.36,
+    "text": "hả? bây giờ chiều 1 á"
+  },
+  {
+    "start": 4004.36,
+    "end": 4007.36,
+    "text": "nếu mình xe này, top.first và top.second"
+  },
+  {
+    "start": 4007.36,
+    "end": 4018.56,
+    "text": "ip...i của e.first màng gì?"
+  },
+  {
+    "start": 4018.56,
+    "end": 4022.52,
+    "text": "à, chỗ này để i nhé, ok"
+  },
+  {
+    "start": 4022.52,
+    "end": 4029.14,
+    "text": "da11"
+  },
+  {
+    "start": 4034.15,
+    "end": 4039.31,
+    "text": "tìm cái đường đi ngắn nhất từ 1 mega o"
+  },
+  {
+    "start": 4046.81,
+    "end": 4047.93,
+    "text": "vấn đề你就SUA"
+  },
+  {
+    "start": 4057.89,
+    "end": 4063.89,
+    "text": "và mình sẽ cập nhật cái khoảng cách đi từ O start đến bố nô xung quanh của ô hiện tại"
+  },
+  {
+    "start": 4063.89,
+    "end": 4068.37,
+    "text": "nó sẽ bằng khoảng cách O start đến cái ô hiện tại cộng thêm 1"
+  },
+  {
+    "start": 4068.37,
+    "end": 4074.4,
+    "text": "và bạn sẽ kiểm tra nếu mà bạn đi đến cái ô cuối cùng đấy thì mình sẽ return về cái khoảng cách của ô hiện tại cộng thêm 1"
+  },
+  {
+    "start": 4074.4,
+    "end": 4077.4,
+    "text": "con cộng thêm 1 thì mình sẽ return về trừ 1"
+  },
+  {
+    "start": 4077.4,
+    "end": 4082.72,
+    "text": "sau này thì bài này thì nó là một cái bài bế cứ bản thôi, trong đồ thị"
+  },
+  {
+    "start": 4082.72,
+    "end": 4087.92,
+    "text": "còn sau này thì các bạn sẽ tối yêu nó hơn bằng các cái thật thoản tốt hơn"
+  },
+  {
+    "start": 4087.92,
+    "end": 4092.04,
+    "text": "Còn ở hiện tại các bạn sử dụng hàng đợi như thế này là ok, vũng nhỏ"
+  },
+  {
+    "start": 4092.04,
+    "end": 4094.24,
+    "text": "Từ từ để mình xem có vấn đề gì không với cái code này"
+  },
+  {
+    "start": 4095.04,
+    "end": 4098.54,
+    "text": "Thế nữa mình có thể để cái code tham khảo dưới nhé, các bạn có thể tham khảo thêm"
+  },
+  {
+    "start": 4098.54,
+    "end": 4102.78,
+    "text": "Vì trong quá trình code nhiều khi mình không để ý được những cái lỗ đạt vặt đấy"
+  },
+  {
+    "start": 4102.78,
+    "end": 4104.07,
+    "text": "Ok"
+  }
+]

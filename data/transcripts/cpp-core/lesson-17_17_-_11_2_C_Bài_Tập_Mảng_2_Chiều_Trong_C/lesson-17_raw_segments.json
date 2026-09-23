@@ -1,0 +1,3372 @@
+[
+  {
+    "start": 0.11,
+    "end": 6.11,
+    "text": "Cái bên này thì mình dưỡng dẫn các bạn bài tiếp theo về phần mạng 2 chiều nhé, mình sẽ bắt đầu với mạng Maximum Pathum, ok?"
+  },
+  {
+    "start": 6.11,
+    "end": 17.11,
+    "text": "Mình sẽ cho mình 1 cái má trận, nhưng mà sau đó yêu cầu mình là tìm cái tổng đường dẫn lớn nhất trong má trận, trong đó đường dẫn là đây là tổng các phần tử của các phần tử."
+  },
+  {
+    "start": 17.11,
+    "end": 24.11,
+    "text": "Tổng của tất cả các phần tử từ hàng đầu tiên đến hàng cuối cùng mà bạn chỉ được phép di chuyển xuống, hoặc theo đường chéo, sang trái hoặc sang phái."
+  },
+  {
+    "start": 24.11,
+    "end": 28.11,
+    "text": "Thế là từ 1 OEG nào đó đúng không? Bạn có thể đi di chuyển xuống dưới thôi"
+  },
+  {
+    "start": 28.11,
+    "end": 33.1,
+    "text": "Đây, từ cái OEG này này, bạn có thể di chuyển xuống dưới"
+  },
+  {
+    "start": 33.1,
+    "end": 37.1,
+    "text": "Sáng xuống dưới trái, hoặc là xuống dưới theo cái đường chéo này này, ok?"
+  },
+  {
+    "start": 37.1,
+    "end": 42.1,
+    "text": "Sau đó thì bạn sẽ phải tìm đường dẫn mà, cái đường dẫn đến nó bắt đầu từ cái hàng đầu tiên"
+  },
+  {
+    "start": 42.1,
+    "end": 46.84,
+    "text": "và nó sẽ kết thúc ở cái hàng cuối cùng sau cho tổng các phần tử trên cái đường dẫn đến nó là lớn nhất"
+  },
+  {
+    "start": 46.84,
+    "end": 48.84,
+    "text": "Input dòng đầu tiên sẽ là sứng bộ tét nhé"
+  },
+  {
+    "start": 48.84,
+    "end": 51.84,
+    "text": "Bộ tét thì bao gồm 2 số nào và mà vợ yêu cầu mình"
+  },
+  {
+    "start": 51.84,
+    "end": 54.9,
+    "text": "in ra cái tổng lớn nhất của cái đường dẫn tìm được"
+  },
+  {
+    "start": 54.9,
+    "end": 62.02,
+    "text": "Thế các bạn thấy là mình sẽ sử dụng thêm 1 cái mạng nữa nhé"
+  },
+  {
+    "start": 62.02,
+    "end": 64.57,
+    "text": "Mình sẽ sử dụng thêm 1 cái mạng nữa"
+  },
+  {
+    "start": 64.57,
+    "end": 67.69,
+    "text": "Hoặc là bạn có thể sử dụng trên trực tiếp cái mạng ban đầu cũng được"
+  },
+  {
+    "start": 67.69,
+    "end": 71.93,
+    "text": "Thì mình thấy là cái hàng đầu tiên của cái ma chặn này này"
+  },
+  {
+    "start": 71.93,
+    "end": 74.81,
+    "text": "Thế cái mình sẽ sử dụng luôn cái..."
+  },
+  {
+    "start": 74.81,
+    "end": 77.37,
+    "text": "Mình tạm gọi là 1 cái mạng DP đi, ok"
+  },
+  {
+    "start": 77.37,
+    "end": 79.37,
+    "text": "Tạm gọi cái mạng DP Easy đi"
+  },
+  {
+    "start": 79.37,
+    "end": 82.57,
+    "text": "Nó sẽ được dùng để lưu..."
+  },
+  {
+    "start": 82.57,
+    "end": 84.57,
+    "text": "Ờm... gì nhỉ?"
+  },
+  {
+    "start": 84.57,
+    "end": 94.81,
+    "text": "lưu tổng lớn nhất nhé, nó sẽ được lưu dùng để lưu để tổng lớn nhất của cái đường dẫn bắt đầu từ cái hàng đầu tiên và đi qua cái OEG này"
+  },
+  {
+    "start": 94.81,
+    "end": 109.94,
+    "text": "và mình sẽ xây dựng đến cái DP, tất cả các phần tử, các vị trí ở trong cái ma chận này và cái đáp án của cái câu trả lời của mình nó sẽ là DP, cái phần tử lớn nhất trong các cái hàng cuối cùng của cái ma chận DP này"
+  },
+  {
+    "start": 109.94,
+    "end": 123.37,
+    "text": "Ok, ví dụ như cái má trận là 10120204, 10120204"
+  },
+  {
+    "start": 123.37,
+    "end": 128.57,
+    "text": "Rồi cái hàng dưới thì nó sẽ là 1003025"
+  },
+  {
+    "start": 128.57,
+    "end": 140.2,
+    "text": "Hàng tiếp theo thì là 0140020, 0140020"
+  },
+  {
+    "start": 140.2,
+    "end": 150.74,
+    "text": "và hàng cuối cùng thì là 10022004, ok"
+  },
+  {
+    "start": 150.74,
+    "end": 156.22,
+    "text": "Bây giờ bạn sẽ xây dựng cái mảng DP đấy nhé, trong đó cái mảng DP đó, cái dòng đầu tiên thì nó giống ý hết cái ma chặn ban đầu"
+  },
+  {
+    "start": 156.22,
+    "end": 168.1,
+    "text": "Nhưng mà từ cái dòng thứ 2 này trở đi ấy, thì cái phần tử DP-EZ nào đó của cái mảng này này, nó sẽ tinh toán như sau đấy là nó sẽ dựa vào 3 cái thằng đứng ở trên nó ấy"
+  },
+  {
+    "start": 168.1,
+    "end": 175.06,
+    "text": "Để xem là với cái phần tử ví dụ như thằng 1 này này, bình thường thì nó sẽ xét 3 vị trí đứng trên nó như thế này này"
+  },
+  {
+    "start": 175.06,
+    "end": 177.25,
+    "text": "xem thằng nào là thằng lớn nhất"
+  },
+  {
+    "start": 177.25,
+    "end": 183.35,
+    "text": "thì khi đó cái giá trị của cái O này này, nó sẽ bằng tổng của cái thằng lớn nhất trong 3 thằng đứng trên nó, cộng với chính nó"
+  },
+  {
+    "start": 183.35,
+    "end": 191.6,
+    "text": "bởi vì là nếu mà bạn muốn tìm đường dẫn lớn nhất í, thì là từ 1 cái hàng nào đó là lớn trên thì bạn sẽ phải chọn cái thằng lớn nhất và bạn đi xuống dưới cái O lớn dưới đúng không?"
+  },
+  {
+    "start": 191.6,
+    "end": 195.6,
+    "text": "trong trường hợp này, 10 với 10 lớn nhất là 10 đúng không? Cộng với 1 thì nó sẽ là 11"
+  },
+  {
+    "start": 195.6,
+    "end": 204.96,
+    "text": "O này thì nó sẽ xét 3 thằng đứng trước, nó là 11 và 12, sau đó nó chọn cái o lớn nhất để nó chọn cái đường đi từ cái o đến đi xuống dưới o này"
+  },
+  {
+    "start": 204.96,
+    "end": 207.28,
+    "text": "thì nó sẽ là 10, cộng với 0 thì là 10"
+  },
+  {
+    "start": 207.28,
+    "end": 211.88,
+    "text": "O này thì nó sẽ chọn 3 thằng đứng trên nó này để nó lựa chọn thằng lớn nhất"
+  },
+  {
+    "start": 211.88,
+    "end": 217.96,
+    "text": "và cái đường đi của mình từ gióng trên xuống tầm dưới mà đi qua o này thì mình sẽ lấy cái từ thằng 10 để đi xuống"
+  },
+  {
+    "start": 217.96,
+    "end": 220.28,
+    "text": "chứ mình không đi từ thằng 2 thằng không để đi xuống o này nhé"
+  },
+  {
+    "start": 220.28,
+    "end": 222.52,
+    "text": "thì nó là 10, cộng không là 10 này"
+  },
+  {
+    "start": 222.52,
+    "end": 226.2,
+    "text": "tương tự như vậy, ông này thì ông ấy sẽ chọn 3 cái thằng đứng trên nó này"
+  },
+  {
+    "start": 226.2,
+    "end": 230.2,
+    "text": "thằng nào lớn nhất thì nó sẽ đi từ cái ồ đấy đi xuống ồ này, đi như thế này này"
+  },
+  {
+    "start": 230.2,
+    "end": 233.88,
+    "text": "cái là 10, cộng với 30 thì nó là 50, ok?"
+  },
+  {
+    "start": 233.88,
+    "end": 236.56,
+    "text": "không phải là 30 không nhỉ?"
+  },
+  {
+    "start": 236.56,
+    "end": 241.12,
+    "text": "ok, thằng 2 này cộng thế nó sẽ chọn cái thằng lớn nhất, trên nó là 20, cộng 12 là 22"
+  },
+  {
+    "start": 241.12,
+    "end": 245.2,
+    "text": "thằng 5 này thì chỉ có 2 thằng đấy là 20 và 4 thì nó sẽ chọn thằng 20 đi xuống nó đúng không?"
+  },
+  {
+    "start": 245.2,
+    "end": 246.24,
+    "text": "thì nó sẽ là 25"
+  },
+  {
+    "start": 246.24,
+    "end": 249.28,
+    "text": "rồi bạn cứ thế, cứ xây dựng sang xuống cái dòng này, xuống cái dòng này"
+  },
+  {
+    "start": 249.28,
+    "end": 254.0,
+    "text": "sau đó bạn chỉ cần tìm cái phần tử lớn nhất của cái dòng cuối cùng này, là mình sẽ biết tỏng cái phần tử lớn nhất"
+  },
+  {
+    "start": 254.0,
+    "end": 257.8,
+    "text": "trên một cái rừng dẫn từ cái hàng đầu tiên tới hàng cuối cùng rồi, ok?"
+  },
+  {
+    "start": 257.8,
+    "end": 262.6,
+    "text": "Thương tự như vậy nhé, ở chỗ này thằng này nó sẽ chọn thằng 11 đi xuống nó nhé, thì thành 11"
+  },
+  {
+    "start": 262.6,
+    "end": 269.35,
+    "text": "thằng 10 này thì nó sẽ chọn là thằng 11 đi xuống nó thì thành là 21"
+  },
+  {
+    "start": 269.35,
+    "end": 272.69,
+    "text": "ok, chọn này là 21 nhé"
+  },
+  {
+    "start": 272.69,
+    "end": 278.5,
+    "text": "thằng 4 này thì nó sẽ chọn thằng 50 thì là 54 này, thằng 0 này nó sẽ chọn là 50 thì nó sẽ là 50 này"
+  },
+  {
+    "start": 278.5,
+    "end": 281.14,
+    "text": "thằng 2 này nó sẽ chọn là 50, tiếp là 52 này"
+  },
+  {
+    "start": 281.14,
+    "end": 283.94,
+    "text": "thằng 0 này nó sẽ chọn là 25, tức là 25 này"
+  },
+  {
+    "start": 283.94,
+    "end": 288.82,
+    "text": "ok, dòng cuối cùng này cũng thế, thằng này nó sẽ chọn thắng 21, cùng với 1 là 22"
+  },
+  {
+    "start": 288.82,
+    "end": 292.02,
+    "text": "thằng không này nó sẽ chọn thắng 54, cùng với không là 54"
+  },
+  {
+    "start": 292.02,
+    "end": 298.37,
+    "text": "thằng 2 này thì nó sẽ chọn là thằng 54, cùng với 2 thì là 56"
+  },
+  {
+    "start": 298.37,
+    "end": 304.93,
+    "text": "thằng 20 này thì nó sẽ chọn thằng lớn nhất trong 3, thằng đấy là 50, 50, 50, 50, 50, 50, 50, cùng với 20, tức là 74"
+  },
+  {
+    "start": 304.93,
+    "end": 308.53,
+    "text": "ok, thằng không này cũng thế, nó sẽ chọn thằng 52 thì thành 52"
+  },
+  {
+    "start": 308.53,
+    "end": 310.77,
+    "text": "thằng 4 thì nó sẽ chọn 52, thành 56"
+  },
+  {
+    "start": 310.77,
+    "end": 314.69,
+    "text": "và bạn chỉ cần tìm cái phần tử lớn nhất ở trên cái dòng cuối cùng này là 97"
+  },
+  {
+    "start": 314.69,
+    "end": 320.73,
+    "text": "cái đường dẫn của bạn sẽ là 20, 50, 54, 74"
+  },
+  {
+    "start": 320.73,
+    "end": 328.17,
+    "text": "2 cách khác cái đường của mình sẽ là 20, 30, 34, 24, 20, 74"
+  },
+  {
+    "start": 328.17,
+    "end": 335.17,
+    "text": "ok, mấu chốt là như thế nhá, từ 1 cái OEG nào đó"
+  },
+  {
+    "start": 335.17,
+    "end": 340.77,
+    "text": "ok, thì mình sẽ tính cái giá trị của cái đường dẫn đi qua cái OEG này xa cho giá trị lớn nhất"
+  },
+  {
+    "start": 340.77,
+    "end": 347.53,
+    "text": "theo hướng đi của mình, từ 1 OEG, bạn có thể đi xuống dưới, đi xanh trái, đi xanh phải, đúng không?"
+  },
+  {
+    "start": 347.53,
+    "end": 357.43,
+    "text": "tức là cái OEG này, thì sẽ có 3 O ở trên nó, có thể đi xuống dưới nó, tức là từ thằng này, thằng đường xuống, từ 1 O, thằng trái này, đi xuống dưới này, đúng không?"
+  },
+  {
+    "start": 357.43,
+    "end": 367.15,
+    "text": "hoặc là 1 O, thằng trái này, đi xuống dưới nó, thì mình sẽ lựa chọn thằng lưỡng nhất trong 3 thằng này, để mình tìm đường dẫn đi qua cái OEG này, thì thông qua cái thằng lưỡng nhất ở trên này, ok?"
+  },
+  {
+    "start": 367.15,
+    "end": 375.71,
+    "text": "C++ như sau nhưng mà chú ý nhé, đây là 2 cái cận ở bên trái này, và cận ở bên phải, nó sẽ không, tức là nó chỉ có 2 cái thằng đứng trên nó thôi, đúng không nhỉ?"
+  },
+  {
+    "start": 375.71,
+    "end": 388.11,
+    "text": "Ví dụ như là cái thằng 5 này này, thì bạn lựa chọn cái đường đi qua ôm ôm 5 này này, thì mình sẽ chỉ được lựa chọn trong qua thằng 20 và thằng 4 thôi, bởi vì là nó là cận bên phải rồi, nên các bạn chú ý cái chỗ đấy là được"
+  },
+  {
+    "start": 388.11,
+    "end": 393.2,
+    "text": "Ok, các bạn cút như sau này, ở đây mình sẽ nhập vào số tiết cây này"
+  },
+  {
+    "start": 393.2,
+    "end": 405.56,
+    "text": "YT chừng chứ nhé, sau đó mình sẽ nhập vào một cái map trận, con cỡ là mở nên mở"
+  },
+  {
+    "start": 405.56,
+    "end": 429.47,
+    "text": "Ok, sau đó thì các bạn có thể xây dựng trực tiết trên cái map trận A kia cũng được nhé"
+  },
+  {
+    "start": 429.47,
+    "end": 434.43,
+    "text": "xây dựng luôn trên map trận A kia không cần phải xây dựng một cái mả mới đâu"
+  },
+  {
+    "start": 434.43,
+    "end": 438.14,
+    "text": "Rồi, nhưng mà nhớ cái dòng đầu tiên thì mình sẽ không xây dựng gì cả nhé"
+  },
+  {
+    "start": 438.14,
+    "end": 440.94,
+    "text": "bởi vì cái dòng đầu tiên thì đằng trên nó không có phần tử nào ý"
+  },
+  {
+    "start": 440.94,
+    "end": 447.34,
+    "text": "Đường dẫn đi qua các phần tử ở dòng đầu tiên thì là chỉ nó luôn, mình chỉ dựa từ dòng thứ 1 trở đi thôi"
+  },
+  {
+    "start": 447.34,
+    "end": 454.38,
+    "text": "Rồi, sau đó mình dựa qua các cột nhé"
+  },
+  {
+    "start": 454.38,
+    "end": 461.68,
+    "text": "Nhưng mà bạn nhớ cái trường hợp mà nếu mà nó là cái cột đầu tiên ấy, cái cột đầu tiên này này"
+  },
+  {
+    "start": 461.68,
+    "end": 465.6,
+    "text": "Ví dụ như cái đường dẫn đi qua cái phần này, ông 1 này này, ông không để ông 1 này này"
+  },
+  {
+    "start": 465.6,
+    "end": 471.87,
+    "text": "Thì nó chỉ có 2 cái thằng đứng trên nó thôi nhé, tức là nếu mà bạn kiểm tra là..."
+  },
+  {
+    "start": 471.87,
+    "end": 479.04,
+    "text": "ıı.. nhảm"
+  },
+  {
+    "start": 479.04,
+    "end": 483.7,
+    "text": "bạn chỉ kisse chìm chè nếu mà cái cột đầu tiên í, tức là"
+  },
+  {
+    "start": 483.7,
+    "end": 489.86,
+    "text": "ghi mà bằng không í nó, thì bạn sẽ có cái gì? bạn sẽ có a của iz nó sẽ bằng"
+  },
+  {
+    "start": 489.86,
+    "end": 494.76,
+    "text": "cộng bằng, mình cộng luôn nhé, mình sẽ lựa chọn 2 cái thằng đứng trên nó ok"
+  },
+  {
+    "start": 494.76,
+    "end": 500.7,
+    "text": "đây trong trình pháp này này"
+  },
+  {
+    "start": 500.7,
+    "end": 506.94,
+    "text": "đây cái o iz đây này, nó thì cái ổn này là ổn cái cột đầu tiên hình ra là 2 cái phần tử đứng trên nó là 2 cái ổn này"
+  },
+  {
+    "start": 506.94,
+    "end": 511.26,
+    "text": "Nó không có thẳng đứng trước, chỗ này, chỗ này nó sẽ là e1g"
+  },
+  {
+    "start": 511.26,
+    "end": 516.17,
+    "text": "Thế còn ông này thì là ông e1g c1, đúng không?"
+  },
+  {
+    "start": 516.17,
+    "end": 520.49,
+    "text": "Thì bạn chỉ cần chọn thằng số lớn hơn trong 2 thằng này, xác bạn cộng với thằng ai g là được"
+  },
+  {
+    "start": 520.49,
+    "end": 523.3,
+    "text": "Tức là mắc của e1g"
+  },
+  {
+    "start": 523.3,
+    "end": 531.78,
+    "text": "Mắc của ai e1g và ai e1e c1, g c1, nhá, ok"
+  },
+  {
+    "start": 531.78,
+    "end": 534.26,
+    "text": "Đây là trường hợp mà nó là cận bên trái nhé"
+  },
+  {
+    "start": 534.26,
+    "end": 539.58,
+    "text": "còn nếu mà nó là cận bên phải, tức là g nó bằng em ở chiều 1, thì bạn sẽ có a, eg nó sẽ bằng cái gì?"
+  },
+  {
+    "start": 539.58,
+    "end": 542.08,
+    "text": "nó sẽ cộng bằng mắc của nó"
+  },
+  {
+    "start": 542.08,
+    "end": 543.76,
+    "text": "nè, nó tương tự như vậy"
+  },
+  {
+    "start": 543.76,
+    "end": 547.44,
+    "text": "khi mà cái phần tử của bạn nó ở cột bên trái này này, đây, thằng eg đây"
+  },
+  {
+    "start": 547.44,
+    "end": 549.68,
+    "text": "thì nó chỉ có 2 thằng đứng trên nó thôi đúng không?"
+  },
+  {
+    "start": 549.68,
+    "end": 551.04,
+    "text": "nó không có thằng bên phải này"
+  },
+  {
+    "start": 551.04,
+    "end": 552.4,
+    "text": "thì thằng này nó sẽ là gì nhỉ?"
+  },
+  {
+    "start": 552.4,
+    "end": 555.57,
+    "text": "thằng này nó cũng sẽ là e chiều 1, g đúng không?"
+  },
+  {
+    "start": 555.57,
+    "end": 559.61,
+    "text": "con thằng này thì nó sẽ là e chiều 1 và g chiều 1 đấy"
+  },
+  {
+    "start": 559.61,
+    "end": 563.97,
+    "text": "thì bạn chỉ cần lựa chọn thằng lớn hơn trong 2 thằng này để bạn đi từ cái ô đấy xuống dưới ô eg này"
+  },
+  {
+    "start": 563.97,
+    "end": 574.02,
+    "text": "dè mình cho is bằng mắt, is 1 d1, 1, and, a, 1, d, 1."
+  },
+  {
+    "start": 574.02,
+    "end": 583.89,
+    "text": "Dè con, nếu mà nó không là 2 trường họp ở 2 biên, khi đó mỗi phần từ is nào đó, nó sẽ có 3 cái thằng đứng trên nó."
+  },
+  {
+    "start": 583.89,
+    "end": 589.45,
+    "text": "Is thì nó sẽ có cái ông đứng trên này thì là is 1 d, ok."
+  },
+  {
+    "start": 589.45,
+    "end": 595.45,
+    "text": "Ông này thì là is 1 d c1, thì còn ông bên chái này thì là is 1, is 1,"
+  },
+  {
+    "start": 595.45,
+    "end": 600.05,
+    "text": "Bạn chỉ cần lựa chọn thằng lớn hơn trong 3 thằng này, sau đó mình đi từ O đến xuống dưới O này"
+  },
+  {
+    "start": 600.05,
+    "end": 604.55,
+    "text": "Thế là mình sẽ cho aiz cộng bằng mắc của 3 thằng đúng không?"
+  },
+  {
+    "start": 604.55,
+    "end": 607.05,
+    "text": "Thằng thứ nhất là aiz chứ 1z này"
+  },
+  {
+    "start": 607.05,
+    "end": 611.82,
+    "text": "Và thằng thứ 2 là thằng lớn hơn trong 2 số là aiz chứ 1z chứ 1"
+  },
+  {
+    "start": 611.82,
+    "end": 618.28,
+    "text": "Và aiz chứ 1z cộng 1 cái"
+  },
+  {
+    "start": 618.28,
+    "end": 621.78,
+    "text": "Ok, rồi bây giờ bạn chỉ cần tìm cái thằng lớn nhất ở trong cái hàng cuối cùng"
+  },
+  {
+    "start": 621.78,
+    "end": 624.48,
+    "text": "Bạn có thể sử dụng ham mac element luôn cũng được ok"
+  },
+  {
+    "start": 624.48,
+    "end": 637.92,
+    "text": "CL, mắc, element, hàn cuối cùng, nó sẽ là A của n l chiều một, và n l chiều một, cộng mờ"
+  },
+  {
+    "start": 637.92,
+    "end": 640.92,
+    "text": "ok, sau đó bạn CL, ở dạy tiến thôi"
+  },
+  {
+    "start": 640.92,
+    "end": 650.1,
+    "text": "mình sẽ tìm được cái thằng lớn nhất ở dòng cuối cùng, nó chính là đường dẫn từ dòng đầu tiên đến dòng cuối cùng"
+  },
+  {
+    "start": 650.1,
+    "end": 652.1,
+    "text": "ok, mình sẽ chọn thằng lớn nhất"
+  },
+  {
+    "start": 652.1,
+    "end": 653.1,
+    "text": "rồi"
+  },
+  {
+    "start": 653.1,
+    "end": 660.58,
+    "text": "mình sẽ copy tết cây này"
+  },
+  {
+    "start": 660.58,
+    "end": 663.06,
+    "text": "In cho bạn là bày tư"
+  },
+  {
+    "start": 663.06,
+    "end": 667.91,
+    "text": "Cái chỗ này, bạn lấy ra phần tửa cái dòng cuối cùng thì bạn sẽ chuyển"
+  },
+  {
+    "start": 667.91,
+    "end": 671.29,
+    "text": "và cái thạm số đầu tiên nó chính là cái dòng cuối cùng nhé, nó chính là N1"
+  },
+  {
+    "start": 671.29,
+    "end": 676.77,
+    "text": "Sau bạn lấy N1, cộng mờ thì nó sẽ chạy từ cái dòng cuối cùng đến hết mờ, phần tửa với dàn đấy, còn không thì"
+  },
+  {
+    "start": 676.77,
+    "end": 678.61,
+    "text": "các bạn có thể làm bình thường thế này cũng được"
+  },
+  {
+    "start": 678.61,
+    "end": 683.25,
+    "text": "Rồi một cái biến REST là lớn nhất đúng không, biến là tên min đi, ok"
+  },
+  {
+    "start": 683.25,
+    "end": 687.29,
+    "text": "Sau đó bạn vượt qua cái dòng cuối cùng từ cột không cho tới cột mờ nhé"
+  },
+  {
+    "start": 687.29,
+    "end": 695.29,
+    "text": "và bạn sẽ cho REST sẽ bằng map của REST và cái thằng A của nờ chữ 1i đúng không? bởi vì cái dòng cuối cùng mà"
+  },
+  {
+    "start": 695.29,
+    "end": 701.31,
+    "text": "xong bạn xe ra thường REST cũng được, kết quả bệnh thế thôi"
+  },
+  {
+    "start": 701.31,
+    "end": 707.28,
+    "text": "đấy là bài đầu tiên nhé, ok"
+  },
+  {
+    "start": 707.28,
+    "end": 713.28,
+    "text": "nói chung là cái dạng bài này thì nó có thể đi từ cái O đằng trên xuống dưới theo nhiều cách nào đó nhưng mà cách làm nó chung là như nhau"
+  },
+  {
+    "start": 713.28,
+    "end": 718.28,
+    "text": "bài hai này nó cũng là một cái ví dụ như thế này để chính là nó sẽ cho mình một cái cỡ mát chận là"
+  },
+  {
+    "start": 718.28,
+    "end": 725.88,
+    "text": "Nó nhận là nhận mờ bao gồm cách số không ấm và bị yêu cầu mình tìm đường đi với cái tỏng nhỏ nhất từ O11 cho tới O-M-R"
+  },
+  {
+    "start": 725.88,
+    "end": 731.63,
+    "text": "O-M-R đấy, mình tiết nhằm đấy. Thế là ví dụ như đây người ta sẽ tìm đường đi từ cái O này này."
+  },
+  {
+    "start": 731.63,
+    "end": 736.63,
+    "text": "Ok, sang cái O này. Mỗi bước đi thì bạn sẽ có thể di chuyển xuống dưới hoặc sang phải."
+  },
+  {
+    "start": 736.63,
+    "end": 740.63,
+    "text": "Thành ra là nó vẫn là cái bài trên này thôi nhưng mà cái nước đi nó khác thôi."
+  },
+  {
+    "start": 740.63,
+    "end": 756.05,
+    "text": "Input thì vẫn như vậy bạn sẽ phải nhập vào suối tiết cây, mỗi tiết cây thì bao gồm nờ và mờ là suối lượng hàng vào cột của nai chặn, sau đó mình sẽ phải tìm cái đường đi ngại, đường đi có tỏng nhỏ nhất từ cái ô một một này cho tới ô mờ này"
+  },
+  {
+    "start": 756.05,
+    "end": 759.05,
+    "text": "Trong đó mình sẽ được đi xuống dưới hoặc đi sang phái đúng không?"
+  },
+  {
+    "start": 759.05,
+    "end": 762.66,
+    "text": "Đi xuống dưới hoặc đi sang phái ạ"
+  },
+  {
+    "start": 762.66,
+    "end": 768.39,
+    "text": "Ok, thế thì các bạn làm đi thông thường thôi ok"
+  },
+  {
+    "start": 768.39,
+    "end": 782.47,
+    "text": "Nó có một o đầu tiên thôi. O đầu tiên này thì là mình sẽ tính toán các đường đi nhé. Nói chung là ở mỗi oezy nào đó thì mình sẽ tính là khoảng cách ngắn nhất đi từ o11 đi qua oezy là bao nhiêu."
+  },
+  {
+    "start": 782.47,
+    "end": 787.83,
+    "text": "Và cái đáp án của mình sẽ là khoảng cách ngắn nhất từ o11 cho tới o nơi chiều 1 và mơi chiều 1 này."
+  },
+  {
+    "start": 787.83,
+    "end": 793.23,
+    "text": "Ok, trong khi đó các bạn có thể sử dụng DP cũng được, hay là sử dụng trực tiếp trên cái mảng ban đầu cũng được."
+  },
+  {
+    "start": 793.23,
+    "end": 795.71,
+    "text": "Ví dụ mình sẽ sử dụng DP-EG"
+  },
+  {
+    "start": 795.71,
+    "end": 802.77,
+    "text": "Nó sẽ lưu cái gì? Nó sẽ lưu cái khoảng cách nhỏ nhất tính từ O11 cũng được nhé"
+  },
+  {
+    "start": 802.77,
+    "end": 805.57,
+    "text": "OK, đến cái O hiện tại là OEG"
+  },
+  {
+    "start": 805.57,
+    "end": 811.76,
+    "text": "Và mình sẽ xây dựng tất cả các cái OEG đấy, và đáp án của mình nó sẽ là DP của NRVM"
+  },
+  {
+    "start": 811.76,
+    "end": 817.44,
+    "text": "Tức là cái đường đi ngắn nhất từ cái O, sẽ nói là đường đi mà có tổng nhỏ nhất từ cái O11 tới ONR"
+  },
+  {
+    "start": 817.44,
+    "end": 820.64,
+    "text": "OK, thì các bạn làm tương tự như bài trước thôi đúng không?"
+  },
+  {
+    "start": 820.64,
+    "end": 826.29,
+    "text": "Ví dụ, ở đây, đi xuống dưới đúng không?"
+  },
+  {
+    "start": 826.29,
+    "end": 830.05,
+    "text": "Đi sang phải, rất là ví dụ, bạn chuẩn bị đi đến cái OEG này này"
+  },
+  {
+    "start": 830.05,
+    "end": 836.38,
+    "text": "Ok, thì nó có 2 cách đi, cái thứ nhất đấy chính là bạn đi từ cái O đằng trên xuống dưới này"
+  },
+  {
+    "start": 836.38,
+    "end": 841.02,
+    "text": "Cái thứ 2 là bạn đi từ 1 cái O sang trái, sang, bởi vì người ta cho mình đi 2 nước đúng không?"
+  },
+  {
+    "start": 841.02,
+    "end": 846.54,
+    "text": "1 là đi xuống dưới, 2 là đi sang phải, thật ra là từ 1 cái OEG nào đó thì nó sẽ có thể có đường đi là"
+  },
+  {
+    "start": 846.54,
+    "end": 851.18,
+    "text": "từ cái O thẳng đằng trên xuống dưới nó, hoặc là từ 1 cái O bên trái nhảy sang nó đúng không?"
+  },
+  {
+    "start": 851.18,
+    "end": 857.14,
+    "text": "thì bạn sẽ lựa chọn thằng nhỏ hơn trong hai thằng này để mình lựa chọn đi từ cái O đấy qua cái OEG này"
+  },
+  {
+    "start": 857.14,
+    "end": 857.94,
+    "text": "Đấy"
+  },
+  {
+    "start": 857.94,
+    "end": 863.94,
+    "text": "Bí dụ như là cái thằng 5 này nhé"
+  },
+  {
+    "start": 863.94,
+    "end": 865.46,
+    "text": "Thằng 5 này này, ok"
+  },
+  {
+    "start": 865.46,
+    "end": 868.78,
+    "text": "Thì nó có hai lựa chọn, từ từ mình xây dựng từ thằng 1 này nhé"
+  },
+  {
+    "start": 868.78,
+    "end": 869.5,
+    "text": "Đấy chứ à?"
+  },
+  {
+    "start": 869.5,
+    "end": 874.1,
+    "text": "Mình đi sang O3 này thì là khi đó cái đường đi của mình mất 4 đơn vị đúng không?"
+  },
+  {
+    "start": 874.1,
+    "end": 876.34,
+    "text": "Còn thằng này đi xuống đây là mất 2 đơn vị này"
+  },
+  {
+    "start": 876.34,
+    "end": 879.78,
+    "text": "Tức là khi đó đi sang O này nó sẽ là 1, 4 và đây là 1, 2 rồi đúng không?"
+  },
+  {
+    "start": 879.78,
+    "end": 882.06,
+    "text": "Thì khi đó mà đi sang cái O5 này này"
+  },
+  {
+    "start": 882.06,
+    "end": 891.22,
+    "text": "Thì bạn sẽ phải đi đường nào. Sao cho cái khoảng cách nó đi từ O11 đến O5 này là nhỏ nhất, thì mình sẽ lựa chọn cái số nhỏ hơn trong số này và số này để mình đi, ok?"
+  },
+  {
+    "start": 891.22,
+    "end": 903.75,
+    "text": "Ở đây cái match của mình là 131, 151, 4, 2, 1, 1, 3, 1, 1, 5, 1, 4, 2, 1, đúng không?"
+  },
+  {
+    "start": 903.75,
+    "end": 915.05,
+    "text": "Ok, vậy thì nhé. Mình sẽ xây dựng cái match đến như sau. Đầu tiên cái O11 này có mộ chính nói là mình cho cái kết quả, cái ODP cũng là 1 này."
+  },
+  {
+    "start": 915.05,
+    "end": 917.08,
+    "text": "sau đó cái o này nhé"
+  },
+  {
+    "start": 917.08,
+    "end": 922.08,
+    "text": "thì nó chỉ có thằng đứng trước nó thôi đúng không, nó không có thằng đứng trên nó thì bắt buộc là cái đường đi của bạn nó sẽ phải đi từ o1 này sang o3"
+  },
+  {
+    "start": 922.08,
+    "end": 925.08,
+    "text": "thì khi đó cái tộc đường đi đến cái o3 này này nó sẽ là 4"
+  },
+  {
+    "start": 925.08,
+    "end": 933.5,
+    "text": "o1 này cũng thế, ông ấy không có cái thằng ở trên, thằng ra là bắt buộc là bạn phải đi từ 1 sang 3 sau đó đi từ 3 sang 1 thì tổng đường đi của mình thì nó sẽ là 5"
+  },
+  {
+    "start": 933.5,
+    "end": 937.75,
+    "text": "o1 này thì bạn chỉ có thể đi trong trên, được trên dưới bởi vì nó không có thằng bên trái"
+  },
+  {
+    "start": 937.75,
+    "end": 943.75,
+    "text": "thằng ra là đi từ cái o1 này đến o1, o này này thì chí phí con nó sẽ là 2 đúng không, đây"
+  },
+  {
+    "start": 943.75,
+    "end": 949.43,
+    "text": "Bây giờ bạn sẽ đi sang cái O này này, xoay dựng cái O mà có vị trí ra năm bắt đầu này, thì bạn sẽ đi đường nào?"
+  },
+  {
+    "start": 949.43,
+    "end": 956.39,
+    "text": "Bạn sẽ phải lựa chọn cái đường đi mà 1 là cái O đứng trên nó này, 2 là cái O đứng bên trái này nó này, thằng nào nhỏ hơn thì mình sẽ đi theo đường đấy"
+  },
+  {
+    "start": 956.39,
+    "end": 964.95,
+    "text": "Thế là mình sẽ đi theo cái đường là 1 này, 2 này xong rồi nhảy sang đây, thì khi đó cái chi phí của mình nó sẽ là 1, 1, 1, viên 5, thì là 7, đúng không?"
+  },
+  {
+    "start": 964.95,
+    "end": 970.75,
+    "text": "Còn nếu mà bạn đi theo cái đường là 1, 3, 5 thì khoảng cách mình nó sẽ là 5, 3, 1, 1 nữa là 9 đúng không?"
+  },
+  {
+    "start": 970.75,
+    "end": 976.41,
+    "text": "Cứ như thế, sau độ ôn ảnh thế, bạn sẽ đi theo cái đường nào, bạn sẽ lựa chọn thằng lớn hơn là nhỏ hơn trong 2 thằng này để mình đi"
+  },
+  {
+    "start": 976.41,
+    "end": 981.71,
+    "text": "Thì trong thương pháp này mình sẽ đi theo, kiểu này này là 1, 4, 5, cho đi xuống dưới đây thì là xáu"
+  },
+  {
+    "start": 981.71,
+    "end": 989.47,
+    "text": "Còn nếu bạn đi theo cái đường này 1, 2, 1, 5, 1 này thì khi chi phi của nó sẽ là bao nhiêu nhỉ? 5,3 là 8 cơc, chứ không phải là 6"
+  },
+  {
+    "start": 989.47,
+    "end": 992.29,
+    "text": "Tương tự như vậy, mình cũng sẽ xây dẫn cái dăm cuối cùng này"
+  },
+  {
+    "start": 992.29,
+    "end": 998.95,
+    "text": "Ở đây thì bạn chỉ có thể đi xuống dưới thôi đúng không? Thành ra là cái ôm 4 này bạn không có lựa chọn, bạn chỉ có thể đi từ trên xuống dưới thôi"
+  },
+  {
+    "start": 998.95,
+    "end": 1002.03,
+    "text": "trí phí của mình sẽ là 2, 14 là 6"
+  },
+  {
+    "start": 1002.03,
+    "end": 1006.11,
+    "text": "hôm nay thì nó có lựa chọn đúng không, nó có thể đi thông qua ông 7 này hoặc ông 6 này"
+  },
+  {
+    "start": 1006.11,
+    "end": 1008.87,
+    "text": "thì nó chọn ông 6 này thôi, sau cũng 2 là 8"
+  },
+  {
+    "start": 1008.87,
+    "end": 1012.55,
+    "text": "ông này ở chỗ này thì cũng có 2 lựa chọn, 1 là bạn đi từ ông 6 này xuống"
+  },
+  {
+    "start": 1012.55,
+    "end": 1015.39,
+    "text": "2 là bạn đi từ ông 8 cái đường mà đi sang 8 này này"
+  },
+  {
+    "start": 1015.39,
+    "end": 1017.91,
+    "text": "thì đó nó sẽ chọn đường đi sông 6 đúng không, qua 6"
+  },
+  {
+    "start": 1017.91,
+    "end": 1021.88,
+    "text": "thì đó trí phí của mình sau cũng 1 là 7, và cái đường đi của bạn nó sẽ đi như thế này"
+  },
+  {
+    "start": 1021.88,
+    "end": 1027.16,
+    "text": "ok, và các đạo an của bạn nó sẽ chính là cái giá trị của cái ONR chứa 1, mờ chứa 1 này"
+  },
+  {
+    "start": 1027.16,
+    "end": 1029.16,
+    "text": "cuối cùng góc bên phải này"
+  },
+  {
+    "start": 1029.16,
+    "end": 1031.16,
+    "text": "mỗi bước các bạn làm như thế nhé"
+  },
+  {
+    "start": 1031.16,
+    "end": 1033.16,
+    "text": "mình sẽ lựa chọn đường đi ngắn hơn trong 2 đường đi"
+  },
+  {
+    "start": 1033.16,
+    "end": 1035.16,
+    "text": "1 là o bên trên"
+  },
+  {
+    "start": 1035.16,
+    "end": 1037.16,
+    "text": "2 là o bên trái này"
+  },
+  {
+    "start": 1037.16,
+    "end": 1039.16,
+    "text": "để lựa chọn xem là mình nên đi theo cái đường nào"
+  },
+  {
+    "start": 1039.16,
+    "end": 1041.16,
+    "text": "để đến cái oindy hiện tại"
+  },
+  {
+    "start": 1041.16,
+    "end": 1043.16,
+    "text": "các bạn làm như sau này"
+  },
+  {
+    "start": 1043.16,
+    "end": 1045.16,
+    "text": "mình sẽ nhập nào vào mờ"
+  },
+  {
+    "start": 1045.16,
+    "end": 1047.16,
+    "text": "ok cái phần này thì mình để yên nhé"
+  },
+  {
+    "start": 1047.16,
+    "end": 1049.16,
+    "text": "sau đó thì mình sẽ"
+  },
+  {
+    "start": 1049.16,
+    "end": 1051.22,
+    "text": "xây dựng 1 cái mảng dp"
+  },
+  {
+    "start": 1051.22,
+    "end": 1053.22,
+    "text": "cũng có nào vào mờ"
+  },
+  {
+    "start": 1053.22,
+    "end": 1055.22,
+    "text": "phần tự sau đó mình sẽ cho"
+  },
+  {
+    "start": 1055.22,
+    "end": 1069.88,
+    "text": "int, int int, int int int int int"
+  },
+  {
+    "start": 1070.63,
+    "end": 1080.01,
+    "text": "你好 Color, depending of color, se heels, iostream, Sprites, Messi etc."
+  },
+  {
+    "start": 1080.01,
+    "end": 1092.39,
+    "text": "OEG, tầm các phần tử trên đường đi từ O11 đến OEG hiện tại, mình sẽ cộng bằng, không phải là cộng bằng mà nó sẽ bằng số nhỏ hơn trong 2 số"
+  },
+  {
+    "start": 1092.39,
+    "end": 1101.87,
+    "text": "Thứ nhất là cái tầm cái đường đi từ O11, ban đầu cho tới O là O, đúng là bên trên nó, đây này, O bên trên nó"
+  },
+  {
+    "start": 1101.87,
+    "end": 1104.51,
+    "text": "đây, cái thằng, đây là oiz, đúng không?"
+  },
+  {
+    "start": 1105.84,
+    "end": 1108.4,
+    "text": "đấy, thì nó có 2 lựa chọn là đi từ trên thường dưới"
+  },
+  {
+    "start": 1108.4,
+    "end": 1110.32,
+    "text": "hoặc là đi từ phải, trái xong phải"
+  },
+  {
+    "start": 1110.32,
+    "end": 1113.76,
+    "text": "thì bạn sẽ chọn thằng nhỏ hơn trong 2 thằng này, thằng này nó sẽ là e1z này"
+  },
+  {
+    "start": 1114.54,
+    "end": 1118.14,
+    "text": "còn thằng này sẽ có o là oiz, à, sẽ là oiz1"
+  },
+  {
+    "start": 1118.14,
+    "end": 1120.38,
+    "text": "đấy, bạn sẽ chọn thằng nhỏ hơn trong 2 thằng này"
+  },
+  {
+    "start": 1120.38,
+    "end": 1123.58,
+    "text": "hay nó cách khác là mình sẽ chọn cái đường đi ngắn hơn trong 2 cái đường đi này"
+  },
+  {
+    "start": 1124.72,
+    "end": 1130.96,
+    "text": "có tỏng nhỏ hơn, nó sẽ là dp của e1z và dp của e1z"
+  },
+  {
+    "start": 1130.96,
+    "end": 1137.78,
+    "text": "ok, sau mình cộng thêm cái thằng, cái thằng O hiện tại thôi, đấy là O-A-E-G"
+  },
+  {
+    "start": 1137.78,
+    "end": 1144.02,
+    "text": "sau đó đáp án của bạn nó sẽ chính là DP của I chứ 1, à, xin lỗi là chứ 1, mở chứ 1"
+  },
+  {
+    "start": 1144.02,
+    "end": 1148.42,
+    "text": "ok, nó chính là cái giá trị của cái O bên phải cùng"
+  },
+  {
+    "start": 1148.42,
+    "end": 1150.82,
+    "text": "ok, rồi mình sẽ nhập input này"
+  },
+  {
+    "start": 1150.82,
+    "end": 1160.08,
+    "text": "và này cũng tương tựng đúng là dễ, nó cũng tương tựng như bài trên thôi"
+  },
+  {
+    "start": 1160.08,
+    "end": 1162.62,
+    "text": "ok, sao nó ra chín nhỉ?"
+  },
+  {
+    "start": 1162.62,
+    "end": 1164.62,
+    "text": "1, 2, 3, 4, 5, 6"
+  },
+  {
+    "start": 1164.62,
+    "end": 1167.55,
+    "text": "đi đường nào mà chín nhỉ?"
+  },
+  {
+    "start": 1167.55,
+    "end": 1169.97,
+    "text": "1, 2"
+  },
+  {
+    "start": 1169.97,
+    "end": 1231.36,
+    "text": "3, từ từ xón 7x9 nhé, 5x12 chứ, rồi mình xé lại nè, cin, az, dp, az thì nó sẽ bằng, cái đường này nó đi theo kiểu 12 là 1, 2, 3, 6, 12 đúng á, dp của i chứ 1, zi, đúng rồi và o, i, zi chứ 1, cộng với az, có gì sai nhỉ, i chứ này mà không, mình xé nè, thôi mình thử ít ra ôn cái mảng dp nhé, chưa nhìn ra"
+  },
+  {
+    "start": 1231.36,
+    "end": 1236.46,
+    "text": "lỗi xa, a tự tự"
+  },
+  {
+    "start": 1236.46,
+    "end": 1242.35,
+    "text": "ok, nó còn có trường hợp là cái cận"
+  },
+  {
+    "start": 1242.35,
+    "end": 1246.35,
+    "text": "tức là cái, đây, xin lỗi"
+  },
+  {
+    "start": 1246.35,
+    "end": 1249.35,
+    "text": "nó còn có trường hợp nó là cái cột đầu tiên ấy"
+  },
+  {
+    "start": 1249.35,
+    "end": 1251.35,
+    "text": "cái cột đầu tiên này"
+  },
+  {
+    "start": 1251.35,
+    "end": 1254.35,
+    "text": "các phần tửa cái cột đầu tiên thì nó không có cái cột ở bên trái"
+  },
+  {
+    "start": 1254.35,
+    "end": 1256.35,
+    "text": "mà mình vẫn cứ cho đi từ bên trái, nó bị xa"
+  },
+  {
+    "start": 1256.35,
+    "end": 1259.93,
+    "text": "ok, bạn có phải cái trường hợp nữa, đây là trường hợp mà"
+  },
+  {
+    "start": 1259.93,
+    "end": 1263.06,
+    "text": "rồi, đây là cái trường hợp nó là cột đầu tiên ấy"
+  },
+  {
+    "start": 1263.06,
+    "end": 1265.06,
+    "text": "thì mình sẽ phải xử lý riêng"
+  },
+  {
+    "start": 1265.06,
+    "end": 1270.54,
+    "text": "Elip, cột đầu tiên rất là ghi bằng không, thì nó sẽ chỉ có thể đi từ trên dưới thôi"
+  },
+  {
+    "start": 1270.54,
+    "end": 1278.18,
+    "text": "Đp, iz, thì nó sẽ bằng dp của cái thằng đứng trên, nó là i chứ 1, ghi, cộng 1 cái thằng hiện tại là a, ghi"
+  },
+  {
+    "start": 1278.18,
+    "end": 1284.73,
+    "text": "Thế là còn, cái gì nữa nhỉ, cột bên trái"
+  },
+  {
+    "start": 1284.73,
+    "end": 1291.18,
+    "text": "Dòng đầu tiên, đúng không? Dòng đầu tiên thì nó chỉ đi được sang phải thôi, đúng không? Elip"
+  },
+  {
+    "start": 1291.18,
+    "end": 1307.57,
+    "text": "int1, negate"
+  },
+  {
+    "start": 1307.57,
+    "end": 1308.09,
+    "text": "izi"
+  },
+  {
+    "start": 1308.84,
+    "end": 1312.52,
+    "text": "thì nó sẽ bằng mắt của DP1"
+  },
+  {
+    "start": 1312.52,
+    "end": 1315.64,
+    "text": "g"
+  },
+  {
+    "start": 1315.64,
+    "end": 1318.02,
+    "text": "và DPof print"
+  },
+  {
+    "start": 1318.02,
+    "end": 1321.78,
+    "text": "of print"
+  },
+  {
+    "start": 1323.72,
+    "end": 1324.52,
+    "text": "như thế này"
+  },
+  {
+    "start": 1325.87,
+    "end": 1331.1,
+    "text": "58"
+  },
+  {
+    "start": 1331.12,
+    "end": 1331.48,
+    "text": "нуc"
+  },
+  {
+    "start": 1331.48,
+    "end": 1332.52,
+    "text": "asing"
+  },
+  {
+    "start": 1332.52,
+    "end": 1333.18,
+    "text": "t Mercantile"
+  },
+  {
+    "start": 1333.18,
+    "end": 1336.18,
+    "text": "casting"
+  },
+  {
+    "start": 1336.3,
+    "end": 1338.36,
+    "text": "If our DPurable"
+  },
+  {
+    "start": 1338.36,
+    "end": 1340.88,
+    "text": "throughout"
+  },
+  {
+    "start": 1340.88,
+    "end": 1343.96,
+    "text": "O đứng trước nó này, cộng thêm cái giá trị của O hiện tạng"
+  },
+  {
+    "start": 1343.96,
+    "end": 1346.76,
+    "text": "Thế còn nếu mà nó là những cái O quột tiên này này"
+  },
+  {
+    "start": 1346.76,
+    "end": 1350.9,
+    "text": "Thì nó không có đi từ bên phải được, thế nghĩa là"
+  },
+  {
+    "start": 1350.9,
+    "end": 1353.26,
+    "text": "Bạn chỉ có thể đi từ O trên dùng dưới thôi, ok?"
+  },
+  {
+    "start": 1353.26,
+    "end": 1355.5,
+    "text": "Mình chỉ có thể đi từ O trên dùng dưới thôi"
+  },
+  {
+    "start": 1355.5,
+    "end": 1359.02,
+    "text": "Thế nghĩa là khi đó DP-EZ nó sẽ bằng cái O đứng trên nó"
+  },
+  {
+    "start": 1359.02,
+    "end": 1361.06,
+    "text": "Và chính là DP của"
+  },
+  {
+    "start": 1361.06,
+    "end": 1364.89,
+    "text": "I chữ 1-G đấy, sau đó cộng với O hiện tạng"
+  },
+  {
+    "start": 1364.89,
+    "end": 1368.53,
+    "text": "Thế còn nếu mà bạn chỉ đi được từ sang trái, từ trái sang thì nó sẽ là"
+  },
+  {
+    "start": 1368.53,
+    "end": 1370.21,
+    "text": "DP của EZ chữ 1"
+  },
+  {
+    "start": 1370.21,
+    "end": 1376.93,
+    "text": "cộng bởi O hiện tại, còn nếu bạn có thể đi từ trái xang hoặc từ trên xuống thì mình sẽ dựa chọn cái số chỗ này là min nhé"
+  },
+  {
+    "start": 1376.93,
+    "end": 1383.32,
+    "text": "cái số nhỏ hơn, trong 2 cái O đấy, o trên, bận trên hoặc bên trái cho nó mình đi sang cái O hiện tại"
+  },
+  {
+    "start": 1383.32,
+    "end": 1397.25,
+    "text": "thì nó sẽ ra đợi ăn của mình là 12 nhé, ok, mình có thể để cái link của bài này ở dưới, các bạn có thể sắp mít thử nhé"
+  },
+  {
+    "start": 1397.25,
+    "end": 1398.75,
+    "text": "cố thử sau đó sắp mít"
+  },
+  {
+    "start": 1398.75,
+    "end": 1407.13,
+    "text": "vài tiếp theo đấy là bài giá trị lớn nhất người ta cho mình giả sử 1 cái mạch trận là hiệu giữa tỏng các số trên đường chèo chính"
+  },
+  {
+    "start": 1407.13,
+    "end": 1409.93,
+    "text": "và tỏng các số trên đường chèo phụ"
+  },
+  {
+    "start": 1409.93,
+    "end": 1414.07,
+    "text": "cho kích thức, cho maa chận E có kích thức là nò nhân nò và hãy tìm maa chận con của E"
+  },
+  {
+    "start": 1414.07,
+    "end": 1416.07,
+    "text": "sao cho maa chận con để cầu giá trị lớn nhất"
+  },
+  {
+    "start": 1416.07,
+    "end": 1419.83,
+    "text": "Input sau đầu tiên sẽ là số nò nằm trong khoảng thứ 2 cho tới 400"
+  },
+  {
+    "start": 1419.83,
+    "end": 1423.59,
+    "text": "nò dòng tiếp theo ghi các số của maa chận E trong các đoạn từ trường 1.000"
+  },
+  {
+    "start": 1423.59,
+    "end": 1425.59,
+    "text": "các số trong đoạn từ trường 1.000 đến 1.000"
+  },
+  {
+    "start": 1425.59,
+    "end": 1430.71,
+    "text": "tức là nó cho mình một cái maa chận vuông nữa, sau đó mình sẽ phải tìm một cái maa chận vuông con của E"
+  },
+  {
+    "start": 1430.71,
+    "end": 1435.98,
+    "text": "sao cho giá trị của maa chận là lớn nhất, trong đó giá trị của maa chận ở đây được định nghĩa là"
+  },
+  {
+    "start": 1435.98,
+    "end": 1440.34,
+    "text": "hiệu giữa tỏng các số trên đường cháo chính và tỏng các số trên đường cháo phụ"
+  },
+  {
+    "start": 1440.34,
+    "end": 1444.5,
+    "text": "ví dụ họ cho 1 cỡ ma trận 4 như thế này và đáp án của mình là 26"
+  },
+  {
+    "start": 1444.5,
+    "end": 1450.05,
+    "text": "thì nó chính là cái đường cháo chính là 9, trừ 2 này 6, 9 thì nó sẽ là bao nhiêu nhỉ?"
+  },
+  {
+    "start": 1450.05,
+    "end": 1456.41,
+    "text": "928, 6 là 24, 24 trừ 2 là 22, sau đó trừ đi các phần từ đường trên đường cháo phụ là"
+  },
+  {
+    "start": 1456.41,
+    "end": 1460.41,
+    "text": "không là trừ 4 đúng không? 22 trừ đi trừ 4 là thành 26"
+  },
+  {
+    "start": 1460.41,
+    "end": 1465.79,
+    "text": "Vậy thì nếu mà các bạn làm bài này một cách thông thường thì đấy chính là mình sẽ sao nhỉ?"
+  },
+  {
+    "start": 1465.79,
+    "end": 1468.23,
+    "text": "đây, ví dụ bạn có một cái ma chặn như thế này đúng không?"
+  },
+  {
+    "start": 1468.23,
+    "end": 1472.65,
+    "text": "là cái ma chặn cỡ bốn nhần bốn như thế này, vẽ lúc nãy rồi thì mình dùng luôn nhá"
+  },
+  {
+    "start": 1472.65,
+    "end": 1475.18,
+    "text": "sau đó thì bạn sẽ phải tìm cái"
+  },
+  {
+    "start": 1475.18,
+    "end": 1482.22,
+    "text": "ở đây mình sẽ lấy luôn cái thẳng kia nhá, 9 chứ 2 chứ 8 không"
+  },
+  {
+    "start": 1482.22,
+    "end": 1486.83,
+    "text": "sau đó là chứ 6 chứ 2009"
+  },
+  {
+    "start": 1486.83,
+    "end": 1488.31,
+    "text": "tiếp theo thì là"
+  },
+  {
+    "start": 1488.31,
+    "end": 1492.4,
+    "text": "4 chứ 5"
+  },
+  {
+    "start": 1492.4,
+    "end": 1493.12,
+    "text": "1"
+  },
+  {
+    "start": 1493.12,
+    "end": 1494.56,
+    "text": "và cuối cùng thì là"
+  },
+  {
+    "start": 1494.56,
+    "end": 1496.74,
+    "text": "1, 3, 4, 9"
+  },
+  {
+    "start": 1496.74,
+    "end": 1498.26,
+    "text": "ở đây chắc là người ta chỉ ma"
+  },
+  {
+    "start": 1498.26,
+    "end": 1501.22,
+    "text": "xếp cái ma chặn vuông mà có cỡ từ 2 trả lên thôi đúng không?"
+  },
+  {
+    "start": 1501.22,
+    "end": 1507.98,
+    "text": "Thì nếu mà làm thông thường thì mình sẽ phải xét tất cả các ma chận vuông có thể ở trên cái 2 chiều này đúng không?"
+  },
+  {
+    "start": 1507.98,
+    "end": 1516.82,
+    "text": "Ok, ví dụ như từ O chữ 2 này này, thì bạn có thể xây dựng được cái ma chận vuông là chín chữ 2, chữ 6, chữ 2 thì bạn sẽ tính tổng các phần tử trên đường trao chính,"
+  },
+  {
+    "start": 1516.82,
+    "end": 1523.72,
+    "text": "rồi là tính tổng các phần tử trên đường trao phụ. Ok, sau mình chứ đi và mình cập nhật kết quả thôi, hoặc là thằng 6 này này,"
+  },
+  {
+    "start": 1523.72,
+    "end": 1529.51,
+    "text": "thì bạn có thể xây dựng được cái ma chận vuông như thế này, có cỡ là 3 nhìn 3 như thế này,"
+  },
+  {
+    "start": 1529.51,
+    "end": 1534.75,
+    "text": "tính tỏng các phần thứ trên đường cho chính, trừ đi tỏng các phần thứ trên đường cho phụ, sau đó mình cập nhật kết quả, đúng không?"
+  },
+  {
+    "start": 1534.75,
+    "end": 1541.19,
+    "text": "hoặc là cái chỗ vị trí 6 này bạn cũng có thể làm một cái hình trữ nhật, à, một cái ma trận vuông cỡ như này nhá, 2x2 như này nhá"
+  },
+  {
+    "start": 1541.19,
+    "end": 1545.67,
+    "text": "ok, không phải là cái ma trận vuông thì cái giá trị của ma trận nó sẽ lớn đúng không?"
+  },
+  {
+    "start": 1545.67,
+    "end": 1556.59,
+    "text": "ra là bạn sẽ phải set tất cả các cái ma trận có thể tạo thành được tệ bởi mình tạm gọi về cái góc bên phải cùng ấy, bên phải cùng ấy, oezy chẳng hả?"
+  },
+  {
+    "start": 1556.59,
+    "end": 1560.43,
+    "text": "Ví dụ như góc bên phải cùng là 6 này thì nó có thể tạo thành cái ma trận như thế này, đúng không?"
+  },
+  {
+    "start": 1560.43,
+    "end": 1562.55,
+    "text": "Hoặc nó cũng có thể tạo thành cái ma trận như thế này."
+  },
+  {
+    "start": 1562.55,
+    "end": 1569.35,
+    "text": "Bạn xinh ra được bao nhiêu ma trận thì mình sẽ tính tỏng các phần tử trên đường cháu chính, rồi chờ đi tỏng các phần tử trên đường cháu phụ, ok?"
+  },
+  {
+    "start": 1569.35,
+    "end": 1575.11,
+    "text": "Nhưng mà mỗi lần mình sẽ ăn một cái ma trận mà mình lại tý tính tỏng các phần tử trên đường cháu chính và đường cháu phụ thì thì nó sẽ rất là lâu."
+  },
+  {
+    "start": 1575.11,
+    "end": 1581.95,
+    "text": "Thay vì đó thì các bạn nên tính sẵn trước đi nhé, mình sẽ tính sẵn sẵn trước cái tỏng ở chỗ này là bao nhiêu nhỉ?"
+  },
+  {
+    "start": 1581.95,
+    "end": 1585.95,
+    "text": "là chín quá, mình sẽ tính sẵn trước tổng các phần tử trên đường cháu chính này,"
+  },
+  {
+    "start": 1585.95,
+    "end": 1588.45,
+    "text": "rồi trên đường cháu phụ hết của cái 3 chặn này luôn."
+  },
+  {
+    "start": 1588.45,
+    "end": 1591.95,
+    "text": "Thì nữa thì mình sẽ tính toán cho nó nhanh, nó tương tự như cái bài prefix sum,"
+  },
+  {
+    "start": 1591.95,
+    "end": 1594.95,
+    "text": "2D trên bà 2 chiều mình đơn giản ấy."
+  },
+  {
+    "start": 1594.95,
+    "end": 1597.95,
+    "text": "Đây, mình có có cốt sẵn rồi, mình chỉ giải thích cốt thôi nhá."
+  },
+  {
+    "start": 1597.95,
+    "end": 1600.6,
+    "text": "Bởi vì cốt lại thì nó hơi mất thời gian,"
+  },
+  {
+    "start": 1600.6,
+    "end": 1602.75,
+    "text": "video thì nó sẽ gãy dài."
+  },
+  {
+    "start": 1602.75,
+    "end": 1606.75,
+    "text": "Công việc đầu tiên đấy là các bạn xây dựng cho mình 1 cái mạng để lưu"
+  },
+  {
+    "start": 1606.75,
+    "end": 1609.75,
+    "text": "cái giá trị của tất cả các phần tử trên đường cháu chính."
+  },
+  {
+    "start": 1609.75,
+    "end": 1620.84,
+    "text": "không phải là tất cả các phần từ trên đường cháu chính mà mình sẽ tính toán 1 cái mai trận mà nó lưu tầm các phần từ trên đường cháu chính của tất cả các vị trí Easy có thể"
+  },
+  {
+    "start": 1620.84,
+    "end": 1634.88,
+    "text": "ví dụ như ở cái chỗ chữ 2 này này, thằng 9 này thì nó là chính nó nhé, nhưng mà tại cái O chữ 2 này này, mình sẽ thay cái O chữ 2 này bằng tầm các phần tử mà bắt đầu từ cái O chữ chín này, xong chạy xuống dưới này này, cái đường cháu chính là chín với chữ 2, thế là mình sẽ lưu với giá trị 7 ở đây"
+  },
+  {
+    "start": 1634.88,
+    "end": 1646.88,
+    "text": "O6 sẽ lưu tổng các phần tử từ O1, chạy xuống nó, 7, 6, 13, O9 sẽ lưu tổng các phần tử từ O9, chứ 269 thì nó bằng bao nhiêu nhỉ?"
+  },
+  {
+    "start": 1646.88,
+    "end": 1664.23,
+    "text": "Lưu là bằng 22 đúng không? Ok. Tương tự như vậy nha, ví dụ như ở O0 này, O2 này thì mình sẽ lưu trình nó, O8 mình cũng lưu trình nó, O0 thì mình lưu trình nó, nhưng mà O2 này thì mình sẽ tính tổng các phần tử trên đường treo chính, tứ bắt đầu từ O2 này xuống nó này."
+  },
+  {
+    "start": 1664.23,
+    "end": 1691.77,
+    "text": "OOPV, OOPV, OOPV, O order, O injections, OFD, release,"
+  },
+  {
+    "start": 1722.03,
+    "end": 1726.55,
+    "text": "Đó bạn tính cái giá trị của cái ma trận cỡ 3x3 mà tạo bởi cái O phải cùng này là O1 này"
+  },
+  {
+    "start": 1726.55,
+    "end": 1730.31,
+    "text": "Thì mình chỉ cần lấy tấm phần tử trên đường cháu chính, chưa đi tấm phần tử trên đường cháu phụ lại được"
+  },
+  {
+    "start": 1730.31,
+    "end": 1732.31,
+    "text": "Thế mình không phải dùng gòng 4 để duyệt nữa"
+  },
+  {
+    "start": 1732.31,
+    "end": 1733.71,
+    "text": "Đói, nó tiện như thế"
+  },
+  {
+    "start": 1733.71,
+    "end": 1734.87,
+    "text": "Đúng không?"
+  },
+  {
+    "start": 1734.87,
+    "end": 1736.07,
+    "text": "Hay lại như thế này nhé"
+  },
+  {
+    "start": 1736.07,
+    "end": 1742.52,
+    "text": "Đây chính là giả sử như mình các bạn muốn một cái ma trận là"
+  },
+  {
+    "start": 1742.52,
+    "end": 1744.84,
+    "text": "Đây, ví dụ như cái ma trận này"
+  },
+  {
+    "start": 1744.84,
+    "end": 1745.84,
+    "text": "Đói"
+  },
+  {
+    "start": 1745.84,
+    "end": 1752.92,
+    "text": "Thì cái ma trận này thì bình thường mình ở cái O9 này này thì mình sẽ lưu tầm các phần tử từ cái O tận O1 này đến tận O9 này đúng không?"
+  },
+  {
+    "start": 1752.92,
+    "end": 1759.52,
+    "text": "nhưng mà bây giờ mình chỉ xét cái map chận có cửa là 3x3, nó bắt đầu từ 2009 rồi chứ 5, 6, 1, 3, 4, 9 như thế này đúng không?"
+  },
+  {
+    "start": 1759.52,
+    "end": 1763.42,
+    "text": "tức là bạn sẽ phải chín lấy tổng cấp phần tử là 2, 6 và 9 thôi đúng không?"
+  },
+  {
+    "start": 1763.42,
+    "end": 1768.62,
+    "text": "thì rất đơn giản thôi, bạn chỉ cần lấy tổng cấp phần tử trên đường trao chính bắt được tổng cấp phần tử ông 9 này đến tận ông 9 này này"
+  },
+  {
+    "start": 1768.62,
+    "end": 1773.92,
+    "text": "mình chứ đi cái đường chéo, tổng cấp phần tử trên đường chéo bắt đầu từ O9 này đến chính nó ở cái phần này này"
+  },
+  {
+    "start": 1773.92,
+    "end": 1777.31,
+    "text": "đây, hay nhỏ hơn 1 tí nhé, cho bạn dễ hiểu hơn nhé"
+  },
+  {
+    "start": 1777.31,
+    "end": 1780.31,
+    "text": "đây, ví dụ như bạn tính cái giá trị của cái ô này"
+  },
+  {
+    "start": 1780.31,
+    "end": 1784.83,
+    "text": "Thì khi đó, phần tử trên đường trao chính của mình chỉ là 6, 9 thôi, đúng không?"
+  },
+  {
+    "start": 1784.83,
+    "end": 1789.31,
+    "text": "Thì bạn sẽ lấy tổng phần tử trên đường trao chính là trừ 9, là trừ 9, là trừ 2, 6, 9"
+  },
+  {
+    "start": 1789.31,
+    "end": 1792.67,
+    "text": "Mình chưa đi tổng phần tử trên đường trao chính này, thế đó xong, đúng không?"
+  },
+  {
+    "start": 1792.67,
+    "end": 1794.55,
+    "text": "O này mình cũng tính được rồi mà, đúng không?"
+  },
+  {
+    "start": 1794.55,
+    "end": 1797.07,
+    "text": "Ví dụ như ở O này mình sẽ lưu là 7 đúng không?"
+  },
+  {
+    "start": 1797.07,
+    "end": 1801.28,
+    "text": "O này nó sẽ là 13 này, và O này cộng với 9 thì là 22 đúng không?"
+  },
+  {
+    "start": 1801.28,
+    "end": 1804.76,
+    "text": "Vậy thì bây giờ mình xét cái tạm giác O là 6, 1, 4, 9 này này"
+  },
+  {
+    "start": 1804.76,
+    "end": 1807.64,
+    "text": "Thì bạn chỉ cần lấy cái giá trị của cái O này này"
+  },
+  {
+    "start": 1807.64,
+    "end": 1811.1,
+    "text": "Nó chính là 22, tức là tổng các phần tử 9, chứ 2, 6, chứ 9 nữa hông?"
+  },
+  {
+    "start": 1811.1,
+    "end": 1813.8,
+    "text": "Bây giờ bạn chỉ muốn tính tháng 6 với tháng 9 này thì bạn chùm đi"
+  },
+  {
+    "start": 1813.8,
+    "end": 1818.6,
+    "text": "tổng các phần tử ở trên cái ồn từ chứ 9 đến chứ 2 này, nó chính là giá trị của ồn này này là 7"
+  },
+  {
+    "start": 1818.6,
+    "end": 1822.4,
+    "text": "thì nó sẽ bằng là 15, thì bạn có phải là tính được 9, cũng 6"
+  },
+  {
+    "start": 1822.4,
+    "end": 1824.4,
+    "text": "Tương tự như vậy cái đường cháo phụ cũng thế nhá"
+  },
+  {
+    "start": 1824.4,
+    "end": 1829.28,
+    "text": "Thực ra là mình tính được các phần tử trên đường cháo chứng và đường cháo phụ thì nó rất là nhanh"
+  },
+  {
+    "start": 1829.28,
+    "end": 1834.23,
+    "text": "Nó cũng như là prefix sum, nhưng mà ở bên đây mình sẽ app dụng trên 1 cái đường cháo"
+  },
+  {
+    "start": 1834.23,
+    "end": 1839.23,
+    "text": "Ok, không biết là các bạn có hiểu tư tưởng của nó không nhỉ?"
+  },
+  {
+    "start": 1839.23,
+    "end": 1842.12,
+    "text": "Hay là O này cũng thế này?"
+  },
+  {
+    "start": 1842.12,
+    "end": 1845.12,
+    "text": "Dạ, xử như mình tính hình trữ nhật này đúng không?"
+  },
+  {
+    "start": 1845.12,
+    "end": 1856.12,
+    "text": "Thì cái O4 này nè, mảng đường trao chính nhé, nó sẽ lưu tổng các phần tử là 6, chữ 5 với 4, thì nó là bằng chữ 7 đúng không?"
+  },
+  {
+    "start": 1856.12,
+    "end": 1861.12,
+    "text": "Ok, nhưng mà cái O3 này nè, thì nó sẽ lưu tổng các phần tử đường trao chính này cơ?"
+  },
+  {
+    "start": 1861.12,
+    "end": 1864.02,
+    "text": "Ctrl, 9, 18"
+  },
+  {
+    "start": 1864.02,
+    "end": 1869.2,
+    "text": "bây giờ tính rá trị này thì bạn sẽ phải lấy rá trị của ô chú 7 này, bạn chư đi thằng chú 6 này"
+  },
+  {
+    "start": 1869.2,
+    "end": 1872.58,
+    "text": "thì nó sẽ ra được tộng có phần thử là chú 5, 54 là chú 1"
+  },
+  {
+    "start": 1872.58,
+    "end": 1875.36,
+    "text": "mình cũng có lưu được có đây rồi là chú 6 rồi mà, Đúng hông?"
+  },
+  {
+    "start": 1875.36,
+    "end": 1879.38,
+    "text": "hay là bà Đây mình tính đường tráo phụ là 3, với 6 thì bạn sẽ lấy rá trị của ô này,"
+  },
+  {
+    "start": 1879.38,
+    "end": 1884.64,
+    "text": "là 9, con 16, con 3 là 18, mình chư đi thằng của ô này, là 9"
+  },
+  {
+    "start": 1884.64,
+    "end": 1888.46,
+    "text": "mình sẽ ra được rá trị của đường tráo phụ là 3, con 6 là 9"
+  },
+  {
+    "start": 1888.46,
+    "end": 1890.46,
+    "text": "tính giá trị thôi, ok?"
+  },
+  {
+    "start": 1890.46,
+    "end": 1892.46,
+    "text": "tư tưởng là nó là như thế nhé"
+  },
+  {
+    "start": 1892.46,
+    "end": 1894.46,
+    "text": "ở đây mình sẽ lưu các cái"
+  },
+  {
+    "start": 1894.46,
+    "end": 1896.46,
+    "text": "mạng này, các cái thần tử ở trong mạng này"
+  },
+  {
+    "start": 1896.46,
+    "end": 1898.46,
+    "text": "từ O1 cho tới Oner và từ"
+  },
+  {
+    "start": 1898.46,
+    "end": 1900.46,
+    "text": "cột 1 cho tới cột mờ nhé"
+  },
+  {
+    "start": 1900.46,
+    "end": 1902.46,
+    "text": "ok, hai cái màa chặn mình cũng sẽ sử dụng"
+  },
+  {
+    "start": 1902.46,
+    "end": 1904.46,
+    "text": "hai cái màa chặn đường trao chính và đường trao phụ để lưu"
+  },
+  {
+    "start": 1904.46,
+    "end": 1906.46,
+    "text": "tương tự như thế, ok?"
+  },
+  {
+    "start": 1906.46,
+    "end": 1908.46,
+    "text": "mình cũng sẽ sử dụng hai cái màa chặn đường trao chính"
+  },
+  {
+    "start": 1908.46,
+    "end": 1910.46,
+    "text": "và đường trao phụ để lưu như thế"
+  },
+  {
+    "start": 1910.46,
+    "end": 1912.46,
+    "text": "ví dụ này, mà này hơi khó 1 tí"
+  },
+  {
+    "start": 1912.46,
+    "end": 1917.5,
+    "text": "nó chỉ hơi khó cài đặt thôi"
+  },
+  {
+    "start": 1917.5,
+    "end": 1919.5,
+    "text": "đấy, mình sẽ cũng có sẽ có 1 cái"
+  },
+  {
+    "start": 1919.5,
+    "end": 1925.11,
+    "text": "đường có một cái mạng, tạm gọi là cái mạng đường chèo chính nhé"
+  },
+  {
+    "start": 1925.11,
+    "end": 1928.11,
+    "text": "và mình sẽ xây dựng cho cái mạng chèo chính cho các bạn xem"
+  },
+  {
+    "start": 1928.11,
+    "end": 1931.11,
+    "text": "Ở cái O đầu tiên thì nó sẽ là chính nó, 9 này"
+  },
+  {
+    "start": 1931.11,
+    "end": 1936.18,
+    "text": "O thứ 2 cũng là chính nó này, chứ 2 này, chứ 8 này, và không"
+  },
+  {
+    "start": 1936.18,
+    "end": 1939.18,
+    "text": "tất phần tử trên đường chèo chính của cái dòng đầu tiên này"
+  },
+  {
+    "start": 1939.18,
+    "end": 1941.18,
+    "text": "hay là cái cột đầu tiên thì nó là chính nó, nhé"
+  },
+  {
+    "start": 1941.18,
+    "end": 1944.18,
+    "text": "chứ 6 này, 4 này, 1, ok"
+  },
+  {
+    "start": 1944.18,
+    "end": 1949.18,
+    "text": "Thế còn ở cái O này thì nó sẽ là thằng này cộng với chính nó là 9, chứ đi 2 là chứ 7, là 7"
+  },
+  {
+    "start": 1949.18,
+    "end": 1952.78,
+    "text": "O này thì nó sẽ là thằng chữ 2, cộng vời không thì là chữ 2"
+  },
+  {
+    "start": 1952.78,
+    "end": 1955.61,
+    "text": "O này thì nó sẽ là chữ 8, cộng 9 là 1"
+  },
+  {
+    "start": 1955.61,
+    "end": 1963.52,
+    "text": "O này thì nó sẽ là chữ 6, chữ đi chữ 5 là bằng chữ 11"
+  },
+  {
+    "start": 1963.52,
+    "end": 1968.83,
+    "text": "O này thì nó sẽ là bằng nhìn nhé, 7, cộng 16 là 13 đúng không?"
+  },
+  {
+    "start": 1968.83,
+    "end": 1972.23,
+    "text": "O này thì nó sẽ là chữ đi 2, cộng với 1 thì là chữ 1 đúng không?"
+  },
+  {
+    "start": 1972.23,
+    "end": 1974.83,
+    "text": "Tiếp tục như thế nhé, chỗ này là 4, cộng với 3 là 7 này"
+  },
+  {
+    "start": 1974.83,
+    "end": 1978.73,
+    "text": "chỗ này là chữ 11, cộng với 14 thì là chữ 7 này"
+  },
+  {
+    "start": 1978.73,
+    "end": 1983.93,
+    "text": "và chỗ này thì là 13, cộng 19 là 22, đây là cái đường treo chính nhé, main"
+  },
+  {
+    "start": 1983.93,
+    "end": 1990.12,
+    "text": "tương tự như vậy, các bạn xây dựng cho mình một cái bản đường cháu phụ để lưu các phần tửa trên đường cháu phụ"
+  },
+  {
+    "start": 1990.12,
+    "end": 1992.98,
+    "text": "đấy, cũng là 4x4 luôn á"
+  },
+  {
+    "start": 1992.98,
+    "end": 2000.77,
+    "text": "rồi ok, mình sẽ xây dựng con"
+  },
+  {
+    "start": 2000.77,
+    "end": 2005.39,
+    "text": "đường cháu phụ thì cái hàng đầu tiên thì nó như cái hàng đầu tiên vào cái cột bên phải cùng này thì nó không thay đổi"
+  },
+  {
+    "start": 2005.39,
+    "end": 2010.51,
+    "text": "đây là 9 này, chứa 2 này, chứa 8 này, không và 9, 1, 9 đúng không?"
+  },
+  {
+    "start": 2010.51,
+    "end": 2014.45,
+    "text": "cái đường cháu, cái thang này thì nó, cái phần bên cột bên phải này nó không có thằng đứng trước"
+  },
+  {
+    "start": 2014.45,
+    "end": 2017.45,
+    "text": "không có thằng đứng ở chéo trên ấy, thằng gà nó mang chính nó"
+  },
+  {
+    "start": 2017.45,
+    "end": 2021.09,
+    "text": "Cây bọng đã xây dựng cởi ôn này thì bạn sẽ lấy là 0, cộng với 0 là 0 nè"
+  },
+  {
+    "start": 2021.09,
+    "end": 2025.77,
+    "text": "Đúng không? Ôn này thì bạn sẽ lấy chữ 8, chữ 8, cộng với chữ 2 là chữ 10 nè"
+  },
+  {
+    "start": 2025.77,
+    "end": 2028.57,
+    "text": "Ôn này thì bạn sẽ lấy chữ 2, cộng với chữ 6 là chữ 8 nè"
+  },
+  {
+    "start": 2028.57,
+    "end": 2030.25,
+    "text": "Tiếp như thế nhá"
+  },
+  {
+    "start": 2030.25,
+    "end": 2033.85,
+    "text": "Ở chỗ này là 9, cộng với 6 là 15 nè"
+  },
+  {
+    "start": 2033.85,
+    "end": 2036.65,
+    "text": "Ôn này là 0, cộng với chữ 5 là chữ 5 nè"
+  },
+  {
+    "start": 2036.65,
+    "end": 2040.1,
+    "text": "Ôn này sẽ là chữ 10, cộng với 14 là chữ 6 nè"
+  },
+  {
+    "start": 2040.1,
+    "end": 2042.98,
+    "text": "Ôn này thì sẽ là chữ 5, cộng với 11 là chữ 4 nè"
+  },
+  {
+    "start": 2042.98,
+    "end": 2045.5,
+    "text": "Ôn này thì nó sẽ là 6, em 15"
+  },
+  {
+    "start": 2045.5,
+    "end": 2048.57,
+    "text": "Cộng với 3 là 15, 18 nè"
+  },
+  {
+    "start": 2048.57,
+    "end": 2053.97,
+    "text": "con o này thì nó sẽ là 1, 14 là 5, đấy, thì mình cũng có đường cháu, chính với đường cháu phụ rồi đúng không?"
+  },
+  {
+    "start": 2053.97,
+    "end": 2058.01,
+    "text": "ok, dạ sửa bây giờ bạn xét cái, cái ma chặn này"
+  },
+  {
+    "start": 2058.01,
+    "end": 2062.14,
+    "text": "cái ma chặn này, thì cái giá trị của ma chặn này rất đơn giản thôi"
+  },
+  {
+    "start": 2062.14,
+    "end": 2066.42,
+    "text": "bạn chỉ cần lấy cái giá trị của cái đường cháu chính là 22 đúng không?"
+  },
+  {
+    "start": 2066.42,
+    "end": 2070.34,
+    "text": "bạn chưa đi cái giá trị của đường cháu chính ở cái vị trí này, chín này"
+  },
+  {
+    "start": 2070.34,
+    "end": 2073.66,
+    "text": "đúng không? thì ra được cái tổng cất phần tử trên đường cháu chính nói chính là"
+  },
+  {
+    "start": 2073.66,
+    "end": 2077.54,
+    "text": "chứ 2, 16, 9, và bạn chưa đi cấp phần tử trên đường cháu phụ"
+  },
+  {
+    "start": 2077.54,
+    "end": 2086.76,
+    "text": "O của VAO chỗ này nó sẽ là 18, 15, 9 thì nó chính là 18 luôn, chứ đi 18"
+  },
+  {
+    "start": 2086.76,
+    "end": 2089.76,
+    "text": "Thì khi đó bạn sẽ tính được ngay cái giá trị của cái ma chặn đó"
+  },
+  {
+    "start": 2089.76,
+    "end": 2095.38,
+    "text": "Ok, hay là một cái ma chặn nhỏ hơn cho nó dễ hiểu hơn"
+  },
+  {
+    "start": 2095.38,
+    "end": 2097.38,
+    "text": "Ví dụ như cái ma chặn này"
+  },
+  {
+    "start": 2097.38,
+    "end": 2102.38,
+    "text": "Thì khi đó cái giá trị của ma chặn này thì bạn sẽ lấy cái giá trị của đường chéo ở cái O bên phải cùng của cái ma chặn này"
+  },
+  {
+    "start": 2102.38,
+    "end": 2105.38,
+    "text": "Cái góc bên phải cùng này nó sẽ là 22 đúng không?"
+  },
+  {
+    "start": 2105.38,
+    "end": 2107.38,
+    "text": "Mình chứ đi cái gì? Mình chứ đi cái phần này này"
+  },
+  {
+    "start": 2107.38,
+    "end": 2111.38,
+    "text": "bởi vì khi đó phần còn lại chính là tầm có phần tử trên đường chéo chính"
+  },
+  {
+    "start": 2111.38,
+    "end": 2114.38,
+    "text": "như là 22 trừ đi, chỗ này là bằng 7 đúng không?"
+  },
+  {
+    "start": 2114.38,
+    "end": 2117.38,
+    "text": "thì các bạn phải có thể ra là 9, 6, 15 đúng không?"
+  },
+  {
+    "start": 2117.38,
+    "end": 2120.38,
+    "text": "mình cộng với các phần tử trên đường chéo phụ ở chỗ này"
+  },
+  {
+    "start": 2120.38,
+    "end": 2122.38,
+    "text": "thằng này đằng trước này nó sẽ không có, cái ồn này nó không có"
+  },
+  {
+    "start": 2122.38,
+    "end": 2124.38,
+    "text": "nên ra là bạn sẽ lấy là 4 luôn"
+  },
+  {
+    "start": 2124.38,
+    "end": 2129.38,
+    "text": "trừ đi 4 thì nó sẽ là 22 trừ đi 7 là bằng 15, 15 trừ 4 là 11"
+  },
+  {
+    "start": 2129.38,
+    "end": 2132.38,
+    "text": "thành ra cái giá trị của cái ma trận nóng buông 22 này nó sẽ là 11"
+  },
+  {
+    "start": 2132.38,
+    "end": 2139.8,
+    "text": "Để mà dễ dàng thì các bạn lưu cái map trận men này, các phần tửa trên cái cột này nó sẽ bằng không hết nhé"
+  },
+  {
+    "start": 2139.8,
+    "end": 2143.83,
+    "text": "hay là trên cái đường chéo phụ, cột này nó cũng bằng không hết này"
+  },
+  {
+    "start": 2143.83,
+    "end": 2148.09,
+    "text": "bên này cũng thế, các bạn lưu cho mình, và trên này sẽ là không hết này"
+  },
+  {
+    "start": 2148.09,
+    "end": 2152.09,
+    "text": "cái dòng không ấy, ok, và cái cột nò bên phải này này cũng là không hết"
+  },
+  {
+    "start": 2152.09,
+    "end": 2160.99,
+    "text": "ok, các bạn lưu là không hết, bởi vì là tại sao mình lại lưu ở chỗ này là không"
+  },
+  {
+    "start": 2160.99,
+    "end": 2168.39,
+    "text": "Bí dụ nha, khi mà bạn tính cái chỗ, cái đường trẻ cả cái, tức là mình sẽ set cái cả cái hình vuông, cái ma chận vuông to này này"
+  },
+  {
+    "start": 2168.39,
+    "end": 2171.49,
+    "text": "thì khi đó tính tổng các phần tử trên đường chéo chính nó chính là thằng này đúng không?"
+  },
+  {
+    "start": 2171.49,
+    "end": 2176.37,
+    "text": "Ok, thì khi đó mình sẽ làm sao nhỉ? Mình sẽ lấy cái thằng 2, 2 này này, đúng không?"
+  },
+  {
+    "start": 2176.37,
+    "end": 2181.07,
+    "text": "Mình chưa đi tổng các phần tử trên đường chéo ở cái chỗ này này, nó sẽ là không, thì nó tiện, đúng không?"
+  },
+  {
+    "start": 2181.07,
+    "end": 2184.97,
+    "text": "Mình sẽ không phải íp el nó dài nữa, tương tự như vậy, vừa sửa như cái phần này này"
+  },
+  {
+    "start": 2184.97,
+    "end": 2198.76,
+    "text": "Khi mà bạn tính cái phần này, khi đường cháo phụ của mình sẽ bằng thằng này đúng không?"
+  },
+  {
+    "start": 2198.76,
+    "end": 2205.76,
+    "text": "Mình chử đi cái o chỗ này, cái giá trị của cái o chỗ này nó cũng sẽ là không luôn, thì nó sẽ tổng các phần tử này, thì nó tiện"
+  },
+  {
+    "start": 2205.76,
+    "end": 2213.86,
+    "text": "Để chính là cái cách mình xây dựng cái mai trận đường cháo chính và đường cháo phụ để có thể tính toán cái giá trị của một cái mai trận nào đó nhanh"
+  },
+  {
+    "start": 2213.86,
+    "end": 2216.14,
+    "text": "Thì hướng dẫn các bạn cốt của bài này nhé"
+  },
+  {
+    "start": 2216.14,
+    "end": 2219.74,
+    "text": "Nó có 2 cái chú ý khi mà xây dựng cái đường cháu chính và đường cháu phụ thôi"
+  },
+  {
+    "start": 2219.74,
+    "end": 2222.1,
+    "text": "Để chính là mình đường cháu chính ý"
+  },
+  {
+    "start": 2222.1,
+    "end": 2226.22,
+    "text": "Thì các bạn nên lưu các phần tựa hàng không và cột không này này"
+  },
+  {
+    "start": 2226.22,
+    "end": 2227.98,
+    "text": "Nó bằng không hết"
+  },
+  {
+    "start": 2227.98,
+    "end": 2232.34,
+    "text": "Nó cũng như là cái prefix xăm ấy, bây giờ các bạn cũng để prefix không của không"
+  },
+  {
+    "start": 2232.34,
+    "end": 2237.7,
+    "text": "Trong trường hợp mà cái chỉ số left và chỉ số right của các bạn nó bắt đầu từ 1 ấy"
+  },
+  {
+    "start": 2237.7,
+    "end": 2240.3,
+    "text": "Thì mình chứ đi cái chỉ số không thì nó tiện, nó không vĩ íp L"
+  },
+  {
+    "start": 2240.3,
+    "end": 2242.94,
+    "text": "Tương tự như vậy, đối với phần đường cháu phụ như thế này này"
+  },
+  {
+    "start": 2242.94,
+    "end": 2246.14,
+    "text": "thì bạn sẽ lưu các phần tửa trên cái hàng không này này, đúng không?"
+  },
+  {
+    "start": 2246.14,
+    "end": 2250.54,
+    "text": "và cái phần tửa trên cái cột là cột cuối cùng này này, cột mr này này,"
+  },
+  {
+    "start": 2250.54,
+    "end": 2253.04,
+    "text": "à, sẽ nỗi cột mr này này, nó cũng là không hết."
+  },
+  {
+    "start": 2253.04,
+    "end": 2255.54,
+    "text": "Thì khi mà bạn lấy cái giá trị của cái cột này bạn chứ đi,"
+  },
+  {
+    "start": 2255.54,
+    "end": 2258.14,
+    "text": "các cái giá trị ở cái trên cái cột này nó bằng không hết thì nó tiện."
+  },
+  {
+    "start": 2258.14,
+    "end": 2259.34,
+    "text": "Ok?"
+  },
+  {
+    "start": 2259.34,
+    "end": 2261.54,
+    "text": "Bài này thì các bạn chỉ cần chú ý cho bạn nhát ra giấy,"
+  },
+  {
+    "start": 2261.54,
+    "end": 2264.74,
+    "text": "để cái cách mà bạn xây dựng một cái giá trị của cái ma chặn,"
+  },
+  {
+    "start": 2264.74,
+    "end": 2267.34,
+    "text": "tức là mình sẽ xét tất cả các cái oezy nhá,"
+  },
+  {
+    "start": 2267.34,
+    "end": 2270.64,
+    "text": "là cái o bên phải cùng của cái ma chặn này như thế này này."
+  },
+  {
+    "start": 2270.64,
+    "end": 2275.88,
+    "text": "Thì mình sẽ xét cái OEG này này, liệu rằng từ cái OEG này nó sẽ xây dựng được bao nhiêu cái ma chặn"
+  },
+  {
+    "start": 2275.88,
+    "end": 2288.69,
+    "text": "Ok, đó, mình sẽ xóa cái phần này đi nhé, xóa cái phần cho cái giữ lại cái ma chặn đừng chéo lúc này cho nó đẹp"
+  },
+  {
+    "start": 2288.69,
+    "end": 2299.68,
+    "text": "Đấy, sau khi mà xây dựng được xong cái ma chặn đấy thì mình sẽ xét tất cả các vị trí EG ở trên cái ma chặn của mình và xem là"
+  },
+  {
+    "start": 2299.68,
+    "end": 2307.52,
+    "text": "từ cái OEG đấy của mình thì mình sẽ xây dựng được bao nhiêu, bao nhiêu cái ma chặn vua, tính với cái OEG là cái O bên phải cùng"
+  },
+  {
+    "start": 2307.52,
+    "end": 2311.4,
+    "text": "ok, bên dưới cũng, bên phải cùng ở bên dưới, hàng cuối cùng í"
+  },
+  {
+    "start": 2311.4,
+    "end": 2313.36,
+    "text": "hấy, sau đó mình sẽ cập nhật kết quả, nè"
+  },
+  {
+    "start": 2313.36,
+    "end": 2315.52,
+    "text": "đây chính là cái bài mình mới nói cốt này"
+  },
+  {
+    "start": 2315.52,
+    "end": 2322.77,
+    "text": "mình sẽ sử dụng 2 cái map trận là map trận major và map trận minor này là cái map trận đường chiều chính này và đường chiều phụ nhé"
+  },
+  {
+    "start": 2322.77,
+    "end": 2330.89,
+    "text": "ở đây input thì, cái số dòng của mình nó lên đến 400, mình sẽ khai báo 2 cái map trận đường chiều chính và đường chiều phụ có cửa là 400 x 400 và khởi tạ tức cả bằng không nhé"
+  },
+  {
+    "start": 2330.89,
+    "end": 2335.85,
+    "text": "ok, sau đó thì mình sẽ nhập vào số tiết cây, ở đây tiết cây bằng 1 thì ra mình đặt là tiết cây bằng 1"
+  },
+  {
+    "start": 2335.85,
+    "end": 2337.85,
+    "text": "đây, cái phần này là phần nhập map trận này"
+  },
+  {
+    "start": 2337.85,
+    "end": 2348.4,
+    "text": "Mát trận này là mát trận vuông, có cỡ là nờ nhưng mà mình sẽ lưu là nờ cộng 1, nờ cộng 1 để mình có thể lưu các chỉ số của cái mát trận này ở o1, 1 cho tới o, nờ"
+  },
+  {
+    "start": 2348.4,
+    "end": 2352.2,
+    "text": "Ok, từ hàng 1 cho tới hàng nờ vào cột 1 cho tới cột nờ, ok"
+  },
+  {
+    "start": 2352.2,
+    "end": 2355.2,
+    "text": "Sau đó bây giờ mình sẽ xây dựng cái phần tửa trên đường chèo chính"
+  },
+  {
+    "start": 2355.2,
+    "end": 2359.25,
+    "text": "Đây này, nói chính là cái phần xây dựng cái này tháng mên này này"
+  },
+  {
+    "start": 2359.25,
+    "end": 2368.45,
+    "text": "Bằng cách như sau, mình sẽ duyệt qua cái đường chèo chính này thì khi xây dựng thì các bạn sẽ xây dựng từ trên xuống dưới và từ trái sang phải đúng không?"
+  },
+  {
+    "start": 2368.45,
+    "end": 2381.71,
+    "text": "bởi vì 1 OEG nào đó chỗ này thì bạn sẽ cộng bằng o ở chỗ này, từ 1 OEG nào đó thì bạn sẽ tính của nó bằng tỏng của o chỗ này, y chứ 1 và y chứ 1 ở chỗ này"
+  },
+  {
+    "start": 2381.71,
+    "end": 2384.71,
+    "text": "cộng thêm với giá trị của o hiện tại"
+  },
+  {
+    "start": 2384.71,
+    "end": 2388.71,
+    "text": "thật ra mình sẽ xây dựng từ trên xuống dưới bởi từ trái có phải, cái công thức của nó như thế này"
+  },
+  {
+    "start": 2388.71,
+    "end": 2396.71,
+    "text": "nếu mà nó là cái hàng đầu tiên, hoặc là nó là cái cột đầu tiên, như lúc đấy mình nói thì cái giá trị của cái đường châu chính này sẽ không thay đổi"
+  },
+  {
+    "start": 2396.71,
+    "end": 2401.47,
+    "text": "Mà Trận ban đầu, 9 chứa 2 chứa 8, 0, 9 chứa 6, 4, 1, đúng không?"
+  },
+  {
+    "start": 2401.47,
+    "end": 2407.13,
+    "text": "Thình ra mình để là nếu như là cột đầu tiên và là cột cuối cùng, ok?"
+  },
+  {
+    "start": 2407.13,
+    "end": 2409.97,
+    "text": "Nói xin lỗi, cái hàng đầu tiên và cái hàng cuối cùng thì mình sẽ..."
+  },
+  {
+    "start": 2409.97,
+    "end": 2416.69,
+    "text": "Cái hàng đầu tiên và cái cột đầu tiên thì mình sẽ để phần tửa trên đường trao chính nó chính xác là các phần tửa trên Mà Trận ban đầu"
+  },
+  {
+    "start": 2416.69,
+    "end": 2422.13,
+    "text": "Còn không nhé? Các phần tửa, tổng các phần tửa trên đường trao chính kết thúc tại oezy ấy, thấy chưa?"
+  },
+  {
+    "start": 2422.13,
+    "end": 2428.27,
+    "text": "thì nó sẽ bằng, không phải kết thúc tại oezy mà bắt đầu từ o11 và kết thúc ở oezy, đây chính là phần vừa nè"
+  },
+  {
+    "start": 2429.02,
+    "end": 2430.04,
+    "text": "trên đường chéo này này"
+  },
+  {
+    "start": 2430.04,
+    "end": 2434.14,
+    "text": "ví dụ nhé, trên đường chéo này chỗ này nhé, thì bạn lại phải tính các phần tử trên đường chéo này đây nhé"
+  },
+  {
+    "start": 2434.14,
+    "end": 2439.0,
+    "text": "hiểu hả, chỗ này thì bạn phải phải trở về trở mấy chín nữa nhé"
+  },
+  {
+    "start": 2439.0,
+    "end": 2447.7,
+    "text": "thì mình sẽ cho là nó sẽ bằng aezy cộng với major của e1e1, nó chính là các phần tử trên đường chéo chính ở o chéo của nó đây này"
+  },
+  {
+    "start": 2447.7,
+    "end": 2450.52,
+    "text": "oezy đây đúng không, oe1e1 đây"
+  },
+  {
+    "start": 2450.52,
+    "end": 2454.68,
+    "text": "Ok, thế là xam cho phần tính đường cháu chính nhé, các phần thử trên đường cháu chính nhé"
+  },
+  {
+    "start": 2454.68,
+    "end": 2460.28,
+    "text": "Tương tự như vậy, khi mà xây dựng đường cháu phụ, đường cháu phụ thì các bạn thấy là nó sẽ chạy từ bên phải xa đúng không?"
+  },
+  {
+    "start": 2460.28,
+    "end": 2468.44,
+    "text": "Thì ra là bạn không thể xây dựng như đường cháu chính được, và mình sẽ phải xây dựng từ cái dòng đầu tiên cho tới dòng cuối cùng, nhưng mà cột thì bạn phải chạy từ bên phải xa đúng không?"
+  },
+  {
+    "start": 2468.44,
+    "end": 2473.16,
+    "text": "Ví dụ như là tính cái thằng chứa nam này thì bạn phải tính nó thông qua thằng bên phải nó ở đây này đúng không?"
+  },
+  {
+    "start": 2473.16,
+    "end": 2479.07,
+    "text": "tức là từ oiz này này, khi mà bạn tính đường cháo phụ thì mình sẽ thông qua cái thằng này"
+  },
+  {
+    "start": 2479.07,
+    "end": 2482.67,
+    "text": "tức là oiz chú 1 và z cộng 1 đấy, ok?"
+  },
+  {
+    "start": 2482.67,
+    "end": 2487.27,
+    "text": "tương tự như vậy, nếu mà khi mà bạn xây dựng đường cháo phụ thì cái hàng đầu tiên và cái cột cuối cùng ấy"
+  },
+  {
+    "start": 2487.27,
+    "end": 2494.83,
+    "text": "thì các phần tử trong cái đường cháo phụ này này, nó sẽ có giá trị tương tự như là cái match-up bàn đỏ 9 chứ 280 này"
+  },
+  {
+    "start": 2494.83,
+    "end": 2496.75,
+    "text": "và 0919, ok?"
+  },
+  {
+    "start": 2496.75,
+    "end": 2503.95,
+    "text": "nếu y bằng 1 và y bằng n thì mình sẽ chơi gán là minor của isi bằng a isi luôn"
+  },
+  {
+    "start": 2503.95,
+    "end": 2512.15,
+    "text": "còn không thì minor của isi, tống các phần từ đường chéo ở isi này sẽ bằng minor của isi 1, isi cộng 1, nó chính là o này"
+  },
+  {
+    "start": 2512.15,
+    "end": 2515.91,
+    "text": "sau đó cộng với giá trị của isi hiện tại"
+  },
+  {
+    "start": 2515.91,
+    "end": 2520.15,
+    "text": "đây chính là cách mà bạn xây dựng đường chéo chính và đường chéo phụ"
+  },
+  {
+    "start": 2520.15,
+    "end": 2530.17,
+    "text": "Rồi, sau khi mà xây dựng được đình cháo chính và đình cháo phụ rồi, thì mình sẽ tiến hành là mình sẽ xét tất cả các o easy ở trên cái ma chặn này"
+  },
+  {
+    "start": 2530.17,
+    "end": 2534.81,
+    "text": "Mình sẽ xét từ o đầu tiên mà mình sẽ xét, nói chính là o này"
+  },
+  {
+    "start": 2534.81,
+    "end": 2545.12,
+    "text": "Chỗ này các bạn cần phải nhắc ra giấy để biết được là cái text xét, cái text xét tất cả các ma chặn nó như thế nào"
+  },
+  {
+    "start": 2545.12,
+    "end": 2548.58,
+    "text": "Ví dụ khi mà bạn xét cái O cuối cùng này, là ONN này, đúng không?"
+  },
+  {
+    "start": 2548.58,
+    "end": 2552.72,
+    "text": "Thì nó sẽ có những cái ma chận này có thể tạo thành nhở, nó chính là cái ma chận 4x4 này này"
+  },
+  {
+    "start": 2552.72,
+    "end": 2555.1,
+    "text": "Đấy, hoặc là 3x3 này này"
+  },
+  {
+    "start": 2555.1,
+    "end": 2558.61,
+    "text": "Hoặc là 2x2 đúng không? Đấy thì bạn sẽ xét tất cả các ma chận đấy"
+  },
+  {
+    "start": 2558.61,
+    "end": 2564.53,
+    "text": "Nhưng mà chú ý nhá, đấy là giả sử như bạn xét cái ma chận mà kết thúc có cái O phải cùng là O3 này này"
+  },
+  {
+    "start": 2564.53,
+    "end": 2568.25,
+    "text": "Thì khi đó cái ma chận của mình, nó chỉ cỡ, có thể cỡ là 2x2 thôi"
+  },
+  {
+    "start": 2568.25,
+    "end": 2571.73,
+    "text": "Đúng không? Bởi vì nó phụ thuộc, nó còn phụ thuộc vào cái"
+  },
+  {
+    "start": 2571.73,
+    "end": 2578.13,
+    "text": "phần tử izi của bạn nằm ở hàng i cột di này, thì cái thằng nhỏ hơn trong hàng i và cột di nó là bao nhiêu?"
+  },
+  {
+    "start": 2578.13,
+    "end": 2581.33,
+    "text": "ví dụ như nó nằm ở o44 này này, đúng không? Thằng 9 này này"
+  },
+  {
+    "start": 2581.33,
+    "end": 2585.17,
+    "text": "thì khi đó cái ma chận lớn nhất của bạn có thể tạo thành được, nó có thể là có cỡ là 4"
+  },
+  {
+    "start": 2585.17,
+    "end": 2588.69,
+    "text": "nhưng nếu mà phần tử của bạn nó nằm ở cái này này, tức là hàng 4, 2 này này"
+  },
+  {
+    "start": 2588.69,
+    "end": 2593.25,
+    "text": "thì khi đó cái ma chận vuông mà có thể tạo thành lớn nhất, bởi cái ov3 này là ov phải cùng ấy"
+  },
+  {
+    "start": 2593.25,
+    "end": 2596.61,
+    "text": "mà chỉ có cỡ 2 nhưng 2 này thôi, đúng không? Mà chỉ phụ thuộc có cái thằng nhỏ hơn ấy"
+  },
+  {
+    "start": 2596.61,
+    "end": 2602.84,
+    "text": "Thành ra là gì? Mình sẽ xét tất cả các ma trận có thể tạo thành, có cỡ từ gì nhỉ?"
+  },
+  {
+    "start": 2602.84,
+    "end": 2607.34,
+    "text": "Cỡ từ min, easy, ok, về đến 2"
+  },
+  {
+    "start": 2607.34,
+    "end": 2610.78,
+    "text": "Trong trường hợp này không biết là nó có trong 1 hay không?"
+  },
+  {
+    "start": 2610.78,
+    "end": 2616.42,
+    "text": "Đối với mỗi phần tử mình dùng 2 vòng 4 để xét tất cả các vị trí easy nhé"
+  },
+  {
+    "start": 2616.42,
+    "end": 2624.08,
+    "text": "Và mình dùng 1 biến tem, nó sẽ là cái số nhỏ hơn trong 2 cái số i và z"
+  },
+  {
+    "start": 2624.08,
+    "end": 2629.04,
+    "text": "Nó chính là cái cỡ lớn nhất có thể của cái ma trận vuông ấy, trong đó easy là cái o bên phải cùng"
+  },
+  {
+    "start": 2629.04,
+    "end": 2631.48,
+    "text": "Ok, mình vừa thích cái đấy rồi, đúng không?"
+  },
+  {
+    "start": 2631.48,
+    "end": 2634.2,
+    "text": "Sau đó nhé, bạn sẽ dùng cái"
+  },
+  {
+    "start": 2634.2,
+    "end": 2636.48,
+    "text": "cái chỉ số hàng là i trừ team"
+  },
+  {
+    "start": 2636.48,
+    "end": 2638.92,
+    "text": "cái chỗ này thì"
+  },
+  {
+    "start": 2638.92,
+    "end": 2642.08,
+    "text": "i trừ đi team, ví dụ như là cái o44 nhé"
+  },
+  {
+    "start": 2642.08,
+    "end": 2644.68,
+    "text": "đây, y bằng 4, y bằng 4 này, cái o44 này này"
+  },
+  {
+    "start": 2644.68,
+    "end": 2646.88,
+    "text": "thì mình sẽ dùng cái chỉ số hàng nó sẽ là"
+  },
+  {
+    "start": 2646.88,
+    "end": 2648.88,
+    "text": "khi đó team nó sẽ bằng 4 nhé, đúng không?"
+  },
+  {
+    "start": 2648.88,
+    "end": 2651.04,
+    "text": "Mình sẽ dùng cái chỉ số hàng"
+  },
+  {
+    "start": 2651.04,
+    "end": 2654.84,
+    "text": "đấy là cái chỉ số hàng là 4 trừ đi 4 là 0, nó chính là cái hàng 0 này này"
+  },
+  {
+    "start": 2654.84,
+    "end": 2656.84,
+    "text": "và cái chỉ số cột của nó cũng sẽ là"
+  },
+  {
+    "start": 2656.84,
+    "end": 2659.48,
+    "text": "ghi trừ tèo cũng là 4 trừ 4, tụi là cái cột không này này"
+  },
+  {
+    "start": 2659.48,
+    "end": 2662.58,
+    "text": "ok, sau đó thì"
+  },
+  {
+    "start": 2662.58,
+    "end": 2666.14,
+    "text": "khi mà mình có cái chỉ số hàng và chỉ số cột rồi thì mình sẽ"
+  },
+  {
+    "start": 2666.14,
+    "end": 2669.74,
+    "text": "bắt đầu từ cái hàng đấy và cái cột đấy mình cứ dịch dần lên nhé"
+  },
+  {
+    "start": 2669.74,
+    "end": 2673.63,
+    "text": "thì khi đó cái ma chận của mình thì nó sẽ bắt đầu từ cái hàng"
+  },
+  {
+    "start": 2673.63,
+    "end": 2677.87,
+    "text": "khi mà hàng bằng không và cột bằng không thì mình sẽ xây dựng được cái ma chận là 9"
+  },
+  {
+    "start": 2677.87,
+    "end": 2679.51,
+    "text": "cái ma chận con này này"
+  },
+  {
+    "start": 2679.51,
+    "end": 2681.75,
+    "text": "đấy, sau đó thì"
+  },
+  {
+    "start": 2681.75,
+    "end": 2684.47,
+    "text": "ở cái bước tiếp theo thì mình sẽ tăng cái chỉ"
+  },
+  {
+    "start": 2684.47,
+    "end": 2686.67,
+    "text": "mình sẽ dùng một cái chỉ số K để chạy nhé"
+  },
+  {
+    "start": 2686.67,
+    "end": 2693.87,
+    "text": "sau đó thì sau khi mà xây dựng xong cái ma chận này này, thì mình sẽ xây dựng cái ma chận tiếp theo là cái ma chận này bằng cách là mình tăng cái trị số K lên"
+  },
+  {
+    "start": 2693.87,
+    "end": 2698.87,
+    "text": "thì khi đó cái trị số hàng của mình cũng tăng theo và cái trị số cột của mình nó tăng theo, ok?"
+  },
+  {
+    "start": 2698.87,
+    "end": 2703.69,
+    "text": "Thì ra đây mình dùng một cái trị số K chạy từ không cho tới min của i chứ di"
+  },
+  {
+    "start": 2703.69,
+    "end": 2709.09,
+    "text": "Thế là mình sẽ xây dựng tất cả các cái ma chận mà có cỡ là từ min của i và di cho về đến 2 đấy"
+  },
+  {
+    "start": 2709.09,
+    "end": 2714.41,
+    "text": "Ok, khi mà K bằng không nhé, thì có nghĩa là mình sẽ xây dựng cái ma chận có cỡ là, có cỡ là tem"
+  },
+  {
+    "start": 2714.41,
+    "end": 2718.0,
+    "text": "mean của betheless, trong trường hợp này sẽ là 4"
+  },
+  {
+    "start": 2718.0,
+    "end": 2744.16,
+    "text": "khi mà cao bằng 0, agree, button phii NRLS,"
+  },
+  {
+    "start": 2744.16,
+    "end": 2749.15,
+    "text": "Các bạn sẽ có được tỏng các phần tử trên đường cháu chính như thế này"
+  },
+  {
+    "start": 2749.15,
+    "end": 2755.85,
+    "text": "Thì nó sẽ là bao nhiêu nhỉ? 22 chứ đi không thì là bằng 0"
+  },
+  {
+    "start": 2755.85,
+    "end": 2758.61,
+    "text": "Bằng 22 sẽ là bằng cộng các phần tử trên đường cháu phụ"
+  },
+  {
+    "start": 2758.61,
+    "end": 2763.13,
+    "text": "Đường cháu phụ khi đó, cái o mà bạn sẽ cộng một cháu phụ nó chính là o này"
+  },
+  {
+    "start": 2763.13,
+    "end": 2767.77,
+    "text": "Thì nó chính là cái trị số là minor của i và cot, cộng k, cộng 1"
+  },
+  {
+    "start": 2767.77,
+    "end": 2772.55,
+    "text": "Các bạn phải tự tìm hiểu nhé, các bạn tự tự nháp ra giấy để tại sao tìm được cái giá trị này"
+  },
+  {
+    "start": 2772.55,
+    "end": 2777.15,
+    "text": "Ok, cũng dễ thôi, mình thông qua cái chỉ số để mình tìm cái O này thôi nè"
+  },
+  {
+    "start": 2777.15,
+    "end": 2782.76,
+    "text": "Sau đó bạn cũng phải trừ đi cái minor của hàng cộng K và G, cộng 1 nó chính là cái O này nè"
+  },
+  {
+    "start": 2782.76,
+    "end": 2789.53,
+    "text": "Đấy, ok, trong trường hợp này nó sẽ là bao nhiêu nhỉ, nó sẽ là trừ 4 nè, chỗ này là không nhé, O chỗ này là không nhé"
+  },
+  {
+    "start": 2789.53,
+    "end": 2795.77,
+    "text": "Thì là trừ đi, trừ 4, trừ đi không đúng không, tức là 22 cộng với 4 là bằng 26"
+  },
+  {
+    "start": 2795.77,
+    "end": 2799.45,
+    "text": "Hình ra khi đó cái hình trữ nhật mà, tâm giác quân này nè"
+  },
+  {
+    "start": 2799.45,
+    "end": 2801.51,
+    "text": "có giá trị là 26"
+  },
+  {
+    "start": 2801.51,
+    "end": 2812.15,
+    "text": "khi mà ca mà tăng lên 1, thì có nghĩa là bạn sẽ xây dựng cái ma chận vuông có o phài cùng này"
+  },
+  {
+    "start": 2812.15,
+    "end": 2815.15,
+    "text": "nhưng mà cỡ của mình là 3x3 thôi"
+  },
+  {
+    "start": 2815.15,
+    "end": 2823.15,
+    "text": "khi mà ma chận vuông mà mình vừa khoanh, nó có giá trị là 22"
+  },
+  {
+    "start": 2823.15,
+    "end": 2827.02,
+    "text": "chứ đi cái giá trị của o này là 9"
+  },
+  {
+    "start": 2827.02,
+    "end": 2831.22,
+    "text": "..."
+  },
+  {
+    "start": 2831.22,
+    "end": 2834.34,
+    "text": "..."
+  },
+  {
+    "start": 2834.34,
+    "end": 2839.28,
+    "text": "Vì sao vậy?"
+  },
+  {
+    "start": 2839.28,
+    "end": 2842.04,
+    "text": "Vì sao, ở�� نè"
+  },
+  {
+    "start": 2842.04,
+    "end": 2857.94,
+    "text": "Hoa exact,"
+  },
+  {
+    "start": 2857.94,
+    "end": 2860.7,
+    "text": "2 mà th亭 ra cái cột bên phải cùng nó cũng sẽ bằng không hết."
+  },
+  {
+    "start": 2860.7,
+    "end": 2865.26,
+    "text": "Đó cái giá trị của mình nó sẽ là 18, chứ đi cái ô chỗ này là không,"
+  },
+  {
+    "start": 2865.26,
+    "end": 2870.35,
+    "text": "đáp án của mình nó sẽ là 22 chứ đen 9 là bằng 3 đúng không?"
+  },
+  {
+    "start": 2870.35,
+    "end": 2872.26,
+    "text": "Là sao nó ra được 3?"
+  },
+  {
+    "start": 2872.26,
+    "end": 2875.5,
+    "text": "22 chứ đen 9 thì nó phải bằng 13 chứ đúng không?"
+  },
+  {
+    "start": 2875.5,
+    "end": 2879.83,
+    "text": "13 chứ đen 18 là bằng chứ 5, có ra cái ma trận này này."
+  },
+  {
+    "start": 2879.83,
+    "end": 2882.05,
+    "text": "Có giá trị là chứ 5."
+  },
+  {
+    "start": 2882.05,
+    "end": 2885.85,
+    "text": "Bạn cứ xinh ra tất cả ma trận sau đó mình cập nhập thôi, OK?"
+  },
+  {
+    "start": 2885.85,
+    "end": 2890.85,
+    "text": "Vì vậy thì không khó nhé, nó chỉ hơi vướng một chút ở cái chỗ mà bạn tìm cái công thức để chia sát này thôi"
+  },
+  {
+    "start": 2890.85,
+    "end": 2902.85,
+    "text": "Bạn có thể tìm công thức khác nhé, ở đây thì mình nghĩ đơn giản là mình sẽ xây dựng cái ma trận từ cứ thu nhỏ thu nhỏ dần cho tới có cỡ làm cái số nhỏ hơn trong hai chỉ số isi và mình thu gọn lại cái cỡ là hai thôi"
+  },
+  {
+    "start": 2902.85,
+    "end": 2907.85,
+    "text": "Ok, sau đó mình lần ra các cái giá trị của hàng bọc cột mà mình cần phải cộng trường"
+  },
+  {
+    "start": 2907.85,
+    "end": 2913.85,
+    "text": "Thế còn bản chất các bài này thì bạn chỉ cần xây dựng được hai cái ma trận mà đừng tra chính, mà đừng tra phụ này thôi"
+  },
+  {
+    "start": 2913.85,
+    "end": 2916.33,
+    "text": "Bước này thì tuy các bạn có thể cài đặt như thế nào cũng được nhé"
+  },
+  {
+    "start": 2916.33,
+    "end": 2920.63,
+    "text": "Ok, hoặc thì đây chính là cái bài mà giá trị lớn nhất của ma trận"
+  },
+  {
+    "start": 2920.63,
+    "end": 2924.26,
+    "text": "Mày tiếp theo nhé, đấy là bài biến đổi nhị phân"
+  },
+  {
+    "start": 2924.26,
+    "end": 2928.82,
+    "text": "Mày ta cho mình một cái ma trận an ở nhân mà bao gồm các cái số 0,1 và hãy sửa đùa các phần tử của ma trận"
+  },
+  {
+    "start": 2928.82,
+    "end": 2933.94,
+    "text": "Thì hàng nguyên tác đấy là nếu phần tử A, I, Z, 1, 1 thì mình sẽ thay tất cả phần tử hàng I, I, Z, bởi 1"
+  },
+  {
+    "start": 2933.94,
+    "end": 2936.62,
+    "text": "Bài này tương đối là dễ đúng không?"
+  },
+  {
+    "start": 2936.62,
+    "end": 2941.48,
+    "text": "Rồi đầu tiên sẽ là số lượng tiết cây, mỗi tiết cây vào hồn nào vào mờ là số lượng dòng và số lượng cục có mái chận và yêu cầu"
+  },
+  {
+    "start": 2941.48,
+    "end": 2943.78,
+    "text": "Mình sẽ phải in ra cái mái chận sau khi bị thay đổi"
+  },
+  {
+    "start": 2943.78,
+    "end": 2949.06,
+    "text": "Thì các bạn chỉ cần, nhưng mà nhớ nhá, để làm bài này, các bạn nên xây dựng một cái mái chận tạm ra"
+  },
+  {
+    "start": 2949.06,
+    "end": 2953.14,
+    "text": "Bởi vì là gì, nếu mà bạn làm thay đổi ngay trên cái mái chận bàn đấu"
+  },
+  {
+    "start": 2953.14,
+    "end": 2958.86,
+    "text": "Bài này bạn chỉ cần set các phần tử ở trong mạng mà phần tử nào là easy thì mình sẽ set tất cả phần tử ở trên cái cột ấy"
+  },
+  {
+    "start": 2958.86,
+    "end": 2961.7,
+    "text": "Cột i và cái hàng z đấy sau đó mình cho nó tất cả bằng một"
+  },
+  {
+    "start": 2961.7,
+    "end": 2967.5,
+    "text": "Đúng không? Bởi vì là nếu mà 1 phần tử bằng 1 thì mình sẽ thay thế tất cả phần tử ở trên cái hàng i và con ghi đấy bằng 1, ok?"
+  },
+  {
+    "start": 2967.5,
+    "end": 2970.86,
+    "text": "Nhưng mà nếu mà mình thay trực tiếp trên cái má chận ban đầu ấy, đúng không?"
+  },
+  {
+    "start": 2970.86,
+    "end": 2973.0,
+    "text": "Thì nó sẽ ảnh hưởng đến kết quả đấy nhé, ok?"
+  },
+  {
+    "start": 2973.0,
+    "end": 2979.55,
+    "text": "Bởi vì là khi mà bạn thay các phần tử ở trên, ví dụ như cái này này, đây, đúng không?"
+  },
+  {
+    "start": 2979.55,
+    "end": 2991.28,
+    "text": "1001 này, ví dụ mình có cái má chận này là 1001 này, sau đó là 0010, rồi là 0000, đúng không?"
+  },
+  {
+    "start": 2991.28,
+    "end": 2995.08,
+    "text": "Thì khi mà duyệt qua thằng này, thì nếu mà bạn thay đổi ngay trên cái mai trận ban đầu ấy"
+  },
+  {
+    "start": 2995.08,
+    "end": 2998.88,
+    "text": "Thì làm sao nhỉ, nó sẽ thay đổi tất cả những thằng này thành 1 này, thằng này cũng thành 1 này"
+  },
+  {
+    "start": 2998.88,
+    "end": 3001.48,
+    "text": "Thằng này cũng thành 1 này, thằng này cũng thành 1 đúng không?"
+  },
+  {
+    "start": 3001.48,
+    "end": 3007.09,
+    "text": "Và vô tình khi đó ấy, khi mà bạn duyệt qua cái phần tử thứ 2 này này, nó lại là 1 rồi"
+  },
+  {
+    "start": 3007.09,
+    "end": 3010.09,
+    "text": "Thì bạn lại vô tình, bạn lại xét tất cả các phần tử trên cái cột này là 1"
+  },
+  {
+    "start": 3010.09,
+    "end": 3012.09,
+    "text": "Đúng không? Như thế nó sẽ bị sai đúng không?"
+  },
+  {
+    "start": 3012.09,
+    "end": 3016.09,
+    "text": "Hình ra là mình sẽ phải thay đổi nó trên một cái mai trận khác"
+  },
+  {
+    "start": 3016.09,
+    "end": 3022.09,
+    "text": "mình sẽ lưu lại cái ma trận khác, chứ mình không thay đổi trực tiếp trên cái ma trận ăn đầu, đúng không?"
+  },
+  {
+    "start": 3022.09,
+    "end": 3027.09,
+    "text": "bởi vì khi mà mình thay đổi trực tiếp trên cái ma trận ăn đầu thì các cái giá trị của cái hàng i của di nó bị thay đổi"
+  },
+  {
+    "start": 3027.09,
+    "end": 3031.48,
+    "text": "thằng ra là các bạn sẽ sử dụng cho mình một cái ma trận khác"
+  },
+  {
+    "start": 3031.48,
+    "end": 3041.21,
+    "text": "đây, mình sẽ sử dụng thêm một cái ma trận, cũng có cỡ là b, b là n, d, m, nhé, sau đó đêm"
+  },
+  {
+    "start": 3041.21,
+    "end": 3046.21,
+    "text": "mình sẽ nhập vào cái ma trận A và mình lưu lại luôn cái ma trận b, cũng có giá trị là i, thế như A"
+  },
+  {
+    "start": 3046.21,
+    "end": 3054.21,
+    "text": "Bây giờ mình sẽ rượt qua các phần tử có má trận E và kiểm tra nếu mà oiz nó đó bằng bột í, thì mình sẽ tiến hành rượt tất cả các cột"
+  },
+  {
+    "start": 3054.21,
+    "end": 3058.21,
+    "text": "Các cái hàng đấy sẽ lỗi rượt tất cả các cái hàng y và đánh dấu cái hàng y đấy có xác trị là một"
+  },
+  {
+    "start": 3058.21,
+    "end": 3061.53,
+    "text": "Sau đó mình cũng sẽ rượt tất cả các cái cột"
+  },
+  {
+    "start": 3061.53,
+    "end": 3066.08,
+    "text": "Ừ, rượt tất cả các cái cột đúng không nhỉ?"
+  },
+  {
+    "start": 3066.08,
+    "end": 3068.08,
+    "text": "Đây là rượt gì nhỉ?"
+  },
+  {
+    "start": 3068.08,
+    "end": 3073.84,
+    "text": "Đây là rượt cột chứ đúng không? Rượt qua tất cả phần tử ở cái cột đấy nè"
+  },
+  {
+    "start": 3073.84,
+    "end": 3076.84,
+    "text": "Ừ, rượt qua tất cả các cột, tức là mình sẽ đánh dấu cái hàng đấy bằng một đúng không?"
+  },
+  {
+    "start": 3076.84,
+    "end": 3078.84,
+    "text": "còn đây mình sẽ đánh dấu cái cột tới bằng 1"
+  },
+  {
+    "start": 3078.84,
+    "end": 3079.84,
+    "text": "ok"
+  },
+  {
+    "start": 3079.84,
+    "end": 3081.84,
+    "text": "nhưng mà mình sẽ thay đổi trên cái ma chận B nhé"
+  },
+  {
+    "start": 3081.84,
+    "end": 3083.84,
+    "text": "chứ đừng thay đổi trên cái ma chận A để tý nữa"
+  },
+  {
+    "start": 3083.84,
+    "end": 3087.84,
+    "text": "mình có thể xét được cái giá trị AeG là cái giá trị của ma chận bắt đầu"
+  },
+  {
+    "start": 3087.84,
+    "end": 3089.84,
+    "text": "thế thôi sau đó là bạn ít ra cái ma chận B"
+  },
+  {
+    "start": 3089.84,
+    "end": 3091.84,
+    "text": "bài này thì không có gì khó khăn cả ok"
+  },
+  {
+    "start": 3091.84,
+    "end": 3097.73,
+    "text": "và tiếp theo là bài ma chận nhị phân người ta cho mình 1 cái ma chận A có nò hàng"
+  },
+  {
+    "start": 3097.73,
+    "end": 3098.73,
+    "text": "và 3 cột"
+  },
+  {
+    "start": 3098.73,
+    "end": 3103.96,
+    "text": "trong đó các cái giá trị của mà chận này nó sẽ là giá trị nhị phân"
+  },
+  {
+    "start": 3103.96,
+    "end": 3110.36,
+    "text": "Vì nhị phân tức là 0, 1 và yêu cầu mình đếm xem có bao nhiêu hàng mà số lượng số 1 nhiều hơn số lượng số 0, quá đơn giản đúng không?"
+  },
+  {
+    "start": 3110.36,
+    "end": 3129.47,
+    "text": "Bạn này thì hơi dễ em chút, nếu các bạn chỉ cần duyệt qua các hàng thôi, sau đó tính tổng các phần tử trên các cây hàng, nếu mà tổng nó lớn hơn là bằng 2 thì mình sẽ tính đếm số hàng đấy là có số lượng số 1 nhiều hơn số không, bởi vì nó có 3 cột mà, ok?"
+  },
+  {
+    "start": 3129.47,
+    "end": 3137.13,
+    "text": "mình ra đây mình sẽ nhập vào n là 1 cái số hàng của cái ma chận đấy, sau đó mình sẽ khai báo 1 cái ma chận A có nờ hàng qua 3 cột nhé"
+  },
+  {
+    "start": 3137.13,
+    "end": 3145.69,
+    "text": "sau đó mình sẽ sử dụng 1 cái bí nan ở S để đếm xem là có bao nhiêu hàng có số lượng số 1 nhiều và số không, sau đó mình rượt qua cái ma chận đấy thôi"
+  },
+  {
+    "start": 3145.69,
+    "end": 3147.93,
+    "text": "ở đây cái phòng phong này là rượt từ không cho đến nờ nhé"
+  },
+  {
+    "start": 3147.93,
+    "end": 3158.8,
+    "text": "sau đó mình rượt từ cột không cho tới cột 3 thôi và mình nhập vào cái IZ ở đây mình tính luôn, mình vừa nhập vào mình tính luôn, sau đó mình tính tỏng các phần tửa trên cái hàng I đấy, ok"
+  },
+  {
+    "start": 3158.8,
+    "end": 3167.16,
+    "text": "nếu mà cái tổng ở trên cái hàng y đế mà lớn hơn là bằng 2, tức là số lượng số 1 ở trong cái hàng đấy nó là 2 hoặc 3, thì có nghĩa là số lượng số 1 có nhiều, dấu không đúng không?"
+  },
+  {
+    "start": 3167.16,
+    "end": 3170.4,
+    "text": "thì mình sẽ tăng miếng đến lên, ok, à, này thì dễ quá"
+  },
+  {
+    "start": 3170.4,
+    "end": 3177.34,
+    "text": "bài phần tử nhỏ thứ k, người ta cho mình một cái ma chận A cấp nờ sau đó là"
+  },
+  {
+    "start": 3177.34,
+    "end": 3183.93,
+    "text": "các phần tử của ma chận A này đã được sắp xếp theo hàng và theo cột và mình sẽ phải tìm cái phần tử nhỏ nhất thứ k của ma chận"
+  },
+  {
+    "start": 3183.93,
+    "end": 3189.38,
+    "text": "ok, tức là cái ma chận này nó sẽ có n là bình phương phần tử đúng không?"
+  },
+  {
+    "start": 3189.38,
+    "end": 3193.58,
+    "text": "Để bài này làm đơn giản nhất, các bạn cứ sắp xếp cái má trận này nhé"
+  },
+  {
+    "start": 3193.58,
+    "end": 3198.58,
+    "text": "Đây cái cốt này là..."
+  },
+  {
+    "start": 3198.58,
+    "end": 3203.88,
+    "text": "Cô này đơn giản thôi, mình sẽ nhập vào cái má trận của cỡ lại, em đó bình phương, sau đó mình sọt cái má trận đấy"
+  },
+  {
+    "start": 3203.88,
+    "end": 3206.68,
+    "text": "và mình in ra cái phần tử ở vị trí K thôi"
+  },
+  {
+    "start": 3206.68,
+    "end": 3207.68,
+    "text": "Ok"
+  },
+  {
+    "start": 3207.68,
+    "end": 3210.08,
+    "text": "Thực ra, bài này bạn có 2 cách làm nữa cơ"
+  },
+  {
+    "start": 3210.08,
+    "end": 3212.68,
+    "text": "Nhưng mà để mà đơn giản, các bạn cứ làm như thế này thôi nhé"
+  },
+  {
+    "start": 3212.68,
+    "end": 3216.38,
+    "text": "Còn nếu mà làm phức tạp hơn thì các bạn có thể sử dụng tìm kiếm nhị phân"
+  },
+  {
+    "start": 3216.38,
+    "end": 3218.84,
+    "text": "Ok, tìm kiếm nhị phân"
+  },
+  {
+    "start": 3218.84,
+    "end": 3226.24,
+    "text": "hoặc là bạn có thể tìm, bài này nó có 1 paper nói về cái bài toán này mà có độ phức tạp lỗ nở"
+  },
+  {
+    "start": 3226.24,
+    "end": 3229.6,
+    "text": "ok, còn cái cái kài đắp như thế này thì"
+  },
+  {
+    "start": 3229.6,
+    "end": 3233.64,
+    "text": "đây cái độ phức tạp của nó sẽ là ONR bình phương, lốc của ONR bình phương đấy nhá"
+  },
+  {
+    "start": 3233.64,
+    "end": 3236.24,
+    "text": "lốc của nó bình phương, ok, nhưng mà nó đơn giản"
+  },
+  {
+    "start": 3236.24,
+    "end": 3238.44,
+    "text": "bạn có thể cải tiến nó thêm bằng cách là"
+  },
+  {
+    "start": 3238.44,
+    "end": 3241.68,
+    "text": "bạn có thể tìm hiểu cái bài toán này trên mạng nhá"
+  },
+  {
+    "start": 3241.68,
+    "end": 3244.2,
+    "text": "đây chính là, bạn có thể tìm"
+  },
+  {
+    "start": 3244.2,
+    "end": 3249.42,
+    "text": "bài toán là tìm phần tử tứ kai trên một cái mai trận mà đã được sắp xếp theo hàng vào cột"
+  },
+  {
+    "start": 3249.42,
+    "end": 3253.74,
+    "text": "thì nó sẽ ra cách mà bạn tìm, tìm kiếm nhị phân, hoặc là"
+  },
+  {
+    "start": 3253.74,
+    "end": 3257.14,
+    "text": "cao ra theo một cái paper nào đó mà có độ phức tạp lỗ u n hả?"
+  },
+  {
+    "start": 3257.14,
+    "end": 3262.38,
+    "text": "còn đơn giản thì các bạn cứ sắp xếp nó tất cho là ít ra cái phần tử tử u n nào trừ ca trừ một ra được, ok?"
+  },
+  {
+    "start": 3262.38,
+    "end": 3267.75,
+    "text": "rồi thì nấy xong cái bài 19 nhá"
+  },
+  {
+    "start": 3267.75,
+    "end": 3274.12,
+    "text": "mấy bài sau thì mình sẽ để một cái video khác và này thì tương đối ra dài rồi"
+  }
+]
