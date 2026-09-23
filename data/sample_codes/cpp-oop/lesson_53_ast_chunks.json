@@ -1,0 +1,144 @@
+[
+  {
+    "chunk_id": "header_1_4",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 4,
+    "raw_text": "#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "class_specifier_56_83",
+    "code_scope": "type_class_specifier",
+    "start_line": 56,
+    "end_line": 83,
+    "raw_text": "class SinhVien\n{\nprivate:\n\t// Neu khong khai bao public ma chi khai bao moi may cai thuoc\n\t//tinh nay thi no mac dinh se la private\n\tstring id, name, date;\n\tdouble gpa;\npublic:\n\t//Ham xu ly thuoc tinh\n\tvoid TinhGPA();\n\tvoid chieuCao();\n\tvoid input();\n\tvoid output();\n\n\t//Getter & setter\n\tdouble getGPA();\n\tstring getID();\n\n\tdouble setGPA(double s);\n\tstring setName(string s);\n\n\t//Constructor\n\tSinhVien();\n\tSinhVien(string, string, string, double);//constructor co the nhan 4 thuoc tinh cua class SinhVien()\n\n\t//Destructor: Ham huy\n\t~SinhVien();\n};",
+    "context_code": "class SinhVien\n{\nprivate:\n\t// Neu khong khai bao public ma chi khai bao moi may cai thuoc\n\t//tinh nay thi no mac dinh se la private\n\tstring id, name, date;\n\tdouble gpa;\npublic:\n\t//Ham xu ly thuoc tinh\n\tvoid TinhGPA();\n\tvoid chieuCao();\n\tvoid input();\n\tvoid output();\n\n\t//Getter & setter\n\tdouble getGPA();\n\tstring getID();\n\n\tdouble setGPA(double s);\n\tstring setName(string s);\n\n\t//Constructor\n\tSinhVien();\n\tSinhVien(string, string, string, double);//constructor co the nhan 4 thuoc tinh cua class SinhVien()\n\n\t//Destructor: Ham huy\n\t~SinhVien();\n};"
+  },
+  {
+    "chunk_id": "func_anonymous_86_89",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 86,
+    "end_line": 89,
+    "raw_text": "void SinhVien::TinhGPA()// Truyen toan tu pham vi \"::\" -> ta dang xay dung ham TinhGPA cua lop SinhVien\n{\n\tcout << \"GPA\" << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid SinhVien::TinhGPA()// Truyen toan tu pham vi \"::\" -> ta dang xay dung ham TinhGPA cua lop SinhVien\n{\n\tcout << \"GPA\" << endl;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_91_94",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 91,
+    "end_line": 94,
+    "raw_text": "void SinhVien::chieuCao()\n{\n\tcout << \"Chieu cao\" << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid SinhVien::chieuCao()\n{\n\tcout << \"Chieu cao\" << endl;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_97_100",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 97,
+    "end_line": 100,
+    "raw_text": "SinhVien::SinhVien()\n{\n\tcout << \"Ham khoi tao duoc goi\" << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nSinhVien::SinhVien()\n{\n\tcout << \"Ham khoi tao duoc goi\" << endl;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_102_113",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 102,
+    "end_line": 113,
+    "raw_text": "SinhVien::SinhVien(string maSv, string tenSv, string ngaySinh, double diemTB)\n{\n\tcout << \"Ham khoi tao co tham so duoc goi\" << endl;\n\tid = maSv;\n\tname = tenSv;\n\tdate = ngaySinh;\n\tgpa = diemTB;\n\tcout << \"ID: \" << id << endl;\n\tcout << \"Name: \" << name << endl;\n\tcout << \"Date: \" << date << endl;\n\tcout << \"GPA: \" << gpa << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nSinhVien::SinhVien(string maSv, string tenSv, string ngaySinh, double diemTB)\n{\n\tcout << \"Ham khoi tao co tham so duoc goi\" << endl;\n\tid = maSv;\n\tname = tenSv;\n\tdate = ngaySinh;\n\tgpa = diemTB;\n\tcout << \"ID: \" << id << endl;\n\tcout << \"Name: \" << name << endl;\n\tcout << \"Date: \" << date << endl;\n\tcout << \"GPA: \" << gpa << endl;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_116_119",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 116,
+    "end_line": 119,
+    "raw_text": "SinhVien::~SinhVien()\n{\n\tcout << \"Doi tuong duoc huy tai day\" << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nSinhVien::~SinhVien()\n{\n\tcout << \"Doi tuong duoc huy tai day\" << endl;\n}"
+  },
+  {
+    "chunk_id": "func_hihi_121_125",
+    "code_scope": "function_hihi",
+    "func_name": "hihi",
+    "start_line": 121,
+    "end_line": 125,
+    "raw_text": "void hihi()\n{\n\tSinhVien x;\n\tcout << \"Tao da o day\" << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid hihi()\n{\n\tSinhVien x;\n\tcout << \"Tao da o day\" << endl;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_128_135",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 128,
+    "end_line": 135,
+    "raw_text": "void SinhVien::input()\n{\n\tcout << \"Nhap ID: \"; cin >> id;\n\tcin.ignore();\n\tcout << \"Nhap ten: \"; cin >> name;\n\tcout << \"Nhap nam sinh: \"; cin >> date;\n\tcout << \"Nhap diem: \"; cin >> gpa;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid SinhVien::input()\n{\n\tcout << \"Nhap ID: \"; cin >> id;\n\tcin.ignore();\n\tcout << \"Nhap ten: \"; cin >> name;\n\tcout << \"Nhap nam sinh: \"; cin >> date;\n\tcout << \"Nhap diem: \"; cin >> gpa;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_137_143",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 137,
+    "end_line": 143,
+    "raw_text": "void SinhVien::output()\n{\n\tcout << \"ID: \" << id << endl;\n\tcout << \"Name: \" << name << endl;\n\tcout << \"Date: \" << date << endl;\n\tcout << \"GPA: \" << gpa << endl;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid SinhVien::output()\n{\n\tcout << \"ID: \" << id << endl;\n\tcout << \"Name: \" << name << endl;\n\tcout << \"Date: \" << date << endl;\n\tcout << \"GPA: \" << gpa << endl;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_148_151",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 148,
+    "end_line": 151,
+    "raw_text": "double SinhVien::getGPA()\n{\n\treturn this->gpa;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\ndouble SinhVien::getGPA()\n{\n\treturn this->gpa;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_152_155",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 152,
+    "end_line": 155,
+    "raw_text": "string SinhVien::getID()\n{\n\treturn this->id;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nstring SinhVien::getID()\n{\n\treturn this->id;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_157_160",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 157,
+    "end_line": 160,
+    "raw_text": "double SinhVien::setGPA(double s)\n{\n\tthis->gpa = s;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\ndouble SinhVien::setGPA(double s)\n{\n\tthis->gpa = s;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_161_164",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 161,
+    "end_line": 164,
+    "raw_text": "string SinhVien::setName(string s)\n{\n\tthis->name = s;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nstring SinhVien::setName(string s)\n{\n\tthis->name = s;\n}"
+  },
+  {
+    "chunk_id": "func_cmp_166_169",
+    "code_scope": "function_cmp",
+    "func_name": "cmp",
+    "start_line": 166,
+    "end_line": 169,
+    "raw_text": "bool cmp(SinhVien a, SinhVien b)//Thuc hien so sanh thong thuong\n{\n\treturn a.getGPA() > b.getGPA();\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nbool cmp(SinhVien a, SinhVien b)//Thuc hien so sanh thong thuong\n{\n\treturn a.getGPA() > b.getGPA();\n}"
+  },
+  {
+    "chunk_id": "func_main_173_217",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 173,
+    "end_line": 217,
+    "raw_text": "int main()\n{\n\t////1. SinhVien sv;-> no se goi ham sinh vien khong co tham so\n\t//SinhVien sv;\n\n\t////2. constructor\n\t//SinhVien({ \"22120017\", \"Truong Tien Anh\", \"21/06/2004\", 3.9 });\n\n\t////3. destructor\n\t//cout << \"Xin chao\" << endl;\n\t//if (1)\n\t//{\n\t//\tSinhVien x;\n\t//\t//Ket thuc pham vi dieu kien nay thi ham huy se duoc goi\n\t//}\n\t//hihi();//Ket thuc ham hihi() -> ham huy se duoc goi\n\t//cout << \"Hello\" << endl;\n\n\n\t////4. Ham truy cap\n\t//sv.TinhGPA();\n\t//sv.chieuCao();\n\n\t////5. Ham tao 1 danh sach sinh vien\n\t//SinhVien a[200];\n\t//for (int i = 0; i < 10; i++)\n\t//{\n\t//\ta[i].input();\n\t//}\n\t//for (int i = 0; i < 10; i++)\n\t//{\n\t//\ta[i].output();\n\t//}\n\n\t//6. Ham setter & getter\n\tSinhVien a[200];\n\tfor (int i = 0; i < 10; i++)\n\t{\n\t\ta[i].input();\n\t}\n\tsort(a, a + 10, cmp);\n\n\n\treturn 0;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main()\n{\n\t////1. SinhVien sv;-> no se goi ham sinh vien khong co tham so\n\t//SinhVien sv;\n\n\t////2. constructor\n\t//SinhVien({ \"22120017\", \"Truong Tien Anh\", \"21/06/2004\", 3.9 });\n\n\t////3. destructor\n\t//cout << \"Xin chao\" << endl;\n\t//if (1)\n\t//{\n\t//\tSinhVien x;\n\t//\t//Ket thuc pham vi dieu kien nay thi ham huy se duoc goi\n\t//}\n\t//hihi();//Ket thuc ham hihi() -> ham huy se duoc goi\n\t//cout << \"Hello\" << endl;\n\n\n\t////4. Ham truy cap\n\t//sv.TinhGPA();\n\t//sv.chieuCao();\n\n\t////5. Ham tao 1 danh sach sinh vien\n\t//SinhVien a[200];\n\t//for (int i = 0; i < 10; i++)\n\t//{\n\t//\ta[i].input();\n\t//}\n\t//for (int i = 0; i < 10; i++)\n\t//{\n\t//\ta[i].output();\n\t//}\n\n\t//6. Ham setter & getter\n\tSinhVien a[200];\n\tfor (int i = 0; i < 10; i++)\n\t{\n\t\ta[i].input();\n\t}\n\tsort(a, a + 10, cmp);\n\n\n\treturn 0;\n}"
+  }
+]

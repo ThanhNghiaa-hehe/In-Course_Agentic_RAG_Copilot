@@ -1,0 +1,27 @@
+[
+  {
+    "chunk_id": "header_1_6",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 6,
+    "raw_text": "#include <iostream>\n#include <string>\n#include <string>\n#include <iomanip>\n#include <iomanip>\n#include <algorithm>\n#include <algorithm>\n\nusing namespace std;",
+    "context_code": "#include <iostream>\n#include <string>\n#include <string>\n#include <iomanip>\n#include <iomanip>\n#include <algorithm>\n#include <algorithm>\n\nusing namespace std;"
+  },
+  {
+    "chunk_id": "class_specifier_13_60",
+    "code_scope": "type_class_specifier",
+    "start_line": 13,
+    "end_line": 60,
+    "raw_text": "class SinhVien {\nprivate:\n    string id;\n    string name;\n    string ns;\n    double gpa;\n\npublic:\n    SinhVien() : id(\"\"), name(\"\"), ns(\"\"), gpa(0.0) {}\n\n    SinhVien(string id, string name, string ns, double gpa) {\n        this->id = id;\n        this->name = name;\n        this->ns = ns;\n        this->gpa = gpa;\n    }\n\n    double getGPA() const {\n        return this->gpa;\n    }\n\n    // 1. Nạp chồng toán tử nhập >> (Friend function)\n    friend istream& operator>>(istream& in, SinhVien& a) {\n        cout << \"Nhap ma sinh vien: \";\n        in >> a.id;\n        in.ignore();\n        cout << \"Nhap ho ten: \";\n        getline(in, a.name);\n        cout << \"Nhap ngay sinh: \";\n        in >> a.ns;\n        cout << \"Nhap diem GPA: \";\n        in >> a.gpa;\n        return in;\n    }\n\n    // 2. Nạp chồng toán tử xuất << (Friend function)\n    friend ostream& operator<<(ostream& out, const SinhVien& a) {\n        out << \"Ma SV: \" << a.id << \" | Ho ten: \" << a.name \n            << \" | Ngay sinh: \" << a.ns \n            << \" | GPA: \" << fixed << setprecision(2) << a.gpa << endl;\n        return out;\n    }\n\n    // 3. Nạp chồng toán tử so sánh < (Friend function phục vụ sắp xếp theo GPA)\n    friend bool operator<(const SinhVien& a, const SinhVien& b) {\n        return a.gpa < b.gpa;\n    }\n};",
+    "context_code": "class SinhVien {\nprivate:\n    string id;\n    string name;\n    string ns;\n    double gpa;\n\npublic:\n    SinhVien() : id(\"\"), name(\"\"), ns(\"\"), gpa(0.0) {}\n\n    SinhVien(string id, string name, string ns, double gpa) {\n        this->id = id;\n        this->name = name;\n        this->ns = ns;\n        this->gpa = gpa;\n    }\n\n    double getGPA() const {\n        return this->gpa;\n    }\n\n    // 1. Nạp chồng toán tử nhập >> (Friend function)\n    friend istream& operator>>(istream& in, SinhVien& a) {\n        cout << \"Nhap ma sinh vien: \";\n        in >> a.id;\n        in.ignore();\n        cout << \"Nhap ho ten: \";\n        getline(in, a.name);\n        cout << \"Nhap ngay sinh: \";\n        in >> a.ns;\n        cout << \"Nhap diem GPA: \";\n        in >> a.gpa;\n        return in;\n    }\n\n    // 2. Nạp chồng toán tử xuất << (Friend function)\n    friend ostream& operator<<(ostream& out, const SinhVien& a) {\n        out << \"Ma SV: \" << a.id << \" | Ho ten: \" << a.name \n            << \" | Ngay sinh: \" << a.ns \n            << \" | GPA: \" << fixed << setprecision(2) << a.gpa << endl;\n        return out;\n    }\n\n    // 3. Nạp chồng toán tử so sánh < (Friend function phục vụ sắp xếp theo GPA)\n    friend bool operator<(const SinhVien& a, const SinhVien& b) {\n        return a.gpa < b.gpa;\n    }\n};"
+  },
+  {
+    "chunk_id": "func_main_62_79",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 62,
+    "end_line": 79,
+    "raw_text": "int main() {\n    SinhVien sv1(\"SV01\", \"Nguyen Van A\", \"20/10/2004\", 3.75);\n    SinhVien sv2(\"SV02\", \"Tran Thi B\", \"15/05/2004\", 3.90);\n\n    cout << \"Thong tin sinh vien 1:\" << endl;\n    cout << sv1;\n\n    cout << \"Thong tin sinh vien 2:\" << endl;\n    cout << sv2;\n\n    if (sv1 < sv2) {\n        cout << \"Sinh vien 2 co GPA cao hon Sinh vien 1.\" << endl;\n    } else {\n        cout << \"Sinh vien 1 co GPA cao hon hoac bang Sinh vien 2.\" << endl;\n    }\n\n    return 0;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\n#include <string>\n#include <string>\n#include <iomanip>\n#include <iomanip>\n#include <algorithm>\n#include <algorithm>\n\nusing namespace std;\n\n// [Function Implementation]\nint main() {\n    SinhVien sv1(\"SV01\", \"Nguyen Van A\", \"20/10/2004\", 3.75);\n    SinhVien sv2(\"SV02\", \"Tran Thi B\", \"15/05/2004\", 3.90);\n\n    cout << \"Thong tin sinh vien 1:\" << endl;\n    cout << sv1;\n\n    cout << \"Thong tin sinh vien 2:\" << endl;\n    cout << sv2;\n\n    if (sv1 < sv2) {\n        cout << \"Sinh vien 2 co GPA cao hon Sinh vien 1.\" << endl;\n    } else {\n        cout << \"Sinh vien 1 co GPA cao hon hoac bang Sinh vien 2.\" << endl;\n    }\n\n    return 0;\n}"
+  }
+]

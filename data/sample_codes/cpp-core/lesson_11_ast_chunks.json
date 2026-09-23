@@ -1,0 +1,28 @@
+[
+  {
+    "chunk_id": "header_1_2",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 2,
+    "raw_text": "#include \"bits/stdc++.h\"\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include \"bits/stdc++.h\"\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "func_check_5_12",
+    "code_scope": "function_check",
+    "func_name": "check",
+    "start_line": 5,
+    "end_line": 12,
+    "raw_text": "bool check(int n)\n{\n    for(int i = 2 ; i <= sqrt(n) ; i++)\n    {\n        if(n % i == 0) return false;\n    }\n    return n > 1 ;\n}",
+    "context_code": "// [Header Context]\n#include \"bits/stdc++.h\"\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nbool check(int n)\n{\n    for(int i = 2 ; i <= sqrt(n) ; i++)\n    {\n        if(n % i == 0) return false;\n    }\n    return n > 1 ;\n}"
+  },
+  {
+    "chunk_id": "func_main_14_57",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 14,
+    "end_line": 57,
+    "raw_text": "int main()\n{\n    int n ; cin >> n;\n    int a[n];\n    for(int i = 0 ; i < n ;i++) cin >> a[i];\n    int Max = -MOD , vt_max , Min = MOD , vt_min , ans = 0;\n    ll sum = 1;\n    for(int i = 0 ; i < n ; i++) \n    {\n        if(a[i] > Max) \n        {\n            Max = a[i], vt_max = i;\n        }\n        if(a[i] <= Min) \n        {\n            Min = a[i] , vt_min = i;\n        }\n        if(check(a[i])) ++ans;\n        sum *= a[i];\n        sum %= MOD;\n    }\n    cout << Max << \" \" << vt_max << endl;\n    cout << Min << \" \" << vt_min << endl;\n    cout << ans << endl;\n    int Min2 = MOD , Max2 = -MOD;\n    bool ok = true;\n    for(int i = 0 ; i < n;i++)\n    {\n        if(a[i] > Max2 && i != vt_max)\n        {\n            Max2 = a[i];\n        }\n        if(a[i] < Min2 && i != vt_min)\n        {\n            Min2 = a[i];\n        }\n        if(a[i] != a[n - i - 1]) ok = false;\n    }\n    cout << max(1ll * Max * Max2 , 1ll* Min2 * Min) << endl;\n    if(ok) cout << \"YES\";\n    else cout << \"NO\";\n    cout << endl;\n    cout << sum;\n}",
+    "context_code": "// [Header Context]\n#include \"bits/stdc++.h\"\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main()\n{\n    int n ; cin >> n;\n    int a[n];\n    for(int i = 0 ; i < n ;i++) cin >> a[i];\n    int Max = -MOD , vt_max , Min = MOD , vt_min , ans = 0;\n    ll sum = 1;\n    for(int i = 0 ; i < n ; i++) \n    {\n        if(a[i] > Max) \n        {\n            Max = a[i], vt_max = i;\n        }\n        if(a[i] <= Min) \n        {\n            Min = a[i] , vt_min = i;\n        }\n        if(check(a[i])) ++ans;\n        sum *= a[i];\n        sum %= MOD;\n    }\n    cout << Max << \" \" << vt_max << endl;\n    cout << Min << \" \" << vt_min << endl;\n    cout << ans << endl;\n    int Min2 = MOD , Max2 = -MOD;\n    bool ok = true;\n    for(int i = 0 ; i < n;i++)\n    {\n        if(a[i] > Max2 && i != vt_max)\n        {\n            Max2 = a[i];\n        }\n        if(a[i] < Min2 && i != vt_min)\n        {\n            Min2 = a[i];\n        }\n        if(a[i] != a[n - i - 1]) ok = false;\n    }\n    cout << max(1ll * Max * Max2 , 1ll* Min2 * Min) << endl;\n    if(ok) cout << \"YES\";\n    else cout << \"NO\";\n    cout << endl;\n    cout << sum;\n}"
+  }
+]

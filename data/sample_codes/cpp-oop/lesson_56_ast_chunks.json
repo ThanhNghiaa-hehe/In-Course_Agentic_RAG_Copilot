@@ -1,0 +1,63 @@
+[
+  {
+    "chunk_id": "header_1_7",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 7,
+    "raw_text": "#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "class_specifier_9_23",
+    "code_scope": "type_class_specifier",
+    "start_line": 9,
+    "end_line": 23,
+    "raw_text": "class PhanSo\n{\nprivate:\n\tint _tu;\n\tint _mau;\npublic:\n\tPhanSo() {};\n\tPhanSo(int tu, int mau) {\n\t\t_tu = tu;\n\t\t_mau = mau;\n\t}\n\tvoid rugon();\n\tfriend istream& operator >> (istream& in, PhanSo &p);\n\tfriend ostream& operator << (ostream& out, PhanSo& p);\n};",
+    "context_code": "class PhanSo\n{\nprivate:\n\tint _tu;\n\tint _mau;\npublic:\n\tPhanSo() {};\n\tPhanSo(int tu, int mau) {\n\t\t_tu = tu;\n\t\t_mau = mau;\n\t}\n\tvoid rugon();\n\tfriend istream& operator >> (istream& in, PhanSo &p);\n\tfriend ostream& operator << (ostream& out, PhanSo& p);\n};"
+  },
+  {
+    "chunk_id": "func_anonymous_25_30",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 25,
+    "end_line": 30,
+    "raw_text": "istream& operator >> (istream& in, PhanSo& p)\n{\n\tcout << \"Tu: \"; in >> p._tu;\n\tcout << \"Mau: \"; in >> p._mau;\n\treturn in;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nistream& operator >> (istream& in, PhanSo& p)\n{\n\tcout << \"Tu: \"; in >> p._tu;\n\tcout << \"Mau: \"; in >> p._mau;\n\treturn in;\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_32_37",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 32,
+    "end_line": 37,
+    "raw_text": "ostream& operator << (ostream& out, PhanSo& p)\n{\n\tcout << \"Phan so: \";\n\tout << p._tu << \"/\" << p._mau << endl;\n\treturn out;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nostream& operator << (ostream& out, PhanSo& p)\n{\n\tcout << \"Phan so: \";\n\tout << p._tu << \"/\" << p._mau << endl;\n\treturn out;\n}"
+  },
+  {
+    "chunk_id": "func_gcd_39_44",
+    "code_scope": "function_gcd",
+    "func_name": "gcd",
+    "start_line": 39,
+    "end_line": 44,
+    "raw_text": "int gcd(int a, int b)\n{\n\tif (b == 0)\n\t\treturn a;\n\treturn gcd(b, a % b);\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint gcd(int a, int b)\n{\n\tif (b == 0)\n\t\treturn a;\n\treturn gcd(b, a % b);\n}"
+  },
+  {
+    "chunk_id": "func_anonymous_46_51",
+    "code_scope": "function_anonymous",
+    "func_name": "anonymous",
+    "start_line": 46,
+    "end_line": 51,
+    "raw_text": "void PhanSo::rugon()\n{\n\tint ucln = gcd(_tu, _mau);\n\t_tu = _tu / ucln;\n\t_mau = _mau / ucln;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid PhanSo::rugon()\n{\n\tint ucln = gcd(_tu, _mau);\n\t_tu = _tu / ucln;\n\t_mau = _mau / ucln;\n}"
+  },
+  {
+    "chunk_id": "func_main_54_60",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 54,
+    "end_line": 60,
+    "raw_text": "int main()\n{\n\tPhanSo p(1, 1);\n\tcin >> p;\n\tp.rugon();\n\tcout << p;\n}",
+    "context_code": "// [Header Context]\n#include<iostream>\n#include<math.h>\n#include<math.h>\n#include<string>\n#include<string>\n#include<iomanip>\n#include<iomanip>\n#include<sstream>\n#include<sstream>\n#include<algorithm>\n#include<algorithm>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main()\n{\n\tPhanSo p(1, 1);\n\tcin >> p;\n\tp.rugon();\n\tcout << p;\n}"
+  }
+]
