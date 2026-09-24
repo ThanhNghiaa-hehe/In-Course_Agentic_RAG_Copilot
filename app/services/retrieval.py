@@ -178,7 +178,7 @@ class RetrievalService:
                         query=query_dense,
                         using="dense",
                         filter=future_filter,
-                        limit=5
+                        limit=10
                     ),
                     models.Prefetch(
                         query=models.SparseVector(
@@ -187,11 +187,11 @@ class RetrievalService:
                         ),
                         using="sparse",
                         filter=future_filter,
-                        limit=5
+                        limit=10
                     )
                 ],
                 query=models.FusionQuery(fusion=models.Fusion.RRF),
-                limit=5
+                limit=10
             )
 
             future_points = future_resp.points
@@ -313,8 +313,8 @@ class RetrievalService:
                 course_id=course_id,
                 current_lesson_seq=current_lesson_seq
             )
-            if target_seq and future_score >= settings.VIDEO_SCORE_THRESHOLD:
-                logger.info(f"[RetrievalService] Phát hiện chủ đề thuộc bài tương lai (Seq {target_seq}) với điểm {future_score:.4f}.")
+            if target_seq and future_score >= 0.35:
+                logger.info(f"[RetrievalService] Phát hiện chủ đề thuộc bài tương lai (Seq {target_seq}) với điểm {future_score:.4f} >= 0.35.")
                 return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
             return RetrievalResult(chunks=[], status="coverage_gap")
 
@@ -431,7 +431,7 @@ class RetrievalService:
             if grade_document_relevance(query_text, it) == "CORRECT"
         ]
 
-        # TH1: Có tài liệu vượt qua thẩm định CRAG -> Trạng thái 'grounded'
+        # TH1: Có tài liệu vượt qua thẩm định CRAG chuẩn (ngưỡng cao) -> Trạng thái 'grounded'
         if crag_verified_items:
             top_reranked = sorted(
                 crag_verified_items,
@@ -446,10 +446,44 @@ class RetrievalService:
                 is_low_confidence=False
             )
 
-        # TH2: Không có tài liệu đạt ngưỡng chuẩn -> Thử Graceful Degradation có thẩm định CRAG
+        # TH1.2: AST Grounding Anchor (Giải pháp B)
+        # Nếu tồn tại khối Code AST đạt confidence >= 0.35 thuộc bài hiện tại, ưu tiên tuyệt đối mốc này
+        valid_ast_items = [
+            it for it in candidate_items
+            if it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.35
+        ]
+        if valid_ast_items:
+            logger.info(f"[RetrievalService] Solution B: Khóa grounded qua AST Grounding Anchor ({len(valid_ast_items)} chunks).")
+            return RetrievalResult(
+                chunks=valid_ast_items[:final_top_k],
+                status="grounded",
+                is_low_confidence=False
+            )
+
+        # TH2: Kiểm tra chủ đề thuộc bài học tương lai (Giải pháp A - Margin-Based Relative Likelihood Ratio)
+        # Bắt buộc thực hiện TRƯỚC Graceful Degradation để tránh việc tài liệu nhiễu điểm thấp ở bài hiện tại nuốt mất bài tương lai
+        max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
+        target_seq, future_score = await self._probe_future_lessons(
+            query_dense=query_dense,
+            sparse_indices=sparse_indices,
+            sparse_values=sparse_values,
+            query_text=query_text,
+            course_id=course_id,
+            current_lesson_seq=current_lesson_seq
+        )
+        margin = future_score - max_current_score
+
+        # Chỉ gán out_of_lesson khi tương lai đạt điểm chuẩn (>= 0.35) VÀ vượt trội bài hiện tại (Margin > 0.08)
+        if target_seq and future_score >= 0.35 and margin > 0.08:
+            logger.info(
+                f"[RetrievalService] Chủ đề thuộc bài học tương lai (Seq {target_seq}) với độ tin cậy {future_score:.4f} (Margin Δ={margin:.4f} > 0.08)."
+            )
+            return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
+
+        # TH3: Không thuộc bài tương lai -> Kích hoạt Graceful Degradation nếu bài hiện tại đạt ngưỡng sàn >= 0.20
         low_confidence_items = [
             it for it in candidate_items
-            if it.get("confidence_score", 0.0) >= 0.20 and grade_document_relevance(query_text, it) == "CORRECT"
+            if it.get("confidence_score", 0.0) >= 0.20 and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
         ]
         if low_confidence_items:
             logger.info(f"[RetrievalService] Kích hoạt Graceful Degradation: {len(low_confidence_items)} chunks đạt ngưỡng tham khảo >= 0.20.")
@@ -465,22 +499,7 @@ class RetrievalService:
                 is_low_confidence=True
             )
 
-        # TH3: Ngữ cảnh hoàn toàn không đạt ngưỡng sàn -> Probe bài học tương lai để phân định
-        target_seq, future_score = await self._probe_future_lessons(
-            query_dense=query_dense,
-            sparse_indices=sparse_indices,
-            sparse_values=sparse_values,
-            query_text=query_text,
-            course_id=course_id,
-            current_lesson_seq=current_lesson_seq
-        )
-        if target_seq and future_score >= settings.VIDEO_SCORE_THRESHOLD:
-            logger.info(
-                f"[RetrievalService] Chủ đề thuộc bài học tương lai (Seq {target_seq}) với độ tin cậy {future_score:.4f}."
-            )
-            return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
-
-        logger.info("[RetrievalService] Không tìm thấy ngữ cảnh phù hợp cả hiện tại lẫn tương lai -> 'coverage_gap'.")
+        logger.info(f"[RetrievalService] Không tìm thấy ngữ cảnh phù hợp (max_current={max_current_score:.4f}, future={future_score:.4f}) -> 'coverage_gap'.")
         return RetrievalResult(chunks=[], status="coverage_gap")
 
 

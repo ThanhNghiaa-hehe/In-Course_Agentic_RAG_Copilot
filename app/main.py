@@ -7,6 +7,7 @@ from app.config import settings
 from app.services.qdrant import get_async_qdrant_client, close_async_qdrant_client, check_qdrant_health
 from app.services.embedding import get_embedding_service
 from app.api import api_v1_router
+from app.api.v1.benchmark import find_latest_benchmark_file, NO_CACHE_HEADERS
 
 
 @asynccontextmanager
@@ -85,8 +86,8 @@ async def get_interactive_workflow():
 
 @app.get("/docs/benchmarks/latest_benchmark_results.json")
 async def get_latest_benchmark_json():
-    """Phục vụ tệp dữ liệu kết quả Benchmark Stage 11 cho giao diện tương tác."""
-    json_path = Path(__file__).resolve().parent.parent / "docs" / "benchmarks" / "latest_benchmark_results.json"
-    if json_path.exists():
-        return FileResponse(json_path, media_type="application/json")
+    """Phục vụ tệp dữ liệu kết quả Benchmark Stage 11 cho giao diện tương tác (Tương thích ngược)."""
+    target_file = find_latest_benchmark_file()
+    if target_file and target_file.exists():
+        return FileResponse(target_file, media_type="application/json", headers=NO_CACHE_HEADERS)
     return HTMLResponse("{\"error\": \"Benchmark data not found\"}", status_code=404, media_type="application/json")

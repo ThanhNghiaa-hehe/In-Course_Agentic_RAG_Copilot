@@ -1,0 +1,553 @@
+{
+  "description": "Tập ngữ liệu huấn luyện ý định đa lớp chuẩn hóa (Platt-Calibrated Intent Training Corpus)",
+  "version": "2.0.0",
+  "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
+  "university": "HUFLIT",
+  "classes": [
+    "chit_chat",
+    "course_query",
+    "out_of_scope"
+  ],
+  "samples": [
+    {
+      "text": "Làm sao để khai báo hằng số const trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Ép kiểu dữ liệu type casting trong C++ có mấy loại và cú pháp thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Kiểu dữ liệu bool trong C++ lưu được những giá trị nào và tốn bao nhiêu byte?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Sự khác nhau giữa float và double trong C++ là gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cú pháp dùng std::cin và std::cout để nhập xuất dữ liệu cơ bản?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Quy tắc đặt tên biến trong C++ cần tuân thủ những nguyên tắc nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Từ khóa unsigned trong kiểu unsigned int có tác dụng gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Toán tử chia lấy phần dư % trong C++ chỉ áp dụng được cho kiểu số nguyên?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Sự khác biệt giữa toán tử tiền tố ++x và hậu tố x++ là gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Các toán tử logic &&, || và ! trong C++ hoạt động như thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cú pháp câu lệnh điều kiện if và if-else trong C++ viết như thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Khi nào nên dùng cấu trúc switch case thay cho nhiều lệnh if else lồng nhau?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Từ khóa break trong khối lệnh switch case có vai trò gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cú pháp và cơ chế hoạt động của vòng lặp for trong C++ gồm những gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Vòng lặp while và vòng lặp do-while khác nhau ở điểm cốt lõi nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Lệnh break và continue trong thân vòng lặp khác nhau như thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Nguyên mẫu hàm function prototype trong C++ là gì và vì sao cần khai báo?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Sự khác biệt giữa truyền tham trị pass by value và truyền tham chiếu pass by reference?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Làm sao để viết hàm hoán đổi giá trị của 2 biến số nguyên swap?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Con trỏ pointer địa chỉ ô nhớ và toán tử giải tham chiếu * trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Khái niệm Lớp Class và Đối tượng Object trong C++ khác nhau như thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Phạm vi truy cập private và public trong class C++ có ý nghĩa gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Thuộc tính attribute và phương thức method của class SinhVien được khai báo ra sao?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm thành viên TinhGPA của class SinhVien tính điểm trung bình như thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Mục đích của phương thức chuanHoaThongTin trong class SinhVien là gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Làm sao để chuẩn hóa định dạng ngày sinh dd/mm/yyyy nếu thiếu số 0?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm displayInfor trong bài học hiển thị những trường thông tin nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Thuộc tính của lớp PhanSo gồm có tử số và mẫu số được khai báo ra sao?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Thuật toán Euclid tìm ước chung lớn nhất gcd của hai số hoạt động thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Làm thế nào để rút gọn một phân số về dạng tối giản trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Nạp chồng toán tử operator overloading trong C++ là gì và mang lại lợi ích gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cú pháp nạp chồng toán tử nhập >> operator>> cho lớp SinhVien như thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Vì sao hàm nạp chồng toán tử nhập xuất << và >> cần được khai báo là friend?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Toán tử xuất << operator<< cần trả về kiểu tham chiếu std::ostream& để làm gì?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cú pháp nạp chồng toán tử so sánh nhỏ hơn < operator< để sắp xếp sinh viên?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cách sử dụng hàm std::sort kết hợp với operator< để sắp xếp danh sách đối tượng?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Bộ nhớ Stack và Heap khác nhau như thế nào khi cấp phát biến trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cú pháp giải phóng bộ nhớ động bằng toán tử delete và delete[] trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm đệ quy recursion cần điều kiện dừng cơ sở như thế nào để tránh tràn ngăn xếp?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cách đọc chuỗi có khoảng trắng bằng hàm std::getline trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Xin chào AI trợ giảng, hôm nay bạn thế nào?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Hello AI Copilot, how are you today?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Chào bạn, bạn có thể giúp gì cho mình trong khóa học này?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Good morning AI tutor, are you ready to assist me?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Chào buổi sáng, chúc một ngày làm việc tràn đầy năng lượng!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Hi bot, chào bạn nhé!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Bạn tên là gì và do ai tạo ra thế?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Ai là tác giả của đồ án In-Course Agentic RAG Copilot này?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Sinh viên thực hiện đồ án này học trường đại học nào?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Mã số sinh viên của bạn Trần Thành Nghĩa là gì?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Đồ án này dùng công nghệ gì ở tầng Backend vậy?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Cơ sở dữ liệu vector trong hệ thống này là gì?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Mô hình embedding nào được dùng để nhúng văn bản bài giảng?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Học lập trình C++ có khó không bạn, cho mình lời khuyên với?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Mình thấy nản quá khi học lập trình, bạn có thể động viên mình không?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Làm sao để học giỏi lập trình, xin kinh nghiệm học tốt?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Phương pháp giảng dạy Socratic của bạn hoạt động như thế nào?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Vì sao bạn không viết luôn code giải bài tập cho học sinh?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Cảm ơn bạn nhé, giải thích rất dễ hiểu!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Thank you very much for your kind support!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Mình hiểu rồi, cảm ơn bạn rất nhiều nhé!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Tạm biệt AI, hẹn gặp lại vào buổi học ngày mai nhé!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Bye bot, chúc bạn một buổi tối vui vẻ!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Hẹn gặp lại bạn sau nhé, tạm biệt!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Frontend của hệ thống học tập này được viết bằng thư viện gì?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Kho lưu trữ mã nguồn GitHub của dự án này ở đâu?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Hệ thống có chạy được trên GPU NVIDIA RTX 2050 không?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Chúc mừng bạn đã hoàn thành đồ án tốt nghiệp xuất sắc!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Ok cảm ơn AI, giờ mình tiếp tục làm bài tập đây!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Tuyệt vời, cảm ơn sự hỗ trợ nhiệt tình của bạn!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Cảm ơn trợ giảng AI rất nhiều vì đã tận tình giải thích!",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Bạn là trợ giảng lập trình của trường đại học nào vậy?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Trần Thành Nghĩa HUFLIT là người phát triển hệ thống này đúng không?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Khóa học này do giảng viên nào hướng dẫn?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Tôi có thể hỏi bạn về các bài tập trong khóa học này không?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Thời tiết hôm nay ở Sài Gòn thế nào bạn ơi, trời mưa hay nắng?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Dự báo thời tiết ngày mai có mưa bão lạnh không bạn?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Hôm nay ăn gì, ăn thịt bò ăn lẩu uống trà sữa không?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Đi nhậu không bạn ơi, rủ đi uống bia uống rượu xem bóng đá nào?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bạn có người yêu chưa, tâm sự chuyện tình cảm cuộc sống gia đình đi?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Dự đoán cung hoàng đạo hôm nay của tôi có may mắn không?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bói toán xem tử vi vận mệnh tương lai giùm tôi với bot?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Tôi muốn mua vé máy bay đi du lịch Đà Lạt giá bao nhiêu?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Giá phòng khách sạn ở Nha Trang mùa hè này thế nào?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm sao để chữa bệnh cảm cúm, hạ sốt uống thuốc gì bạn ơi?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bí quyết giảm cân nhanh trong một tuần không cần tập thể dục?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Chỉ cách trúng số độc đắc Vietlott ngày hôm nay với?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Kể một câu chuyện cười vui nhộn nghe xem nào bot?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Hát cho mình nghe một bài hát đang hot trend TikTok đi?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Trái đất quay quanh mặt trời mất bao nhiêu ngày vậy bạn?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bạn có biết nấu món phở bò truyền thống Hà Nội không?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bạn có biết chơi cờ vua cờ tướng không, đánh một ván nào?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Cách hack tài khoản Facebook của bạn gái làm như thế nào?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Sau khi ăn thịt chó khử mùi hôi miệng bằng cách nào?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Viết bài thơ tình lãng mạn tặng người yêu nhân ngày sinh nhật?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Kết quả bóng đá Ngoại Hạng Anh đêm qua đội nào thắng?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Giá vàng SJC hôm nay tăng hay giảm bao nhiêu một chỉ?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Mua điện thoại iPhone 16 Pro Max ở đâu giá rẻ nhất?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Đường đi từ quận 1 sang quận 7 có bị kẹt xe lúc 5 giờ chiều không?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Cách làm món trà chanh giã tay thơm ngon tại nhà?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Mẹo dọn dẹp nhà cửa gọn gàng đón Tết nhanh nhất?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Xem điểm thi tốt nghiệp trung học phổ thông quốc gia ở trang web nào?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm sao để ngủ ngon khi bị stress mất ngủ ban đêm?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Tư vấn chọn mua xe máy Honda Vision hay Yamaha Janus?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Hướng dẫn cách chăm sóc cây sen đá trồng trong văn phòng?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Vừa đi ăn lẩu vừa viết biến const trong C++ thì biến đó có đổi giá trị khi lẩu sôi không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Toán tử chia dư % có tính được tiền chia đều cho nhóm đi nhậu không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Lệnh if-else có quyết định được hôm nay nên đi xem phim hay ngủ ở nhà không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Vòng lặp for chạy 100 lần giống như hít đất 100 cái mỗi sáng thế nào?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm swap đổi chỗ 2 người yêu cũ có dùng truyền tham chiếu được không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Tạo một class SinhVien đi phượt Đà Lạt có thuộc tính xe máy và lều trại được không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Phương thức TinhGPA() có tính được điểm hạnh kiểm khi tham gia câu lạc bộ ghi-ta không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm chuanHoaThongTin() có sửa được biệt danh người yêu thành tên chính thức trên Facebook không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Lớp PhanSo có chia được cái bánh pizza 8 miếng cho 3 người ăn không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Constructor của class SinhVien có tự động chuẩn bị quần áo khi vừa thức dậy buổi sáng không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Làm sao để dùng chuanHoaThongTin() xóa bỏ những lời nói tục tĩu khi bình luận trên mạng?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Chuẩn hóa ngày sinh dd/mm/yyyy có nhắc tôi nhớ ngày kỷ niệm ngày cưới của bố mẹ không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cộng hai phân số PhanSo có cộng dồn được thời gian tập gym của cả tuần không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Nạp chồng toán tử operator>> có thể nhập một ly trà sữa trân châu đường đen vào máy tính không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Toán tử so sánh operator< có so sánh được độ đẹp trai của hai chàng trai cua cùng một cô gái không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Bộ re-ranker của hệ thống là mô hình gì?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Thẻ timestamp trong câu trả lời có định dạng thế nào?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Bạn có hỗ trợ kiểm tra lỗi biên dịch mã nguồn C++ không?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Tại sao nên học C++ trước khi học các ngôn ngữ cấp cao khác?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Hôm nay là thứ mấy rồi bot?",
+      "intent": "chit_chat"
+    },
+    {
+      "text": "Hôm nay thời tiết đẹp quá bạn nhỉ?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bạn có biết nấu món phở bò Hà Nội không?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bài hát nào đang hot trên TikTok hiện tại thế?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Trái đất quay quanh mặt trời mất bao nhiêu ngày?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Bạn có biết chơi cờ vua không?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Học phí đại học HUFLIT một tín chỉ là bao nhiêu?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Mua điện thoại iPhone 16 ở đâu giá rẻ nhất?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Giá vàng SJC hôm nay tăng hay giảm bao nhiêu?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Quán cà phê nào view đẹp ở Sài Gòn cuối tuần?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Cách làm bánh mì kẹp thịt ngon tại nhà?",
+      "intent": "out_of_scope"
+    }
+  ]
+}
