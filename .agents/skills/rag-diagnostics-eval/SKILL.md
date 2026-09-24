@@ -29,6 +29,8 @@ Khi hệ thống gặp lỗi truy xuất, chất lượng câu trả lời bị 
 | **P12** | **Tag & Syntax Corruption** | Thẻ `<timestamp>` bị gõ sai cú pháp (thiếu thuộc tính `sec` hoặc sai định dạng `mm:ss`). | Kiểm soát đầu ra bằng Regex Validator trước khi phát luồng qua kênh Dual-Channel SSE. |
 | **P13** | **Benchmark Label Skew / Data Contamination** | Tập kiểm thử gán nhãn kiến thức không tồn tại trong học liệu thực tế, dẫn đến kết quả đánh giá sai lệch. | Áp dụng quy trình Data-Centric AI Audit: (1) Preserve v1_legacy; (2) Re-annotate dựa trên transcript thật; (3) Lập Academic Changelog. |
 | **P14** | **Spurious Mention Leakage** | Lời thoại video giới thiệu thoáng qua các từ khóa của bài sau khiến Reranker bị đánh lừa và vượt qua bộ lọc In-HNSW. | Tích hợp Semantic Coverage Evaluator vào CRAG Grader để phân biệt giữa câu giới thiệu lướt qua và nội dung giảng dạy thực chất. |
+| **P15** | **Regex Keyword Quick-Fix Anti-Pattern** | Lạm dụng regex hoặc danh sách từ khóa cứng (bắt tên lớp, hàm, entity bài học) để ép luồng Router thay vì dùng Machine Learning. | Xóa bỏ toàn bộ regex bắt từ khóa; chuyển 100% sang Platt-Calibrated LinearSVC trên không gian E5 1024-dim kết hợp Margin Decision Boundary (ΔP >= 0.12). |
+| **P16** | **Retrieval Hierarchy Precedence Inversion** | Thứ bậc thẩm định bị đảo ngược (kích hoạt Graceful Degradation trước Future Probing), khiến chunk nhiễu điểm thấp bài hiện tại nuốt mất bài tương lai. | Tuân thủ thứ tự bất biến: (1) Grounded chuẩn cao / AST Anchor -> (2) Future Probing (Margin > 0.08) -> (3) Graceful Degradation (>= 0.20) -> (4) Coverage Gap. |
 
 ### Quy Trình Xử Lý Sự Cố P13 (Data-Centric AI Label Audit Protocol)
 Khi kết quả Benchmark xuất hiện sự sai lệch giữa dự đoán của hệ thống và nhãn kỳ vọng của đề thi:
@@ -74,4 +76,18 @@ Sử dụng mô hình LLM-as-a-Judge (`gpt-4o-mini` hoặc `qwen2.5:7b-instruct`
 ### C. Quy Tắc Phân Tầng Bộ Đề 80/20 (Stratified Golden Dataset Split)
 * **80% In-Scope Technical Queries:** Các kịch bản hỏi đáp chính khóa thuộc bài giảng hiện tại, kiểm tra năng lực truy xuất chính xác (Precision) và đồng bộ mốc nhảy video.
 * **20% Adversarial Traps & Coverage-Gap:** Các câu hỏi bẫy đời sống (ăn uống, nhậu nhẹt), câu hỏi bài chưa học, câu hỏi nhờ giải hộ bài tập nhằm kiểm định tính kiên cố của Intent Router và rào chắn chống ảo giác.
+
+---
+
+## 4. Chuẩn Đo Lường Hiệu Chuẩn Xác Suất Router (Router Calibration Diagnostics)
+
+### A. Expected Calibration Error (ECE - Guo et al., ICML 2017)
+Đo lường độ lệch giữa độ tin cậy tự gán $\hat{p}_i = \max_k P(y_i=k \mid x_i)$ và tỷ lệ chính xác thực tế qua $M = 10$ khoảng tin cậy (bins) $B_1, \dots, B_{10}$:
+$$\text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{N} \left| \text{acc}(B_m) - \text{conf}(B_m) \right|$$
+* **Ngưỡng cam kết:** $\text{ECE} \le 0.08$ (Độ tin cậy của Router phản ánh chính xác xác suất thực tế).
+
+### B. Multi-Class Brier Score (Brier, 1950)
+Đo sai số bình phương trung bình của phân phối xác suất dự đoán so với vector nhãn thực tế $y_i$:
+$$\text{BS} = \frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} \left( P(y_i = k \mid x_i) - \mathbf{1}(y_i = k) \right)^2$$
+* **Ngưỡng cam kết:** $\text{BS} \le 0.15$ (Tiệm cận 0 chứng minh phân phối xác suất hội tụ sát nhãn Ground-Truth).
 

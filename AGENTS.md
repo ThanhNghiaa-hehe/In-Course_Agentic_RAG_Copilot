@@ -24,6 +24,13 @@
     - Khi truy xuất đoạn Code AST có `approx_video_sec`, hệ thống ưu tiên tuyệt đối mốc video Ground-Truth này (`is_approximate: false`), loại bỏ hoàn toàn cơ chế đoán mò xác suất của Phase 1.
   - **Pre/Post-Optimization Benchmark Cycle (Chu Trình Khảo Thí Đối Chiếu):**
     - Mọi hoạt động tinh chỉnh kiến trúc và cấu hình hệ thống bắt buộc phải được kẹp giữa 2 lượt đo lường của Bộ Benchmark Stage 11 (Trước tối ưu để lấy Baseline và Sau tối ưu để xác nhận không hồi quy).
+- **Retrieval Hierarchy Precedence Invariant (Bất Biến Phân Cấp Quyết Định Truy Xuất):**
+  - Thứ tự phân luồng ngữ cảnh trong `RetrievalService` bắt buộc phải tuân thủ nghiêm ngặt 4 tầng phân cấp toán học:
+    1. *Grounded cấp cao:* CRAG $\ge 0.40$ hoặc AST Grounding Anchor $\ge 0.35$ của bài hiện tại.
+    2. *Thăm dò bài tương lai (Future Lesson Probing):* BẮT BUỘC thực hiện TRƯỚC Graceful Degradation, thẩm định với điều kiện $S_{\text{future}} \ge 0.35$ và $\text{Margin} = S_{\text{future}} - \max(S_{\text{current}}) > 0.08$.
+    3. *Hạ chuẩn có kiểm soát (Graceful Degradation):* Chỉ kích hoạt khi bài tương lai không đạt biên độ vượt trội, và bài hiện tại có điểm sàn $S_{\text{current}} \ge 0.20$ cùng xác thực CRAG.
+    4. *Khoảng trống học liệu (Coverage Gap):* Khi cả bài hiện tại và bài tương lai đều không đạt điểm chuẩn.
+  - Tuyệt đối KHÔNG để tài liệu nhiễu điểm thấp của bài hiện tại nuốt mất các câu hỏi thuộc bài học tương lai.
 
 - **Speech-to-Text & Lexicon Biasing:** `faster-whisper` with automatic domain **`hotwords`** (C++, Java, Python keywords) maintained across every window, tuned Silero VAD (`threshold=0.35`, `speech_pad_ms=400`, `condition_on_previous_text=False`), and CPU fallback if `cublas64_12.dll` is missing.
 - **Context Assembly:** U-shaped layout `[Top 1, Top 3, Top 2]` to eliminate Stanford's "Lost-in-the-Middle" degradation.
@@ -110,12 +117,22 @@
 - **Cấm Tuyệt Đối Phương Pháp Vá Tạm (Zero Quick-Fix Policy):**
   - Tuyệt đối KHÔNG đề xuất hoặc áp dụng các giải pháp "chữa cháy tình huống" (như hardcode tăng/giảm ngưỡng threshold cục bộ, viết thêm regex thủ công bắt câu chữ, hoặc cắt bớt các tầng phòng thủ kiến trúc vì lý do tiện tay).
   - Mọi giải pháp cho bài toán RAG, Router, Context Misalignment hoặc LLM Degeneration phải được xây dựng dựa trên các chuẩn mực kiến trúc đã được thẩm định từ tài liệu học thuật và công nghiệp chính thống (ví dụ: *CRAG - Corrective RAG (Yan et al., 2024)*, *Semantic Router (Aurelio AI)*, *Decoding Constraints (Holtzman et al., 2019)*).
+- **Zero-Regex Keyword Whitelisting Invariant (Cấm Tuyệt Đối Regex Bắt Từ Khóa Phân Luồng):**
+  - Tuyệt đối KHÔNG sử dụng biểu thức chính quy (Regex) hoặc danh sách từ khóa cứng (bắt tên lớp, tên hàm, từ khóa C++ như `class`, `struct`, `SinhVien`, `PhanSo`, `break`, `continue`, `TinhGPA`, `gcd`) để ép luồng Router hoặc thẩm định câu hỏi.
+  - Toàn bộ cơ chế phân luồng ý định bắt buộc phải vận hành 100% bằng Machine Learning / Statistical Embedding Model (Platt-Calibrated LinearSVC trên không gian E5 1024 chiều kết hợp Margin Decision Boundary $\Delta P \ge 0.12$).
+  - Mọi trường hợp phân loại sai lệch phải được khắc phục bằng phương pháp Data-Centric AI (chuẩn hóa và bổ sung mẫu câu vào tệp ngữ liệu độc lập `data/metadata/router_training_corpus.json` rồi huấn luyện lại mô hình), tuyệt đối không chắp vá regex trong mã nguồn Python.
+- **Triệt Tiêu Nợ Kỹ Thuật (Zero Technical Debt Policy):**
+  - Mọi tính năng và bản vá lỗi bắt buộc phải sử dụng các thuật toán truyền thống và thư viện chuẩn mực công nghiệp đã được kiểm chứng (Scikit-Learn, ONNX Runtime, FastEmbed, Qdrant Client). Kiên quyết từ chối các đoạn mã chắp vá cục bộ (ad-hoc regex patches) gây tích tụ nợ kỹ thuật và làm suy yếu độ bền vững của hệ thống.
 - **Quy Trình Nghiên Cứu Thấu Đáo & Zero-Hallucination (Deep Research Mandate):**
   - Khi đối mặt với lỗi kiến trúc hoặc bài toán mới, AI BẮT BUỘC phải thực hiện tra cứu tài liệu chuyên sâu, đối chiếu các paper và tài liệu chính thống (LangChain, LlamaIndex, vLLM, Meta AI), giải thích rõ cơ chế khoa học, không phỏng đoán, không giải thích nửa vời.
 - **Kỷ Luật Bất Khả Xâm Phạm Mã Nguồn Khi Yêu Cầu Test (Strict Code Integrity):**
   - Mỗi khi người dùng yêu cầu lệnh test hoặc test case: AI TUYỆT ĐỐI KHÔNG được tự ý chỉnh sửa bất kỳ file mã nguồn, file script hay file HTML nào.
   - AI chỉ cung cấp lệnh kiểm thử và giải thích kết quả mong đợi.
   - Mọi đề xuất cải tiến hoặc chỉnh sửa file phát sinh BẮT BUỘC phải trình bày phương án rõ ràng và xin ý kiến phê duyệt từ người dùng; chỉ khi người dùng bấm đồng ý mới được phép chỉnh sửa.
+- **Zero-Reinventing-the-Wheel Policy (Tuyệt Đối Không Tự Chế Bánh Xe):**
+  - Tuyệt đối KHÔNG tự ý lập trình lại từ đầu (handcraft from scratch) các thuật toán cơ bản bằng code thô khi bài toán đã có thư viện chuẩn công nghiệp được tối ưu hóa bằng C/C++ và kiểm chứng khoa học rộng rãi (ví dụ: bắt buộc dùng `scikit-learn` cho bài toán phân loại tuyến tính và Platt Scaling thay vì tự viết Nearest Centroid bằng Python).
+  - Chỉ tự phát triển mã nguồn tùy biến (bespoke code) cho các cấu phần đặc thù mang tính sáng tạo riêng của đồ án mà không có thư viện nào giải quyết được (như cơ chế đồng bộ thẻ video `<timestamp>` từ Code AST Tree-sitter sang React Video Player).
+  - Mọi đề xuất kiến trúc phải luôn ưu tiên tính chính xác toán học, độ ổn định của thư viện chuẩn và khả năng bảo vệ vững chắc trước Hội đồng khoa học.
 
 ## 10. Evaluation-Driven Development (EDD) & Benchmark-First Mandate
 - **Nguyên Tắc Benchmark-First (Thước Đo Đi Trước, Tối Ưu Đi Sau):**
@@ -140,5 +157,18 @@
     1. **Preserve Legacy:** Lưu bản sao lưu nguyên trạng `tests/data/<dataset_name>_v1_legacy.json`.
     2. **Ground-Truth Re-annotation:** Cập nhật phiên bản mới `<dataset_name>.json` (v2.0.0) dựa trên bằng chứng đối chiếu 1:1 từ transcript video và code AST thật.
     3. **Academic Changelog:** Lập báo cáo kiểm toán khoa học tại `docs/benchmarks/dataset_audit_and_changelog_v2.md` giải trình rõ nguyên nhân từng ca lệch nhãn.
+
+## 11. Calibrated Decision Layer & Empirical Validation Protocol
+- **Zero Pseudo-Calibration Mandate:**
+  - Tuyệt đối KHÔNG tự nhận một hàm biến đổi Softmax với nhiệt độ $T$ tự chọn cảm tính là "Calibrated".
+  - Một bộ phân loại chỉ được coi là có tính hiệu chuẩn xác suất (Calibrated Probability) khi:
+    1. Tham số hiệu chuẩn được tối ưu hóa bằng dữ liệu kiểm chứng thực tế (Platt Scaling 1999 qua cross-validation hoặc Temperature Scaling cực tiểu hóa NLL theo Guo et al., ICML 2017).
+    2. Được đo lường và xác nhận bằng 2 chỉ số thực nghiệm định lượng: **Expected Calibration Error (ECE)** và **Brier Score** trên Golden Dataset.
+- **Empirical Hardware Benchmarking Standard:**
+  - Tuyệt đối KHÔNG đưa các con số ước lượng phỏng đoán về thời gian (như 0.1s, 0.1ms) vào tài liệu học thuật và báo cáo bảo vệ đồ án.
+  - Mọi số liệu về độ trễ (Latency) và thời gian huấn luyện bắt buộc phải đo trực tiếp bằng `time.perf_counter()` trên phần cứng thực tế của đồ án, báo cáo rõ giá trị trung bình và độ lệch chuẩn ($\mu \pm \sigma$).
+- **Core Component Availability & Local Invariant:**
+  - Tuyệt đối KHÔNG sử dụng các dịch vụ Cloud API mới ra mắt, đang ở trạng thái waitlist thử nghiệm hoặc có điều khoản ToS bất định làm cấu phần lõi của đồ án.
+  - Mọi cơ chế phân luồng (Router), nhúng vector (Embedding), và lập luận Socratic phải đảm bảo tính khả dụng độc lập 100% trên môi trường cục bộ để bảo vệ đồ án an toàn tuyệt đối.
 
 
