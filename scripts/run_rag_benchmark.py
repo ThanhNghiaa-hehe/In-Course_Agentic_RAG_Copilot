@@ -2,14 +2,13 @@
 Kịch bản khảo thí tự động Stage 11: RAG Triad & Multi-Tier Quantitative Benchmark
 In-Course Agentic RAG Copilot - Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT.
 
-Mục tiêu:
-- Nạp 50 test cases từ Golden Dataset (`tests/data/benchmark_golden_dataset.json`).
-- Đo lường tự động:
-  1. Router Accuracy (Độ chính xác phân luồng ý định)
-  2. Retrieval & CRAG Grader Precision (Độ chính xác thẩm định ngữ cảnh)
-  3. Video Timestamp Accuracy (|Δt| <= 15s và cấm tiệt timestamp giả mạo)
-  4. Latency từng giai đoạn
-- Xuất báo cáo Markdown chi tiết tại `docs/benchmarks/stage11_baseline_report.md`.
+Tính năng:
+- Interactive Dataset Selector: Chọn tệp benchmark theo menu số hoặc qua cờ lệnh --dataset.
+- Logging chi tiết thời gian: Hiển thị [YYYY-MM-DD HH:MM:SS] cho từng test case khi thực thi.
+- Lưu trữ vĩnh viễn không đè file:
+  + Markdown: docs/benchmarks/stage11_report_YYYY-MM-DD_HH-MM-SS.md
+  + JSON:     docs/benchmarks/stage11_results_YYYY-MM-DD_HH-MM-SS.json
+  + Dashboard sync: docs/benchmarks/latest_benchmark_results.json
 """
 
 import os
@@ -17,6 +16,8 @@ import sys
 import json
 import time
 import asyncio
+import argparse
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -31,11 +32,75 @@ from app.services.qdrant import get_async_qdrant_client, close_async_qdrant_clie
 from app.config import settings
 
 
-async def run_benchmark(dataset_path: Path, output_report_path: Path):
-    print("=" * 70)
+def select_dataset_interactive() -> Path:
+    """Hiển thị menu chọn tệp Benchmark từ thư mục tests/data."""
+    data_dir = PROJECT_ROOT / "tests" / "data"
+    json_files = sorted(list(data_dir.glob("*.json")))
+
+    if not json_files:
+        raise FileNotFoundError(f"Không tìm thấy tệp JSON nào trong {data_dir}")
+
+    # Ưu tiên đưa benchmark_golden_dataset.json lên đầu danh sách làm mặc định
+    priority_files: List[Path] = []
+    for f in json_files:
+        if f.name == "benchmark_golden_dataset.json":
+            priority_files.insert(0, f)
+        else:
+            priority_files.append(f)
+
+    print("\n" + "=" * 74)
+    print("  BỘ KHẢO THÍ ĐỊNH LƯỢNG RAG TRIAD - STAGE 11 BENCHMARK SUITE")
+    print("  Tác giả: Trần Thành Nghĩa (MSSV: 23DH112252) - HUFLIT")
+    print("=" * 74)
+    print("[?] DANH SÁCH TẬP DỮ LIỆU BENCHMARK KHẢ DỤNG:")
+    for idx, f in enumerate(priority_files, start=1):
+        default_tag = " [MẶC ĐỊNH]" if idx == 1 else ""
+        print(f"  [{idx}] {f.name}{default_tag}")
+    print(f"  [{len(priority_files) + 1}] Nhập đường dẫn tệp JSON tùy chỉnh khác...")
+    print("-" * 74)
+
+    try:
+        choice = input(f">> Nhập số thứ tự tập dữ liệu cần kiểm thử [1-{len(priority_files) + 1}] (Enter để chọn [1]): ").strip()
+    except (EOFError, KeyboardInterrupt):
+        print("\n[INFO] Tự động chọn tập dữ liệu mặc định [1].")
+        return priority_files[0]
+
+    if not choice or choice == "1":
+        return priority_files[0]
+
+    try:
+        choice_num = int(choice)
+        if 1 <= choice_num <= len(priority_files):
+            return priority_files[choice_num - 1]
+        elif choice_num == len(priority_files) + 1:
+            custom_path_str = input(">> Nhập đường dẫn tệp JSON: ").strip()
+            custom_path = Path(custom_path_str)
+            if custom_path.exists():
+                return custom_path
+            else:
+                print(f"[CẢNH BÁO] Không tìm thấy tệp {custom_path}. Sử dụng tập dữ liệu mặc định [1].")
+                return priority_files[0]
+    except ValueError:
+        print("[CẢNH BÁO] Lựa chọn không hợp lệ. Sử dụng tập dữ liệu mặc định [1].")
+
+    return priority_files[0]
+
+
+async def run_benchmark(dataset_path: Path):
+    start_dt = datetime.now()
+    start_time_str = start_dt.strftime("%Y-%m-%d %H:%M:%S")
+    timestamp_file_str = start_dt.strftime("%Y-%m-%d_%H-%M-%S")
+
+    output_report_path = PROJECT_ROOT / "docs" / "benchmarks" / f"stage11_report_{timestamp_file_str}.md"
+    json_archive_path = PROJECT_ROOT / "docs" / "benchmarks" / f"stage11_results_{timestamp_file_str}.json"
+    latest_json_path = PROJECT_ROOT / "docs" / "benchmarks" / "latest_benchmark_results.json"
+
+    print("=" * 74)
     print(" BẮT ĐẦU KHẢO THÍ ĐỊNH LƯỢNG TỰ ĐỘNG STAGE 11 (BENCHMARK SUITE)")
-    print(" Tác giả: Trần Thành Nghĩa (MSSV: 23DH112252) - HUFLIT")
-    print("=" * 70)
+    print(f" Thời gian bắt đầu: {start_time_str}")
+    print(f" Tập dữ liệu nạp:   {dataset_path.name}")
+    print(f" Tác giả:           Trần Thành Nghĩa (MSSV: 23DH112252) - HUFLIT")
+    print("=" * 74)
 
     if not dataset_path.exists():
         print(f"[LỖI] Không tìm thấy tệp dataset tại: {dataset_path}")
@@ -70,7 +135,7 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
     results_detail: List[Dict[str, Any]] = []
 
     print("\nĐang thực thi các kịch bản kiểm thử...")
-    print("-" * 70)
+    print("-" * 74)
 
     for idx, item in enumerate(dataset, start=1):
         test_id = item["id"]
@@ -129,12 +194,12 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
             crag_status_correct += 1
             tier_stats[tier]["status_ok"] += 1
 
-        # Đánh giá Timestamp
+        # 3. Đánh giá Timestamp
         if not expected_has_ts:
             # Kỳ vọng KHÔNG có timestamp (chống ảo giác): Nếu thực tế không có -> ĐẠT
             is_ts_ok = (actual_has_ts is False)
         else:
-            # Kỳ vọng CÓ timestamp: Nếu có và |Δt| <= 30s (hoặc có video cùng bài)
+            # Kỳ vọng CÓ timestamp: Nếu có và |Δt| <= 30s
             if actual_has_ts:
                 if target_sec is not None:
                     delta_t = abs(actual_ts_sec - target_sec)
@@ -162,7 +227,9 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
 
         reason_str = f" | [Lý do: {', '.join(fail_reasons)}]" if fail_reasons else ""
         status_flag = "PASS" if (is_router_ok and is_status_ok and is_ts_ok) else "WARN"
-        print(f"[{idx:02d}/{total_cases:02d}] {test_id} ({tier[:4].upper()}): {status_flag} | Latency: {t_elapsed_ms:6.1f}ms | Query: {query[:40]}...{reason_str}")
+
+        cur_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[{cur_timestamp}] [{idx:03d}/{total_cases:03d}] {test_id} ({tier[:4].upper()}): {status_flag} | Latency: {t_elapsed_ms:6.1f}ms | Query: {query[:45]}...{reason_str}")
 
         results_detail.append({
             "id": test_id,
@@ -170,6 +237,7 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
             "query": query,
             "course_id": course_id,
             "lesson_seq": lesson_seq,
+            "timestamp": cur_timestamp,
             "expected": {
                 "intent": expected_intent,
                 "status": expected_status,
@@ -203,24 +271,30 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
             ]
         })
 
+    end_dt = datetime.now()
+    end_time_str = end_dt.strftime("%Y-%m-%d %H:%M:%S")
+    total_elapsed_sec = (end_dt - start_dt).total_seconds()
+
     # Tính toán chỉ số tổng hợp
     router_acc = (router_correct / total_cases) * 100.0
     crag_acc = (crag_status_correct / total_cases) * 100.0
     ts_acc = (timestamp_correct / total_cases) * 100.0
     avg_latency = total_time_ms / total_cases
 
-    print("\n" + "=" * 70)
+    print("\n" + "=" * 74)
     print(" KẾT QUẢ TỔNG QUAN BENCHMARK STAGE 11")
+    print(f" - Thời gian bắt đầu:          {start_time_str}")
+    print(f" - Thời gian hoàn tất:         {end_time_str} (Tổng thời gian: {total_elapsed_sec:.1f}s)")
     print(f" - Tổng số ca kiểm thử:       {total_cases}")
     print(f" - Router Accuracy:            {router_acc:5.1f}% ({router_correct}/{total_cases})")
     print(f" - CRAG Grader Precision:      {crag_acc:5.1f}% ({crag_status_correct}/{total_cases})")
     print(f" - Timestamp Precision/Safety: {ts_acc:5.1f}% ({timestamp_correct}/{total_cases})")
     print(f" - Thời gian trung bình/câu:   {avg_latency:5.1f} ms")
-    print("=" * 70)
+    print("=" * 74)
 
-    print("\n" + "=" * 70)
+    print("\n" + "=" * 74)
     print(" CHI TIẾT TỪNG TẦNG KIỂM THỬ (BREAKDOWN BY TIERS)")
-    print("=" * 70)
+    print("=" * 74)
     tier_titles = {
         "in_scope": "1. In-Scope Technical (Kiến thức trong bài)",
         "out_of_lesson": "2. Out-of-Lesson (Chặn bài tương lai)",
@@ -230,7 +304,6 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
     for t_key, t_title in tier_titles.items():
         st = tier_stats[t_key]
         total = st["total"]
-        # Đếm số ca PASS toàn diện (cả 3 tiêu chuẩn đều đạt)
         tier_pass = sum(1 for r in results_detail if r["tier"] == t_key and r["pass_flags"]["overall_pass"])
         tier_fail = total - tier_pass
         avg_t = st["time_ms"] / max(1, total)
@@ -241,13 +314,14 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
         print(f"   • CRAG Grader Ngữ cảnh: {st['status_ok']}/{total} ĐÚNG ({total - st['status_ok']} SAI)")
         print(f"   • Timestamp Video:      {st['ts_ok']}/{total} ĐÚNG ({total - st['ts_ok']} SAI)")
         print(f"   • Độ trễ trung bình:    {avg_t:.1f} ms")
-    print("=" * 70)
+    print("=" * 74)
 
-    # Xuất báo cáo Markdown
+    # Xuất báo cáo Markdown vĩnh viễn (không đè tệp)
     output_report_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_report_path, "w", encoding="utf-8") as f:
-        f.write(f"""# BÁO CÁO KHẢO THÍ ĐỊNH LƯỢNG RAG STAGE 11 (BASELINE BENCHMARK)
-**Thời gian thực hiện:** {time.strftime('%Y-%m-%d %H:%M:%S')}  
+        f.write(f"""# BÁO CÁO KHẢO THÍ ĐỊNH LƯỢNG RAG STAGE 11 (BENCHMARK SUITE)
+**Thời gian bắt đầu:** {start_time_str}  
+**Thời gian kết thúc:** {end_time_str} ({total_elapsed_sec:.1f} giây)  
 **Sinh viên thực hiện:** Trần Thành Nghĩa (MSSV: `23DH112252`)  
 **Đồ án:** In-Course Agentic RAG Copilot - Trường ĐH Ngoại ngữ - Tin học TP.HCM (HUFLIT)  
 **Tập dữ liệu chuẩn:** `{dataset_path.name}` ({total_cases} test cases qua 4 tầng)
@@ -269,23 +343,24 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
 
 | Tầng kiểm thử (Tier) | Số ca | Router OK | CRAG OK | Timestamp OK | Độ trễ TB (ms) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **1. In-Scope Technical** (C++ cơ bản) | {tier_stats['in_scope']['total']} | {tier_stats['in_scope']['router_ok']}/{tier_stats['in_scope']['total']} | {tier_stats['in_scope']['status_ok']}/{tier_stats['in_scope']['total']} | {tier_stats['in_scope']['ts_ok']}/{tier_stats['in_scope']['total']} | {tier_stats['in_scope']['time_ms']/max(1, tier_stats['in_scope']['total']):.1f} |
-| **2. Out-of-Lesson** (Bài tương lai) | {tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['router_ok']}/{tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['status_ok']}/{tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['ts_ok']}/{tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['time_ms']/max(1, tier_stats['out_of_lesson']['total']):.1f} |
-| **3. Adversarial Hybrid** (Truy vấn đối nghịch) | {tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['router_ok']}/{tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['status_ok']}/{tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['ts_ok']}/{tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['time_ms']/max(1, tier_stats['adversarial_hybrid']['total']):.1f} |
+| **1. In-Scope Technical** | {tier_stats['in_scope']['total']} | {tier_stats['in_scope']['router_ok']}/{tier_stats['in_scope']['total']} | {tier_stats['in_scope']['status_ok']}/{tier_stats['in_scope']['total']} | {tier_stats['in_scope']['ts_ok']}/{tier_stats['in_scope']['total']} | {tier_stats['in_scope']['time_ms']/max(1, tier_stats['in_scope']['total']):.1f} |
+| **2. Out-of-Lesson** | {tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['router_ok']}/{tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['status_ok']}/{tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['ts_ok']}/{tier_stats['out_of_lesson']['total']} | {tier_stats['out_of_lesson']['time_ms']/max(1, tier_stats['out_of_lesson']['total']):.1f} |
+| **3. Adversarial Hybrid** | {tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['router_ok']}/{tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['status_ok']}/{tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['ts_ok']}/{tier_stats['adversarial_hybrid']['total']} | {tier_stats['adversarial_hybrid']['time_ms']/max(1, tier_stats['adversarial_hybrid']['total']):.1f} |
 | **4. Chit-Chat / Out-of-Domain** | {tier_stats['chit_chat']['total']} | {tier_stats['chit_chat']['router_ok']}/{tier_stats['chit_chat']['total']} | {tier_stats['chit_chat']['status_ok']}/{tier_stats['chit_chat']['total']} | {tier_stats['chit_chat']['ts_ok']}/{tier_stats['chit_chat']['total']} | {tier_stats['chit_chat']['time_ms']/max(1, tier_stats['chit_chat']['total']):.1f} |
 
 ---
 
-## 3. KẾT LUẬN & ĐỊNH HƯỚNG KÍCH HOẠT PHASE 2
-* Bộ chỉ số trên đóng vai trò là **Baseline Score (Thước đo cơ sở)** chính thức của đồ án trước khi nâng cấp.
-* Bước tiếp theo: Kích hoạt **Roadmap Phase 2 (Code-to-Video Metadata Binding)**, sau đó chạy lại Benchmark để đo lường mức độ cải thiện của Timestamp Precision.
+## 3. KẾT LUẬN & ĐỊNH HƯỚNG BƯỚC TIẾP THEO
+* Báo cáo này được tự động tạo và lưu trữ vĩnh viễn theo mốc thời gian, đảm bảo tính minh bạch khoa học của đồ án.
+* Tệp JSON chi tiết phục vụ Interactive Workflow Dashboard được lưu độc lập tại `{json_archive_path.name}`.
 """)
 
-    # Xuất tệp JSON chi tiết phục vụ Interactive Workflow Dashboard
-    json_export_path = PROJECT_ROOT / "docs" / "benchmarks" / "latest_benchmark_results.json"
+    # Xuất tệp JSON vĩnh viễn và bản copy latest cho Dashboard
     benchmark_payload = {
         "metadata": {
-            "timestamp": time.strftime('%Y-%m-%d %H:%M:%S'),
+            "start_time": start_time_str,
+            "end_time": end_time_str,
+            "total_elapsed_sec": round(total_elapsed_sec, 2),
             "student_name": "Trần Thành Nghĩa",
             "student_id": "23DH112252",
             "university": "HUFLIT",
@@ -312,19 +387,36 @@ async def run_benchmark(dataset_path: Path, output_report_path: Path):
         },
         "cases": results_detail
     }
-    with open(json_export_path, "w", encoding="utf-8") as f:
+
+    # 1. Lưu bản lưu trữ vĩnh viễn có timestamp
+    with open(json_archive_path, "w", encoding="utf-8") as f:
         json.dump(benchmark_payload, f, ensure_ascii=False, indent=2)
 
-    print(f"\n[XONG] Báo cáo chi tiết Markdown: {output_report_path}")
-    print(f"[XONG] Dữ liệu JSON trực quan:     {json_export_path}")
+    # 2. Cập nhật bản latest phục vụ Dashboard đồng bộ
+    with open(latest_json_path, "w", encoding="utf-8") as f:
+        json.dump(benchmark_payload, f, ensure_ascii=False, indent=2)
+
+    print(f"\n[LƯU TRỮ VĨNH VIỄN] Báo cáo Markdown: {output_report_path}")
+    print(f"[LƯU TRỮ VĨNH VIỄN] Dữ liệu JSON:     {json_archive_path}")
+    print(f"[ĐỒNG BỘ DASHBOARD] Dữ liệu mới nhất: {latest_json_path}")
+
     await close_async_qdrant_client()
 
 
+def main():
+    parser = argparse.ArgumentParser(description="Chạy bộ khảo thí tự động Stage 11 Benchmark cho In-Course Agentic RAG Copilot.")
+    parser.add_argument("--dataset", "-d", type=str, default=None, help="Đường dẫn tới tệp benchmark JSON cần chạy (bỏ qua menu tương tác)")
+    args = parser.parse_args()
+
+    if args.dataset:
+        dataset_path = Path(args.dataset)
+        if not dataset_path.is_absolute():
+            dataset_path = PROJECT_ROOT / dataset_path
+    else:
+        dataset_path = select_dataset_interactive()
+
+    asyncio.run(run_benchmark(dataset_path))
+
+
 if __name__ == "__main__":
-    DATASET_FILE = PROJECT_ROOT / "tests" / "data" / "benchmark_golden_dataset.json"
-    
-    # Định dạng tên tệp: stage11_report_YYYY-MM-DD_HH-MM-SS.md (tránh dấu : vì Windows cấm)
-    timestamp_str = time.strftime("%Y-%m-%d_%H-%M-%S")
-    REPORT_FILE = PROJECT_ROOT / "docs" / "benchmarks" / f"stage11_report_{timestamp_str}.md"
-    
-    asyncio.run(run_benchmark(DATASET_FILE, REPORT_FILE))
+    main()

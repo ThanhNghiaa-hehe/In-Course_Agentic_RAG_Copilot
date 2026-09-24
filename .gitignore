@@ -40,7 +40,8 @@ redis_data/
 .cache/
 huggingface/
 nltk_data/
-models/
+/models/
+!app/agent/models/calibrated_router.joblib
 
 # Testing & Coverage
 .pytest_cache/
@@ -73,3 +74,6 @@ data/raw_downloads/*
 # External Workspace Junctions
 external_be/
 external_fe/
+
+# Temporary Scratch Scripts
+scratch/

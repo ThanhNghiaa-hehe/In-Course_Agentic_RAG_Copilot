@@ -1595,11 +1595,16 @@
           Đo lường định lượng 50 kịch bản thử nghiệm chuẩn qua 4 tầng (In-Scope, Out-of-Lesson, Adversarial, Chit-Chat).
         </div>
       </div>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);" id="bm-meta-time">Thời gian đo: 2026-09-20 21:54:25</span>
-        <button class="btn-action btn-eval" onclick="loadBenchmarkData()" aria-label="Tải lại dữ liệu Benchmark" style="padding:6px 12px; font-size:11.5px;">
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);" id="bm-meta-time">Thời gian đo: Đang tải...</span>
+        <input type="file" id="bmFileInput" accept=".json" style="display:none;" onchange="handleBenchmarkFileUpload(event)" />
+        <button class="btn-action" onclick="document.getElementById('bmFileInput').click()" aria-label="Chọn tệp JSON từ máy" style="padding:6px 12px; font-size:11.5px; background:#eff6ff; border-color:#93c5fd; color:#1e40af;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          📁 Tải tệp JSON từ máy
+        </button>
+        <button class="btn-action btn-eval" onclick="loadBenchmarkData()" aria-label="Tải lại qua API" style="padding:6px 12px; font-size:11.5px;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
-          Tải lại dữ liệu
+          Tải lại qua API
         </button>
       </div>
     </div>
@@ -2438,21 +2443,113 @@
     }
 
     async function loadBenchmarkData() {
+      const timeEl = document.getElementById('bm-meta-time');
+      if (timeEl) timeEl.textContent = "Đang tải dữ liệu...";
+
+      const antiCacheQuery = `?t=${Date.now()}`;
+
+      // Thử 1: Gọi chuẩn RESTful API v1 (/api/v1/benchmark/latest)
       try {
-        const res = await fetch('/docs/benchmarks/latest_benchmark_results.json');
+        const res = await fetch(`/api/v1/benchmark/latest${antiCacheQuery}`, { cache: 'no-store' });
         if (res.ok) {
           benchmarkData = await res.json();
           renderBenchmarkUI();
           return;
         }
       } catch (err) {
-        console.warn("[Benchmark] Không thể fetch latest_benchmark_results.json:", err);
+        console.warn("[Benchmark] Fetch API v1 tương đối thất bại:", err.message);
       }
-      
-      // Nếu mở trực tiếp qua file://, fetch có thể bị CORS, tự động render data nếu có sẵn
+
+      // Thử 2: Gọi chuẩn RESTful API v1 tuyệt đối tới local backend (khi mở file:///)
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/api/v1/benchmark/latest${antiCacheQuery}`, { cache: 'no-store' });
+        if (res.ok) {
+          benchmarkData = await res.json();
+          renderBenchmarkUI();
+          return;
+        }
+      } catch (err) {
+        console.warn("[Benchmark] Fetch API v1 localhost:8000 thất bại:", err.message);
+      }
+
+      // Thử 3: Fallback qua đường dẫn cũ (/docs/benchmarks/latest_benchmark_results.json)
+      try {
+        const res = await fetch(`/docs/benchmarks/latest_benchmark_results.json${antiCacheQuery}`, { cache: 'no-store' });
+        if (res.ok) {
+          benchmarkData = await res.json();
+          renderBenchmarkUI();
+          return;
+        }
+      } catch (err) {
+        console.warn("[Benchmark] Fetch fallback tương đối thất bại:", err.message);
+      }
+
+      // Nếu mở trực tiếp qua file:// và tất cả fetch đều bị CORS chặn
       if (benchmarkData) {
         renderBenchmarkUI();
+      } else {
+        if (timeEl) {
+          timeEl.innerHTML = `<span style="color:#e11d48; font-weight:600;">⚠️ Trình duyệt chặn fetch qua file://. Hãy bấm <strong>"📁 Tải tệp JSON từ máy"</strong> hoặc kéo thả file JSON vào đây.</span>`;
+        }
       }
+    }
+
+    function handleBenchmarkFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      readBenchmarkFile(file);
+    }
+
+    function readBenchmarkFile(file) {
+      const timeEl = document.getElementById('bm-meta-time');
+      if (timeEl) timeEl.textContent = `Đang đọc tệp: ${file.name}...`;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed && (parsed.cases || parsed.summary)) {
+            benchmarkData = parsed;
+            renderBenchmarkUI();
+          } else {
+            alert("Tệp JSON không đúng cấu trúc Benchmark Stage 11 (cần có các trường summary hoặc cases).");
+          }
+        } catch (err) {
+          alert(`Không thể đọc tệp JSON: ${err.message}`);
+        }
+      };
+      reader.onerror = function() {
+        alert("Lỗi khi đọc tệp từ ổ cứng!");
+      };
+      reader.readAsText(file);
+    }
+
+    function initBenchmarkDragAndDrop() {
+      const container = document.getElementById('benchmark-view-container');
+      if (!container) return;
+
+      container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        container.style.boxShadow = 'inset 0 0 0 2px #2563eb, 0 8px 24px rgba(37,99,235,0.12)';
+      });
+
+      container.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        container.style.boxShadow = '';
+      });
+
+      container.addEventListener('drop', (e) => {
+        e.preventDefault();
+        container.style.boxShadow = '';
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          const file = e.dataTransfer.files[0];
+          if (file.name.toLowerCase().endsWith('.json')) {
+            readBenchmarkFile(file);
+          } else {
+            alert("Vui lòng thả tệp định dạng .json kết quả benchmark.");
+          }
+        }
+      });
     }
 
     function setTierFilter(tier) {
@@ -2489,14 +2586,31 @@
       const s = benchmarkData.summary;
       const meta = benchmarkData.metadata;
 
+      const totalCount = (meta && meta.total_cases) || (benchmarkData.cases ? benchmarkData.cases.length : 200);
+
+      // Cập nhật Tab Text & Tiêu đề số lượng ca test động
+      const tabBtn = document.getElementById('tabBtnBenchmark');
+      if (tabBtn) {
+        tabBtn.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          Stage 11 Benchmark &amp; Golden Dataset Explorer (${totalCount} QAs)
+          <span class="tab-badge-live">LIVE</span>
+        `;
+      }
+      const headerSub = document.querySelector('.benchmark-header-sub');
+      if (headerSub) {
+        headerSub.textContent = `Đo lường định lượng ${totalCount} kịch bản thử nghiệm chuẩn qua 4 tầng (In-Scope, Out-of-Lesson, Adversarial, Chit-Chat).`;
+      }
+
       // Update Header Time
-      if (meta && meta.timestamp) {
-        document.getElementById('bm-meta-time').textContent = `Thời gian đo: ${meta.timestamp}`;
+      const timeStr = (meta && (meta.start_time || meta.timestamp)) || '';
+      if (timeStr) {
+        document.getElementById('bm-meta-time').textContent = `Thời gian đo: ${timeStr} • Tổng: ${totalCount} kịch bản`;
       }
 
       // Update KPI 1: Router
       document.getElementById('kpi-router-val').textContent = `${s.router_accuracy}%`;
-      document.getElementById('kpi-router-target').textContent = `Mục tiêu: ≥ 90.0% (${s.router_correct}/${meta.total_cases})`;
+      document.getElementById('kpi-router-target').textContent = `Mục tiêu: ≥ 90.0% (${s.router_correct}/${totalCount})`;
       document.getElementById('kpi-router-bar').style.width = `${s.router_accuracy}%`;
       const rBadge = document.getElementById('kpi-router-badge');
       if (s.router_accuracy >= 90) {
@@ -2509,7 +2623,7 @@
 
       // Update KPI 2: CRAG
       document.getElementById('kpi-crag-val').textContent = `${s.crag_precision}%`;
-      document.getElementById('kpi-crag-target').textContent = `Mục tiêu: ≥ 85.0% (${s.crag_correct}/${meta.total_cases})`;
+      document.getElementById('kpi-crag-target').textContent = `Mục tiêu: ≥ 85.0% (${s.crag_correct}/${totalCount})`;
       document.getElementById('kpi-crag-bar').style.width = `${s.crag_precision}%`;
       const cBadge = document.getElementById('kpi-crag-badge');
       if (s.crag_precision >= 85) {
@@ -2522,7 +2636,7 @@
 
       // Update KPI 3: Timestamp
       document.getElementById('kpi-ts-val').textContent = `${s.timestamp_safety}%`;
-      document.getElementById('kpi-ts-target').textContent = `Mục tiêu: ≥ 88.0% (${s.timestamp_correct}/${meta.total_cases})`;
+      document.getElementById('kpi-ts-target').textContent = `Mục tiêu: ≥ 88.0% (${s.timestamp_correct}/${totalCount})`;
       document.getElementById('kpi-ts-bar').style.width = `${s.timestamp_safety}%`;
       const tBadge = document.getElementById('kpi-ts-badge');
       if (s.timestamp_safety >= 88) {
@@ -2535,6 +2649,39 @@
 
       // Update KPI 4: Latency
       document.getElementById('kpi-lat-val').textContent = `${s.avg_latency_ms} ms`;
+
+      // Cập nhật nhãn động trên Tier filter pills & KPI subtext
+      if (s.tier_breakdown) {
+        const tb = s.tier_breakdown;
+        const allBtn = document.querySelector('#tierFilterGroup .filter-pill[data-tier="all"]');
+        const inBtn = document.querySelector('#tierFilterGroup .filter-pill[data-tier="in_scope"]');
+        const outBtn = document.querySelector('#tierFilterGroup .filter-pill[data-tier="out_of_lesson"]');
+        const advBtn = document.querySelector('#tierFilterGroup .filter-pill[data-tier="adversarial_hybrid"]');
+        const chitBtn = document.querySelector('#tierFilterGroup .filter-pill[data-tier="chit_chat"]');
+
+        if (allBtn) allBtn.textContent = `Tất cả (${totalCount})`;
+        if (inBtn && tb.in_scope) inBtn.textContent = `1. In-Scope (${tb.in_scope.total})`;
+        if (outBtn && tb.out_of_lesson) outBtn.textContent = `2. Out-of-Lesson (${tb.out_of_lesson.total})`;
+        if (advBtn && tb.adversarial_hybrid) advBtn.textContent = `3. Adversarial (${tb.adversarial_hybrid.total})`;
+        if (chitBtn && tb.chit_chat) chitBtn.textContent = `4. Chit-Chat (${tb.chit_chat.total})`;
+
+        const kpiRouterSub = document.querySelector('.kpi-card:nth-child(1) .kpi-subtext');
+        if (kpiRouterSub) {
+          kpiRouterSub.textContent = `In-Scope: ${tb.in_scope?.router_ok}/${tb.in_scope?.total} • Out-Lesson: ${tb.out_of_lesson?.router_ok}/${tb.out_of_lesson?.total} • Adv: ${tb.adversarial_hybrid?.router_ok}/${tb.adversarial_hybrid?.total} • ChitChat: ${tb.chit_chat?.router_ok}/${tb.chit_chat?.total}`;
+        }
+        const kpiCragSub = document.querySelector('.kpi-card:nth-child(2) .kpi-subtext');
+        if (kpiCragSub) {
+          kpiCragSub.textContent = `In-Scope: ${tb.in_scope?.status_ok}/${tb.in_scope?.total} • Out-Lesson: ${tb.out_of_lesson?.status_ok}/${tb.out_of_lesson?.total} • Adv: ${tb.adversarial_hybrid?.status_ok}/${tb.adversarial_hybrid?.total} • ChitChat: ${tb.chit_chat?.status_ok}/${tb.chit_chat?.total}`;
+        }
+        const kpiTsSub = document.querySelector('.kpi-card:nth-child(3) .kpi-subtext');
+        if (kpiTsSub) {
+          kpiTsSub.textContent = `In-Scope: ${tb.in_scope?.ts_ok}/${tb.in_scope?.total} • Out-Lesson: ${tb.out_of_lesson?.ts_ok}/${tb.out_of_lesson?.total} • Adv: ${tb.adversarial_hybrid?.ts_ok}/${tb.adversarial_hybrid?.total} • ChitChat: ${tb.chit_chat?.ts_ok}/${tb.chit_chat?.total}`;
+        }
+        const kpiLatSub = document.querySelector('.kpi-card:nth-child(4) .kpi-subtext');
+        if (kpiLatSub) {
+          kpiLatSub.textContent = `In-Scope: ${tb.in_scope?.avg_latency_ms?.toFixed(0)}ms • Out-Lesson: ${tb.out_of_lesson?.avg_latency_ms?.toFixed(0)}ms • ChitChat: ${tb.chit_chat?.avg_latency_ms?.toFixed(0)}ms`;
+        }
+      }
 
       renderBenchmarkTable();
     }
@@ -2695,6 +2842,11 @@
       document.getElementById('drawerBackdrop').classList.remove('active');
       document.getElementById('benchmarkDrawer').classList.remove('open');
     }
+
+    // Khởi tạo tính năng Drag & Drop cho Benchmark
+    document.addEventListener('DOMContentLoaded', () => {
+      initBenchmarkDragAndDrop();
+    });
   </script>
 </body>
 </html>
