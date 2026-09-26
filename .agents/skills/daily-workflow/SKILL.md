@@ -52,10 +52,10 @@ Hệ thống bước vào giai đoạn nước rút hoàn thiện đồ án vớ
    - Dựng tab "Trợ Giảng AI (Socratic Copilot)" trực tiếp trên giao diện học bài `CourseContent.jsx` (React 19, Tailwind v4).
    - Kết nối luồng Server-Sent Events (SSE) thời gian thực tới FastAPI (`/api/v1/chat/stream`), tự động truyền ngữ cảnh `course_id` và `lesson_seq`.
    - Bắt sự kiện click thẻ `<timestamp sec="...">` để kích hoạt giao thức `player.seekTo(sec)` điều khiển YouTube Iframe (`postMessage`) hoặc HTML5 `<video>`.
-4. **Milestone 4 (OOP Quantitative Benchmark Suite & RAGAS Triad):**
-   - Xây dựng Golden Dataset chuyên sâu cho OOP: `tests/data/benchmark_oop_dataset.json` (50 test cases bao phủ 4 tầng: In-Scope OOP, Out-of-Lesson, Adversarial Traps, Chitchat).
-   - Đo lường tự động 4 chỉ số vàng: Router Accuracy $\ge 90\%$, Grader Precision $\ge 85\%$, Video Timestamp Accuracy $|\Delta t| \le 15$s $\ge 90\%$, và RAGAS Triad (Faithfulness $\ge 0.85$, Relevance $\ge 0.80$, Precision $\ge 0.80$).
-   - Xuất báo cáo khoa học tự động tại `docs/benchmarks/oop_benchmark_report.md`.
+4. **Milestone 4 (Data-Centric Benchmark v2.1 & Cascade NLI Cross-Encoder):**
+   - **Bước 1 (First Priority):** Tối ưu hóa & làm sạch nhãn Ground-Truth bộ đề thi `benchmark_golden_dataset.json` (v2.1) theo chuẩn Data-Centric AI (loại bỏ hoàn toàn Label Noise ở Tầng 3 Adversarial Hybrid và Tầng 2 Out-of-Lesson).
+   - **Bước 2 (Second Priority):** Triển khai kiến trúc **Cascade Router & Socratic Guardrail** (Tầng 1: LinearSVC Fast-Path 1.99ms $\rightarrow$ Tầng 2: NLI Cross-Encoder Arbiter `MoritzLaurer/bge-m3-zeroshot-v2.0` cho ca phân vân và bẫy trùng từ vựng).
+   - **Bước 3 (Third Priority):** Chuyển dịch sang **LangGraph StateGraph** (4 discrete nodes) và đo lường định lượng Benchmark Stage 11 hoàn chỉnh.
 5. **Milestone 5 (E2E System Verification, Final Thesis & Defense Preparation):**
    - Kiểm thử toàn diện môi trường tích hợp: Spring Boot (:8080) + MongoDB Docker + FastAPI (:8000) + Qdrant Cloud + React Frontend (:5173).
    - Hoàn thiện bản thảo Luận văn tốt nghiệp và bộ Slide thuyết trình bảo vệ trước Hội đồng chấm đồ án HUFLIT.

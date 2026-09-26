@@ -82,6 +82,10 @@
 
 ## 6. Session Kickoff & Student Theory Learning Protocol
 - **Kickoff Protocol:** Khi sinh viên hỏi *"hôm nay làm gì tiếp theo"* hoặc câu tương tự, AI phải ngay lập tức rà soát `docs/daily_reports/` gần nhất và tiến trình hiện tại để xuất ra danh sách ưu tiên gồm 2–3 đầu việc cụ thể, link file trực tiếp, kỹ năng liên quan và lệnh PowerShell sẵn sàng chạy.
+  - **Next Session Mandatory Priority Queue (Thứ Tự Ưu Tiên Bắt Buộc Phiên Tiếp Theo):**
+    1. **Ưu tiên 1 (First Priority):** Tối ưu hóa và làm sạch Ground-Truth bộ đề thi Golden Dataset v2.1 (Data-Centric AI: loại bỏ Label Noise ở Tầng 3 Adversarial Hybrid và Tầng 2 Out-of-Lesson).
+    2. **Ưu tiên 2 (Second Priority):** Tối ưu hóa Router & Socratic Guardrail bằng kiến trúc Cascade NLI Cross-Encoder (LinearSVC Fast-Path -> MoritzLaurer/bge-m3-zeroshot-v2.0 Arbiter).
+    3. **Ưu tiên 3 (Third Priority):** Triển khai các mục tiêu tiếp theo (Chuyển dịch LangGraph StateGraph, tích hợp giao diện React 19 CourseContent.jsx và đo lường benchmark tổng kết).
 - **Student Theory Document Mandate:** Mỗi khi kết thúc một phiên làm việc bằng việc đẩy code lên GitHub, AI **BẮT BUỘC phải tạo thêm một tài liệu học tập lý thuyết chuyên sâu tại `docs/theory_learning/YYYY-MM-DD_theory.md`**. Tài liệu này giải thích chi tiết toàn bộ kiến thức nền tảng, công thức toán học, nguyên lý thuật toán và bộ câu hỏi phản biện bảo vệ đồ án của phiên đó (đảm bảo tính chính xác 100%, không suy đoán - No Hallucination).
 - **Session Wrap-up Holistic Double-Check Mandate:** Trước khi kết thúc bất kỳ phiên làm việc nào và trước khi viết báo cáo hàng ngày, AI **BẮT BUỘC phải thực hiện một lượt rà soát đối chiếu chéo toàn diện (Holistic End-to-End Audit)** bao gồm 6 trụ cột theo thứ tự ưu tiên:
   1. 🚨 **Lỗi Thuật Toán & Logic Toán Học (QUAN TRỌNG NHẤT - TOP PRIORITY):**
