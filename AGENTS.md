@@ -104,6 +104,10 @@
   - Không đưa số giây/mốc thời gian cụ thể (như `145`, `02:25`) vào câu ví dụ của System Prompt để tránh việc các mô hình LLM nhỏ (3B) sao chép mù quáng.
   - Khi RAG trả về `0 chunks` (nội dung chưa học trong phạm vi bài hiện tại), hệ thống phải kích hoạt prompt rẽ nhánh cảnh báo tiêu cực: TUYỆT ĐỐI CẤM sinh thẻ `<timestamp>`, thông báo cho sinh viên biết bài học hiện tại chưa giảng dạy chủ đề này và chỉ giải thích lý thuyết thuần túy.
 - **Uvicorn Development Standard:** Luôn khởi chạy uvicorn với cờ `--reload` để đảm bảo code chỉnh sửa lập tức được cập nhật vào RAM.
+- **Hardware & Framework Compatibility Invariant (Bất Biến Kiểm Định Tương Thích Phần Cứng):**
+  - Tuyệt đối KHÔNG đề xuất hoặc thử nghiệm các mô hình phụ thuộc framework độc quyền của hệ điều hành khác (như Apple MLX trên macOS) trên môi trường Windows / NVIDIA CUDA của dự án.
+  - Mọi mô hình Encoder mới phục vụ Router hoặc Guardrail bắt buộc phải có bản phân phối ONNX Runtime hoặc PyTorch CUDA tương thích với Windows 11 x86_64 và nằm trong hạn mức bộ nhớ 4GB VRAM của card RTX 2050.
+
 
 ## 8. Direct Communication & Zero-Hallucination Answering Protocols
 - **Direct Answer First (Trả lời trực diện trước tiên):** Khi người dùng đặt câu hỏi kỹ thuật, kiến trúc hoặc xác nhận phạm vi (Yes/No, có phải/không phải, tại sao), AI BẮT BUỘC phải đưa ra câu trả lời trực tiếp ngay ở câu đầu tiên (Đúng/Sai/Có/Không/Kết luận trọng tâm). Tuyệt đối không vòng vo, không lan man lý thuyết giáo trình khi không được yêu cầu.
