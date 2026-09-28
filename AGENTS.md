@@ -31,6 +31,13 @@
     3. *Hạ chuẩn có kiểm soát (Graceful Degradation):* Chỉ kích hoạt khi bài tương lai không đạt biên độ vượt trội, và bài hiện tại có điểm sàn $S_{\text{current}} \ge 0.20$ cùng xác thực CRAG.
     4. *Khoảng trống học liệu (Coverage Gap):* Khi cả bài hiện tại và bài tương lai đều không đạt điểm chuẩn.
   - Tuyệt đối KHÔNG để tài liệu nhiễu điểm thấp của bài hiện tại nuốt mất các câu hỏi thuộc bài học tương lai.
+- **Tri-Tier Metaphor Grounding Invariant (Bất Biến Xử Lý Ẩn Dụ & Ví Dụ Đời Sống Không Ảo Giác):**
+  - Đối với các câu hỏi học viên mượn hình ảnh, ví dụ đời sống để hỏi bản chất kỹ thuật lập trình (như câu `BENCH-141`), hệ thống bắt buộc áp dụng chuỗi 3 tầng chuẩn mực công nghiệp:
+    1. *Tầng 1 (Pre-retrieval):* Query Intent Decomposition bóc tách bản chất kỹ thuật lõi mà không làm biến dạng câu hỏi gốc, loại trừ hiện tượng Vocabulary Mismatch Trap.
+    2. *Tầng 2 (Retrieval):* CRAG Confidence Banding kết hợp AST Grounding Anchor của bài hiện tại khi $0.15 \le S < 0.22$, đánh dấu `is_approximate: true` để minh bạch độ tin cậy.
+    3. *Tầng 3 (Generation):* Socratic Grounded Synthesis trừu tượng hóa khái niệm, trích dẫn đúng mốc video dạy cú pháp, từ chối giải bài hộ và gợi mở câu hỏi định hướng.
+  - Cấm tuyệt đối các giải pháp vá tạm (Zero Quick-Fix): không hardcode regex bắt từ khóa đời sống, không hạ ngưỡng threshold toàn cục.
+
 
 - **Speech-to-Text & Lexicon Biasing:** `faster-whisper` with automatic domain **`hotwords`** (C++, Java, Python keywords) maintained across every window, tuned Silero VAD (`threshold=0.35`, `speech_pad_ms=400`, `condition_on_previous_text=False`), and CPU fallback if `cublas64_12.dll` is missing.
 - **Context Assembly:** U-shaped layout `[Top 1, Top 3, Top 2]` to eliminate Stanford's "Lost-in-the-Middle" degradation.
@@ -83,9 +90,10 @@
 ## 6. Session Kickoff & Student Theory Learning Protocol
 - **Kickoff Protocol:** Khi sinh viên hỏi *"hôm nay làm gì tiếp theo"* hoặc câu tương tự, AI phải ngay lập tức rà soát `docs/daily_reports/` gần nhất và tiến trình hiện tại để xuất ra danh sách ưu tiên gồm 2–3 đầu việc cụ thể, link file trực tiếp, kỹ năng liên quan và lệnh PowerShell sẵn sàng chạy.
   - **Next Session Mandatory Priority Queue (Thứ Tự Ưu Tiên Bắt Buộc Phiên Tiếp Theo):**
-    1. **Ưu tiên 1 (First Priority):** Tối ưu hóa và làm sạch Ground-Truth bộ đề thi Golden Dataset v2.1 (Data-Centric AI: loại bỏ Label Noise ở Tầng 3 Adversarial Hybrid và Tầng 2 Out-of-Lesson).
-    2. **Ưu tiên 2 (Second Priority):** Tối ưu hóa Router & Socratic Guardrail bằng kiến trúc Cascade NLI Cross-Encoder (LinearSVC Fast-Path -> MoritzLaurer/bge-m3-zeroshot-v2.0 Arbiter).
-    3. **Ưu tiên 3 (Third Priority):** Triển khai các mục tiêu tiếp theo (Chuyển dịch LangGraph StateGraph, tích hợp giao diện React 19 CourseContent.jsx và đo lường benchmark tổng kết).
+    1. **Ưu tiên 1 (Hoàn thành 100%):** Tối ưu hóa và làm sạch Ground-Truth bộ đề thi Golden Dataset v2.1 (Data-Centric AI: loại bỏ Label Noise, tích hợp 10 kịch bản kiểm thử an ninh, thiết lập điểm chuẩn Baseline 85.50%).
+    2. **Ưu tiên 2 (Active - Đang thực hiện):** Tối ưu hóa Router & Socratic Guardrail bằng kiến trúc Cascade NLI Cross-Encoder (LinearSVC Fast-Path -> MoritzLaurer/bge-m3-zeroshot-v2.0 Arbiter kết hợp Output Guardrail bằng AST Tree-sitter).
+    3. **Ưu tiên 3 (Sau Ưu tiên 2):** Thiết lập Môi trường thử nghiệm trực quan **Interactive Chatbot Playground** (`/playground`) kết nối trực tiếp với mô hình 7B host trên Kaggle (GPU T4 16GB + Ollama + Ngrok Free Static Domain) để đối thoại kiểm chứng năng lực Socratic thực tế.
+    4. **Ưu tiên 4 (Hoàn thiện tổng thể):** Chuyển dịch LangGraph StateGraph (4 nodes, checkpointer), tích hợp giao diện React 19 CourseContent.jsx và đo lường benchmark Stage 11 tổng kết.
 - **Student Theory Document Mandate:** Mỗi khi kết thúc một phiên làm việc bằng việc đẩy code lên GitHub, AI **BẮT BUỘC phải tạo thêm một tài liệu học tập lý thuyết chuyên sâu tại `docs/theory_learning/YYYY-MM-DD_theory.md`**. Tài liệu này giải thích chi tiết toàn bộ kiến thức nền tảng, công thức toán học, nguyên lý thuật toán và bộ câu hỏi phản biện bảo vệ đồ án của phiên đó (đảm bảo tính chính xác 100%, không suy đoán - No Hallucination).
 - **Session Wrap-up Holistic Double-Check Mandate:** Trước khi kết thúc bất kỳ phiên làm việc nào và trước khi viết báo cáo hàng ngày, AI **BẮT BUỘC phải thực hiện một lượt rà soát đối chiếu chéo toàn diện (Holistic End-to-End Audit)** bao gồm 6 trụ cột theo thứ tự ưu tiên:
   1. 🚨 **Lỗi Thuật Toán & Logic Toán Học (QUAN TRỌNG NHẤT - TOP PRIORITY):**
@@ -111,6 +119,11 @@
 - **Hardware & Framework Compatibility Invariant (Bất Biến Kiểm Định Tương Thích Phần Cứng):**
   - Tuyệt đối KHÔNG đề xuất hoặc thử nghiệm các mô hình phụ thuộc framework độc quyền của hệ điều hành khác (như Apple MLX trên macOS) trên môi trường Windows / NVIDIA CUDA của dự án.
   - Mọi mô hình Encoder mới phục vụ Router hoặc Guardrail bắt buộc phải có bản phân phối ONNX Runtime hoặc PyTorch CUDA tương thích với Windows 11 x86_64 và nằm trong hạn mức bộ nhớ 4GB VRAM của card RTX 2050.
+- **Remote GPU Inference & Ngrok Free Static Domain Protocol:**
+  - Hỗ trợ kiến trúc Hybrid Local / Kaggle Cloud LLM cho mô hình 7B/8B (như `qwen2.5:7b`):
+  - Kaggle Notebook khởi chạy Ollama daemon nền trên GPU T4 (15-16GB VRAM) và kết nối qua **1 Static Domain miễn phí của Ngrok** (ví dụ: `ngrok.connect(11434, "http", domain="<static-domain>.ngrok-free.app")`).
+  - Cấu hình file `.env` trên máy cục bộ cố định vĩnh viễn (`LLM_BASE_URL=https://<static-domain>.ngrok-free.app/v1`), loại bỏ hoàn toàn việc phải cập nhật lại URL mỗi khi restart session.
+  - Sử dụng script anti-idle định kỳ trên browser console để duy trì phiên làm việc không bị ngắt kết nối trong suốt quá trình thử nghiệm và demo.
 
 
 ## 8. Direct Communication & Zero-Hallucination Answering Protocols
