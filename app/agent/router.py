@@ -18,6 +18,7 @@ import joblib
 
 from app.schemas.chat import RouterClassification
 from app.services.embedding import get_embedding_service
+from app.agent.guardrails import get_security_input_guardrail, SECURITY_REFUSAL_RESPONSE
 
 logger = logging.getLogger("uvicorn.error")
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -66,17 +67,81 @@ OFFTOPIC_CASUAL_RESPONSES = (
 )
 
 
+class NLIArbiter:
+    """
+    Stage 2 Cross-Encoder NLI Arbiter:
+    Sử dụng mô hình MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7 (chạy CPU, 0 MB VRAM).
+    Nhiệm vụ: Phán xử logic ngữ nghĩa (Entailment / Contradiction) cho các câu hỏi
+    rơi vào vùng phân vân (Margin < 0.12 hoặc P_course >= 0.20 khi bị Stage 1 kéo về out_of_scope).
+    Tuyệt đối Zero-Regex, 100% Machine Learning.
+    """
+
+    def __init__(self):
+        self._pipeline = None
+        self._candidate_labels = [
+            "câu hỏi học tập chuyên môn thắc mắc cú pháp hoặc giải thuật lập trình",
+            "câu đùa vui, châm biếm, so sánh phi thực tế với phim ảnh, tình cảm hoặc đời sống"
+        ]
+        self._label_map = {
+            "câu hỏi học tập chuyên môn thắc mắc cú pháp hoặc giải thuật lập trình": "course_query",
+            "câu đùa vui, châm biếm, so sánh phi thực tế với phim ảnh, tình cảm hoặc đời sống": "out_of_scope"
+        }
+        self._template = "Văn bản này có mục đích là {}."
+
+    def _get_pipeline(self):
+        """Khởi tạo trễ (Lazy Loading) để không làm chậm thời gian khởi động server."""
+        if self._pipeline is None:
+            try:
+                from transformers import pipeline
+                logger.info("[NLIArbiter] Đang nạp mô hình mDeBERTa-v3-base-xnli trên CPU...")
+                self._pipeline = pipeline(
+                    "zero-shot-classification",
+                    model="MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+                    device=-1
+                )
+                logger.info("[NLIArbiter] Nạp thành công mô hình NLI Arbiter trên CPU.")
+            except Exception as e:
+                logger.error(f"[NLIArbiter] Không thể nạp pipeline transformers NLI: {e}")
+                self._pipeline = None
+        return self._pipeline
+
+    def arbitrate(self, prompt: str) -> tuple[str, float]:
+        """Phán định ý định bằng suy luận logic Zero-Shot NLI."""
+        pipe = self._get_pipeline()
+        if pipe is None:
+            return "out_of_scope", 0.0
+        try:
+            res = pipe(
+                prompt,
+                candidate_labels=self._candidate_labels,
+                hypothesis_template=self._template,
+                multi_label=False
+            )
+            top_label_desc = res["labels"][0]
+            top_score = float(res["scores"][0])
+            pred_intent = self._label_map.get(top_label_desc, "out_of_scope")
+            logger.info(f"[NLIArbiter] Phán định NLI: '{prompt[:35]}...' -> {pred_intent} ({top_score*100:.1f}%)")
+            return pred_intent, top_score
+        except Exception as e:
+            logger.error(f"[NLIArbiter] Lỗi suy luận NLI ({e}), giữ nguyên phán quyết Stage 1.")
+            return "out_of_scope", 0.0
+
+
 class IntentRouter:
     """
     Bộ định tuyến phân loại ý định người dùng chuẩn SOTA:
     - Loại bỏ hoàn toàn các danh sách prototype tĩnh trong mã nguồn.
-    - Vận hành dựa trên mô hình Platt-Calibrated LinearSVC trên không gian E5 1024 chiều.
+    - Kiến trúc Cascade 2 Tầng (Cascading Multi-Tier Router):
+      + Tầng 1: Platt-Calibrated LinearSVC trên không gian E5 1024-dim (Fast-Path ~2 ms).
+      + Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli trên CPU khi phân vân).
     - Biên độ tự tin Margin Decision Boundary (ΔP >= 0.12) chống phân vân ngữ nghĩa.
     """
 
     def __init__(self):
         self._calibrated_clf = None
         self._classes = ["chit_chat", "course_query", "out_of_scope"]
+        self._nli_arbiter = NLIArbiter()
+        self._security_guardrail = get_security_input_guardrail()
 
         # Nạp mô hình đã hiệu chuẩn Platt Scaling (Scikit-Learn CalibratedClassifierCV)
         model_path = PROJECT_ROOT / "app" / "agent" / "models" / "calibrated_router.joblib"
@@ -113,7 +178,7 @@ class IntentRouter:
         """
         Phân loại câu hỏi của học viên thuần túy bằng Machine Learning (Zero-Regex):
         - Tầng 1: Platt-Calibrated Classifier (Scikit-Learn LinearSVC + CalibratedClassifierCV)
-        - Tầng 2: Margin Decision Boundary (ΔP >= 0.12) chống phân vân ngữ nghĩa
+        - Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli trên CPU) khi phân vân
         - Tầng 3: An toàn mặc định (Abstention) -> Đẩy vào RAG (course_query)
         """
         clean_prompt = self._normalize_text(prompt)
@@ -121,6 +186,17 @@ class IntentRouter:
             return RouterClassification(
                 intent="chit_chat",
                 direct_response=GREETING_RESPONSES,
+                is_course_query=False
+            )
+
+        # ----------------------------------------------------
+        # 0. TẦNG 0: Security Input Guardrail (OWASP LLM01 Gate - ~0ms)
+        # ----------------------------------------------------
+        is_safe, refusal_reason = self._security_guardrail.validate_input(clean_prompt)
+        if not is_safe:
+            return RouterClassification(
+                intent="out_of_scope",
+                direct_response=refusal_reason or OFFTOPIC_CASUAL_RESPONSES,
                 is_course_query=False
             )
 
@@ -146,24 +222,50 @@ class IntentRouter:
                 top2_prob = float(probs[top2_idx])
                 margin = top1_prob - top2_prob
 
+                p_chit = float(probs[0])
+                p_course = float(probs[1])
+                p_oos = float(probs[2])
+
                 logger.info(
-                    f"[IntentRouter-Calibrated] Probs: chit_chat={probs[0]:.3f} | "
-                    f"course_query={probs[1]:.3f} | out_of_scope={probs[2]:.3f} (Margin={margin:.3f})"
+                    f"[IntentRouter-Calibrated] Probs: chit_chat={p_chit:.3f} | "
+                    f"course_query={p_course:.3f} | out_of_scope={p_oos:.3f} (Margin={margin:.3f})"
                 )
 
-                # Ngưỡng Margin Quyết Định (Margin Decision Boundary >= 0.12)
+                # ----------------------------------------------------
+                # ĐIỀU PHỐI CASCADE: STAGE 1 (LinearSVC) -> STAGE 2 (NLI ARBITER)
+                # ----------------------------------------------------
                 MARGIN_THRESHOLD = 0.12
-                if margin >= MARGIN_THRESHOLD:
-                    if top1_class == "course_query":
+
+                # Điều kiện kích hoạt Stage 2 NLI Arbiter:
+                # 1. Rơi vào vùng phân vân ngữ nghĩa (margin < 0.12)
+                # 2. Hoặc Stage 1 chọn out_of_scope nhưng chưa đủ tự tin (p_oos < 0.72) và vẫn có tín hiệu kỹ thuật đáng kể (p_course >= 0.25 và p_chit < 0.35)
+                #    (Dấu hiệu của câu ẩn dụ sư phạm / chuỗi kỹ thuật bị từ vựng đời sống kéo lệch)
+                is_ambiguous = (margin < MARGIN_THRESHOLD)
+                is_potential_metaphor = (top1_class == "out_of_scope" and p_oos < 0.72 and p_course >= 0.25 and p_chit < 0.35)
+
+                if is_ambiguous or is_potential_metaphor:
+                    logger.info(
+                        f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter: "
+                        f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, P_course={p_course:.3f}"
+                    )
+                    nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
+
+                    # Nếu NLI khẳng định đây là câu hỏi học tập (Entailment >= 0.50): Cứu về course_query
+                    if nli_intent == "course_query" and nli_conf >= 0.50:
+                        logger.info(f"[IntentRouter-Cascade] NLI Arbiter giải cứu thành công -> course_query ({nli_conf*100:.1f}%)")
                         return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                    elif top1_class == "chit_chat":
-                        return RouterClassification(intent="chit_chat", direct_response=self._select_chitchat_response(clean_prompt), is_course_query=False)
-                    elif top1_class == "out_of_scope":
+
+                    # Nếu NLI khẳng định out_of_scope và tự tin cao (>= 0.65)
+                    elif nli_intent == "out_of_scope" and nli_conf >= 0.65 and top1_class != "chit_chat":
                         return RouterClassification(intent="out_of_scope", direct_response=OFFTOPIC_CASUAL_RESPONSES, is_course_query=False)
-                else:
-                    # Margin hẹp (phân vân ngữ nghĩa) -> Abstention, an toàn fallback vào course_query
-                    logger.info(f"[IntentRouter-Calibrated] Margin thấp ({margin:.3f} < {MARGIN_THRESHOLD}) -> Abstention Fallback vào RAG.")
+
+                # Trường hợp thông thường: Tuân thủ phán quyết Stage 1 LinearSVC
+                if top1_class == "course_query":
                     return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                elif top1_class == "chit_chat":
+                    return RouterClassification(intent="chit_chat", direct_response=self._select_chitchat_response(clean_prompt), is_course_query=False)
+                elif top1_class == "out_of_scope":
+                    return RouterClassification(intent="out_of_scope", direct_response=OFFTOPIC_CASUAL_RESPONSES, is_course_query=False)
 
             except Exception as err:
                 logger.warning(f"[IntentRouter] Lỗi tính toán Calibrated Router ({err}).")
