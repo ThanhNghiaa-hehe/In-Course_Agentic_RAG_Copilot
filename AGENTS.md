@@ -31,6 +31,13 @@
     3. *Hạ chuẩn có kiểm soát (Graceful Degradation):* Chỉ kích hoạt khi bài tương lai không đạt biên độ vượt trội, và bài hiện tại có điểm sàn $S_{\text{current}} \ge 0.20$ cùng xác thực CRAG.
     4. *Khoảng trống học liệu (Coverage Gap):* Khi cả bài hiện tại và bài tương lai đều không đạt điểm chuẩn.
   - Tuyệt đối KHÔNG để tài liệu nhiễu điểm thấp của bài hiện tại nuốt mất các câu hỏi thuộc bài học tương lai.
+- **Modality-Aware Latency Gate Invariant (Bất Biến Cổng Độ Trễ Phân Biệt Phương Thức - Bài Học Chặng 2):**
+  - Tuyệt đối KHÔNG dùng ngưỡng phẳng ($0.22$) trên video transcript để đóng cổng thăm dò bài tương lai.
+  - *Bẫy văn nói bài giảng:* Video bài cũ thường nhắc lướt qua kiến thức bài mới đạt điểm $0.22 - 0.28$.
+  - Chỉ cho phép Early Exit (bỏ qua `_probe_future_lessons`) khi:
+    (a) Bài hiện tại có **Code AST Grounding Anchor $\ge 0.35$** (có mã nguồn thực thi chính thức), HOẶC
+    (b) Video transcript của bài hiện tại đạt **độ tự tin cao $\ge 0.30$**.
+  - Khi điểm bài hiện tại nằm trong dải lơ lửng ($0.22 \le S < 0.30$ video-only), hệ thống BẮT BUỘC vẫn phải thăm dò bài tương lai với biên độ $\text{Margin} \in [0.08, 0.10]$ để loại bỏ triệt để hiện tượng bài cũ nuốt bài mới (giải quyết 21 ca lỗi Tier 2).
 - **Tri-Tier Metaphor Grounding Invariant (Bất Biến Xử Lý Ẩn Dụ & Ví Dụ Đời Sống Không Ảo Giác):**
   - Đối với các câu hỏi học viên mượn hình ảnh, ví dụ đời sống để hỏi bản chất kỹ thuật lập trình (như câu `BENCH-141`), hệ thống bắt buộc áp dụng chuỗi 3 tầng chuẩn mực công nghiệp:
     1. *Tầng 1 (Pre-retrieval):* Query Intent Decomposition bóc tách bản chất kỹ thuật lõi mà không làm biến dạng câu hỏi gốc, loại trừ hiện tượng Vocabulary Mismatch Trap.
@@ -93,8 +100,9 @@
     1. **Ưu tiên 1 (Hoàn thành 100%):** Tối ưu hóa và làm sạch Ground-Truth bộ đề thi Golden Dataset v2.1 (Data-Centric AI: loại bỏ Label Noise, tích hợp 10 kịch bản kiểm thử an ninh, thiết lập điểm chuẩn Baseline 85.50%).
     2. **Chặng 1 (Hoàn thành 100% - Đạt 98.00%):** Triển khai Module Cascade NLI Router (Stage 1 LinearSVC Fast-Path 2.06ms -> Stage 2 Cross-Encoder NLI Arbiter CPU) kết hợp Security Input Guardrail (OWASP LLM01 Gate 1.8ms) và Tree-sitter Socratic Output Guardrail, hoàn thành đo lường Bộ Benchmark Kỹ thuật (`scripts/run_rag_benchmark.py` & `scratch/check_router_v21.py` đo Router Accuracy 98.00%, CRAG Status, Timestamp và Latency).
     3. **Chặng 2 (Active - Ưu tiên hàng đầu):** **Tối ưu hóa Lõi Truy xuất & Hiệu năng Toàn diện (Retrieval, CRAG, Timestamps & Latency SLA)**:
-       - Hạ độ trễ trung bình Pipeline từ 5.9s xuống $\le 3000\text{ ms}$ (thu hẹp `top_candidates` Reranker từ 25 xuống 12–15 chunks, tối ưu hóa điều kiện Future Lesson Probing để loại bỏ double-query thừa).
-       - Nâng CRAG Grader Precision từ 74.0% lên $\ge 85\%$ và Timestamp Accuracy từ 70.0% lên $\ge 85\%$ thông qua mở rộng Phase 2 Code-to-Video Metadata Binding và cân chỉnh Margin ($S_{\text{future}} - S_{\text{current}} > 0.12$).
+       - Hạ độ trễ trung bình Pipeline từ 5.9s xuống $\le 3000\text{ ms}$ (thu hẹp `top_candidates` Reranker từ 25 xuống 10–12 chunks, tối ưu hóa điều kiện Future Lesson Probing để loại bỏ double-query thừa).
+       - Nâng CRAG Grader Precision từ 76.5% lên $\mathbf{\ge 85.0\%}$ bằng cách triển khai Modality-Aware Latency Gate (triệt tiêu 21 ca lỗi Tier 2 do bẫy văn nói nhắc thoáng qua trong video).
+       - Nâng Timestamp Accuracy từ 61.5% lên $\mathbf{\ge 85.0\%}$ thông qua mở rộng Phase 2 Code-to-Video Metadata Binding (phân biệt mốc lý thuyết và mốc demo code thực hành).
     4. **Chặng 3 (Sau Chặng 2):** Thiết lập Môi trường thử nghiệm trực quan **Interactive Chatbot Playground** (`/playground`) kết nối trực tiếp với mô hình 7B host trên Kaggle (GPU T4 16GB + Ollama + Ngrok Free Static Domain) để đối thoại kiểm chứng năng lực Socratic thực tế và test thẻ video click-to-seek.
     5. **Chặng 4 (Sau Chặng 3):** Nâng cấp toàn diện **LangGraph StateGraph** từ Stateless Orchestrator hiện tại thành Full Stateful Loop (4 discrete nodes bao gồm Socratic Streaming Generator, conditional edges, và Redis sliding window checkpointer 4–6 turns).
     6. **Chặng 5 (Nghiệm thu tổng thể):** Tích hợp giao diện React 19 `CourseContent.jsx` và thực thi Bộ Evaluation Toàn diện RAGAS Triad & G-Eval (Faithfulness, Answer Relevance, Context Recall & Precision, G-Eval Socratic Adherence chống lỗi P10 giải bài hộ qua LLM-as-a-Judge).
