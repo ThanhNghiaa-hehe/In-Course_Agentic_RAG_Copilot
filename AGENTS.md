@@ -14,6 +14,8 @@
 - **Embedding & Sparse Engine:** `fastembed` with `intfloat/multilingual-e5-large` (1024-dim) and `Qdrant/bm25` (unified single stack, no TEI dependency).
 - **E5 Asymmetric Prefix Standard:** Bắt buộc thêm `passage: ` khi index tài liệu/code và `query: ` khi truy vấn tìm kiếm để tối ưu hóa không gian vector cosine.
 - **Re-ranking & Normalization:** Cross-encoder with **Logistic Sigmoid Normalization** $\sigma(z) = \frac{1}{1 + e^{-z}}$. Triết lý thiết kế **Recall-First** kết hợp Calibrated Sigmoid / Min-Max Normalization để loại bỏ nhiễu từ câu hỏi ngắn.
+- **Corrective RAG (CRAG) Attribution Standard:** Thuật toán CRAG được áp dụng theo chuẩn mực của **Yan et al. (Google DeepMind / USTC / UCLA - arXiv:2401.15884)** với 3 trạng thái tin cậy (Correct, Ambiguous, Incorrect). Tuyệt đối không nhầm lẫn với bộ benchmark Meta CRAG (NeurIPS 2024 KDD Cup).
+- **Relevance vs. Context Sufficiency Invariant (ICLR 2025):** Phân định rõ độ liên quan từ vựng/ngữ nghĩa (Semantic Relevance do Re-ranker đo) và độ đầy đủ thông tin để trả lời sư phạm (Context Sufficiency). Một đoạn văn nói nhắc lướt bài sau đạt điểm tương quan nhưng không đủ thông tin, tuyệt đối không được phép gán nhãn `grounded`.
 - **Multimodal Thresholding & Fallback Policy (2-Phase Roadmap):**
   - **Phase 1 (Legacy - Under 50% Progress):** Áp dụng *Modality-Aware Thresholding*:
     - `CODE_SCORE_THRESHOLD = 0.35` (nghiêm ngặt cho Code AST nhằm đảm bảo tính đúng đắn cú pháp).
@@ -101,8 +103,11 @@
     2. **Chặng 1 (Hoàn thành 100% - Đạt 98.00%):** Triển khai Module Cascade NLI Router (Stage 1 LinearSVC Fast-Path 2.06ms -> Stage 2 Cross-Encoder NLI Arbiter CPU) kết hợp Security Input Guardrail (OWASP LLM01 Gate 1.8ms) và Tree-sitter Socratic Output Guardrail, hoàn thành đo lường Bộ Benchmark Kỹ thuật (`scripts/run_rag_benchmark.py` & `scratch/check_router_v21.py` đo Router Accuracy 98.00%, CRAG Status, Timestamp và Latency).
     3. **Chặng 2 (Active - Ưu tiên hàng đầu):** **Tối ưu hóa Lõi Truy xuất & Hiệu năng Toàn diện (Retrieval, CRAG, Timestamps & Latency SLA)**:
        - Hạ độ trễ trung bình Pipeline từ 5.9s xuống $\le 3000\text{ ms}$ (thu hẹp `top_candidates` Reranker từ 25 xuống 10–12 chunks, tối ưu hóa điều kiện Future Lesson Probing để loại bỏ double-query thừa).
-       - Nâng CRAG Grader Precision từ 76.5% lên $\mathbf{\ge 85.0\%}$ bằng cách triển khai Modality-Aware Latency Gate (triệt tiêu 21 ca lỗi Tier 2 do bẫy văn nói nhắc thoáng qua trong video).
-       - Nâng Timestamp Accuracy từ 61.5% lên $\mathbf{\ge 85.0\%}$ thông qua mở rộng Phase 2 Code-to-Video Metadata Binding (phân biệt mốc lý thuyết và mốc demo code thực hành).
+       - **Quy trình 4 bước nâng CRAG Grader Precision từ 76.5% lên $\mathbf{\ge 85.0\%}$:**
+         (a) *Ablation Study:* Chạy thực nghiệm kiểm chứng độc lập nguyên nhân gốc trên 21 ca lỗi Tier 2 khi bỏ qua Latency Gate;
+         (b) *Pedagogical Role Tagging (0ms Latency):* Áp dụng cơ chế phân loại vai trò sư phạm offline (`forward_reference` tagging) kết hợp Lesson-level Aggregation;
+         (c) *Modality-Aware Latency Gate:* Triển khai cổng phân biệt phương thức kết hợp cơ chế 3 trạng thái tin cậy của Yan et al.;
+         (d) *Phase 2 Metadata Binding:* Mở rộng mốc video Ground-Truth nâng Timestamp Safety từ 61.5% lên $\mathbf{\ge 85.0\%}$.
     4. **Chặng 3 (Sau Chặng 2):** Thiết lập Môi trường thử nghiệm trực quan **Interactive Chatbot Playground** (`/playground`) kết nối trực tiếp với mô hình 7B host trên Kaggle (GPU T4 16GB + Ollama + Ngrok Free Static Domain) để đối thoại kiểm chứng năng lực Socratic thực tế và test thẻ video click-to-seek.
     5. **Chặng 4 (Sau Chặng 3):** Nâng cấp toàn diện **LangGraph StateGraph** từ Stateless Orchestrator hiện tại thành Full Stateful Loop (4 discrete nodes bao gồm Socratic Streaming Generator, conditional edges, và Redis sliding window checkpointer 4–6 turns).
     6. **Chặng 5 (Nghiệm thu tổng thể):** Tích hợp giao diện React 19 `CourseContent.jsx` và thực thi Bộ Evaluation Toàn diện RAGAS Triad & G-Eval (Faithfulness, Answer Relevance, Context Recall & Precision, G-Eval Socratic Adherence chống lỗi P10 giải bài hộ qua LLM-as-a-Judge).
