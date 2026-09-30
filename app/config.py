@@ -40,6 +40,12 @@ class Settings(BaseSettings):
     DEFAULT_TOP_CANDIDATES: int = 10
     DEFAULT_FINAL_TOP_K: int = 3
 
+    # Stage 6-9 Retrieval & CRAG Optimization (Chặng 2)
+    FUTURE_PROBE_ACTIVATION_GATE: float = 0.22
+    FUTURE_PROBE_MARGIN: float = 0.12
+    FUTURE_PROBE_LIMIT: int = 18
+    CRAG_RRF_WEIGHT: float = 0.10
+
     # Whisper
     WHISPER_MODEL_SIZE: str = "large-v3"
     WHISPER_DEVICE: str = "cpu"

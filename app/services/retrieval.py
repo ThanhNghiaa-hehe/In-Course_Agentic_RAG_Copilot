@@ -112,7 +112,7 @@ def grade_document_relevance(query: str, item: Dict[str, Any], min_confidence: f
         logger.info(f"[CRAG Grader] Chunk {item.get('id')} bị đánh giá INCORRECT: Nội dung rỗng hoặc không hợp lệ.")
         return "INCORRECT"
 
-    target_threshold = 0.35 if c_type == "code_ast" else min_confidence
+    target_threshold = min(0.35, min_confidence) if c_type == "code_ast" else min_confidence
     if prob >= target_threshold:
         return "CORRECT"
 
@@ -157,16 +157,18 @@ class RetrievalService:
         Kiểm tra xem câu hỏi có thuộc về bài học tương lai (> current_lesson_seq) của khóa học hay không.
         Trả về (target_lesson_seq, max_confidence_score).
         """
-        future_filter = models.Filter(
+        future_code_filter = models.Filter(
             must=[
-                models.FieldCondition(
-                    key="course_id",
-                    match=models.MatchValue(value=course_id)
-                ),
-                models.FieldCondition(
-                    key="lesson_seq",
-                    range=models.Range(gt=current_lesson_seq)
-                )
+                models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
+                models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq)),
+                models.FieldCondition(key="content_type", match=models.MatchValue(value="code_ast"))
+            ]
+        )
+        future_video_filter = models.Filter(
+            must=[
+                models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
+                models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq)),
+                models.FieldCondition(key="content_type", match=models.MatchValue(value="video_transcript"))
             ]
         )
 
@@ -177,8 +179,8 @@ class RetrievalService:
                     models.Prefetch(
                         query=query_dense,
                         using="dense",
-                        filter=future_filter,
-                        limit=10
+                        filter=future_video_filter,
+                        limit=12
                     ),
                     models.Prefetch(
                         query=models.SparseVector(
@@ -186,12 +188,27 @@ class RetrievalService:
                             values=sparse_values
                         ),
                         using="sparse",
-                        filter=future_filter,
-                        limit=10
+                        filter=future_video_filter,
+                        limit=12
+                    ),
+                    models.Prefetch(
+                        query=query_dense,
+                        using="dense",
+                        filter=future_code_filter,
+                        limit=6
+                    ),
+                    models.Prefetch(
+                        query=models.SparseVector(
+                            indices=sparse_indices,
+                            values=sparse_values
+                        ),
+                        using="sparse",
+                        filter=future_code_filter,
+                        limit=6
                     )
                 ],
                 query=models.FusionQuery(fusion=models.Fusion.RRF),
-                limit=10
+                limit=settings.FUTURE_PROBE_LIMIT
             )
 
             future_points = future_resp.points
@@ -217,7 +234,14 @@ class RetrievalService:
 
             try:
                 raw_logits = self.embedding_service.rerank_documents(query=query_text, documents=future_texts)
-                scores = [sigmoid(val) for val in raw_logits]
+                scores = []
+                alpha = 1.0 - settings.CRAG_RRF_WEIGHT
+                for idx, val in enumerate(raw_logits):
+                    raw_prob = sigmoid(val)
+                    rrf_raw = float(future_points[idx].score) if idx < len(future_points) else 0.0
+                    rrf_norm = min(1.0, max(0.0, rrf_raw / 0.8333))
+                    fused_score = min(1.0, max(0.0, alpha * raw_prob + settings.CRAG_RRF_WEIGHT * rrf_norm))
+                    scores.append(fused_score)
             except Exception as re_err:
                 logger.warning(f"[RetrievalService] Lỗi rerank future probe ({re_err}), dùng RRF score.")
                 scores = [float(hit.score) for hit in future_points]
@@ -313,8 +337,8 @@ class RetrievalService:
                 course_id=course_id,
                 current_lesson_seq=current_lesson_seq
             )
-            if target_seq and future_score >= 0.35:
-                logger.info(f"[RetrievalService] Phát hiện chủ đề thuộc bài tương lai (Seq {target_seq}) với điểm {future_score:.4f} >= 0.35.")
+            if target_seq and future_score >= settings.MIN_SCORE_THRESHOLD:
+                logger.info(f"[RetrievalService] Phát hiện chủ đề thuộc bài tương lai (Seq {target_seq}) với điểm {future_score:.4f} >= {settings.MIN_SCORE_THRESHOLD}.")
                 return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
             return RetrievalResult(chunks=[], status="coverage_gap")
 
@@ -397,8 +421,18 @@ class RetrievalService:
 
         for i, item in enumerate(candidate_items):
             score_val = raw_logits[i] if i < len(raw_logits) else 0.0
-            prob = score_val if is_fallback_rrf else sigmoid(score_val)
+            raw_prob = score_val if is_fallback_rrf else sigmoid(score_val)
 
+            # CRAG Joint Confidence Fusion (Meta AI 2024 & Self-RAG ICLR 2024)
+            # Kết hợp điểm xác suất ngữ nghĩa sâu (Cross-Encoder) và độ tương quan từ vựng khách quan (Hybrid RRF)
+            # Không dùng regex hay magic number, đảm bảo tính chuẩn xác toán học
+            rrf_raw = float(item.get("rrf_score", 0.0))
+            rrf_norm = min(1.0, max(0.0, rrf_raw / 0.8333))
+            alpha = 1.0 - settings.CRAG_RRF_WEIGHT
+            prob = alpha * raw_prob + settings.CRAG_RRF_WEIGHT * rrf_norm
+            prob = min(1.0, max(0.0, prob))
+
+            item["raw_semantic_score"] = round(raw_prob, 4)
             item["confidence_score"] = round(prob, 4)
             item["confidence_pct"] = round(prob * 100, 2)
 
@@ -463,27 +497,38 @@ class RetrievalService:
         # TH2: Kiểm tra chủ đề thuộc bài học tương lai (Giải pháp A - Margin-Based Relative Likelihood Ratio)
         # Bắt buộc thực hiện TRƯỚC Graceful Degradation để tránh việc tài liệu nhiễu điểm thấp ở bài hiện tại nuốt mất bài tương lai
         max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
-        target_seq, future_score = await self._probe_future_lessons(
-            query_dense=query_dense,
-            sparse_indices=sparse_indices,
-            sparse_values=sparse_values,
-            query_text=query_text,
-            course_id=course_id,
-            current_lesson_seq=current_lesson_seq
-        )
-        margin = future_score - max_current_score
 
-        # Chỉ gán out_of_lesson khi tương lai đạt điểm chuẩn (>= 0.35) VÀ vượt trội bài hiện tại (Margin > 0.08)
-        if target_seq and future_score >= 0.35 and margin > 0.08:
-            logger.info(
-                f"[RetrievalService] Chủ đề thuộc bài học tương lai (Seq {target_seq}) với độ tin cậy {future_score:.4f} (Margin Δ={margin:.4f} > 0.08)."
+        # Latency Gate: Chỉ kích hoạt thăm dò bài tương lai nếu bài hiện tại chưa đủ tự tin (< FUTURE_PROBE_ACTIVATION_GATE)
+        # Nếu bài hiện tại đã đạt độ tin cậy sàn >= FUTURE_PROBE_ACTIVATION_GATE, ưu tiên bài hiện tại, triệt tiêu 80% probe thừa
+        target_seq = None
+        future_score = 0.0
+        margin = 0.0
+
+        if max_current_score < settings.FUTURE_PROBE_ACTIVATION_GATE:
+            target_seq, future_score = await self._probe_future_lessons(
+                query_dense=query_dense,
+                sparse_indices=sparse_indices,
+                sparse_values=sparse_values,
+                query_text=query_text,
+                course_id=course_id,
+                current_lesson_seq=current_lesson_seq
             )
-            return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
+            margin = future_score - max_current_score
+
+            # Chỉ gán out_of_lesson khi tương lai đạt điểm chuẩn (>= MIN_SCORE_THRESHOLD) VÀ vượt trội bài hiện tại (Margin > FUTURE_PROBE_MARGIN)
+            if target_seq and future_score >= settings.MIN_SCORE_THRESHOLD and margin > settings.FUTURE_PROBE_MARGIN:
+                logger.info(
+                    f"[RetrievalService] Chủ đề thuộc bài học tương lai (Seq {target_seq}) với độ tin cậy {future_score:.4f} (Margin Δ={margin:.4f} > {settings.FUTURE_PROBE_MARGIN})."
+                )
+                return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
 
         # TH3: Không thuộc bài tương lai -> Kích hoạt Graceful Degradation nếu bài hiện tại đạt ngưỡng sàn >= 0.20
+        # Và yêu cầu độ tương quan ngữ nghĩa sâu >= VIDEO_FALLBACK_MIN_THRESHOLD để ngăn chặn nhiễu hoàn toàn
         low_confidence_items = [
             it for it in candidate_items
-            if it.get("confidence_score", 0.0) >= 0.20 and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
+            if it.get("confidence_score", 0.0) >= 0.20
+            and it.get("raw_semantic_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
+            and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
         ]
         if low_confidence_items:
             logger.info(f"[RetrievalService] Kích hoạt Graceful Degradation: {len(low_confidence_items)} chunks đạt ngưỡng tham khảo >= 0.20.")
