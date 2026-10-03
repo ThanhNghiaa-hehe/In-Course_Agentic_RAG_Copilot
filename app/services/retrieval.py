@@ -1,6 +1,8 @@
 import logging
 import math
 import re
+import json
+from pathlib import Path
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional, Literal, Tuple
 from qdrant_client import AsyncQdrantClient
@@ -11,6 +13,8 @@ from app.services.qdrant import get_async_qdrant_client
 from app.services.embedding import EmbeddingService, get_embedding_service
 
 logger = logging.getLogger("uvicorn.error")
+
+BINDING_MANIFEST_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "metadata" / "lesson_code_video_binding.json"
 
 
 @dataclass
@@ -143,6 +147,15 @@ class RetrievalService:
     ):
         self.client = client or get_async_qdrant_client()
         self.embedding_service = embedding_service or get_embedding_service()
+        self._code_video_bindings: Dict[str, int] = {}
+        if BINDING_MANIFEST_PATH.exists():
+            try:
+                with open(BINDING_MANIFEST_PATH, "r", encoding="utf-8") as bf:
+                    b_data = json.load(bf)
+                    self._code_video_bindings = b_data.get("bindings", {})
+                logger.info(f"[RetrievalService] Nạp thành công {len(self._code_video_bindings)} Code-to-Video bindings từ manifest.")
+            except Exception as b_err:
+                logger.warning(f"[RetrievalService] Không thể đọc metadata bindings ({b_err}).")
 
     async def _probe_future_lessons(
         self,
@@ -363,12 +376,20 @@ class RetrievalService:
             if content_type == "code_ast":
                 ctx_code = p.get("context_code") or p.get("raw_text", "")
                 code_lang = p.get("code_language") or p.get("language", "cpp")
+                code_scope = p.get("code_scope", "")
                 approx_vid_sec = p.get("approx_video_sec")
+                if approx_vid_sec is None and self._code_video_bindings:
+                    lookup_key = f"{item['lesson_id']}:{code_scope}"
+                    approx_vid_sec = self._code_video_bindings.get(lookup_key)
+                    if approx_vid_sec is None:
+                        lesson_fallback = f"{item['lesson_id']}:function_main"
+                        approx_vid_sec = self._code_video_bindings.get(lesson_fallback)
+
                 parsed_vid_sec = int(approx_vid_sec) if approx_vid_sec is not None else None
                 item.update({
                     "file_path": p.get("file_path", ""),
                     "language": code_lang,
-                    "code_scope": p.get("code_scope", ""),
+                    "code_scope": code_scope,
                     "start_line": p.get("start_line", 0),
                     "end_line": p.get("end_line", 0),
                     "context_code": ctx_code,
@@ -377,7 +398,7 @@ class RetrievalService:
                 if parsed_vid_sec is not None:
                     lbl = f"{parsed_vid_sec//60:02d}:{parsed_vid_sec%60:02d}"
                     item["timestamp_tag"] = f'<timestamp sec="{parsed_vid_sec}">{lbl}</timestamp>'
-                texts_to_rerank.append(f"[Mã nguồn {code_lang.upper()} - {p.get('code_scope', '')}]\n{ctx_code}")
+                texts_to_rerank.append(f"[Mã nguồn {code_lang.upper()} - {code_scope}]\n{ctx_code}")
             else:
                 start_sec = int(p.get("start_sec", 0))
                 end_sec = int(p.get("end_sec", 0))
@@ -458,72 +479,129 @@ class RetrievalService:
         if has_bound_code_video:
             logger.info("[RetrievalService] Roadmap Phase 2: Sử dụng Ground-Truth Code-to-Video Metadata Binding.")
 
-        # [CRAG Stage: Document Relevance Grading (Meta AI 2024)]
-        # Thẩm định độ tương quan thực tế giữa câu hỏi và các tài liệu trước khi nạp vào Prompt
-        crag_verified_items = [
-            it for it in scored_items
-            if grade_document_relevance(query_text, it) == "CORRECT"
-        ]
+        # =========================================================================
+        # [RETRIEVAL HIERARCHY PRECEDENCE INVARIANT - YAN ET AL. & ICLR 2025]
+        # Bắt buộc tuân thủ 4 tầng phân cấp toán học một chiều nghiêm ngặt:
+        # =========================================================================
 
-        # TH1: Có tài liệu vượt qua thẩm định CRAG chuẩn (ngưỡng cao) -> Trạng thái 'grounded'
-        if crag_verified_items:
-            top_reranked = sorted(
-                crag_verified_items,
+        # -------------------------------------------------------------------------
+        # TẦNG 1: GROUNDED ANCHOR & MODALITY-AWARE EARLY EXIT
+        # -------------------------------------------------------------------------
+        # Phân biệt rạch ròi giữa 2 phương thức:
+        # 1. Code AST: Mốc neo cú pháp tất định (unambiguous syntax anchor)
+        #    Nếu có Code AST >= MODALITY_GATE_AST_THRESHOLD (0.35) -> Khóa GROUNDED ngay lập tức, triệt tiêu Future Probing.
+        # 2. Video Transcript: Văn nói bài giảng tự nhiên
+        #    - Nếu Video Transcript >= MODALITY_GATE_VIDEO_HIGH_CONFIDENCE (0.40) -> Khóa GROUNDED ngay lập tức.
+        #    - Nếu Video Transcript thuộc dải [MODALITY_GATE_VIDEO_THRESHOLD, MODALITY_GATE_VIDEO_HIGH_CONFIDENCE) ([0.30, 0.40)):
+        #      KHÔNG Early Exit! Phải thăm dò bài tương lai trước để tránh lỗi văn nói bài cũ nuốt bài mới (ICLR 2025 Context Sufficiency).
+        valid_ast_items = [
+            it for it in candidate_items
+            if it.get("content_type") == "code_ast"
+            and it.get("confidence_score", 0.0) >= settings.MODALITY_GATE_AST_THRESHOLD
+        ]
+        valid_video_items = [
+            it for it in candidate_items
+            if it.get("content_type") == "video_transcript"
+            and it.get("confidence_score", 0.0) >= settings.MODALITY_GATE_VIDEO_THRESHOLD
+        ]
+        max_video_score = max([it.get("confidence_score", 0.0) for it in valid_video_items], default=0.0)
+
+        # 1.1. Code AST Anchor Early Exit:
+        if valid_ast_items:
+            anchor_candidates = sorted(
+                valid_ast_items + valid_video_items,
                 key=lambda x: x["confidence_score"],
                 reverse=True
             )[:final_top_k]
-            final_assembled = reorder_lost_in_the_middle(top_reranked)
-            logger.info(f"[RetrievalService] Hoàn tất CRAG Verification với {len(final_assembled)} chunks hợp lệ.")
+            final_assembled = reorder_lost_in_the_middle(anchor_candidates)
+            logger.info(
+                f"[RetrievalService] Tầng 1 Early Exit (Code AST Anchor): Khóa GROUNDED thành công "
+                f"({len(valid_ast_items)} AST, {len(valid_video_items)} Video chunks). "
+                f"Triệt tiêu future probing."
+            )
             return RetrievalResult(
                 chunks=final_assembled,
                 status="grounded",
                 is_low_confidence=False
             )
 
-        # TH1.2: AST Grounding Anchor (Giải pháp B)
-        # Nếu tồn tại khối Code AST đạt confidence >= 0.35 thuộc bài hiện tại, ưu tiên tuyệt đối mốc này
-        valid_ast_items = [
-            it for it in candidate_items
-            if it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.35
-        ]
-        if valid_ast_items:
-            logger.info(f"[RetrievalService] Solution B: Khóa grounded qua AST Grounding Anchor ({len(valid_ast_items)} chunks).")
+        # 1.2. High-Confidence Video Early Exit (>= 0.40):
+        if valid_video_items and max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
+            anchor_candidates = sorted(
+                valid_video_items,
+                key=lambda x: x["confidence_score"],
+                reverse=True
+            )[:final_top_k]
+            final_assembled = reorder_lost_in_the_middle(anchor_candidates)
+            logger.info(
+                f"[RetrievalService] Tầng 1 Early Exit (High-Confidence Video >= {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE}): "
+                f"Khóa GROUNDED thành công (max_video_score={max_video_score:.4f}). "
+                f"Triệt tiêu future probing."
+            )
             return RetrievalResult(
-                chunks=valid_ast_items[:final_top_k],
+                chunks=final_assembled,
                 status="grounded",
                 is_low_confidence=False
             )
 
-        # TH2: Kiểm tra chủ đề thuộc bài học tương lai (Giải pháp A - Margin-Based Relative Likelihood Ratio)
-        # Bắt buộc thực hiện TRƯỚC Graceful Degradation để tránh việc tài liệu nhiễu điểm thấp ở bài hiện tại nuốt mất bài tương lai
+        # -------------------------------------------------------------------------
+        # TẦNG 2: FUTURE LESSON PROBING (Kiểm tra bài học tương lai)
+        # -------------------------------------------------------------------------
+        # Kích hoạt khi:
+        # - Bài hiện tại không có Code AST >= 0.35, VÀ
+        # - Video bài hiện tại chỉ đạt dải hội thoại [0.30, 0.40) HOẶC dưới 0.30.
+        # Khắc phục triệt để hiện tượng văn nói bài cũ nuốt câu hỏi bài mới (ICLR 2025 Context Sufficiency):
+        # Bài tương lai chỉ được phép nuốt bài hiện tại khi:
+        # (a) target_seq is not None
+        # (b) future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE (0.40)
+        # (c) margin = future_score - max_current_score >= settings.FUTURE_PROBE_MARGIN (0.12)
         max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
-
-        # Latency Gate: Chỉ kích hoạt thăm dò bài tương lai nếu bài hiện tại chưa đủ tự tin (< FUTURE_PROBE_ACTIVATION_GATE)
-        # Nếu bài hiện tại đã đạt độ tin cậy sàn >= FUTURE_PROBE_ACTIVATION_GATE, ưu tiên bài hiện tại, triệt tiêu 80% probe thừa
         target_seq = None
         future_score = 0.0
         margin = 0.0
 
-        if max_current_score < settings.FUTURE_PROBE_ACTIVATION_GATE:
-            target_seq, future_score = await self._probe_future_lessons(
-                query_dense=query_dense,
-                sparse_indices=sparse_indices,
-                sparse_values=sparse_values,
-                query_text=query_text,
-                course_id=course_id,
-                current_lesson_seq=current_lesson_seq
+        target_seq, future_score = await self._probe_future_lessons(
+            query_dense=query_dense,
+            sparse_indices=sparse_indices,
+            sparse_values=sparse_values,
+            query_text=query_text,
+            course_id=course_id,
+            current_lesson_seq=current_lesson_seq
+        )
+        margin = future_score - max_current_score
+
+        if target_seq and future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and margin >= settings.FUTURE_PROBE_MARGIN:
+            logger.info(
+                f"[RetrievalService] Tầng 2 Out-of-Lesson: Phát hiện chủ đề bài tương lai "
+                f"(Seq {target_seq}) vượt trội với score={future_score:.4f} (Margin Δ={margin:.4f} >= {settings.FUTURE_PROBE_MARGIN})."
             )
-            margin = future_score - max_current_score
+            return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
 
-            # Chỉ gán out_of_lesson khi tương lai đạt điểm chuẩn (>= MIN_SCORE_THRESHOLD) VÀ vượt trội bài hiện tại (Margin > FUTURE_PROBE_MARGIN)
-            if target_seq and future_score >= settings.MIN_SCORE_THRESHOLD and margin > settings.FUTURE_PROBE_MARGIN:
-                logger.info(
-                    f"[RetrievalService] Chủ đề thuộc bài học tương lai (Seq {target_seq}) với độ tin cậy {future_score:.4f} (Margin Δ={margin:.4f} > {settings.FUTURE_PROBE_MARGIN})."
-                )
-                return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
+        # Nếu bài tương lai KHÔNG vượt trội, và bài hiện tại có video transcript trong dải [0.30, 0.40):
+        # Đây chính là ngữ cảnh bài giảng hợp lệ của bài hiện tại (bảo toàn BENCH-022, BENCH-035, BENCH-041,...).
+        if valid_video_items:
+            anchor_candidates = sorted(
+                valid_video_items,
+                key=lambda x: x["confidence_score"],
+                reverse=True
+            )[:final_top_k]
+            final_assembled = reorder_lost_in_the_middle(anchor_candidates)
+            logger.info(
+                f"[RetrievalService] Tầng 2 Non-Dominated -> GROUNDED: Bài tương lai không vượt trội "
+                f"(future={future_score:.4f}, margin={margin:.4f}). "
+                f"Video bài hiện tại đạt độ tin cậy hợp lệ {max_video_score:.4f} in [{settings.MODALITY_GATE_VIDEO_THRESHOLD}, {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE})."
+            )
+            return RetrievalResult(
+                chunks=final_assembled,
+                status="grounded",
+                is_low_confidence=False
+            )
 
-        # TH3: Không thuộc bài tương lai -> Kích hoạt Graceful Degradation nếu bài hiện tại đạt ngưỡng sàn >= 0.20
-        # Và yêu cầu độ tương quan ngữ nghĩa sâu >= VIDEO_FALLBACK_MIN_THRESHOLD để ngăn chặn nhiễu hoàn toàn
+        # -------------------------------------------------------------------------
+        # TẦNG 3: GRACEFUL DEGRADATION (CRAG Ambiguous State: 0.20 <= S < 0.30)
+        # -------------------------------------------------------------------------
+        # Chỉ kích hoạt khi bài tương lai KHÔNG vượt trội, và bài hiện tại có cơ sở tham khảo:
+        # S_current >= 0.20 VÀ S_semantic_raw >= VIDEO_FALLBACK_MIN_THRESHOLD (0.15)
         low_confidence_items = [
             it for it in candidate_items
             if it.get("confidence_score", 0.0) >= 0.20
@@ -531,20 +609,29 @@ class RetrievalService:
             and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
         ]
         if low_confidence_items:
-            logger.info(f"[RetrievalService] Kích hoạt Graceful Degradation: {len(low_confidence_items)} chunks đạt ngưỡng tham khảo >= 0.20.")
             top_low_conf = sorted(
                 low_confidence_items,
                 key=lambda x: x["confidence_score"],
                 reverse=True
             )[:final_top_k]
             final_assembled = reorder_lost_in_the_middle(top_low_conf)
+            logger.info(
+                f"[RetrievalService] Tầng 3 Graceful Degradation: {len(low_confidence_items)} chunks "
+                f"đạt ngưỡng tham khảo [0.20, 0.30). Gắn cờ is_low_confidence=True."
+            )
             return RetrievalResult(
                 chunks=final_assembled,
                 status="grounded",
                 is_low_confidence=True
             )
 
-        logger.info(f"[RetrievalService] Không tìm thấy ngữ cảnh phù hợp (max_current={max_current_score:.4f}, future={future_score:.4f}) -> 'coverage_gap'.")
+        # -------------------------------------------------------------------------
+        # TẦNG 4: KHOẢNG TRỐNG HỌC LIỆU (Curriculum Coverage Gap - CRAG Incorrect)
+        # -------------------------------------------------------------------------
+        logger.info(
+            f"[RetrievalService] Tầng 4 Coverage Gap: Không tìm thấy ngữ cảnh phù hợp "
+            f"(max_current={max_current_score:.4f}, future={future_score:.4f}) -> 'coverage_gap'."
+        )
         return RetrievalResult(chunks=[], status="coverage_gap")
 
 

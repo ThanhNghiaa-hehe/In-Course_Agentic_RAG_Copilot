@@ -40,9 +40,14 @@ class Settings(BaseSettings):
     DEFAULT_TOP_CANDIDATES: int = 10
     DEFAULT_FINAL_TOP_K: int = 3
 
-    # Stage 6-9 Retrieval & CRAG Optimization (Chặng 2)
+    # Stage 6-9 Retrieval & CRAG Optimization (Chặng 2 - Modality-Aware Precision)
+    MODALITY_GATE_AST_THRESHOLD: float = 0.35
+    MODALITY_GATE_VIDEO_THRESHOLD: float = 0.30
+    MODALITY_GATE_VIDEO_EARLY_EXIT: float = 0.30  # Backward-compatibility alias for MODALITY_GATE_VIDEO_THRESHOLD
+    MODALITY_GATE_VIDEO_HIGH_CONFIDENCE: float = 0.40
     FUTURE_PROBE_ACTIVATION_GATE: float = 0.22
     FUTURE_PROBE_MARGIN: float = 0.12
+    FUTURE_PROBE_MIN_CONFIDENCE: float = 0.40
     FUTURE_PROBE_LIMIT: int = 18
     CRAG_RRF_WEIGHT: float = 0.10
 
