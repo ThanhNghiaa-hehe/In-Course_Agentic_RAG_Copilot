@@ -54,6 +54,18 @@ TECH_CANONICAL_MAP = {
     r'\b(răn\s*adan\s*min|chạy\s*admin)\b': 'Run as Administrator',
     r'\b(bui\s*nè|bui\s*number|đợi\s*mà\s*lát\s*nó\s*bui)\b': 'build',
     r'\b(visual\s*tildo|vizual\s*studio)\b': 'Visual Studio',
+    # Kiểu dữ liệu & Thuật ngữ C++ cơ bản
+    r'\b(full\s*load|phút\s*lót|phút\s*load)\b': 'float',
+    r'\b(trè|che)\b': 'char',
+    r'\b(1\s*vai|một\s*vai)\b': '1 byte',
+    r'\b(đắp\s*bồ|đúp\s*bồ)\b': 'double',
+    r'\b(in\s*tơ\s*dơ|in\s*ti\s*dơ|in\s*tơ\s*giơ)\b': 'integer',
+    r'\b(bu\s*lơ|bu\s*lê|bu\s*lin)\b': 'bool',
+    r'\b(xì\s*in|si\s*in|xê\s*in)\b': 'cin',
+    r'\b(xì\s*out|si\s*out|xê\s*out|xi\s*out)\b': 'cout',
+    r'\b(sờ\s*chinh|sờ\s*tring|sờ\s*trinh)\b': 'string',
+    r'\b(sờ\s*tring\s*sờ\s*trim|xì\s*tring\s*xì\s*trim)\b': 'stringstream',
+    r'\b(en\s*lai|en\s*đơ\s*lai)\b': 'endl',
 }
 
 def get_hotwords_for_course(course_id: str, custom_hotwords: str = None) -> str:
@@ -83,6 +95,15 @@ def normalize_text(text: str) -> str:
     for f in fillers:
         text = text.replace(f, "")
     
+    # Lọc bỏ các đoạn ảo giác tiếng Anh ngẫu nhiên do Whisper sinh ra khi im lặng
+    hallucination_patterns = [
+        r'Inaja ra kế hoạchApp Injury bath The Nippin Flock Vishal Perfure Solean Img,?\s*Ph reveals',
+        r'App Injury bath The Nippin Flock Vishal Perfure Solean Img',
+        r'The Nippin Flock Vishal Perfure Solean Img',
+    ]
+    for hp in hallucination_patterns:
+        text = re.sub(hp, '', text, flags=re.IGNORECASE)
+
     for pattern, replacement in TECH_CANONICAL_MAP.items():
         text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
 

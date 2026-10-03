@@ -239,6 +239,9 @@ def ingest_single_file(file_path: Path, course_id: str, lesson_id: str, lesson_s
             # Phân giải mốc video Ground-Truth từ metadata manifest (Phase 2)
             scope_key = f"{lesson_id}:{c['code_scope']}"
             approx_video_sec = video_bindings.get(scope_key)
+            if approx_video_sec is None:
+                # Fallback thử theo function_main hoặc header_preamble của bài
+                approx_video_sec = video_bindings.get(f"{lesson_id}:function_main") or video_bindings.get(f"{lesson_id}:header_preamble")
 
             point = models.PointStruct(
                 id=point_id,
