@@ -1,6 +1,6 @@
 ---
 name: rag-diagnostics-eval
-description: Framework-agnostic RAG failure diagnostics clinic and automated quantitative evaluation runbook. Classifies incidents into 12 production failure patterns (P01-P12), drives RAGAS Triad metrics, and enforces CI/CD Quality Gates.
+description: Framework-agnostic RAG failure diagnostics clinic and automated quantitative evaluation runbook. Classifies incidents into 19 production failure patterns (P01-P19), drives RAGAS Triad metrics, and enforces CI/CD Quality Gates.
 ---
 
 # RAG Diagnostics & Quantitative Evaluation Runbook
@@ -9,7 +9,7 @@ Kỹ năng chẩn đoán sự cố RAG đa phương thức và quy chuẩn đán
 
 ---
 
-## 1. Phân Loại 12 Lỗi RAG Thực Chiến (Failure Patterns P01–P12)
+## 1. Phân Loại 19 Lỗi RAG Thực Chiến (Failure Patterns P01–P19)
 
 Khi hệ thống gặp lỗi truy xuất, chất lượng câu trả lời bị suy giảm hoặc Quality Gate bị FAIL, kỹ sư đối chiếu và gắn mã sự cố theo bảng chuẩn hóa:
 
@@ -32,6 +32,8 @@ Khi hệ thống gặp lỗi truy xuất, chất lượng câu trả lời bị 
 | **P15** | **Regex Keyword Quick-Fix Anti-Pattern** | Lạm dụng regex hoặc danh sách từ khóa cứng (bắt tên lớp, hàm, entity bài học) để ép luồng Router thay vì dùng Machine Learning. | Xóa bỏ toàn bộ regex bắt từ khóa; chuyển 100% sang Platt-Calibrated LinearSVC trên không gian E5 1024-dim kết hợp Margin Decision Boundary (ΔP >= 0.12). |
 | **P16** | **Retrieval Hierarchy Precedence Inversion** | Thứ bậc thẩm định bị đảo ngược (kích hoạt Graceful Degradation trước Future Probing), khiến chunk nhiễu điểm thấp bài hiện tại nuốt mất bài tương lai. | Tuân thủ thứ tự bất biến: (1) Grounded chuẩn cao / AST Anchor -> (2) Future Probing (Margin > 0.08) -> (3) Graceful Degradation (>= 0.20) -> (4) Coverage Gap. |
 | **P17** | **Metaphorical / Extensional Query Misalignment** | Sinh viên mượn ẩn dụ đời sống ("phượt Đà Lạt", "xe máy") để hỏi bản chất lập trình, khiến Reranker cho điểm thấp và rớt oan sang `coverage_gap`. | Triển khai Kiến trúc 3 tầng: (1) Query Intent Decomposition; (2) CRAG AST Anchoring ($0.15 \le S < 0.22$); (3) Socratic Concept Abstraction Synthesis. Tuyệt đối không dùng regex hay hạ threshold toàn cục. |
+| **P18** | **Multi-Grounding Single-Label Discrepancy** | Video bài giảng 45 phút giảng một chủ đề ở nhiều đoạn (lý thuyết mở đầu vs demo code cuối bài). RAG trích xuất đúng video nhưng lệch $> 30\text{s}$ so với mốc duy nhất của đề thi. | Phân định rạch ròi: Cờ `has_ts: True` xác nhận ngữ cảnh đúng. Nâng cấp benchmark sang Multi-interval Ground-truth `[t1, t2]`, không coi đây là lỗi ảo giác P09. |
+| **P19** | **Zero-Sum Scalar Threshold Dilemma** | Nâng ngưỡng phẳng $\theta$ vô hướng để chặn Tier 2 thì vô tình nuốt mất Tier 1; hạ $\theta$ thì lọt câu hỏi bài tương lai. | Áp dụng **Pareto Context Sufficiency Invariant (ICLR 2025)**: Phán quyết quan hệ thống trị đa mục tiêu $(S, M, \Delta t)$, triệt tiêu hiện tượng đánh đổi. |
 
 ### Quy Trình Xử Lý Sự Cố P13 (Data-Centric AI Label Audit Protocol)
 Khi kết quả Benchmark xuất hiện sự sai lệch giữa dự đoán của hệ thống và nhãn kỳ vọng của đề thi:
