@@ -547,14 +547,8 @@ class RetrievalService:
         # -------------------------------------------------------------------------
         # TẦNG 2: FUTURE LESSON PROBING (Kiểm tra bài học tương lai)
         # -------------------------------------------------------------------------
-        # Kích hoạt khi:
-        # - Bài hiện tại không có Code AST >= 0.35, VÀ
-        # - Video bài hiện tại chỉ đạt dải hội thoại [0.30, 0.40) HOẶC dưới 0.30.
-        # Khắc phục triệt để hiện tượng văn nói bài cũ nuốt câu hỏi bài mới (ICLR 2025 Context Sufficiency):
-        # Bài tương lai chỉ được phép nuốt bài hiện tại khi:
-        # (a) target_seq is not None
-        # (b) future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE (0.40)
-        # (c) margin = future_score - max_current_score >= settings.FUTURE_PROBE_MARGIN (0.12)
+        # Áp dụng chuẩn [PARETO CONTEXT SUFFICIENCY INVARIANT - ICLR 2025]:
+        # Bài tương lai chỉ được phép thống trị bài hiện tại khi thỏa mãn bất đẳng thức Pareto.
         max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
         target_seq = None
         future_score = 0.0
@@ -570,15 +564,36 @@ class RetrievalService:
         )
         margin = future_score - max_current_score
 
-        if target_seq and future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and margin >= settings.FUTURE_PROBE_MARGIN:
+        has_local_grounding = max_current_score >= settings.PARETO_LOCAL_GROUNDING_THRESHOLD
+
+        future_dominates = False
+        if target_seq:
+            if not has_local_grounding:
+                # Trường hợp 1: Bài hiện tại KHÔNG có ngữ cảnh đạt chuẩn sàn (< 0.22)
+                # Kích hoạt Out-of-Lesson khi bài tương lai đạt độ tự tin (>= 0.40) và biên độ chuẩn (>= 0.12)
+                future_dominates = (
+                    future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and
+                    margin >= settings.FUTURE_PROBE_MARGIN
+                )
+            else:
+                # Trường hợp 2: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo hợp lệ (>= 0.22)
+                # Bài tương lai chỉ thống trị Pareto khi mang tính đột phá chuyên sâu vượt bậc (>= 0.55 và Margin >= 0.25)
+                # Ngăn chặn triệt để hiện tượng bài sau nhắc lại nuốt mất câu hỏi hợp lệ của bài hiện tại
+                future_dominates = (
+                    future_score >= settings.PARETO_DOMINANCE_FUTURE_MIN and
+                    margin >= settings.PARETO_DOMINANCE_MARGIN
+                )
+
+        if future_dominates:
             logger.info(
-                f"[RetrievalService] Tầng 2 Out-of-Lesson: Phát hiện chủ đề bài tương lai "
-                f"(Seq {target_seq}) vượt trội với score={future_score:.4f} (Margin Δ={margin:.4f} >= {settings.FUTURE_PROBE_MARGIN})."
+                f"[RetrievalService] Tầng 2 Out-of-Lesson (Pareto Dominance): Bài tương lai "
+                f"(Seq {target_seq}) thống trị với future_score={future_score:.4f}, margin={margin:.4f} "
+                f"(has_local_grounding={has_local_grounding})."
             )
             return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
 
-        # Nếu bài tương lai KHÔNG vượt trội, và bài hiện tại có video transcript trong dải [0.30, 0.40):
-        # Đây chính là ngữ cảnh bài giảng hợp lệ của bài hiện tại (bảo toàn BENCH-022, BENCH-035, BENCH-041,...).
+        # Nếu bài tương lai KHÔNG thống trị Pareto, và bài hiện tại có video transcript đạt ngưỡng hợp lệ:
+        # Đây chính là ngữ cảnh bài giảng hợp lệ của bài hiện tại (bảo toàn BENCH-004, BENCH-011, BENCH-041,...).
         if valid_video_items:
             anchor_candidates = sorted(
                 valid_video_items,
@@ -587,14 +602,14 @@ class RetrievalService:
             )[:final_top_k]
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
-                f"[RetrievalService] Tầng 2 Non-Dominated -> GROUNDED: Bài tương lai không vượt trội "
+                f"[RetrievalService] Tầng 2 Non-Dominated -> GROUNDED: Bài tương lai không thống trị "
                 f"(future={future_score:.4f}, margin={margin:.4f}). "
-                f"Video bài hiện tại đạt độ tin cậy hợp lệ {max_video_score:.4f} in [{settings.MODALITY_GATE_VIDEO_THRESHOLD}, {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE})."
+                f"Video bài hiện tại đạt độ tin cậy hợp lệ {max_video_score:.4f} >= {settings.MODALITY_GATE_VIDEO_THRESHOLD}."
             )
             return RetrievalResult(
                 chunks=final_assembled,
                 status="grounded",
-                is_low_confidence=False
+                is_low_confidence=(max_video_score < 0.25)
             )
 
         # -------------------------------------------------------------------------

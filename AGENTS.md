@@ -56,7 +56,15 @@
   - *Ranh giới hoàn thiện (Stateful Full-Loop):* Đồ thị hiện tại chưa kích hoạt lưu vết phiên đa lượt (Stateless / Single-Turn) và tầng phát luồng LLM SSE vẫn chạy ngoài graph. Việc nâng cấp thành **Full End-to-End Stateful StateGraph** (4 Discrete Nodes gồm Streaming Generator Node + Redis Sliding Window Checkpointer 4–6 turns) được quy hoạch thực hiện chính thức ở **Chặng 3**.
 - **Data/Code Separation Invariant (Bất Biến Tách Rời Dữ Liệu & Mã Nguồn):**
   - Tuyệt đối KHÔNG hardcode các bảng tra cứu, từ điển ánh xạ metadata (như bảng gắn mốc video `AST_VIDEO_GROUND_TRUTH`) trực tiếp vào mã nguồn Python (`.py`).
-  - Mọi metadata nghiệp vụ bắt buộc phải được lưu trữ độc lập trong thư mục `data/metadata/*.json` (ví dụ: `data/metadata/lesson_code_video_binding.json`), và các script/service chỉ được đọc động từ file manifest này.
+- **Pareto Context Sufficiency Invariant (ICLR 2025):**
+  - Hệ thống phân định rạch ròi giữa độ tương quan ngữ nghĩa (Semantic Relevance) và độ đầy đủ thông tin sư phạm (Context Sufficiency).
+  - Bài học tương lai chỉ được phép thống trị (dominate) bài hiện tại sang trạng thái `out_of_lesson` khi thỏa mãn bất đẳng thức Pareto:
+    (a) Nếu bài hiện tại $S_{\text{current}} < 0.22$ (chưa có cơ sở giảng dạy cục bộ): $S_{\text{future}} \ge 0.25$ và $\text{Margin} \ge 0.12$.
+    (b) Nếu bài hiện tại $S_{\text{current}} \ge 0.22$ (đã có cơ sở giảng dạy cục bộ): Bài tương lai bắt buộc phải là bài giảng chuyên sâu vượt trội với $S_{\text{future}} \ge 0.55$ và $\text{Margin} \ge 0.25$.
+  - Tuyệt đối không dùng ngưỡng phẳng hoặc giải pháp vá tạm (Zero Quick-Fix).
+- **Multi-Grounding Timestamp Evaluation Principle:**
+  - Trong video bài giảng dài (30-60 phút), một khái niệm thường xuất hiện ở nhiều phân đoạn (lý thuyết, minh họa code, bài tập áp dụng).
+  - Cờ `has_ts: True` trong báo cáo kiểm thử xác nhận hệ thống đã trích xuất thành công mốc video thực tế có thật. Độ lệch $|\Delta t| > 30\text{s}$ so với đáp án mẫu phản ánh hiện tượng Single-Label Annotation Discrepancy, hoàn toàn độc lập với độ chính xác ngữ cảnh của CRAG Grader và không được coi là lỗi ảo giác (Hallucination).
 - **Zero Foreign Superpower Policy:** Từ chối các plugin superpower ngoại lai không rõ nguồn gốc; chỉ sử dụng bespoke custom skills may đo trong thư mục `.agents/skills/`.
 
 
