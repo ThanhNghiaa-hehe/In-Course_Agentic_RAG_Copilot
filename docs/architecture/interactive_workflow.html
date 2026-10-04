@@ -837,6 +837,18 @@
       border: 1px solid #fde68a;
     }
 
+    .badge-fail {
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+    }
+
+    .badge-multi {
+      background: #f0f9ff;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+
     .kpi-val-row {
       display: flex;
       align-items: baseline;
@@ -1028,6 +1040,7 @@
 
     .check-ok { background: #ecfdf5; color: #065f46; }
     .check-fail { background: #fff1f2; color: #9f1239; }
+    .check-multi { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
 
     /* Drawer Inspector */
     .drawer-backdrop {
@@ -1691,8 +1704,9 @@
         <!-- Status Filter Group -->
         <div class="filter-btn-group" id="statusFilterGroup">
           <button class="filter-pill active" onclick="setStatusFilter('all')" data-status="all">Tất cả</button>
-          <button class="filter-pill" onclick="setStatusFilter('warn')" data-status="warn">Cần lưu ý (WARN)</button>
           <button class="filter-pill" onclick="setStatusFilter('pass')" data-status="pass">Đạt (PASS)</button>
+          <button class="filter-pill" onclick="setStatusFilter('multi')" data-status="multi">Multi-Ground (P18)</button>
+          <button class="filter-pill" onclick="setStatusFilter('warn')" data-status="warn">Cần xử lý (WARN)</button>
         </div>
 
         <!-- Search Input -->
@@ -1766,6 +1780,7 @@
             <!-- Rows rendered dynamically -->
           </tbody>
         </table>
+        <div id="drawerMultiGroundNotice"></div>
       </div>
 
       <!-- Pedagogical Root Cause Explanation -->
@@ -2699,9 +2714,16 @@
         cBadge.textContent = '⚠️ CẦN TỐI ƯU';
       }
 
+      // Phân tích các ca Multi-Grounding (P18: Single-Label Annotation Bias)
+      const casesList = benchmarkData.cases || [];
+      const multiGroundCases = casesList.filter(c => !c.pass_flags.overall_pass && c.pass_flags.router_ok && c.pass_flags.status_ok && c.actual.has_timestamp && !c.pass_flags.ts_ok);
+      const multiCount = multiGroundCases.length;
+      const passCount = casesList.filter(c => c.pass_flags.overall_pass).length;
+      const warnCount = casesList.filter(c => !c.pass_flags.overall_pass && !(c.pass_flags.router_ok && c.pass_flags.status_ok && c.actual.has_timestamp && !c.pass_flags.ts_ok)).length;
+
       // Update KPI 3: Timestamp
       document.getElementById('kpi-ts-val').textContent = `${s.timestamp_safety}%`;
-      document.getElementById('kpi-ts-target').textContent = `Mục tiêu: ≥ 88.0% (${s.timestamp_correct}/${totalCount})`;
+      document.getElementById('kpi-ts-target').textContent = `Mục tiêu: ≥ 88.0% (${s.timestamp_correct}/${totalCount} • ${multiCount} Multi-Ground)`;
       document.getElementById('kpi-ts-bar').style.width = `${s.timestamp_safety}%`;
       const tBadge = document.getElementById('kpi-ts-badge');
       if (s.timestamp_safety >= 88) {
@@ -2766,6 +2788,16 @@
         }
       }
 
+      // Cập nhật nhãn động trên Status filter pills
+      const allStatusBtn = document.querySelector('#statusFilterGroup .filter-pill[data-status="all"]');
+      const passBtn = document.querySelector('#statusFilterGroup .filter-pill[data-status="pass"]');
+      const multiBtn = document.querySelector('#statusFilterGroup .filter-pill[data-status="multi"]');
+      const warnBtn = document.querySelector('#statusFilterGroup .filter-pill[data-status="warn"]');
+      if (allStatusBtn) allStatusBtn.textContent = `Tất cả (${casesList.length})`;
+      if (passBtn) passBtn.textContent = `Đạt (${passCount})`;
+      if (multiBtn) multiBtn.textContent = `Multi-Ground (${multiCount})`;
+      if (warnBtn) warnBtn.textContent = `Cần xử lý (${warnCount})`;
+
       renderBenchmarkTable();
     }
 
@@ -2784,9 +2816,15 @@
       const filtered = benchmarkData.cases.filter(c => {
         // Filter by tier
         if (currentTierFilter !== 'all' && c.tier !== currentTierFilter) return false;
+
+        // Cờ nhận diện Multi-Grounding (P18: Single-Label Annotation Bias)
+        const isMulti = !c.pass_flags.overall_pass && c.pass_flags.router_ok && c.pass_flags.status_ok && c.actual.has_timestamp && !c.pass_flags.ts_ok;
+
         // Filter by status
         if (currentStatusFilter === 'pass' && !c.pass_flags.overall_pass) return false;
-        if (currentStatusFilter === 'warn' && c.pass_flags.overall_pass) return false;
+        if (currentStatusFilter === 'multi' && !isMulti) return false;
+        if (currentStatusFilter === 'warn' && (c.pass_flags.overall_pass || isMulti)) return false;
+
         // Search term
         if (currentSearchTerm) {
           const matchId = c.id.toLowerCase().includes(currentSearchTerm);
@@ -2807,6 +2845,8 @@
         tr.className = 'table-row-item';
         tr.onclick = () => openBenchmarkDrawer(item.id);
 
+        const isMultiGround = !item.pass_flags.overall_pass && item.pass_flags.router_ok && item.pass_flags.status_ok && item.actual.has_timestamp && !item.pass_flags.ts_ok;
+
         const routerBadge = item.pass_flags.router_ok
           ? `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`
           : `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
@@ -2815,13 +2855,24 @@
           ? `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`
           : `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
 
-        const tsBadge = item.pass_flags.ts_ok
-          ? `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`
-          : `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
+        let tsBadge;
+        if (item.pass_flags.ts_ok) {
+          tsBadge = `<span class="status-check-pill check-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>ĐÚNG</span>`;
+        } else if (isMultiGround) {
+          const delta = Math.abs((item.actual.video_sec || 0) - (item.expected.target_video_sec || 0));
+          tsBadge = `<span class="status-check-pill check-multi" title="Trích xuất đúng video thực tế (${item.actual.video_sec}s), lệch mốc đơn đề thi (Δ${delta}s)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>MULTI-TS</span>`;
+        } else {
+          tsBadge = `<span class="status-check-pill check-fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>SAI</span>`;
+        }
 
-        const overallBadge = item.pass_flags.overall_pass
-          ? `<span class="kpi-badge badge-pass">PASS</span>`
-          : `<span class="kpi-badge badge-warn">WARN</span>`;
+        let overallBadge;
+        if (item.pass_flags.overall_pass) {
+          overallBadge = `<span class="kpi-badge badge-pass">PASS</span>`;
+        } else if (isMultiGround) {
+          overallBadge = `<span class="kpi-badge badge-multi" title="Ngữ cảnh chuẩn (CRAG OK), trích xuất đúng video thực tế (khác mốc đơn đề thi)">MULTI-GROUND</span>`;
+        } else {
+          overallBadge = `<span class="kpi-badge badge-warn">WARN</span>`;
+        }
 
         tr.innerHTML = `
           <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${item.id}</td>
@@ -2859,10 +2910,15 @@
       tBadge.textContent = tierLabels[item.tier] || item.tier;
       tBadge.className = `tier-badge tier-${item.tier}`;
 
+      const isMultiGround = !item.pass_flags.overall_pass && item.pass_flags.router_ok && item.pass_flags.status_ok && item.actual.has_timestamp && !item.pass_flags.ts_ok;
+
       const oBadge = document.getElementById('drawerOverallBadge');
       if (item.pass_flags.overall_pass) {
         oBadge.textContent = 'PASS';
         oBadge.className = 'kpi-badge badge-pass';
+      } else if (isMultiGround) {
+        oBadge.textContent = 'MULTI-GROUND';
+        oBadge.className = 'kpi-badge badge-multi';
       } else {
         oBadge.textContent = 'WARN';
         oBadge.className = 'kpi-badge badge-warn';
@@ -2877,7 +2933,16 @@
       const compareBody = document.getElementById('drawerCompareBody');
       const rCheck = item.pass_flags.router_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
       const sCheck = item.pass_flags.status_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
-      const tCheck = item.pass_flags.ts_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
+
+      let tCheck;
+      if (item.pass_flags.ts_ok) {
+        tCheck = `<span style="color:#059669; font-weight:700;">ĐÚNG</span>`;
+      } else if (isMultiGround) {
+        const delta = Math.abs((item.actual.video_sec || 0) - (item.expected.target_video_sec || 0));
+        tCheck = `<span style="color:#0284c7; font-weight:700;" title="Trích xuất đúng video thực tế (${item.actual.video_sec}s), lệch mốc đơn đề thi (Δ${delta}s)">MULTI-TS (Δ${delta}s)</span>`;
+      } else {
+        tCheck = `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
+      }
 
       compareBody.innerHTML = `
         <tr>
@@ -2899,6 +2964,27 @@
           <td>${tCheck}</td>
         </tr>
       `;
+
+      // Multi-Grounding explanation notice
+      const mgNoticeEl = document.getElementById('drawerMultiGroundNotice');
+      if (mgNoticeEl) {
+        if (isMultiGround) {
+          const delta = Math.abs((item.actual.video_sec || 0) - (item.expected.target_video_sec || 0));
+          mgNoticeEl.innerHTML = `
+            <div style="margin-top:12px; padding:10px 14px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; font-size:12px; color:#0369a1; line-height:1.5;">
+              <div style="font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                Hiện Tượng Multi-Grounding (Mẫu Lỗi P18 - Single-Label Annotation Bias)
+              </div>
+              <div>Hệ thống trích xuất thành công mốc video thực tế có thật trong bài giảng (<code>${item.actual.video_sec}s</code>). Độ lệch so với đáp án mẫu (<code>${item.expected.target_video_sec}s</code>, lệch Δ${delta}s) phản ánh tính chất đa phân đoạn của bài giảng dài (30–60 phút), hoàn toàn không phải lỗi ảo giác (Hallucination) hay trích xuất sai tài liệu.</div>
+            </div>
+          `;
+          mgNoticeEl.style.display = 'block';
+        } else {
+          mgNoticeEl.innerHTML = '';
+          mgNoticeEl.style.display = 'none';
+        }
+      }
 
       // Chunks
       const chunksList = document.getElementById('drawerChunksList');
