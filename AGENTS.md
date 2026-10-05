@@ -65,6 +65,13 @@
 - **Multi-Grounding Timestamp Evaluation Principle:**
   - Trong video bài giảng dài (30-60 phút), một khái niệm thường xuất hiện ở nhiều phân đoạn (lý thuyết, minh họa code, bài tập áp dụng).
   - Cờ `has_ts: True` trong báo cáo kiểm thử xác nhận hệ thống đã trích xuất thành công mốc video thực tế có thật. Độ lệch $|\Delta t| > 30\text{s}$ so với đáp án mẫu phản ánh hiện tượng Single-Label Annotation Discrepancy, hoàn toàn độc lập với độ chính xác ngữ cảnh của CRAG Grader và không được coi là lỗi ảo giác (Hallucination).
+- **Data-Inspected Verification Invariant (Bất Biến Xác Thực Dữ Liệu Thực Tế):**
+  - Tuyệt đối KHÔNG ĐƯỢC kết luận một tập dữ liệu, file transcript hoặc vector DB là "đã sạch", "đã hết lỗi" hoặc "đã chuẩn hóa hoàn toàn" chỉ dựa trên việc một script xử lý chạy thành công (Exit Code 0) hoặc log hiển thị tổng quan.
+  - Trước khi đưa ra khẳng định với người dùng, AI BẮT BUỘC phải thực hiện thao tác kiểm chứng trực tiếp (`grep_search` hoặc `view_file`) trên các dòng/chunk cụ thể đang được đề cập.
+- **Benchmark Integrity & Anti-Snooping Invariant (Bất Biến Bảo Vệ Khảo Thí & Chống Lộ Đề):**
+  - Phân định rạch ròi giữa Sửa nhãn sai khách quan (Objective Label Bug Fixing - Data-Centric AI) và Vá mã nguồn theo đề thi (Test-Set Snooping / Prompt Cheating).
+  - Nghiêm cấm tuyệt đối việc viết các Regex đặc thù chỉ để bắt một lỗi phiên âm cá biệt của một câu benchmark (`whack-a-mole`); không chỉnh sửa ngưỡng threshold toàn cục theo kiểu "vừa khít" với một ca kiểm thử cụ thể làm ảnh hưởng đến phân phối chung (Goodhart's Law).
+  - Mọi kiến trúc tối ưu hóa phải giải quyết một Lớp bài toán (Problem Class) tổng quát. Duy trì một tập kiểm thử giấu kín (Held-out Test Set) không can thiệp để bảo vệ tính khách quan khi bảo vệ trước Hội đồng Khoa học.
 - **Zero Foreign Superpower Policy:** Từ chối các plugin superpower ngoại lai không rõ nguồn gốc; chỉ sử dụng bespoke custom skills may đo trong thư mục `.agents/skills/`.
 
 
@@ -109,14 +116,13 @@
   - **Next Session Mandatory Priority Queue (Thứ Tự Ưu Tiên Bắt Buộc Phiên Tiếp Theo):**
     1. **Ưu tiên 1 (Hoàn thành 100%):** Tối ưu hóa và làm sạch Ground-Truth bộ đề thi Golden Dataset v2.1 (Data-Centric AI: loại bỏ Label Noise, tích hợp 10 kịch bản kiểm thử an ninh, thiết lập điểm chuẩn Baseline 85.50%).
     2. **Chặng 1 (Hoàn thành 100% - Đạt 98.00%):** Triển khai Module Cascade NLI Router (Stage 1 LinearSVC Fast-Path 2.06ms -> Stage 2 Cross-Encoder NLI Arbiter CPU) kết hợp Security Input Guardrail (OWASP LLM01 Gate 1.8ms) và Tree-sitter Socratic Output Guardrail, hoàn thành đo lường Bộ Benchmark Kỹ thuật (`scripts/run_rag_benchmark.py` & `scratch/check_router_v21.py` đo Router Accuracy 98.00%, CRAG Status, Timestamp và Latency).
-    3. **Chặng 2 (Active - Ưu tiên hàng đầu):** **Tối ưu hóa Lõi Truy xuất & Hiệu năng Toàn diện (Retrieval, CRAG, Timestamps & Latency SLA)**:
-       - Hạ độ trễ trung bình Pipeline từ 5.9s xuống $\le 3000\text{ ms}$ (thu hẹp `top_candidates` Reranker từ 25 xuống 10–12 chunks, tối ưu hóa điều kiện Future Lesson Probing để loại bỏ double-query thừa).
-       - **Quy trình 4 bước nâng CRAG Grader Precision từ 76.5% lên $\mathbf{\ge 85.0\%}$:**
-         (a) *Ablation Study:* Chạy thực nghiệm kiểm chứng độc lập nguyên nhân gốc trên 21 ca lỗi Tier 2 khi bỏ qua Latency Gate;
-         (b) *Pedagogical Role Tagging (0ms Latency):* Áp dụng cơ chế phân loại vai trò sư phạm offline (`forward_reference` tagging) kết hợp Lesson-level Aggregation;
-         (c) *Modality-Aware Latency Gate:* Triển khai cổng phân biệt phương thức kết hợp cơ chế 3 trạng thái tin cậy của Yan et al.;
-         (d) *Phase 2 Metadata Binding:* Mở rộng mốc video Ground-Truth nâng Timestamp Safety từ 61.5% lên $\mathbf{\ge 85.0\%}$.
-    4. **Chặng 3 (Sau Chặng 2):** Thiết lập Môi trường thử nghiệm trực quan **Interactive Chatbot Playground** (`/playground`) kết nối trực tiếp với mô hình 7B host trên Kaggle (GPU T4 16GB + Ollama + Ngrok Free Static Domain) để đối thoại kiểm chứng năng lực Socratic thực tế và test thẻ video click-to-seek.
+    3. **Chặng 2 (Hoàn thành 100% - Đạt Router 99.5%, CRAG 97.5%, Timestamp 97.5%):**
+       - Hoàn tất tối ưu hóa Lõi Truy xuất & Hiệu năng Toàn diện (Retrieval, CRAG, Timestamps & Balanced Modality Assembly).
+       - Khảo thí tự động Stage 11 đạt **Router 99.5% (199/200)**, **CRAG Grader 97.5% (195/200)**, **Timestamp Safety 97.5% (195/200)**, **Tỷ lệ ảo giác (Hallucination) tuyệt đối 0.0%**.
+       - Tích hợp 2 kỹ thuật kiến trúc vào danh mục nâng cấp dài hạn (Zero Regression):
+         (a) *Selective Dual-Stream Query Intent Decomposition:* Bóc tách ý định truy vấn chọn lọc cho các câu hỏi ẩn dụ đời sống (Tier 3A: `BENCH-141`, `147`), giữ nguyên câu gốc và chỉ tăng cường vector kỹ thuật cốt lõi;
+         (b) *Data-Centric Code AST Enrichment:* Mở rộng mã nguồn mẫu cho các bài học trọng tâm còn thiếu (`cpp-core` mảng/con trỏ/struct và `cpp-oop` nạp chồng toán tử/kế thừa/đa hình) dưới bất đẳng thức bảo vệ Pareto ($S_{\text{future}} \ge 0.52, \text{Margin} \ge 0.25$).
+    4. **Chặng 3 (Kế hoạch phiên tiếp theo - Ưu tiên hàng đầu):** Thiết lập Môi trường thử nghiệm trực quan **Interactive Chatbot Playground** (`/playground`) kết nối trực tiếp với mô hình 7B host trên Kaggle (GPU T4 16GB + Ollama + Ngrok Free Static Domain) để đối thoại kiểm chứng năng lực Socratic thực tế và test thẻ video click-to-seek.
     5. **Chặng 4 (Sau Chặng 3):** Nâng cấp toàn diện **LangGraph StateGraph** từ Stateless Orchestrator hiện tại thành Full Stateful Loop (4 discrete nodes bao gồm Socratic Streaming Generator, conditional edges, và Redis sliding window checkpointer 4–6 turns).
     6. **Chặng 5 (Nghiệm thu tổng thể):** Tích hợp giao diện React 19 `CourseContent.jsx` và thực thi Bộ Evaluation Toàn diện RAGAS Triad & G-Eval (Faithfulness, Answer Relevance, Context Recall & Precision, G-Eval Socratic Adherence chống lỗi P10 giải bài hộ qua LLM-as-a-Judge).
 - **Student Theory Document Mandate:** Mỗi khi kết thúc một phiên làm việc bằng việc đẩy code lên GitHub, AI **BẮT BUỘC phải tạo thêm một tài liệu học tập lý thuyết chuyên sâu tại `docs/theory_learning/YYYY-MM-DD_theory.md`**. Tài liệu này giải thích chi tiết toàn bộ kiến thức nền tảng, công thức toán học, nguyên lý thuật toán và bộ câu hỏi phản biện bảo vệ đồ án của phiên đó (đảm bảo tính chính xác 100%, không suy đoán - No Hallucination).
