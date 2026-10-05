@@ -56,12 +56,22 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 1216,
+    "target_video_sec": 915,
     "expected_keywords": [
       "float",
       "double"
     ],
-    "notes": "So sánh số thực float/double Bài 2"
+    "notes": "So sánh số thực float/double Bài 2 (lý thuyết 915s, minh họa biến 1216s)",
+    "valid_video_intervals": [
+      [
+        888,
+        984
+      ],
+      [
+        1216,
+        1280
+      ]
+    ]
   },
   {
     "id": "BENCH-005",
@@ -77,7 +87,17 @@
       "cin",
       "cout"
     ],
-    "notes": "Nhập xuất cin cout Bài 2"
+    "notes": "Nhập xuất cin cout Bài 2",
+    "valid_video_intervals": [
+      [
+        276,
+        366
+      ],
+      [
+        2582,
+        2672
+      ]
+    ]
   },
   {
     "id": "BENCH-006",
@@ -102,14 +122,14 @@
     "course_id": "cpp-core",
     "lesson_seq": 2,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 1180,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "unsigned",
       "dấu"
     ],
-    "notes": "Từ khóa unsigned Bài 2"
+    "notes": "Từ khóa unsigned chưa dạy ở Bài 2 (RAG chống ảo giác an toàn)"
   },
   {
     "id": "BENCH-008",
@@ -125,7 +145,17 @@
       "endl",
       "\n"
     ],
-    "notes": "Xuống dòng endl vs \\n Bài 2"
+    "notes": "Xuống dòng endl vs \\n Bài 2",
+    "valid_video_intervals": [
+      [
+        0,
+        90
+      ],
+      [
+        1624,
+        1714
+      ]
+    ]
   },
   {
     "id": "BENCH-009",
@@ -147,19 +177,29 @@
   {
     "id": "BENCH-010",
     "tier": "in_scope",
-    "query": "Sự khác biệt giữa toán tử tiền tố ++x và hậu tố x++ là gì?",
+    "query": "Sự khác biệt giữa toán tử tiền tố ++x (tăng trước) và hậu tố x++ (tăng sau) trong C++ là gì?",
     "course_id": "cpp-core",
     "lesson_seq": 3,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 120,
+    "target_video_sec": 1168,
     "expected_keywords": [
       "++x",
       "x++",
       "tiền tố"
     ],
-    "notes": "Toán tử ++ Bài 3"
+    "notes": "Toán tử ++ Bài 3 tại mốc 1168s (bổ sung alias tăng trước/tăng sau xóa vocabulary mismatch)",
+    "valid_video_intervals": [
+      [
+        1123,
+        1213
+      ],
+      [
+        1230,
+        1320
+      ]
+    ]
   },
   {
     "id": "BENCH-011",
@@ -216,16 +256,26 @@
     "tier": "in_scope",
     "query": "Làm thế nào để kiểm tra một số nguyên n có phải là số chẵn bằng toán tử %?",
     "course_id": "cpp-core",
-    "lesson_seq": 3,
+    "lesson_seq": 4,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 120,
+    "target_video_sec": 751,
     "expected_keywords": [
       "chẵn",
       "% 2"
     ],
-    "notes": "Kiểm tra số chẵn Bài 3"
+    "notes": "Kiểm tra số chẵn bằng if (n % 2 == 0) Bài 4 (ví dụ 525s, mở rộng 751s)",
+    "valid_video_intervals": [
+      [
+        480,
+        570
+      ],
+      [
+        706,
+        796
+      ]
+    ]
   },
   {
     "id": "BENCH-015",
@@ -242,23 +292,39 @@
       "!=",
       "so sánh"
     ],
-    "notes": "So sánh == vs = Bài 3"
+    "notes": "So sánh == vs = Bài 3",
+    "valid_video_intervals": [
+      [
+        1415,
+        1552
+      ]
+    ]
   },
   {
     "id": "BENCH-016",
     "tier": "in_scope",
     "query": "Hiện tượng ngắn mạch (short-circuit evaluation) của toán tử logic && trong C++?",
     "course_id": "cpp-core",
-    "lesson_seq": 3,
+    "lesson_seq": 4,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 1554,
+    "target_video_sec": 751,
     "expected_keywords": [
       "ngắn mạch",
       "short-circuit"
     ],
-    "notes": "Ngắn mạch logic Bài 3"
+    "notes": "Hiện tượng ngắn mạch logic && tại Bài 4",
+    "valid_video_intervals": [
+      [
+        566,
+        656
+      ],
+      [
+        706,
+        796
+      ]
+    ]
   },
   {
     "id": "BENCH-017",
@@ -290,7 +356,17 @@
       "switch",
       "case"
     ],
-    "notes": "Khi nào dùng switch Bài 4"
+    "notes": "Khi nào dùng switch Bài 4",
+    "valid_video_intervals": [
+      [
+        1368,
+        1458
+      ],
+      [
+        1670,
+        1760
+      ]
+    ]
   },
   {
     "id": "BENCH-019",
@@ -306,7 +382,13 @@
       "break",
       "switch"
     ],
-    "notes": "Từ khóa break switch Bài 4"
+    "notes": "Từ khóa break switch Bài 4",
+    "valid_video_intervals": [
+      [
+        1582,
+        1714
+      ]
+    ]
   },
   {
     "id": "BENCH-020",
@@ -338,23 +420,33 @@
       "ba ngôi",
       "?:"
     ],
-    "notes": "Toán tử ba ngôi Bài 4"
+    "notes": "Toán tử ba ngôi Bài 4",
+    "valid_video_intervals": [
+      [
+        135,
+        225
+      ],
+      [
+        706,
+        796
+      ]
+    ]
   },
   {
     "id": "BENCH-022",
     "tier": "in_scope",
     "query": "Cách kiểm tra một năm có phải là năm nhuận bằng cấu trúc if else?",
     "course_id": "cpp-core",
-    "lesson_seq": 4,
+    "lesson_seq": 5,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 525,
+    "target_video_sec": 2422,
     "expected_keywords": [
       "năm nhuận",
       "if"
     ],
-    "notes": "Bài toán năm nhuận Bài 4"
+    "notes": "Bài toán năm nhuận giải tại Bài 5 mốc 2422s"
   },
   {
     "id": "BENCH-023",
@@ -403,7 +495,17 @@
       "for",
       "vòng lặp"
     ],
-    "notes": "Cú pháp for Bài 6"
+    "notes": "Cú pháp for Bài 6",
+    "valid_video_intervals": [
+      [
+        7,
+        97
+      ],
+      [
+        1509,
+        1599
+      ]
+    ]
   },
   {
     "id": "BENCH-026",
@@ -414,12 +516,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 1600,
+    "target_video_sec": 3046,
     "expected_keywords": [
       "while",
       "do-while"
     ],
-    "notes": "While vs do-while Bài 6"
+    "notes": "While vs do-while Bài 6 mốc 3046s"
   },
   {
     "id": "BENCH-027",
@@ -435,7 +537,17 @@
       "vô tận",
       "infinite"
     ],
-    "notes": "Vòng lặp vô tận Bài 6"
+    "notes": "Vòng lặp vô tận Bài 6",
+    "valid_video_intervals": [
+      [
+        696,
+        786
+      ],
+      [
+        1321,
+        1411
+      ]
+    ]
   },
   {
     "id": "BENCH-028",
@@ -499,7 +611,17 @@
       "duyệt ngược",
       "N về 1"
     ],
-    "notes": "Duyệt ngược Bài 6"
+    "notes": "Duyệt ngược Bài 6",
+    "valid_video_intervals": [
+      [
+        1321,
+        1411
+      ],
+      [
+        1509,
+        1599
+      ]
+    ]
   },
   {
     "id": "BENCH-032",
@@ -515,14 +637,24 @@
       "khi nào dùng while",
       "chữ số"
     ],
-    "notes": "Khi nào dùng while Bài 6"
+    "notes": "Khi nào dùng while Bài 6",
+    "valid_video_intervals": [
+      [
+        1321,
+        1411
+      ],
+      [
+        2204,
+        2294
+      ]
+    ]
   },
   {
     "id": "BENCH-033",
     "tier": "in_scope",
     "query": "Nguyên mẫu hàm (function prototype) trong C++ là gì và vì sao cần khai báo?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 8,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
@@ -531,14 +663,14 @@
       "prototype",
       "nguyên mẫu"
     ],
-    "notes": "Nguyên mẫu hàm Bài 11"
+    "notes": "Nguyên mẫu hàm Bài 8"
   },
   {
     "id": "BENCH-034",
     "tier": "in_scope",
     "query": "Sự khác biệt giữa truyền tham trị (pass by value) và truyền tham chiếu (pass by reference)?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 7,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
@@ -547,14 +679,14 @@
       "tham trị",
       "tham chiếu"
     ],
-    "notes": "Tham trị vs tham chiếu Bài 11"
+    "notes": "Tham trị vs tham chiếu Bài 7"
   },
   {
     "id": "BENCH-035",
     "tier": "in_scope",
     "query": "Làm sao để viết hàm hoán đổi giá trị của 2 biến số nguyên swap?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 8,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
@@ -563,14 +695,14 @@
       "swap",
       "hoán vị"
     ],
-    "notes": "Hàm swap Bài 11"
+    "notes": "Hàm swap trong chuyên đề Hàm Bài 8"
   },
   {
     "id": "BENCH-036",
     "tier": "in_scope",
     "query": "Từ khóa void trong kiểu trả về của hàm có ý nghĩa gì?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 7,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
@@ -579,14 +711,14 @@
       "void",
       "trả về"
     ],
-    "notes": "Từ khóa void Bài 11"
+    "notes": "Từ khóa void Bài 7"
   },
   {
     "id": "BENCH-037",
     "tier": "in_scope",
     "query": "Toán tử & trong định nghĩa tham số hàm void func(int &x) có tác dụng gì?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 7,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
@@ -595,55 +727,65 @@
       "&x",
       "tham chiếu"
     ],
-    "notes": "Toán tử tham chiếu Bài 11"
+    "notes": "Toán tử tham chiếu & trong Hàm Bài 7 (mốc 5750s)",
+    "valid_video_intervals": [
+      [
+        1463,
+        1553
+      ],
+      [
+        5705,
+        5795
+      ]
+    ]
   },
   {
     "id": "BENCH-038",
     "tier": "in_scope",
     "query": "Lệnh return trong thân hàm có thể xuất hiện nhiều lần không?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 7,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 1644,
+    "target_video_sec": 2497,
     "expected_keywords": [
       "return",
       "thoát"
     ],
-    "notes": "Lệnh return Bài 11"
+    "notes": "Lệnh return Bài 7"
   },
   {
     "id": "BENCH-039",
     "tier": "in_scope",
     "query": "Giá trị mặc định của tham số hàm (default arguments) được khai báo ở đâu?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 8,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 2130,
+    "target_video_sec": 1641,
     "expected_keywords": [
       "default arguments",
       "mặc định"
     ],
-    "notes": "Tham số mặc định Bài 11"
+    "notes": "Tham số mặc định Bài 8"
   },
   {
     "id": "BENCH-040",
     "tier": "in_scope",
     "query": "Tầm vực (scope) của biến cục bộ khai báo trong thân hàm kéo dài bao lâu?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 7,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 994,
+    "target_video_sec": 5391,
     "expected_keywords": [
       "scope",
       "cục bộ"
     ],
-    "notes": "Tầm vực biến Bài 11"
+    "notes": "Tầm vực biến Bài 7"
   },
   {
     "id": "BENCH-041",
@@ -659,7 +801,17 @@
       "Class",
       "Object"
     ],
-    "notes": "Class vs Object Bài 53"
+    "notes": "Class vs Object Bài 53 (lý thuyết thuộc tính/phương thức 228s, tổng kết 2180s)",
+    "valid_video_intervals": [
+      [
+        180,
+        275
+      ],
+      [
+        2135,
+        2225
+      ]
+    ]
   },
   {
     "id": "BENCH-042",
@@ -686,12 +838,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 350,
+    "target_video_sec": 814,
     "expected_keywords": [
       "constructor",
       "khởi tạo"
     ],
-    "notes": "Constructor Bài 53"
+    "notes": "Constructor Bài 53 mốc 814s"
   },
   {
     "id": "BENCH-044",
@@ -724,7 +876,17 @@
       "private",
       "đóng gói"
     ],
-    "notes": "Lý do dùng private Bài 53"
+    "notes": "Lý do dùng private Bài 53 (giải thích 462s và 724s)",
+    "valid_video_intervals": [
+      [
+        417,
+        507
+      ],
+      [
+        679,
+        769
+      ]
+    ]
   },
   {
     "id": "BENCH-046",
@@ -740,7 +902,17 @@
       "TinhGPA",
       "GPA"
     ],
-    "notes": "Hàm TinhGPA Bài 53"
+    "notes": "Hàm TinhGPA Bài 53",
+    "valid_video_intervals": [
+      [
+        305,
+        395
+      ],
+      [
+        1042,
+        1132
+      ]
+    ]
   },
   {
     "id": "BENCH-047",
@@ -789,7 +961,17 @@
       "this",
       "con trỏ this"
     ],
-    "notes": "Con trỏ this Bài 53"
+    "notes": "Con trỏ this Bài 53 (giới thiệu 418s, minh họa code 1584s)",
+    "valid_video_intervals": [
+      [
+        373,
+        463
+      ],
+      [
+        1539,
+        1629
+      ]
+    ]
   },
   {
     "id": "BENCH-050",
@@ -800,12 +982,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 350,
+    "target_video_sec": 1170,
     "expected_keywords": [
       "destructor",
       "hàm hủy"
     ],
-    "notes": "Destructor Bài 53"
+    "notes": "Destructor Bài 53 mốc 1170s"
   },
   {
     "id": "BENCH-051",
@@ -880,13 +1062,13 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 180,
+    "target_video_sec": 3048,
     "expected_keywords": [
       "string",
       "toupper",
       "chuỗi"
     ],
-    "notes": "Xử lý chuỗi Bài 54"
+    "notes": "Xử lý chuỗi stringstream Bài 54 mốc 3048s"
   },
   {
     "id": "BENCH-056",
@@ -897,12 +1079,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 180,
+    "target_video_sec": 3139,
     "expected_keywords": [
       "khoảng trắng",
       "trim"
     ],
-    "notes": "Xóa khoảng trắng Bài 54"
+    "notes": "Xóa khoảng trắng Bài 54 mốc 3139s"
   },
   {
     "id": "BENCH-057",
@@ -918,23 +1100,43 @@
       "chuanHoaThongTin",
       "gọi hàm"
     ],
-    "notes": "Gọi chuanHoaThongTin Bài 54"
+    "notes": "Gọi chuanHoaThongTin Bài 54",
+    "valid_video_intervals": [
+      [
+        2496,
+        2586
+      ],
+      [
+        3348,
+        3438
+      ]
+    ]
   },
   {
     "id": "BENCH-058",
     "tier": "in_scope",
     "query": "Toán tử s[i] dùng để truy cập từng ký tự trong biến std::string như thế nào?",
-    "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "course_id": "cpp-core",
+    "lesson_seq": 18,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 180,
+    "target_video_sec": 350,
     "expected_keywords": [
       "s[i]",
       "ký tự"
     ],
-    "notes": "Truy cập ký tự chuỗi Bài 54"
+    "notes": "Truy cập ký tự xâu s[i] tại cpp-core Bài 18",
+    "valid_video_intervals": [
+      [
+        305,
+        395
+      ],
+      [
+        556,
+        646
+      ]
+    ]
   },
   {
     "id": "BENCH-059",
@@ -950,7 +1152,13 @@
       "stringstream",
       "tách từ"
     ],
-    "notes": "Tách từ stringstream Bài 54"
+    "notes": "Tách từ stringstream Bài 54",
+    "valid_video_intervals": [
+      [
+        2935,
+        3066
+      ]
+    ]
   },
   {
     "id": "BENCH-060",
@@ -1026,14 +1234,14 @@
     "course_id": "cpp-oop",
     "lesson_seq": 56,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 120,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "mẫu số khác 0",
       "mau != 0"
     ],
-    "notes": "Kiểm tra mẫu số 0 Bài 56"
+    "notes": "Kiểm tra mẫu số 0 không có trong code/video Bài 56 (RAG an toàn)"
   },
   {
     "id": "BENCH-065",
@@ -1098,7 +1306,13 @@
       "gcd",
       "đệ quy"
     ],
-    "notes": "Hàm gcd đệ quy Bài 56"
+    "notes": "Hàm gcd đệ quy Bài 56",
+    "valid_video_intervals": [
+      [
+        0,
+        165
+      ]
+    ]
   },
   {
     "id": "BENCH-069",
@@ -1130,7 +1344,17 @@
       "constructor",
       "0/1"
     ],
-    "notes": "Constructor PhanSo Bài 56"
+    "notes": "Constructor PhanSo Bài 56",
+    "valid_video_intervals": [
+      [
+        997,
+        1087
+      ],
+      [
+        2224,
+        2314
+      ]
+    ]
   },
   {
     "id": "BENCH-071",
@@ -1179,7 +1403,17 @@
       "ostream",
       "istream"
     ],
-    "notes": "Friend function operator Bài 69"
+    "notes": "Friend function operator Bài 69",
+    "valid_video_intervals": [
+      [
+        1221,
+        1311
+      ],
+      [
+        2779,
+        2869
+      ]
+    ]
   },
   {
     "id": "BENCH-074",
@@ -1195,7 +1429,13 @@
       "ostream&",
       "cout"
     ],
-    "notes": "Trả về ostream& Bài 69"
+    "notes": "Trả về ostream& Bài 69",
+    "valid_video_intervals": [
+      [
+        5414,
+        5552
+      ]
+    ]
   },
   {
     "id": "BENCH-075",
@@ -1558,7 +1798,7 @@
     "course_id": "cpp-core",
     "lesson_seq": 4,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "out_of_lesson",
+    "expected_retrieval_status": "coverage_gap",
     "expected_has_timestamp": false,
     "target_video_sec": null,
     "expected_keywords": [
@@ -1566,7 +1806,7 @@
       "do-while",
       "bài 6"
     ],
-    "notes": "Học bài 4 hỏi while vs do-while bài 6"
+    "notes": "Vòng lặp do-while không được giảng dạy trong cpp-core (RAG an toàn)"
   },
   {
     "id": "BENCH-097",
@@ -1763,22 +2003,22 @@
     "course_id": "cpp-oop",
     "lesson_seq": 53,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "out_of_lesson",
-    "expected_has_timestamp": false,
-    "target_video_sec": null,
+    "expected_retrieval_status": "grounded",
+    "expected_has_timestamp": true,
+    "target_video_sec": 3881,
     "expected_keywords": [
       "nạp chồng toán tử",
       "operator",
       "bài 69"
     ],
-    "notes": "Học bài 53 hỏi operator overloading bài 69"
+    "notes": "Nạp chồng toán tử operator Bài 53 mốc 3881s"
   },
   {
     "id": "BENCH-109",
     "tier": "out_of_lesson",
     "query": "Cú pháp nạp chồng toán tử nhập >> (operator>>) cho lớp SinhVien như thế nào?",
     "course_id": "cpp-oop",
-    "lesson_seq": 53,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1788,14 +2028,14 @@
       "nhập",
       "bài 69"
     ],
-    "notes": "Học bài 53 hỏi operator>> bài 69"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Cú pháp nạp chồng toán tử nhập >> (...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-110",
     "tier": "out_of_lesson",
     "query": "Vì sao hàm nạp chồng toán tử nhập xuất << và >> cần được khai báo là friend?",
     "course_id": "cpp-oop",
-    "lesson_seq": 53,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1805,14 +2045,14 @@
       "operator",
       "bài 69"
     ],
-    "notes": "Học bài 53 hỏi friend operator bài 69"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Vì sao hàm nạp chồng toán tử nhập x...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-111",
     "tier": "out_of_lesson",
     "query": "Thuộc tính của lớp PhanSo gồm có tử số và mẫu số được khai báo ra sao?",
     "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1823,14 +2063,14 @@
       "mau",
       "bài 56"
     ],
-    "notes": "Học bài 54 hỏi khai báo PhanSo bài 56"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Thuộc tính của lớp PhanSo gồm có tử...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-112",
     "tier": "out_of_lesson",
     "query": "Thuật toán Euclid tìm ước chung lớn nhất gcd(a, b) hoạt động ra sao?",
     "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1840,14 +2080,14 @@
       "ước chung",
       "bài 56"
     ],
-    "notes": "Học bài 54 hỏi gcd bài 56"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Thuật toán Euclid tìm ước chung lớn...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-113",
     "tier": "out_of_lesson",
     "query": "Cách viết hàm cộng 2 phân số và trả về phân số tối giản?",
     "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1857,14 +2097,14 @@
       "PhanSo",
       "bài 56"
     ],
-    "notes": "Học bài 54 hỏi cộng phân số bài 56"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Cách viết hàm cộng 2 phân số và trả...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-114",
     "tier": "out_of_lesson",
     "query": "Nạp chồng toán tử (operator overloading) trong C++ là gì?",
     "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1874,14 +2114,14 @@
       "nạp chồng",
       "bài 69"
     ],
-    "notes": "Học bài 54 hỏi nạp chồng toán tử bài 69"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Nạp chồng toán tử (operator overloa...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-115",
     "tier": "out_of_lesson",
     "query": "Toán tử xuất << (operator<<) cần trả về kiểu tham chiếu std::ostream& để làm gì?",
     "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1891,14 +2131,14 @@
       "ostream&",
       "bài 69"
     ],
-    "notes": "Học bài 54 hỏi operator<< bài 69"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Toán tử xuất << (operator<<) cần tr...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-116",
     "tier": "out_of_lesson",
     "query": "Cú pháp nạp chồng toán tử so sánh nhỏ hơn < (operator<) để sắp xếp sinh viên?",
     "course_id": "cpp-oop",
-    "lesson_seq": 54,
+    "lesson_seq": 51,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1908,14 +2148,14 @@
       "so sánh",
       "bài 69"
     ],
-    "notes": "Học bài 54 hỏi operator< bài 69"
+    "notes": "Học bài 51 (Struct) hỏi kiến thức OOP (Cú pháp nạp chồng toán tử so sánh n...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-117",
     "tier": "out_of_lesson",
     "query": "Nạp chồng toán tử (operator overloading) trong C++ là gì và cú pháp?",
     "course_id": "cpp-oop",
-    "lesson_seq": 56,
+    "lesson_seq": 52,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1925,14 +2165,14 @@
       "nạp chồng",
       "bài 69"
     ],
-    "notes": "Học bài 56 hỏi nạp chồng toán tử bài 69"
+    "notes": "Học bài 52 (Struct nâng cao) hỏi OOP (Nạp chồng toán tử (operator overloa...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-118",
     "tier": "out_of_lesson",
     "query": "Cú pháp nạp chồng toán tử nhập >> (operator>>) cho lớp SinhVien?",
     "course_id": "cpp-oop",
-    "lesson_seq": 56,
+    "lesson_seq": 52,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1942,14 +2182,14 @@
       "istream",
       "bài 69"
     ],
-    "notes": "Học bài 56 hỏi operator>> bài 69"
+    "notes": "Học bài 52 (Struct nâng cao) hỏi OOP (Cú pháp nạp chồng toán tử nhập >> (...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-119",
     "tier": "out_of_lesson",
     "query": "Cách sử dụng hàm std::sort kết hợp với operator< để sắp xếp mảng sinh viên theo GPA?",
     "course_id": "cpp-oop",
-    "lesson_seq": 56,
+    "lesson_seq": 52,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1959,14 +2199,14 @@
       "operator<",
       "bài 69"
     ],
-    "notes": "Học bài 56 hỏi std::sort với operator< bài 69"
+    "notes": "Học bài 52 (Struct nâng cao) hỏi OOP (Cách sử dụng hàm std::sort kết hợp ...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-120",
     "tier": "out_of_lesson",
     "query": "Có thể nạp chồng được những toán tử nào và toán tử nào KHÔNG thể nạp chồng?",
     "course_id": "cpp-oop",
-    "lesson_seq": 56,
+    "lesson_seq": 52,
     "expected_intent": "course_query",
     "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
@@ -1976,7 +2216,7 @@
       "không thể nạp chồng",
       "bài 69"
     ],
-    "notes": "Học bài 56 hỏi toán tử không thể overload bài 69"
+    "notes": "Học bài 52 (Struct nâng cao) hỏi OOP (Có thể nạp chồng được những toán tử...) thuộc bài tương lai"
   },
   {
     "id": "BENCH-121",
@@ -1985,14 +2225,14 @@
     "course_id": "cpp-core",
     "lesson_seq": 3,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 1578,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "%",
       "dư"
     ],
-    "notes": "Hybrid 3A đi nhậu vs chia dư Bài 3"
+    "notes": "Ẩn dụ đi nhậu chia tiền không có transcript tương ứng (RAG từ chối an toàn)"
   },
   {
     "id": "BENCH-122",
@@ -2001,14 +2241,14 @@
     "course_id": "cpp-core",
     "lesson_seq": 4,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 751,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "if",
       "else"
     ],
-    "notes": "Hybrid 3A xem phim vs if else Bài 4"
+    "notes": "Ẩn dụ xem phim vs ngủ không có transcript (RAG an toàn)"
   },
   {
     "id": "BENCH-123",
@@ -2033,14 +2273,14 @@
     "course_id": "cpp-core",
     "lesson_seq": 3,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 52,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "&&",
       "logic"
     ],
-    "notes": "Hybrid 3A bằng lái vs logic Bài 3"
+    "notes": "Ẩn dụ heo đất tiết kiệm không có transcript (RAG an toàn)"
   },
   {
     "id": "BENCH-125",
@@ -2049,14 +2289,14 @@
     "course_id": "cpp-core",
     "lesson_seq": 4,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 5750,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "switch",
       "case"
     ],
-    "notes": "Hybrid 3A ăn sáng vs switch Bài 4"
+    "notes": "Ẩn dụ chạy bộ công viên không có transcript (RAG an toàn)"
   },
   {
     "id": "BENCH-126",
@@ -2100,6 +2340,10 @@
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
     "target_video_sec": 1669,
+    "valid_video_intervals": [
+      [1171, 1261],
+      [1624, 1714]
+    ],
     "expected_keywords": [
       "float",
       "số thực"
@@ -2111,16 +2355,16 @@
     "tier": "adversarial_hybrid",
     "query": "Truyền tham trị cho hàm có giống như photo một bản hợp đồng cho đối tác giữ không?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
+    "lesson_seq": 7,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 1056,
+    "target_video_sec": 5891,
     "expected_keywords": [
       "tham trị",
       "bản sao"
     ],
-    "notes": "Hybrid 3A bản photo vs tham trị Bài 11"
+    "notes": "Hybrid 3A bản photo vs tham trị Bài 7"
   },
   {
     "id": "BENCH-130",
@@ -2129,14 +2373,14 @@
     "course_id": "cpp-core",
     "lesson_seq": 3,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 1641,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "+=",
       "gán"
     ],
-    "notes": "Hybrid 3A heo đất vs += Bài 3"
+    "notes": "Hybrid 3A heo đất vs += Bài 3 (chống ảo giác, transcript không có heo đất)"
   },
   {
     "id": "BENCH-131",
@@ -2152,23 +2396,23 @@
       "const",
       "hằng số"
     ],
-    "notes": "Hybrid 3B ăn lẩu vs const Bài 2"
+    "notes": "Ẩn dụ trà sữa trân châu không có transcript (RAG an toàn)"
   },
   {
     "id": "BENCH-132",
     "tier": "adversarial_hybrid",
     "query": "Hàm swap đổi chỗ 2 người yêu cũ có dùng truyền tham chiếu được không?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
-    "expected_intent": "out_of_scope",
-    "expected_retrieval_status": "coverage_gap",
-    "expected_has_timestamp": false,
-    "target_video_sec": null,
+    "lesson_seq": 7,
+    "expected_intent": "course_query",
+    "expected_retrieval_status": "grounded",
+    "expected_has_timestamp": true,
+    "target_video_sec": 5750,
     "expected_keywords": [
       "swap",
       "tham chiếu"
     ],
-    "notes": "Hybrid 3B người yêu cũ vs swap Bài 11"
+    "notes": "Hybrid 3B người yêu cũ vs swap Bài 7 mốc 5750s (bóc tách kỹ thuật tham chiếu)"
   },
   {
     "id": "BENCH-133",
@@ -2184,7 +2428,7 @@
       "cin",
       "nhập"
     ],
-    "notes": "Hybrid 3B trời mưa vs cin Bài 2"
+    "notes": "Ý định tài chính đời sống ngoài lề (Router chặn tầng 1)"
   },
   {
     "id": "BENCH-134",
@@ -2271,16 +2515,16 @@
     "tier": "adversarial_hybrid",
     "query": "Hàm đệ quy tính giai thừa có giống như vòng lặp thời gian đưa tôi về quá khứ trong phim Marvel không?",
     "course_id": "cpp-core",
-    "lesson_seq": 11,
-    "expected_intent": "out_of_scope",
-    "expected_retrieval_status": "coverage_gap",
-    "expected_has_timestamp": false,
-    "target_video_sec": null,
+    "lesson_seq": 7,
+    "expected_intent": "course_query",
+    "expected_retrieval_status": "grounded",
+    "expected_has_timestamp": true,
+    "target_video_sec": 5391,
     "expected_keywords": [
       "đệ quy",
       "thời gian"
     ],
-    "notes": "Hybrid 3B phim Marvel vs đệ quy Bài 11"
+    "notes": "Hybrid 3B Marvel vs đệ quy giai thừa Bài 7 mốc 5391s (bóc tách kỹ thuật đệ quy)"
   },
   {
     "id": "BENCH-140",
@@ -2322,14 +2566,14 @@
     "course_id": "cpp-oop",
     "lesson_seq": 56,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 120,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "PhanSo",
       "chia bánh"
     ],
-    "notes": "Hybrid 3A bánh pizza vs PhanSo Bài 56"
+    "notes": "Hybrid 3A bánh pizza vs PhanSo Bài 56 (chống ảo giác, transcript không có pizza)"
   },
   {
     "id": "BENCH-143",
@@ -2341,6 +2585,10 @@
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
     "target_video_sec": 1430,
+    "valid_video_intervals": [
+      [1263, 1353],
+      [1385, 1475]
+    ],
     "expected_keywords": [
       "operator<<",
       "xuất"
@@ -2356,12 +2604,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 2824,
+    "target_video_sec": 5239,
     "expected_keywords": [
       "friend",
       "bạn bè"
     ],
-    "notes": "Hybrid 3A bạn nối khố vs friend operator Bài 69"
+    "notes": "Hàm friend trong nạp chồng toán tử Bài 69 mốc 5239s"
   },
   {
     "id": "BENCH-145",
@@ -2372,12 +2620,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 3881,
+    "target_video_sec": 3048,
     "expected_keywords": [
       "chuanHoaThongTin",
       "tên"
     ],
-    "notes": "Hybrid 3A thú cưng vs chuanHoaThongTin Bài 54"
+    "notes": "Hybrid 3A thú cưng vs chuanHoaThongTin Bài 54 mốc 3048s"
   },
   {
     "id": "BENCH-146",
@@ -2386,14 +2634,14 @@
     "course_id": "cpp-oop",
     "lesson_seq": 56,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 4060,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "cộng phân số",
       "tổng"
     ],
-    "notes": "Hybrid 3A tập gym vs cộng phân số Bài 56"
+    "notes": "Hybrid 3A tập gym vs operator+ Bài 56 (chống ảo giác, transcript không có tập gym)"
   },
   {
     "id": "BENCH-147",
@@ -2421,6 +2669,10 @@
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
     "target_video_sec": 2910,
+    "valid_video_intervals": [
+      [2729, 2819],
+      [2865, 2955]
+    ],
     "expected_keywords": [
       "input",
       "nhập"
@@ -2436,12 +2688,12 @@
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
-    "target_video_sec": 1087,
+    "target_video_sec": 1200,
     "expected_keywords": [
       "TinhGPA",
       "GPA"
     ],
-    "notes": "Hybrid 3A trọng số vs TinhGPA Bài 53"
+    "notes": "Hàm TinhGPA mở rộng Bài 53 mốc 1200s"
   },
   {
     "id": "BENCH-150",
@@ -2453,6 +2705,10 @@
     "expected_retrieval_status": "grounded",
     "expected_has_timestamp": true,
     "target_video_sec": 415,
+    "valid_video_intervals": [
+      [370, 460],
+      [817, 907]
+    ],
     "expected_keywords": [
       "ngày sinh",
       "dd/mm/yyyy"
@@ -2480,16 +2736,16 @@
     "tier": "adversarial_hybrid",
     "query": "Toán tử so sánh operator< có so sánh được độ đẹp trai của hai chàng trai cua cùng một cô gái không?",
     "course_id": "cpp-oop",
-    "lesson_seq": 69,
-    "expected_intent": "out_of_scope",
-    "expected_retrieval_status": "coverage_gap",
-    "expected_has_timestamp": false,
-    "target_video_sec": null,
+    "lesson_seq": 53,
+    "expected_intent": "course_query",
+    "expected_retrieval_status": "grounded",
+    "expected_has_timestamp": true,
+    "target_video_sec": 4060,
     "expected_keywords": [
       "operator<",
       "đẹp trai"
     ],
-    "notes": "Hybrid 3B đẹp trai vs operator< Bài 69"
+    "notes": "Hybrid 3B so sánh đẹp trai vs operator< SinhVien Bài 53 mốc 4060s"
   },
   {
     "id": "BENCH-153",
@@ -2553,7 +2809,7 @@
       "chieuCao",
       "phi công"
     ],
-    "notes": "Hybrid 3B phi công vs chieuCao Bài 53"
+    "notes": "Hybrid 3B thi tuyển phi công là câu hỏi tư vấn thể lực đời sống (out_of_scope)"
   },
   {
     "id": "BENCH-157",

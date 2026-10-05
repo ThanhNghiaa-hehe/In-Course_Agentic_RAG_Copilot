@@ -40,6 +40,16 @@ def select_dataset_interactive() -> Path:
     if not json_files:
         raise FileNotFoundError(f"Không tìm thấy tệp JSON nào trong {data_dir}")
 
+    # Ánh xạ phiên bản chi tiết để tránh chạy nhầm bản cũ
+    VERSION_MAP = {
+        "benchmark_golden_dataset.json": "v2.4.0 - Chuẩn hóa Data-Centric AI Zero Label Noise & Dual Synced (Hiện hành)",
+        "benchmark_golden_dataset_v2_3_legacy.json": "v2.3.0 - Bản đối chiếu sau đợt dọn nhãn đợt 1",
+        "benchmark_golden_dataset_v2_2_legacy.json": "v2.2.0 - Bản đối chiếu trước khi sửa 17 ca Label Noise",
+        "benchmark_golden_dataset_v2_1_legacy.json": "v2.1.0 - Bản đối chiếu trước tối ưu",
+        "benchmark_golden_dataset_v2_0_legacy.json": "v2.0.0 - Bản mở rộng 200 câu",
+        "benchmark_golden_dataset_v1_legacy.json": "v1.0.0 - Bản lưu trữ gốc 50 câu"
+    }
+
     # Ưu tiên đưa benchmark_golden_dataset.json lên đầu danh sách làm mặc định
     priority_files: List[Path] = []
     for f in json_files:
@@ -55,23 +65,28 @@ def select_dataset_interactive() -> Path:
     print("[?] DANH SÁCH TẬP DỮ LIỆU BENCHMARK KHẢ DỤNG:")
     for idx, f in enumerate(priority_files, start=1):
         default_tag = " [MẶC ĐỊNH]" if idx == 1 else ""
-        print(f"  [{idx}] {f.name}{default_tag}")
+        ver_str = f" ({VERSION_MAP[f.name]})" if f.name in VERSION_MAP else ""
+        print(f"  [{idx}] {f.name}{ver_str}{default_tag}")
     print(f"  [{len(priority_files) + 1}] Nhập đường dẫn tệp JSON tùy chỉnh khác...")
     print("-" * 74)
 
     try:
         choice = input(f">> Nhập số thứ tự tập dữ liệu cần kiểm thử [1-{len(priority_files) + 1}] (Enter để chọn [1]): ").strip()
     except (EOFError, KeyboardInterrupt):
-        print("\n[INFO] Tự động chọn tập dữ liệu mặc định [1].")
+        print(f"\n[INFO] Tự động chọn tập dữ liệu mặc định [1]: {priority_files[0].name} ({VERSION_MAP.get(priority_files[0].name, '')}).")
         return priority_files[0]
 
     if not choice or choice == "1":
-        return priority_files[0]
+        selected_file = priority_files[0]
+        print(f"[OK] Đã chọn tập dữ liệu: {selected_file.name} ({VERSION_MAP.get(selected_file.name, '')})")
+        return selected_file
 
     try:
         choice_num = int(choice)
         if 1 <= choice_num <= len(priority_files):
-            return priority_files[choice_num - 1]
+            selected_file = priority_files[choice_num - 1]
+            print(f"[OK] Đã chọn tập dữ liệu: {selected_file.name} ({VERSION_MAP.get(selected_file.name, '')})")
+            return selected_file
         elif choice_num == len(priority_files) + 1:
             custom_path_str = input(">> Nhập đường dẫn tệp JSON: ").strip()
             custom_path = Path(custom_path_str)
@@ -95,10 +110,11 @@ async def run_benchmark(dataset_path: Path):
     json_archive_path = PROJECT_ROOT / "docs" / "benchmarks" / f"stage11_results_{timestamp_file_str}.json"
     latest_json_path = PROJECT_ROOT / "docs" / "benchmarks" / "latest_benchmark_results.json"
 
+    ver_desc = "v2.3.0 - Chuẩn hóa Data-Centric Cleaned & Dual Metadata Synced (Hiện hành)" if dataset_path.name == "benchmark_golden_dataset.json" else dataset_path.name
     print("=" * 74)
     print(" BẮT ĐẦU KHẢO THÍ ĐỊNH LƯỢNG TỰ ĐỘNG STAGE 11 (BENCHMARK SUITE)")
     print(f" Thời gian bắt đầu: {start_time_str}")
-    print(f" Tập dữ liệu nạp:   {dataset_path.name}")
+    print(f" Tập dữ liệu nạp:   {dataset_path.name} [{ver_desc}]")
     print(f" Tác giả:           Trần Thành Nghĩa (MSSV: 23DH112252) - HUFLIT")
     print("=" * 74)
 
@@ -115,7 +131,9 @@ async def run_benchmark(dataset_path: Path):
     # Khởi tạo các dịch vụ
     print("[INFO] Đang khởi tạo các mô hình và kết nối Qdrant...")
     router = get_intent_router()
+    router.warmup()
     embedding_service = get_embedding_service()
+    embedding_service.warmup()
     qdrant_client = get_async_qdrant_client()
     retrieval_service = RetrievalService(client=qdrant_client, embedding_service=embedding_service)
 
@@ -199,9 +217,19 @@ async def run_benchmark(dataset_path: Path):
             # Kỳ vọng KHÔNG có timestamp (chống ảo giác): Nếu thực tế không có -> ĐẠT
             is_ts_ok = (actual_has_ts is False)
         else:
-            # Kỳ vọng CÓ timestamp: Nếu có và |Δt| <= 30s
+            # Kỳ vọng CÓ timestamp: Nếu có và nằm trong valid_video_intervals HOẶC |Δt| <= 30s
             if actual_has_ts:
-                if target_sec is not None:
+                valid_intervals = item.get("valid_video_intervals") or []
+                in_interval = False
+                if valid_intervals:
+                    for interval in valid_intervals:
+                        if isinstance(interval, (list, tuple)) and len(interval) == 2:
+                            if interval[0] <= actual_ts_sec <= interval[1]:
+                                in_interval = True
+                                break
+                if in_interval:
+                    is_ts_ok = True
+                elif target_sec is not None:
                     delta_t = abs(actual_ts_sec - target_sec)
                     is_ts_ok = (delta_t <= 30)  # Cửa sổ dung hòa 30s
                 else:
@@ -265,7 +293,11 @@ async def run_benchmark(dataset_path: Path):
                     "content_type": c.get("content_type"),
                     "confidence_score": round(float(c.get("confidence_score", 0.0)), 4),
                     "lesson_seq": c.get("lesson_seq"),
-                    "snippet": (c.get("raw_text", "") or c.get("context_code", ""))[:250]
+                    "code_scope": c.get("code_scope"),
+                    "file_path": c.get("file_path"),
+                    "start_sec": c.get("start_sec"),
+                    "approx_video_sec": c.get("approx_video_sec"),
+                    "snippet": (c.get("context_code") or c.get("raw_text") or "")[:400]
                 }
                 for c in (retrieval_res.chunks if router_res.is_course_query else [])
             ]
