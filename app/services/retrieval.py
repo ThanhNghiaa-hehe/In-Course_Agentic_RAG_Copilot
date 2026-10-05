@@ -89,6 +89,40 @@ def reorder_lost_in_the_middle(items: List[Dict[str, Any]]) -> List[Dict[str, An
     return [item for item in reordered if item is not None]
 
 
+def assemble_balanced_modality(
+    video_items: List[Dict[str, Any]],
+    code_items: List[Dict[str, Any]],
+    final_top_k: int = 3,
+    prefer_balanced: bool = True
+) -> List[Dict[str, Any]]:
+    """
+    Lắp ghép ngữ cảnh đa phương thức cân bằng thích ứng (Adaptive Balanced Modality Assembly):
+    - Đảm bảo tối thiểu 1 Video Transcript (bảo toàn mốc thời gian <timestamp> và lời giảng sư phạm).
+    - Nếu có Code AST đạt độ tương quan hợp lệ (prefer_balanced=True), đảm bảo tối thiểu 1 Code AST Chunk.
+    - Điền đầy các slot còn lại (tối đa final_top_k) bằng các chunk có điểm cao nhất tiếp theo (Video hoặc Code).
+    - Tự động Fallback về 100% Video nếu không có Code AST đạt chuẩn (Fault-Tolerant & Graceful Degradation).
+    """
+    sorted_videos = sorted(video_items, key=lambda x: x.get("confidence_score", 0.0), reverse=True)
+    sorted_codes = sorted(code_items, key=lambda x: x.get("confidence_score", 0.0), reverse=True)
+
+    if not sorted_videos and not sorted_codes:
+        return []
+    if not sorted_codes or not prefer_balanced:
+        return sorted_videos[:final_top_k] if sorted_videos else sorted_codes[:final_top_k]
+    if not sorted_videos:
+        return sorted_codes[:final_top_k]
+
+    selected = [sorted_videos[0], sorted_codes[0]]
+    remaining = [v for v in sorted_videos[1:]] + [c for c in sorted_codes[1:]]
+    remaining_sorted = sorted(remaining, key=lambda x: x.get("confidence_score", 0.0), reverse=True)
+
+    needed = final_top_k - len(selected)
+    if needed > 0:
+        selected.extend(remaining_sorted[:needed])
+
+    return selected
+
+
 def sigmoid(z: float) -> float:
     """
     Logistic Sigmoid Normalization: Chuyển đổi raw logits (-inf, +inf) sang xác suất thực [0.0, 1.0].
@@ -165,10 +199,10 @@ class RetrievalService:
         query_text: str,
         course_id: str,
         current_lesson_seq: int
-    ) -> Tuple[Optional[int], float]:
+    ) -> Tuple[Optional[int], float, str]:
         """
         Kiểm tra xem câu hỏi có thuộc về bài học tương lai (> current_lesson_seq) của khóa học hay không.
-        Trả về (target_lesson_seq, max_confidence_score).
+        Trả về (target_lesson_seq, max_confidence_score, best_chunk_type).
         """
         future_code_filter = models.Filter(
             must=[
@@ -267,11 +301,14 @@ class RetrievalService:
                     max_idx = idx
 
             target_seq = future_seqs[max_idx] if future_seqs else None
-            return target_seq, max_score
+            best_chunk_type = "video_transcript"
+            if future_points and max_idx < len(future_points):
+                best_chunk_type = (future_points[max_idx].payload or {}).get("content_type", "video_transcript")
+            return target_seq, max_score, best_chunk_type
 
         except Exception as probe_err:
             logger.warning(f"[RetrievalService] Lỗi khi probe future lessons ({probe_err}).")
-            return None, 0.0
+            return None, 0.0, "video_transcript"
 
     async def search(
         self,
@@ -293,6 +330,17 @@ class RetrievalService:
         """
         logger.info(
             f"[RetrievalService] Query: '{query_text}' | Course: {course_id} | Window: lesson_seq <= {current_lesson_seq}"
+        )
+
+        is_syntax_query = bool(
+            re.search(
+                r"(\+\=|\-\=|\*\=|\/\=|\%\=|\+\+|\-\-|==|!=|<=|>=|&&|\|\||<<|>>|%|"
+                r"toán tử|cú pháp|cách viết|viết rút gọn|khai báo|hàm|lớp|class|struct|"
+                r"code|cài đặt|vòng lặp|for|while|do-while|if|else|switch|case|break|continue|"
+                r"vector|string|cin|cout|swap|tham chiếu|pointer|con trỏ)",
+                query_text,
+                re.IGNORECASE
+            )
         )
 
         # 1. Sinh Dual Vectors bất đồng bộ / fast ONNX
@@ -342,7 +390,7 @@ class RetrievalService:
 
         # Nếu hoàn toàn không có candidate nào trong phạm vi bài hiện tại
         if not raw_candidates:
-            target_seq, future_score = await self._probe_future_lessons(
+            target_seq, future_score, _ = await self._probe_future_lessons(
                 query_dense=query_dense,
                 sparse_indices=sparse_indices,
                 sparse_values=sparse_values,
@@ -378,10 +426,13 @@ class RetrievalService:
                 code_lang = p.get("code_language") or p.get("language", "cpp")
                 code_scope = p.get("code_scope", "")
                 approx_vid_sec = p.get("approx_video_sec")
-                if approx_vid_sec is None and self._code_video_bindings:
+                # Ưu tiên mốc Ground-Truth trong manifest JSON nếu có cấu hình chính xác
+                if self._code_video_bindings:
                     lookup_key = f"{item['lesson_id']}:{code_scope}"
-                    approx_vid_sec = self._code_video_bindings.get(lookup_key)
-                    if approx_vid_sec is None:
+                    manifest_sec = self._code_video_bindings.get(lookup_key)
+                    if manifest_sec is not None:
+                        approx_vid_sec = manifest_sec
+                    elif approx_vid_sec is None:
                         lesson_fallback = f"{item['lesson_id']}:function_main"
                         approx_vid_sec = self._code_video_bindings.get(lesson_fallback)
 
@@ -508,11 +559,12 @@ class RetrievalService:
 
         # 1.1. Code AST Anchor Early Exit:
         if valid_ast_items:
-            anchor_candidates = sorted(
-                valid_ast_items + valid_video_items,
-                key=lambda x: x["confidence_score"],
-                reverse=True
-            )[:final_top_k]
+            anchor_candidates = assemble_balanced_modality(
+                video_items=valid_video_items,
+                code_items=valid_ast_items,
+                final_top_k=final_top_k,
+                prefer_balanced=True
+            )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
                 f"[RetrievalService] Tầng 1 Early Exit (Code AST Anchor): Khóa GROUNDED thành công "
@@ -525,13 +577,26 @@ class RetrievalService:
                 is_low_confidence=False
             )
 
-        # 1.2. High-Confidence Video Early Exit (>= 0.40):
-        if valid_video_items and max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
-            anchor_candidates = sorted(
-                valid_video_items,
-                key=lambda x: x["confidence_score"],
-                reverse=True
-            )[:final_top_k]
+        # 1.2. High-Confidence Video Early Exit:
+        # Bẫy văn nói bài giảng: Chỉ Early Exit khi:
+        # (a) max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
+        # (b) VÀ không phải câu hỏi cú pháp cấu trúc điều khiển bị thiếu Code AST anchor trong bài hiện tại
+        can_early_exit_video = (
+            valid_video_items and 
+            max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
+        )
+        if can_early_exit_video:
+            eligible_code_items = [
+                it for it in candidate_items
+                if it.get("content_type") == "code_ast"
+                and it.get("confidence_score", 0.0) >= 0.20
+            ]
+            anchor_candidates = assemble_balanced_modality(
+                video_items=valid_video_items,
+                code_items=eligible_code_items,
+                final_top_k=final_top_k,
+                prefer_balanced=(is_syntax_query or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
+            )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
                 f"[RetrievalService] Tầng 1 Early Exit (High-Confidence Video >= {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE}): "
@@ -554,7 +619,7 @@ class RetrievalService:
         future_score = 0.0
         margin = 0.0
 
-        target_seq, future_score = await self._probe_future_lessons(
+        target_seq, future_score, future_chunk_type = await self._probe_future_lessons(
             query_dense=query_dense,
             sparse_indices=sparse_indices,
             sparse_values=sparse_values,
@@ -570,19 +635,28 @@ class RetrievalService:
         if target_seq:
             if not has_local_grounding:
                 # Trường hợp 1: Bài hiện tại KHÔNG có ngữ cảnh đạt chuẩn sàn (< 0.22)
-                # Kích hoạt Out-of-Lesson khi bài tương lai đạt độ tự tin (>= 0.40) và biên độ chuẩn (>= 0.12)
+                # Kích hoạt Out-of-Lesson khi bài tương lai đạt độ tự tin (>= 0.25) và biên độ chuẩn (>= 0.12)
                 future_dominates = (
                     future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and
                     margin >= settings.FUTURE_PROBE_MARGIN
                 )
             else:
                 # Trường hợp 2: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo hợp lệ (>= 0.22)
-                # Bài tương lai chỉ thống trị Pareto khi mang tính đột phá chuyên sâu vượt bậc (>= 0.55 và Margin >= 0.25)
-                # Ngăn chặn triệt để hiện tượng bài sau nhắc lại nuốt mất câu hỏi hợp lệ của bài hiện tại
-                future_dominates = (
-                    future_score >= settings.PARETO_DOMINANCE_FUTURE_MIN and
-                    margin >= settings.PARETO_DOMINANCE_MARGIN
-                )
+                # Phân tầng theo phương thức (Modality-Aware Precedence - ICLR 2025 Context Sufficiency):
+                if future_chunk_type == "code_ast":
+                    # Code AST ở bài tương lai chỉ vô tình chứa từ khóa (như double, int)
+                    # không được phép nuốt mất bài giảng lý thuyết nền tảng của bài hiện tại.
+                    # Chỉ dominate khi đạt ngưỡng Code AST chuyên biệt:
+                    future_dominates = (
+                        future_score >= settings.PARETO_DOMINANCE_CODE_FUTURE_MIN and
+                        margin >= settings.PARETO_DOMINANCE_CODE_MARGIN
+                    )
+                else:
+                    # Bài giảng video chuyên sâu bài tương lai:
+                    future_dominates = (
+                        future_score >= settings.PARETO_DOMINANCE_FUTURE_MIN and
+                        margin >= settings.PARETO_DOMINANCE_MARGIN
+                    )
 
         if future_dominates:
             logger.info(
@@ -595,11 +669,17 @@ class RetrievalService:
         # Nếu bài tương lai KHÔNG thống trị Pareto, và bài hiện tại có video transcript đạt ngưỡng hợp lệ:
         # Đây chính là ngữ cảnh bài giảng hợp lệ của bài hiện tại (bảo toàn BENCH-004, BENCH-011, BENCH-041,...).
         if valid_video_items:
-            anchor_candidates = sorted(
-                valid_video_items,
-                key=lambda x: x["confidence_score"],
-                reverse=True
-            )[:final_top_k]
+            eligible_code_items = [
+                it for it in candidate_items
+                if it.get("content_type") == "code_ast"
+                and it.get("confidence_score", 0.0) >= 0.20
+            ]
+            anchor_candidates = assemble_balanced_modality(
+                video_items=valid_video_items,
+                code_items=eligible_code_items,
+                final_top_k=final_top_k,
+                prefer_balanced=(is_syntax_query or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
+            )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
                 f"[RetrievalService] Tầng 2 Non-Dominated -> GROUNDED: Bài tương lai không thống trị "
