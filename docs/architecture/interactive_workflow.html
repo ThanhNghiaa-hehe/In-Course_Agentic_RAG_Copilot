@@ -2570,7 +2570,8 @@
                   intent: c.expected_intent,
                   status: c.expected_retrieval_status,
                   has_timestamp: c.expected_has_timestamp,
-                  target_video_sec: c.target_video_sec
+                  target_video_sec: c.target_video_sec,
+                  valid_video_intervals: c.valid_video_intervals || null
                 },
                 actual: {
                   intent: c.expected_intent,
@@ -2807,7 +2808,7 @@
       tbody.innerHTML = '';
 
       const tierLabels = {
-        in_scope: "In-Scope (Bài 1&2)",
+        in_scope: "In-Scope Technical",
         out_of_lesson: "Out-of-Lesson",
         adversarial_hybrid: "Adversarial Hybrid",
         chit_chat: "Chit-Chat / Fast-P"
@@ -2874,9 +2875,13 @@
           overallBadge = `<span class="kpi-badge badge-warn">WARN</span>`;
         }
 
+        const dynamicTierText = item.tier === 'in_scope'
+          ? (item.lesson_seq ? `In-Scope (Bài ${item.lesson_seq})` : 'In-Scope Technical')
+          : (tierLabels[item.tier] || item.tier);
+
         tr.innerHTML = `
           <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${item.id}</td>
-          <td><span class="tier-badge tier-${item.tier}">${tierLabels[item.tier] || item.tier}</span></td>
+          <td><span class="tier-badge tier-${item.tier}">${dynamicTierText}</span></td>
           <td style="font-weight:500; max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${item.query}">${item.query}</td>
           <td>${routerBadge}</td>
           <td>${cragBadge}</td>
@@ -2893,6 +2898,16 @@
       });
     }
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function openBenchmarkDrawer(caseId) {
       if (!benchmarkData || !benchmarkData.cases) return;
       const item = benchmarkData.cases.find(c => c.id === caseId);
@@ -2907,7 +2922,10 @@
 
       document.getElementById('drawerCaseId').textContent = item.id;
       const tBadge = document.getElementById('drawerTierBadge');
-      tBadge.textContent = tierLabels[item.tier] || item.tier;
+      const drawerTierText = item.tier === 'in_scope'
+        ? (item.lesson_seq ? `1. In-Scope (Bài ${item.lesson_seq})` : '1. In-Scope Technical')
+        : (tierLabels[item.tier] || item.tier);
+      tBadge.textContent = drawerTierText;
       tBadge.className = `tier-badge tier-${item.tier}`;
 
       const isMultiGround = !item.pass_flags.overall_pass && item.pass_flags.router_ok && item.pass_flags.status_ok && item.actual.has_timestamp && !item.pass_flags.ts_ok;
@@ -2934,9 +2952,26 @@
       const rCheck = item.pass_flags.router_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
       const sCheck = item.pass_flags.status_ok ? `<span style="color:#059669; font-weight:700;">ĐÚNG</span>` : `<span style="color:#e11d48; font-weight:700;">SAI</span>`;
 
+      // Video Timestamp Display
+      let expTsText = item.expected.has_timestamp ? (item.expected.target_video_sec + 's') : 'None (Cấm sinh)';
+      const intervals = item.expected.valid_video_intervals || item.valid_video_intervals;
+      if (intervals && intervals.length > 0) {
+        const ivFormatted = intervals.map(iv => `${iv[0]}s–${iv[1]}s`).join(', ');
+        expTsText += `<br><span style="color:#0284c7; font-size:10px; font-weight:600;">[Khoảng: ${ivFormatted}]</span>`;
+      }
+
       let tCheck;
       if (item.pass_flags.ts_ok) {
-        tCheck = `<span style="color:#059669; font-weight:700;">ĐÚNG</span>`;
+        if (intervals && intervals.length > 0 && item.actual.video_sec !== null && item.actual.video_sec !== undefined) {
+          const inIv = intervals.some(iv => item.actual.video_sec >= iv[0] && item.actual.video_sec <= iv[1]);
+          if (inIv) {
+            tCheck = `<span style="color:#059669; font-weight:700;" title="Khớp phân đoạn Multi-Span hợp lệ trong bài giảng">ĐÚNG (MULTI-SPAN)</span>`;
+          } else {
+            tCheck = `<span style="color:#059669; font-weight:700;">ĐÚNG</span>`;
+          }
+        } else {
+          tCheck = `<span style="color:#059669; font-weight:700;">ĐÚNG</span>`;
+        }
       } else if (isMultiGround) {
         const delta = Math.abs((item.actual.video_sec || 0) - (item.expected.target_video_sec || 0));
         tCheck = `<span style="color:#0284c7; font-weight:700;" title="Trích xuất đúng video thực tế (${item.actual.video_sec}s), lệch mốc đơn đề thi (Δ${delta}s)">MULTI-TS (Δ${delta}s)</span>`;
@@ -2959,7 +2994,7 @@
         </tr>
         <tr>
           <td>Mốc Video Timestamp</td>
-          <td><code>${item.expected.has_timestamp ? (item.expected.target_video_sec + 's') : 'None (Cấm sinh)'}</code></td>
+          <td><code>${expTsText}</code></td>
           <td><code>${item.actual.has_timestamp ? (item.actual.video_sec + 's') : 'None'}</code></td>
           <td>${tCheck}</td>
         </tr>
@@ -2986,19 +3021,66 @@
         }
       }
 
-      // Chunks
+      // Chunks Rendering with Specialized Modality Viewers (Dark Terminal for Code AST, Sky Card for Video)
       const chunksList = document.getElementById('drawerChunksList');
       if (item.chunks && item.chunks.length > 0) {
         document.getElementById('drawerChunksSection').style.display = 'block';
-        chunksList.innerHTML = item.chunks.map(c => `
-          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-family:var(--font-mono); font-size:11px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-weight:700; color:#1e40af;">
-              <span>${c.id || 'Chunk'} (${c.content_type || 'text'})</span>
-              <span>Score: ${c.confidence_score || '0.0'}</span>
-            </div>
-            <div style="color:#334155; line-height:1.4; white-space:pre-wrap;">${c.snippet || ''}</div>
-          </div>
-        `).join('');
+        chunksList.innerHTML = item.chunks.map(c => {
+          const isCode = c.content_type === 'code_ast';
+          const score = (Number(c.confidence_score) || 0).toFixed(4);
+
+          if (isCode) {
+            const scopeLabel = c.code_scope ? `[${escapeHtml(c.code_scope)}]` : '';
+            const filePathLabel = c.file_path ? escapeHtml(c.file_path) : 'C++ Source';
+            const vidSec = c.approx_video_sec;
+            const vidPill = (vidSec !== undefined && vidSec !== null)
+              ? `<span style="background:#0284c7; color:#ffffff; padding:1.5px 6px; border-radius:4px; font-size:9.5px; font-weight:600; display:inline-flex; align-items:center; gap:3px;">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  ${Math.floor(vidSec / 60)}:${String(vidSec % 60).padStart(2, '0')}
+                </span>`
+              : '';
+
+            return `
+              <div style="background:#0f172a; border:1px solid #334155; border-radius:8px; overflow:hidden; font-family:var(--font-mono); font-size:11px; box-shadow:0 3px 8px rgba(0,0,0,0.18);">
+                <div style="background:#1e293b; padding:6px 12px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="background:#7c3aed; color:#ffffff; padding:2px 7px; border-radius:4px; font-size:9.5px; font-weight:700; letter-spacing:0.5px; display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                      CODE AST
+                    </span>
+                    <span style="color:#cbd5e1; font-size:11px; font-weight:600;">${scopeLabel} ${filePathLabel}</span>
+                    ${vidPill}
+                  </div>
+                  <span style="color:#34d399; font-weight:700; font-size:11px;">Score: ${score}</span>
+                </div>
+                <pre style="margin:0; padding:10px 12px; color:#e2e8f0; line-height:1.5; overflow-x:auto; font-size:11.5px; font-family:'JetBrains Mono', Consolas, 'Fira Code', monospace; white-space:pre-wrap; word-break:break-word;"><code>${escapeHtml(c.snippet || c.context_code || '')}</code></pre>
+              </div>
+            `;
+          } else {
+            const startSec = c.start_sec;
+            const tsPill = (startSec !== undefined && startSec !== null)
+              ? `<span style="color:#0284c7; font-weight:700; font-family:var(--font-mono); font-size:11px;">
+                  Mốc: ${Math.floor(startSec / 60)}:${String(startSec % 60).padStart(2, '0')} (${startSec}s)
+                </span>`
+              : '';
+
+            return `
+              <div style="background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #0284c7; border-radius:8px; padding:10px 12px; font-size:11.5px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; padding:2px 7px; border-radius:4px; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      VIDEO TRANSCRIPT
+                    </span>
+                    ${tsPill}
+                  </div>
+                  <span style="color:#059669; font-weight:700; font-family:var(--font-mono); font-size:11px;">Score: ${score}</span>
+                </div>
+                <div style="color:#334155; line-height:1.55; font-size:12px;">${escapeHtml(c.snippet || '')}</div>
+              </div>
+            `;
+          }
+        }).join('');
       } else {
         chunksList.innerHTML = `<div style="font-family:var(--font-mono); font-size:11.5px; color:var(--text-muted); font-style:italic;">Không trích xuất chunk nào (Câu hỏi ngoài lề hoặc Fast-Path không gọi RAG).</div>`;
       }
