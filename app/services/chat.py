@@ -39,7 +39,8 @@ class ChatService:
         self.router = get_intent_router()
         self.client = openai_client or AsyncOpenAI(
             base_url=settings.LLM_BASE_URL,
-            api_key=settings.OPENAI_API_KEY or "ollama"
+            api_key=settings.OPENAI_API_KEY or "vllm",
+            default_headers={"ngrok-skip-browser-warning": "true"}
         )
 
     def _format_context_block(self, chunks: List[Dict[str, Any]]) -> str:

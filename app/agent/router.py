@@ -126,6 +126,16 @@ class NLIArbiter:
             logger.error(f"[NLIArbiter] Lỗi suy luận NLI ({e}), giữ nguyên phán quyết Stage 1.")
             return "out_of_scope", 0.0
 
+    def warmup(self) -> None:
+        """Khởi động nóng mô hình NLI Arbiter trên CPU/RAM để khử triệt để Cold-Start."""
+        try:
+            pipe = self._get_pipeline()
+            if pipe is not None:
+                pipe("khởi động hệ thống", candidate_labels=self._candidate_labels[:1], hypothesis_template=self._template)
+                logger.info("[NLIArbiter] Khởi động nóng (Warmup) hoàn tất.")
+        except Exception as e:
+            logger.warning(f"[NLIArbiter] Warmup thất bại nhẹ ({e}).")
+
 
 class IntentRouter:
     """
@@ -153,6 +163,10 @@ class IntentRouter:
                 logger.error(f"[IntentRouter] Lỗi khi nạp calibrated_router.joblib ({e}).")
         else:
             logger.warning(f"[IntentRouter] Chưa tìm thấy {model_path}. Cần chạy script huấn luyện.")
+
+    def warmup(self) -> None:
+        """Khởi động nóng mô hình NLI Arbiter để triệt tiêu Cold-Start."""
+        self._nli_arbiter.warmup()
 
     def _normalize_text(self, text: str) -> str:
         """Chuẩn hóa văn bản Unicode NFC và loại bỏ khoảng trắng thừa."""
