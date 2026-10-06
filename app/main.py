@@ -22,7 +22,11 @@ async def lifespan(app: FastAPI):
     embed_service = get_embedding_service()
     embed_service.warmup()
 
-    # 2. Khởi tạo Qdrant Client pool
+    # 2. Khởi động nóng Intent Router & NLI Arbiter (khử triệt để Cold-Start 54s)
+    from app.agent.router import get_intent_router
+    get_intent_router().warmup()
+
+    # 3. Khởi tạo Qdrant Client pool
     get_async_qdrant_client()
 
     yield
@@ -71,8 +75,18 @@ async def root():
     return {
         "message": "In-Course Agentic RAG Copilot API is running",
         "docs_url": "/docs",
-        "workflow_simulator_url": "/workflow"
+        "workflow_simulator_url": "/workflow",
+        "playground_url": "/playground"
     }
+
+
+@app.get("/playground")
+async def get_interactive_playground():
+    """Phục vụ trực tiếp trang thử nghiệm Interactive Chatbot Playground."""
+    playground_path = Path(__file__).resolve().parent / "templates" / "playground.html"
+    if playground_path.exists():
+        return FileResponse(playground_path, media_type="text/html")
+    return HTMLResponse("<h1>Tệp playground.html chưa sẵn sàng</h1>", status_code=404)
 
 
 @app.get("/workflow")

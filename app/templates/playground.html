@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In-Course Agentic RAG Copilot &bull; Learning Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-app: #f4f6fa;
+      --bg-card: #ffffff;
+      --bg-surface: #f8fafc;
+      --bg-surface-hover: #f1f5f9;
+      
+      --border-subtle: #edf2f7;
+      --border-default: #e2e8f0;
+      --border-focus: #181b34;
+      
+      --text-heading: #0f172a;
+      --text-body: #334155;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      
+      --brand-dark: #181b34;
+      --brand-primary: #2563eb;
+      --brand-primary-light: #eff6ff;
+      --accent-warm: #ea580c;
+      --accent-warm-light: #fff7ed;
+      --accent-green: #059669;
+      --accent-green-light: #ecfdf5;
+      
+      --shadow-card: 0 2px 10px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+      --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-card: 16px;
+      --radius-pill: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-app);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      height: 64px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--brand-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .brand-title-box h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--brand-primary-light);
+      color: var(--brand-primary);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-heading);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+    .header-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 10px;
+      transition: all 0.15s ease;
+    }
+    .header-link-btn:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-heading);
+    }
+
+    /* 3-Column Main Workspace:
+       CỘT 1 (Trái): Chọn bài (340px)
+       CỘT 2 (Giữa): Video to (1fr)
+       CỘT 3 (Phải): Chatbot AI (380px)
+    */
+    .studio-workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 340px minmax(500px, 1fr) 390px;
+      gap: 16px;
+      padding: 16px;
+      height: calc(100vh - 64px);
+      overflow: hidden;
+    }
+
+    /* ========================================================
+       CỘT 1: KHUNG CHỌN BÀI & PROFILE (BÊN TRÁI)
+       ======================================================== */
+    .syllabus-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    .user-profile-widget {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+    }
+    .profile-avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e0e7ff, #f3e8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--brand-dark);
+      font-size: 13.5px;
+      flex-shrink: 0;
+    }
+    .profile-meta h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-heading);
+      line-height: 1.2;
+    }
+    .profile-meta p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .course-mode-pills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 10px 14px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 6px;
+    }
+    .mode-pill-btn {
+      padding: 7px 10px;
+      border: 1px solid var(--border-default);
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .mode-pill-btn.active {
+      background: var(--brand-dark);
+      color: #ffffff;
+      border-color: var(--brand-dark);
+    }
+
+    .search-filter-box {
+      padding: 8px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .search-input {
+      width: 100%;
+      padding: 7px 12px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: var(--font-sans);
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--brand-dark); background: #ffffff; }
+
+    .syllabus-tab-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .st-btn {
+      padding: 9px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .st-btn.active {
+      color: var(--text-heading);
+      border-bottom-color: var(--brand-dark);
+      background: #ffffff;
+    }
+
+    .syllabus-list-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .lesson-item-card {
+      padding: 9px 12px;
+      border: 1px solid var(--border-default);
+      background: var(--bg-surface);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .lesson-item-card:hover {
+      background: #ffffff;
+      border-color: var(--brand-dark);
+    }
+    .lesson-item-card.current {
+      background: #ffffff;
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 1.5px var(--brand-primary);
+    }
+    .lesson-item-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-heading);
+      line-height: 1.3;
+    }
+    .lesson-seq-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      background: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-body);
+      flex-shrink: 0;
+    }
+
+    .ast-scope-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .ast-scope-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand-primary);
+    }
+
+    .filter-info-box {
+      margin: 10px 12px 12px;
+      padding: 8px 10px;
+      background: var(--accent-green-light);
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #065f46;
+      line-height: 1.4;
+    }
+
+
+    /* ========================================================
+       CỘT 2: VIDEO TO CHỨA YOUTUBE API (Ở GIỮA)
+       ======================================================== */
+    .video-center-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      padding: 20px;
+      gap: 16px;
+    }
+    .video-banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .video-info h2 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+    .video-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .sync-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent-green);
+      background: var(--accent-green-light);
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    /* Khung Video Lớn Mở Rộng Toàn Bộ Diện Tích */
+    .video-screen-wrapper {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+      display: flex;
+    }
+    #youtube-player-frame,
+    .video-screen-wrapper iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
+      flex: 1;
+    }
+
+
+    /* ========================================================
+       CỘT 3: KHUNG CHATBOT AI (BÊN PHẢI)
+       ======================================================== */
+    .chatbot-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+    }
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bot-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--brand-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bot-title-text h3 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+    .bot-title-text p {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+    .clear-btn {
+      background: transparent;
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .clear-btn:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+
+    /* Message Stream */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--bg-surface);
+    }
+    .msg-row {
+      display: flex;
+      flex-direction: column;
+      max-width: 92%;
+      animation: msgIn 0.2s ease-out;
+    }
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .msg-row.user {
+      align-self: flex-end;
+    }
+    .msg-row.user .msg-bubble {
+      background: var(--brand-dark);
+      color: #ffffff;
+      border-radius: 14px 14px 2px 14px;
+    }
+    .msg-row.assistant {
+      align-self: flex-start;
+      width: 100%;
+    }
+    .msg-row.assistant .msg-bubble {
+      background: #ffffff;
+      color: var(--text-heading);
+      border: 1px solid var(--border-default);
+      border-radius: 14px 14px 14px 2px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .msg-bubble {
+      padding: 11px 14px;
+      font-size: 13px;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+
+    /* Thought Accordion */
+    .thought-drawer {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+    .thought-header {
+      padding: 7px 10px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .thought-header:hover { background: #f1f5f9; }
+    .thought-content {
+      padding: 8px 10px;
+      font-size: 11px;
+      line-height: 1.45;
+      border-top: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: none;
+    }
+    .tag-chip {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      margin-right: 3px;
+    }
+    .tag-grounded { background: var(--accent-green-light); color: var(--accent-green); }
+    .tag-out { background: var(--accent-warm-light); color: var(--accent-warm); }
+    .tag-gap { background: #fef3c7; color: #b45309; }
+    .tag-fast { background: var(--brand-primary-light); color: var(--brand-primary); }
+
+    /* Video Timestamp Pill */
+    .ts-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--brand-primary-light);
+      border: 1px solid #bfdbfe;
+      color: var(--brand-primary);
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      text-decoration: none;
+      margin: 1px 2px;
+      vertical-align: middle;
+      transition: all 0.15s ease;
+    }
+    .ts-pill:hover {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      transform: scale(1.02);
+    }
+    .ts-pill svg { width: 9px; height: 9px; fill: currentColor; }
+
+    pre {
+      background: #181b34;
+      color: #f8fafc;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      overflow-x: auto;
+      margin: 6px 0;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      background: #f1f5f9;
+      padding: 1px 4px;
+      border-radius: 4px;
+      color: var(--brand-primary);
+    }
+    pre code { background: transparent; color: inherit; padding: 0; }
+
+    /* Input Box */
+    .chat-input-area {
+      padding: 12px;
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .input-box {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 12px;
+      padding: 7px 10px;
+      transition: border-color 0.2s;
+    }
+    .input-box:focus-within {
+      border-color: var(--brand-dark);
+      background: #ffffff;
+    }
+    textarea {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      resize: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--text-heading);
+      max-height: 90px;
+    }
+    .send-action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--brand-dark);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .send-action-btn:hover { background: #2a305e; }
+    .send-action-btn:disabled { background: var(--border-default); color: var(--text-dim); cursor: not-allowed; }
+
+    .quick-suggestions {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding: 6px 12px 2px;
+      background: #ffffff;
+    }
+    .sugg-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .sugg-chip:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-heading);
+    }
+  </style>
+
+  <!-- Google YouTube IFrame Player API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="header-brand">
+      <div class="brand-mark">CS</div>
+      <div class="brand-title-box">
+        <h1>In-Course Agentic Copilot <span class="brand-badge">Learning Studio</span></h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-indicator" title="Mô hình LLM được phục vụ từ Kaggle vLLM qua Ngrok Static Domain">
+        <span class="status-dot"></span>
+        <span id="model-status-text">vLLM: Qwen 2.5 Coder 7B (Dual T4)</span>
+      </div>
+      <a href="/workflow" class="header-link-btn" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 9h6"/></svg>
+        11 Stages Workflow
+      </a>
+      <a href="/docs" class="header-link-btn" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        API Specs
+      </a>
+    </div>
+  </header>
+
+  <!-- 3-Column Studio Workspace -->
+  <div class="studio-workspace">
+
+    <!-- ========================================================
+         CỘT 1: KHUNG CHỌN BÀI & PROFILE (BÊN TRÁI)
+         ======================================================== -->
+    <aside class="syllabus-panel">
+      <!-- Profile Widget -->
+      <div class="user-profile-widget">
+        <div class="profile-avatar-circle">TN</div>
+        <div class="profile-meta">
+          <h4>Trần Thành Nghĩa</h4>
+          <p>MSSV: 23DH112252 &bull; HUFLIT</p>
+        </div>
+      </div>
+
+      <!-- Khóa học Selector -->
+      <div class="course-mode-pills">
+        <button class="mode-pill-btn active" id="pill-oop" onclick="switchCourse('cpp-oop')">C++ OOP (31 Bài)</button>
+        <button class="mode-pill-btn" id="pill-core" onclick="switchCourse('cpp-core')">C++ Cơ Bản (52 Bài)</button>
+      </div>
+
+      <!-- Ô tìm kiếm bài học nhanh -->
+      <div class="search-filter-box">
+        <input type="text" class="search-input" id="lesson-search-input" placeholder="Tìm kiếm bài học (ví dụ: con trỏ, mảng, class...)" oninput="filterLessons(this.value)">
+      </div>
+
+      <!-- Tabs Lộ Trình vs Code AST -->
+      <div class="syllabus-tab-bar">
+        <button class="st-btn active" id="st-tab-lessons" onclick="toggleSidebarTab('lessons')">Lộ Trình Bài Học</button>
+        <button class="st-btn" id="st-tab-ast" onclick="toggleSidebarTab('ast')">Code AST & Binding</button>
+      </div>
+
+      <!-- Danh sách đầy đủ 83 bài học -->
+      <div class="syllabus-list-content" id="lesson-items-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Danh sách Code AST Ground-Truth -->
+      <div class="syllabus-list-content" id="ast-items-container" style="display:none;">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- In-HNSW Pre-Filter Observability -->
+      <div class="filter-info-box">
+        <strong>In-HNSW Dynamic Pre-filter:</strong><br>
+        <code>course_id == "<span id="gate-course">cpp-oop</span>"</code><br>
+        <code>lesson_seq &le; <span id="gate-seq">53</span></code> (Chặn kiến thức bài tương lai)
+      </div>
+    </aside>
+
+
+    <!-- ========================================================
+         CỘT 2: VIDEO TO CHỨA YOUTUBE PLAYLIST API (Ở GIỮA)
+         ======================================================== -->
+    <main class="video-center-panel">
+      <div class="video-banner-header">
+        <div class="video-info">
+          <h2 id="video-lesson-title">Bài 53: Lập trình Hướng Đối Tượng (OOP Phần 1)</h2>
+          <p id="video-lesson-desc">Khóa học C++ Lập trình Hướng Đối Tượng &bull; Playlist 28Tech Real-time</p>
+        </div>
+        <div class="sync-status-indicator" id="sync-indicator">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span id="sync-text">Playlist 28Tech: Đã Kết Nối</span>
+        </div>
+      </div>
+
+      <!-- Màn hình Video Lớn Toàn Phần -->
+      <div class="video-screen-wrapper">
+        <div id="youtube-player-frame"></div>
+      </div>
+    </main>
+
+
+    <!-- ========================================================
+         CỘT 3: KHUNG CHATBOT SOCTRATIC AI (BÊN PHẢI)
+         ======================================================== -->
+    <section class="chatbot-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="bot-avatar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M6 13h.01"/><path d="18 13h.01"/></svg>
+          </div>
+          <div class="bot-title-text">
+            <h3>Trợ Giảng Socratic AI</h3>
+            <p id="chat-lesson-sub">Ngữ cảnh: Bài 53 (OOP)</p>
+          </div>
+        </div>
+        <button class="clear-btn" onclick="clearChat()">Làm mới</button>
+      </div>
+
+      <!-- Quick Prompt Suggestions -->
+      <div class="quick-suggestions">
+        <span class="sugg-chip" onclick="quickAsk('Giải thích cú pháp nạp chồng toán tử >> và << trong C++?')">Toán tử >>, <<</span>
+        <span class="sugg-chip" onclick="quickAsk('Hàm tạo Constructor và Hàm hủy Destructor là gì?')">Constructor/Destructor</span>
+        <span class="sugg-chip" onclick="quickAsk('Hàm ảo (virtual) và tính đa hình là gì?')">Thăm Dò Bài Mới</span>
+        <span class="sugg-chip" onclick="quickAsk('Em bị lỗi đệ quy vô tận khi viết hàm Fibonacci...')">Debug Đệ Quy</span>
+      </div>
+
+      <!-- Message Stream Box -->
+      <div class="chat-messages" id="chat-messages-box">
+        <div class="msg-row assistant">
+          <div class="msg-bubble">
+            Xin chào bạn! Tôi là <strong>Trợ giảng AI Socratic</strong> theo giáo trình lập trình C++. Tôi sẽ hướng dẫn tư duy từng bước cho bạn và chỉ ra nguyên nhân lỗi thay vì giải bài hộ.<br><br>
+            Khi thảo luận về bài giảng, tôi sẽ viện dẫn trực tiếp các mốc video như <span class="ts-pill" onclick="seekVideo(180)"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> 03:00 (Mốc Video)</span>. Bạn bấm vào thẻ để video ở giữa nhảy ngay đến đoạn đó nhé!
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Box -->
+      <div class="chat-input-area">
+        <div class="input-box">
+          <textarea id="prompt-input" placeholder="Hỏi bài tập, cú pháp C++, hoặc lỗi code... (Enter để gửi)" rows="1" onkeydown="handleInputKey(event)"></textarea>
+          <button class="send-action-btn" id="send-btn" onclick="submitMessage()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // --- PLAYLIST CONFIG & DANH SÁCH TOÀN BỘ 83 BÀI HỌC THẬT CỦA 28TECH ---
+    const YOUTUBE_PLAYLIST_ID = 'PLux-_phi0Rz0Hq9fDP4TlOulBl8APKp79';
+
+    // 52 Bài C++ Cơ Bản (Lesson 1 -> 52)
+    const CPP_CORE_LESSONS = [
+      { seq: 1, title: 'Bài 1: Giới thiệu & Cách tự học lập trình C++', pIndex: 0 },
+      { seq: 2, title: 'Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến', pIndex: 1, ast: [{ name: 'int main()', sec: 45, label: '00:45', desc: 'Vào ra cơ bản cin, cout' }] },
+      { seq: 3, title: 'Bài 3: Toàn tập về các toán tử cơ bản trong C++', pIndex: 2, ast: [{ name: 'main()', sec: 450, label: '07:30', desc: 'Toán tử số học' }, { name: 'increment()', sec: 1168, label: '19:28', desc: 'Toán tử tăng giảm ++, --' }] },
+      { seq: 4, title: 'Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case', pIndex: 3, ast: [{ name: 'main()', sec: 751, label: '12:31', desc: 'Cấu trúc if, else if, else' }] },
+      { seq: 5, title: 'Bài 5: Giải bài tập If Else & Kiểm tra Năm Nhuận', pIndex: 4, ast: [{ name: 'namNhuan(int year)', sec: 2422, label: '40:22', desc: 'Kiểm tra năm nhuận C++' }] },
+      { seq: 6, title: 'Bài 6: Vòng lặp For, While và Do-While', pIndex: 5, ast: [{ name: 'main()', sec: 350, label: '05:50', desc: 'Vòng lặp for' }, { name: 'while()', sec: 1600, label: '26:40', desc: 'Vòng lặp while' }] },
+      { seq: 7, title: 'Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị', pIndex: 6, ast: [{ name: 'thayDoi(int &a)', sec: 5750, label: '95:50', desc: 'Tham chiếu &a làm thay đổi biến gốc' }] },
+      { seq: 8, title: 'Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm', pIndex: 7, ast: [{ name: 'tong(int a, int b)', sec: 1641, label: '27:21', desc: 'Nạp chồng hàm' }, { name: 'swap(int &a, int &b)', sec: 2638, label: '43:58', desc: 'Hoán vị 2 số nguyên tham chiếu' }] },
+      { seq: 9, title: 'Bài 9: Từ khóa Typedef và Define trong C++', pIndex: 8 },
+      { seq: 10, title: 'Bài 10: Phân tích độ phức tạp của thuật toán', pIndex: 9 },
+      { seq: 11, title: 'Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp', pIndex: 10, ast: [{ name: 'main()', sec: 520, label: '08:40', desc: 'Khai báo và duyệt mảng 1 chiều' }] },
+      { seq: 12, title: 'Bài 12: Hướng dẫn giải bài tập Mảng 1 chiều (Phần 1)', pIndex: 11 },
+      { seq: 13, title: 'Bài 13: Hướng dẫn giải bài tập Mảng 1 chiều (Phần 2)', pIndex: 12 },
+      { seq: 14, title: 'Bài 14: Lý thuyết về Mảng 2 chiều trong C++', pIndex: 13 },
+      { seq: 15, title: 'Bài 15: Mảng cộng dồn 1 chiều & 2 chiều - Prefix Sum', pIndex: 14 },
+      { seq: 16, title: 'Bài 16: Bài tập Mảng 2 chiều có lời giải (Phần 1)', pIndex: 15 },
+      { seq: 17, title: 'Bài 17: Bài tập Mảng 2 chiều có lời giải (Phần 2)', pIndex: 16 },
+      { seq: 18, title: 'Bài 18: Xâu ký tự trong C++ - Cách sử dụng String', pIndex: 17 },
+      { seq: 19, title: 'Bài 19: Bài tập Mảng 2 chiều có lời giải (Phần 3)', pIndex: 18 },
+      { seq: 20, title: 'Bài 20: Hướng dẫn sử dụng Vector trong C++ & Iterator', pIndex: 19 },
+      { seq: 21, title: 'Bài 21: Hướng dẫn sử dụng Pair trong C++', pIndex: 20 },
+      { seq: 22, title: 'Bài 22: Cấu trúc dữ liệu Set trong C++ - Multiset', pIndex: 21 },
+      { seq: 23, title: 'Bài 23: Cấu trúc dữ liệu Map trong C++ - Multimap', pIndex: 22 },
+      { seq: 24, title: 'Bài 24: Bài tập áp dụng Set và Map trong C++', pIndex: 23 },
+      { seq: 25, title: 'Bài 25: Tìm kiếm nhị phân & Lower_bound, Upper_bound', pIndex: 24 },
+      { seq: 26, title: 'Bài 26: Cách sử dụng hàm Sort trong C++ & Comparator', pIndex: 25 },
+      { seq: 27, title: 'Bài 27: Thuật toán sắp xếp chèn, nổi bọt, chọn, đếm', pIndex: 26 },
+      { seq: 28, title: 'Bài 28: Thuật toán sắp xếp trộn (Merge Sort)', pIndex: 27 },
+      { seq: 29, title: 'Bài 29: Thuật toán sắp xếp vun đống (Heap Sort)', pIndex: 28 },
+      { seq: 30, title: 'Bài 30: Sắp xếp nhanh QuickSort - Lomuto & Hoare', pIndex: 29 },
+      { seq: 31, title: 'Bài 31: Các hàm thuật toán trong thư viện Algorithm', pIndex: 30 },
+      { seq: 32, title: 'Bài 32: Hướng dẫn giải bài tập Sắp xếp và Tìm kiếm (P1)', pIndex: 31 },
+      { seq: 33, title: 'Bài 33: Hướng dẫn giải bài tập Sắp xếp và Tìm kiếm (P2)', pIndex: 32 },
+      { seq: 34, title: 'Bài 34: Kiến thức toán & Lý thuyết số (Phần 1)', pIndex: 33 },
+      { seq: 35, title: 'Bài 35: Kiến thức toán & Lý thuyết số (Phần 2)', pIndex: 34 },
+      { seq: 36, title: 'Bài 36: Kiến thức toán & Lý thuyết số (Phần 3)', pIndex: 35 },
+      { seq: 37, title: 'Bài 37: Kỹ thuật đệ quy trong C++ & Cách hàm hoạt động', pIndex: 36 },
+      { seq: 38, title: 'Bài 38: Giải bài tập Xâu kí tự trong C++ (Phần 1)', pIndex: 37 },
+      { seq: 39, title: 'Bài 39: Giải bài tập Xâu kí tự trong C++ (Phần 2)', pIndex: 38 },
+      { seq: 40, title: 'Bài 40: Giải bài tập Xâu kí tự trong C++ (Phần 3)', pIndex: 39 },
+      { seq: 41, title: 'Bài 41: Thuật toán sinh kế tiếp - Nhị phân, Hoán vị', pIndex: 40 },
+      { seq: 42, title: 'Bài 42: Hướng dẫn giải bài tập Thuật toán sinh kế tiếp', pIndex: 41 },
+      { seq: 43, title: 'Bài 43: Cấu trúc dữ liệu Ngăn xếp (Stack) trong C++', pIndex: 42 },
+      { seq: 44, title: 'Bài 44: Cấu trúc dữ liệu Hàng đợi (Queue) trong C++', pIndex: 43 },
+      { seq: 45, title: 'Bài 45: Hàng đợi hai đầu (Deque in C++)', pIndex: 44 },
+      { seq: 46, title: 'Bài 46: Hàng đợi ưu tiên (Priority_queue in C++)', pIndex: 45 },
+      { seq: 47, title: 'Bài 47: Kỹ thuật cửa sổ trượt (Sliding Window)', pIndex: 46 },
+      { seq: 48, title: 'Bài 48: Kỹ thuật hai con trỏ (Two Pointers)', pIndex: 47 },
+      { seq: 49, title: 'Bài 49: Toán tử bit trong C++ (Bitwise Operators)', pIndex: 48 },
+      { seq: 50, title: 'Bài 50: Kiểu cấu trúc trong C++ (Struct in C++)', pIndex: 49, ast: [{ name: 'struct SinhVien', sec: 350, label: '05:50', desc: 'Định nghĩa struct SinhVien' }] },
+      { seq: 51, title: 'Bài 51: Hướng dẫn giải bài tập Struct (Phần 1)', pIndex: 50 },
+      { seq: 52, title: 'Bài 52: Hướng dẫn giải bài tập Struct (Phần 2) - QLSV', pIndex: 51 }
+    ];
+
+    // 31 Bài C++ OOP (Lesson 53 -> 83)
+    const CPP_OOP_LESSONS = [
+      {
+        seq: 53,
+        title: 'Bài 53: OOP Phần 1 - Class, Object & Constructor',
+        pIndex: 52,
+        chapters: [
+          { sec: 180, label: '03:00', title: 'Khái niệm Lớp (Class) và Đối tượng (Object)' },
+          { sec: 350, label: '05:50', title: 'Thuộc tính Private và Public' },
+          { sec: 814, label: '13:34', title: 'Hàm khởi tạo (Constructor)' },
+          { sec: 1170, label: '19:30', title: 'Hàm hủy (Destructor)' }
+        ],
+        ast: [
+          { name: 'class SinhVien', sec: 350, label: '05:50', desc: 'Lớp SinhVien với private GPA, tên' },
+          { name: 'SinhVien::Constructor', sec: 814, label: '13:34', desc: 'Hàm khởi tạo có tham số' },
+          { name: 'SinhVien::Destructor', sec: 1170, label: '19:30', desc: 'Hàm hủy giải phóng bộ nhớ' }
+        ]
+      },
+      {
+        seq: 54,
+        title: 'Bài 54: Giải bài tập OOP Phần 1 & Static Member',
+        pIndex: 53,
+        chapters: [
+          { sec: 180, label: '03:00', title: 'Biến tĩnh và hàm tĩnh (Static member)' },
+          { sec: 415, label: '06:55', title: 'Nhập xuất danh sách sinh viên' },
+          { sec: 3048, label: '50:48', title: 'Chuẩn hóa định dạng ngày sinh' }
+        ],
+        ast: [
+          { name: 'function tangDem()', sec: 180, label: '03:00', desc: 'Hàm static tăng biến đếm số đối tượng' },
+          { name: 'chuanHoaThongTin()', sec: 3048, label: '50:48', desc: 'Chuẩn hóa ngày sinh C++' }
+        ]
+      },
+      {
+        seq: 55,
+        title: 'Bài 55: Giải bài tập OOP Phần 2 & Class NhanVien',
+        pIndex: 54,
+        chapters: [
+          { sec: 180, label: '03:00', title: 'Xây dựng Class NhanVien đầy đủ' },
+          { sec: 280, label: '04:40', title: 'Hàm main thực thi tính lương' }
+        ],
+        ast: [
+          { name: 'class NhanVien', sec: 180, label: '03:00', desc: 'Khai báo mã NV, tên, phòng ban, lương' },
+          { name: 'function main()', sec: 280, label: '04:40', desc: 'Khởi tạo đối tượng NhanVien và xuất' }
+        ]
+      },
+      {
+        seq: 56,
+        title: 'Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<',
+        pIndex: 55,
+        chapters: [
+          { sec: 120, label: '02:00', title: 'Khái niệm Nạp chồng toán tử' },
+          { sec: 415, label: '06:55', title: 'Nạp chồng toán tử nhập >> (istream)' },
+          { sec: 501, label: '08:21', title: 'Nạp chồng toán tử xuất << (ostream)' }
+        ],
+        ast: [
+          { name: 'operator >>', sec: 415, label: '06:55', desc: 'istream& operator>>(istream& in, PhanSo& a)' },
+          { name: 'operator <<', sec: 501, label: '08:21', desc: 'ostream& operator<<(ostream& out, const PhanSo& a)' }
+        ]
+      },
+      { seq: 57, title: 'Bài 57: Lý thuyết về con trỏ trong C++ - Mảng & Con trỏ', pIndex: 56 },
+      { seq: 58, title: 'Bài 58: Danh sách liên kết đơn trong C++ - QLSV', pIndex: 57 },
+      { seq: 59, title: 'Bài 59: Thuật toán quay lui - Bài toán N quân hậu', pIndex: 58 },
+      { seq: 60, title: 'Bài 60: Chữa đề thi thử lập trình C++ PTIT Test 1', pIndex: 59 },
+      { seq: 61, title: 'Bài 61: Chữa đề thi thử lập trình C++ PTIT Test 2', pIndex: 60 },
+      { seq: 62, title: 'Bài 62: Chữa đề thi thử lập trình C++ PTIT Test 3', pIndex: 61 },
+      { seq: 63, title: 'Bài 63: Chữa đề thi thử lập trình C++ PTIT Test 4', pIndex: 62 },
+      { seq: 64, title: 'Bài 64: Mảng 1 chiều, Lý thuyết con trỏ, Vector & Iterator', pIndex: 63 },
+      { seq: 65, title: 'Bài 65: Hướng dẫn C++ Final Test 1 - Giải đề cuối kỳ', pIndex: 64 },
+      { seq: 66, title: 'Bài 66: Hướng dẫn C++ Final Test 2 - Giải đề cuối kỳ', pIndex: 65 },
+      { seq: 67, title: 'Bài 67: Mảng 1 chiều & Vòng lặp Range Based For Loop', pIndex: 66 },
+      { seq: 68, title: 'Bài 68: Tìm kiếm nhị phân & Kỹ thuật đệ quy (2024)', pIndex: 67 },
+      { seq: 69, title: 'Bài 69: OOP C++ - Class, Constructor, Destructor, Operator', pIndex: 68, ast: [{ name: 'class Advanced', sec: 240, label: '04:00', desc: 'Cấu trúc OOP nâng cao' }] },
+      { seq: 70, title: 'Bài 70: Thuật toán tìm kiếm nhị phân - Lower_bound, Upper_bound', pIndex: 69 },
+      { seq: 71, title: 'Bài 71: Xâu ký tự trong C++ & Kỹ năng xử lý bài tập xâu', pIndex: 70 },
+      { seq: 72, title: 'Bài 72: Xâu ký tự (String) & Các dạng bài tập xâu quan trọng', pIndex: 71 },
+      { seq: 73, title: 'Bài 73: Hướng dẫn đề thi thử lập trình C++ PTIT 2024 (Test 1)', pIndex: 72 },
+      { seq: 74, title: 'Bài 74: Hướng dẫn đề thi thử lập trình C++ PTIT 2024 (Test 2)', pIndex: 73 },
+      { seq: 75, title: 'Bài 75: Lập trình Hướng Đối Tượng OOP Phần 1 (Update 2025)', pIndex: 74 },
+      { seq: 76, title: 'Bài 76: Thuật toán quay lui và bài tập áp dụng (Update 2025)', pIndex: 75 },
+      { seq: 77, title: 'Bài 77: Set & Map trong C++ (2025)', pIndex: 76 },
+      { seq: 78, title: 'Bài 78: Cấu trúc rẽ nhánh If Else và Switch Case (2025)', pIndex: 77 },
+      { seq: 79, title: 'Bài 79: Lý thuyết con trỏ trong C++ (2025) - Con trỏ & Mảng', pIndex: 78 },
+      { seq: 80, title: 'Bài 80: Vector và Iterator trong C++ (2025)', pIndex: 79 },
+      { seq: 81, title: 'Bài 81: Danh sách liên kết đơn (Update 2026)', pIndex: 80 },
+      { seq: 82, title: 'Bài 82: Kỹ thuật đệ quy - Cây đệ quy (2026)', pIndex: 81 },
+      { seq: 83, title: 'Bài 83: Lập trình Hướng đối tượng OOP (2026)', pIndex: 82 }
+    ];
+
+    // --- STATE MANAGEMENT ---
+    let activeCourse = 'cpp-oop';
+    let currentLesson = CPP_OOP_LESSONS[0];
+    let ytPlayer = null;
+    let ytReady = false;
+    let isStreaming = false;
+
+    // --- YOUTUBE PLAYLIST API (REAL-TIME BINDING) ---
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('youtube-player-frame', {
+        playerVars: {
+          'listType': 'playlist',
+          'list': YOUTUBE_PLAYLIST_ID,
+          'index': currentLesson.pIndex,
+          'playsinline': 1,
+          'rel': 0,
+          'enablejsapi': 1,
+          'origin': window.location.origin
+        },
+        events: {
+          'onReady': () => {
+            ytReady = true;
+            document.getElementById('sync-indicator').innerHTML = `
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Playlist 28Tech: Đã Kết Nối (Real-time)</span>
+            `;
+          },
+          'onError': (e) => {
+            console.warn('[YouTube Error]', e.data);
+          }
+        }
+      });
+    }
+
+    function selectLesson(lesson) {
+      currentLesson = lesson;
+      document.getElementById('video-lesson-title').innerText = lesson.title;
+      document.getElementById('video-lesson-desc').innerText = `Mã bài: lesson-${String(lesson.seq).padStart(2,'0')} &bull; Bài ${lesson.seq}/83 &bull; Playlist 28Tech Real-time`;
+      document.getElementById('chat-lesson-sub').innerText = `Ngữ cảnh: Bài ${lesson.seq}`;
+      document.getElementById('gate-seq').innerText = lesson.seq;
+
+      // Real-time chuyển video trong Playlist
+      if (ytPlayer && ytPlayer.playVideoAt) {
+        ytPlayer.playVideoAt(lesson.pIndex);
+      }
+
+      // Render AST
+      renderAstBindings(lesson);
+
+      // Highlight card active
+      document.querySelectorAll('.lesson-item-card').forEach(el => {
+        el.classList.toggle('current', parseInt(el.dataset.seq) === lesson.seq);
+      });
+    }
+
+    function seekVideo(seconds) {
+      if (ytPlayer && ytPlayer.seekTo) {
+        ytPlayer.seekTo(Number(seconds), true);
+        ytPlayer.playVideo();
+      } else {
+        const iframe = document.querySelector('#youtube-player-frame iframe') || document.querySelector('iframe');
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: 'seekTo',
+            args: [Number(seconds), true]
+          }), '*');
+        }
+      }
+
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      const formatted = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+      const ind = document.getElementById('sync-indicator');
+      ind.innerHTML = `
+        <span style="color:var(--brand-primary);font-weight:700">▶ Đang phát tại ${formatted} (${seconds}s)</span>
+      `;
+    }
+
+    function renderAstBindings(lesson) {
+      const astBox = document.getElementById('ast-items-container');
+      astBox.innerHTML = '';
+      const list = lesson.ast || [];
+      if (list.length > 0) {
+        list.forEach(ast => {
+          const aCard = document.createElement('div');
+          aCard.className = 'ast-scope-card';
+          aCard.innerHTML = `
+            <div class="ast-scope-header">
+              <span><code>${ast.name}</code></span>
+              <span class="ts-pill" onclick="seekVideo(${ast.sec})">▶ ${ast.label}</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);">${ast.desc}</div>
+          `;
+          astBox.appendChild(aCard);
+        });
+      } else {
+        astBox.innerHTML = '<span style="color:var(--text-dim);font-size:11.5px;padding:8px 4px;">Bài học này sử dụng tài liệu transcript video giảng dạy.</span>';
+      }
+    }
+
+    function switchCourse(courseId) {
+      activeCourse = courseId;
+      document.getElementById('pill-oop').classList.toggle('active', courseId === 'cpp-oop');
+      document.getElementById('pill-core').classList.toggle('active', courseId === 'cpp-core');
+      document.getElementById('gate-course').innerText = courseId;
+      
+      const list = courseId === 'cpp-oop' ? CPP_OOP_LESSONS : CPP_CORE_LESSONS;
+      renderLessonList(list);
+      selectLesson(list[0]);
+    }
+
+    function renderLessonList(list) {
+      const container = document.getElementById('lesson-items-container');
+      container.innerHTML = '';
+      list.forEach(l => {
+        const item = document.createElement('div');
+        item.className = `lesson-item-card ${l.seq === currentLesson.seq ? 'current' : ''}`;
+        item.dataset.seq = l.seq;
+        item.onclick = () => selectLesson(l);
+        item.innerHTML = `
+          <div class="lesson-item-title">${l.title}</div>
+          <span class="lesson-seq-badge">Seq: ${l.seq}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function filterLessons(query) {
+      const q = query.toLowerCase().trim();
+      const currentList = activeCourse === 'cpp-oop' ? CPP_OOP_LESSONS : CPP_CORE_LESSONS;
+      const filtered = currentList.filter(l => l.title.toLowerCase().includes(q) || String(l.seq).includes(q));
+      renderLessonList(filtered);
+    }
+
+    function toggleSidebarTab(tab) {
+      document.getElementById('st-tab-lessons').classList.toggle('active', tab === 'lessons');
+      document.getElementById('st-tab-ast').classList.toggle('active', tab === 'ast');
+      document.getElementById('lesson-items-container').style.display = tab === 'lessons' ? 'flex' : 'none';
+      document.getElementById('ast-items-container').style.display = tab === 'ast' ? 'flex' : 'none';
+    }
+
+
+    // --- CHAT INTERACTION & SSE STREAMING ---
+    function quickAsk(prompt) {
+      document.getElementById('prompt-input').value = prompt;
+      submitMessage();
+    }
+
+    function clearChat() {
+      document.getElementById('chat-messages-box').innerHTML = '';
+    }
+
+    function handleInputKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitMessage();
+      }
+    }
+
+    async function submitMessage() {
+      const input = document.getElementById('prompt-input');
+      const text = input.value.trim();
+      if (!text || isStreaming) return;
+
+      input.value = '';
+      isStreaming = true;
+      document.getElementById('send-btn').disabled = true;
+
+      // 1. User Message
+      appendMsg(text, 'user');
+
+      // 2. Assistant Bubble
+      const assistantElem = createAssistantBubble();
+      const thoughtBody = assistantElem.querySelector('.thought-content');
+      const textElem = assistantElem.querySelector('.assistant-body-text');
+
+      try {
+        const response = await fetch('/api/v1/chat/stream', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: text,
+            course_id: activeCourse,
+            lesson_seq: currentLesson.seq
+          })
+        });
+
+        if (!response.ok) {
+          textElem.innerText = `Lỗi máy chủ (${response.status}).`;
+          return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+        let fullAnswer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+
+          let curEvent = 'message';
+          for (const line of lines) {
+            const tr = line.trim();
+            if (tr.startsWith('event:')) {
+              curEvent = tr.replace('event:', '').trim();
+            } else if (tr.startsWith('data:')) {
+              const raw = tr.replace('data:', '').trim();
+              if (raw === '[DONE]') break;
+
+              if (curEvent === 'metadata') {
+                try {
+                  const meta = JSON.parse(raw);
+                  renderMetadataThought(thoughtBody, meta);
+                } catch(e) {}
+              } else if (curEvent === 'delta') {
+                try {
+                  const d = JSON.parse(raw);
+                  if (d.content) {
+                    fullAnswer += d.content;
+                    textElem.innerHTML = formatMarkdownWithTimestamps(fullAnswer);
+                    scrollChatToBottom();
+                  }
+                } catch(e) {}
+              }
+            }
+          }
+        }
+      } catch (err) {
+        textElem.innerHTML = `<span style="color:#dc2626">Không thể kết nối tới mô hình LLM (${err.message}). Khi bạn bật lại Kaggle Notebook, hệ thống sẽ tự động kết nối lại ngay lập tức!</span>`;
+      } finally {
+        isStreaming = false;
+        document.getElementById('send-btn').disabled = false;
+      }
+    }
+
+    function appendMsg(text, sender) {
+      const box = document.getElementById('chat-messages-box');
+      const row = document.createElement('div');
+      row.className = `msg-row ${sender}`;
+      row.innerHTML = `<div class="msg-bubble">${escapeHtml(text)}</div>`;
+      box.appendChild(row);
+      scrollChatToBottom();
+    }
+
+    function createAssistantBubble() {
+      const box = document.getElementById('chat-messages-box');
+      const row = document.createElement('div');
+      row.className = 'msg-row assistant';
+      row.innerHTML = `
+        <div class="thought-drawer">
+          <div class="thought-header" onclick="toggleThought(this)">
+            <span>Thẩm định CRAG & Luồng suy nghĩ</span>
+            <span style="font-size:10px;">&blacktriangledown;</span>
+          </div>
+          <div class="thought-content">Đang phân tích ý định câu hỏi...</div>
+        </div>
+        <div class="msg-bubble assistant-body-text">
+          <span style="color:var(--text-dim)">Trợ giảng đang suy nghĩ...</span>
+        </div>
+      `;
+      box.appendChild(row);
+      scrollChatToBottom();
+      return row;
+    }
+
+    function toggleThought(headerEl) {
+      const content = headerEl.nextElementSibling;
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function renderMetadataThought(bodyEl, meta) {
+      let tagClass = 'tag-grounded';
+      let tagLabel = 'Grounded (Xác thực bài học)';
+      if (meta.retrieval_status === 'out_of_lesson') {
+        tagClass = 'tag-out';
+        tagLabel = `Out-of-Lesson (Bài tương lai: Seq ${meta.target_lesson_seq || '?'})`;
+      } else if (meta.retrieval_status === 'coverage_gap') {
+        tagClass = 'tag-gap';
+        tagLabel = 'Coverage-Gap (Ngoài phạm vi)';
+      } else if (meta.retrieval_status === 'fast_path') {
+        tagClass = 'tag-fast';
+        tagLabel = 'Fast-Path (< 2ms)';
+      }
+
+      bodyEl.innerHTML = `
+        <div>
+          <span class="tag-chip ${tagClass}">${tagLabel}</span>
+          <span class="tag-chip" style="background:#f1f5f9;color:#334155;">Intent: ${meta.intent}</span>
+          <span class="tag-chip" style="background:#f1f5f9;color:#334155;">Chunks: ${meta.retrieved_chunk_count}</span>
+          ${meta.is_approximate ? '<span class="tag-chip" style="background:#fff7ed;color:#ea580c">Fallback Video</span>' : ''}
+        </div>
+        ${meta.sources && meta.sources.length > 0 ? `
+          <div style="margin-top:6px;color:var(--text-muted);">
+            <strong>Nguồn học liệu:</strong>
+            ${meta.sources.map(s => `
+              <div>&bull; [${s.content_type}] Bài ${s.lesson_seq} (${s.lesson_id}) &bull; Tin cậy: ${(s.confidence_score * 100).toFixed(1)}%</div>
+            `).join('')}
+          </div>
+        ` : ''}
+      `;
+    }
+
+    function formatMarkdownWithTimestamps(text) {
+      let res = text.replace(/<timestamp sec="(\d+)">([^<]+)<\/timestamp>/g, (m, sec, label) => {
+        return `<span class="ts-pill" onclick="seekVideo(${sec})"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> ${label}</span>`;
+      });
+      res = res.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      res = res.replace(/```([a-z]*)\n([\s\S]*?)```/g, (m, lang, code) => {
+        return `<pre><code>${escapeHtml(code.trim())}</code></pre>`;
+      });
+      res = res.replace(/`([^`]+)`/g, '<code>$1</code>');
+      res = res.replace(/\n/g, '<br>');
+      return res;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function scrollChatToBottom() {
+      const box = document.getElementById('chat-messages-box');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    // Run on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderLessonList(CPP_OOP_LESSONS);
+      selectLesson(currentLesson);
+    });
+  </script>
+</body>
+</html>
