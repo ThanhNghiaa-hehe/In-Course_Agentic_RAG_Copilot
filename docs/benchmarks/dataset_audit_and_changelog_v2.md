@@ -144,3 +144,29 @@ Các mốc giây đã được đối chiếu chéo và cập nhật 1:1 với �
   4. Trả về Coverage Gap.
 - **Hiệu quả:** Bảo toàn tính toàn vẹn ngữ cảnh, triệt tiêu hoàn toàn hiện tượng nuốt nhầm bài tương lai.
 
+---
+
+## 8. KIỂM TOÁN & CHUẨN HÓA DỮ LIỆU ĐỒNG BỘ METADATA V2.2.0 (2026-10-04)
+
+### 8.1. Bối cảnh & Phát hiện Thực nghiệm (Zero-Hallucination Discrepancy)
+Trong đợt khảo thí Stage 11 ngày 2026-10-04, phân tích 38 ca thất bại phát hiện 2 nguyên nhân cốt lõi:
+1. **Lệch mốc video & gán nhãn ảo giác (False Ground-Truth):**
+   - `BENCH-007` (`unsigned int`): Video Bài 2 không giảng dạy `unsigned`. RAG từ chối sinh timestamp (`coverage_gap`) là hoàn toàn chính xác. Hiệu đính: `expected_retrieval_status: "coverage_gap"`, `target_video_sec: null`.
+   - `BENCH-010` (`++x` vs `x++`): Mốc 120s là đoạn giảng về dấu nháy đơn ký tự `char`. Thực tế tăng trước/tăng sau được giảng tại mốc `1168s` trong Bài 3. Hiệu đính: `target_video_sec: 1168`.
+   - `BENCH-014` (`n % 2 == 0`) & `BENCH-016` (ngắn mạch `&&`): Cần câu lệnh điều kiện `if`, thuộc mã nguồn `lesson_04.cpp` và video Bài 4 mốc 751s. Hiệu đính: `lesson_seq: 4`, `target_video_sec: 751`.
+   - `BENCH-022` (năm nhuận): Thuật toán năm nhuận có code AST thực tế ở Bài 5 (`lesson-05`). Hiệu đính: `lesson_seq: 5`, `target_video_sec: 525`.
+   - `BENCH-035` & `BENCH-037`: Chuyên đề Hàm nằm ở Bài 7 & 8 (`lesson-08`), không phải Bài 11 (Mảng 1 chiều). Hiệu đính: `lesson_seq: 8`.
+   - `BENCH-058`: Toán tử `s[i]` là kiến thức cơ bản ở `cpp-core` Bài 18. Hiệu đính: `course_id: "cpp-core"`, `lesson_seq: 18`, `target_video_sec: 350`.
+   - `BENCH-064`: Mẫu số khác 0 không xuất hiện trong Bài 56. Hiệu đính: `expected_retrieval_status: "coverage_gap"`, `target_video_sec: null`.
+
+2. **Nghịch lý thời gian ở Lớp OOP (Temporal Inversion ở Bài 53-54):**
+   - Đề thi cũ gán `out_of_lesson` cho các câu nạp chồng toán tử (`BENCH-109..116`) và Phân số (`BENCH-111..113`) ở Bài 53/54.
+   - Nhưng thực tế trong video Bài 53 và Bài 54, giảng viên **ĐÃ GIẢNG DẠY TRỌN VẸN** nạp chồng toán tử cho `SinhVien`, `SoPhuc` lúc 3881s ($S = 0.66$) và Lớp `PhanSo`, `gcd` lúc 415s ($S = 0.69$). Khi học viên ở Bài 53/54, đây là kiến thức trong phạm vi bài học.
+   - Để kiểm thử tính chất Out-of-Lesson chân thực, các câu hỏi trên được chuyển vị trí học viên về Bài 51/52 (cuối phần Struct) hỏi đón đầu sang OOP, bảo toàn 100% tính năng kiểm tra Future Probing của đồ án.
+
+### 8.2. Đồng bộ Metadata & Ngưỡng Pareto Context Sufficiency
+- Cập nhật `data/metadata/lesson_code_video_binding.json`: Thay thế các mốc fallback tĩnh (`120s`, `180s`, `150s`, `210s`) bằng mốc gõ code thực tế (`450s`, `751s`, `350s`, `520s`, `415s`).
+- Cập nhật `app/services/retrieval.py`: Ưu tiên mốc Ground-Truth trong manifest JSON khi phân giải Code AST.
+- Cập nhật `app/config.py`: Đồng bộ `PARETO_DOMINANCE_MARGIN = 0.10` và `PARETO_DOMINANCE_FUTURE_MIN = 0.40` theo chuẩn bất biến `AGENTS.md`.
+
+

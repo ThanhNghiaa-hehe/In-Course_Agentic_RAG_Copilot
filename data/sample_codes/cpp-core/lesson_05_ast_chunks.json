@@ -1,0 +1,28 @@
+[
+  {
+    "chunk_id": "header_1_2",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 2,
+    "raw_text": "#include <iostream>\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include <iostream>\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "func_namNhuan_5_13",
+    "code_scope": "function_namNhuan",
+    "func_name": "namNhuan",
+    "start_line": 5,
+    "end_line": 13,
+    "raw_text": "bool namNhuan(int n) {\n    if (n <= 0) {\n        return false;\n    }\n    if ((n % 400 == 0) || (n % 4 == 0 && n % 100 != 0)) {\n        return true;\n    }\n    return false;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nbool namNhuan(int n) {\n    if (n <= 0) {\n        return false;\n    }\n    if ((n % 400 == 0) || (n % 4 == 0 && n % 100 != 0)) {\n        return true;\n    }\n    return false;\n}"
+  },
+  {
+    "chunk_id": "func_main_15_26",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 15,
+    "end_line": 26,
+    "raw_text": "int main() {\n    int n;\n    cin >> n;\n    if (n <= 0) {\n        cout << \"INVALID\" << endl;\n    } else if (namNhuan(n)) {\n        cout << \"YES\" << endl;\n    } else {\n        cout << \"NO\" << endl;\n    }\n    return 0;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main() {\n    int n;\n    cin >> n;\n    if (n <= 0) {\n        cout << \"INVALID\" << endl;\n    } else if (namNhuan(n)) {\n        cout << \"YES\" << endl;\n    } else {\n        cout << \"NO\" << endl;\n    }\n    return 0;\n}"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "chunk_id": "header_1_3",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 3,
+    "raw_text": "#include <iostream>\n#include <string>\n#include <string>\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include <iostream>\n#include <string>\n#include <string>\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "class_specifier_5_34",
+    "code_scope": "type_class_specifier",
+    "start_line": 5,
+    "end_line": 34,
+    "raw_text": "class NhanVien {\nprivate:\n    string ma, ten, gioiTinh, ngaySinh, diaChi, maSoThue, ngayKi;\npublic:\n    NhanVien() {\n        ma = \"00001\";\n        ten = \"\";\n        gioiTinh = \"\";\n        ngaySinh = \"\";\n        diaChi = \"\";\n        maSoThue = \"\";\n        ngayKi = \"\";\n    }\n\n    friend istream& operator >> (istream& in, NhanVien& a) {\n        getline(in, a.ten);\n        in >> a.gioiTinh >> a.ngaySinh;\n        in.ignore();\n        getline(in, a.diaChi);\n        in >> a.maSoThue >> a.ngayKi;\n        return in;\n    }\n\n    friend ostream& operator << (ostream& out, NhanVien a) {\n        out << a.ma << \" \" << a.ten << \" \" << a.gioiTinh << \" \" \n            << a.ngaySinh << \" \" << a.diaChi << \" \" \n            << a.maSoThue << \" \" << a.ngayKi << endl;\n        return out;\n    }\n};",
+    "context_code": "class NhanVien {\nprivate:\n    string ma, ten, gioiTinh, ngaySinh, diaChi, maSoThue, ngayKi;\npublic:\n    NhanVien() {\n        ma = \"00001\";\n        ten = \"\";\n        gioiTinh = \"\";\n        ngaySinh = \"\";\n        diaChi = \"\";\n        maSoThue = \"\";\n        ngayKi = \"\";\n    }\n\n    friend istream& operator >> (istream& in, NhanVien& a) {\n        getline(in, a.ten);\n        in >> a.gioiTinh >> a.ngaySinh;\n        in.ignore();\n        getline(in, a.diaChi);\n        in >> a.maSoThue >> a.ngayKi;\n        return in;\n    }\n\n    friend ostream& operator << (ostream& out, NhanVien a) {\n        out << a.ma << \" \" << a.ten << \" \" << a.gioiTinh << \" \" \n            << a.ngaySinh << \" \" << a.diaChi << \" \" \n            << a.maSoThue << \" \" << a.ngayKi << endl;\n        return out;\n    }\n};"
+  },
+  {
+    "chunk_id": "func_main_36_41",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 36,
+    "end_line": 41,
+    "raw_text": "int main() {\n    NhanVien a;\n    cin >> a;\n    cout << a;\n    return 0;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\n#include <string>\n#include <string>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main() {\n    NhanVien a;\n    cin >> a;\n    cout << a;\n    return 0;\n}"
+  }
+]

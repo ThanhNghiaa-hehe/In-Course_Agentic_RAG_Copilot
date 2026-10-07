@@ -1,0 +1,46 @@
+[
+  {
+    "chunk_id": "header_1_2",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 2,
+    "raw_text": "#include <iostream>\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include <iostream>\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "func_tong_9_11",
+    "code_scope": "function_tong",
+    "func_name": "tong",
+    "start_line": 9,
+    "end_line": 11,
+    "raw_text": "int tong(int a, int b) {\n    return a + b;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint tong(int a, int b) {\n    return a + b;\n}"
+  },
+  {
+    "chunk_id": "func_min_13_15",
+    "code_scope": "function_min",
+    "func_name": "min",
+    "start_line": 13,
+    "end_line": 15,
+    "raw_text": "int min(int a, int b) {\n    return (a < b) ? a : b;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint min(int a, int b) {\n    return (a < b) ? a : b;\n}"
+  },
+  {
+    "chunk_id": "func_swap_18_22",
+    "code_scope": "function_swap",
+    "func_name": "swap",
+    "start_line": 18,
+    "end_line": 22,
+    "raw_text": "void swap(int &a, int &b) {\n    int temp = a;\n    a = b;\n    b = temp;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid swap(int &a, int &b) {\n    int temp = a;\n    a = b;\n    b = temp;\n}"
+  },
+  {
+    "chunk_id": "func_main_24_31",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 24,
+    "end_line": 31,
+    "raw_text": "int main() {\n    int x = 10, y = 20;\n    cout << \"Tong: \" << tong(x, y) << endl;\n    cout << \"Min: \" << min(x, y) << endl;\n    swap(x, y);\n    cout << \"Sau swap: x = \" << x << \", y = \" << y << endl;\n    return 0;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main() {\n    int x = 10, y = 20;\n    cout << \"Tong: \" << tong(x, y) << endl;\n    cout << \"Min: \" << min(x, y) << endl;\n    swap(x, y);\n    cout << \"Sau swap: x = \" << x << \", y = \" << y << endl;\n    return 0;\n}"
+  }
+]

@@ -184,8 +184,8 @@ def reclean_single_target(raw_or_chunk_file: Path):
 
 def main():
     parser = argparse.ArgumentParser(description="Reclean toàn bộ transcript và tái nạp Qdrant Cloud")
-    parser.add_argument("--all", action="store_true", default=True, help="Quét và reclean toàn bộ thư mục data/transcripts")
-    parser.add_argument("--path", type=str, default=None, help="Đường dẫn đến file JSON cụ thể")
+    parser.add_argument("--all", action="store_true", default=False, help="Quét và reclean toàn bộ thư mục data/transcripts")
+    parser.add_argument("--path", "--target", dest="path", type=str, default=None, help="Đường dẫn đến file JSON hoặc thư mục bài học cụ thể")
     args = parser.parse_args()
 
     transcripts_root = PROJECT_ROOT / "data" / "transcripts"
@@ -199,7 +199,18 @@ def main():
 
     target_files = []
     if args.path:
-        target_files.append(Path(args.path))
+        p = Path(args.path)
+        if p.is_dir():
+            raw_files = sorted(list(p.rglob("*raw_segments.json")))
+            if raw_files:
+                target_files = raw_files
+            else:
+                target_files = sorted(list(p.rglob("*chunks.json")))
+        elif p.is_file():
+            target_files.append(p)
+        else:
+            print(f"[LỖI] Không tìm thấy đường dẫn: {p}")
+            return
     else:
         # Tìm ưu tiên raw_segments
         raw_files = sorted(list(transcripts_root.rglob("*raw_segments.json")))

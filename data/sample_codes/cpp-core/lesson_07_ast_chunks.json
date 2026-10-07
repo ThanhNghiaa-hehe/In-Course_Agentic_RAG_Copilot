@@ -1,0 +1,37 @@
+[
+  {
+    "chunk_id": "header_1_2",
+    "code_scope": "header_preamble",
+    "start_line": 1,
+    "end_line": 2,
+    "raw_text": "#include <iostream>\nusing namespace std;\nusing namespace std;",
+    "context_code": "#include <iostream>\nusing namespace std;\nusing namespace std;"
+  },
+  {
+    "chunk_id": "func_thayDoi_5_7",
+    "code_scope": "function_thayDoi",
+    "func_name": "thayDoi",
+    "start_line": 5,
+    "end_line": 7,
+    "raw_text": "void thayDoi(int n) {\n    n += 1000;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid thayDoi(int n) {\n    n += 1000;\n}"
+  },
+  {
+    "chunk_id": "func_thamChieu_10_12",
+    "code_scope": "function_thamChieu",
+    "func_name": "thamChieu",
+    "start_line": 10,
+    "end_line": 12,
+    "raw_text": "void thamChieu(int &n) {\n    n += 1000;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nvoid thamChieu(int &n) {\n    n += 1000;\n}"
+  },
+  {
+    "chunk_id": "func_main_14_21",
+    "code_scope": "function_main",
+    "func_name": "main",
+    "start_line": 14,
+    "end_line": 21,
+    "raw_text": "int main() {\n    int m = 20;\n    thayDoi(m);\n    cout << \"Gia tri sau khi goi thayDoi (tham tri): \" << m << endl; // vẫn là 20\n    thamChieu(m);\n    cout << \"Gia tri sau khi goi thamChieu (tham chieu): \" << m << endl; // thành 1020\n    return 0;\n}",
+    "context_code": "// [Header Context]\n#include <iostream>\nusing namespace std;\nusing namespace std;\n\n// [Function Implementation]\nint main() {\n    int m = 20;\n    thayDoi(m);\n    cout << \"Gia tri sau khi goi thayDoi (tham tri): \" << m << endl; // vẫn là 20\n    thamChieu(m);\n    cout << \"Gia tri sau khi goi thamChieu (tham chieu): \" << m << endl; // thành 1020\n    return 0;\n}"
+  }
+]
