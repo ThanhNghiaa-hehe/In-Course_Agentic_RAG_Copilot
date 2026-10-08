@@ -2,6 +2,7 @@ import asyncio
 import json
 import logging
 import re
+import uuid
 from typing import AsyncGenerator, Dict, Any, List, Optional
 from openai import AsyncOpenAI
 
@@ -14,7 +15,7 @@ from app.agent.prompts import (
 )
 from app.agent.router import get_intent_router
 from app.services.retrieval import RetrievalService, RetrievalResult, get_retrieval_service
-from app.services.chat_graph import get_chat_graph
+from app.services.chat_graph import get_chat_graph, commit_assistant_turn, reset_session_state
 from app.schemas.chat import ChatRequest, SuggestedTimestamp, StreamMetadataEvent
 
 logger = logging.getLogger("uvicorn.error")
@@ -82,12 +83,17 @@ class ChatService:
     async def stream_chat(self, request: ChatRequest) -> AsyncGenerator[Dict[str, Any], None]:
         """
         Xử lý yêu cầu trò chuyện và phát luồng sự kiện SSE (Dual-Channel Server-Sent Events):
-        - Event 'metadata': Gửi danh sách nguồn trích dẫn, mốc timestamp đề xuất, cờ fast-path, trạng thái retrieval.
+        - Hỗ trợ phiên đa lượt (Multi-turn Stateful Session) qua LangGraph Checkpointer theo thread_id.
+        - Event 'metadata': Gửi session_id, turn_count, danh sách nguồn trích dẫn, mốc timestamp đề xuất.
         - Event 'delta': Bắn từng token văn bản được sinh ra từ LLM.
-        - Event 'done': Báo hiệu hoàn tất luồng truyền phát.
+        - Event 'done': Báo hiệu hoàn tất luồng truyền phát và tự động lưu vết turn đối thoại.
         """
-        # 1. Khởi chạy chu trình điều phối Agentic RAG qua LangGraph StateGraph
+        # 1. Quản lý Session ID chuẩn hóa (Tạo mới nếu client chưa có)
+        session_id = request.session_id or f"session_{uuid.uuid4().hex[:12]}"
+        config = {"configurable": {"thread_id": session_id}}
+
         initial_state = {
+            "session_id": session_id,
             "prompt": request.prompt,
             "course_id": request.course_id,
             "lesson_seq": request.lesson_seq,
@@ -102,19 +108,25 @@ class ChatService:
             "suggested_timestamps": [],
             "sources": [],
             "system_prompt": "",
-            "user_message_content": ""
+            "user_message_content": "",
+            "assembled_messages": []
         }
 
+        # Khởi chạy chu trình điều phối Agentic RAG qua LangGraph StateGraph có Checkpointer
         graph = get_chat_graph()
-        final_state = await graph.ainvoke(initial_state)
+        final_state = await graph.ainvoke(initial_state, config=config)
+        turn_count = final_state.get("turn_count", 1)
         logger.info(
-            f"[ChatService:LangGraph] Graph hoàn tất: Intent={final_state['intent']} | "
-            f"Status={final_state['retrieval_status']} | Chunks={len(final_state['retrieved_chunks'])}"
+            f"[ChatService:LangGraph] Graph hoàn tất: Session={session_id} | Turn={turn_count} | "
+            f"Intent={final_state['intent']} | Status={final_state['retrieval_status']} | "
+            f"Chunks={len(final_state['retrieved_chunks'])}"
         )
 
         # 2. Xử lý Fast-Path (Chào hỏi xã giao, cảm ơn, danh tính, ngoài lề)
         if not final_state["is_course_query"]:
             fast_metadata = StreamMetadataEvent(
+                session_id=session_id,
+                turn_count=turn_count,
                 intent=final_state["intent"],
                 used_fast_path=True,
                 retrieved_chunk_count=0,
@@ -131,7 +143,6 @@ class ChatService:
             }
 
             direct_text = final_state["direct_response"] or ""
-            # Stream mượt mà từng từ cho trải nghiệm phản hồi tự nhiên
             words = direct_text.split(" ")
             for i, word in enumerate(words):
                 chunk_token = word if i == 0 else " " + word
@@ -141,6 +152,9 @@ class ChatService:
                 }
                 await asyncio.sleep(0.015)
 
+            # Lưu vết lượt Fast-Path vào Checkpointer
+            commit_assistant_turn(session_id, request.prompt, direct_text)
+
             yield {
                 "event": "done",
                 "data": "[DONE]"
@@ -149,6 +163,8 @@ class ChatService:
 
         # 3. Gửi sự kiện 'metadata' đầu tiên cho Frontend UI từ kết quả đồ thị
         meta_event = StreamMetadataEvent(
+            session_id=session_id,
+            turn_count=turn_count,
             intent=final_state["intent"],
             used_fast_path=False,
             retrieved_chunk_count=len(final_state["retrieved_chunks"]),
@@ -166,10 +182,15 @@ class ChatService:
             "data": meta_event.model_dump_json()
         }
 
-        messages = [
-            {"role": "system", "content": final_state["system_prompt"]},
-            {"role": "user", "content": final_state["user_message_content"]}
-        ]
+        # Sử dụng danh sách tin nhắn ChatML đa lượt do Node context_assembly đóng gói
+        messages = final_state.get("assembled_messages")
+        if not messages:
+            messages = [
+                {"role": "system", "content": final_state["system_prompt"]},
+                {"role": "user", "content": final_state["user_message_content"]}
+            ]
+
+        full_assistant_response = ""
 
         try:
             stream_response = await self.client.chat.completions.create(
@@ -179,7 +200,7 @@ class ChatService:
                 max_tokens=settings.LLM_MAX_TOKENS,
                 presence_penalty=0.5,
                 frequency_penalty=0.5,
-                stop=["\n\n\n", "Học viên:", "Sinh viên:", "<|im_end|>", "User:"],
+                stop=["\n\n\n", "Học viên:", "Sinh viên:", "<|im_end|>"],
                 stream=True
             )
 
@@ -194,10 +215,15 @@ class ChatService:
                     if (retrieval_status != "grounded" or not retrieved_chunks) and ("<timestamp" in token or "</timestamp>" in token):
                         continue
 
+                    full_assistant_response += token
                     yield {
                         "event": "delta",
                         "data": json.dumps({"content": token})
                     }
+
+            # Lưu vết câu trả lời hoàn chỉnh của Trợ giảng vào LangGraph Checkpointer
+            if full_assistant_response.strip():
+                commit_assistant_turn(session_id, request.prompt, full_assistant_response)
 
         except Exception as e:
             logger.error(f"[ChatService] Lỗi kết nối LLM Server ({settings.LLM_BASE_URL}): {str(e)}")
