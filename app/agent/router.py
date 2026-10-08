@@ -252,12 +252,12 @@ class IntentRouter:
 
                 # Điều kiện kích hoạt Stage 2 NLI Arbiter:
                 # 1. Rơi vào vùng phân vân ngữ nghĩa (margin < 0.12)
-                # 2. Hoặc Stage 1 chọn out_of_scope nhưng chưa đủ tự tin (p_oos < 0.72) và vẫn có tín hiệu kỹ thuật đáng kể (p_course >= 0.25 và p_chit < 0.35)
-                #    (Dấu hiệu của câu ẩn dụ sư phạm / chuỗi kỹ thuật bị từ vựng đời sống kéo lệch)
+                # 2. Hoặc Stage 1 chọn out_of_scope nhưng chưa đủ tự tin (p_oos < 0.75) và vẫn có tín hiệu môn học/giáo trình (p_course >= 0.15 và p_chit < 0.35)
+                #    (Dấu hiệu của câu ẩn dụ sư phạm hoặc câu hỏi điều hướng lộ trình khóa học/playlist)
                 is_ambiguous = (margin < MARGIN_THRESHOLD)
-                is_potential_metaphor = (top1_class == "out_of_scope" and p_oos < 0.72 and p_course >= 0.25 and p_chit < 0.35)
+                is_potential_study_query = (top1_class == "out_of_scope" and p_oos < 0.75 and p_course >= 0.15 and p_chit < 0.35)
 
-                if is_ambiguous or is_potential_metaphor:
+                if is_ambiguous or is_potential_study_query:
                     logger.info(
                         f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter: "
                         f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, P_course={p_course:.3f}"
