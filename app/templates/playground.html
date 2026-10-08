@@ -142,23 +142,25 @@
 
     /* 3-Column Main Workspace:
        CỘT 1 (Trái): Chọn bài (340px)
-       CỘT 2 (Giữa): Video to (1fr)
-       CỘT 3 (Phải): Chatbot AI (380px)
+       CỘT 2 (Giữa): Video to (flex: 1 - tràn toàn phần khi đóng chat)
+       CỘT 3 (Phải): Chatbot AI (400px - thu gọn mượt mà thành icon)
     */
     .studio-workspace {
       flex: 1;
-      display: grid;
-      grid-template-columns: 340px minmax(500px, 1fr) 390px;
+      display: flex;
       gap: 16px;
       padding: 16px;
       height: calc(100vh - 64px);
       overflow: hidden;
+      position: relative;
     }
 
     /* ========================================================
        CỘT 1: KHUNG CHỌN BÀI & PROFILE (BÊN TRÁI)
        ======================================================== */
     .syllabus-panel {
+      width: 340px;
+      flex-shrink: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-default);
       border-radius: var(--radius-card);
@@ -346,6 +348,8 @@
        CỘT 2: VIDEO TO CHỨA YOUTUBE API (Ở GIỮA)
        ======================================================== */
     .video-center-panel {
+      flex: 1;
+      min-width: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-default);
       border-radius: var(--radius-card);
@@ -356,6 +360,7 @@
       overflow: hidden;
       padding: 20px;
       gap: 16px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .video-banner-header {
       display: flex;
@@ -413,6 +418,8 @@
        CỘT 3: KHUNG CHATBOT AI (BÊN PHẢI)
        ======================================================== */
     .chatbot-panel {
+      width: 400px;
+      flex-shrink: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-default);
       border-radius: var(--radius-card);
@@ -421,6 +428,25 @@
       flex-direction: column;
       height: 100%;
       overflow: hidden;
+      transform: translateX(0);
+      opacity: 1;
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  margin 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .chatbot-panel.collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      margin-left: -16px !important;
+      padding: 0 !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateX(24px) !important;
+      border: none !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
     }
     .panel-header {
       padding: 14px 16px;
@@ -674,6 +700,74 @@
       background: var(--bg-surface-hover);
       color: var(--text-heading);
     }
+
+    /* Floating Action Button (FAB) for Chat Trigger */
+    .chat-fab-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--brand-dark);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-pill);
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px -5px rgba(24, 27, 52, 0.4), 0 8px 10px -6px rgba(24, 27, 52, 0.2);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    .chat-fab-toggle:hover {
+      background: #24284d;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 28px -4px rgba(24, 27, 52, 0.45);
+    }
+    .chat-fab-toggle:active {
+      transform: translateY(0) scale(0.97);
+    }
+    .chat-fab-toggle.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.9);
+    }
+    .chat-fab-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 0 2px var(--brand-dark);
+    }
+
+    /* Collapse / Close Chat Button in Panel Header */
+    .chat-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .collapse-chat-btn {
+      background: transparent;
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .collapse-chat-btn:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-heading);
+      border-color: var(--border-focus);
+    }
   </style>
 
   <!-- Google YouTube IFrame Player API -->
@@ -702,6 +796,12 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         API Specs
       </a>
+      <button class="header-link-btn" id="header-chat-toggle" onclick="toggleChat()" title="Bật/tắt Trợ Giảng Socratic">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span id="header-chat-text">Trợ Giảng AI</span>
+      </button>
     </div>
   </header>
 
@@ -793,7 +893,12 @@
             <p id="chat-lesson-sub">Ngữ cảnh: Bài 53 (OOP)</p>
           </div>
         </div>
-        <button class="clear-btn" onclick="clearChat()">Làm mới</button>
+        <div class="chat-header-actions">
+          <button class="clear-btn" onclick="clearChat()" title="Xóa lịch sử hội thoại">Làm mới</button>
+          <button class="collapse-chat-btn" onclick="toggleChat(false)" title="Thu gọn khung chat (Mở rộng video)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
       </div>
 
       <!-- Quick Prompt Suggestions -->
@@ -1128,6 +1233,29 @@
       document.getElementById('chat-messages-box').innerHTML = '';
     }
 
+    function getOrCreateSessionId() {
+      let sid = sessionStorage.getItem('copilot_session_id');
+      if (!sid) {
+        sid = 'session_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+        sessionStorage.setItem('copilot_session_id', sid);
+      }
+      return sid;
+    }
+
+    function clearChat() {
+      const newSid = 'session_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+      sessionStorage.setItem('copilot_session_id', newSid);
+      const box = document.getElementById('chat-messages-box');
+      box.innerHTML = `
+        <div class="msg-row assistant">
+          <div class="msg-bubble">
+            Phiên đối thoại mới đã được thiết lập (Sẵn sàng). Tôi là <strong>Trợ giảng AI Socratic</strong> theo giáo trình lập trình C++. Tôi sẽ hướng dẫn tư duy từng bước cho bạn và chỉ ra nguyên nhân lỗi thay vì giải bài hộ.<br><br>
+            Bạn có thể hỏi bất kỳ bài học hoặc cú pháp nào để bắt đầu mạch thảo luận!
+          </div>
+        </div>
+      `;
+    }
+
     function handleInputKey(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -1152,6 +1280,8 @@
       const thoughtBody = assistantElem.querySelector('.thought-content');
       const textElem = assistantElem.querySelector('.assistant-body-text');
 
+      const currentSid = getOrCreateSessionId();
+
       try {
         const response = await fetch('/api/v1/chat/stream', {
           method: 'POST',
@@ -1159,7 +1289,8 @@
           body: JSON.stringify({
             prompt: text,
             course_id: activeCourse,
-            lesson_seq: currentLesson.seq
+            lesson_seq: currentLesson.seq,
+            session_id: currentSid
           })
         });
 
@@ -1193,6 +1324,9 @@
               if (curEvent === 'metadata') {
                 try {
                   const meta = JSON.parse(raw);
+                  if (meta.session_id) {
+                    sessionStorage.setItem('copilot_session_id', meta.session_id);
+                  }
                   renderMetadataThought(thoughtBody, meta);
                 } catch(e) {}
               } else if (curEvent === 'delta') {
@@ -1268,6 +1402,7 @@
       bodyEl.innerHTML = `
         <div>
           <span class="tag-chip ${tagClass}">${tagLabel}</span>
+          ${meta.turn_count ? `<span class="tag-chip" style="background:#e0e7ff;color:#4338ca;font-weight:700;">Lượt ${meta.turn_count}</span>` : ''}
           <span class="tag-chip" style="background:#f1f5f9;color:#334155;">Intent: ${meta.intent}</span>
           <span class="tag-chip" style="background:#f1f5f9;color:#334155;">Chunks: ${meta.retrieved_chunk_count}</span>
           ${meta.is_approximate ? '<span class="tag-chip" style="background:#fff7ed;color:#ea580c">Fallback Video</span>' : ''}
@@ -1305,11 +1440,76 @@
       box.scrollTop = box.scrollHeight;
     }
 
+    // --- LOGIC ĐÓNG/MỞ KHUNG CHAT & FLOATING ACTION BUTTON (UI/UX PRO MAX) ---
+    let isChatOpen = false;
+
+    function initChatState() {
+      const savedState = sessionStorage.getItem('copilot_chat_open');
+      // Mặc định mở nếu người dùng đã lưu 'true', hoặc thu gọn (false) để video rộng rãi
+      if (savedState === 'true') {
+        setChatVisibility(true);
+      } else {
+        setChatVisibility(false);
+      }
+    }
+
+    function toggleChat(forceState) {
+      const nextState = (forceState !== undefined) ? forceState : !isChatOpen;
+      setChatVisibility(nextState);
+    }
+
+    function setChatVisibility(isOpen) {
+      isChatOpen = isOpen;
+      sessionStorage.setItem('copilot_chat_open', isOpen ? 'true' : 'false');
+      
+      const chatPanel = document.querySelector('.chatbot-panel');
+      const fabBtn = document.getElementById('chat-fab-toggle');
+      const headerBtn = document.getElementById('header-chat-toggle');
+      const headerText = document.getElementById('header-chat-text');
+
+      if (isOpen) {
+        if (chatPanel) chatPanel.classList.remove('collapsed');
+        if (fabBtn) fabBtn.classList.add('hidden');
+        if (headerBtn) {
+          headerBtn.classList.add('active');
+          headerBtn.style.background = 'var(--brand-dark)';
+          headerBtn.style.color = '#ffffff';
+          headerBtn.style.borderColor = 'var(--brand-dark)';
+        }
+        if (headerText) headerText.innerText = 'Đóng Chat';
+        setTimeout(() => {
+          scrollChatToBottom();
+          const input = document.getElementById('prompt-input');
+          if (input) input.focus();
+        }, 360);
+      } else {
+        if (chatPanel) chatPanel.classList.add('collapsed');
+        if (fabBtn) fabBtn.classList.remove('hidden');
+        if (headerBtn) {
+          headerBtn.classList.remove('active');
+          headerBtn.style.background = 'var(--bg-surface)';
+          headerBtn.style.color = 'var(--text-muted)';
+          headerBtn.style.borderColor = 'var(--border-default)';
+        }
+        if (headerText) headerText.innerText = 'Trợ Giảng AI';
+      }
+    }
+
     // Run on load
     window.addEventListener('DOMContentLoaded', () => {
       renderLessonList(CPP_OOP_LESSONS);
       selectLesson(currentLesson);
+      initChatState();
     });
   </script>
+
+  <!-- Floating Action Button: Hiển thị khi chat thu gọn -->
+  <button id="chat-fab-toggle" class="chat-fab-toggle" onclick="toggleChat(true)" title="Mở Trợ Giảng Socratic AI">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    <span>Hỏi Trợ Giảng AI</span>
+    <span class="chat-fab-indicator"></span>
+  </button>
 </body>
 </html>
