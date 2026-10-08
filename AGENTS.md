@@ -84,6 +84,15 @@
   - *Resilience khi LLM Remote Offline:* FastAPI backend phải hoạt động độc lập (Fast-Path, Retrieval, CRAG Grader, Video Seek, AST Inspector) ngay cả khi instance GPU Kaggle tạm tắt để tiết kiệm quota 30h/tuần.
   - *Ngân sách Ngữ cảnh:* Với trần vật lý $8{,}192\text{ tokens}$, ngân sách RAG context + System prompt chiếm $\approx 3{,}650\text{ tokens}$. Giai đoạn 3 chạy Single-turn Stateless để kiểm chuẩn độ chính xác mốc thời gian; Giai đoạn 4 kích hoạt Stateful Sliding Window với kích thước tối ưu $k \in [4, 6]$ turns (8–12 messages trong phạm vi an toàn $3{,}368\text{ tokens}$ khả dụng), vượt quá sẽ kích hoạt tóm tắt lịch sử.
 - **Zero Foreign Superpower Policy:** Từ chối các plugin superpower ngoại lai không rõ nguồn gốc; chỉ sử dụng bespoke custom skills may đo trong thư mục `.agents/skills/`.
+- **Curriculum Navigation & Router Rescue Invariant (Bất Biến Điều Hướng Lộ Trình):**
+  - Đối với các câu hỏi điều hướng giáo trình (hỏi bài học nào trong playlist, học vòng lặp/hàm ở đâu), mô hình Stage 1 LinearSVC có thể bị phân tán xác suất ($P_{\text{course}} \approx 0.15 - 0.24$) do chứa các từ vựng tổ chức danh mục.
+  - Hệ thống BẮT BUỘC duy trì cổng cứu xét Stage 2 NLI Arbiter (`mDeBERTa-v3`) khi $P_{\text{oos}} < 0.75$ và $P_{\text{course}} \ge 0.15$, dùng suy luận giả thuyết zero-shot để phân biệt câu hỏi học tập với câu hỏi ngoài lề, tuyệt đối không hardcode regex.
+- **Architectural Foundation vs. Domain Core Invariant (Lý Luận Kiến Trúc "Use First, Build Last"):**
+  - Hệ thống tuân thủ triệt để nguyên lý chuẩn công nghiệp:
+    (a) *Tầng Hạ tầng (Foundation - "Use First"):* Kế thừa toàn bộ các công nghệ chuẩn mực thế giới: Qdrant Cloud (Vector DB), FastEmbed/ONNX (Embedding), faster-whisper + Silero VAD (Speech), tree-sitter (AST parser), LangGraph StateGraph (Orchestration State Machine).
+    (b) *Tầng Nghiệp vụ Lõi (Domain Core - "Build Custom"):* Tự phát triển thuật toán CRAG Grader (Yan et al.), triệt tiêu Lost-in-the-Middle (U-shaped layout), Pareto Context Sufficiency (ICLR 2025) và Cascade LinearSVC Router (2.06ms).
+  - Loại bỏ hoàn toàn các pipeline RAG đóng hộp của LangChain/LlamaIndex để triệt tiêu độ trễ thắt nút cổ chai (giảm từ 1200ms xuống 2.06ms), ngăn chặn lỗi gãy cú pháp AST và loại bỏ hiện tượng bài cũ nuốt bài mới (Hallucination).
+
 
 
 ## 3. Production Conventions
@@ -97,6 +106,9 @@
   - Trước bất kỳ hành động nào liên quan đến tạo file mới, sửa file cũ hoặc chạy lệnh terminal: AI BẮT BUỘC phải tự động rà soát lại toàn bộ User Rules và Skills trong dự án.
   - Ngay cả khi người dùng nói mệt mỏi, nhờ làm hộ, hoặc đề cập đến việc tạo contribution: AI TUYỆT ĐỐI KHÔNG ĐƯỢC tự ý thực thi các thao tác tạo/sửa mã nguồn hoặc chạy lệnh ngầm trong âm thầm.
   - AI BẮT BUỘC phải: (1) Trình bày phương án và danh sách tệp dự kiến tạo/sửa; (2) Chờ người dùng phản hồi hoặc bấm nút phê duyệt (Proceed); (3) Chỉ cung cấp khối lệnh PowerShell sạch để người dùng tự kiểm soát và thực thi trên terminal của họ.
+- **Scratch Directory Modification Guardrail (Bảo Vệ Tệp Scratch):**
+  - Tuyệt đối KHÔNG tự ý tạo mới, sửa đổi hoặc xóa bất kỳ tệp mã nguồn nào trong thư mục `scratch/` khi chưa hỏi ý kiến và nhận được sự đồng thuận rõ ràng từ người dùng.
+  - Luôn ưu tiên để người dùng kiểm soát và tự chạy các file thử nghiệm trong `scratch/`.
 
 
 ## 4. Enterprise Git & Daily Delivery Cadence
