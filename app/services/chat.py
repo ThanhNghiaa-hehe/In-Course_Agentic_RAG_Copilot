@@ -1,20 +1,12 @@
 import asyncio
 import json
 import logging
-import re
 import uuid
 from typing import AsyncGenerator, Dict, Any, List, Optional
 from openai import AsyncOpenAI
 
 from app.config import settings
-from app.agent.prompts import (
-    SOCRATIC_GROUNDED_PROMPT,
-    OUT_OF_LESSON_PROMPT,
-    COVERAGE_GAP_PROMPT,
-    SOCRATIC_SYSTEM_PROMPT,
-)
-from app.agent.router import get_intent_router
-from app.services.retrieval import RetrievalService, RetrievalResult, get_retrieval_service
+from app.services.curriculum import get_curriculum_service, CurriculumService
 from app.services.chat_graph import get_chat_graph, commit_assistant_turn, reset_session_state
 from app.schemas.chat import ChatRequest, SuggestedTimestamp, StreamMetadataEvent
 
@@ -24,61 +16,24 @@ logger = logging.getLogger("uvicorn.error")
 class ChatService:
     """
     Dịch vụ điều phối trò chuyện Socratic & Truyền phát dữ liệu thời gian thực (SSE Stream):
+    - Tích hợp Curriculum Navigation Dispatcher: Fast-Path (< 20ms) cho câu hỏi lộ trình/playlist.
     - Tích hợp Intent Router: Fast-Path (< 1ms) cho chào hỏi / out-of-scope.
-    - Tích hợp Advanced Hybrid Retrieval (Qdrant + Jina Reranker v2 + Graceful Degradation).
-    - Phân định 3 trạng thái sư phạm cô lập: Grounded, Out-of-Lesson (bài tương lai), Coverage-Gap.
+    - Tích hợp Advanced Hybrid Retrieval & CRAG Grader qua LangGraph StateGraph.
     - Chuẩn hóa ngữ cảnh U-shaped & trích xuất mốc <timestamp sec="xxx">mm:ss</timestamp>.
-    - Kết nối OpenAI-compatible Client (hỗ trợ cả Ollama Local và OpenAI Cloud).
+    - Kết nối OpenAI-compatible Client (hỗ trợ cả Ollama Local và vLLM Remote).
     """
 
     def __init__(
         self,
-        retrieval_service: Optional[RetrievalService] = None,
+        retrieval_service: Optional[Any] = None,
         openai_client: Optional[AsyncOpenAI] = None
     ):
-        self.retrieval_service = retrieval_service or get_retrieval_service()
-        self.router = get_intent_router()
+        self.curriculum_service = get_curriculum_service()
         self.client = openai_client or AsyncOpenAI(
             base_url=settings.LLM_BASE_URL,
             api_key=settings.OPENAI_API_KEY or "vllm",
             default_headers={"ngrok-skip-browser-warning": "true"}
         )
-
-    def _format_context_block(self, chunks: List[Dict[str, Any]]) -> str:
-        """
-        Định dạng các chunks ngữ cảnh thành khối văn bản có cấu trúc rõ ràng cho LLM.
-        """
-        if not chunks:
-            return "[LƯU Ý: Không tìm thấy tài liệu bài giảng nào vượt qua ngưỡng tin cậy cho câu hỏi này. Hãy hướng dẫn học viên dựa trên kiến thức chuẩn của C++]."
-
-        blocks = ["[NGỮ CẢNH BÀI GIẢNG ĐÃ ĐƯỢC XÁC THỰC TỪ KHÓA HỌC]"]
-        for idx, chunk in enumerate(chunks, 1):
-            c_type = chunk.get("content_type", "unknown")
-            lesson_id = chunk.get("lesson_id", "unknown")
-            lesson_seq = chunk.get("lesson_seq", "?")
-            conf_pct = chunk.get("confidence_pct", 0.0)
-            is_approx = chunk.get("is_approximate", False)
-
-            header = f"--- Tài liệu {idx} (Loại: {c_type} | Bài: {lesson_id} (Seq: {lesson_seq}) | Độ tin cậy: {conf_pct:.1f}%"
-            if is_approx:
-                header += " [Mốc tham khảo gần nhất]"
-            header += ") ---"
-
-            blocks.append(header)
-
-            if c_type == "code_ast":
-                file_p = chunk.get("file_path", "")
-                scope = chunk.get("code_scope", "")
-                code_content = chunk.get("context_code") or chunk.get("raw_text", "")
-                blocks.append(f"Mã nguồn ({file_p} - Phạm vi: {scope}):\n```cpp\n{code_content}\n```")
-            else:
-                tag = chunk.get("timestamp_tag", "")
-                sec = chunk.get("start_sec")
-                label = chunk.get("start_label", "")
-                raw_t = chunk.get("raw_text", "")
-                blocks.append(f"Video Timestamp: {tag} (Bắt đầu tại {label} - {sec}s)\nNội dung giảng viên: {raw_t}")
-
-        return "\n".join(blocks)
 
     async def stream_chat(self, request: ChatRequest) -> AsyncGenerator[Dict[str, Any], None]:
         """
@@ -91,6 +46,53 @@ class ChatService:
         # 1. Quản lý Session ID chuẩn hóa (Tạo mới nếu client chưa có)
         session_id = request.session_id or f"session_{uuid.uuid4().hex[:12]}"
         config = {"configurable": {"thread_id": session_id}}
+
+        # 0. Fast-Path Curriculum Navigation Intent Dispatcher (< 20ms)
+        # Bắt các câu hỏi hỏi về bài học trong playlist ("học vòng lặp thì chọn bài nào...")
+        if self.curriculum_service.is_navigation_query(request.prompt):
+            nav_response = self.curriculum_service.generate_navigation_response(
+                prompt=request.prompt,
+                current_lesson_seq=request.lesson_seq,
+                course_id=request.course_id
+            )
+            if nav_response:
+                match_res = self.curriculum_service.find_lesson_for_query(request.prompt, preferred_course_id=request.course_id)
+                target_seq = match_res[0].get("seq") if match_res else None
+
+                metadata_event = StreamMetadataEvent(
+                    session_id=session_id,
+                    turn_count=1,
+                    intent="course_query",
+                    used_fast_path=True,
+                    retrieved_chunk_count=0,
+                    is_approximate=False,
+                    retrieval_status="fast_path",
+                    is_low_confidence=False,
+                    target_lesson_seq=target_seq,
+                    suggested_timestamps=[],
+                    sources=[]
+                )
+                yield {
+                    "event": "metadata",
+                    "data": metadata_event.model_dump_json()
+                }
+
+                # Truyền phát từng token phản hồi định hướng bài học
+                words = nav_response.split(" ")
+                for i, word in enumerate(words):
+                    chunk_token = word if i == 0 else " " + word
+                    yield {
+                        "event": "delta",
+                        "data": json.dumps({"content": chunk_token})
+                    }
+                    await asyncio.sleep(0.012)
+
+                commit_assistant_turn(session_id, request.prompt, nav_response)
+                yield {
+                    "event": "done",
+                    "data": "[DONE]"
+                }
+                return
 
         initial_state = {
             "session_id": session_id,
@@ -111,6 +113,7 @@ class ChatService:
             "user_message_content": "",
             "assembled_messages": []
         }
+
 
         # Khởi chạy chu trình điều phối Agentic RAG qua LangGraph StateGraph có Checkpointer
         graph = get_chat_graph()
