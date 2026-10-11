@@ -7,6 +7,7 @@ class ChatRequest(BaseModel):
     course_id: str = Field(..., description="Mã khóa học hiện tại")
     lesson_seq: int = Field(..., ge=1, description="Thứ tự bài học hiện tại (dùng để pre-filter)")
     current_video_sec: Optional[int] = Field(default=None, ge=0, description="Mốc thời gian hiện tại của video trên player")
+    session_id: Optional[str] = Field(default=None, description="Mã phiên hội thoại đa lượt của học viên (LangGraph thread_id)")
 
 
 class SuggestedTimestamp(BaseModel):
@@ -31,6 +32,8 @@ class RouterClassification(BaseModel):
 
 
 class StreamMetadataEvent(BaseModel):
+    session_id: Optional[str] = Field(default=None, description="Mã phiên hội thoại được đồng bộ với LangGraph Checkpointer")
+    turn_count: int = Field(default=1, description="Thứ tự lượt đối thoại trong phiên hiện tại")
     intent: Literal["chit_chat", "out_of_scope", "course_query"] = "course_query"
     suggested_timestamps: List[SuggestedTimestamp] = Field(default_factory=list)
     retrieved_chunk_count: int = 0

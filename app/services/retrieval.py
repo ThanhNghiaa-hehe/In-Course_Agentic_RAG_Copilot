@@ -583,8 +583,7 @@ class RetrievalService:
         # (b) VÀ không phải câu hỏi cú pháp cấu trúc điều khiển bị thiếu Code AST anchor trong bài hiện tại
         can_early_exit_video = (
             valid_video_items and 
-            max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE and
-            not (is_syntax_query and not valid_ast_items)
+            max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
         )
         if can_early_exit_video:
             eligible_code_items = [
@@ -628,18 +627,9 @@ class RetrievalService:
             course_id=course_id,
             current_lesson_seq=current_lesson_seq
         )
+        margin = future_score - max_current_score
 
-        # Context Sufficiency Check (ICLR 2025):
-        # Đối với câu hỏi cú pháp/cấu trúc, chỉ coi là có local grounding vững chắc khi có Code AST chính quy trong bài hiện tại.
-        # Nếu thiếu Code AST (not valid_ast_items), văn nói lướt qua ở video bài trước không được tính là local grounding.
-        if is_syntax_query and not valid_ast_items:
-            effective_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items if it.get("content_type") == "code_ast"], default=0.0)
-            has_local_grounding = False
-        else:
-            effective_current_score = max_current_score
-            has_local_grounding = max_current_score >= settings.PARETO_LOCAL_GROUNDING_THRESHOLD
-
-        margin = future_score - effective_current_score
+        has_local_grounding = max_current_score >= settings.PARETO_LOCAL_GROUNDING_THRESHOLD
 
         future_dominates = False
         if target_seq:

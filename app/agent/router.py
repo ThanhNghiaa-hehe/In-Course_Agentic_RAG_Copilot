@@ -250,12 +250,16 @@ class IntentRouter:
                 # ----------------------------------------------------
                 MARGIN_THRESHOLD = 0.12
 
-                # Điều kiện kích hoạt Stage 2 NLI Arbiter:
+                # Điều kiện kích hoạt Stage 2 NLI Arbiter (Zero Quick-Fix / Pure ML Inference):
                 # 1. Rơi vào vùng phân vân ngữ nghĩa (margin < 0.12)
-                # 2. Hoặc Stage 1 chọn out_of_scope nhưng chưa đủ tự tin (p_oos < 0.75) và vẫn có tín hiệu môn học/giáo trình (p_course >= 0.15 và p_chit < 0.35)
-                #    (Dấu hiệu của câu ẩn dụ sư phạm hoặc câu hỏi điều hướng lộ trình khóa học/playlist)
+                # 2. Hoặc Stage 1 chọn out_of_scope nhưng chưa đủ tự tin (p_oos < 0.75 và p_course >= 0.15)
+                # 3. Hoặc Stage 1 chọn chit_chat nhưng chưa đủ tự tin áp đảo (p_chit < 0.75)
+                #    (Dấu hiệu câu hỏi giáo trình/bài tập có đại từ nhân xưng 'thầy', 'bài học này' bị LinearSVC nhầm sang chào hỏi)
                 is_ambiguous = (margin < MARGIN_THRESHOLD)
-                is_potential_study_query = (top1_class == "out_of_scope" and p_oos < 0.75 and p_course >= 0.15 and p_chit < 0.35)
+                is_potential_study_query = (
+                    (top1_class == "out_of_scope" and p_oos < 0.75 and p_course >= 0.15 and p_chit < 0.35) or
+                    (top1_class == "chit_chat" and p_chit < 0.75)
+                )
 
                 if is_ambiguous or is_potential_study_query:
                     logger.info(
