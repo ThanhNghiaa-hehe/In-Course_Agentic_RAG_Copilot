@@ -609,6 +609,100 @@
     }
     .ts-pill svg { width: 9px; height: 9px; fill: currentColor; }
 
+    /* --- Telemetry Debug Inspector (UI/UX Pro Max) --- */
+    .telemetry-bar {
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px dashed var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+    }
+    .telemetry-metrics {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .telem-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .telem-chip.ttft-fast { background: #ecfdf5; color: #059669; }
+    .telem-chip.ttft-mid { background: #fffbeb; color: #d97706; }
+    .telem-chip.ttft-slow { background: #fef2f2; color: #dc2626; }
+    .telem-copy-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .telem-copy-btn:hover {
+      background: #f8fafc;
+      color: var(--brand-primary);
+      border-color: var(--brand-primary);
+    }
+    .telem-copy-btn.copied {
+      background: #ecfdf5;
+      color: #059669;
+      border-color: #059669;
+    }
+    .export-telemetry-btn {
+      background: transparent;
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .export-telemetry-btn:hover {
+      background: var(--brand-primary-light);
+      color: var(--brand-primary);
+      border-color: #bfdbfe;
+    }
+    .toast-notify {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+    .toast-notify.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     pre {
       background: #181b34;
       color: #f8fafc;
@@ -894,6 +988,7 @@
           </div>
         </div>
         <div class="chat-header-actions">
+          <button class="export-telemetry-btn" onclick="exportSessionTelemetry()" title="Xuất toàn bộ Telemetry của phiên (JSON)">Xuất Log</button>
           <button class="clear-btn" onclick="clearChat()" title="Xóa lịch sử hội thoại">Làm mới</button>
           <button class="collapse-chat-btn" onclick="toggleChat(false)" title="Thu gọn khung chat (Mở rộng video)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1245,6 +1340,7 @@
     function clearChat() {
       const newSid = 'session_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
       sessionStorage.setItem('copilot_session_id', newSid);
+      sessionTelemetryLog.length = 0;
       const box = document.getElementById('chat-messages-box');
       box.innerHTML = `
         <div class="msg-row assistant">
@@ -1269,8 +1365,17 @@
       if (!text || isStreaming) return;
 
       input.value = '';
+      await sendChatMsg(text);
+    }
+
+    // --- SESSION TELEMETRY LOG (MLOps & Debug Observability) ---
+    const sessionTelemetryLog = [];
+
+    async function sendChatMsg(text) {
+      if (!text || isStreaming) return;
       isStreaming = true;
       document.getElementById('send-btn').disabled = true;
+
 
       // 1. User Message
       appendMsg(text, 'user');
@@ -1281,6 +1386,10 @@
       const textElem = assistantElem.querySelector('.assistant-body-text');
 
       const currentSid = getOrCreateSessionId();
+      const startTime = performance.now();
+      let firstTokenTime = null;
+      let tokenCount = 0;
+      let currentMetadata = null;
 
       try {
         const response = await fetch('/api/v1/chat/stream', {
@@ -1324,6 +1433,7 @@
               if (curEvent === 'metadata') {
                 try {
                   const meta = JSON.parse(raw);
+                  currentMetadata = meta;
                   if (meta.session_id) {
                     sessionStorage.setItem('copilot_session_id', meta.session_id);
                   }
@@ -1333,6 +1443,10 @@
                 try {
                   const d = JSON.parse(raw);
                   if (d.content) {
+                    if (firstTokenTime === null) {
+                      firstTokenTime = performance.now();
+                    }
+                    tokenCount++;
                     fullAnswer += d.content;
                     textElem.innerHTML = formatMarkdownWithTimestamps(fullAnswer);
                     scrollChatToBottom();
@@ -1342,6 +1456,44 @@
             }
           }
         }
+
+        // 3. Render Telemetry Bar & Save Session Record
+        const endTime = performance.now();
+        const ttftMs = firstTokenTime ? Math.round(firstTokenTime - startTime) : Math.round(endTime - startTime);
+        const totalMs = Math.round(endTime - startTime);
+        const tokPerSec = (totalMs > 0 && tokenCount > 0) ? (tokenCount / (totalMs / 1000)).toFixed(1) : '0.0';
+
+        const turnIndex = sessionTelemetryLog.length;
+        const telemetryEntry = {
+          turn: turnIndex + 1,
+          timestamp: new Date().toISOString(),
+          session_id: currentSid,
+          course_id: activeCourse,
+          lesson_seq: currentLesson.seq,
+          prompt: text,
+          latency: {
+            ttft_ms: ttftMs,
+            total_ms: totalMs,
+            token_count: tokenCount,
+            tokens_per_sec: parseFloat(tokPerSec)
+          },
+          router: {
+            intent: currentMetadata ? currentMetadata.intent : 'unknown',
+            used_fast_path: currentMetadata ? currentMetadata.used_fast_path : false
+          },
+          crag: {
+            retrieval_status: currentMetadata ? currentMetadata.retrieval_status : 'unknown',
+            target_lesson_seq: currentMetadata ? currentMetadata.target_lesson_seq : null,
+            retrieved_chunk_count: currentMetadata ? currentMetadata.retrieved_chunk_count : 0
+          },
+          timestamps: currentMetadata && currentMetadata.suggested_timestamps ? currentMetadata.suggested_timestamps : [],
+          sources: currentMetadata && currentMetadata.sources ? currentMetadata.sources : [],
+          response_text: fullAnswer
+        };
+        sessionTelemetryLog.push(telemetryEntry);
+
+        renderTelemetryBar(assistantElem, telemetryEntry, turnIndex);
+
       } catch (err) {
         textElem.innerHTML = `<span style="color:#dc2626">Không thể kết nối tới mô hình LLM (${err.message}). Khi bạn bật lại Kaggle Notebook, hệ thống sẽ tự động kết nối lại ngay lập tức!</span>`;
       } finally {
@@ -1349,6 +1501,81 @@
         document.getElementById('send-btn').disabled = false;
       }
     }
+
+    function renderTelemetryBar(assistantElem, entry, turnIndex) {
+      const bubble = assistantElem.querySelector('.assistant-body-text');
+      if (!bubble) return;
+
+      const ttft = entry.latency.ttft_ms;
+      let ttftClass = 'ttft-fast';
+      if (ttft > 3000) ttftClass = 'ttft-slow';
+      else if (ttft > 1200) ttftClass = 'ttft-mid';
+
+      const bar = document.createElement('div');
+      bar.className = 'telemetry-bar';
+      bar.innerHTML = `
+        <div class="telemetry-metrics">
+          <span class="telem-chip ${ttftClass}" title="Thời gian chờ token đầu tiên (Time-to-First-Token)">⚡ TTFT: ${ttft}ms</span>
+          <span class="telem-chip" title="Tổng thời gian xử lý và truyền phát">⏳ ${(entry.latency.total_ms / 1000).toFixed(2)}s</span>
+          <span class="telem-chip" title="Tốc độ sinh token">🚀 ${entry.latency.tokens_per_sec} tok/s</span>
+          <span class="telem-chip" style="background:#e0e7ff;color:#3730a3;" title="Trạng thái CRAG">${entry.crag.retrieval_status}</span>
+        </div>
+        <button class="telem-copy-btn" id="telem-btn-${turnIndex}" onclick="copyTurnTelemetry(${turnIndex})" title="Sao chép toàn bộ JSON Telemetry & Debug của lượt này">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Debug
+        </button>
+      `;
+      bubble.appendChild(bar);
+      scrollChatToBottom();
+    }
+
+    function copyTurnTelemetry(idx) {
+      const entry = sessionTelemetryLog[idx];
+      if (!entry) return;
+      navigator.clipboard.writeText(JSON.stringify(entry, null, 2)).then(() => {
+        showToast('Đã sao chép Debug Telemetry vào Clipboard!');
+        const btn = document.getElementById(`telem-btn-${idx}`);
+        if (btn) {
+          btn.classList.add('copied');
+          btn.innerHTML = '✓ Đã copy';
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Debug`;
+          }, 2000);
+        }
+      }).catch(err => {
+        prompt('Sao chép JSON Telemetry:', JSON.stringify(entry));
+      });
+    }
+
+    function exportSessionTelemetry() {
+      if (sessionTelemetryLog.length === 0) {
+        showToast('Chưa có lượt đối thoại nào để xuất!');
+        return;
+      }
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sessionTelemetryLog, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `telemetry_session_${new Date().toISOString().replace(/[:.]/g, '-')}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast(`Đã xuất ${sessionTelemetryLog.length} lượt telemetry thành công!`);
+    }
+
+    function showToast(text) {
+      let toast = document.getElementById('playground-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'playground-toast';
+        toast.className = 'toast-notify';
+        document.body.appendChild(toast);
+      }
+      toast.innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
 
     function appendMsg(text, sender) {
       const box = document.getElementById('chat-messages-box');
