@@ -52,7 +52,8 @@ def test_intent_router_out_of_scope():
         res = router.classify(q)
         assert res.intent == "out_of_scope"
         assert res.is_course_query is False
-        assert "Trợ giảng Lập trình chuyên biệt" in res.direct_response
+        assert "In-Course AI Copilot" in res.direct_response
+        assert "chuyên môn của khóa học" in res.direct_response
 
 
 def test_intent_router_course_query():
