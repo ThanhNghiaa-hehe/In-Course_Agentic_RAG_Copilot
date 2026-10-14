@@ -261,4 +261,18 @@
   - Tuyệt đối KHÔNG sử dụng các dịch vụ Cloud API mới ra mắt, đang ở trạng thái waitlist thử nghiệm hoặc có điều khoản ToS bất định làm cấu phần lõi của đồ án.
   - Mọi cơ chế phân luồng (Router), nhúng vector (Embedding), và lập luận Socratic phải đảm bảo tính khả dụng độc lập 100% trên môi trường cục bộ để bảo vệ đồ án an toàn tuyệt đối.
 
+## 12. Strict Benchmark Authenticity & Anti-Surrogate Invariants (Chống Giả Lập Số Liệu Khảo Thí)
+- **Anti-Surrogate Evaluation Invariant (Bất Biến Chống Giả Lập Số Liệu Khảo Thí):**
+  - Tuyệt đối NGHIÊM CẤM sử dụng các công thức tính điểm xấp xỉ/ước lượng nhân tạo (như `0.92 + crag * 0.06`) hoặc chuỗi văn bản mẫu gán cứng (`mock_socratic_response`) để sinh ra các chỉ số RAGAS Triad (Faithfulness, Relevance) hay G-Eval Socratic.
+  - Mọi chỉ số khảo thí hiển thị trên Dashboard hoặc báo cáo học thuật bắt buộc phải xuất phát từ phép đo thực tế:
+    (a) Nếu kịch bản không kích hoạt LLM-as-a-Judge sinh văn bản thật (để tiết kiệm quota/thời gian), chỉ số đó BẮT BUỘC phải hiển thị `null`, `--` hoặc `Chưa đo lường (Cần LLM)`.
+    (b) Tuyệt đối không được phép sinh số liệu xanh giả mạo đánh lừa mắt người giám sát.
+- **Strict Anti-Quick-Fix & Pure Deep Learning Invariant:**
+  - Tuyệt đối NGHIÊM CẤM việc tạo ra các module trung gian chứa danh sách Regex bắt chuỗi từ khóa của bài test (như bóc tách lỗi compiler bằng regex hardcode).
+  - Hệ thống phải vận hành 100% bằng cơ chế Deep Learning & Vector Search thuần túy (FastEmbed E5 Large + Qdrant Sparse BM25 + Cross-Encoder Logistic Sigmoid).
+  - Mọi hoạt động tối ưu hóa từ vựng phải giải quyết ở cấp độ bài toán tổng quát (huấn luyện thêm dữ liệu, cải tiến hàm trích xuất token, hoặc kiểm toán làm sạch nhãn theo Data-Centric AI).
+- **Curriculum-Aligned Benchmark Invariant (Bất Biến Đồng Bộ Giáo Trình Chuẩn):**
+  - Mọi câu hỏi kiểm thử trong tập Golden Dataset hoặc OOD Stress-Test bắt buộc phải được đối soát trực tiếp với `data/curriculum/lessons_manifest.json` và file transcript thực tế.
+  - Tuyệt đối không gán nhãn `lesson_seq` theo phỏng đoán. Nếu bài giảng thực tế không dạy kiến thức đó, nhãn `expected_retrieval_status` bắt buộc phải là `coverage_gap` và `expected_has_timestamp: false`.
+
 
