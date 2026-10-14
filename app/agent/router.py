@@ -80,11 +80,13 @@ class NLIArbiter:
         self._pipeline = None
         self._candidate_labels = [
             "câu hỏi học tập chuyên môn thắc mắc cú pháp hoặc giải thuật lập trình",
-            "câu đùa vui, châm biếm, so sánh phi thực tế với phim ảnh, tình cảm hoặc đời sống"
+            "lời chào hỏi, cảm ơn, tạm biệt hoặc giao tiếp xã giao thông thường",
+            "câu hỏi ngoài lề đời sống, thời tiết, giải trí hoặc phim ảnh"
         ]
         self._label_map = {
             "câu hỏi học tập chuyên môn thắc mắc cú pháp hoặc giải thuật lập trình": "course_query",
-            "câu đùa vui, châm biếm, so sánh phi thực tế với phim ảnh, tình cảm hoặc đời sống": "out_of_scope"
+            "lời chào hỏi, cảm ơn, tạm biệt hoặc giao tiếp xã giao thông thường": "chit_chat",
+            "câu hỏi ngoài lề đời sống, thời tiết, giải trí hoặc phim ảnh": "out_of_scope"
         }
         self._template = "Văn bản này có mục đích là {}."
 
@@ -182,7 +184,7 @@ class IntentRouter:
             return GRATITUDE_RESPONSES
         elif any(w in lower_p for w in ["tạm biệt", "bye", "hẹn gặp", "ngủ ngon"]):
             return GOODBYE_RESPONSES
-        elif any(w in lower_p for w in ["tác giả", "là ai", "nghĩa", "huflit", "đồ án", "mã số"]):
+        elif any(w in lower_p for w in ["tác giả", "là ai", "nghĩa", "huflit", "đồ án", "mã số", "tạo ra", "phát triển", "giới thiệu", "bản thân"]):
             return IDENTITY_RESPONSES
         elif any(w in lower_p for w in ["khuyên", "kinh nghiệm", "khó không", "nản", "bắt đầu"]):
             return ADVICE_RESPONSES
@@ -276,6 +278,10 @@ class IntentRouter:
                     # Nếu NLI khẳng định out_of_scope và tự tin cao (>= 0.65)
                     elif nli_intent == "out_of_scope" and nli_conf >= 0.65 and top1_class != "chit_chat":
                         return RouterClassification(intent="out_of_scope", direct_response=OFFTOPIC_CASUAL_RESPONSES, is_course_query=False)
+
+                    # Nếu NLI khẳng định chit_chat và tự tin cao (>= 0.50)
+                    elif nli_intent == "chit_chat" and nli_conf >= 0.50:
+                        return RouterClassification(intent="chit_chat", direct_response=self._select_chitchat_response(clean_prompt), is_course_query=False)
 
                 # Trường hợp thông thường: Tuân thủ phán quyết Stage 1 LinearSVC
                 if top1_class == "course_query":
