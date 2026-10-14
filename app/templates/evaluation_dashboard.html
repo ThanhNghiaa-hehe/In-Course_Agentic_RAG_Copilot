@@ -1166,6 +1166,12 @@
     const elBadgeTtft = document.getElementById('badge-ttft');
     const elKpiRouter = document.getElementById('kpi-router');
 
+    const elBadgeFaithfulness = document.getElementById('badge-faithfulness');
+    const elBadgeRelevance = document.getElementById('badge-relevance');
+    const elBadgeGeval = document.getElementById('badge-geval');
+    const elBadgeTimestamp = document.getElementById('badge-timestamp');
+    const elBadgeRouter = document.getElementById('badge-router');
+
     const elMetaTotalCases = document.getElementById('meta-total-cases');
     const elMetaRuntime = document.getElementById('meta-runtime');
 
@@ -1261,11 +1267,11 @@
       elMetaRuntime.textContent = `${meta.start_time || 'Gần đây'} (${meta.total_elapsed_sec || '--'}s)`;
 
       // Render KPI Cards (Chỉ hiển thị số liệu thực tế, tuyệt đối không dùng số giả lập)
-      const hasRagasFaith = kpi.ragas_faithfulness !== undefined;
-      const hasRagasRelev = kpi.ragas_relevance !== undefined;
-      const hasGeval = kpi.geval_socratic_score !== undefined;
-      const hasTsSafe = (kpi.timestamp_safety !== undefined) || (kpi.timestamp_accuracy !== undefined);
-      const hasRouterAcc = kpi.router_accuracy !== undefined;
+      const hasRagasFaith = (kpi.ragas_faithfulness !== undefined && kpi.ragas_faithfulness !== null);
+      const hasRagasRelev = (kpi.ragas_relevance !== undefined && kpi.ragas_relevance !== null);
+      const hasGeval = (kpi.geval_socratic_score !== undefined && kpi.geval_socratic_score !== null);
+      const hasTsSafe = (kpi.timestamp_safety !== undefined && kpi.timestamp_safety !== null) || (kpi.timestamp_accuracy !== undefined && kpi.timestamp_accuracy !== null);
+      const hasRouterAcc = (kpi.router_accuracy !== undefined && kpi.router_accuracy !== null);
 
       const faith = hasRagasFaith ? `${kpi.ragas_faithfulness}%` : '--%';
       const relev = hasRagasRelev ? `${kpi.ragas_relevance}%` : '--%';
@@ -1282,6 +1288,37 @@
       elKpiTtft.textContent = ttftP50;
       elBadgeTtft.textContent = ttftP90;
       elKpiRouter.textContent = routerAcc;
+
+      // Cập nhật trạng thái badge chân card để phản ánh trung thực
+      if (elBadgeFaithfulness) {
+        if (!hasRagasFaith) {
+          elBadgeFaithfulness.textContent = 'Cần LLM Eval';
+          elBadgeFaithfulness.className = 'badge badge-neutral';
+        } else {
+          elBadgeFaithfulness.textContent = kpi.ragas_faithfulness >= 85 ? 'PASS' : 'WARN';
+          elBadgeFaithfulness.className = kpi.ragas_faithfulness >= 85 ? 'badge badge-pass' : 'badge badge-warn';
+        }
+      }
+
+      if (elBadgeRelevance) {
+        if (!hasRagasRelev) {
+          elBadgeRelevance.textContent = 'Cần LLM Eval';
+          elBadgeRelevance.className = 'badge badge-neutral';
+        } else {
+          elBadgeRelevance.textContent = kpi.ragas_relevance >= 80 ? 'PASS' : 'WARN';
+          elBadgeRelevance.className = kpi.ragas_relevance >= 80 ? 'badge badge-pass' : 'badge badge-warn';
+        }
+      }
+
+      if (elBadgeGeval) {
+        if (!hasGeval) {
+          elBadgeGeval.textContent = 'Chưa chạy LLM';
+          elBadgeGeval.className = 'badge badge-neutral';
+        } else {
+          elBadgeGeval.textContent = kpi.geval_socratic_score >= 85 ? '0% Lỗi P10' : 'Có cảnh báo';
+          elBadgeGeval.className = kpi.geval_socratic_score >= 85 ? 'badge badge-pass' : 'badge badge-warn';
+        }
+      }
 
       // Render Comparison Table (In-Domain vs OOD Stress-Test)
       const inData = breakdown.in_domain || {};
