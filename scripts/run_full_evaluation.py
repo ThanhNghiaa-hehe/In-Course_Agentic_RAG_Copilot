@@ -309,19 +309,16 @@ async def run_full_evaluation(
         ttft_estimates_ms.append(est_ttft_ms)
 
         # --- LƯỢT 2: THẨM ĐỊNH G-EVAL SOCRATIC ADHERENCE ---
-        mock_socratic_response = (
-            f"Trong Bài {lesson_seq}, khái niệm này được giải thích rất kỹ tại mốc "
-            f"<timestamp sec=\"{actual_ts_sec or 120}\">video bài giảng</timestamp>. "
-            "Bản chất của vấn đề là do cách quản lý bộ nhớ. "
-            "Bạn hãy thử suy nghĩ xem biến này được lưu trên Stack hay Heap nhé?"
-        )
-        geval_score, geval_verdict, violations = evaluate_geval_heuristic(
-            query=query,
-            answer=mock_socratic_response,
-            is_course_query=is_course_query
-        )
-        geval_scores.append(geval_score)
-        source_stats[ds_source]["geval_sum"] += geval_score
+        if enable_geval_llm:
+            # Chỉ đánh giá khi có văn bản sinh thực tế từ LLM
+            geval_score = None
+            geval_verdict = "Cần triển khai LLM stream generator"
+            violations = []
+        else:
+            # Tuyệt đối không dùng mock_socratic_response giả mạo để tính điểm (Anti-Surrogate Invariant)
+            geval_score = None
+            geval_verdict = "Chưa kích hoạt LLM Generation (--enable-llm=False)"
+            violations = []
 
         # Ghi nhận kết quả chi tiết
         results_detail.append({
@@ -359,18 +356,24 @@ async def run_full_evaluation(
     t_global_total = time.perf_counter() - t_global_start
     end_time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # --- LƯỢT 3: TỔNG HỢP CHỈ SỐ RAGAS TRIAD & LATENCY DISTRIBUTION ---
+    # --- LƯỢT 3: TỔNG HỢP CHỈ SỐ KHẢO THÍ CHÍNH THỨC & LATENCY DISTRIBUTION ---
     lat_percentiles = calculate_percentiles(latencies_ms)
     ttft_percentiles = calculate_percentiles(ttft_estimates_ms)
 
     router_acc = (router_correct / total_cases) * 100.0
     crag_precision = (crag_status_correct / total_cases) * 100.0
     ts_safety = (timestamp_correct / total_cases) * 100.0
-    avg_geval = sum(geval_scores) / max(1, len(geval_scores))
 
-    # Ước tính RAGAS Triad dựa trên ground-truth alignment
-    ragas_faithfulness = min(1.0, round(0.92 + (crag_precision / 100.0) * 0.06, 3))
-    ragas_relevance = min(1.0, round(0.88 + (router_acc / 100.0) * 0.08, 3))
+    # Tuyệt đối KHÔNG dùng công thức nhân tạo xấp xỉ (Anti-Surrogate Evaluation Invariant)
+    if enable_geval_llm and geval_scores:
+        avg_geval = sum(geval_scores) / len(geval_scores)
+        ragas_faithfulness = None
+        ragas_relevance = None
+    else:
+        avg_geval = None
+        ragas_faithfulness = None
+        ragas_relevance = None
+
     ragas_context_precision = min(1.0, round(crag_precision / 100.0, 3))
 
     # Thống kê phân rã In-domain vs OOD
@@ -378,32 +381,49 @@ async def run_full_evaluation(
     in_router_acc = (source_stats["in_domain_golden"]["router_ok"] / in_total) * 100.0
     in_crag_acc = (source_stats["in_domain_golden"]["status_ok"] / in_total) * 100.0
     in_ts_acc = (source_stats["in_domain_golden"]["ts_ok"] / in_total) * 100.0
-    in_geval = source_stats["in_domain_golden"]["geval_sum"] / in_total
+    in_geval = (source_stats["in_domain_golden"]["geval_sum"] / in_total) if avg_geval is not None else None
     in_lat = calculate_percentiles(source_stats["in_domain_golden"]["time_ms"])
 
     ood_total = max(1, source_stats["ood_stress"]["total"])
     ood_router_acc = (source_stats["ood_stress"]["router_ok"] / ood_total) * 100.0
     ood_crag_acc = (source_stats["ood_stress"]["status_ok"] / ood_total) * 100.0
     ood_ts_acc = (source_stats["ood_stress"]["ts_ok"] / ood_total) * 100.0
-    ood_geval = source_stats["ood_stress"]["geval_sum"] / ood_total
+    ood_geval = (source_stats["ood_stress"]["geval_sum"] / ood_total) if avg_geval is not None else None
     ood_lat = calculate_percentiles(source_stats["ood_stress"]["time_ms"])
 
     # In bảng tóm tắt ra console
     print("\n" + "=" * 78)
     print("                    KẾT QUẢ KHẢO THÍ CHẶNG 5 TOÀN DIỆN")
     print("=" * 78)
-    print(f" Tổng test cases:           {total_cases} câu (200 In-Domain Golden + {ood_total} OOD Stress-Test)")
+    print(f" Tổng test cases:           {total_cases} câu (In-Domain: {source_stats['in_domain_golden']['total']} + OOD: {source_stats['ood_stress']['total']})")
     print(f" Thời gian thực thi:        {t_global_total:.2f} giây")
     print("-" * 78)
     print(f" 1. Router Classification:  {router_correct}/{total_cases} ({router_acc:.2f}%)  [In-Domain: {in_router_acc:.1f}% | OOD: {ood_router_acc:.1f}%]")
     print(f" 2. CRAG Grader Precision:  {crag_status_correct}/{total_cases} ({crag_precision:.2f}%)  [In-Domain: {in_crag_acc:.1f}% | OOD: {ood_crag_acc:.1f}%]")
     print(f" 3. Timestamp Safety:       {timestamp_correct}/{total_cases} ({ts_safety:.2f}%)  [In-Domain: {in_ts_acc:.1f}% | OOD: {ood_ts_acc:.1f}%]")
-    print(f" 4. G-Eval Socratic Score:  {avg_geval*100:.1f}% (Zero P10 Violations)")
-    print(f" 5. RAGAS Faithfulness:     {ragas_faithfulness*100:.1f}% | Relevance: {ragas_relevance*100:.1f}% | Context Precision: {ragas_context_precision*100:.1f}%")
+    if avg_geval is not None:
+        print(f" 4. G-Eval Socratic Score:  {avg_geval*100:.1f}%")
+    else:
+        print(" 4. G-Eval Socratic Score:  Chưa kích hoạt (Cần cờ --enable-llm)")
+    if ragas_faithfulness is not None:
+        print(f" 5. RAGAS Faithfulness:     {ragas_faithfulness*100:.1f}% | Relevance: {ragas_relevance*100:.1f}% | Context Precision: {ragas_context_precision*100:.1f}%")
+    else:
+        print(f" 5. RAGAS Triad:            Context Precision: {ragas_context_precision*100:.1f}% | (Faithfulness & Relevance cần LLM sinh text)")
     print(f" 6. TTFT Latency (P50/P90): P50 = {ttft_percentiles['p50']}ms | P90 = {ttft_percentiles['p90']}ms | Mean = {ttft_percentiles['mean']}ms")
     print("=" * 78)
 
     # 4. Xuất Báo Cáo Markdown Chính Thức
+    geval_str = f"{avg_geval*100:.1f}%" if avg_geval is not None else "Chưa đo lường (Cần LLM)"
+    geval_in_str = f"{in_geval*100:.1f}%" if in_geval is not None else "--"
+    geval_ood_str = f"{ood_geval*100:.1f}%" if ood_geval is not None else "--"
+    geval_verdict_str = "**PASS**" if (avg_geval is not None and avg_geval >= 0.85) else "*N/A (Chưa sinh text)*"
+
+    ragas_faith_str = f"{ragas_faithfulness*100:.1f}%" if ragas_faithfulness is not None else "Chưa đo lường (Cần LLM)"
+    ragas_faith_verdict = "**PASS**" if (ragas_faithfulness is not None and ragas_faithfulness >= 0.85) else "*N/A (Cần LLM)*"
+
+    ragas_relev_str = f"{ragas_relevance*100:.1f}%" if ragas_relevance is not None else "Chưa đo lường (Cần LLM)"
+    ragas_relev_verdict = "**PASS**" if (ragas_relevance is not None and ragas_relevance >= 0.80) else "*N/A (Cần LLM)*"
+
     with open(output_report_path, "w", encoding="utf-8") as f:
         f.write(f"""# BÁO CÁO KHẢO THÍ ĐỊNH LƯỢNG TOÀN DIỆN - CHẶNG 5
 > **Đồ án:** Trợ giảng AI Socratic hỗ trợ học lập trình bằng Agentic RAG và đồng bộ video  
@@ -416,15 +436,15 @@ async def run_full_evaluation(
 
 ## 1. BẢNG TỔNG HỢP CHỈ SỐ KHẢO THÍ ĐA DIỆN (EVALUATION MATRIX)
 
-| Trụ cột đánh giá | Chỉ số kỹ thuật | Kết quả Toàn thể (300 câu) | In-Domain Golden (200 câu) | OOD Stress-Test (100 câu) | Ngưỡng Cam Kết | Kết luận |
+| Trụ cột đánh giá | Chỉ số kỹ thuật | Kết quả Toàn thể | In-Domain Golden | OOD Stress-Test | Ngưỡng Cam Kết | Kết luận |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Phân luồng ý định** | **Router Accuracy** | **{router_acc:.2f}%** ({router_correct}/{total_cases}) | {in_router_acc:.1f}% | {ood_router_acc:.1f}% | $\\ge 98.0\\%$ | **PASS** |
 | **Thẩm định ngữ cảnh** | **CRAG Precision** | **{crag_precision:.2f}%** ({crag_status_correct}/{total_cases}) | {in_crag_acc:.1f}% | {ood_crag_acc:.1f}% | $\\ge 95.0\\%$ | **PASS** |
 | **Mốc video sư phạm** | **Timestamp Safety** | **{ts_safety:.2f}%** ({timestamp_correct}/{total_cases}) | {in_ts_acc:.1f}% | {ood_ts_acc:.1f}% | $\\ge 90.0\\%$ | **PASS** |
-| **Chuẩn mực Socratic** | **G-Eval Score** | **{avg_geval*100:.1f}%** | {in_geval*100:.1f}% | {ood_geval*100:.1f}% | $\\ge 85.0\\%$ | **PASS** |
-| **RAGAS Triad** | **Faithfulness** | **{ragas_faithfulness*100:.1f}%** | 94.5% | 91.0% | $\\ge 85.0\\%$ | **PASS** |
-| | **Answer Relevance** | **{ragas_relevance*100:.1f}%** | 93.0% | 89.5% | $\\ge 80.0\\%$ | **PASS** |
-| | **Context Precision** | **{ragas_context_precision*100:.1f}%** | 97.5% | 93.0% | $\\ge 80.0\\%$ | **PASS** |
+| **Chuẩn mực Socratic** | **G-Eval Score** | **{geval_str}** | {geval_in_str} | {geval_ood_str} | $\\ge 85.0\\%$ | {geval_verdict_str} |
+| **RAGAS Triad** | **Faithfulness** | **{ragas_faith_str}** | -- | -- | $\\ge 85.0\\%$ | {ragas_faith_verdict} |
+| | **Answer Relevance** | **{ragas_relev_str}** | -- | -- | $\\ge 80.0\\%$ | {ragas_relev_verdict} |
+| | **Context Precision** | **{ragas_context_precision*100:.1f}%** | {in_crag_acc:.1f}% | {ood_crag_acc:.1f}% | $\\ge 80.0\\%$ | **PASS** |
 | **Hiệu năng thời gian** | **TTFT ($P_{{50}}$ / $P_{{90}}$)** | **{ttft_percentiles['p50']}ms / {ttft_percentiles['p90']}ms** | {in_lat['p50']:.1f}ms | {ood_lat['p50']:.1f}ms | $< 1200\\text{{ms}}$ | **PASS** |
 
 ---
@@ -471,9 +491,9 @@ async def run_full_evaluation(
             "crag_correct": crag_status_correct,
             "timestamp_safety": round(ts_safety, 2),
             "timestamp_correct": timestamp_correct,
-            "geval_socratic_score": round(avg_geval * 100, 2),
-            "ragas_faithfulness": round(ragas_faithfulness * 100, 2),
-            "ragas_relevance": round(ragas_relevance * 100, 2),
+            "geval_socratic_score": round(avg_geval * 100, 2) if avg_geval is not None else None,
+            "ragas_faithfulness": round(ragas_faithfulness * 100, 2) if ragas_faithfulness is not None else None,
+            "ragas_relevance": round(ragas_relevance * 100, 2) if ragas_relevance is not None else None,
             "ragas_context_precision": round(ragas_context_precision * 100, 2),
             "ttft_p50_ms": ttft_percentiles["p50"],
             "ttft_p90_ms": ttft_percentiles["p90"],
@@ -485,7 +505,7 @@ async def run_full_evaluation(
                 "router_acc": round(in_router_acc, 2),
                 "crag_precision": round(in_crag_acc, 2),
                 "ts_safety": round(in_ts_acc, 2),
-                "geval_score": round(in_geval * 100, 2),
+                "geval_score": round(in_geval * 100, 2) if in_geval is not None else None,
                 "latency_p50": in_lat["p50"]
             },
             "ood_stress": {
@@ -493,7 +513,7 @@ async def run_full_evaluation(
                 "router_acc": round(ood_router_acc, 2),
                 "crag_precision": round(ood_crag_acc, 2),
                 "ts_safety": round(ood_ts_acc, 2),
-                "geval_score": round(ood_geval * 100, 2),
+                "geval_score": round(ood_geval * 100, 2) if ood_geval is not None else None,
                 "latency_p50": ood_lat["p50"],
                 "group_stats": ood_group_stats
             }
@@ -537,6 +557,12 @@ def main():
         default=None,
         help="Giới hạn số lượng câu hỏi để kiểm thử nhanh (Smoke-test, ví dụ: --limit 5)."
     )
+    parser.add_argument(
+        "--enable-llm",
+        action="store_true",
+        default=False,
+        help="Kích hoạt sinh phản hồi văn bản bằng LLM thực tế và chấm điểm G-Eval / RAGAS Triad."
+    )
     args = parser.parse_args()
 
     data_dir = PROJECT_ROOT / "tests" / "data"
@@ -552,8 +578,9 @@ def main():
     else:  # all
         selected_paths = [golden_file, ood_file]
 
-    asyncio.run(run_full_evaluation(selected_paths, limit=args.limit))
+    asyncio.run(run_full_evaluation(selected_paths, enable_geval_llm=args.enable_llm, limit=args.limit))
 
 
 if __name__ == "__main__":
     main()
+
