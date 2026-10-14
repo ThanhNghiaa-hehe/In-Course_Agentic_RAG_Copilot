@@ -76,7 +76,8 @@ async def root():
         "message": "In-Course Agentic RAG Copilot API is running",
         "docs_url": "/docs",
         "workflow_simulator_url": "/workflow",
-        "playground_url": "/playground"
+        "playground_url": "/playground",
+        "evaluation_dashboard_url": "/evaluation"
     }
 
 
@@ -87,6 +88,15 @@ async def get_interactive_playground():
     if playground_path.exists():
         return FileResponse(playground_path, media_type="text/html")
     return HTMLResponse("<h1>Tệp playground.html chưa sẵn sàng</h1>", status_code=404)
+
+
+@app.get("/evaluation")
+async def get_evaluation_dashboard():
+    """Phục vụ trực tiếp trang Interactive Observability Dashboard Chặng 5."""
+    dashboard_path = Path(__file__).resolve().parent / "templates" / "evaluation_dashboard.html"
+    if dashboard_path.exists():
+        return FileResponse(dashboard_path, media_type="text/html")
+    return HTMLResponse("<h1>Tệp evaluation_dashboard.html chưa sẵn sàng</h1>", status_code=404)
 
 
 @app.get("/workflow")

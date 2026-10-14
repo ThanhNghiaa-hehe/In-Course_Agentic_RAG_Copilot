@@ -8,6 +8,7 @@ from openai import AsyncOpenAI
 from app.config import settings
 from app.services.curriculum import get_curriculum_service, CurriculumService
 from app.services.chat_graph import get_chat_graph, commit_assistant_turn, reset_session_state
+from app.agent.guardrails import get_session_rate_limiter
 from app.schemas.chat import ChatRequest, SuggestedTimestamp, StreamMetadataEvent
 
 logger = logging.getLogger("uvicorn.error")
@@ -46,6 +47,41 @@ class ChatService:
         # 1. Quản lý Session ID chuẩn hóa (Tạo mới nếu client chưa có)
         session_id = request.session_id or f"session_{uuid.uuid4().hex[:12]}"
         config = {"configurable": {"thread_id": session_id}}
+
+        # -1. Kiểm tra Rate Limiting (Chống spam dồn dập per session)
+        rate_limiter = get_session_rate_limiter()
+        is_allowed, rate_msg, retry_after = rate_limiter.check_rate_limit(session_id)
+        if not is_allowed:
+            metadata_event = StreamMetadataEvent(
+                session_id=session_id,
+                turn_count=1,
+                intent="rate_limited",
+                used_fast_path=True,
+                retrieved_chunk_count=0,
+                is_approximate=False,
+                retrieval_status="fast_path",
+                is_low_confidence=False,
+                target_lesson_seq=None,
+                suggested_timestamps=[],
+                sources=[]
+            )
+            yield {
+                "event": "metadata",
+                "data": metadata_event.model_dump_json()
+            }
+            words = (rate_msg or "Vui lòng gửi câu hỏi chậm lại để có thời gian thực hành nhé.").split(" ")
+            for i, word in enumerate(words):
+                chunk_token = word if i == 0 else " " + word
+                yield {
+                    "event": "delta",
+                    "data": json.dumps({"content": chunk_token})
+                }
+                await asyncio.sleep(0.012)
+            yield {
+                "event": "done",
+                "data": "[DONE]"
+            }
+            return
 
         # 0. Fast-Path Curriculum Navigation Intent Dispatcher (< 20ms)
         # Bắt các câu hỏi hỏi về bài học trong playlist ("học vòng lặp thì chọn bài nào...")

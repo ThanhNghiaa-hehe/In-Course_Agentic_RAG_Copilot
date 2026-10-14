@@ -13,8 +13,9 @@ Bao gồm 2 chốt chặn kiến trúc:
 """
 
 import re
+import time
 import logging
-from typing import Tuple, Optional, List
+from typing import Tuple, Optional, List, Dict
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -169,9 +170,73 @@ class SocraticOutputGuardrail:
         return modified, new_text
 
 
+class SessionRateLimiter:
+    """
+    Tầng Kiểm soát Tần suất Phiên Học (Session Rate Limiter - In-Memory Sliding Window).
+    Nhiệm vụ: Chặn đứng hành vi spam dồn dập hoặc DoS tài nguyên GPU.
+    - Giới hạn: max_per_minute = 6 requests/phút (trung bình 10s/câu).
+    - Giới hạn: max_per_hour = 60 requests/giờ.
+    - Độ trễ kiểm tra: < 0.1ms trên RAM.
+    """
+
+    def __init__(self, max_per_minute: int = 6, max_per_hour: int = 60):
+        self.max_per_minute = max_per_minute
+        self.max_per_hour = max_per_hour
+        # Dictionary mapping session_id -> list of float timestamps (epoch seconds)
+        self._history: Dict[str, List[float]] = {}
+
+    def check_rate_limit(self, session_id: str) -> Tuple[bool, Optional[str], Optional[int]]:
+        """
+        Kiểm tra tần suất cho session_id.
+        Trả về (is_allowed, error_message, retry_after_seconds).
+        """
+        now = time.time()
+        timestamps = self._history.get(session_id, [])
+
+        # Dọn dẹp các mốc thời gian cũ hơn 1 giờ (3600s)
+        cutoff_hour = now - 3600.0
+        timestamps = [ts for ts in timestamps if ts > cutoff_hour]
+
+        # Kiểm tra ngưỡng 1 phút (60s)
+        cutoff_minute = now - 60.0
+        recent_minute = [ts for ts in timestamps if ts > cutoff_minute]
+
+        if len(recent_minute) >= self.max_per_minute:
+            oldest_in_minute = recent_minute[0]
+            retry_after = max(1, int(60.0 - (now - oldest_in_minute)))
+            msg = (
+                f"Bạn đang gửi câu hỏi khá nhanh ({len(recent_minute)} câu/phút). "
+                f"Phương pháp Socratic khuyến khích bạn dành {retry_after}s để đọc kỹ gợi ý trước đó, "
+                "mở IDE và tự gõ thử mã nguồn trước khi đặt câu hỏi tiếp theo nhé!"
+            )
+            self._history[session_id] = timestamps
+            return False, msg, retry_after
+
+        # Kiểm tra ngưỡng 1 giờ (3600s)
+        if len(timestamps) >= self.max_per_hour:
+            oldest_in_hour = timestamps[0]
+            retry_after = max(1, int(3600.0 - (now - oldest_in_hour)))
+            msg = (
+                f"Bạn đã đặt {len(timestamps)} câu hỏi trong 1 giờ qua. "
+                "Hãy dành thời gian thực hành các bài tập đã thảo luận để củng cố kiến thức trước khi tiếp tục nhé!"
+            )
+            self._history[session_id] = timestamps
+            return False, msg, retry_after
+
+        # Hợp lệ: Ghi nhận timestamp mới
+        timestamps.append(now)
+        self._history[session_id] = timestamps
+        return True, None, None
+
+    def reset_session(self, session_id: str) -> None:
+        """Xóa lịch sử tần suất khi học viên bấm làm mới phiên."""
+        self._history.pop(session_id, None)
+
+
 # Singleton instances
 _security_input_guardrail: Optional[SecurityInputGuardrail] = None
 _socratic_output_guardrail: Optional[SocraticOutputGuardrail] = None
+_session_rate_limiter: Optional[SessionRateLimiter] = None
 
 
 def get_security_input_guardrail() -> SecurityInputGuardrail:
@@ -186,3 +251,10 @@ def get_socratic_output_guardrail() -> SocraticOutputGuardrail:
     if _socratic_output_guardrail is None:
         _socratic_output_guardrail = SocraticOutputGuardrail()
     return _socratic_output_guardrail
+
+
+def get_session_rate_limiter() -> SessionRateLimiter:
+    global _session_rate_limiter
+    if _session_rate_limiter is None:
+        _session_rate_limiter = SessionRateLimiter()
+    return _session_rate_limiter

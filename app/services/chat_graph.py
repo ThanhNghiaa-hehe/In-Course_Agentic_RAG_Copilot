@@ -11,6 +11,7 @@ Kiến trúc:
 - Conditional Edges: Phân luồng rẽ nhánh linh hoạt giữa Fast-Path và Course Retrieval.
 """
 
+import re
 import logging
 from typing import TypedDict, List, Dict, Any, Optional
 from langgraph.graph import StateGraph, END
@@ -18,6 +19,7 @@ from langgraph.checkpoint.memory import MemorySaver
 
 from app.agent.router import get_intent_router
 from app.services.retrieval import get_retrieval_service, RetrievalResult
+from app.agent.guardrails import get_session_rate_limiter
 from app.agent.prompts import (
     SOCRATIC_GROUNDED_PROMPT,
     OUT_OF_LESSON_PROMPT,
@@ -277,7 +279,9 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     """
     Node 4: Điều phối ngữ cảnh đa lượt (Multi-Turn Context Assembly & Token Budget Guard).
     - Áp dụng thuật toán Sliding Window k = 5 turns (tối đa 10 messages gần nhất).
+    - Token Budget Pruning: Khống chế tổng ký tự lịch sử <= 2,400 chars (~800 tokens).
     - Tích hợp tóm tắt bối cảnh các lượt cũ (conversation_summary) vào System Prompt.
+    - Pedagogical Soft Nudge: Thêm gợi ý thực hành khi phiên kéo dài (> 6 turns).
     - Đóng gói danh sách tin nhắn chuẩn ChatML tuân thủ ngân sách an toàn <= 3,368 tokens.
     """
     history_messages = state.get("messages", [])
@@ -289,23 +293,59 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     # 1. Thuật toán Sliding Window: Giữ lại tối đa 5 turns gần nhất (10 tin nhắn)
     SLIDING_WINDOW_TURNS = 5
     max_history_count = SLIDING_WINDOW_TURNS * 2
-    sliding_history = (
+    raw_sliding_history = (
         history_messages[-max_history_count:]
         if len(history_messages) > max_history_count
         else list(history_messages)
     )
 
-    # 2. Xây dựng System Prompt hoàn chỉnh (kèm tóm tắt tiến trình nếu có)
+    # 2. Token Budget Pruning: Khống chế độ dài lịch sử <= 2,400 ký tự (~800 tokens)
+    # Cắt tỉa các khối code dài ở các lượt cũ để bảo vệ KV Cache Prefill
+    MAX_HISTORY_CHARS = 2400
+    sliding_history: List[Dict[str, str]] = []
+    accumulated_chars = 0
+
+    # Duyệt ngược từ tin nhắn mới nhất về cũ nhất trong cửa sổ trượt
+    for msg in reversed(raw_sliding_history):
+        content = msg.get("content", "")
+        role = msg.get("role", "user")
+
+        # Rút gọn code block dài trong các câu trả lời cũ của assistant
+        if role == "assistant" and "```" in content and len(content) > 350:
+            content = re.sub(
+                r"```(?:cpp|c\+\+|c)?\n.*?```",
+                "[...khung code minh họa ở lượt trước...]",
+                content,
+                flags=re.DOTALL
+            )
+
+        msg_len = len(content)
+        if accumulated_chars + msg_len > MAX_HISTORY_CHARS and len(sliding_history) >= 2:
+            # Vượt trần ngân sách nhưng luôn giữ ít nhất 1 turn gần nhất (2 msgs)
+            break
+
+        sliding_history.insert(0, {"role": role, "content": content})
+        accumulated_chars += msg_len
+
+    # 3. Xây dựng System Prompt hoàn chỉnh (kèm tóm tắt tiến trình & Soft Nudge nếu có)
     full_system_prompt = system_prompt
     if conv_summary:
         full_system_prompt += f"\n\n[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]:\n{conv_summary}"
 
-    # 3. Đóng gói danh sách tin nhắn chuẩn ChatML
+    # Pedagogical Soft Nudge: Khích lệ tự thực hành khi phiên kéo dài liên tục
+    if turn_count > 6:
+        full_system_prompt += (
+            "\n\n[HƯỚNG DẪN SƯ PHẠM ĐA LƯỢT]: Phiên học đã qua nhiều lượt trao đổi chi tiết. "
+            "Ở cuối câu trả lời, hãy đính kèm một câu động viên ngắn gọn khuyến khích học viên "
+            "tự mở IDE gõ chạy thử mã nguồn để củng cố bài học."
+        )
+
+    # 4. Đóng gói danh sách tin nhắn chuẩn ChatML
     assembled: List[Dict[str, str]] = [
         {"role": "system", "content": full_system_prompt}
     ]
 
-    # Nạp các lượt trò chuyện trước đó từ Sliding Window
+    # Nạp các lượt trò chuyện trước đó từ Sliding Window đã được cắt tỉa
     for msg in sliding_history:
         assembled.append({"role": msg["role"], "content": msg["content"]})
 
@@ -421,7 +461,7 @@ def commit_assistant_turn(session_id: str, user_prompt: str, assistant_response:
 
 def reset_session_state(session_id: str) -> None:
     """
-    Đặt lại trạng thái phiên trong Checkpointer khi học viên bấm nút Làm mới.
+    Đặt lại trạng thái phiên trong Checkpointer và Rate Limiter khi học viên bấm nút Làm mới.
     """
     graph = get_chat_graph()
     config = {"configurable": {"thread_id": session_id}}
@@ -431,4 +471,6 @@ def reset_session_state(session_id: str) -> None:
         "conversation_summary": None,
         "assembled_messages": []
     })
-    logger.info(f"[LangGraph:Checkpointer] Đã reset trạng thái cho Session '{session_id}'.")
+    # Đồng bộ đặt lại lịch sử tần suất trong Rate Limiter
+    get_session_rate_limiter().reset_session(session_id)
+    logger.info(f"[LangGraph:Checkpointer] Đã reset trạng thái và rate limiter cho Session '{session_id}'.")

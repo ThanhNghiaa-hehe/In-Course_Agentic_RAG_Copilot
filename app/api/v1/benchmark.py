@@ -42,7 +42,31 @@ def find_latest_benchmark_file() -> Path | None:
     if latest_link.exists():
         return latest_link
 
-    return None
+def find_latest_evaluation_file() -> Path | None:
+    """
+    Tìm tệp kết quả khảo thí Chặng 5 mới nhất:
+    1. Ưu tiên tệp stage5_evaluation_results_*.json mới nhất.
+    2. Fallback về latest_evaluation_results.json.
+    3. Fallback về find_latest_benchmark_file() nếu Chặng 5 chưa chạy.
+    """
+    if not BENCHMARK_DIR.exists():
+        return None
+
+    stage5_files = list(BENCHMARK_DIR.glob("stage5_evaluation_results_*.json"))
+    if stage5_files:
+        stage5_files.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+        latest_s5 = stage5_files[0]
+        latest_link = BENCHMARK_DIR / "latest_evaluation_results.json"
+        if latest_link.exists() and latest_link.stat().st_mtime >= latest_s5.stat().st_mtime:
+            return latest_link
+        return latest_s5
+
+    latest_link = BENCHMARK_DIR / "latest_evaluation_results.json"
+    if latest_link.exists():
+        return latest_link
+
+    # Fallback sang Stage 11 benchmark file
+    return find_latest_benchmark_file()
 
 
 @router.get(
@@ -56,6 +80,26 @@ async def get_latest_benchmark():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Chưa có dữ liệu Benchmark Stage 11 nào được ghi nhận. Vui lòng chạy `scripts/run_rag_benchmark.py`."
+        )
+
+    return FileResponse(
+        target_file,
+        media_type="application/json",
+        headers=NO_CACHE_HEADERS
+    )
+
+
+@router.get(
+    "/evaluation/latest",
+    summary="Lấy kết quả khảo thí Chặng 5 mới nhất (RAGAS, G-Eval, OOD, Latency)",
+    description="Trả về tệp kết quả JSON Chặng 5 mới nhất phục vụ Interactive Observability Dashboard."
+)
+async def get_latest_evaluation():
+    target_file = find_latest_evaluation_file()
+    if not target_file or not target_file.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Chưa có dữ liệu khảo thí nào. Vui lòng chạy `scripts/run_full_evaluation.py`."
         )
 
     return FileResponse(

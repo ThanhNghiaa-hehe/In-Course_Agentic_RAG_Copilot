@@ -36,3 +36,18 @@ async def stream_socratic_chat(
             "X-Accel-Buffering": "no"
         }
     )
+
+
+@router.post(
+    "/reset",
+    summary="Đặt lại trạng thái phiên hội thoại đa lượt và Rate Limiter",
+    description="Xóa toàn bộ lịch sử hội thoại trong LangGraph Checkpointer và đặt lại hạn mức tần suất cho session_id."
+)
+async def reset_chat_session(session_id: str):
+    from app.services.chat_graph import reset_session_state
+    reset_session_state(session_id)
+    return {
+        "status": "success",
+        "session_id": session_id,
+        "message": "Đã đặt lại trạng thái phiên hội thoại và bộ nhớ đa lượt thành công."
+    }
