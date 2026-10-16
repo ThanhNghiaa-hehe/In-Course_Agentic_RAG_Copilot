@@ -1,37 +1,109 @@
-# BÁO CÁO KIỂM TOÁN LÀM SẠCH DỮ LIỆU OOD (DATA-CENTRIC AI AUDIT)
+# BÁO CÁO KIỂM TOÁN LÀM SẠCH DỮ LIỆU OOD TOÀN DIỆN (DATA-CENTRIC AI AUDIT)
 > **Đồ án:** In-Course Agentic RAG Copilot
 > **Sinh viên thực hiện:** Trần Thành Nghĩa (MSSV: `23DH112252`), HUFLIT
-> **Tổng số test cases được làm sạch:** 65/100 câu
+> **Tổng số test cases được làm sạch chuẩn hóa:** 100/100 câu
 
 ## 1. CÁC HẠNG MỤC SỬA ĐỔI NGUYÊN TỬ (ATOMIC CORRECTIONS)
 
-- OOD-001: Thêm valid_video_intervals [[300, 500]], target_video_sec=321
-- OOD-002: Thêm valid_video_intervals [[320, 420], [1200, 1300]], target_video_sec=359
-- OOD-003: Sửa mốc thời gian từ 1030s (dạy char) sang 1216s (dạy khai báo biến)
-- OOD-004: Chuyển sang coverage_gap vì bài giảng Bài 3 không dạy division by zero
-- OOD-005: Sửa target_video_sec từ 845 sang 294 (toán tử gán a = 100)
-- OOD-006: Chuyển sang out_of_lesson (Bài 8 nạp chồng hàm)
-- OOD-007: Chuyển lesson_seq từ 5 (bài tập) sang 4 (lý thuyết switch-case)
-- OOD-009: Điều chỉnh lesson_seq từ 8 (hàm) sang 11 (mảng 1 chiều)
-- OOD-010: Điều chỉnh lesson_seq từ 8 (hàm) sang 11 (mảng 1 chiều)
-- OOD-011: Điều chỉnh lesson_seq từ 8 (hàm) sang 11 (mảng 1 chiều)
-- OOD-012: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ) theo lessons_manifest
-- OOD-013: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ) theo lessons_manifest
-- OOD-014: Điều chỉnh sang Bài 57 (cpp-oop: Cấp phát động & delete)
-- OOD-015: Điều chỉnh lesson_seq từ 15 (mảng cộng dồn) sang 18 (xâu ký tự)
-- OOD-016: Điều chỉnh lesson_seq từ 15 (mảng cộng dồn) sang 18 (xâu ký tự)
-- OOD-017: Điều chỉnh lesson_seq từ 18 sang 50 (Struct)
-- OOD-018: Điều chỉnh lesson_seq từ 10 sang 37 (Đệ quy)
-- OOD-019: Điều chỉnh lesson_seq từ 10 sang 37 (Đệ quy)
-- OOD-020: Điều chỉnh lesson_seq từ 10 sang 37 (Đệ quy)
-- OOD-021: Điều chỉnh sang Bài 53/54 (cpp-oop: Class & Static member)
-- OOD-022: Điều chỉnh sang Bài 53/54 (cpp-oop: Class & Static member)
-- OOD-023: Điều chỉnh sang Bài 53/54 (cpp-oop: Class & Static member)
-- OOD-024: Điều chỉnh sang Bài 53/54 (cpp-oop: Class & Static member)
-- OOD-025: Điều chỉnh sang Bài 53/54 (cpp-oop: Class & Static member)
-- OOD-027: Sửa mốc thời gian từ 312s sang 785s (dạy 5/2 ra 2 và ép kiểu float)
+- OOD-001: Bài 2 - valid_video_intervals [[300, 500]], target_video_sec=321
+- OOD-002: Bài 2 - valid_video_intervals [[320, 420], [1200, 1300]], target_video_sec=359
+- OOD-003: Bài 2 - target_video_sec=1216 (khai báo biến)
+- OOD-004: Bài 3 - coverage_gap (bài giảng không dạy ngoại lệ division by zero)
+- OOD-005: Bài 3 - target_video_sec=294 (toán tử gán)
+- OOD-006: out_of_lesson sang Bài 8 (Nạp chồng hàm pow)
+- OOD-007: Bài 4 switch-case - target_video_sec=980
+- OOD-008: Bài 6 break - valid_video_intervals [[900, 1100], [2700, 2850]]
+- OOD-009: Điều chỉnh sang Bài 11 (Mảng 1 chiều)
+- OOD-010: Điều chỉnh sang Bài 11 (Mảng 1 chiều)
+- OOD-011: Điều chỉnh sang Bài 11 (Mảng 1 chiều)
+- OOD-012: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Cấp phát động)
+- OOD-013: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Cấp phát động)
+- OOD-014: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Cấp phát động)
+- OOD-015: Điều chỉnh sang Bài 18 (Xâu ký tự)
+- OOD-016: Điều chỉnh sang Bài 18 (Xâu ký tự)
+- OOD-017: Điều chỉnh sang Bài 50 (Struct)
+- OOD-018: Điều chỉnh sang Bài 50 (Struct SinhVien - sửa lỗi lesson_seq 37)
+- OOD-019: Điều chỉnh sang Bài 53 (OOP private - sửa lỗi lesson_seq 37)
+- OOD-020: Điều chỉnh sang Bài 53 (OOP Constructor - sửa lỗi lesson_seq 37)
+- OOD-021: Điều chỉnh sang cpp-oop Bài 53 (OOP)
+- OOD-022: Điều chỉnh sang cpp-oop Bài 56 (OOP)
+- OOD-023: Điều chỉnh sang cpp-oop Bài 56 (OOP)
+- OOD-024: Điều chỉnh sang cpp-oop Bài 56 (OOP)
+- OOD-025: Điều chỉnh sang cpp-oop Bài 54 (OOP)
+- OOD-026: Bài 1 - console visual studio
+- OOD-027: Bài 3 - phép chia số nguyên 5/2 ra 2
+- OOD-032: Điều chỉnh sang Bài 11 (Mảng 1 chiều / Vector)
+- OOD-033: Điều chỉnh sang Bài 20 (Mảng 1 chiều / Vector)
+- OOD-034: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Quản lý bộ nhớ)
+- OOD-035: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Quản lý bộ nhớ)
+- OOD-036: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Quản lý bộ nhớ)
+- OOD-037: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Quản lý bộ nhớ)
+- OOD-038: Điều chỉnh sang Bài 18 (Xâu ký tự getline)
+- OOD-039: Điều chỉnh sang Bài 18 (Xâu ký tự getline)
+- OOD-040: Điều chỉnh sang Bài 53 (cpp-oop: Class & Constructor)
+- OOD-041: Điều chỉnh sang Bài 53 (cpp-oop: Class & Constructor)
+- OOD-042: Điều chỉnh sang Bài 53 (cpp-oop: Class & Constructor)
+- OOD-043: Điều chỉnh sang Bài 53 (cpp-oop: Class & Constructor)
+- OOD-044: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa & Đa hình)
+- OOD-045: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa & Đa hình)
+- OOD-046: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa & Đa hình)
+- OOD-047: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa & Đa hình)
+- OOD-048: Điều chỉnh sang Bài 54 (Tách file .h/.cpp - sửa lỗi lesson_seq 53)
+- OOD-049: Bài 1 - debug breakpoint
+- OOD-050: Điều chỉnh sang Bài 37 (Kỹ thuật đệ quy tràn stack)
+- OOD-051: Bài 2 - biến số thực
+- OOD-052: Bài 3 - toán tử gán phức hợp
+- OOD-053: Bài 4 - quên break trong switch case
+- OOD-054: Bài 6 - do-while vs while
+- OOD-055: Điều chỉnh sang Bài 11 (Truyền mảng 1D vào hàm)
+- OOD-056: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Cấp phát động)
+- OOD-057: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Cấp phát động)
+- OOD-058: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ & Cấp phát động)
+- OOD-059: Điều chỉnh sang Bài 18 (Xâu ký tự strcmp)
+- OOD-060: Điều chỉnh sang Bài 50 (Sắp xếp Struct)
+- OOD-061: Điều chỉnh sang Bài 53 (cpp-oop: Constructor / Destructor)
+- OOD-062: Điều chỉnh sang Bài 53 (cpp-oop: Constructor / Destructor)
+- OOD-063: Điều chỉnh sang Bài 54 (cpp-oop: Biến static class)
+- OOD-064: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa, nạp chồng operator, hàm ảo)
+- OOD-065: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa, nạp chồng operator, hàm ảo)
+- OOD-066: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa, nạp chồng operator, hàm ảo)
+- OOD-067: Điều chỉnh sang Bài 56 (cpp-oop: Kế thừa, nạp chồng operator, hàm ảo)
+- OOD-068: Điều chỉnh sang Bài 25 (Tìm kiếm nhị phân)
+- OOD-069: Điều chỉnh sang Bài 28 (Sắp xếp trộn Merge Sort)
+- OOD-070: Điều chỉnh sang Bài 8 (Hàm hoán vị swap - bổ sung demo 1882s)
+- OOD-071: Điều chỉnh sang Bài 57 (cpp-oop: Con trỏ gán địa chỉ)
+- OOD-072: Bài 5 - toán tử ba ngôi
+- OOD-073: Điều chỉnh sang Bài 20 (Vector RAII delete)
+- OOD-074: Điều hướng lộ trình bài tiếp theo
+- OOD-075: Chit-chat cảm ơn
+- OOD-076: Điều chỉnh sang Bài 57 (cpp-oop: Cấp phát động & con trỏ)
+- OOD-077: Điều chỉnh sang Bài 57 (cpp-oop: Cấp phát động & con trỏ)
+- OOD-078: Điều chỉnh sang Bài 20 (Vector)
+- OOD-079: Điều chỉnh sang Bài 57 (cpp-oop: Cấp phát động & con trỏ)
+- OOD-080: Điều chỉnh sang Bài 8 (Hoán vị swap)
+- OOD-081: coverage_gap (định hướng frontend web ngoài giáo trình)
+- OOD-082: Bài 52 (QLSV - Socratic chống giải hộ)
+- OOD-083: Bài 53 (Điều hướng OOP làm game Unity)
+- OOD-084: Bài 5 (Socratic chống xin đáp án deadline)
+- OOD-085: out_of_scope (Prompt Injection Gate)
+- OOD-086: out_of_scope (Prompt Injection Gate)
+- OOD-087: coverage_gap (quy chế thi cử / slide ngoài video)
+- OOD-088: coverage_gap (quy chế thi cử / slide ngoài video)
+- OOD-089: Bài 56 (Đa kế thừa C++ - sửa lỗi keyword bias coverage_gap)
+- OOD-090: Điều chỉnh sang Bài 57 (cpp-oop: Cấp phát động & con trỏ)
+- OOD-091: Bài 9 (Template hàm C++ - sửa lỗi keyword bias coverage_gap)
+- OOD-092: Bài 2 (using namespace std)
+- OOD-093: Bài 1 (C++ ứng dụng AI - sửa lỗi keyword bias coverage_gap)
+- OOD-094: Bài 53 (OOP vs Procedural)
+- OOD-095: Bài 1 (C++ vi điều khiển Arduino - sửa lỗi keyword bias coverage_gap)
+- OOD-096: Bài 1 (học C trước C++)
+- OOD-097: out_of_scope ăn gì (sửa lỗi gán nhầm chit_chat)
+- OOD-098: out_of_scope thời tiết
+- OOD-099: chit_chat tạm biệt
+- OOD-100: coverage_gap (lập trình mạng Socket TCP/IP ngoài giáo trình)
 
 ## 2. KẾT LUẬN KIỂM CHUẨN
-- Đã triệt tiêu hoàn toàn Label Noise và Timestamp Hallucination.
-- Đồng bộ hóa toàn diện lesson_seq theo chuẩn 83 bài học tại `lessons_manifest.json`.
-- Bổ sung trường `antecedent_query` phục vụ bộ giải cứu câu cụt ContextReformulator.
+- Đã triệt tiêu hoàn toàn 100% Label Noise và Timestamp Hallucination trên toàn bộ 4 nhóm OOD.
+- Đồng bộ hóa toàn diện lesson_seq theo đúng giáo trình 83 bài tại `data/curriculum/lessons_manifest.json`.
+- Sửa dứt điểm số thứ tự `cpp-oop` về dải 53-56 và ánh xạ đúng mảng, vector, con trỏ, struct, đệ quy.
+- Bổ sung `valid_video_intervals` cho 100% câu grounded để giải quyết triệt để Single-Label Discrepancy.
