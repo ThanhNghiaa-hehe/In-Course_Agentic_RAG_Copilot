@@ -95,7 +95,7 @@ async def get_evaluation_dashboard():
     """Phục vụ trực tiếp trang Interactive Observability Dashboard Chặng 5."""
     dashboard_path = Path(__file__).resolve().parent / "templates" / "evaluation_dashboard.html"
     if dashboard_path.exists():
-        return FileResponse(dashboard_path, media_type="text/html")
+        return FileResponse(dashboard_path, media_type="text/html", headers=NO_CACHE_HEADERS)
     return HTMLResponse("<h1>Tệp evaluation_dashboard.html chưa sẵn sàng</h1>", status_code=404)
 
 

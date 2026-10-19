@@ -17,6 +17,7 @@ import os
 import sys
 import json
 import time
+import uuid
 import math
 import asyncio
 import argparse
@@ -33,6 +34,9 @@ from app.services.retrieval import RetrievalService
 from app.services.embedding import get_embedding_service
 from app.services.qdrant import get_async_qdrant_client, close_async_qdrant_client
 from app.services.curriculum import get_curriculum_service
+from app.services.chat import ChatService
+from app.services.chat_graph import crag_grader_node, context_assembly_node, AgentState
+from app.schemas.chat import ChatRequest
 from app.config import settings
 
 
@@ -167,6 +171,9 @@ async def run_full_evaluation(
     curriculum_service = get_curriculum_service()
     qdrant_client = get_async_qdrant_client()
     retrieval_service = RetrievalService(client=qdrant_client, embedding_service=embedding_service)
+    chat_service = ChatService(retrieval_service=retrieval_service) if enable_geval_llm else None
+    if enable_geval_llm:
+        print(f"[INFO] Đã khởi tạo ChatService kết nối LLM ({settings.LLM_MODEL_NAME} @ {settings.LLM_BASE_URL})")
 
     # Thống kê tổng hợp
     router_correct = 0
@@ -309,11 +316,88 @@ async def run_full_evaluation(
         ttft_estimates_ms.append(est_ttft_ms)
 
         # --- LƯỢT 2: THẨM ĐỊNH G-EVAL SOCRATIC ADHERENCE ---
-        if enable_geval_llm:
-            # Chỉ đánh giá khi có văn bản sinh thực tế từ LLM
-            geval_score = None
-            geval_verdict = "Cần triển khai LLM stream generator"
-            violations = []
+        generated_answer_text = None
+        if enable_geval_llm and chat_service:
+            try:
+                # 1. Fast-Path & Navigation: Trả lời tức thời (< 1ms) theo chuẩn Production
+                if is_nav:
+                    generated_answer_text = curriculum_service.generate_navigation_response(
+                        prompt=query,
+                        current_lesson_seq=lesson_seq,
+                        course_id=course_id
+                    )
+                elif not is_course_query:
+                    generated_answer_text = getattr(router_res, "direct_response", None) or "Xin chào! Tôi có thể giúp gì cho bạn về khóa học lập trình C++?"
+                else:
+                    # 2. Pipeline Context Re-use: Tái sử dụng 100% ngữ cảnh đã truy xuất từ Lượt 1
+                    # Triệt tiêu lần chạy Re-ranker CPU thứ hai, tiết kiệm 10-12 giây lãng phí mỗi câu hỏi
+                    session_id = f"eval_{test_id}_{uuid.uuid4().hex[:6]}"
+                    eval_state: AgentState = {
+                        "session_id": session_id,
+                        "turn_count": 1,
+                        "prompt": query,
+                        "course_id": course_id,
+                        "lesson_seq": lesson_seq,
+                        "intent": actual_intent,
+                        "direct_response": getattr(router_res, "direct_response", None),
+                        "is_course_query": is_course_query,
+                        "retrieved_chunks": retrieval_res.chunks if (actual_status != "coverage_gap" and hasattr(retrieval_res, "chunks")) else [],
+                        "retrieval_status": actual_status,
+                        "is_approximate": False,
+                        "is_low_confidence": getattr(retrieval_res, "is_low_confidence", False),
+                        "target_lesson_seq": getattr(retrieval_res, "target_lesson_seq", None),
+                        "suggested_timestamps": [],
+                        "sources": [],
+                        "messages": [],
+                        "conversation_summary": None,
+                        "system_prompt": "",
+                        "user_message_content": "",
+                        "assembled_messages": []
+                    }
+
+                    # Đóng gói Prompt và ChatML qua các discrete nodes chuẩn LangGraph StateGraph
+                    grader_res = await crag_grader_node(eval_state)
+                    eval_state.update(grader_res)
+                    assembly_res = await context_assembly_node(eval_state)
+                    eval_state.update(assembly_res)
+
+                    messages = eval_state.get("assembled_messages") or [
+                        {"role": "system", "content": eval_state["system_prompt"]},
+                        {"role": "user", "content": eval_state["user_message_content"]}
+                    ]
+
+                    # Gọi trực tiếp vLLM Remote Stream (Kaggle GPU)
+                    stream_response = await chat_service.client.chat.completions.create(
+                        model=settings.LLM_MODEL_NAME,
+                        messages=messages,
+                        temperature=settings.LLM_TEMPERATURE,
+                        max_tokens=settings.LLM_MAX_TOKENS,
+                        presence_penalty=0.5,
+                        frequency_penalty=0.5,
+                        stop=["\n\n\n", "Học viên:", "Sinh viên:", "<|im_end|>"],
+                        stream=True
+                    )
+
+                    answer_tokens: List[str] = []
+                    async for chunk in stream_response:
+                        if chunk.choices and chunk.choices[0].delta.content:
+                            token = chunk.choices[0].delta.content
+                            # Deterministic Decoding Guardrail: Chặn sinh thẻ timestamp nếu không phải grounded hoặc không có chunks
+                            if (actual_status != "grounded" or not eval_state["retrieved_chunks"]) and ("<timestamp" in token or "</timestamp>" in token):
+                                continue
+                            answer_tokens.append(token)
+                    generated_answer_text = "".join(answer_tokens)
+
+                geval_score, geval_verdict, violations = evaluate_geval_heuristic(
+                    query, generated_answer_text, is_course_query
+                )
+                geval_scores.append(geval_score)
+                source_stats[ds_source]["geval_sum"] += geval_score
+            except Exception as e:
+                geval_score = 0.0
+                geval_verdict = f"Lỗi sinh LLM: {str(e)}"
+                violations = [f"LLM-Exception: {str(e)}"]
+                geval_scores.append(geval_score)
         else:
             # Tuyệt đối không dùng mock_socratic_response giả mạo để tính điểm (Anti-Surrogate Invariant)
             geval_score = None
@@ -343,14 +427,17 @@ async def run_full_evaluation(
             "est_ttft_ms": round(est_ttft_ms, 2),
             "geval_socratic_score": geval_score,
             "geval_verdict": geval_verdict,
-            "violations": violations
+            "violations": violations,
+            "generated_answer": generated_answer_text
         })
 
         if idx % 5 == 0 or idx == total_cases or idx == 1:
+            geval_status_str = f" | G-Eval: {sum(geval_scores)/len(geval_scores)*100:.1f}%" if geval_scores else ""
             print(f"  [Tiến trình {idx:03d}/{total_cases:03d}] "
                   f"Router: {router_correct}/{idx} ({router_correct/idx*100:.1f}%) | "
                   f"CRAG: {crag_status_correct}/{idx} ({crag_status_correct/idx*100:.1f}%) | "
-                  f"TS: {timestamp_correct}/{idx} ({timestamp_correct/idx*100:.1f}%) | "
+                  f"TS: {timestamp_correct}/{idx} ({timestamp_correct/idx*100:.1f}%)"
+                  f"{geval_status_str} | "
                   f"Latency tb: {sum(latencies_ms)/len(latencies_ms):.1f}ms")
 
     t_global_total = time.perf_counter() - t_global_start
@@ -381,14 +468,14 @@ async def run_full_evaluation(
     in_router_acc = (source_stats["in_domain_golden"]["router_ok"] / in_total) * 100.0
     in_crag_acc = (source_stats["in_domain_golden"]["status_ok"] / in_total) * 100.0
     in_ts_acc = (source_stats["in_domain_golden"]["ts_ok"] / in_total) * 100.0
-    in_geval = (source_stats["in_domain_golden"]["geval_sum"] / in_total) if avg_geval is not None else None
+    in_geval = (source_stats["in_domain_golden"]["geval_sum"] / source_stats["in_domain_golden"]["total"]) if (avg_geval is not None and source_stats["in_domain_golden"]["total"] > 0) else None
     in_lat = calculate_percentiles(source_stats["in_domain_golden"]["time_ms"])
 
     ood_total = max(1, source_stats["ood_stress"]["total"])
     ood_router_acc = (source_stats["ood_stress"]["router_ok"] / ood_total) * 100.0
     ood_crag_acc = (source_stats["ood_stress"]["status_ok"] / ood_total) * 100.0
     ood_ts_acc = (source_stats["ood_stress"]["ts_ok"] / ood_total) * 100.0
-    ood_geval = (source_stats["ood_stress"]["geval_sum"] / ood_total) if avg_geval is not None else None
+    ood_geval = (source_stats["ood_stress"]["geval_sum"] / source_stats["ood_stress"]["total"]) if (avg_geval is not None and source_stats["ood_stress"]["total"] > 0) else None
     ood_lat = calculate_percentiles(source_stats["ood_stress"]["time_ms"])
 
     # In bảng tóm tắt ra console
@@ -535,6 +622,11 @@ async def run_full_evaluation(
 
     print(f"\n[OK] Đã lưu báo cáo Markdown tại: {output_report_path.relative_to(PROJECT_ROOT)}")
     print(f"[OK] Đã cập nhật tệp JSON Dashboard tại: {latest_json_path.relative_to(PROJECT_ROOT)}")
+
+    # Dọn dẹp tài nguyên và đóng kết nối HTTP / Qdrant an toàn
+    if chat_service and hasattr(chat_service, "client"):
+        await chat_service.client.close()
+    await close_async_qdrant_client()
 
 
 def main():
