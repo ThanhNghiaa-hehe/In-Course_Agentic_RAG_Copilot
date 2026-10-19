@@ -1227,9 +1227,10 @@
     // Nạp dữ liệu thực thi từ Endpoint API
     async function fetchBenchmarkData() {
       try {
-        let response = await fetch('/api/v1/benchmark/evaluation/latest');
+        const cacheBuster = '?_t=' + Date.now();
+        let response = await fetch('/api/v1/benchmark/evaluation/latest' + cacheBuster, { cache: 'no-store' });
         if (!response.ok) {
-          response = await fetch('/api/v1/benchmark/latest');
+          response = await fetch('/api/v1/benchmark/latest' + cacheBuster, { cache: 'no-store' });
         }
 
         if (!response.ok) {
