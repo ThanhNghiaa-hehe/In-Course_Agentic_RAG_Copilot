@@ -1,0 +1,230 @@
+{
+  "metadata": {
+    "start_time": "2026-10-19 22:46:40",
+    "end_time": "2026-10-19 22:51:37",
+    "total_elapsed_sec": 265.74,
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "total_cases": 5,
+    "in_domain_cases": 1,
+    "ood_cases": 5,
+    "datasets": [
+      "ood_stress_test_dataset.json"
+    ]
+  },
+  "kpi_summary": {
+    "router_accuracy": 100.0,
+    "router_correct": 5,
+    "crag_precision": 60.0,
+    "crag_correct": 3,
+    "timestamp_safety": 60.0,
+    "timestamp_correct": 3,
+    "geval_socratic_score": 53.0,
+    "ragas_faithfulness": null,
+    "ragas_relevance": null,
+    "ragas_context_precision": 60.0,
+    "ttft_p50_ms": 39216.95,
+    "ttft_p90_ms": 69127.45,
+    "ttft_mean_ms": 39490.05
+  },
+  "breakdown": {
+    "in_domain": {
+      "total": 1,
+      "router_acc": 0.0,
+      "crag_precision": 0.0,
+      "ts_safety": 0.0,
+      "geval_score": null,
+      "latency_p50": 0.0
+    },
+    "ood_stress": {
+      "total": 5,
+      "router_acc": 100.0,
+      "crag_precision": 60.0,
+      "ts_safety": 60.0,
+      "geval_score": 53.0,
+      "latency_p50": 38766.95,
+      "group_stats": {
+        "compiler_error": {
+          "total": 5,
+          "router_ok": 5,
+          "status_ok": 3,
+          "ts_ok": 3
+        },
+        "student_vernacular": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "multiturn_dialog": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "cross_language": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        }
+      }
+    }
+  },
+  "latency_percentiles": {
+    "pipeline": {
+      "p50": 38766.95,
+      "p90": 68677.45,
+      "p99": 68677.45,
+      "mean": 39040.05,
+      "min": 12099.48,
+      "max": 68677.45
+    },
+    "ttft": {
+      "p50": 39216.95,
+      "p90": 69127.45,
+      "p99": 69127.45,
+      "mean": 39490.05,
+      "min": 12549.48,
+      "max": 69127.45
+    }
+  },
+  "cases": [
+    {
+      "id": "OOD-001",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Lỗi 'error: cout was not declared in this scope; did you mean std::cout?' khi compile code là bị gì vậy thầy?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 321,
+      "actual_sec": 321,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 38766.95,
+      "est_ttft_ms": 39216.95,
+      "geval_socratic_score": 0.0,
+      "geval_verdict": "FAIL: Vi phạm quy tắc P10 (Cung cấp full solution code có thể copy nộp bài ngay).",
+      "violations": [
+        "P10: Phát hiện sinh trọn vẹn chương trình có int main() và #include (Vi phạm nghiêm trọng bản quyền Socratic)."
+      ],
+      "generated_answer": "Chào bạn! Bạn đang gặp lỗi vì chưa khai báo hoặc sử dụng đúng `std::cout`. Hãy thử giải quyết bài toán bằng cách thêm câu lệnh `using namespace std;` vào đầu file của bạn. Điều này sẽ cho phép bạn sử dụng `cout` mà không cần phải viết đầy đủ với tiền tố `std::`.\n\nVí dụ:\n\n```cpp\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello, World!\" << endl;\n    return 0;\n}\n```\n\nĐây chỉ là một ví dụ đơn giản. Nếu bạn vẫn gặp khó khăn, hãy chia sẻ phần mã nguồn cụ thể mà bạn đang cố gắng thực thi để tôi có thể giúp đỡ chi tiết hơn nhé!"
+    },
+    {
+      "id": "OOD-002",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Code em báo lỗi 'error: expected ; before } token' ở cuối hàm main thì sửa thế nào?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 359,
+      "actual_sec": 359,
+      "is_ts_ok": true,
+      "retrieved_chunks": 1,
+      "latency_ms": 59431.92,
+      "est_ttft_ms": 59881.92,
+      "geval_socratic_score": 0.0,
+      "geval_verdict": "FAIL: Vi phạm quy tắc P10 (Cung cấp full solution code có thể copy nộp bài ngay).",
+      "violations": [
+        "P10: Phát hiện sinh trọn vẹn chương trình có int main() và #include (Vi phạm nghiêm trọng bản quyền Socratic)."
+      ],
+      "generated_answer": "Để khắc phục lỗi `'error: expected ; before } token'` ở cuối hàm `main`, bạn cần đảm bảo rằng tất cả các câu lệnh đều kết thúc bằng dấu chấm phẩy (`;`). Hãy kiểm tra xem có câu lệnh nào thiếu dấu chấm phẩy không. \n\nVí dụ, nếu bạn có đoạn mã như sau:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\"\n}\n```\n\nBạn cần thêm dấu chấm phẩy sau `\"Hello, World!\"`:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\";\n}\n```\n\nKiểm tra từng dòng code trong hàm `main` để chắc chắn rằng mỗi câu lệnh đều đúng định dạng. Nếu vẫn gặp lỗi, hãy cung cấp thêm phần mã nguồn liên quan để tôi có thể giúp bạn chi tiết hơn."
+    },
+    {
+      "id": "OOD-003",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Trình biên dịch báo 'error: redeclaration of int a with no linkage' nghĩa là sao?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "coverage_gap",
+      "is_status_ok": false,
+      "expected_has_ts": true,
+      "actual_has_ts": false,
+      "target_sec": 1216,
+      "actual_sec": null,
+      "is_ts_ok": false,
+      "retrieved_chunks": 0,
+      "latency_ms": 68677.45,
+      "est_ttft_ms": 69127.45,
+      "geval_socratic_score": 0.85,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P10-Minor: Thiếu câu hỏi gợi mở định hướng ở cuối câu trả lời."
+      ],
+      "generated_answer": "Oh, bạn đã gặp phải một lỗi khá thú vị! Hãy tưởng tượng như vậy: Bạn đang xây dựng một ngôi nhà và muốn đặt tên cho cửa sổ. Nhưng rồi bạn phát hiện ra rằng cửa sổ đó đã có tên trước đây và không thể ghi đè lên được. Đó chính là lỗi 'redeclaration of int a with no linkage'.\n\nTrong ngôn ngữ lập trình C++, khi bạn khai báo biến `int a` hai lần trong cùng một phạm vi (ví dụ: trong cùng một hàm), trình biên dịch sẽ hiểu rằng bạn đang cố gắng tạo ra hai cái \"cửa sổ\" với cùng một tên, điều này không hợp lệ.\n\nĐể giải quyết vấn đề này, hãy chắc chắn rằng mỗi biến chỉ được khai báo một lần trong từng phạm vi. Nếu bạn cần sử dụng lại giá trị của biến `a`, hãy đảm bảo nó được khởi tạo đúng cách hoặc tham chiếu đến giá trị cũ nếu cần thiết.\n\nHãy thử viết lại đoạn mã của mình để tránh việc khai báo trùng lặp nhé! Và nhớ luôn kiểm tra kỹ các dòng code mới thêm vào để tránh những lỗi nhỏ như thế này."
+    },
+    {
+      "id": "OOD-004",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Gặp cảnh báo 'warning: division by zero' khi chạy phép chia 10 / 0 thì chương trình xử lý thế nào?",
+      "lesson_seq": 3,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "coverage_gap",
+      "actual_status": "coverage_gap",
+      "is_status_ok": true,
+      "expected_has_ts": false,
+      "actual_has_ts": false,
+      "target_sec": null,
+      "actual_sec": null,
+      "is_ts_ok": true,
+      "retrieved_chunks": 0,
+      "latency_ms": 16224.47,
+      "est_ttft_ms": 16674.47,
+      "geval_socratic_score": 0.9,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "Scaffolding-Warning: Khối code minh họa chưa có chú thích hoặc // TODO rõ ràng."
+      ],
+      "generated_answer": "Oh no! Bạn đã gặp phải một cảnh báo nguy hiểm đó, bạn biết sao không? Đó chính là 'division by zero'. Đây là lỗi xảy ra khi chúng ta cố gắng chia một số cho số 0. \n\nTrong ngôn ngữ lập trình C++, nếu bạn thực hiện phép chia mà mẫu (số bị chia) bằng 0, compiler sẽ đưa ra cảnh báo này để bảo vệ bạn khỏi việc gây ra sự cố lớn hơn nữa.\n\nNhưng đừng lo lắng quá nhé! Chúng ta có thể xử lý trường hợp này bằng cách kiểm tra xem mẫu có bằng 0 hay không trước khi thực hiện phép chia. Nếu mẫu bằng 0, chúng ta có thể in ra thông báo lỗi hoặc làm điều gì đó phù hợp với tình huống của mình.\n\nVí dụ:\n\n```cpp\nint a = 10;\nint b = 0;\n\nif(b != 0){\n    int result = a / b;\n} else {\n    cout << \"Error: Division by zero is not allowed.\";\n}\n```\n\nĐây chỉ là một ví dụ đơn giản. Trong thực tế, bạn cần phải cân nhắc kỹ lưỡng về cách xử lý các trường hợp như vậy để đảm bảo chương trình hoạt động ổn định và an toàn nhất có thể."
+    },
+    {
+      "id": "OOD-005",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Em viết a + b = 10 thì bị báo 'error: lvalue required as left operand of assignment', lvalue là gì?",
+      "lesson_seq": 3,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "coverage_gap",
+      "is_status_ok": false,
+      "expected_has_ts": true,
+      "actual_has_ts": false,
+      "target_sec": 294,
+      "actual_sec": null,
+      "is_ts_ok": false,
+      "retrieved_chunks": 0,
+      "latency_ms": 12099.48,
+      "est_ttft_ms": 12549.48,
+      "geval_socratic_score": 0.9,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P01-Minor: Phản hồi thiếu phân tích giải thích bản chất khái niệm."
+      ],
+      "generated_answer": "Oh no! It looks like you're trying to assign a value to an expression that isn't allowed in C++. Let me explain what an `lvalue` is and why it's important.\n\nAn **lvalue** (pronounced \"ell-value\") is essentially a memory location or something that can be assigned a value. Think of it as a variable name or an array element. For example:\n\n```cpp\nint x;\nx = 5; // Here, 'x' is an lvalue because we can assign a value to it.\n```\n\nOn the other hand, expressions like `a + b`, `(a * b) / c`, etc., are not lvalues because they don't represent a specific memory location where values can be stored directly.\n\nSo when you write:\n```cpp\na + b = 10;\n```\nThe compiler throws an error because `a + b` is not an lvalue. You cannot assign a value to the result of adding two variables together.\n\nIf you want to set the sum of `a` and `b` equal to 10, you need to use parentheses or another way to store the result somewhere:\n```cpp\n(a + b) = 10; // This will still cause an error\n\n// Correct approach:\nint sum = a + b;\nsum = 10;\n\n// Or if you just want to print out their sum being 10:\nif ((a + b) == 10) {\n    std::cout << \"The sum of a and b is indeed 10!\" << std::endl;\n}\n```\n\nRemember, always make sure your left-hand side of assignments is an lvalue!\n\nDo you have any more questions about this? I'm here to help with anything else related to C++!"
+    }
+  ]
+}

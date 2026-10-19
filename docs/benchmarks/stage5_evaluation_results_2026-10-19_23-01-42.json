@@ -1,0 +1,226 @@
+{
+  "metadata": {
+    "start_time": "2026-10-19 23:01:42",
+    "end_time": "2026-10-19 23:03:29",
+    "total_elapsed_sec": 84.21,
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "total_cases": 5,
+    "in_domain_cases": 5,
+    "ood_cases": 1,
+    "datasets": [
+      "benchmark_golden_dataset.json"
+    ]
+  },
+  "kpi_summary": {
+    "router_accuracy": 100.0,
+    "router_correct": 5,
+    "crag_precision": 100.0,
+    "crag_correct": 5,
+    "timestamp_safety": 100.0,
+    "timestamp_correct": 5,
+    "geval_socratic_score": 76.0,
+    "ragas_faithfulness": null,
+    "ragas_relevance": null,
+    "ragas_context_precision": 100.0,
+    "ttft_p50_ms": 3552.32,
+    "ttft_p90_ms": 13079.8,
+    "ttft_mean_ms": 5546.66
+  },
+  "breakdown": {
+    "in_domain": {
+      "total": 5,
+      "router_acc": 100.0,
+      "crag_precision": 100.0,
+      "ts_safety": 100.0,
+      "geval_score": 76.0,
+      "latency_p50": 3102.32
+    },
+    "ood_stress": {
+      "total": 1,
+      "router_acc": 0.0,
+      "crag_precision": 0.0,
+      "ts_safety": 0.0,
+      "geval_score": null,
+      "latency_p50": 0.0,
+      "group_stats": {
+        "compiler_error": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "student_vernacular": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "multiturn_dialog": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "cross_language": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        }
+      }
+    }
+  },
+  "latency_percentiles": {
+    "pipeline": {
+      "p50": 3102.32,
+      "p90": 12629.8,
+      "p99": 12629.8,
+      "mean": 5096.66,
+      "min": 3076.41,
+      "max": 12629.8
+    },
+    "ttft": {
+      "p50": 3552.32,
+      "p90": 13079.8,
+      "p99": 13079.8,
+      "mean": 5546.66,
+      "min": 3526.41,
+      "max": 13079.8
+    }
+  },
+  "cases": [
+    {
+      "id": "BENCH-001",
+      "dataset": "in_domain_golden",
+      "ood_group": null,
+      "query": "Làm sao để khai báo hằng số const trong C++?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 1669,
+      "actual_sec": 1669,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 12629.8,
+      "est_ttft_ms": 13079.8,
+      "geval_socratic_score": 0.9,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P01-Minor: Phản hồi thiếu phân tích giải thích bản chất khái niệm."
+      ],
+      "generated_answer": "Để khai báo hằng số `const` trong C++, bạn cần làm gì?"
+    },
+    {
+      "id": "BENCH-002",
+      "dataset": "in_domain_golden",
+      "ood_group": null,
+      "query": "Ép kiểu dữ liệu (type casting) trong C++ có mấy loại và cú pháp thế nào?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 454,
+      "actual_sec": 454,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 3581.68,
+      "est_ttft_ms": 4031.68,
+      "geval_socratic_score": 1.0,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [],
+      "generated_answer": "Chào bạn! Để trả lời câu hỏi của bạn về ép kiểu dữ liệu (type casting) trong C++, chúng ta hãy cùng phân tích từng loại và cú pháp.\n\n### 1. **Có bao nhiêu loại ép kiểu dữ liệu trong C++?**\nEp kiểu dữ liệu trong C++ chủ yếu có hai loại chính:\n\n1. **Implicit Type Casting**: Được gọi là ép kiểu隐式类型转换, xảy ra tự động khi compiler chuyển đổi giữa các kiểu dữ liệu khác nhau.\n   \n2. **Explicit Type Casting**: Được gọi là ép kiểu显式类型转换, được thực hiện bởi developer bằng cách sử dụng toán tử cụ thể.\n\n### 2. **Cú pháp của mỗi loại ep kiểu dữ liệu:**\n\n#### a. Implicit Type Casting\nImplicit type casting thường xảy ra khi một giá trị nhỏ hơn được gán cho một biến lớn hơn hoặc ngược lại.\n\nVí dụ:\n```cpp\ndouble d = 3; // Compiler sẽ tự động chuyển đổi int sang double\n```\n\n#### b. Explicit Type Casting\nExplicit type casting được thực hiện bằng cách sử dụng toán tử `(new_type)` trước giá trị cần chuyển đổi.\n\n**Toán tử Cast phổ biến:**\n- `(int)`: Chuyển đổi sang kiểu int.\n- `(float)`: Chuyển đổi sang kiểu float.\n- `(char)`: Chuyển đổi sang kiểu char.\n- `(long long)`: Chuyển đổi sang kiểu long long.\n- `(bool)`: Chuyển đổi sang kiểu bool.\n\nVí dụ:\n```cpp\ndouble d = 3.5;\nint i = static_cast<int>(d); // Sử dụng static_cast để chuyển từ double sang int\n\nchar c = 'A';\nint asciiValue = static_cast<int>(c); // Sử dụng static_cast để chuyển từ char sang int\n\nbool isTrue = true;\nint num = static_cast<int>(isTrue); // Sử dụng static_cast để chuyển từ bool sang int\n```\n\n### 3. **Khi nào nên sử dụng explicit type casting?**\nSử dụng explicit type casting khi bạn muốn rõ ràng hóa việc chuyển đổi giữa các kiểu dữ liệu, đặc biệt là khi có nguy cơ mất mát thông tin hoặc gây hiểu lầm cho người đọc mã nguồn.\n\nVí dụ:\n```cpp\ndouble pi = 3.14159;\nint radius = 5;\n\n// Tính diện tích hình tròn với tường thuật rõ ràng rằng ta đang làm việc với số nguyên \nint area = static_cast<int>(pi * radius);\n```\n\nHy vọng giải thích trên giúp bạn hiểu rõ hơn về ép kiểu dữ liệu trong C++. Nếu còn bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với tôi!"
+    },
+    {
+      "id": "BENCH-003",
+      "dataset": "in_domain_golden",
+      "ood_group": null,
+      "query": "Kiểu dữ liệu bool trong C++ lưu được những giá trị nào và tốn bao nhiêu byte?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 1030,
+      "actual_sec": 1030,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 3076.41,
+      "est_ttft_ms": 3526.41,
+      "geval_socratic_score": 0.9,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P01-Minor: Phản hồi thiếu phân tích giải thích bản chất khái niệm."
+      ],
+      "generated_answer": "Đúng rồi! Bạn đã hiểu rằng kiểu dữ liệu `char` trong C++ chiếm 1 byte và có thể chứa 256 giá trị từ 0 đến 255.\n\nTiếp theo, hãy tưởng tượng chúng ta đang làm việc với kiểu dữ liệu `bool`. Bạn nghĩ rằng `bool` có thể chứa bao nhiêu giá trị?\n\nHãy thử suy luận:\n\n1. Kiểu dữ liệu `bool` chỉ đại diện cho hai trạng thái: true hoặc false.\n2. Nếu chúng ta coi true là 1 và false là 0, thì đó cũng chỉ là hai giá trị khác nhau.\n\nVậy, bạn nghĩ rằng kiểu dữ liệu `bool` cần bao nhiêu bit để biểu diễn được cả hai trạng thái này?"
+    },
+    {
+      "id": "BENCH-004",
+      "dataset": "in_domain_golden",
+      "ood_group": null,
+      "query": "Sự khác nhau giữa float và double trong C++ là gì?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 915,
+      "actual_sec": 888,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 3102.32,
+      "est_ttft_ms": 3552.32,
+      "geval_socratic_score": 1.0,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [],
+      "generated_answer": "Chào bạn! Để trả lời câu hỏi của mình, hãy cùng phân tích kỹ thuật về sự khác biệt giữa `float` và `double` trong C++. Bạn đã nghe thấy rằng cả hai đều là kiểu dữ liệu số thực (floating-point), nhưng có một điểm quan trọng khác biệt lớn:\n\n1. **Kích thước bộ nhớ**: \n   - `<timestamp sec=\"832\">13:52</timestamp>`: Trong video, giáo viên nói rằng \"C++, hạt thứ 2 là double, double này cũng là 4b, double này cũng là 8b\". Điều này nghĩa là kích thước bộ nhớ của `double` thường là 8 bytes (64 bits) trên hầu hết các hệ thống.\n   - Đối với `float`, kích thước bộ nhớ thường là 4 bytes (32 bits).\n\n2. **Độ chính xác**:\n   - Do kích thước bộ nhớ lớn hơn, `double` có thể lưu trữ giá trị số thực với độ chính xác cao hơn so với `float`. Thông thường, `float` có thể lưu trữ khoảng 6-7 chữ số thập phân chính xác, trong khi `double` có thể lưu trữ khoảng 15-17 chữ số thập phân chính xác.\n\nVậy nên, sự khác biệt cơ bản nhất giữa `float` và `double` nằm ở khả năng lưu trữ giá trị số thực và độ chính xác của chúng. Nếu bạn cần làm việc với các phép tính phức tạp hoặc yêu cầu độ chính xác cao hơn, thì nên sử dụng kiểu dữ liệu `double`.\n\nBạn nghĩ sao về điều này? Có câu hỏi nào khác không?"
+    },
+    {
+      "id": "BENCH-005",
+      "dataset": "in_domain_golden",
+      "ood_group": null,
+      "query": "Cú pháp dùng std::cin và std::cout để nhập xuất dữ liệu cơ bản?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 321,
+      "actual_sec": 2627,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 3093.12,
+      "est_ttft_ms": 3543.12,
+      "geval_socratic_score": 0.0,
+      "geval_verdict": "Lỗi sinh LLM: peer closed connection without sending complete message body (incomplete chunked read)",
+      "violations": [
+        "LLM-Exception: peer closed connection without sending complete message body (incomplete chunked read)"
+      ],
+      "generated_answer": null
+    }
+  ]
+}

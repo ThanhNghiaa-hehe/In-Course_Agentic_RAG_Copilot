@@ -1,0 +1,176 @@
+{
+  "metadata": {
+    "start_time": "2026-10-19 22:07:36",
+    "end_time": "2026-10-19 22:09:45",
+    "total_elapsed_sec": 105.29,
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "total_cases": 3,
+    "in_domain_cases": 1,
+    "ood_cases": 3,
+    "datasets": [
+      "ood_stress_test_dataset.json"
+    ]
+  },
+  "kpi_summary": {
+    "router_accuracy": 100.0,
+    "router_correct": 3,
+    "crag_precision": 66.67,
+    "crag_correct": 2,
+    "timestamp_safety": 66.67,
+    "timestamp_correct": 2,
+    "geval_socratic_score": 86.67,
+    "ragas_faithfulness": null,
+    "ragas_relevance": null,
+    "ragas_context_precision": 66.7,
+    "ttft_p50_ms": 11451.8,
+    "ttft_p90_ms": 21213.07,
+    "ttft_mean_ms": 14375.27
+  },
+  "breakdown": {
+    "in_domain": {
+      "total": 1,
+      "router_acc": 0.0,
+      "crag_precision": 0.0,
+      "ts_safety": 0.0,
+      "geval_score": null,
+      "latency_p50": 0.0
+    },
+    "ood_stress": {
+      "total": 3,
+      "router_acc": 100.0,
+      "crag_precision": 66.67,
+      "ts_safety": 66.67,
+      "geval_score": 86.67,
+      "latency_p50": 11001.8,
+      "group_stats": {
+        "compiler_error": {
+          "total": 3,
+          "router_ok": 3,
+          "status_ok": 2,
+          "ts_ok": 2
+        },
+        "student_vernacular": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "multiturn_dialog": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "cross_language": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        }
+      }
+    }
+  },
+  "latency_percentiles": {
+    "pipeline": {
+      "p50": 11001.8,
+      "p90": 20763.07,
+      "p99": 20763.07,
+      "mean": 13925.27,
+      "min": 10010.94,
+      "max": 20763.07
+    },
+    "ttft": {
+      "p50": 11451.8,
+      "p90": 21213.07,
+      "p99": 21213.07,
+      "mean": 14375.27,
+      "min": 10460.94,
+      "max": 21213.07
+    }
+  },
+  "cases": [
+    {
+      "id": "OOD-001",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Lỗi 'error: cout was not declared in this scope; did you mean std::cout?' khi compile code là bị gì vậy thầy?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 321,
+      "actual_sec": 321,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 20763.07,
+      "est_ttft_ms": 21213.07,
+      "geval_socratic_score": 0.9,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "Scaffolding-Warning: Khối code minh họa chưa có chú thích hoặc // TODO rõ ràng."
+      ],
+      "generated_answer": "Chào bạn! Bạn đang gặp lỗi vì biến `cout` chưa được khai báo trong phạm vi của bạn. Biến `cout` nằm trong namespace `std`, nên compiler không biết nó là gì.\n\nĐể giải quyết lỗi này, bạn có hai lựa chọn:\n\n1. Sử dụng tiền tố `std::` trước mỗi lần gọi `cout`. Ví dụ:\n   ```cpp\n   std::cout << \"Hello, World!\" << std::endl;\n   ```\n\n2. Hoặc sử dụng câu lệnh `using namespace std;` để không cần thêm tiền tố `std::` mỗi khi gọi hàm từ namespace `std`. Ví dụ:\n   ```cpp\n   using namespace std;\n\n   int main() {\n       cout << \"Hello, World!\" << endl;\n       return 0;\n   }\n   ```\n\nBạn muốn thử cách nào?"
+    },
+    {
+      "id": "OOD-002",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Code em báo lỗi 'error: expected ; before } token' ở cuối hàm main thì sửa thế nào?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 359,
+      "actual_sec": 359,
+      "is_ts_ok": true,
+      "retrieved_chunks": 1,
+      "latency_ms": 10010.94,
+      "est_ttft_ms": 10460.94,
+      "geval_socratic_score": 0.85,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P10-Minor: Thiếu câu hỏi gợi mở định hướng ở cuối câu trả lời."
+      ],
+      "generated_answer": "Để khắc phục lỗi `'error: expected ; before } token'`, bạn cần đảm bảo rằng tất cả các câu lệnh đều kết thúc bằng dấu chấm phẩy (`;`). Hãy kiểm tra lại phần cuối của hàm `main()` để chắc chắn rằng mọi câu lệnh đều có dấu chấm phẩy.\n\nVí dụ, nếu bạn có đoạn mã như sau:\n\n```cpp\nint main() {\n    std::cout << \"Hello, World!\";\n}\n```\n\nThì điều này sẽ gây ra lỗi vì thiếu dấu chấm phẩy sau `\"Hello, World!\"`. Bạn nên sửa thành:\n\n```cpp\nint main() {\n    std::cout << \"Hello, World!\"; // Thêm dấu chấm phẩy ở đây\n}\n```\n\nKiểm tra từng dòng code trong hàm `main()` và thêm dấu chấm phẩy nếu cần thiết. Sau đó biên dịch lại chương trình để xem liệu lỗi đã được giải quyết chưa."
+    },
+    {
+      "id": "OOD-003",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Trình biên dịch báo 'error: redeclaration of int a with no linkage' nghĩa là sao?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "coverage_gap",
+      "is_status_ok": false,
+      "expected_has_ts": true,
+      "actual_has_ts": false,
+      "target_sec": 1216,
+      "actual_sec": null,
+      "is_ts_ok": false,
+      "retrieved_chunks": 0,
+      "latency_ms": 11001.8,
+      "est_ttft_ms": 11451.8,
+      "geval_socratic_score": 0.85,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P10-Minor: Thiếu câu hỏi gợi mở định hướng ở cuối câu trả lời."
+      ],
+      "generated_answer": "Chào bạn! Bạn đã gặp lỗi `error: redeclaration of int a with no linkage` khi viết mã C++. Hãy cùng tìm hiểu nguyên nhân của lỗi này nhé!\n\nLỗi này xuất hiện khi bạn khai báo một biến có tên giống như một biến đã được định nghĩa trước đó trong phạm vi tương tự. Ví dụ:\n\n```cpp\nint a = 5;\nint a = 10; // Lỗi: Redefinition of 'a'\n```\n\nTrong trường hợp trên, bạn đã khai báo biến `a` hai lần liên tiếp với cùng một kiểu dữ liệu (`int`). Điều này gây ra lỗi vì trình biên dịch không thể phân biệt giữa hai biến.\n\nĐể khắc phục lỗi này, hãy chắc chắn rằng mỗi biến đều có tên duy nhất trong phạm vi mà nó được sử dụng. Nếu bạn muốn thay đổi giá trị của biến, chỉ cần gán lại cho nó:\n\n```cpp\nint a = 5;\na = 10; // Không phải là lỗi nữa!\n```\n\nNếu bạn vẫn gặp khó khăn hoặc có thêm câu hỏi về lập trình C++, đừng ngần ngại liên hệ với tôi nhé!"
+    }
+  ]
+}
