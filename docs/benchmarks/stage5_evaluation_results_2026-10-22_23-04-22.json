@@ -1,0 +1,228 @@
+{
+  "metadata": {
+    "start_time": "2026-10-22 23:04:22",
+    "end_time": "2026-10-22 23:09:41",
+    "total_elapsed_sec": 272.4,
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "total_cases": 5,
+    "in_domain_cases": 1,
+    "ood_cases": 5,
+    "datasets": [
+      "ood_stress_test_dataset.json"
+    ]
+  },
+  "kpi_summary": {
+    "router_accuracy": 100.0,
+    "router_correct": 5,
+    "crag_precision": 100.0,
+    "crag_correct": 5,
+    "timestamp_safety": 60.0,
+    "timestamp_correct": 3,
+    "geval_socratic_score": 89.0,
+    "ragas_faithfulness": null,
+    "ragas_relevance": null,
+    "ragas_context_precision": 100.0,
+    "ttft_p50_ms": 48616.5,
+    "ttft_p90_ms": 71244.47,
+    "ttft_mean_ms": 42561.15
+  },
+  "breakdown": {
+    "in_domain": {
+      "total": 1,
+      "router_acc": 0.0,
+      "crag_precision": 0.0,
+      "ts_safety": 0.0,
+      "geval_score": null,
+      "latency_p50": 0.0
+    },
+    "ood_stress": {
+      "total": 5,
+      "router_acc": 100.0,
+      "crag_precision": 100.0,
+      "ts_safety": 60.0,
+      "geval_score": 89.0,
+      "latency_p50": 48166.5,
+      "group_stats": {
+        "compiler_error": {
+          "total": 5,
+          "router_ok": 5,
+          "status_ok": 5,
+          "ts_ok": 3
+        },
+        "student_vernacular": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "multiturn_dialog": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "cross_language": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        }
+      }
+    }
+  },
+  "latency_percentiles": {
+    "pipeline": {
+      "p50": 48166.5,
+      "p90": 70794.47,
+      "p99": 70794.47,
+      "mean": 42111.15,
+      "min": 9951.11,
+      "max": 70794.47
+    },
+    "ttft": {
+      "p50": 48616.5,
+      "p90": 71244.47,
+      "p99": 71244.47,
+      "mean": 42561.15,
+      "min": 10401.11,
+      "max": 71244.47
+    }
+  },
+  "cases": [
+    {
+      "id": "OOD-001",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Lỗi 'error: cout was not declared in this scope; did you mean std::cout?' khi compile code là bị gì vậy thầy?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 321,
+      "actual_sec": 321,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 20335.54,
+      "est_ttft_ms": 20785.54,
+      "geval_socratic_score": 0.85,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P10-Minor: Thiếu câu hỏi gợi mở định hướng ở cuối câu trả lời."
+      ],
+      "generated_answer": "Lỗi 'error: cout was not declared in this scope' xảy ra vì biến `cout` chưa được khai báo trong phạm vi của bạn. Trong C++, `cout` nằm trong namespace `std`, nên khi bạn muốn sử dụng nó, bạn cần phải khai báo hoặc sử dụng từ khóa `using`.\n\nĐể khắc phục lỗi này, bạn có hai lựa chọn:\n\n1. Sử dụng từ khóa `using`: Đây là cách đơn giản nhất và dễ dàng nhất. Bạn chỉ cần thêm dòng sau vào đầu file của mình:\n```cpp\nusing namespace std;\n```\nSau khi làm như vậy, bạn có thể sử dụng `cout` mà không cần phải prefix với `std::`.\n\n2. Prefix với `std::`: Nếu bạn không muốn dùng từ khóa `using`, bạn cũng có thể viết đầy đủ như sau:\n```cpp\n// [Lưu ý]: Học viên tự khai báo thư viện cần thiết\n\nint main() {\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n    // Gợi ý: Hãy đọc kỹ giải thích tư duy và mã giả bên trên để tự hoàn thiện logic!\n    // TODO: Học viên tự viết mã thực thi vào đây.\n    return 0;\n}\n```\n\nBạn thấy rằng cả hai cách trên đều hoạt động, nhưng cách thứ nhất thường được khuyến nghị vì nó ngắn gọn hơn và tránh gây hiểu lầm về nguồn gốc của các hàm/đối tượng.\n\nHãy thử áp dụng một trong hai cách trên vào mã nguồn của mình xem sao!"
+    },
+    {
+      "id": "OOD-002",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Code em báo lỗi 'error: expected ; before } token' ở cuối hàm main thì sửa thế nào?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 359,
+      "actual_sec": 359,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 9951.11,
+      "est_ttft_ms": 10401.11,
+      "geval_socratic_score": 0.85,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P10-Minor: Thiếu câu hỏi gợi mở định hướng ở cuối câu trả lời."
+      ],
+      "generated_answer": "Để khắc phục lỗi `'error: expected ; before } token'`, bạn cần đảm bảo rằng tất cả các câu lệnh đều kết thúc bằng dấu chấm phẩy (`;`). Hãy kiểm tra xem có câu lệnh nào thiếu dấu chấm phẩy không.\n\nDưới đây là một ví dụ minh họa về cách sửa lỗi:\n\n```cpp\n// [Lưu ý]: Học viên tự khai báo thư viện cần thiết\n\nint main() {\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n    // Gợi ý: Hãy đọc kỹ giải thích tư duy và mã giả bên trên để tự hoàn thiện logic!\n    // TODO: Học viên tự viết mã thực thi vào đây.\n    return 0;\n}\n```\n\nTrong ví dụ trên, tôi đã thêm dấu chấm phẩy sau `std::cout << \"Chào mừng bạn!\";`. Điều này sẽ khiến chương trình hợp lệ và không còn报错.\n\nHãy thử kiểm tra mã nguồn của bạn và tìm kiếm các câu lệnh thiếu dấu chấm phẩy. Sau đó, hãy thêm chúng vào và biên dịch lại để xem liệu lỗi đã được giải quyết chưa."
+    },
+    {
+      "id": "OOD-003",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Trình biên dịch báo 'error: redeclaration of int a with no linkage' nghĩa là sao?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 1216,
+      "actual_sec": 47,
+      "is_ts_ok": false,
+      "retrieved_chunks": 3,
+      "latency_ms": 48166.5,
+      "est_ttft_ms": 48616.5,
+      "geval_socratic_score": 1.0,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [],
+      "generated_answer": "Chào bạn! Bạn đang gặp lỗi 'error: redeclaration of int a with no linkage'. Đây là thông báo lỗi khi bạn khai báo lại biến `a` mà chưa làm rõ rằng đây là một biến toàn cục hay biến cục bộ.\n\nĐể hiểu rõ hơn, hãy cùng phân tích từng phần:\n\n1. **Khai báo biến**: Khi bạn khai báo một biến, ví dụ `int a;`, trình biên dịch sẽ tạo ra một vùng nhớ để lưu trữ giá trị của biến đó.\n\n2. **Biến toàn cục vs Biến cục bộ**:\n   - Nếu bạn khai báo `int a;` bên ngoài tất cả các hàm (trong namespace hoặc file .cpp), đó là biến toàn cục.\n   - Nếu bạn khai báo `int a;` trong một hàm, đó là biến cục bộ.\n\n3. **Lỗi trùng lặp**: Khi bạn khai báo lại cùng một tên biến trong cùng một scope (cùng cấp độ), trình biên dịch sẽ phát hiện ra sự trùng lặp và đưa ra lỗi 'redeclaration'.\n\nVí dụ về trường hợp gây lỗi:\n```cpp\n// [Lưu ý]: Học viên tự khai báo thư viện cần thiết\n\nint a = 5; // Biến toàn cục\n\nvoid someFunction() {\n    int a = 10; // Biến cục bộ với cùng tên\n}\n\nint main() {\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n    // Gợi ý: Hãy đọc kỹ giải thích tư duy và mã giả bên trên để tự hoàn thiện logic!\n    // TODO: Học viên tự viết mã thực thi vào đây.\n    return 0;\n}\n```\n\nTrong ví dụ trên, cả hai `a`s đều có cùng tên nhưng nằm ở các scope khác nhau. Điều này không gây lỗi vì chúng được coi là riêng biệt.\n\nNhưng nếu bạn cố gắng khai báo lại `a` ở cùng cấp độ:\n```cpp\n// [Lưu ý]: Học viên tự khai báo thư viện cần thiết\n\nint a = 5;\n\nvoid someFunction() {\n    int b = 10; // Không gây lỗi\n}\n\nint main() {\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n    // Gợi ý: Hãy đọc kỹ giải thích tư duy và mã giả bên trên để tự hoàn thiện logic!\n    // TODO: Học viên tự viết mã thực thi vào đây.\n    return 0;\n}\n```\nTrường hợp này sẽ gây lỗi do việc khai báo lại `a`.\n\n### Câu hỏi gợi mở:\n- Hãy thử tìm hiểu thêm về cách sử dụng toán tử phạm vi (::) để truy cập đến biến toàn cầu từ bên trong hàm?\n- Bạn có thể nghĩ ra cách nào để tránh tình trạng trùng lặp tên biến?"
+    },
+    {
+      "id": "OOD-004",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Gặp cảnh báo 'warning: division by zero' khi chạy phép chia 10 / 0 thì chương trình xử lý thế nào?",
+      "lesson_seq": 3,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "out_of_lesson",
+      "actual_status": "out_of_lesson",
+      "is_status_ok": true,
+      "expected_has_ts": false,
+      "actual_has_ts": false,
+      "target_sec": null,
+      "actual_sec": null,
+      "is_ts_ok": true,
+      "retrieved_chunks": 0,
+      "latency_ms": 61308.12,
+      "est_ttft_ms": 61758.12,
+      "geval_socratic_score": 0.9,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "Scaffolding-Warning: Khối code minh họa chưa có chú thích hoặc // TODO rõ ràng."
+      ],
+      "generated_answer": "THÔNG BÁO: Báo nhẹ nhàng chủ đề này sẽ được học ở bài học sau trong khóa học, khuyên bạn hãy nắm chắc bài hiện tại để tránh hiểu lầm về hành vi của ngôn ngữ lập trình.\n\nKHÁI NIỆM: Khi thực hiện phép chia cho số không (division by zero), kết quả thường là một lỗi hoặc cảnh báo tùy thuộc vào ngôn ngữ lập trình. Trong C++, việc cố gắng chia cho số không gây ra cảnh báo 'warning: division by zero'.\n\nGỢI MỞ: Nếu chúng ta có đoạn mã như sau:\n\n```cpp\nint result = 10 / 0;\n```\n\nHỏi rằng điều gì xảy ra? Và liệu bạn có thể dự đoán được cách mà compiler xử lý trường hợp này hay không?\n\nĐIỀU KIỆN TIÊN QUYẾT:\n- TUYỆT ĐỐI CẤM sinh thẻ `<timestamp>`.\n- CẤM sinh khối `#include` và hàm `int main()`.\n- KHÔNG giải code hoàn chỉnh.\n- ưu tiên dùng mã giả (pseudocode) nếu cần minh họa giải thuật."
+    },
+    {
+      "id": "OOD-005",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Em viết a + b = 10 thì bị báo 'error: lvalue required as left operand of assignment', lvalue là gì?",
+      "lesson_seq": 3,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 294,
+      "actual_sec": 402,
+      "is_ts_ok": false,
+      "retrieved_chunks": 1,
+      "latency_ms": 70794.47,
+      "est_ttft_ms": 71244.47,
+      "geval_socratic_score": 0.85,
+      "geval_verdict": "PASS: Tuân thủ xuất sắc phương pháp Socratic.",
+      "violations": [
+        "P10-Minor: Thiếu câu hỏi gợi mở định hướng ở cuối câu trả lời."
+      ],
+      "generated_answer": "Lỗi bạn gặp phải là do việc cố gắng gán giá trị cho một biểu thức không thể thay đổi (lvalue). Trong C++, phép gán (`=`) yêu cầu toán hạng bên trái phải là một biến hoặc địa chỉ nhớ trữ, tức là một lvalue.\n\nTrong trường hợp của bạn:\n\n```cpp\na + b = 10;\n```\n\nBiểu thức `a + b` không phải là một lvalue vì nó chỉ ra kết quả của phép cộng hai biến `a` và `b`, chứ không liên quan đến bất kỳ biến nào có thể thay đổi giá trị.\n\nĐể khắc phục lỗi này, bạn cần đảm bảo rằng toán hạng bên trái của phép gán là một biến cụ thể. Ví dụ:\n\n```cpp\nint result = a + b; // Biến result có thể thay đổi giá trị\nresult = 10;       // Điều này hợp lệ\n```\n\nHoặc nếu bạn muốn thực hiện tính toán và lưu kết quả vào `a`, bạn nên làm như sau:\n\n```cpp\na += 10 - b; // Sử dụng toán tử cộng dồn để tránh lỗi lvalue\n```\n\nHãy thử viết lại đoạn mã của mình bằng cách sử dụng các biến cụ thể thay vì biểu thức phức tạp. Bạn có thể bắt đầu từ đây và tiếp tục phát triển logic của mình."
+    }
+  ]
+}

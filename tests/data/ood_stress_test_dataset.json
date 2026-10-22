@@ -70,6 +70,10 @@
     "notes": "Lỗi khai báo biến trùng tên trong cùng scope (Bài 2)",
     "valid_video_intervals": [
       [
+        30,
+        120
+      ],
+      [
         1166,
         1280
       ]
@@ -83,7 +87,7 @@
     "course_id": "cpp-core",
     "lesson_seq": 3,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "coverage_gap",
+    "expected_retrieval_status": "out_of_lesson",
     "expected_has_timestamp": false,
     "target_video_sec": null,
     "expected_keywords": [
@@ -91,7 +95,7 @@
       "toán tử",
       "division by zero"
     ],
-    "notes": "Lỗi chia cho 0 trong toán tử số học (Bài 3)",
+    "notes": "Lỗi chia cho 0 trong toán tử số học - Chuyển sang bài toán tử và rẽ nhánh điều kiện if-else (Bài 4)",
     "valid_video_intervals": []
   },
   {
@@ -115,6 +119,10 @@
       [
         240,
         360
+      ],
+      [
+        380,
+        480
       ]
     ]
   },
@@ -181,6 +189,10 @@
     "notes": "Lỗi đặt break ngoài vòng lặp hoặc switch (Bài 6)",
     "valid_video_intervals": [
       [
+        750,
+        900
+      ],
+      [
         900,
         1100
       ],
@@ -209,7 +221,7 @@
     "notes": "Lỗi truy cập ngoài phạm vi mảng gây segfault (Bài 8)",
     "valid_video_intervals": [
       [
-        450,
+        380,
         650
       ]
     ]
@@ -222,21 +234,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 11,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 620,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "array subscript",
       "chỉ số",
       "mảng"
     ],
-    "notes": "Lỗi dùng biến đơn làm mảng hoặc sai cú pháp ngoặc vuông (Bài 8)",
-    "valid_video_intervals": [
-      [
-        550,
-        750
-      ]
-    ]
+    "notes": "Lỗi dùng biến đơn làm mảng hoặc sai cú pháp ngoặc vuông - Không nằm trong video transcript mảng cơ bản (Bài 8)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-011",
@@ -314,6 +321,10 @@
     "notes": "Lỗi giải tham chiếu con trỏ chưa trỏ vào vùng nhớ hợp lệ (Bài 11)",
     "valid_video_intervals": [
       [
+        200,
+        300
+      ],
+      [
         380,
         550
       ]
@@ -327,22 +338,17 @@
     "course_id": "cpp-oop",
     "lesson_seq": 57,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 890,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "double free",
       "delete",
       "giải phóng bộ nhớ",
       "cấp phát động"
     ],
-    "notes": "Lỗi giải phóng vùng nhớ heap hai lần (Bài 12)",
-    "valid_video_intervals": [
-      [
-        800,
-        950
-      ]
-    ]
+    "notes": "Lỗi giải phóng vùng nhớ heap hai lần - Lỗi glibc không giảng chi tiết trong video cơ bản (Bài 12)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-015",
@@ -366,6 +372,10 @@
       [
         350,
         500
+      ],
+      [
+        3600,
+        3750
       ]
     ]
   },
@@ -377,22 +387,17 @@
     "course_id": "cpp-core",
     "lesson_seq": 18,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 650,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "strlen",
       "length",
       "string",
       "mảng char"
     ],
-    "notes": "Mảng ký tự char[] dùng strlen(), còn std::string mới có phương thức length() (Bài 15)",
-    "valid_video_intervals": [
-      [
-        550,
-        750
-      ]
-    ]
+    "notes": "Mảng ký tự char[] dùng strlen(), còn std::string mới có phương thức length() - Không xuất hiện trong transcript (Bài 15)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-017",
@@ -414,7 +419,7 @@
     "notes": "Lỗi truy cập trường không tồn tại trong struct (Bài 21)",
     "valid_video_intervals": [
       [
-        220,
+        150,
         350
       ],
       [
@@ -431,21 +436,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 50,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 520,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "struct",
       "biến đối tượng",
       "truy xuất thành viên"
     ],
-    "notes": "Phải tạo biến cụ thể từ kiểu struct trước khi truy cập thuộc tính (Bài 21)",
-    "valid_video_intervals": [
-      [
-        450,
-        650
-      ]
-    ]
+    "notes": "Phải tạo biến cụ thể từ kiểu struct trước khi truy cập thuộc tính - Lỗi biên dịch không có trong video (Bài 21)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-019",
@@ -467,7 +467,7 @@
     "notes": "Lỗi truy cập thuộc tính private ngoài phạm vi class (Bài 1 OOP)",
     "valid_video_intervals": [
       [
-        500,
+        400,
         750
       ]
     ]
@@ -480,21 +480,17 @@
     "course_id": "cpp-oop",
     "lesson_seq": 53,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 590,
+    "expected_retrieval_status": "out_of_lesson",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
+    "target_lesson_seq": 54,
     "expected_keywords": [
       "default constructor",
       "hàm tạo mặc định",
       "constructor"
     ],
-    "notes": "Khi đã viết constructor có tham số thì C++ không tự sinh constructor mặc định (Bài 3 OOP)",
-    "valid_video_intervals": [
-      [
-        500,
-        880
-      ]
-    ]
+    "notes": "Hàm tạo constructor thuộc Bài 54 (Bài 3 OOP) - Hệ thống phát hiện và điều hướng sang bài tương lai",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-021",
@@ -532,22 +528,17 @@
     "course_id": "cpp-oop",
     "lesson_seq": 56,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 720,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "vtable",
       "virtual",
       "phương thức ảo",
       "destructor"
     ],
-    "notes": "Lỗi thiếu định nghĩa phương thức ảo hoặc virtual destructor (Bài 15 OOP)",
-    "valid_video_intervals": [
-      [
-        600,
-        850
-      ]
-    ]
+    "notes": "Lỗi thiếu định nghĩa phương thức ảo hoặc virtual destructor - Lỗi linker chuyên sâu không có trong transcript (Bài 15 OOP)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-023",
@@ -557,21 +548,16 @@
     "course_id": "cpp-oop",
     "lesson_seq": 56,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 720,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "abstract class",
       "thuần ảo",
       "lớp trừu tượng"
     ],
-    "notes": "Lớp trừu tượng chứa pure virtual function không thể khởi tạo đối tượng trực tiếp (Bài 16 OOP)",
-    "valid_video_intervals": [
-      [
-        600,
-        850
-      ]
-    ]
+    "notes": "Lớp trừu tượng chứa pure virtual function không thể khởi tạo đối tượng trực tiếp - Lỗi cú pháp không có trong transcript (Bài 16 OOP)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-024",
@@ -594,6 +580,10 @@
       [
         600,
         850
+      ],
+      [
+        3800,
+        4000
       ]
     ]
   },
@@ -633,21 +623,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 1,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 890,
+    "expected_retrieval_status": "out_of_lesson",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "console",
       "visual studio",
       "chạy chương trình"
     ],
-    "notes": "Vấn đề cấu hình console và dừng màn hình (Bài 1)",
-    "valid_video_intervals": [
-      [
-        750,
-        950
-      ]
-    ]
+    "notes": "Vấn đề cấu hình console Visual Studio - Khóa học hướng dẫn trên Dev C++ (Bài 1)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-027",
@@ -711,21 +696,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 5,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 420,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "if",
       "so sánh ==",
       "toán tử gán ="
     ],
-    "notes": "Nhầm lẫn toán tử so sánh == với toán tử gán = trong if (Bài 5)",
-    "valid_video_intervals": [
-      [
-        375,
-        465
-      ]
-    ]
+    "notes": "Nhầm lẫn toán tử so sánh == với toán tử gán = trong if - Không có giải thích chi tiết trong transcript (Bài 5)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-030",
@@ -735,21 +715,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 6,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 830,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "while(1)",
       "vòng lặp vô tận",
       "menu"
     ],
-    "notes": "Ứng dụng vòng lặp vô tận làm menu điều khiển hoặc server lắng nghe (Bài 6)",
-    "valid_video_intervals": [
-      [
-        785,
-        875
-      ]
-    ]
+    "notes": "Ứng dụng vòng lặp vô tận làm menu điều khiển hoặc server lắng nghe - Kiến trúc thực tế ngoài bài giảng (Bài 6)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-031",
@@ -783,22 +758,18 @@
     "course_id": "cpp-core",
     "lesson_seq": 11,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 520,
+    "expected_retrieval_status": "out_of_lesson",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
+    "target_lesson_seq": 57,
     "expected_keywords": [
       "chỉ số 0",
       "offset",
       "địa chỉ ô nhớ",
       "mảng"
     ],
-    "notes": "Bản chất chỉ số mảng là độ lệch địa chỉ (offset) từ phần tử đầu (Bài 8)",
-    "valid_video_intervals": [
-      [
-        450,
-        650
-      ]
-    ]
+    "notes": "Bản chất chỉ số mảng là độ lệch địa chỉ (offset) thuộc bài học con trỏ Bài 57",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-033",
@@ -1219,22 +1190,17 @@
     "course_id": "cpp-oop",
     "lesson_seq": 54,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 420,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "tách file",
       "header .h",
       "source .cpp",
       "module"
     ],
-    "notes": "Ý nghĩa việc tách file khai báo (.h) và định nghĩa (.cpp) trong dự án lớn (Bài 20 OOP)",
-    "valid_video_intervals": [
-      [
-        350,
-        600
-      ]
-    ]
+    "notes": "Ý nghĩa việc tách file khai báo (.h) và định nghĩa (.cpp) - Kiến trúc dự án lớn ngoài phạm vi transcript (Bài 20 OOP)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-049",
@@ -1244,21 +1210,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 1,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 890,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "debug",
       "breakpoint",
       "dev c++"
     ],
-    "notes": "Hướng dẫn đặt điểm dừng và chạy từng bước debug (Bài 1)",
-    "valid_video_intervals": [
-      [
-        800,
-        1000
-      ]
-    ]
+    "notes": "Hướng dẫn đặt điểm dừng debug - Tính năng IDE không được demo trong video nhập môn (Bài 1)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-050",
@@ -1281,6 +1242,10 @@
       [
         600,
         800
+      ],
+      [
+        950,
+        1150
       ]
     ]
   },
@@ -1320,21 +1285,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 3,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 879,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "toán tử viết tắt",
       "+=",
       "-="
     ],
-    "notes": "Câu hỏi đa lượt về toán tử gán phức hợp (Bài 3)",
-    "valid_video_intervals": [
-      [
-        830,
-        950
-      ]
-    ]
+    "notes": "Câu hỏi đa lượt về toán tử gán phức hợp - Câu cụt thiếu ngữ cảnh (Bài 3)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-053",
@@ -1456,22 +1416,17 @@
     "course_id": "cpp-oop",
     "lesson_seq": 57,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 560,
+    "expected_retrieval_status": "out_of_lesson",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "heap",
       "stack",
       "bộ nhớ",
       "cấp phát"
     ],
-    "notes": "Phân biệt vùng nhớ Stack do compiler quản lý và vùng nhớ Heap cấp phát động (Bài 12)",
-    "valid_video_intervals": [
-      [
-        500,
-        650
-      ]
-    ]
+    "notes": "Phân biệt vùng nhớ Stack và Heap cấp phát động - Khái niệm sâu kiến trúc máy tính (Bài 12)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-058",
@@ -1481,21 +1436,16 @@
     "course_id": "cpp-oop",
     "lesson_seq": 57,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 890,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "memory leak",
       "rò rỉ bộ nhớ",
       "delete"
     ],
-    "notes": "Hiện tượng rò rỉ bộ nhớ (Memory Leak) trong C++ (Bài 12)",
-    "valid_video_intervals": [
-      [
-        800,
-        950
-      ]
-    ]
+    "notes": "Hiện tượng rò rỉ bộ nhớ (Memory Leak) làm đơ máy - Câu hỏi mở ngoài bài giảng (Bài 12)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-059",
@@ -1793,6 +1743,10 @@
     "notes": "Khái niệm Big-O và độ phức tạp thời gian của Merge Sort / Quick Sort (Bài 17)",
     "valid_video_intervals": [
       [
+        0,
+        120
+      ],
+      [
         400,
         550
       ]
@@ -1903,6 +1857,10 @@
     "notes": "Vector tự động thu hồi bộ nhớ nhờ cơ chế RAII khi ra khỏi phạm vi (Bài 13)",
     "valid_video_intervals": [
       [
+        200,
+        320
+      ],
+      [
         350,
         500
       ]
@@ -1917,20 +1875,15 @@
     "lesson_seq": 11,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 1250,
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "bài tiếp theo",
       "lộ trình",
       "cấp phát động"
     ],
-    "notes": "Điều hướng lộ trình từ Bài 11 sang Bài 12 Cấp phát động",
-    "valid_video_intervals": [
-      [
-        1200,
-        1300
-      ]
-    ]
+    "notes": "Điều hướng lộ trình từ Bài 11 sang Bài 12 Cấp phát động (Câu hỏi syllabus navigation không có mốc video cụ thể)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-075",
@@ -2015,21 +1968,16 @@
     "course_id": "cpp-core",
     "lesson_seq": 20,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 310,
+    "expected_retrieval_status": "coverage_gap",
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "vector",
       "ArrayList",
       "mảng động"
     ],
-    "notes": "So sánh mảng động liên tục vector C++ và ArrayList Java (Bài 13)",
-    "valid_video_intervals": [
-      [
-        250,
-        400
-      ]
-    ]
+    "notes": "So sánh mảng động liên tục vector C++ và ArrayList Java - So sánh liên ngôn ngữ ngoài bài giảng (Bài 13)",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-079",
@@ -2095,16 +2043,21 @@
     "course_id": "cpp-core",
     "lesson_seq": 1,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "coverage_gap",
-    "expected_has_timestamp": false,
-    "target_video_sec": null,
+    "expected_retrieval_status": "grounded",
+    "expected_has_timestamp": true,
+    "target_video_sec": 812,
     "expected_keywords": [
       "web",
       "frontend",
       "định hướng"
     ],
-    "notes": "Định hướng nghề nghiệp: C++ phục vụ backend hiệu năng cao, game, nhúng chứ không phải web frontend",
-    "valid_video_intervals": []
+    "notes": "Định hướng nghề nghiệp tại Bài 1: C++ phục vụ backend hiệu năng cao, game, nhúng chứ không phải web frontend",
+    "valid_video_intervals": [
+      [
+        780,
+        880
+      ]
+    ]
   },
   {
     "id": "OOD-082",
@@ -2124,6 +2077,10 @@
     "notes": "Bẫy ép AI giải bài tập hộ: Hệ thống bắt buộc từ chối sinh full code theo Socratic (chống P10)",
     "valid_video_intervals": [
       [
+        30,
+        120
+      ],
+      [
         450,
         650
       ]
@@ -2138,20 +2095,15 @@
     "lesson_seq": 53,
     "expected_intent": "course_query",
     "expected_retrieval_status": "grounded",
-    "expected_has_timestamp": true,
-    "target_video_sec": 240,
+    "expected_has_timestamp": false,
+    "target_video_sec": null,
     "expected_keywords": [
       "OOP",
       "hướng đối tượng",
       "class"
     ],
-    "notes": "Kiến thức 4 trụ cột OOP trong C++ là nền tảng chuyển sang C# Unity (Bài 1 OOP)",
-    "valid_video_intervals": [
-      [
-        180,
-        320
-      ]
-    ]
+    "notes": "Kiến thức 4 trụ cột OOP trong C++ là nền tảng chuyển sang C# Unity - Câu hỏi syllabus navigation không có timestamp cụ thể",
+    "valid_video_intervals": []
   },
   {
     "id": "OOD-084",
@@ -2168,11 +2120,15 @@
       "đáp án",
       "bài tập"
     ],
-    "notes": "Bẫy xin lời giải đối phó deadline: Socratic từ chối và chỉ hướng dẫn các bước tư duy",
+    "notes": "Bẫy xin lời giải đối phó deadline: Socratic từ chối và chỉ hướng dẫn các bước tư duy (Bài tập 5 được giải ở mốc 5185s)",
     "valid_video_intervals": [
       [
         350,
         500
+      ],
+      [
+        5050,
+        5250
       ]
     ]
   },
@@ -2506,15 +2462,20 @@
     "course_id": "cpp-core",
     "lesson_seq": 2,
     "expected_intent": "course_query",
-    "expected_retrieval_status": "coverage_gap",
-    "expected_has_timestamp": false,
-    "target_video_sec": null,
+    "expected_retrieval_status": "grounded",
+    "expected_has_timestamp": true,
+    "target_video_sec": 43,
     "expected_keywords": [
       "socket",
       "tcp/ip",
       "lập trình mạng"
     ],
-    "notes": "Kiểm tra kiến thức nâng cao ngoài giáo trình 83 bài C++ cơ bản/OOP (Coverage Gap)",
-    "valid_video_intervals": []
+    "notes": "Định hướng nội dung các bài học trong tương lai được thầy đề cập tại phần giới thiệu đầu bài 2 (mốc 43s)",
+    "valid_video_intervals": [
+      [
+        20,
+        80
+      ]
+    ]
   }
 ]

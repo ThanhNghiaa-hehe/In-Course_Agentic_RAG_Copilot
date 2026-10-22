@@ -1,0 +1,220 @@
+{
+  "metadata": {
+    "start_time": "2026-10-23 00:28:54",
+    "end_time": "2026-10-23 00:31:04",
+    "total_elapsed_sec": 82.69,
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "total_cases": 5,
+    "in_domain_cases": 1,
+    "ood_cases": 5,
+    "datasets": [
+      "ood_stress_test_dataset.json"
+    ]
+  },
+  "kpi_summary": {
+    "router_accuracy": 100.0,
+    "router_correct": 5,
+    "crag_precision": 100.0,
+    "crag_correct": 5,
+    "timestamp_safety": 60.0,
+    "timestamp_correct": 3,
+    "geval_socratic_score": null,
+    "ragas_faithfulness": null,
+    "ragas_relevance": null,
+    "ragas_context_precision": 100.0,
+    "ttft_p50_ms": 18509.83,
+    "ttft_p90_ms": 28322.23,
+    "ttft_mean_ms": 16986.08
+  },
+  "breakdown": {
+    "in_domain": {
+      "total": 1,
+      "router_acc": 0.0,
+      "crag_precision": 0.0,
+      "ts_safety": 0.0,
+      "geval_score": null,
+      "latency_p50": 0.0
+    },
+    "ood_stress": {
+      "total": 5,
+      "router_acc": 100.0,
+      "crag_precision": 100.0,
+      "ts_safety": 60.0,
+      "geval_score": null,
+      "latency_p50": 18059.83,
+      "group_stats": {
+        "compiler_error": {
+          "total": 5,
+          "router_ok": 5,
+          "status_ok": 5,
+          "ts_ok": 3
+        },
+        "student_vernacular": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "multiturn_dialog": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        },
+        "cross_language": {
+          "total": 0,
+          "router_ok": 0,
+          "status_ok": 0,
+          "ts_ok": 0
+        }
+      }
+    }
+  },
+  "latency_percentiles": {
+    "pipeline": {
+      "p50": 18059.83,
+      "p90": 27872.23,
+      "p99": 27872.23,
+      "mean": 16536.08,
+      "min": 5787.22,
+      "max": 27872.23
+    },
+    "ttft": {
+      "p50": 18509.83,
+      "p90": 28322.23,
+      "p99": 28322.23,
+      "mean": 16986.08,
+      "min": 6237.22,
+      "max": 28322.23
+    }
+  },
+  "cases": [
+    {
+      "id": "OOD-001",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Lỗi 'error: cout was not declared in this scope; did you mean std::cout?' khi compile code là bị gì vậy thầy?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 321,
+      "actual_sec": 321,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 20579.44,
+      "est_ttft_ms": 21029.44,
+      "geval_socratic_score": null,
+      "geval_verdict": "Chưa kích hoạt LLM Generation (--enable-llm=False)",
+      "violations": [],
+      "generated_answer": null
+    },
+    {
+      "id": "OOD-002",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Code em báo lỗi 'error: expected ; before } token' ở cuối hàm main thì sửa thế nào?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 359,
+      "actual_sec": 359,
+      "is_ts_ok": true,
+      "retrieved_chunks": 3,
+      "latency_ms": 18059.83,
+      "est_ttft_ms": 18509.83,
+      "geval_socratic_score": null,
+      "geval_verdict": "Chưa kích hoạt LLM Generation (--enable-llm=False)",
+      "violations": [],
+      "generated_answer": null
+    },
+    {
+      "id": "OOD-003",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Trình biên dịch báo 'error: redeclaration of int a with no linkage' nghĩa là sao?",
+      "lesson_seq": 2,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 1216,
+      "actual_sec": 47,
+      "is_ts_ok": false,
+      "retrieved_chunks": 3,
+      "latency_ms": 10381.66,
+      "est_ttft_ms": 10831.66,
+      "geval_socratic_score": null,
+      "geval_verdict": "Chưa kích hoạt LLM Generation (--enable-llm=False)",
+      "violations": [],
+      "generated_answer": null
+    },
+    {
+      "id": "OOD-004",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Gặp cảnh báo 'warning: division by zero' khi chạy phép chia 10 / 0 thì chương trình xử lý thế nào?",
+      "lesson_seq": 3,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "out_of_lesson",
+      "actual_status": "out_of_lesson",
+      "is_status_ok": true,
+      "expected_has_ts": false,
+      "actual_has_ts": false,
+      "target_sec": null,
+      "actual_sec": null,
+      "is_ts_ok": true,
+      "retrieved_chunks": 0,
+      "latency_ms": 5787.22,
+      "est_ttft_ms": 6237.22,
+      "geval_socratic_score": null,
+      "geval_verdict": "Chưa kích hoạt LLM Generation (--enable-llm=False)",
+      "violations": [],
+      "generated_answer": null
+    },
+    {
+      "id": "OOD-005",
+      "dataset": "ood_stress",
+      "ood_group": "compiler_error",
+      "query": "Em viết a + b = 10 thì bị báo 'error: lvalue required as left operand of assignment', lvalue là gì?",
+      "lesson_seq": 3,
+      "expected_intent": "course_query",
+      "actual_intent": "course_query",
+      "is_router_ok": true,
+      "expected_status": "grounded",
+      "actual_status": "grounded",
+      "is_status_ok": true,
+      "expected_has_ts": true,
+      "actual_has_ts": true,
+      "target_sec": 294,
+      "actual_sec": 402,
+      "is_ts_ok": false,
+      "retrieved_chunks": 1,
+      "latency_ms": 27872.23,
+      "est_ttft_ms": 28322.23,
+      "geval_socratic_score": null,
+      "geval_verdict": "Chưa kích hoạt LLM Generation (--enable-llm=False)",
+      "violations": [],
+      "generated_answer": null
+    }
+  ]
+}

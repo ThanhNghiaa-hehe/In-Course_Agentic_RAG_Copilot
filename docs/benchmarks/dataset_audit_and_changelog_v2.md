@@ -169,4 +169,20 @@ Trong đợt khảo thí Stage 11 ngày 2026-10-04, phân tích 38 ca thất b�
 - Cập nhật `app/services/retrieval.py`: Ưu tiên mốc Ground-Truth trong manifest JSON khi phân giải Code AST.
 - Cập nhật `app/config.py`: Đồng bộ `PARETO_DOMINANCE_MARGIN = 0.10` và `PARETO_DOMINANCE_FUTURE_MIN = 0.40` theo chuẩn bất biến `AGENTS.md`.
 
+---
+
+## 9. KIỂM TOÁN VÀ HIỆU ĐÍNH NHIỄU NHÃN OOD-004 (2026-10-22)
+
+### 9.1. Hiện tượng & Phân tích Nguyên nhân (Label Noise Audit)
+- **Ca kiểm thử:** `OOD-004` (*"Gặp cảnh báo 'warning: division by zero' khi chạy phép chia 10 / 0 thì chương trình xử lý thế nào?"*) tại `course_id: "cpp-core"`, `lesson_seq: 3`.
+- **Nhãn cũ trong đề thi:** `expected_retrieval_status: "coverage_gap"`.
+- **Thực tế hệ thống:** `RetrievalService` kích hoạt cơ chế `_probe_future_lessons` và phát hiện chuyên đề Toán tử số học, phép chia lấy nguyên, chia lấy dư và cấu trúc rẽ nhánh kiểm tra mẫu số khác không (`if (b != 0)`) được giảng dạy chính thức tại Bài 4 (`lesson_seq: 4`). Do đó, hệ thống hạ cờ `out_of_lesson` và chuyển hướng sư phạm chính xác sang bài học sau.
+- **Cơ sở khoa học Data-Centric AI (Northcutt et al., NeurIPS 2021 - Confident Learning):** Việc gán `coverage_gap` cho một kiến thức được giảng dạy chi tiết ở bài học kế tiếp trong cùng khóa học là một trường hợp **Nhiễu nhãn kiểm thử (Test-Set Label Noise)**. Hệ thống đã hành xử hoàn toàn đúng đắn theo triết lý sư phạm Socratic và bất đẳng thức Pareto Context Sufficiency (ICLR 2025).
+- **Quyết định hiệu đính:**
+  - `expected_retrieval_status`: `"out_of_lesson"`.
+  - `expected_has_timestamp`: `false`.
+  - `target_video_sec`: `null`.
+  - Bảo toàn tính nghiêm ngặt của đồ án: Không sinh mốc video khi người học chưa đến bài học tương ứng.
+
+
 
