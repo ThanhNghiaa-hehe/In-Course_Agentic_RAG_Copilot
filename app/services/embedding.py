@@ -50,6 +50,15 @@ class EmbeddingService:
         scores = list(self.reranker_model.rerank(query=query, documents=documents))
         return [float(s) for s in scores]
 
+    async def rerank_documents_async(self, query: str, documents: List[str]) -> List[float]:
+        """
+        Phiên bản bất đồng bộ (non-blocking) của rerank_documents.
+        Chạy tính toán Cross-Attention trong worker thread riêng qua asyncio.to_thread,
+        ngăn chặn hoàn toàn hiện tượng Event Loop Starvation làm tê liệt FastAPI backend.
+        """
+        import asyncio
+        return await asyncio.to_thread(self.rerank_documents, query, documents)
+
     def warmup(self) -> None:
         """
         Khởi động nhẹ ONNX session để loại bỏ độ trễ (cold-start latency) cho người dùng đầu tiên.
