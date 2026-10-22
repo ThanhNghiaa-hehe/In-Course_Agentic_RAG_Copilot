@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import List, Tuple, Optional
 import numpy as np
 from fastembed import TextEmbedding, SparseTextEmbedding
@@ -20,8 +21,20 @@ class EmbeddingService:
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Sparse: {settings.SPARSE_MODEL_NAME}...")
         self.sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME)
 
-        logger.info(f"[EmbeddingService] Khởi tạo mô hình Reranker Đa ngữ: {settings.RERANKER_MODEL_NAME}...")
-        self.reranker_model = TextCrossEncoder(settings.RERANKER_MODEL_NAME)
+        int8_model_dir = Path(__file__).resolve().parent.parent.parent / "data" / "models" / "jina-reranker-v2-int8"
+        int8_onnx_file = int8_model_dir / "onnx" / "model.onnx"
+        if getattr(settings, "USE_INT8_RERANKER", True) and int8_onnx_file.exists():
+            size_mb = int8_onnx_file.stat().st_size / (1024 * 1024)
+            logger.info(
+                f"[EmbeddingService] Kích hoạt mô hình Reranker INT8 (ONNX PTQ AVX-512 - {size_mb:.1f}MB) từ: {int8_model_dir}..."
+            )
+            self.reranker_model = TextCrossEncoder(
+                settings.RERANKER_MODEL_NAME,
+                specific_model_path=str(int8_model_dir)
+            )
+        else:
+            logger.info(f"[EmbeddingService] Khởi tạo mô hình Reranker Đa ngữ FP32: {settings.RERANKER_MODEL_NAME}...")
+            self.reranker_model = TextCrossEncoder(settings.RERANKER_MODEL_NAME)
         logger.info("[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công!")
 
     def embed_query_dense(self, query_text: str) -> List[float]:

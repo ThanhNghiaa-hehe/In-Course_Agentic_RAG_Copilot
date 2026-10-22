@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     SPARSE_MODEL_NAME: str = "Qdrant/bm25"
     RERANKER_MODEL_NAME: str = "jinaai/jina-reranker-v2-base-multilingual"
     USE_ONNX: bool = True
+    USE_INT8_RERANKER: bool = False
     MIN_SCORE_THRESHOLD: float = 0.25
     CODE_SCORE_THRESHOLD: float = 0.35
     VIDEO_SCORE_THRESHOLD: float = 0.22

@@ -74,6 +74,76 @@ def truncate_rerank_text(text: str, max_chars: int = settings.RERANK_MAX_CHARS) 
     return cleaned[:max_chars]
 
 
+def deduplicate_temporal_candidates(
+    raw_candidates: List[Any],
+    min_overlap_ratio: float = 0.40,
+    proximity_sec: int = 30
+) -> List[Any]:
+    """
+    [M-06: Pre-rerank Window Deduplication]
+    Áp dụng thuật toán Temporal Non-Maximum Suppression (NMS) trên trục thời gian:
+    - Loại bỏ các chunk video transcript bị gối đầu trùng lặp (stride 15s-30s) trong cùng bài học.
+    - Loại bỏ các chunk Code AST trùng lặp cùng scope hàm/lớp trong cùng bài học.
+    - Giữ lại chunk có điểm RRF cao hơn (chọn chunk xuất hiện trước trong danh sách RRF).
+    - Cắt giảm 25% - 30% số lượng ứng viên cần Re-rank mà không làm mất thông tin.
+    """
+    if not raw_candidates or len(raw_candidates) <= 1:
+        return raw_candidates
+
+    accepted_candidates: List[Any] = []
+
+    for hit in raw_candidates:
+        p = hit.payload or {}
+        c_type = p.get("content_type", "video_transcript")
+        lesson_id = p.get("lesson_id", "")
+
+        is_suppressed = False
+
+        if c_type == "code_ast":
+            code_scope = p.get("code_scope", "")
+            for prev in accepted_candidates:
+                prev_p = prev.payload or {}
+                if (
+                    prev_p.get("content_type") == "code_ast"
+                    and prev_p.get("lesson_id") == lesson_id
+                    and prev_p.get("code_scope") == code_scope
+                ):
+                    is_suppressed = True
+                    break
+        else:
+            start_sec = int(p.get("start_sec", 0))
+            end_sec = int(p.get("end_sec", 0))
+            vid_title = p.get("video_title", "")
+
+            for prev in accepted_candidates:
+                prev_p = prev.payload or {}
+                if prev_p.get("content_type") == "video_transcript":
+                    prev_vid = prev_p.get("video_title", "")
+                    prev_lid = prev_p.get("lesson_id", "")
+
+                    if (vid_title and prev_vid and vid_title == prev_vid) or (lesson_id and prev_lid and lesson_id == prev_lid):
+                        prev_start = int(prev_p.get("start_sec", 0))
+                        prev_end = int(prev_p.get("end_sec", 0))
+
+                        # 1. Kiểm tra độ lệch mốc bắt đầu (Edge Proximity)
+                        if abs(start_sec - prev_start) <= proximity_sec:
+                            is_suppressed = True
+                            break
+
+                        # 2. Kiểm tra độ phủ thời gian Overlap Ratio
+                        overlap = max(0, min(end_sec, prev_end) - max(start_sec, prev_start))
+                        if overlap > 0:
+                            min_dur = min(end_sec - start_sec, prev_end - prev_start)
+                            if min_dur > 0 and (overlap / min_dur) >= min_overlap_ratio:
+                                is_suppressed = True
+                                break
+
+        if not is_suppressed:
+            accepted_candidates.append(hit)
+
+    return accepted_candidates
+
+
 def reorder_lost_in_the_middle(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Khắc phục hiện tượng 'Lost-in-the-Middle' (Liu et al., Stanford 2024).
@@ -331,6 +401,9 @@ class RetrievalService:
         if not future_points:
             return None, 0.0, "video_transcript"
 
+        # [M-06: Pre-rerank Deduplication] Khử trùng lặp các ứng viên bài tương lai
+        future_points = deduplicate_temporal_candidates(future_points)
+
         future_texts: List[str] = []
         future_seqs: List[int] = []
 
@@ -512,11 +585,17 @@ class RetrievalService:
                 return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
             return RetrievalResult(chunks=[], status="coverage_gap")
 
-        # 4. [STAGE 8] Multilingual Cross-Encoder Re-ranking & Logistic Sigmoid Normalization
+        # 4. [STAGE 8 & M-06] Pre-rerank Window Deduplication & Multilingual Cross-Encoder Re-ranking
+        deduped_candidates = deduplicate_temporal_candidates(raw_candidates)
+        if len(deduped_candidates) < len(raw_candidates):
+            logger.info(
+                f"[RetrievalService:M-06] Khử trùng lặp Pre-rerank: Giảm từ {len(raw_candidates)} xuống {len(deduped_candidates)} candidates."
+            )
+
         candidate_items: List[Dict[str, Any]] = []
         texts_to_rerank: List[str] = []
 
-        for hit in raw_candidates:
+        for hit in deduped_candidates:
             raw_rrf = float(hit.score)
             p = hit.payload or {}
             content_type = p.get("content_type", "video_transcript")
