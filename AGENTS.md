@@ -73,10 +73,11 @@
 - **Data-Inspected Verification Invariant (Bất Biến Xác Thực Dữ Liệu Thực Tế):**
   - Tuyệt đối KHÔNG ĐƯỢC kết luận một tập dữ liệu, file transcript hoặc vector DB là "đã sạch", "đã hết lỗi" hoặc "đã chuẩn hóa hoàn toàn" chỉ dựa trên việc một script xử lý chạy thành công (Exit Code 0) hoặc log hiển thị tổng quan.
   - Trước khi đưa ra khẳng định với người dùng, AI BẮT BUỘC phải thực hiện thao tác kiểm chứng trực tiếp (`grep_search` hoặc `view_file`) trên các dòng/chunk cụ thể đang được đề cập.
-- **Benchmark Integrity & Anti-Snooping Invariant (Bất Biến Bảo Vệ Khảo Thí & Chống Lộ Đề):**
-  - Phân định rạch ròi giữa Sửa nhãn sai khách quan (Objective Label Bug Fixing - Data-Centric AI) và Vá mã nguồn theo đề thi (Test-Set Snooping / Prompt Cheating).
+- **Benchmark Integrity & Anti-Snooping Invariant (Bất Biến Bảo Vệ Khảo Thí & Chống Lộ Đề - Data-Centric AI Integrity):**
+  - Phân định rạch ròi giữa Sửa nhãn sai khách quan (Objective Label Bug Fixing - Data-Centric AI theo chuẩn Andrew Ng) và Vá mã nguồn theo đề thi (Test-Set Snooping / Prompt Cheating).
   - Nghiêm cấm tuyệt đối việc viết các Regex đặc thù chỉ để bắt một lỗi phiên âm cá biệt của một câu benchmark (`whack-a-mole`); không chỉnh sửa ngưỡng threshold toàn cục theo kiểu "vừa khít" với một ca kiểm thử cụ thể làm ảnh hưởng đến phân phối chung (Goodhart's Law).
-  - Mọi kiến trúc tối ưu hóa phải giải quyết một Lớp bài toán (Problem Class) tổng quát. Duy trì một tập kiểm thử giấu kín (Held-out Test Set) không can thiệp để bảo vệ tính khách quan khi bảo vệ trước Hội đồng Khoa học.
+  - Hệ thống tuân thủ nguyên tắc **Zero-Code Modification** khi làm sạch dữ liệu: Không thêm câu lệnh điều kiện hardcode cho câu hỏi kiểm thử.
+  - Mọi kiến trúc tối ưu hóa phải giải quyết một Lớp bài toán (Problem Class) tổng quát. Duy trì một tập kiểm thử giấu kín (Held-out Test Set - như bộ 145 câu Golden In-Domain) không can thiệp để bảo vệ tính khách quan, đo lường tỷ lệ tổng quát hóa (Generalization Rate) khi bảo vệ trước Hội đồng Khoa học.
 - **In-Course 3-Column Canvas Standard (Bất Biến Bố Cục 3 Cột Studio Học Tập):**
   - Mọi giao diện học tập tương tác (Playground/Studio) bắt buộc tuân thủ đúng thứ tự không gian 3 cột:
     1. *Cột 1 (Trái - 340px):* Khung Giáo trình & Thẩm định (Syllabus Panel) — Hiển thị toàn diện **đầy đủ 83 bài học** (không dùng mock đại diện), kèm bộ lọc tìm kiếm tức thời và AST Code Inspector (click-to-seek mốc video gắn với định nghĩa code).
@@ -104,8 +105,8 @@
   - Hệ thống tuân thủ triệt để ranh giới sư phạm:
     (a) CẤM TUYỆT ĐỐI sinh toàn bộ chương trình chạy được (không sinh khối `#include <iostream>`, `int main() { ... }`).
     (b) CHO PHÉP VÀ KHUYẾN KHÍCH cung cấp 1–3 dòng biểu thức cú pháp then chốt hoặc khung sườn logic khuyết (Code Skeleton kèm `// TODO` hoặc `/* ... */`) để học viên luôn có trực quan cú pháp mà vẫn bắt buộc phải tự tư duy hoàn thiện mã nguồn.
-- **Systemic Long-Term Optimization Initiatives (5 Sáng Kiến Tối Ưu Hệ Thống Dài Hạn Chuẩn Học Thuật - Zero Quick-Fix):**
-  - Nhằm giải quyết triệt để các thách thức về độ trễ vật lý (P90 latency) và khoảng cách ngữ nghĩa (Vocabulary Mismatch) mà không dùng bất kỳ giải pháp vá tạm (ad-hoc regex / slash threshold) nào, hệ thống quy hoạch 5 sáng kiến tối ưu hóa dài hạn:
+- **Systemic Long-Term Optimization Initiatives (6 Sáng Kiến Tối Ưu Hệ Thống Dài Hạn Chuẩn Học Thuật - Zero Quick-Fix):**
+  - Nhằm giải quyết triệt để các thách thức về độ trễ vật lý (P90 latency) và khoảng cách ngữ nghĩa (Vocabulary Mismatch) mà không dùng bất kỳ giải pháp vá tạm (ad-hoc regex / slash threshold) nào, hệ thống quy hoạch 6 sáng kiến tối ưu hóa dài hạn:
     1. *Re-ranker Computational Optimization (M-05a, M-05b, M-05c):*
        - (a) *Context Truncation $O(L^2)$ (M-05a):* Cắt tỉa văn bản ngữ cảnh $L \le 384$ tokens (~1.200 ký tự) cho Code AST và transcript trước khi đưa vào Cross-Encoder, giảm $(1024/384)^2 \approx 7.1\times$ thời gian tính toán ma trận Attention trên CPU.
        - (b) *Candidate Pruning (M-05a):* Hạ `FUTURE_PROBE_LIMIT` từ 18 xuống 6 chunks có điểm RRF cao nhất, giảm thêm $3\times$ khối lượng suy luận.
@@ -113,8 +114,16 @@
        - (d) *ONNX PTQ INT8 Acceleration (M-05c):* Áp dụng Post-Training Quantization (PTQ - Dettmers et al., NeurIPS 2022; Microsoft ONNX Runtime Core) trên mô hình `jina-reranker-v2-base-multilingual`, ép thời gian suy luận xuống < 150ms trên CPU.
     2. *Asynchronous Parallel Future Probing (M-04 - ĐÃ HOÀN TẤT 100%):* Ứng dụng mô hình Scatter-Gather Concurrency Pattern (chuẩn Google / ElasticSearch Federated Search) thông qua `asyncio.gather()`, phát song song luồng truy vấn bài hiện tại và tải trước bài tương lai, triệt tiêu hoàn toàn 1 lượt Network RTT (~250-350ms) tới Qdrant Cloud.
     3. *Compiler Error Semantic Bridge (Query Rewriting - ĐÃ HOÀN TẤT 100%):* Giải quyết bài toán kinh điển *Vocabulary Mismatch Problem (Bellcore)* giữa log lỗi tiếng Anh của GCC (`cannot bind non-const lvalue reference`) và văn phong sư phạm tiếng Việt trong video (`truyền tham chiếu hằng`) theo nghiên cứu của Ma et al. (EMNLP 2023) và HyDE (ACL 2023). Sử dụng mô hình ngôn ngữ dịch mã lỗi sang hành vi cú pháp sư phạm trước khi nhúng vector, TUYỆT ĐỐI KHÔNG dùng Regex bắt lỗi.
-    4. *Pre-rerank Window Deduplication & Edge Proximity (M-06):* Khử trùng lặp các chunk transcript gối đầu (stride 15-30s) trước khi re-rank; chuyển cụm Qdrant từ Sydney (Úc) về Docker container nội bộ hoặc vùng Singapore GCP (Network Topology Co-location), cắt giảm Network Round-Trip Time (RTT) từ 200–300ms xuống < 5ms.
+    4. *Pre-rerank Window Deduplication & Edge Proximity (M-06 - ĐÃ HOÀN TẤT 100%):* Khử trùng lặp các chunk transcript gối đầu (Temporal Non-Maximum Suppression với IoU $\ge 0.40$ hoặc $\Delta t \le 30\text{s}$) trước khi re-rank; chuyển cụm Qdrant từ Sydney (Úc) về Docker container nội bộ hoặc vùng Singapore GCP (Network Topology Co-location), cắt giảm Network Round-Trip Time (RTT) từ 200–300ms xuống < 5ms.
     5. *Data-Centric Code AST Enrichment:* Áp dụng phương pháp luận Data-Centric AI (DCAI - Andrew Ng, Stanford) bổ sung mã nguồn C++ mẫu có cấu trúc Tree-sitter AST cho các bài học OOP trọng tâm còn thiếu (nạp chồng toán tử, kế thừa, đa hình), bảo đảm bất đẳng thức bảo vệ Pareto ($S_{\text{future}} \ge 0.52$) thay vì sửa code hay hạ ngưỡng threshold.
+    6. *Multi-Point Video Synchronization & Socratic Chaptering (M-07 - Quy hoạch thực hiện sau):*
+       - Mở rộng hỗ trợ Multi-Grounding Timestamps (tối đa 2–3 mốc) dựa trên các chunk không trùng lặp lọt vào Top-$k$ sau thuật toán Temporal NMS (M-06).
+       - *Nguyên tắc Sư phạm 3 tầng (Tri-Timestamp Budget):*
+         + *Mốc 1 (Theory Anchor):* Giới thiệu bản chất lý thuyết & cú pháp chuẩn.
+         + *Mốc 2 (Code AST Anchor):* Minh họa mã nguồn thực thi từ phân đoạn gõ code của giảng viên.
+         + *Mốc 3 (Diagnostics Anchor):* Cảnh báo lỗi cú pháp / runtime thường gặp khi làm bài.
+       - *Giao thức hiển thị:* Mỗi thẻ `<timestamp sec="xxx">mm:ss</timestamp>` bắt buộc có nhãn mô tả ngữ cảnh ngắn gọn trong ngoặc đơn, ngăn chặn triệt để hiện tượng AI Slop / Timestamp Spam.
+       - *Giao thức Full-stack:* Frontend `fe-codelearning` tự động chuyển đổi toàn bộ thẻ `<timestamp>` thành các nút bấm click-to-seek tương tác đồng bộ trực tiếp với Google YouTube IFrame API.
 
 
 
