@@ -845,18 +845,18 @@
 
     <!-- 6 KPI Metric Cards Grid -->
     <div class="kpi-grid">
-      <!-- KPI 1: Faithfulness -->
+      <!-- KPI 1: No-Hallucination Rate & Dual-Metric Grounding -->
       <div class="kpi-card">
         <div class="kpi-top">
-          <span class="kpi-label">RAGAS Faithfulness</span>
+          <span class="kpi-label">No-Hallucination Rate</span>
           <div class="kpi-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           </div>
         </div>
-        <div class="kpi-val" id="kpi-faithfulness">--%</div>
+        <div class="kpi-val" id="kpi-no-hallucination">--%</div>
         <div class="kpi-footer">
-          <span class="badge badge-pass" id="badge-faithfulness">PASS</span>
-          <span style="color: var(--text-dim);">Chuẩn &ge; 85%</span>
+          <span class="badge badge-pass" id="badge-no-hallucination">PASS</span>
+          <span id="sub-faithfulness" style="color: var(--text-dim); font-size: 11px;">Strict: --%</span>
         </div>
       </div>
 
@@ -1141,6 +1141,16 @@
       <div class="drawer-code-box" id="drawer-violations-box">Không phát hiện vi phạm quy tắc Socratic.</div>
     </div>
 
+    <div id="drawer-ragas-section" style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border-light);">
+      <div class="drawer-section-title">Thẩm định RAGAS Triad & No-Hallucination (M-08 NLI)</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; margin-bottom: 6px;">
+        <div>No-Hallucination: <strong class="mono" id="drawer-ragas-nohal">--%</strong></div>
+        <div>Strict Grounding: <strong class="mono" id="drawer-ragas-faith">--%</strong></div>
+        <div>Answer Relevance: <strong class="mono" id="drawer-ragas-relev">--%</strong></div>
+        <div>Mệnh đề NLI (E/N/C): <strong class="mono" id="drawer-ragas-claims">--</strong></div>
+      </div>
+    </div>
+
     <div style="margin-top: auto;">
       <button class="btn btn-primary" style="width: 100%; justify-content: center;" id="drawer-copy-json-btn">
         <!-- Lucide Copy SVG -->
@@ -1158,7 +1168,9 @@
     let selectedCase = null;
 
     // DOM Elements
-    const elKpiFaithfulness = document.getElementById('kpi-faithfulness');
+    const elKpiNoHallucination = document.getElementById('kpi-no-hallucination');
+    const elBadgeNoHallucination = document.getElementById('badge-no-hallucination');
+    const elSubFaithfulness = document.getElementById('sub-faithfulness');
     const elKpiRelevance = document.getElementById('kpi-relevance');
     const elKpiGeval = document.getElementById('kpi-geval');
     const elKpiTimestamp = document.getElementById('kpi-timestamp');
@@ -1268,13 +1280,32 @@
       elMetaRuntime.textContent = `${meta.start_time || 'Gần đây'} (${meta.total_elapsed_sec || '--'}s)`;
 
       // Render KPI Cards (Chỉ hiển thị số liệu thực tế, tuyệt đối không dùng số giả lập)
+      const hasRagasNoHal = (kpi.ragas_no_hallucination !== undefined && kpi.ragas_no_hallucination !== null);
       const hasRagasFaith = (kpi.ragas_faithfulness !== undefined && kpi.ragas_faithfulness !== null);
       const hasRagasRelev = (kpi.ragas_relevance !== undefined && kpi.ragas_relevance !== null);
       const hasGeval = (kpi.geval_socratic_score !== undefined && kpi.geval_socratic_score !== null);
       const hasTsSafe = (kpi.timestamp_safety !== undefined && kpi.timestamp_safety !== null) || (kpi.timestamp_accuracy !== undefined && kpi.timestamp_accuracy !== null);
       const hasRouterAcc = (kpi.router_accuracy !== undefined && kpi.router_accuracy !== null);
 
-      const faith = hasRagasFaith ? `${kpi.ragas_faithfulness}%` : '--%';
+      // KPI 1: No-Hallucination Rate (chính) & Strict In-Course Grounding (phụ)
+      if (hasRagasNoHal) {
+        elKpiNoHallucination.textContent = `${kpi.ragas_no_hallucination}%`;
+        elBadgeNoHallucination.textContent = kpi.ragas_no_hallucination >= 80 ? 'PASS' : 'WARN';
+        elBadgeNoHallucination.className = kpi.ragas_no_hallucination >= 80 ? 'badge badge-pass' : 'badge badge-warn';
+        elSubFaithfulness.textContent = `Strict: ${hasRagasFaith ? kpi.ragas_faithfulness + '%' : '--%'}`;
+      } else if (hasRagasFaith) {
+        // Tương thích ngược khi tệp JSON chưa chạy offline NLI
+        elKpiNoHallucination.textContent = `${kpi.ragas_faithfulness}%`;
+        elBadgeNoHallucination.textContent = kpi.ragas_faithfulness >= 85 ? 'PASS' : 'WARN';
+        elBadgeNoHallucination.className = kpi.ragas_faithfulness >= 85 ? 'badge badge-pass' : 'badge badge-warn';
+        elSubFaithfulness.textContent = `Strict: ${kpi.ragas_faithfulness}%`;
+      } else {
+        elKpiNoHallucination.textContent = '--%';
+        elBadgeNoHallucination.textContent = 'Cần Offline Eval';
+        elBadgeNoHallucination.className = 'badge badge-neutral';
+        elSubFaithfulness.textContent = 'Strict: --%';
+      }
+
       const relev = hasRagasRelev ? `${kpi.ragas_relevance}%` : '--%';
       const geval = hasGeval ? `${kpi.geval_socratic_score}%` : '--%';
       const tsSafe = hasTsSafe ? `${kpi.timestamp_safety ?? kpi.timestamp_accuracy}%` : '--%';
@@ -1282,24 +1313,12 @@
       const ttftP50 = kpi.ttft_p50_ms !== undefined ? `${kpi.ttft_p50_ms} ms` : (kpi.avg_latency_ms ? `${Math.round(kpi.avg_latency_ms)} ms` : '-- ms');
       const ttftP90 = kpi.ttft_p90_ms !== undefined ? `P90: ${kpi.ttft_p90_ms} ms` : 'P90: -- ms';
 
-      elKpiFaithfulness.textContent = faith;
       elKpiRelevance.textContent = relev;
       elKpiGeval.textContent = geval;
       elKpiTimestamp.textContent = tsSafe;
       elKpiTtft.textContent = ttftP50;
       elBadgeTtft.textContent = ttftP90;
       elKpiRouter.textContent = routerAcc;
-
-      // Cập nhật trạng thái badge chân card để phản ánh trung thực
-      if (elBadgeFaithfulness) {
-        if (!hasRagasFaith) {
-          elBadgeFaithfulness.textContent = 'Cần LLM Eval';
-          elBadgeFaithfulness.className = 'badge badge-neutral';
-        } else {
-          elBadgeFaithfulness.textContent = kpi.ragas_faithfulness >= 85 ? 'PASS' : 'WARN';
-          elBadgeFaithfulness.className = kpi.ragas_faithfulness >= 85 ? 'badge badge-pass' : 'badge badge-warn';
-        }
-      }
 
       if (elBadgeRelevance) {
         if (!hasRagasRelev) {
@@ -1474,6 +1493,26 @@
       elDrawerGevalScore.textContent = gscore;
       elDrawerGevalVerdict.textContent = c.geval_verdict || 'Tuân thủ chuẩn Socratic';
       elDrawerGevalVerdict.className = `badge ${(c.geval_socratic_score === undefined || c.geval_socratic_score >= 0.85) ? 'badge-pass' : 'badge-warn'}`;
+
+      // Thẩm định RAGAS Triad NLI M-08
+      const elDrawerRagasNohal = document.getElementById('drawer-ragas-nohal');
+      const elDrawerRagasFaith = document.getElementById('drawer-ragas-faith');
+      const elDrawerRagasRelev = document.getElementById('drawer-ragas-relev');
+      const elDrawerRagasClaims = document.getElementById('drawer-ragas-claims');
+
+      if (elDrawerRagasNohal) {
+        if (c.ragas_no_hallucination !== undefined && c.ragas_no_hallucination !== null) {
+          elDrawerRagasNohal.textContent = `${(c.ragas_no_hallucination * 100).toFixed(1)}%`;
+          elDrawerRagasFaith.textContent = `${(c.ragas_faithfulness * 100).toFixed(1)}%`;
+          elDrawerRagasRelev.textContent = `${(c.ragas_relevance * 100).toFixed(1)}%`;
+          elDrawerRagasClaims.textContent = `${c.ragas_grounded_claims || 0}E / ${c.ragas_neutral_claims || 0}N / ${c.ragas_contradiction_claims || 0}C`;
+        } else {
+          elDrawerRagasNohal.textContent = '--%';
+          elDrawerRagasFaith.textContent = '--%';
+          elDrawerRagasRelev.textContent = '--%';
+          elDrawerRagasClaims.textContent = 'Chưa chạy M-08';
+        }
+      }
 
       if (c.violations && c.violations.length > 0) {
         elDrawerViolationsBox.textContent = c.violations.join('\n');
