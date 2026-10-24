@@ -119,8 +119,8 @@ class SocraticOutputGuardrail:
         """
         Kiểm tra và hiệu chỉnh văn bản đầu ra của LLM:
         - Trích xuất các khối mã nguồn ```cpp ... ```
-        - Kiểm tra xem có hàm nào được triển khai hoàn chỉnh logic (> 6 câu lệnh thân hàm)
-          mà không có hướng dẫn gợi mở Socratic.
+        - Phát hiện và triệt tiêu vi phạm P10 (sinh trọn vẹn chương trình có #include và int main()).
+        - Cắt tỉa các hàm giải hoàn chỉnh (> 6 câu lệnh thân hàm) thành khung gợi mở Socratic Scaffolding.
         - Trả về (was_modified, safe_text).
         """
         if not text or "```" not in text:
@@ -136,36 +136,74 @@ class SocraticOutputGuardrail:
 
         for match in matches:
             code_snippet = match.group(1)
-            # Kiểm tra nhanh: Nếu code chỉ là vài dòng minh họa cú pháp (< 4 dòng code thật), bỏ qua
-            lines = [l for l in code_snippet.splitlines() if l.strip() and not l.strip().startswith("//")]
-            if len(lines) <= 4:
-                continue
+            original_code = code_snippet
+            current_code = code_snippet
 
-            # Nếu có Tree-sitter: Phân tích cú pháp cây AST
+            # 1. Kiểm tra chữ ký chương trình hoàn chỉnh chạy ngay được (Vi phạm P10)
+            has_main = bool(re.search(r"\b(?:int|void)\s+main\s*\(", current_code))
+            has_include = bool(re.search(r"#include\s*[<\"]", current_code))
+
+            # 2. Xử lý qua Tree-sitter C++ AST (nếu có parser)
             if self._parser is not None:
                 try:
-                    tree = self._parser.parse(code_snippet.encode("utf-8"))
+                    tree = self._parser.parse(current_code.encode("utf-8"))
                     root = tree.root_node
 
-                    # Đếm số lượng hàm có thân lệnh đầy đủ (function_definition)
+                    # Duyệt các định nghĩa hàm (function_definition)
                     func_nodes = [c for c in root.children if c.type == "function_definition"]
                     for fnode in func_nodes:
-                        # Kiểm tra compound_statement (khối thân hàm { ... })
+                        func_text = current_code.encode("utf-8")[fnode.start_byte:fnode.end_byte].decode("utf-8")
+                        is_main_func = bool(re.search(r"\b(?:int|void)\s+main\s*\(", func_text))
+
                         body_node = next((c for c in fnode.children if c.type == "compound_statement"), None)
-                        if body_node and len(body_node.children) >= 8:
-                            # Phát hiện hàm giải hoàn chỉnh -> Cắt tỉa thân hàm bảo vệ Socratic
-                            body_bytes = code_snippet.encode("utf-8")[body_node.start_byte:body_node.end_byte].decode("utf-8")
-                            socratic_body = (
-                                "{\n    // [SOCRATIC SCAFFOLDING]: Hãy đọc kỹ gợi ý bên trên và tự triển khai logic tại đây!\n"
-                                "    // Gợi ý: Kiểm tra điều kiện đầu vào trước khi thực hiện tính toán.\n"
-                                "    // TODO: Học viên tự hoàn thiện phần thân hàm này.\n}"
-                            )
-                            new_code = code_snippet.replace(body_bytes, socratic_body, 1)
-                            new_text = new_text.replace(code_snippet, new_code, 1)
-                            modified = True
-                            logger.info("[SocraticOutputGuardrail] Đã can thiệp cắt tỉa code giải hộ thành Socratic Scaffolding.")
+                        if body_node:
+                            # Nếu là hàm main khi có include, HOẶC hàm có logic hoàn chỉnh (>= 8 AST children)
+                            if (is_main_func and has_include) or len(body_node.children) >= 8:
+                                body_bytes = current_code.encode("utf-8")[body_node.start_byte:body_node.end_byte].decode("utf-8")
+                                socratic_body = (
+                                    "{\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n"
+                                    "    // Gợi ý: Hãy đọc kỹ giải thích tư duy và mã giả bên trên để tự hoàn thiện logic!\n"
+                                    "    // TODO: Học viên tự viết mã thực thi vào đây.\n"
+                                    "    return 0;\n}"
+                                ) if is_main_func else (
+                                    "{\n    // [SOCRATIC SCAFFOLDING]: Hãy đọc kỹ gợi ý bên trên và tự triển khai logic tại đây!\n"
+                                    "    // Gợi ý: Kiểm tra điều kiện đầu vào trước khi thực hiện tính toán.\n"
+                                    "    // TODO: Học viên tự hoàn thiện phần thân hàm này.\n}"
+                                )
+                                current_code = current_code.replace(body_bytes, socratic_body, 1)
+
+                    # Khử thẻ #include nếu có hàm main đi kèm (ngăn chặn copy-run toàn bộ chương trình)
+                    if has_main and has_include:
+                        current_code = re.sub(
+                            r"#include\s*[<\"].*?[>\"]",
+                            "// [Lưu ý]: Học viên tự khai báo thư viện cần thiết",
+                            current_code
+                        )
+
                 except Exception as err:
-                    logger.debug(f"[SocraticOutputGuardrail] Parse tree-sitter lỗi nhẹ ({err}), giữ nguyên văn bản.")
+                    logger.debug(f"[SocraticOutputGuardrail] Parse tree-sitter lỗi nhẹ ({err}), chuyển sang Heuristic.")
+
+            # 3. Fallback Heuristics khi Tree-sitter không hoạt động hoặc không bắt được
+            if has_main and has_include:
+                if "#include" in current_code:
+                    current_code = re.sub(
+                        r"#include\s*[<\"].*?[>\"]",
+                        "// [Lưu ý]: Học viên tự khai báo thư viện cần thiết",
+                        current_code
+                    )
+                if "TODO" not in current_code:
+                    main_body_pattern = re.compile(r"((?:int|void)\s+main\s*\([^)]*\)\s*\{)(.*?)(\})", re.DOTALL)
+                    current_code = main_body_pattern.sub(
+                        r"\1\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n"
+                        r"    // TODO: Học viên tự triển khai mã nguồn vào đây theo gợi ý bên trên.\n"
+                        r"    return 0;\n\3",
+                        current_code
+                    )
+
+            if current_code != original_code:
+                new_text = new_text.replace(original_code, current_code, 1)
+                modified = True
+                logger.info("[SocraticOutputGuardrail] Đã can thiệp cắt tỉa code giải hộ thành Socratic Scaffolding.")
 
         return modified, new_text
 

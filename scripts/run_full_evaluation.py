@@ -36,6 +36,7 @@ from app.services.qdrant import get_async_qdrant_client, close_async_qdrant_clie
 from app.services.curriculum import get_curriculum_service
 from app.services.chat import ChatService
 from app.services.chat_graph import crag_grader_node, context_assembly_node, AgentState
+from app.agent.guardrails import get_socratic_output_guardrail
 from app.schemas.chat import ChatRequest
 from app.config import settings
 
@@ -387,6 +388,10 @@ async def run_full_evaluation(
                                 continue
                             answer_tokens.append(token)
                     generated_answer_text = "".join(answer_tokens)
+
+                    # Production Guardrail Sync: Kiểm duyệt đầu ra qua SocraticOutputGuardrail (Tree-sitter AST)
+                    socratic_guard = get_socratic_output_guardrail()
+                    _, generated_answer_text = socratic_guard.audit_output(generated_answer_text)
 
                 geval_score, geval_verdict, violations = evaluate_geval_heuristic(
                     query, generated_answer_text, is_course_query

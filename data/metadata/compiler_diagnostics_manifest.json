@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Bảng tri thức chẩn đoán lỗi trình biên dịch (GCC/Clang/MSVC) ánh xạ sang hành vi cú pháp sư phạm tiếng Việt phục vụ Semantic Query Rewriting (HyDE / EMNLP 2023).",
+  "diagnostics": [
+    {
+      "category": "redeclaration_conflict",
+      "patterns": [
+        "redeclaration of",
+        "redefinition of",
+        "previously declared here",
+        "with no linkage"
+      ],
+      "pedagogical_vietnamese": "quy tắc khai báo biến, cú pháp kiểu dữ liệu và tên biến, không được khai báo hai biến trùng tên nhau trong cùng phạm vi",
+      "target_concepts": ["quy tắc khai báo biến", "tên biến trùng lặp", "kiểu dữ liệu và biến"]
+    },
+    {
+      "category": "lvalue_assignment",
+      "patterns": [
+        "lvalue required as left operand",
+        "lvalue required",
+        "cannot bind non-const lvalue",
+        "assignment of read-only"
+      ],
+      "pedagogical_vietnamese": "toán tử gán dấu bằng, quy tắc gán giá trị cho biến, vế trái phép gán bắt buộc phải là một biến chứa dữ liệu chứ không thể là biểu thức tính toán",
+      "target_concepts": ["toán tử gán", "gán giá trị cho biến", "quy tắc phép gán dấu bằng"]
+    },
+    {
+      "category": "undeclared_identifier",
+      "patterns": [
+        "was not declared in this scope",
+        "not declared in this scope",
+        "did you mean std::",
+        "undeclared identifier"
+      ],
+      "pedagogical_vietnamese": "sử dụng biến hoặc hàm chưa được khai báo hoặc thiếu using namespace std tiền tố thư viện",
+      "target_concepts": ["namespace std", "cout cin", "khai báo thư viện"]
+    },
+    {
+      "category": "syntax_missing_token",
+      "patterns": [
+        "expected ; before",
+        "expected ';' before",
+        "expected primary-expression",
+        "expected '}'",
+        "expected ')'"
+      ],
+      "pedagogical_vietnamese": "cú pháp lệnh thiếu dấu chấm phẩy kết thúc câu lệnh hoặc thiếu dấu đóng ngoặc",
+      "target_concepts": ["dấu chấm phẩy", "cú pháp câu lệnh", "kết thúc lệnh"]
+    },
+    {
+      "category": "division_by_zero",
+      "patterns": [
+        "division by zero",
+        "division-by-zero"
+      ],
+      "pedagogical_vietnamese": "phép chia cho số 0 trong toán tử số học không hợp lệ",
+      "target_concepts": ["toán tử số học", "phép chia", "chia cho 0"]
+    },
+    {
+      "category": "overloaded_ambiguous",
+      "patterns": [
+        "call of overloaded",
+        "is ambiguous",
+        "ambiguous overload"
+      ],
+      "pedagogical_vietnamese": "gọi hàm nạp chồng bị mâu thuẫn kiểu dữ liệu, cần ép kiểu tham số",
+      "target_concepts": ["nạp chồng hàm", "overload", "ép kiểu cmath pow"]
+    },
+    {
+      "category": "switch_datatype_constraint",
+      "patterns": [
+        "switch quantity not an integer",
+        "not an integer in switch"
+      ],
+      "pedagogical_vietnamese": "lệnh switch case chỉ chấp nhận biến kiểu số nguyên hoặc ký tự, không chấp nhận số thực float",
+      "target_concepts": ["câu lệnh switch case", "ràng buộc kiểu số nguyên"]
+    },
+    {
+      "category": "break_outside_loop",
+      "patterns": [
+        "break statement not within loop or switch",
+        "break statement not within loop"
+      ],
+      "pedagogical_vietnamese": "câu lệnh break đặt sai vị trí bên ngoài vòng lặp for while hoặc switch",
+      "target_concepts": ["lệnh break", "vòng lặp for while", "thoát vòng lặp"]
+    },
+    {
+      "category": "array_out_of_bounds_segfault",
+      "patterns": [
+        "segmentation fault",
+        "core dumped",
+        "array subscript is above array bounds",
+        "invalid types int[int] for array subscript",
+        "subscripted value is not an array"
+      ],
+      "pedagogical_vietnamese": "truy cập mảng vượt quá kích thước chỉ số phần tử, lỗi tràn mảng bộ nhớ",
+      "target_concepts": ["mảng một chiều", "chỉ số phần tử mảng", "tràn mảng"]
+    },
+    {
+      "category": "variable_length_array_init",
+      "patterns": [
+        "variable-sized object",
+        "may not be initialized"
+      ],
+      "pedagogical_vietnamese": "mảng có kích thước biến động không được khởi tạo danh sách giá trị mặc định",
+      "target_concepts": ["khởi tạo mảng", "kích thước mảng"]
+    },
+    {
+      "category": "pointer_type_conversion",
+      "patterns": [
+        "cannot convert",
+        "in assignment",
+        "invalid conversion from",
+        "assignment to",
+        "makes pointer from integer without a cast"
+      ],
+      "pedagogical_vietnamese": "gán sai kiểu con trỏ và giá trị biến, thiếu toán tử lấy địa chỉ & hoặc giải con trỏ *",
+      "target_concepts": ["con trỏ", "địa chỉ con trỏ", "toán tử và giải tham chiếu"]
+    },
+    {
+      "category": "null_pointer_dereference",
+      "patterns": [
+        "dereferencing null pointer",
+        "null pointer",
+        "dangling pointer"
+      ],
+      "pedagogical_vietnamese": "giải tham chiếu con trỏ null hoặc con trỏ rác chưa cấp phát bộ nhớ",
+      "target_concepts": ["con trỏ null", "cấp phát bộ nhớ con trỏ"]
+    },
+    {
+      "category": "class_struct_member_access",
+      "patterns": [
+        "request for member",
+        "which is of non-class type",
+        "has no member named",
+        "private within this context"
+      ],
+      "pedagogical_vietnamese": "truy cập thuộc tính phương thức của struct hoặc class sai cú pháp toán tử chấm hoặc phạm vi private",
+      "target_concepts": ["struct", "class OOP", "truy cập thuộc tính"]
+    },
+    {
+      "category": "stray_character",
+      "patterns": [
+        "stray '\\",
+        "stray '`'",
+        "stray character in program"
+      ],
+      "pedagogical_vietnamese": "lỗi ký tự lạ hoặc ký tự đặc biệt do sao chép mã nguồn từ word hoặc trang web",
+      "target_concepts": ["ký tự lạ trong code", "cú pháp c++"]
+    }
+  ]
+}
