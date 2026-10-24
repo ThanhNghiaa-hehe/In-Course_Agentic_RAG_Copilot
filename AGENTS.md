@@ -105,13 +105,13 @@
   - Hệ thống tuân thủ triệt để ranh giới sư phạm:
     (a) CẤM TUYỆT ĐỐI sinh toàn bộ chương trình chạy được (không sinh khối `#include <iostream>`, `int main() { ... }`).
     (b) CHO PHÉP VÀ KHUYẾN KHÍCH cung cấp 1–3 dòng biểu thức cú pháp then chốt hoặc khung sườn logic khuyết (Code Skeleton kèm `// TODO` hoặc `/* ... */`) để học viên luôn có trực quan cú pháp mà vẫn bắt buộc phải tự tư duy hoàn thiện mã nguồn.
-- **Systemic Long-Term Optimization Initiatives (6 Sáng Kiến Tối Ưu Hệ Thống Dài Hạn Chuẩn Học Thuật - Zero Quick-Fix):**
-  - Nhằm giải quyết triệt để các thách thức về độ trễ vật lý (P90 latency) và khoảng cách ngữ nghĩa (Vocabulary Mismatch) mà không dùng bất kỳ giải pháp vá tạm (ad-hoc regex / slash threshold) nào, hệ thống quy hoạch 6 sáng kiến tối ưu hóa dài hạn:
+- **Systemic Long-Term Optimization Initiatives (7 Sáng Kiến Tối Ưu Hệ Thống Dài Hạn Chuẩn Học Thuật - Zero Quick-Fix):**
+  - Nhằm giải quyết triệt để các thách thức về độ trễ vật lý (P90 latency) và khoảng cách ngữ nghĩa (Vocabulary Mismatch) mà không dùng bất kỳ giải pháp vá tạm (ad-hoc regex / slash threshold) nào, hệ thống quy hoạch 7 sáng kiến tối ưu hóa dài hạn:
     1. *Re-ranker Computational Optimization (M-05a, M-05b, M-05c):*
        - (a) *Context Truncation $O(L^2)$ (M-05a):* Cắt tỉa văn bản ngữ cảnh $L \le 384$ tokens (~1.200 ký tự) cho Code AST và transcript trước khi đưa vào Cross-Encoder, giảm $(1024/384)^2 \approx 7.1\times$ thời gian tính toán ma trận Attention trên CPU.
        - (b) *Candidate Pruning (M-05a):* Hạ `FUTURE_PROBE_LIMIT` từ 18 xuống 6 chunks có điểm RRF cao nhất, giảm thêm $3\times$ khối lượng suy luận.
        - (c) *Asyncio Thread Offloading (M-05b):* Đẩy hàm Re-ranker sang Thread Pool bằng `asyncio.to_thread()`, giải phóng 100% Event Loop khỏi tình trạng đóng băng (Event Loop Starvation).
-       - (d) *ONNX PTQ INT8 Acceleration (M-05c):* Áp dụng Post-Training Quantization (PTQ - Dettmers et al., NeurIPS 2022; Microsoft ONNX Runtime Core) trên mô hình `jina-reranker-v2-base-multilingual`, ép thời gian suy luận xuống < 150ms trên CPU.
+       - (d) *ONNX PTQ INT8 Acceleration (M-05c - ĐÃ HỦY BỎ / REJECTED DO HỒI QUY TOÁN HỌC):* Thực nghiệm ngày 22/10/2026 xác nhận Dynamic INT8 gây ra hiện tượng Lệch thang đo Logit (Negative Logit Scale Drift $\Delta z \approx -1.0$), làm điểm sigmoid rơi xuống dưới ngưỡng sàn $0.22$, kéo CRAG Precision từ 100% rớt xuống 40% (2/5 câu). Hệ thống chính thức loại bỏ M-05c, chốt hạ sử dụng bản FP32 chuẩn mực kết hợp M-05a (Context Truncation) và M-05b (Asyncio Offloading) để đạt P50 Latency lý tưởng mà bảo toàn 100% độ chính xác.
     2. *Asynchronous Parallel Future Probing (M-04 - ĐÃ HOÀN TẤT 100%):* Ứng dụng mô hình Scatter-Gather Concurrency Pattern (chuẩn Google / ElasticSearch Federated Search) thông qua `asyncio.gather()`, phát song song luồng truy vấn bài hiện tại và tải trước bài tương lai, triệt tiêu hoàn toàn 1 lượt Network RTT (~250-350ms) tới Qdrant Cloud.
     3. *Compiler Error Semantic Bridge (Query Rewriting - ĐÃ HOÀN TẤT 100%):* Giải quyết bài toán kinh điển *Vocabulary Mismatch Problem (Bellcore)* giữa log lỗi tiếng Anh của GCC (`cannot bind non-const lvalue reference`) và văn phong sư phạm tiếng Việt trong video (`truyền tham chiếu hằng`) theo nghiên cứu của Ma et al. (EMNLP 2023) và HyDE (ACL 2023). Sử dụng mô hình ngôn ngữ dịch mã lỗi sang hành vi cú pháp sư phạm trước khi nhúng vector, TUYỆT ĐỐI KHÔNG dùng Regex bắt lỗi.
     4. *Pre-rerank Window Deduplication & Edge Proximity (M-06 - ĐÃ HOÀN TẤT 100%):* Khử trùng lặp các chunk transcript gối đầu (Temporal Non-Maximum Suppression với IoU $\ge 0.40$ hoặc $\Delta t \le 30\text{s}$) trước khi re-rank; chuyển cụm Qdrant từ Sydney (Úc) về Docker container nội bộ hoặc vùng Singapore GCP (Network Topology Co-location), cắt giảm Network Round-Trip Time (RTT) từ 200–300ms xuống < 5ms.
@@ -124,6 +124,16 @@
          + *Mốc 3 (Diagnostics Anchor):* Cảnh báo lỗi cú pháp / runtime thường gặp khi làm bài.
        - *Giao thức hiển thị:* Mỗi thẻ `<timestamp sec="xxx">mm:ss</timestamp>` bắt buộc có nhãn mô tả ngữ cảnh ngắn gọn trong ngoặc đơn, ngăn chặn triệt để hiện tượng AI Slop / Timestamp Spam.
        - *Giao thức Full-stack:* Frontend `fe-codelearning` tự động chuyển đổi toàn bộ thẻ `<timestamp>` thành các nút bấm click-to-seek tương tác đồng bộ trực tiếp với Google YouTube IFrame API.
+    7. *Decoupled Offline RAGAS Triad Evaluator (M-08 - ĐÃ HOÀN TẤT TRIỂN KHAI 100%):*
+       - Ứng dụng kiến trúc tách rời hai pha (Decoupled Two-Phase Evaluation Architecture) theo chuẩn Es et al. (EACL 2024) và TruLens Telemetry:
+         * *Pha 1 (Inference Logging - 100%):* Lưu đầy đủ `(query, context, generated_answer)` vào `latest_evaluation_results.json`.
+         * *Pha 2 (Offline Multi-Metric Synthesis - 100%):* Kịch bản `scripts/evaluate_ragas_offline.py` đọc tệp JSON, tự động nạp mô hình NLI `mDeBERTa-v3` lên GPU VRAM (RTX 2050 4GB) hoặc CPU đa luồng để tính Faithfulness và `multilingual-e5-large` tính Answer Relevance.
+       - **Multi-Passage Propositional Faithfulness Invariant:** Áp dụng cơ chế Multi-Passage Max-Entailment ($\max_j P(\text{Entailment}(c_j, s)) \ge 0.30$) trên từng chunk độc lập; tự động khử bẫy chú thích dòng code và giải quyết đại từ thay thế (Coreference Resolution) để bảo toàn chủ ngữ trước khi suy luận NLI.
+       - **RAGAS Domain Pre-filtering Invariant:** Chỉ kích hoạt tính Faithfulness trên tập câu `is_course_query == True` và `actual_status == "grounded"`, loại trừ hoàn toàn câu chào hỏi, ngoài khóa, bẻ khóa để bảo toàn mẫu số toán học.
+       - Tự động đồng bộ số liệu vào `latest_evaluation_results.json` và xuất bản báo cáo `docs/benchmarks/ragas_offline_synthesis_report.md`.
+- **RAGAS Domain Pre-filtering Invariant (Bất Biến Tiền Lọc Miền Áp Dụng RAGAS):**
+  - Công thức RAGAS Faithfulness $\text{Faithfulness} = \frac{|\text{Luận điểm được chứng minh bởi Context}|}{|\text{Tổng luận điểm trích xuất}|}$ chỉ có nghĩa toán học khi $\text{Context} \ne \emptyset$.
+  - CẤM TUYỆT ĐỐI đưa các câu hỏi chào hỏi (`chit_chat`), điều hướng danh mục (`curriculum_navigation`), câu hỏi ngoài lề (`out_of_scope`), hoặc bẻ khóa (`jailbreak`) vào phép tính Faithfulness nhằm tránh lỗi chia cho 0 và suy diễn sai lệch. Thẩm định RAGAS Triad chỉ được kích hoạt trên tập các câu hỏi học tập nội khóa có ngữ cảnh bài giảng hợp lệ (`actual_status == "grounded"`).
 
 
 

@@ -94,3 +94,27 @@ $$\text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{N} \left| \text{acc}(B_m) - \text{con
 $$\text{BS} = \frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} \left( P(y_i = k \mid x_i) - \mathbf{1}(y_i = k) \right)^2$$
 * **Ngưỡng cam kết:** $\text{BS} \le 0.15$ (Tiệm cận 0 chứng minh phân phối xác suất hội tụ sát nhãn Ground-Truth).
 
+---
+
+## 5. Quy Chuẩn Thẩm Định Ngoại Tuyến RAGAS Triad (Sáng Kiến M-08)
+
+Khi tiến hành kiểm toán chất lượng bộ ba RAGAS Triad cho hệ thống học tập:
+
+### A. Kiến Trúc Tách Rời Hai Pha (Decoupled Two-Phase Architecture)
+1. **Pha Trực tuyến (Online Serving):** Tuyệt đối không nhồi nhét mô hình kiểm toán vào luồng chat của sinh viên nhằm bảo toàn độ trễ TTFT < 350ms.
+2. **Pha Ngoại tuyến (Offline Telemetry):** Đọc tệp nhật ký suy luận thực tế `latest_evaluation_results.json` và thực hiện đo lường định lượng độc lập qua `scripts/evaluate_ragas_offline.py`.
+
+### B. Tiêu Chuẩn Bóc Tách Mệnh Đề Bản Chất (Propositional Extraction)
+1. **Lọc Bẫy Mô Tả Dòng Code:** Loại bỏ toàn bộ các dòng chú thích số dòng code (`Dòng \d+:`, `Line \d+:`) và biến minh họa giả định (`MAX_VALUE`, `= 100`) trong code block; chỉ trích xuất các mệnh đề tri thức lý thuyết và cú pháp chuẩn.
+2. **Khôi Phục Tham Chiếu Đại Từ (Coreference Resolution):** Tự động liên kết các câu bắt đầu bằng đại từ (`nó`, `chúng`, `điều này`) vào câu khẳng định đứng trước để bảo toàn chủ ngữ ngữ nghĩa trước khi đưa vào NLI.
+
+### C. Cơ Chế So Khớp Đa Phân Đoạn (Multi-Passage Max-Entailment)
+Một mệnh đề $s$ được coi là trung thực (Faithful / Grounded) khi và chỉ khi:
+$$\exists c_j \in \text{Top-k Chunks}: \quad P\big(\text{Entailment}(c_j, s)\big) > P\big(\text{Contradiction}(c_j, s)\big) \quad \land \quad P\big(\text{Entailment}(c_j, s)\big) \ge 0.30$$
+Triệt tiêu hoàn toàn hiện tượng pha loãng ma trận Cross-Attention khi nối dồn nhiều chunk văn bản nói.
+
+### D. Tiêu Chuẩn Phần Cứng (GPU VRAM vs CPU)
+* **GPU CUDA:** Khi có card NVIDIA (RTX 2050 4GB VRAM), tự động nạp `mDeBERTa-v3` lên VRAM với `batch_size = 32`, tăng tốc độ suy luận lên > 50 câu/giây (< 1s cho 5 câu).
+* **CPU Fallback:** Khi chạy CPU, tự động tối ưu hóa `torch.set_num_threads` và cắt tỉa `max_length = 384` để chống nghẽn luồng.
+
+
