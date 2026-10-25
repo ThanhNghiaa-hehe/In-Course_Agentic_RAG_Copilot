@@ -42,6 +42,10 @@ class StreamMetadataEvent(BaseModel):
     retrieval_status: Literal["grounded", "out_of_lesson", "coverage_gap", "fast_path"] = "grounded"
     is_low_confidence: bool = False
     target_lesson_seq: Optional[int] = None
+    auto_seek_sec: Optional[int] = Field(
+        default=None,
+        description="Mốc giây video để Frontend tự động nhảy (seekTo) ngay lập tức tại miligiây thứ 350 (Ưu tiên 2: Fast-Path Progressive Streaming)"
+    )
     sources: List[Dict[str, Any]] = Field(
         default_factory=list,
         description="Danh sách nguồn trích dẫn phục vụ hiển thị source cards trên UI"

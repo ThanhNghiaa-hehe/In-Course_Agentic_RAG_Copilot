@@ -201,6 +201,15 @@ class ChatService:
             return
 
         # 3. Gửi sự kiện 'metadata' đầu tiên cho Frontend UI từ kết quả đồ thị
+        # [Ưu tiên 2: Fast-Path Progressive Streaming] Bắn ngay mốc video auto_seek_sec ở miligiây thứ ~350
+        # để Frontend tự động seek ngay lập tức tới đoạn video bài giảng tương ứng, triệt tiêu độ trễ cảm nhận.
+        suggested_ts = [
+            SuggestedTimestamp(**ts) for ts in final_state.get("suggested_timestamps", [])
+        ]
+        auto_seek_sec = None
+        if final_state["retrieval_status"] == "grounded" and suggested_ts:
+            auto_seek_sec = suggested_ts[0].sec
+
         meta_event = StreamMetadataEvent(
             session_id=session_id,
             turn_count=turn_count,
@@ -211,9 +220,8 @@ class ChatService:
             retrieval_status=final_state["retrieval_status"],
             is_low_confidence=final_state["is_low_confidence"],
             target_lesson_seq=final_state["target_lesson_seq"],
-            suggested_timestamps=[
-                SuggestedTimestamp(**ts) for ts in final_state.get("suggested_timestamps", [])
-            ],
+            auto_seek_sec=auto_seek_sec,
+            suggested_timestamps=suggested_ts,
             sources=final_state.get("sources", [])
         )
         yield {

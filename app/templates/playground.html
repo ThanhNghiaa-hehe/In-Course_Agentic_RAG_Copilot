@@ -1442,6 +1442,16 @@
                     sessionStorage.setItem('copilot_session_id', meta.session_id);
                   }
                   renderMetadataThought(thoughtBody, meta);
+
+                  // [Ưu tiên 2: Fast-Path Progressive Streaming]
+                  // Tự động seek video ngay tức thì tại miligiây thứ ~350 khi nhận được mốc video Ground-Truth
+                  if (meta.auto_seek_sec !== null && meta.auto_seek_sec !== undefined) {
+                    seekVideo(meta.auto_seek_sec);
+                    const mins = Math.floor(meta.auto_seek_sec / 60);
+                    const secs = meta.auto_seek_sec % 60;
+                    const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                    showToast(`⚡ Fast-Path: Tự động nhảy video đến mốc ${formatted}`);
+                  }
                 } catch(e) {}
               } else if (curEvent === 'delta') {
                 try {
