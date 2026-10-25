@@ -1392,6 +1392,7 @@
       const currentSid = getOrCreateSessionId();
       const startTime = performance.now();
       let firstTokenTime = null;
+      let actionLatencyMs = null;
       let tokenCount = 0;
       let currentMetadata = null;
 
@@ -1446,6 +1447,7 @@
                   // [Ưu tiên 2: Fast-Path Progressive Streaming]
                   // Tự động seek video ngay tức thì tại miligiây thứ ~350 khi nhận được mốc video Ground-Truth
                   if (meta.auto_seek_sec !== null && meta.auto_seek_sec !== undefined) {
+                    actionLatencyMs = Math.round(performance.now() - startTime);
                     seekVideo(meta.auto_seek_sec);
                     const mins = Math.floor(meta.auto_seek_sec / 60);
                     const secs = meta.auto_seek_sec % 60;
@@ -1475,7 +1477,11 @@
         const endTime = performance.now();
         const ttftMs = firstTokenTime ? Math.round(firstTokenTime - startTime) : Math.round(endTime - startTime);
         const totalMs = Math.round(endTime - startTime);
-        const tokPerSec = (totalMs > 0 && tokenCount > 0) ? (tokenCount / (totalMs / 1000)).toFixed(1) : '0.0';
+        // Chuẩn công nghiệp: Tốc độ sinh token thực tế = tokenCount / thời gian sinh sau TTFT
+        const genTimeSec = (totalMs - ttftMs) / 1000;
+        const tokPerSec = (genTimeSec > 0.05 && tokenCount > 0)
+          ? (tokenCount / genTimeSec).toFixed(1)
+          : ((totalMs > 0 && tokenCount > 0) ? (tokenCount / (totalMs / 1000)).toFixed(1) : '0.0');
 
         const turnIndex = sessionTelemetryLog.length;
         const telemetryEntry = {
@@ -1486,6 +1492,7 @@
           lesson_seq: currentLesson.seq,
           prompt: text,
           latency: {
+            action_latency_ms: actionLatencyMs,
             ttft_ms: ttftMs,
             total_ms: totalMs,
             token_count: tokenCount,
@@ -1529,9 +1536,10 @@
       bar.className = 'telemetry-bar';
       bar.innerHTML = `
         <div class="telemetry-metrics">
+          ${entry.latency.action_latency_ms !== null && entry.latency.action_latency_ms !== undefined ? `<span class="telem-chip ttft-fast" title="Thời gian nhảy video tự động (Time-to-First-Action - P2)">🎯 Video Seek: ${entry.latency.action_latency_ms}ms</span>` : ''}
           <span class="telem-chip ${ttftClass}" title="Thời gian chờ token đầu tiên (Time-to-First-Token)">⚡ TTFT: ${ttft}ms</span>
           <span class="telem-chip" title="Tổng thời gian xử lý và truyền phát">⏳ ${(entry.latency.total_ms / 1000).toFixed(2)}s</span>
-          <span class="telem-chip" title="Tốc độ sinh token">🚀 ${entry.latency.tokens_per_sec} tok/s</span>
+          <span class="telem-chip" title="Tốc độ sinh token thực tế">🚀 ${entry.latency.tokens_per_sec} tok/s</span>
           <span class="telem-chip" style="background:#e0e7ff;color:#3730a3;" title="Trạng thái CRAG">${entry.crag.retrieval_status}</span>
         </div>
         <button class="telem-copy-btn" id="telem-btn-${turnIndex}" onclick="copyTurnTelemetry(${turnIndex})" title="Sao chép toàn bộ JSON Telemetry & Debug của lượt này">

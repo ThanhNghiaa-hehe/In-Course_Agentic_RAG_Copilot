@@ -327,8 +327,11 @@ async def run_full_evaluation(
                         current_lesson_seq=lesson_seq,
                         course_id=course_id
                     )
+                    # Cập nhật TTFT thực tế đo được cho Fast-path
+                    ttft_estimates_ms[-1] = (time.perf_counter() - t0) * 1000.0
                 elif not is_course_query:
                     generated_answer_text = getattr(router_res, "direct_response", None) or "Xin chào! Tôi có thể giúp gì cho bạn về khóa học lập trình C++?"
+                    ttft_estimates_ms[-1] = (time.perf_counter() - t0) * 1000.0
                 else:
                     # 2. Pipeline Context Re-use: Tái sử dụng 100% ngữ cảnh đã truy xuất từ Lượt 1
                     # Triệt tiêu lần chạy Re-ranker CPU thứ hai, tiết kiệm 10-12 giây lãng phí mỗi câu hỏi
@@ -367,7 +370,7 @@ async def run_full_evaluation(
                         {"role": "user", "content": eval_state["user_message_content"]}
                     ]
 
-                    # Gọi trực tiếp vLLM Remote Stream (Kaggle GPU)
+                    # Gọi trực tiếp vLLM Remote Stream (Kaggle GPU) và bấm giờ TTFT thực tế
                     stream_response = await chat_service.client.chat.completions.create(
                         model=settings.LLM_MODEL_NAME,
                         messages=messages,
@@ -379,10 +382,16 @@ async def run_full_evaluation(
                         stream=True
                     )
 
+                    actual_first_token_time = None
                     answer_tokens: List[str] = []
                     async for chunk in stream_response:
                         if chunk.choices and chunk.choices[0].delta.content:
                             token = chunk.choices[0].delta.content
+                            # Đo thời gian nhận token đầu tiên thực tế
+                            if actual_first_token_time is None:
+                                actual_first_token_time = time.perf_counter()
+                                actual_ttft_ms = (actual_first_token_time - t0) * 1000.0
+                                ttft_estimates_ms[-1] = actual_ttft_ms
                             # Deterministic Decoding Guardrail: Chặn sinh thẻ timestamp nếu không phải grounded hoặc không có chunks
                             if (actual_status != "grounded" or not eval_state["retrieved_chunks"]) and ("<timestamp" in token or "</timestamp>" in token):
                                 continue
@@ -429,7 +438,8 @@ async def run_full_evaluation(
             "is_ts_ok": is_ts_ok,
             "retrieved_chunks": retrieved_chunks_count,
             "latency_ms": round(elapsed_ms, 2),
-            "est_ttft_ms": round(est_ttft_ms, 2),
+            "ttft_ms": round(ttft_estimates_ms[-1], 2),
+            "is_ttft_measured": bool(enable_geval_llm),
             "geval_socratic_score": geval_score,
             "geval_verdict": geval_verdict,
             "violations": violations,
