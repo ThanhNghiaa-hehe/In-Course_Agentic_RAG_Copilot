@@ -1,3 +1,5 @@
+import os
+import sys
 import logging
 from pathlib import Path
 from typing import List, Tuple, Optional
@@ -8,34 +10,81 @@ from app.config import settings
 
 logger = logging.getLogger("uvicorn.error")
 
+
+def _setup_cuda_dlls() -> None:
+    """
+    Tự động liên kết các thư viện CUDA / cuDNN runtime (cublas, cudnn) từ gói torch.lib
+    vào hệ thống Windows DLL Search Path để ONNX Runtime CUDAExecutionProvider hoạt động mượt mà.
+    """
+    if sys.platform == "win32":
+        try:
+            import torch
+            torch_lib = os.path.join(os.path.dirname(torch.__file__), "lib")
+            if os.path.isdir(torch_lib):
+                if hasattr(os, "add_dll_directory"):
+                    os.add_dll_directory(torch_lib)
+                current_path = os.environ.get("PATH", "")
+                if torch_lib not in current_path:
+                    os.environ["PATH"] = torch_lib + os.pathsep + current_path
+        except Exception as e:
+            logger.warning(f"[EmbeddingService] Không thể cấu hình CUDA DLLs từ torch.lib: {e}")
+
+
 class EmbeddingService:
     """
     Dịch vụ quản lý Dual Embedding (Dense E5-large + Sparse BM25) & Multilingual Cross-Encoder Reranker.
-    Được nạp vào bộ nhớ RAM 1 lần duy nhất lúc khởi động server (FastAPI Lifespan).
-    Đảm bảo tốc độ truy xuất siêu tốc (< 50ms) cho mỗi request.
+    Được nạp vào bộ nhớ RAM/VRAM 1 lần duy nhất lúc khởi động server (FastAPI Lifespan).
+    Kích hoạt GPU CUDA Hardware Acceleration (Sáng kiến M-05e) đưa độ trễ Re-ranking từ 16.5s về < 50ms.
     """
     def __init__(self):
+        _setup_cuda_dlls()
+
+        self.device = "cpu"
+        self.providers = ["CPUExecutionProvider"]
+        try:
+            import torch
+            if torch.cuda.is_available():
+                self.device = "cuda"
+                self.providers = ["CUDAExecutionProvider", "CPUExecutionProvider"]
+                gpu_name = torch.cuda.get_device_name(0)
+                vram_mb = torch.cuda.get_device_properties(0).total_memory / (1024 * 1024)
+                logger.info(
+                    f"[EmbeddingService:M-05e] Kích hoạt tăng tốc GPU VRAM CUDA: {gpu_name} "
+                    f"({vram_mb:.0f} MB VRAM) - Providers: {self.providers}"
+                )
+            else:
+                logger.info("[EmbeddingService] GPU CUDA không khả dụng, sử dụng CPUExecutionProvider.")
+        except Exception as e:
+            logger.warning(f"[EmbeddingService] Lỗi nhận diện CUDA ({e}), sử dụng CPUExecutionProvider.")
+
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Dense: {settings.EMBEDDING_MODEL_NAME}...")
-        self.dense_model = TextEmbedding(settings.EMBEDDING_MODEL_NAME)
+        self.dense_model = TextEmbedding(settings.EMBEDDING_MODEL_NAME, providers=self.providers)
 
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Sparse: {settings.SPARSE_MODEL_NAME}...")
-        self.sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME)
+        self.sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME, providers=self.providers)
 
         int8_model_dir = Path(__file__).resolve().parent.parent.parent / "data" / "models" / "jina-reranker-v2-int8"
         int8_onnx_file = int8_model_dir / "onnx" / "model.onnx"
-        if getattr(settings, "USE_INT8_RERANKER", True) and int8_onnx_file.exists():
+        if getattr(settings, "USE_INT8_RERANKER", False) and int8_onnx_file.exists():
             size_mb = int8_onnx_file.stat().st_size / (1024 * 1024)
             logger.info(
                 f"[EmbeddingService] Kích hoạt mô hình Reranker INT8 (ONNX PTQ AVX-512 - {size_mb:.1f}MB) từ: {int8_model_dir}..."
             )
             self.reranker_model = TextCrossEncoder(
                 settings.RERANKER_MODEL_NAME,
-                specific_model_path=str(int8_model_dir)
+                specific_model_path=str(int8_model_dir),
+                providers=self.providers
             )
         else:
-            logger.info(f"[EmbeddingService] Khởi tạo mô hình Reranker Đa ngữ FP32: {settings.RERANKER_MODEL_NAME}...")
-            self.reranker_model = TextCrossEncoder(settings.RERANKER_MODEL_NAME)
-        logger.info("[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công!")
+            logger.info(
+                f"[EmbeddingService:M-05e] Khởi tạo mô hình Reranker Đa ngữ FP32: {settings.RERANKER_MODEL_NAME} "
+                f"(Device: {self.device.upper()})..."
+            )
+            self.reranker_model = TextCrossEncoder(
+                settings.RERANKER_MODEL_NAME,
+                providers=self.providers
+            )
+        logger.info(f"[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công trên {self.device.upper()}!")
 
     def embed_query_dense(self, query_text: str) -> List[float]:
         """

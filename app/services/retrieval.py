@@ -401,8 +401,9 @@ class RetrievalService:
         if not future_points:
             return None, 0.0, "video_transcript"
 
-        # [M-06: Pre-rerank Deduplication] Khử trùng lặp các ứng viên bài tương lai
+        # [M-06: Pre-rerank Deduplication & M-05a: Candidate Pruning] Khử trùng lặp và giới hạn ứng viên bài tương lai
         future_points = deduplicate_temporal_candidates(future_points)
+        future_points = future_points[:settings.FUTURE_PROBE_LIMIT]
 
         future_texts: List[str] = []
         future_seqs: List[int] = []
