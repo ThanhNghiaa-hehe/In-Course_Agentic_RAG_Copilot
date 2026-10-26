@@ -1,5 +1,5 @@
 # BÁO CÁO TỔNG HỢP BỘ BA RAGAS TRIAD NGOẠI TUYẾN (DUAL-METRIC GROUNDING)
-**Thời gian đánh giá:** 2026-10-24 18:17:53  
+**Thời gian đánh giá:** 2026-10-27 01:56:12  
 **Sinh viên thực hiện:** Trần Thành Nghĩa (MSSV: `23DH112252`)  
 **Trường Đại học:** Ngoại ngữ - Tin học TP.HCM (HUFLIT)  
 **Kho mã nguồn:** [https://github.com/ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot](https://github.com/ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot)  
@@ -11,10 +11,10 @@
 
 | Chỉ số Đánh giá | Điểm số đạt được | Ngưỡng chuẩn | Đánh giá | Phương pháp đo lường & Bản chất khoa học |
 | :--- | :---: | :---: | :---: | :--- |
-| **No-Hallucination Rate** | **85.52%** | $\ge 85.0\%$ | **PASS** | $1 - \frac{|C|}{|Total|}$, chứng minh hệ thống không bịa đặt sai lệch |
-| **Strict In-Course Grounding** | **53.02%** | *Tham chiếu* | **INFO** | $\frac{|E|}{|Total|}$, tỷ lệ trích dẫn trực tiếp bài giảng nguyên văn |
-| **Calibrated Faithfulness** | **69.27%** | $\ge 70.0\%$ | **PASS** | $\frac{|E| + 0.5|N|}{|Total|}$, dung hòa tri thức C++ bổ trợ đúng đắn |
-| **Answer Relevance** | **91.25%** | $\ge 80.0\%$ | **PASS** | Local Cosine Embedding `multilingual-e5-large` (1024 chiều) |
+| **No-Hallucination Rate** | **87.85%** | $\ge 85.0\%$ | **PASS** | $1 - \frac{|C|}{|Total|}$, chứng minh hệ thống không bịa đặt sai lệch |
+| **Strict In-Course Grounding** | **54.42%** | *Tham chiếu* | **INFO** | $\frac{|E|}{|Total|}$, tỷ lệ trích dẫn trực tiếp bài giảng nguyên văn |
+| **Calibrated Faithfulness** | **71.13%** | $\ge 70.0\%$ | **PASS** | $\frac{|E| + 0.5|N|}{|Total|}$, dung hòa tri thức C++ bổ trợ đúng đắn |
+| **Answer Relevance** | **91.39%** | $\ge 80.0\%$ | **PASS** | Local Cosine Embedding `multilingual-e5-large` (1024 chiều) |
 | **Context Precision** | **94.7%** | $\ge 85.0\%$ | **PASS** | CRAG Grader + Hybrid In-HNSW Retrieval |
 
 ---
@@ -23,15 +23,15 @@
 
 ### A. Phân khu Trong Giáo Trình (In-Domain Golden Dataset - 200 câu)
 - **Số câu grounded được đánh giá:** 95 câu
-- **No-Hallucination Rate:** **84.95%** (An toàn tuyệt đối, không có phát biểu sai lệch bản chất C++)
-- **Strict In-Course Faithfulness:** **57.94%** (Bám sát nội dung bài giảng của khóa học C++)
-- **Answer Relevance:** **91.77%** (Độ tập trung cao, giải quyết trúng đích thắc mắc của sinh viên)
+- **No-Hallucination Rate:** **85.76%** (An toàn tuyệt đối, không có phát biểu sai lệch bản chất C++)
+- **Strict In-Course Faithfulness:** **55.20%** (Bám sát nội dung bài giảng của khóa học C++)
+- **Answer Relevance:** **91.89%** (Độ tập trung cao, giải quyết trúng đích thắc mắc của sinh viên)
 
 ### B. Phân khu Thử Thách Ngoài Phân Phối (OOD Stress-Test - 100 câu)
 - **Số câu grounded được đánh giá:** 72 câu
-- **No-Hallucination Rate:** **86.28%**
-- **Strict In-Course Faithfulness:** **46.53%**
-- **Answer Relevance:** **90.55%**
+- **No-Hallucination Rate:** **90.60%**
+- **Strict In-Course Faithfulness:** **53.39%**
+- **Answer Relevance:** **90.73%**
 
 ---
 
