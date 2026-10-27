@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import re
 import uuid
 from typing import AsyncGenerator, Dict, Any, List, Optional
 from openai import AsyncOpenAI
@@ -12,6 +13,42 @@ from app.agent.guardrails import get_session_rate_limiter
 from app.schemas.chat import ChatRequest, SuggestedTimestamp, StreamMetadataEvent
 
 logger = logging.getLogger("uvicorn.error")
+
+# ==============================================================================
+# TRI-LAYER ANTI-CJK TOKEN LEAKAGE GUARDRAIL (TẦNG 2 - BACKEND STREAMING)
+# ==============================================================================
+CJK_REPLACEMENTS = {
+    "大约从": "khoảng từ ",
+    "大约": "khoảng ",
+    "从": "từ ",
+    "到": " đến ",
+    "浮点数": "số thực",
+    "整数": "số nguyên",
+    "常量": "hằng số",
+    "变量": "biến",
+    "指针": "con trỏ",
+    "引用": "tham chiếu",
+    "。": ". ",
+    "（": " (",
+    "）": ") ",
+    "：": ": ",
+    "、": ", "
+}
+
+CJK_REGEX = re.compile(r'[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f]')
+
+def sanitize_cjk_tokens(text: str) -> str:
+    """
+    Bắt và loại trừ 100% token chữ Hán hoặc dấu câu CJK từ mô hình Qwen 2.5 Coder.
+    """
+    if not text:
+        return text
+    for zh, vi in CJK_REPLACEMENTS.items():
+        if zh in text:
+            text = text.replace(zh, vi)
+    if CJK_REGEX.search(text):
+        text = CJK_REGEX.sub('', text)
+    return text
 
 
 class ChatService:
@@ -201,14 +238,13 @@ class ChatService:
             return
 
         # 3. Gửi sự kiện 'metadata' đầu tiên cho Frontend UI từ kết quả đồ thị
-        # [Ưu tiên 2: Fast-Path Progressive Streaming] Bắn ngay mốc video auto_seek_sec ở miligiây thứ ~350
-        # để Frontend tự động seek ngay lập tức tới đoạn video bài giảng tương ứng, triệt tiêu độ trễ cảm nhận.
+        # [Zero Auto-Seek Invariant - Phương Án A]:
+        # Tuyệt đối CẤM cơ chế tự ý giật màn hình hoặc ép video tự tua ở client.
+        # auto_seek_sec được cố định là None; 100% việc tua video do học viên chủ động bấm nút.
         suggested_ts = [
             SuggestedTimestamp(**ts) for ts in final_state.get("suggested_timestamps", [])
         ]
         auto_seek_sec = None
-        if final_state["retrieval_status"] == "grounded" and suggested_ts:
-            auto_seek_sec = suggested_ts[0].sec
 
         meta_event = StreamMetadataEvent(
             session_id=session_id,
@@ -260,6 +296,11 @@ class ChatService:
 
                     # Deterministic Decoding Guardrail: Chặn sinh thẻ timestamp nếu không phải grounded hoặc không có chunks
                     if (retrieval_status != "grounded" or not retrieved_chunks) and ("<timestamp" in token or "</timestamp>" in token):
+                        continue
+
+                    # Tri-Layer Anti-CJK Token Leakage Guardrail (Tầng 2 - Backend Streaming Sanitizer)
+                    token = sanitize_cjk_tokens(token)
+                    if not token:
                         continue
 
                     full_assistant_response += token
