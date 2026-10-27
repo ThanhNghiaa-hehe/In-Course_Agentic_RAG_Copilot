@@ -14,6 +14,7 @@ class SuggestedTimestamp(BaseModel):
     sec: int = Field(..., ge=0)
     label: str = Field(..., description="Định dạng mm:ss")
     title: str = Field(..., description="Mô tả ngắn gọn nội dung giảng viên nói")
+    lesson_seq: Optional[int] = Field(default=None, description="Bài học sở hữu mốc video này (hỗ trợ Cross-Lesson Video Alignment)")
 
 
 class RouterClassification(BaseModel):

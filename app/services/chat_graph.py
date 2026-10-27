@@ -202,14 +202,16 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
                 suggested_timestamps.append({
                     "sec": chunk["start_sec"],
                     "label": chunk.get("start_label", f"{chunk['start_sec']//60:02d}:{chunk['start_sec']%60:02d}"),
-                    "title": chunk.get("video_title", "Đoạn video bài giảng liên quan")
+                    "title": chunk.get("video_title", "Đoạn video bài giảng liên quan"),
+                    "lesson_seq": chunk.get("lesson_seq")
                 })
             elif chunk.get("content_type") == "code_ast" and chunk.get("approx_video_sec") is not None:
                 v_sec = int(chunk["approx_video_sec"])
                 suggested_timestamps.append({
                     "sec": v_sec,
                     "label": f"{v_sec//60:02d}:{v_sec%60:02d}",
-                    "title": f"Bài giảng giải thích cú pháp [{chunk.get('code_scope', 'Code AST')}]"
+                    "title": f"Bài giảng giải thích cú pháp [{chunk.get('code_scope', 'Code AST')}]",
+                    "lesson_seq": chunk.get("lesson_seq")
                 })
 
             sources.append({

@@ -1234,9 +1234,27 @@
       });
     }
 
-    function seekVideo(seconds) {
+    function seekVideo(seconds, targetLessonSeq) {
+      const secNum = Number(seconds);
+      // Cross-Lesson Playlist Alignment: Nếu mốc video thuộc bài học khác, tự chuyển video trong playlist trước
+      if (targetLessonSeq && currentLesson && parseInt(targetLessonSeq) !== currentLesson.seq) {
+        const currentList = activeCourse === 'cpp-oop' ? CPP_OOP_LESSONS : CPP_CORE_LESSONS;
+        const target = currentList.find(l => l.seq === parseInt(targetLessonSeq));
+        if (target) {
+          selectLesson(target);
+          showToast(`🎬 Đã chuyển sang ${target.title} @ ${Math.floor(secNum/60)}:${String(secNum%60).padStart(2,'0')}`);
+          setTimeout(() => {
+            if (ytPlayer && ytPlayer.seekTo) {
+              ytPlayer.seekTo(secNum, true);
+              ytPlayer.playVideo();
+            }
+          }, 700);
+          return;
+        }
+      }
+
       if (ytPlayer && ytPlayer.seekTo) {
-        ytPlayer.seekTo(Number(seconds), true);
+        ytPlayer.seekTo(secNum, true);
         ytPlayer.playVideo();
       } else {
         const iframe = document.querySelector('#youtube-player-frame iframe') || document.querySelector('iframe');
@@ -1244,18 +1262,20 @@
           iframe.contentWindow.postMessage(JSON.stringify({
             event: 'command',
             func: 'seekTo',
-            args: [Number(seconds), true]
+            args: [secNum, true]
           }), '*');
         }
       }
 
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
+      const mins = Math.floor(secNum / 60);
+      const secs = secNum % 60;
       const formatted = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
       const ind = document.getElementById('sync-indicator');
-      ind.innerHTML = `
-        <span style="color:var(--brand-primary);font-weight:700">▶ Đang phát tại ${formatted} (${seconds}s)</span>
-      `;
+      if (ind) {
+        ind.innerHTML = `
+          <span style="color:var(--brand-primary);font-weight:700">▶ Đang phát tại ${formatted} (${secNum}s)</span>
+        `;
+      }
     }
 
     function renderAstBindings(lesson) {
@@ -1444,16 +1464,9 @@
                   }
                   renderMetadataThought(thoughtBody, meta);
 
-                  // [Ưu tiên 2: Fast-Path Progressive Streaming]
-                  // Tự động seek video ngay tức thì tại miligiây thứ ~350 khi nhận được mốc video Ground-Truth
-                  if (meta.auto_seek_sec !== null && meta.auto_seek_sec !== undefined) {
-                    actionLatencyMs = Math.round(performance.now() - startTime);
-                    seekVideo(meta.auto_seek_sec);
-                    const mins = Math.floor(meta.auto_seek_sec / 60);
-                    const secs = meta.auto_seek_sec % 60;
-                    const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-                    showToast(`⚡ Fast-Path: Tự động nhảy video đến mốc ${formatted}`);
-                  }
+                  // [Zero Auto-Seek Invariant - Phương Án A]
+                  // Video đứng yên hoàn toàn để giữ vững ngữ cảnh đọc của học viên.
+                  // Video chỉ tua khi người dùng chủ động nhấp vào nút timestamp.
                 } catch(e) {}
               } else if (curEvent === 'delta') {
                 try {
@@ -1668,8 +1681,20 @@
     }
 
     function formatMarkdownWithTimestamps(text) {
-      let res = text.replace(/<timestamp sec="(\d+)">([^<]+)<\/timestamp>/g, (m, sec, label) => {
-        return `<span class="ts-pill" onclick="seekVideo(${sec})"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> ${label}</span>`;
+      if (!text) return '';
+      // Tri-Layer Anti-CJK Token Leakage Guardrail (Tầng 3 - Frontend Sanitizer)
+      const cjkRegex = /[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f]/g;
+      text = text.replace(/大约从/g, 'khoảng từ ')
+                 .replace(/浮点数/g, 'số thực')
+                 .replace(/大约/g, 'khoảng ')
+                 .replace(/到/g, ' đến ')
+                 .replace(/。/g, '. ')
+                 .replace(cjkRegex, '');
+
+      let res = text.replace(/<timestamp\s+sec="(\d+)"(?:\s+lesson="(\d+)")?>([^<]+)<\/timestamp>/g, (m, sec, lessonSeq, label) => {
+        const lArg = lessonSeq ? lessonSeq : (currentLesson ? currentLesson.seq : '');
+        const badgeTxt = (lessonSeq && currentLesson && parseInt(lessonSeq) !== currentLesson.seq) ? `[Bài ${lessonSeq}] ${label}` : label;
+        return `<span class="ts-pill" onclick="seekVideo(${sec}, ${lArg})" title="Nhấp để phát video tại mốc ${label}"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> ${badgeTxt}</span>`;
       });
       res = res.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
       res = res.replace(/```([a-z]*)\n([\s\S]*?)```/g, (m, lang, code) => {

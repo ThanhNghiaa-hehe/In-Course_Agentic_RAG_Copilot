@@ -304,9 +304,53 @@
     /* KPI Grid */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
       margin-bottom: 24px;
+    }
+
+    .kpi-dual-pills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .kpi-pill {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 3px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .kpi-pill:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .kpi-pill-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .kpi-pill-val {
+      font-size: 11px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #0f172a;
+      line-height: 1.1;
     }
 
     .kpi-card {
@@ -843,24 +887,28 @@
       </div>
     </div>
 
-    <!-- 6 KPI Metric Cards Grid -->
+    <!-- 7 KPI Metric Cards Grid (Complete RAGAS Triad + Socratic + Timestamps) -->
     <div class="kpi-grid">
       <!-- KPI 1: No-Hallucination Rate & Dual-Metric Grounding -->
       <div class="kpi-card">
         <div class="kpi-top">
-          <span class="kpi-label">No-Hallucination Rate</span>
-          <div class="kpi-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          </div>
+          <span class="kpi-label">No-Hallucination</span>
+          <span class="badge badge-pass" id="badge-no-hallucination">PASS</span>
         </div>
         <div class="kpi-val" id="kpi-no-hallucination">--%</div>
-        <div class="kpi-footer">
-          <span class="badge badge-pass" id="badge-no-hallucination">PASS</span>
-          <span id="sub-faithfulness" style="color: var(--text-dim); font-size: 11px;">Strict: --%</span>
+        <div class="kpi-dual-pills">
+          <div class="kpi-pill" title="Strict In-Course Grounding: Bám sát từng câu chữ transcript">
+            <span class="kpi-pill-label">Strict</span>
+            <span class="kpi-pill-val" id="kpi-strict-val">--%</span>
+          </div>
+          <div class="kpi-pill" title="Calibrated Faithfulness: Tính thêm phân tích mở rộng không vi phạm kỹ thuật">
+            <span class="kpi-pill-label">Calib</span>
+            <span class="kpi-pill-val" id="kpi-calib-val">--%</span>
+          </div>
         </div>
       </div>
 
-      <!-- KPI 2: Answer Relevance -->
+      <!-- KPI 2: Answer Relevance (RAGAS Triad Pillar 2) -->
       <div class="kpi-card">
         <div class="kpi-top">
           <span class="kpi-label">Answer Relevance</span>
@@ -875,7 +923,22 @@
         </div>
       </div>
 
-      <!-- KPI 3: G-Eval Socratic -->
+      <!-- KPI 3: Context Precision (RAGAS Triad Pillar 3) -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Context Precision</span>
+          <div class="kpi-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+        </div>
+        <div class="kpi-val" id="kpi-context-precision">--%</div>
+        <div class="kpi-footer">
+          <span class="badge badge-pass" id="badge-context-precision">PASS</span>
+          <span style="color: var(--text-dim);">CRAG &ge; 90%</span>
+        </div>
+      </div>
+
+      <!-- KPI 4: G-Eval Socratic -->
       <div class="kpi-card">
         <div class="kpi-top">
           <span class="kpi-label">G-Eval Socratic</span>
@@ -890,7 +953,7 @@
         </div>
       </div>
 
-      <!-- KPI 4: Timestamp Precision -->
+      <!-- KPI 5: Timestamp Precision -->
       <div class="kpi-card">
         <div class="kpi-top">
           <span class="kpi-label">Timestamp Precision</span>
@@ -905,7 +968,7 @@
         </div>
       </div>
 
-      <!-- KPI 5: TTFT Latency -->
+      <!-- KPI 6: TTFT Latency -->
       <div class="kpi-card">
         <div class="kpi-top">
           <span class="kpi-label">TTFT Latency (P50)</span>
@@ -920,7 +983,7 @@
         </div>
       </div>
 
-      <!-- KPI 6: Router Accuracy -->
+      <!-- KPI 7: Router Accuracy -->
       <div class="kpi-card">
         <div class="kpi-top">
           <span class="kpi-label">Router Accuracy</span>
@@ -1146,8 +1209,9 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; margin-bottom: 6px;">
         <div>No-Hallucination: <strong class="mono" id="drawer-ragas-nohal">--%</strong></div>
         <div>Strict Grounding: <strong class="mono" id="drawer-ragas-faith">--%</strong></div>
+        <div>Calib Grounding: <strong class="mono" id="drawer-ragas-calib">--%</strong></div>
         <div>Answer Relevance: <strong class="mono" id="drawer-ragas-relev">--%</strong></div>
-        <div>Mệnh đề NLI (E/N/C): <strong class="mono" id="drawer-ragas-claims">--</strong></div>
+        <div style="grid-column: span 2;">Mệnh đề NLI (E/N/C): <strong class="mono" id="drawer-ragas-claims">--</strong></div>
       </div>
     </div>
 
@@ -1170,7 +1234,10 @@
     // DOM Elements
     const elKpiNoHallucination = document.getElementById('kpi-no-hallucination');
     const elBadgeNoHallucination = document.getElementById('badge-no-hallucination');
-    const elSubFaithfulness = document.getElementById('sub-faithfulness');
+    const elKpiStrictVal = document.getElementById('kpi-strict-val');
+    const elKpiCalibVal = document.getElementById('kpi-calib-val');
+    const elKpiContextPrecision = document.getElementById('kpi-context-precision');
+    const elBadgeContextPrecision = document.getElementById('badge-context-precision');
     const elKpiRelevance = document.getElementById('kpi-relevance');
     const elKpiGeval = document.getElementById('kpi-geval');
     const elKpiTimestamp = document.getElementById('kpi-timestamp');
@@ -1287,23 +1354,37 @@
       const hasTsSafe = (kpi.timestamp_safety !== undefined && kpi.timestamp_safety !== null) || (kpi.timestamp_accuracy !== undefined && kpi.timestamp_accuracy !== null);
       const hasRouterAcc = (kpi.router_accuracy !== undefined && kpi.router_accuracy !== null);
 
-      // KPI 1: No-Hallucination Rate (chính) & Strict In-Course Grounding (phụ)
+      // KPI 1: No-Hallucination Rate (chính) & Strict / Calibrated Grounding (phụ dạng pill)
+      const hasCalib = (kpi.ragas_calibrated_faithfulness !== undefined && kpi.ragas_calibrated_faithfulness !== null);
       if (hasRagasNoHal) {
         elKpiNoHallucination.textContent = `${kpi.ragas_no_hallucination}%`;
         elBadgeNoHallucination.textContent = kpi.ragas_no_hallucination >= 80 ? 'PASS' : 'WARN';
         elBadgeNoHallucination.className = kpi.ragas_no_hallucination >= 80 ? 'badge badge-pass' : 'badge badge-warn';
-        elSubFaithfulness.textContent = `Strict: ${hasRagasFaith ? kpi.ragas_faithfulness + '%' : '--%'}`;
+        if (elKpiStrictVal) elKpiStrictVal.textContent = hasRagasFaith ? `${kpi.ragas_faithfulness}%` : '--%';
+        if (elKpiCalibVal) elKpiCalibVal.textContent = hasCalib ? `${kpi.ragas_calibrated_faithfulness}%` : '--%';
       } else if (hasRagasFaith) {
         // Tương thích ngược khi tệp JSON chưa chạy offline NLI
         elKpiNoHallucination.textContent = `${kpi.ragas_faithfulness}%`;
         elBadgeNoHallucination.textContent = kpi.ragas_faithfulness >= 85 ? 'PASS' : 'WARN';
         elBadgeNoHallucination.className = kpi.ragas_faithfulness >= 85 ? 'badge badge-pass' : 'badge badge-warn';
-        elSubFaithfulness.textContent = `Strict: ${kpi.ragas_faithfulness}%`;
+        if (elKpiStrictVal) elKpiStrictVal.textContent = `${kpi.ragas_faithfulness}%`;
+        if (elKpiCalibVal) elKpiCalibVal.textContent = '--%';
       } else {
         elKpiNoHallucination.textContent = '--%';
         elBadgeNoHallucination.textContent = 'Cần Offline Eval';
         elBadgeNoHallucination.className = 'badge badge-neutral';
-        elSubFaithfulness.textContent = 'Strict: --%';
+        if (elKpiStrictVal) elKpiStrictVal.textContent = '--%';
+        if (elKpiCalibVal) elKpiCalibVal.textContent = '--%';
+      }
+
+      // KPI 3: Context Precision (RAGAS Triad Pillar 3)
+      const ctxPrec = kpi.ragas_context_precision ?? kpi.crag_precision;
+      if (elKpiContextPrecision) {
+        elKpiContextPrecision.textContent = ctxPrec !== undefined ? `${ctxPrec}%` : '--%';
+      }
+      if (elBadgeContextPrecision) {
+        elBadgeContextPrecision.textContent = (ctxPrec >= 90) ? 'PASS' : 'WARN';
+        elBadgeContextPrecision.className = (ctxPrec >= 90) ? 'badge badge-pass' : 'badge badge-warn';
       }
 
       const relev = hasRagasRelev ? `${kpi.ragas_relevance}%` : '--%';
@@ -1497,6 +1578,7 @@
       // Thẩm định RAGAS Triad NLI M-08
       const elDrawerRagasNohal = document.getElementById('drawer-ragas-nohal');
       const elDrawerRagasFaith = document.getElementById('drawer-ragas-faith');
+      const elDrawerRagasCalib = document.getElementById('drawer-ragas-calib');
       const elDrawerRagasRelev = document.getElementById('drawer-ragas-relev');
       const elDrawerRagasClaims = document.getElementById('drawer-ragas-claims');
 
@@ -1504,11 +1586,18 @@
         if (c.ragas_no_hallucination !== undefined && c.ragas_no_hallucination !== null) {
           elDrawerRagasNohal.textContent = `${(c.ragas_no_hallucination * 100).toFixed(1)}%`;
           elDrawerRagasFaith.textContent = `${(c.ragas_faithfulness * 100).toFixed(1)}%`;
+          if (elDrawerRagasCalib) {
+            const calVal = (c.ragas_calibrated_faithfulness !== undefined && c.ragas_calibrated_faithfulness !== null)
+              ? `${(c.ragas_calibrated_faithfulness * 100).toFixed(1)}%`
+              : '--%';
+            elDrawerRagasCalib.textContent = calVal;
+          }
           elDrawerRagasRelev.textContent = `${(c.ragas_relevance * 100).toFixed(1)}%`;
           elDrawerRagasClaims.textContent = `${c.ragas_grounded_claims || 0}E / ${c.ragas_neutral_claims || 0}N / ${c.ragas_contradiction_claims || 0}C`;
         } else {
           elDrawerRagasNohal.textContent = '--%';
           elDrawerRagasFaith.textContent = '--%';
+          if (elDrawerRagasCalib) elDrawerRagasCalib.textContent = '--%';
           elDrawerRagasRelev.textContent = '--%';
           elDrawerRagasClaims.textContent = 'Chưa chạy M-08';
         }
