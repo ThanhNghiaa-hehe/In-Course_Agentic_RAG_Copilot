@@ -129,8 +129,25 @@ class ChatService:
                 course_id=request.course_id
             )
             if nav_response:
-                match_res = self.curriculum_service.find_lesson_for_query(request.prompt, preferred_course_id=request.course_id)
+                match_res = self.curriculum_service.find_lesson_for_query(
+                    request.prompt,
+                    current_lesson_seq=request.lesson_seq,
+                    preferred_course_id=request.course_id
+                )
                 target_seq = match_res[0].get("seq") if match_res else None
+
+                suggested_ts = []
+                if target_seq is not None:
+                    raw_ts = self.curriculum_service.get_lesson_timestamps(target_seq)
+                    for item in raw_ts:
+                        suggested_ts.append(
+                            SuggestedTimestamp(
+                                sec=item["sec"],
+                                label=item["label"],
+                                title=item["title"],
+                                lesson_seq=target_seq
+                            )
+                        )
 
                 metadata_event = StreamMetadataEvent(
                     session_id=session_id,
@@ -142,7 +159,7 @@ class ChatService:
                     retrieval_status="fast_path",
                     is_low_confidence=False,
                     target_lesson_seq=target_seq,
-                    suggested_timestamps=[],
+                    suggested_timestamps=suggested_ts,
                     sources=[]
                 )
                 yield {
