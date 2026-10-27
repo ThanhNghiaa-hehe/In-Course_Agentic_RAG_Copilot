@@ -141,6 +141,14 @@
 - **RAGAS Domain Pre-filtering Invariant (Bất Biến Tiền Lọc Miền Áp Dụng RAGAS):**
   - Công thức RAGAS Faithfulness $\text{Faithfulness} = \frac{|\text{Luận điểm được chứng minh bởi Context}|}{|\text{Tổng luận điểm trích xuất}|}$ chỉ có nghĩa toán học khi $\text{Context} \ne \emptyset$.
   - CẤM TUYỆT ĐỐI đưa các câu hỏi chào hỏi (`chit_chat`), điều hướng danh mục (`curriculum_navigation`), câu hỏi ngoài lề (`out_of_scope`), hoặc bẻ khóa (`jailbreak`) vào phép tính Faithfulness nhằm tránh lỗi chia cho 0 và suy diễn sai lệch. Thẩm định RAGAS Triad chỉ được kích hoạt trên tập các câu hỏi học tập nội khóa có ngữ cảnh bài giảng hợp lệ (`actual_status == "grounded"`).
+- **Video Synchronization UX & Cross-Lesson Alignment Invariant (Bất Biến Đồng Bộ Video Chéo - Phương Án A):**
+  - *Zero Auto-Seek:* Tuyệt đối CẤM cơ chế tự động tua video (`auto_seek_sec`) khi người dùng chưa đồng ý; 100% hành vi seek video phải bắt nguồn từ cú nhấp chuột chủ động của học viên.
+  - *Cross-Lesson Sync:* Khi học viên đang ở bài $K$ nhưng truy vấn kiến thức bài cũ $J < K$, thẻ mốc thời gian bắt buộc mang định danh bài học `lesson_seq`. Khi nhấp seek, frontend BẮT BUỘC thực hiện chuyển đổi playlist `ytPlayer.playVideoAt(lesson_J.pIndex)` trước khi gọi `player.seekTo(sec)`, triệt tiêu hoàn toàn lỗi tua nhầm trên video bài hiện tại.
+  - *Grounding Source Citations:* Thẻ timestamp hiển thị dưới dạng các nút bấm trích dẫn nguồn tinh gọn ở cuối phản hồi, bảo đảm câu trả lời Socratic mạch lạc và không gây phân tâm khi đọc mã nguồn.
+- **Tri-Layer Anti-CJK Token Leakage Invariant (Bất Biến Triệt Tiêu Lọt Ký Tự Chữ Hán):**
+  - Tuyệt đối KHÔNG phụ thuộc duy nhất vào System Prompt để chặn tiếng Trung trên các mô hình nguồn gốc Trung Quốc (như Qwen Coder).
+  - Bắt buộc kích hoạt tầng Stream Sanitizer kép (Backend `ChatService` và Frontend `formatMarkdownWithTimestamps`) với biểu thức chính quy Unicode CJK `[\u4e00-\u9fff]`.
+  - Tự động thay thế các cụm từ toán học/khoảng giá trị phổ biến (`大约从` -> `khoảng từ`, `浮点数` -> `số thực`, `。` -> `.`) và thanh trừng triệt để mọi ký tự Hán tự đơn lẻ trước khi gửi đến người dùng, bảo đảm 100% phản hồi thuần Tiếng Việt & Anh ngữ kỹ thuật.
 
 
 
