@@ -181,10 +181,29 @@ class NLIArbiter:
             sim_r = max([float(np.dot(q_vec, rv) / (np.linalg.norm(q_vec) * np.linalg.norm(rv))) for rv in self._reject_vecs])
 
             # Kiểm tra câu hỏi mới (chứa từ để hỏi hoặc dấu ?)
-            is_q = any(w in prompt.lower() for w in ["?", "là gì", "thế nào", "như thế nào", "sao vậy", "giải thích", "hỏi"])
+            is_q = any(w in prompt.lower() for w in ["?", "là gì", "thế nào", "như thế nào", "sao vậy", "giải thích", "hỏi", "dạy gì", "học gì"])
             is_agree = (sim_c >= 0.88) and (sim_c > sim_r + 0.05) and not is_q
+
+            # [Stage 2 NLI Arbiter]: Cứu xét bằng Cross-Encoder khi câu nói tự nhiên dài hoặc phân vân
+            if not is_agree and not is_q and len(prompt.split()) >= 2:
+                pipe = self._get_pipeline()
+                if pipe is not None:
+                    premise = f"Trợ giảng hỏi: 'Bạn có muốn mình chuyển sang bài học tiếp theo và mở video cho bạn không?'. Học viên trả lời: '{prompt}'."
+                    nli_res = pipe(
+                        premise,
+                        candidate_labels=["đồng ý mở video bài học", "từ chối hoặc đặt câu hỏi khác"],
+                        hypothesis_template="Ý định của học viên là {}.",
+                        multi_label=False
+                    )
+                    top_lbl = nli_res["labels"][0]
+                    top_score = float(nli_res["scores"][0])
+                    if top_lbl == "đồng ý mở video bài học" and top_score >= 0.70:
+                        is_agree = True
+                        sim_c = top_score
+                        logger.info(f"[ConfirmationClassifier:NLI-Rescue] Cứu xét thành công qua NLI: '{prompt[:35]}' -> {top_score*100:.1f}%")
+
             logger.info(
-                f"[ConfirmationClassifier:E5-Margin] '{prompt[:35]}' -> "
+                f"[ConfirmationClassifier:E5-NLI] '{prompt[:35]}' -> "
                 f"Cos_C={sim_c:.3f} | Cos_R={sim_r:.3f} | IsQuestion={is_q} -> IsAgree={is_agree}"
             )
             return is_agree, sim_c
