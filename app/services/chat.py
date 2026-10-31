@@ -51,6 +51,90 @@ def sanitize_cjk_tokens(text: str) -> str:
     return text
 
 
+def sanitize_timestamp_tags(text: str, valid_secs: set) -> str:
+    """
+    Deterministic Timestamp Whitelist Guardrail (ERR-02):
+    Loại bỏ triệt để các thẻ <timestamp sec="X"> không nằm trong danh mục Whitelist được bảo chứng.
+    - Nếu valid_secs rỗng: Loại bỏ toàn bộ thẻ <timestamp>.
+    - Nếu valid_secs có phần tử: Bắt buộc sec phải thuộc valid_secs.
+    - Các mốc bịa đặt (như LLM tự tăng giây 218, 219, 220) sẽ bị gỡ bỏ thẻ, giữ lại text trơn.
+    """
+    if not text:
+        return text
+    if not valid_secs:
+        return re.sub(r'<timestamp\b[^>]*>(.*?)</timestamp>', r'\1', text)
+
+    def _tag_verifier(m: re.Match) -> str:
+        full_tag = m.group(0)
+        inner_content = m.group(1)
+        sec_m = re.search(r'sec=["\'](\d+)["\']', full_tag)
+        if sec_m:
+            sec_val = int(sec_m.group(1))
+            if sec_val in valid_secs:
+                return full_tag
+        return inner_content
+
+    return re.sub(r'<timestamp\b[^>]*>(.*?)</timestamp>', _tag_verifier, text)
+
+
+class StreamingTimestampSanitizer:
+    """
+    Bộ đệm luồng kiểm chuẩn thẻ Timestamp thời gian thực:
+    - Bắt và đệm thẻ <timestamp ... </timestamp> trong luồng SSE.
+    - Kiểm chứng thuộc tính sec="" đối chiếu với tập Whitelist valid_secs.
+    - Nếu mốc thời gian không nằm trong Whitelist (LLM bịa đặt), lập tức gỡ bỏ thẻ và chỉ phát text trơn.
+    """
+    def __init__(self, valid_secs: set):
+        self.valid_secs = valid_secs
+        self.buffer = ""
+
+    def process(self, token: str) -> List[str]:
+        self.buffer += token
+        out = []
+
+        while self.buffer:
+            if "<timestamp" in self.buffer:
+                idx = self.buffer.find("<timestamp")
+                if idx > 0:
+                    out.append(self.buffer[:idx])
+                    self.buffer = self.buffer[idx:]
+
+                close_idx = self.buffer.find("</timestamp>")
+                if close_idx != -1:
+                    tag_end = close_idx + len("</timestamp>")
+                    full_tag = self.buffer[:tag_end]
+                    self.buffer = self.buffer[tag_end:]
+                    sanitized = sanitize_timestamp_tags(full_tag, self.valid_secs)
+                    if sanitized:
+                        out.append(sanitized)
+                else:
+                    if len(self.buffer) > 150:
+                        out.append(self.buffer)
+                        self.buffer = ""
+                    break
+            elif "<" in self.buffer:
+                last_lt = self.buffer.rfind("<")
+                if last_lt > 0:
+                    out.append(self.buffer[:last_lt])
+                    self.buffer = self.buffer[last_lt:]
+                if not "<timestamp".startswith(self.buffer):
+                    out.append(self.buffer)
+                    self.buffer = ""
+                break
+            else:
+                out.append(self.buffer)
+                self.buffer = ""
+                break
+        return out
+
+    def flush(self) -> List[str]:
+        if not self.buffer:
+            return []
+        res = sanitize_timestamp_tags(self.buffer, self.valid_secs)
+        self.buffer = ""
+        return [res] if res else []
+
+
 class ChatService:
     """
     Dịch vụ điều phối trò chuyện Socratic & Truyền phát dữ liệu thời gian thực (SSE Stream):
@@ -317,28 +401,45 @@ class ChatService:
             retrieval_status = final_state.get("retrieval_status", "coverage_gap")
             retrieved_chunks = final_state.get("retrieved_chunks", [])
 
+            # Tập hợp Whitelist các mốc giây được bảo chứng (ERR-02)
+            valid_secs = set()
+            for item in final_state.get("suggested_timestamps", []):
+                if isinstance(item, dict) and item.get("sec") is not None:
+                    valid_secs.add(int(item["sec"]))
+
+            ts_sanitizer = StreamingTimestampSanitizer(valid_secs=valid_secs)
+
             async for chunk in stream_response:
                 if chunk.choices and chunk.choices[0].delta.content:
-                    token = chunk.choices[0].delta.content
-
-                    # Deterministic Decoding Guardrail: Chặn sinh thẻ timestamp nếu không có mốc nào được bảo chứng
-                    has_verified_ts = bool(final_state.get("suggested_timestamps"))
-                    if (not has_verified_ts) and ("<timestamp" in token or "</timestamp>" in token):
-                        continue
+                    raw_token = chunk.choices[0].delta.content
 
                     # Tri-Layer Anti-CJK Token Leakage Guardrail (Tầng 2 - Backend Streaming Sanitizer)
-                    token = sanitize_cjk_tokens(token)
-                    if not token:
+                    clean_token = sanitize_cjk_tokens(raw_token)
+                    if not clean_token:
                         continue
 
-                    full_assistant_response += token
-                    yield {
-                        "event": "delta",
-                        "data": json.dumps({"content": token})
-                    }
+                    # Deterministic Timestamp Whitelist Guardrail (Streaming Buffer)
+                    sanitized_tokens = ts_sanitizer.process(clean_token)
+                    for tok in sanitized_tokens:
+                        full_assistant_response += tok
+                        yield {
+                            "event": "delta",
+                            "data": json.dumps({"content": tok})
+                        }
+
+            # Xả các token còn lại trong bộ đệm cuối luồng
+            final_flushed = ts_sanitizer.flush()
+            for tok in final_flushed:
+                full_assistant_response += tok
+                yield {
+                    "event": "delta",
+                    "data": json.dumps({"content": tok})
+                }
 
             # Lưu vết câu trả lời hoàn chỉnh của Trợ giảng vào LangGraph Checkpointer
             if full_assistant_response.strip():
+                # Hàng rào bảo vệ lần 2: Đảm bảo 100% không lọt bất kỳ thẻ timestamp ảo giác nào vào DB
+                full_assistant_response = sanitize_timestamp_tags(full_assistant_response, valid_secs)
                 commit_assistant_turn(session_id, request.prompt, full_assistant_response)
 
         except Exception as e:

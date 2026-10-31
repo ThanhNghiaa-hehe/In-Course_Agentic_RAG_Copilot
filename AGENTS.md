@@ -63,10 +63,21 @@
   - Tuyệt đối KHÔNG hardcode các bảng tra cứu, từ điển ánh xạ metadata (như bảng gắn mốc video `AST_VIDEO_GROUND_TRUTH`) trực tiếp vào mã nguồn Python (`.py`).
 - **Pareto Context Sufficiency Invariant (ICLR 2025):**
   - Hệ thống phân định rạch ròi giữa độ tương quan ngữ nghĩa (Semantic Relevance) và độ đầy đủ thông tin sư phạm (Context Sufficiency).
-  - Bài học tương lai chỉ được phép thống trị (dominate) bài hiện tại sang trạng thái `out_of_lesson` khi thỏa mãn bất đẳng thức Pareto:
+  - Bài học tương lai chỉ được phép thống trị (dominate) bài hiện tại sang trạng thái `out_of_lesson` khi thỏa mãn bất đẳng thức Pareto 3 phân tầng:
     (a) Nếu bài hiện tại $S_{\text{current}} < 0.22$ (chưa có cơ sở giảng dạy cục bộ): $S_{\text{future}} \ge 0.25$ và $\text{Margin} \ge 0.12$.
-    (b) Nếu bài hiện tại $S_{\text{current}} \ge 0.22$ (đã có cơ sở giảng dạy cục bộ): Bài tương lai bắt buộc phải là bài giảng chuyên sâu vượt trội với $S_{\text{future}} \ge 0.55$ và $\text{Margin} \ge 0.25$.
+    (b) Nếu bài hiện tại rơi vào dải lơ lửng ($0.22 \le S_{\text{current}} < 0.30$) và không có Code AST (Văn nói nhắc lướt ngoại vi): Bài tương lai được phép thống trị khi $S_{\text{future}} \ge 0.30$ và $\text{Margin} \ge 0.08$.
+    (c) Nếu bài hiện tại $S_{\text{current}} \ge 0.30$ (đã có cơ sở giảng dạy tự tin cao): Bài tương lai bắt buộc phải là bài giảng chuyên sâu vượt trội với $S_{\text{future}} \ge 0.45$ và $\text{Margin} \ge 0.20$ (hoặc $S_{\text{future}} \ge 0.52, \text{Margin} \ge 0.25$ đối với Code AST).
   - Tuyệt đối không dùng ngưỡng phẳng hoặc giải pháp vá tạm (Zero Quick-Fix).
+- **Deterministic Timestamp Whitelist Guardrail Invariant:**
+  - Tuyệt đối KHÔNG dựa vào cờ boolean `has_verified_ts` để cho phép LLM tự do sinh thẻ `<timestamp>`.
+  - Bộ giải mã luồng Server-Sent Events (SSE) tại `ChatService.stream_chat` bắt buộc duy trì một tập hợp Whitelist các giây được bảo chứng:
+    $$\mathcal{W} = \{s \mid s \in \text{suggested\_timestamps}\}$$
+  - Bất kỳ thẻ `<timestamp sec="X">` nào mà $X \notin \mathcal{W}$ đều bị tự động loại bỏ thẻ khỏi luồng token stream, triệt tiêu 100% hiện tượng LLM tự tăng giây theo các bước ẩn dụ đời sống.
+- **Curriculum Overview Generalization & NLI Rescue Invariant:**
+  - Mở rộng mẫu nhận diện cấu trúc giáo trình cho các câu hỏi tổng quan ("hôm nay học bài gì", "bài này học về cái gì", "chúng ta học bài gì").
+  - Khi LinearSVC dự đoán `chit_chat` với các từ vựng mang ngữ nghĩa học tập, Stage 2 NLI Arbiter (`mDeBERTa-v3`) BẮT BUỘC kiểm tra giả thuyết với nhãn tổng quát:
+    `"câu hỏi học tập, tìm hiểu nội dung bài học, giáo trình hoặc kỹ thuật lập trình"`
+    Nếu đạt độ tin cậy $\ge 50\%$, hệ thống lập tức cứu xét về `course_query`, chấm dứt triệt để việc nhầm sang chào hỏi xã giao.
 - **Multi-Grounding Timestamp Evaluation Principle:**
   - Trong video bài giảng dài (30-60 phút), một khái niệm thường xuất hiện ở nhiều phân đoạn (lý thuyết, minh họa code, bài tập áp dụng).
   - Cờ `has_ts: True` trong báo cáo kiểm thử xác nhận hệ thống đã trích xuất thành công mốc video thực tế có thật. Độ lệch $|\Delta t| > 30\text{s}$ so với đáp án mẫu phản ánh hiện tượng Single-Label Annotation Discrepancy, hoàn toàn độc lập với độ chính xác ngữ cảnh của CRAG Grader và không được coi là lỗi ảo giác (Hallucination).

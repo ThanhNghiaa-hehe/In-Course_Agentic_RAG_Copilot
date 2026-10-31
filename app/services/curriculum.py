@@ -27,12 +27,15 @@ BINDING_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "metadat
 NAVIGATION_INTENT_TRIGGERS = [
     "bài nào", "chọn bài nào", "học bài nào", "bài mấy", "bài bao nhiêu",
     "trong playlist", "trong lộ trình", "lộ trình học", "ở bài nào",
-    "xem bài nào", "học ở đâu", "bài số mấy", "tìm bài", "playlist này"
+    "xem bài nào", "học ở đâu", "bài số mấy", "tìm bài", "playlist này",
+    "học bài gì", "hôm nay học gì", "hôm nay học bài gì", "bài này học gì",
+    "hôm nay chúng ta học", "chúng ta học bài gì"
 ]
 
 OVERVIEW_QUERY_PATTERNS = [
-    r"học\s+gì",
-    r"sẽ\s+học\s+gì",
+    r"học\s+(?:\w+\s+)?gì",
+    r"sẽ\s+học\s+(?:\w+\s+)?gì",
+    r"hôm\s+nay\s+(?:chúng\s+ta\s+)?học",
     r"nội\s+dung\s+(?:của\s+)?bài",
     r"nói\s+về\s+(?:gì|cái\s+gì)",
     r"dạy\s+(?:gì|về\s+gì)",

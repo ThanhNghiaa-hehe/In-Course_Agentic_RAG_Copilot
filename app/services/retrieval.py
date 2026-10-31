@@ -889,8 +889,16 @@ class RetrievalService:
                     future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and
                     margin >= settings.FUTURE_PROBE_MARGIN
                 )
+            elif max_current_score < settings.PARETO_MARGINAL_VIDEO_MAX:
+                # Trường hợp 2: Bài hiện tại rơi vào dải lơ lửng (0.22 <= S < 0.30) và không có Code AST
+                # (Văn nói nhắc lướt ngoại vi theo AGENTS.md Modality-Aware Latency Gate Invariant)
+                # Cho phép bài tương lai dominate với biên độ Pareto chuẩn mực (S_future >= 0.30 và margin >= 0.08)
+                future_dominates = (
+                    future_score >= settings.PARETO_MARGINAL_FUTURE_MIN and
+                    margin >= settings.PARETO_MARGINAL_MARGIN
+                )
             else:
-                # Trường hợp 2: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo hợp lệ (>= 0.22)
+                # Trường hợp 3: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo tự tin cao (S >= 0.30)
                 # Phân tầng theo phương thức (Modality-Aware Precedence - ICLR 2025 Context Sufficiency):
                 if future_chunk_type == "code_ast":
                     # Code AST ở bài tương lai chỉ vô tình chứa từ khóa (như double, int)

@@ -113,12 +113,12 @@ class NLIArbiter:
         self._confirm_vecs = None
         self._reject_vecs = None
         self._candidate_labels = [
-            "câu hỏi học tập chuyên môn thắc mắc cú pháp hoặc giải thuật lập trình",
+            "câu hỏi học tập, tìm hiểu nội dung bài học, giáo trình hoặc kỹ thuật lập trình",
             "lời chào hỏi, cảm ơn, tạm biệt hoặc giao tiếp xã giao thông thường",
             "câu hỏi ngoài lề đời sống, thời tiết, giải trí hoặc phim ảnh"
         ]
         self._label_map = {
-            "câu hỏi học tập chuyên môn thắc mắc cú pháp hoặc giải thuật lập trình": "course_query",
+            "câu hỏi học tập, tìm hiểu nội dung bài học, giáo trình hoặc kỹ thuật lập trình": "course_query",
             "lời chào hỏi, cảm ơn, tạm biệt hoặc giao tiếp xã giao thông thường": "chit_chat",
             "câu hỏi ngoài lề đời sống, thời tiết, giải trí hoặc phim ảnh": "out_of_scope"
         }
