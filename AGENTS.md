@@ -101,6 +101,17 @@
 - **Zero-Regex NLI Rescue Invariant (Bất Biến Giải Cứu Chào Hỏi Bằng Deep Learning NLI):**
   - Tuyệt đối KHÔNG dùng regex chắp vá (Quick-Fix) để bắt các câu hỏi cấu trúc bài giảng bị nhầm sang `chit_chat`.
   - Khi Stage 1 LinearSVC phân loại là `chit_chat` nhưng độ tự tin $P_{\text{chit\_chat}} < 0.75$, hệ thống BẮT BUỘC kích hoạt Stage 2 Cross-Encoder NLI Arbiter (`mDeBERTa-v3`). Nếu mô hình NLI suy luận giả thuyết học tập đạt độ tin cậy $\ge 50\%$, hệ thống tự động giải cứu câu hỏi về `course_query`, chấm dứt triệt để vòng lặp chào hỏi (Greeting Loop) mà bảo toàn 100% tính nguyên vẹn toán học.
+- **Prerequisite Order Pareto Invariant (Bất Biến Thứ Tự Tiên Quyết Trong Lộ Trình Học Tập - ICLR 2025):**
+  - Trong một giáo trình nhiều bài học (DAG - Directed Acyclic Graph), một khái niệm kỹ thuật luôn xuất hiện ở 2 tầng: Nút Tiên quyết Nhập môn (Foundational Definition Node) và Nút Ứng dụng/Phân tích Nâng cao (Application/Complexity Node).
+  - Khi học viên đang ở bài học sơ cấp (ví dụ Bài 1) hỏi về khái niệm tương lai, hệ thống bắt buộc ưu tiên hướng dẫn học viên tới **Bài học tiên quyết có thứ tự nhỏ nhất ($\min L_{\text{seq}}$)** trong số các bài học đạt ngưỡng tin cậy tương quan ($S \ge 0.35$).
+  - Bài học ứng dụng nâng cao (đến sau) CHỈ ĐƯỢC PHÉP thay thế bài học tiên quyết nếu đạt biên độ vượt trội áp đảo:
+    $$S_{\text{late}} - S_{\text{early}} > \Delta_{\text{dominate}} \quad (\text{với } \Delta_{\text{dominate}} = 0.15)$$
+  - Tuyệt đối KHÔNG sử dụng `argmax` ngây thơ khiến bài học ứng dụng nuốt mất bài học tiên quyết nhập môn; tuyệt đối KHÔNG hardcode tên bài học hoặc regex cá biệt (Zero Quick-Fix).
+- **Conversational Navigation Fast-Path & NLI Cascading Invariant:**
+  - Xác nhận điều hướng video đa lượt bắt buộc vận hành theo cấu trúc 2 tầng (Two-Tier Cascading Architecture):
+    1. *Tầng 1 (Fast-Path Vector E5 Margin < 2ms):* So khớp tương quan Cosine đa chiều với Prototype Anchors trên không gian E5 1024-dim ($\text{sim}_c \ge 0.88$ và $\text{Margin} \ge 0.05$).
+    2. *Tầng 2 (Deep Learning NLI Arbiter Rescue):* Khi câu nói tự nhiên dài hoặc phân vân, tự động gọi Cross-Encoder `mDeBERTa-v3` phán định giả thuyết tiền đề logic ($P(\text{Đồng ý}) \ge 70\%$).
+  - Cấm tuyệt đối việc sử dụng regex chuỗi cứng để bắt từ khóa xác nhận.
 - **Socratic Code Scaffold Boundary Invariant (Bất Biến Ranh Giới Mã Nguồn Gợi Mở):**
   - Hệ thống tuân thủ triệt để ranh giới sư phạm:
     (a) CẤM TUYỆT ĐỐI sinh toàn bộ chương trình chạy được (không sinh khối `#include <iostream>`, `int main() { ... }`).

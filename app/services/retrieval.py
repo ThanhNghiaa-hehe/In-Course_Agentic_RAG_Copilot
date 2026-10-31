@@ -440,18 +440,55 @@ class RetrievalService:
             logger.warning(f"[RetrievalService] Lỗi rerank future probe ({re_err}), dùng RRF score.")
             scores = [float(hit.score) for hit in future_points]
 
-        max_idx = 0
+        # 1. Tìm ứng viên có điểm tuyệt đối cao nhất
+        best_idx = 0
         max_score = 0.0
         for idx, sc in enumerate(scores):
             if sc > max_score:
                 max_score = sc
-                max_idx = idx
+                best_idx = idx
 
-        target_seq = future_seqs[max_idx] if future_seqs else None
+        # 2. [Prerequisite Order Pareto Invariant - ICLR 2025]
+        # Khắc phục triệt để bẫy đảo ngược giáo trình (Curriculum Inversion Trap):
+        # Giữa bài học cơ sở tiên quyết (L_early) và bài học ứng dụng nâng cao (L_late),
+        # bài học đến sau CHỈ ĐƯỢC PHÉP thống trị nếu đạt biên độ vượt trội áp đảo (Margin > 0.15).
+        CONFIDENCE_FLOOR = 0.35
+        DOMINATE_MARGIN = 0.15
+
+        confident_candidates = [
+            (idx, future_seqs[idx], scores[idx])
+            for idx in range(len(scores))
+            if scores[idx] >= CONFIDENCE_FLOOR and future_seqs[idx] > 0
+        ]
+
+        if confident_candidates:
+            # Sắp xếp theo lesson_seq tăng dần (ưu tiên bài học tiên quyết gần tiến độ học viên nhất)
+            sorted_by_seq = sorted(confident_candidates, key=lambda x: (x[1], -x[2]))
+            earliest_idx, earliest_seq, earliest_score = sorted_by_seq[0]
+
+            if (max_score - earliest_score) > DOMINATE_MARGIN:
+                chosen_idx = best_idx
+                logger.info(
+                    f"[RetrievalService:Pareto] Bài học sau Seq {future_seqs[best_idx]} áp đảo hoàn toàn "
+                    f"Bài học cơ sở Seq {earliest_seq} (Score {max_score:.4f} vs {earliest_score:.4f}, Margin > {DOMINATE_MARGIN})."
+                )
+            else:
+                chosen_idx = earliest_idx
+                if earliest_seq != future_seqs[best_idx]:
+                    logger.info(
+                        f"[RetrievalService:Pareto] Kích hoạt Prerequisite Order Invariant: "
+                        f"Ưu tiên Bài học cơ sở Seq {earliest_seq} (Score {earliest_score:.4f}) "
+                        f"trước Bài học ứng dụng Seq {future_seqs[best_idx]} (Score {max_score:.4f}, Margin <= {DOMINATE_MARGIN})."
+                    )
+        else:
+            chosen_idx = best_idx
+
+        target_seq = future_seqs[chosen_idx] if future_seqs else None
+        chosen_score = scores[chosen_idx] if scores else max_score
         best_chunk_type = "video_transcript"
         best_future_chunk = None
-        if future_points and max_idx < len(future_points):
-            best_p = future_points[max_idx].payload or {}
+        if future_points and chosen_idx < len(future_points):
+            best_p = future_points[chosen_idx].payload or {}
             best_chunk_type = best_p.get("content_type", "video_transcript")
             start_s = best_p.get("start_sec")
             if start_s is None and best_p.get("approx_video_sec") is not None:
@@ -463,9 +500,9 @@ class RetrievalService:
                 "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
                 "video_title": best_p.get("video_title", f"Bài giảng Bài {target_seq}"),
                 "content_type": best_chunk_type,
-                "score": max_score
+                "score": chosen_score
             }
-        return target_seq, max_score, best_chunk_type, best_future_chunk
+        return target_seq, chosen_score, best_chunk_type, best_future_chunk
 
     async def _probe_future_lessons(
         self,

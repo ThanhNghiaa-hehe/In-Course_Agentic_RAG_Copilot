@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     FUTURE_PROBE_ACTIVATION_GATE: float = 0.22
     FUTURE_PROBE_MARGIN: float = 0.12
     FUTURE_PROBE_MIN_CONFIDENCE: float = 0.25
-    FUTURE_PROBE_LIMIT: int = 6
+    FUTURE_PROBE_LIMIT: int = 10
     RERANK_MAX_CHARS: int = 1200
     CRAG_RRF_WEIGHT: float = 0.10
     PARETO_LOCAL_GROUNDING_THRESHOLD: float = 0.22
