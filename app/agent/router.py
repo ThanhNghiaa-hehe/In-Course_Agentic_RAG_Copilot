@@ -69,9 +69,21 @@ OFFTOPIC_CASUAL_RESPONSES = (
 
 CONFIRM_ANCHORS = [
     "query: ok",
+    "query: oke",
+    "query: okie",
+    "query: có",
+    "query: có nha",
+    "query: có nhé",
+    "query: có chứ",
+    "query: dạ có",
+    "query: vâng",
+    "query: vâng ạ",
+    "query: dạ được",
     "query: ừ",
     "query: chuyển đi",
+    "query: chuyển giúp mình",
     "query: ừ chuyển giúp mình",
+    "query: mở giúp mình",
     "query: mở video đó lên",
     "query: đồng ý",
     "query: yes",
@@ -79,6 +91,8 @@ CONFIRM_ANCHORS = [
 ]
 
 REJECT_ANCHORS = [
+    "query: không",
+    "query: không cần",
     "query: không cần đâu",
     "query: thôi khỏi",
     "query: không muốn xem"
@@ -177,7 +191,7 @@ class NLIArbiter:
         except Exception as e:
             logger.error(f"[ConfirmationClassifier] Lỗi tính tương quan vector: {e}")
             norm = prompt.strip().lower()
-            return norm in ["ok", "ừ", "u", "ừm", "yes", "yep", "chuyển đi", "mở đi", "bật đi", "đồng ý", "được", "okie"], 0.9
+            return norm in ["ok", "ừ", "u", "ừm", "yes", "yep", "chuyển đi", "mở đi", "bật đi", "đồng ý", "được", "okie", "có", "vâng"], 0.9
 
     def warmup(self) -> None:
         """Khởi động nóng mô hình NLI Arbiter trên CPU/RAM để khử triệt để Cold-Start."""
