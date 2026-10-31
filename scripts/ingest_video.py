@@ -67,6 +67,15 @@ TECH_CANONICAL_MAP = {
     r'\b(sờ\s*chinh|sờ\s*tring|sờ\s*trinh)\b': 'string',
     r'\b(sờ\s*tring\s*sờ\s*trim|xì\s*tring\s*xì\s*trim)\b': 'stringstream',
     r'\b(en\s*lai|en\s*đơ\s*lai)\b': 'endl',
+    # Cấu trúc điều khiển & Vòng lặp (Control Structures & Loops)
+    r'\bvòng\s+(?:lập|lặp)\s+(?:4|bốn)\b': 'vòng lặp for',
+    r'\bvòng\s+là\s+con\b': 'vòng lặp for',
+    r'\bvòng\s+(?:là\s+)?(?:fo|foe)\b': 'vòng for',
+    r'\bVòng\s+(?:fo|foe)\b': 'Vòng for',
+    r'\bvòng\s+(?:lập|lặp)\s+(?:qua|quai|wai)\b': 'vòng lặp while',
+    r'\bvòng\s+(?:lập|lặp)\s+do\s*(?:y|wai|quai)\b': 'vòng lặp do-while',
+    r'\bhoạt\s+động\s+qua\b': 'vòng lặp while',
+    r'\b(?:hai\s+)?(?:dầu|dấu)\s+(?:trầm|chấm)\s+7\b': 'hai dấu chấm phẩy',
 }
 
 def get_hotwords_for_course(course_id: str, custom_hotwords: str = None) -> str:

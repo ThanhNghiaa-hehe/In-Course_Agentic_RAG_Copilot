@@ -147,11 +147,11 @@ def run_audit():
             continue
 
         l_dir = lesson_dirs[0]
-        # Tìm file raw_segments hoặc chunks
-        raw_file = l_dir / f"lesson-{seq:02d}_raw_segments.json"
+        # Ưu tiên kiểm toán file chunks.json (dữ liệu thực tế được nạp lên Qdrant)
         chunk_file = l_dir / f"lesson-{seq:02d}_chunks.json"
+        raw_file = l_dir / f"lesson-{seq:02d}_raw_segments.json"
 
-        target_file = raw_file if raw_file.exists() else (chunk_file if chunk_file.exists() else None)
+        target_file = chunk_file if chunk_file.exists() else (raw_file if raw_file.exists() else None)
         if not target_file:
             # Tìm file json bất kỳ
             json_files = list(l_dir.glob("*.json"))
@@ -256,3 +256,4 @@ def run_audit():
 
 if __name__ == "__main__":
     run_audit()
+
