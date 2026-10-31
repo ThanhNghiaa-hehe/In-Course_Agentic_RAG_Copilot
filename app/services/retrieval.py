@@ -27,11 +27,13 @@ class RetrievalResult:
     - status: 'grounded' (có tài liệu), 'out_of_lesson' (bài học tương lai), 'coverage_gap' (ngoài giáo trình)
     - target_lesson_seq: Thứ tự bài học tương lai nếu bị chặn bởi In-HNSW Pre-filter
     - is_low_confidence: Cờ đánh dấu Graceful Degradation (0.20 <= score < 0.35)
+    - future_best_chunk: Mốc video của đoạn trích dẫn bài tương lai (hỗ trợ Conversational Navigation)
     """
     chunks: List[Dict[str, Any]] = field(default_factory=list)
     status: Literal["grounded", "out_of_lesson", "coverage_gap"] = "coverage_gap"
     target_lesson_seq: Optional[int] = None
     is_low_confidence: bool = False
+    future_best_chunk: Optional[Dict[str, Any]] = None
 
     def __iter__(self):
         return iter(self.chunks)
@@ -447,9 +449,23 @@ class RetrievalService:
 
         target_seq = future_seqs[max_idx] if future_seqs else None
         best_chunk_type = "video_transcript"
+        best_future_chunk = None
         if future_points and max_idx < len(future_points):
-            best_chunk_type = (future_points[max_idx].payload or {}).get("content_type", "video_transcript")
-        return target_seq, max_score, best_chunk_type
+            best_p = future_points[max_idx].payload or {}
+            best_chunk_type = best_p.get("content_type", "video_transcript")
+            start_s = best_p.get("start_sec")
+            if start_s is None and best_p.get("approx_video_sec") is not None:
+                start_s = int(best_p.get("approx_video_sec"))
+
+            best_future_chunk = {
+                "lesson_seq": target_seq,
+                "start_sec": start_s,
+                "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
+                "video_title": best_p.get("video_title", f"Bài giảng Bài {target_seq}"),
+                "content_type": best_chunk_type,
+                "score": max_score
+            }
+        return target_seq, max_score, best_chunk_type, best_future_chunk
 
     async def _probe_future_lessons(
         self,
@@ -471,7 +487,8 @@ class RetrievalService:
             course_id=course_id,
             current_lesson_seq=current_lesson_seq
         )
-        return await self._score_future_points(points, query_text)
+        res = await self._score_future_points(points, query_text)
+        return res[0], res[1], res[2]
 
     async def search(
         self,
@@ -577,13 +594,18 @@ class RetrievalService:
 
         # Nếu hoàn toàn không có candidate nào trong phạm vi bài hiện tại
         if not raw_candidates:
-            target_seq, future_score, _ = await self._score_future_points(
+            target_seq, future_score, _, best_future_chunk = await self._score_future_points(
                 future_points=future_points,
                 query_text=dense_query_text if has_bridge else query_text
             )
             if target_seq and future_score >= settings.MIN_SCORE_THRESHOLD:
                 logger.info(f"[RetrievalService] Phát hiện chủ đề thuộc bài tương lai (Seq {target_seq}) với điểm {future_score:.4f} >= {settings.MIN_SCORE_THRESHOLD}.")
-                return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
+                return RetrievalResult(
+                    chunks=[],
+                    status="out_of_lesson",
+                    target_lesson_seq=target_seq,
+                    future_best_chunk=best_future_chunk
+                )
             return RetrievalResult(chunks=[], status="coverage_gap")
 
         # 4. [STAGE 8 & M-06] Pre-rerank Window Deduplication & Multilingual Cross-Encoder Re-ranking
@@ -813,7 +835,7 @@ class RetrievalService:
 
         # Sử dụng future_points đã được tải song song từ trước (Scatter-Gather)
         # Triệt tiêu hoàn toàn lượt chờ mạng Qdrant thứ hai!
-        target_seq, future_score, future_chunk_type = await self._score_future_points(
+        target_seq, future_score, future_chunk_type, best_future_chunk = await self._score_future_points(
             future_points=future_points,
             query_text=dense_query_text if has_bridge else query_text
         )
@@ -854,7 +876,12 @@ class RetrievalService:
                 f"(Seq {target_seq}) thống trị với future_score={future_score:.4f}, margin={margin:.4f} "
                 f"(has_local_grounding={has_local_grounding})."
             )
-            return RetrievalResult(chunks=[], status="out_of_lesson", target_lesson_seq=target_seq)
+            return RetrievalResult(
+                chunks=[],
+                status="out_of_lesson",
+                target_lesson_seq=target_seq,
+                future_best_chunk=best_future_chunk
+            )
 
         # Nếu bài tương lai KHÔNG thống trị Pareto, và bài hiện tại có video transcript đạt ngưỡng hợp lệ:
         # Đây chính là ngữ cảnh bài giảng hợp lệ của bài hiện tại (bảo toàn BENCH-004, BENCH-011, BENCH-041,...).

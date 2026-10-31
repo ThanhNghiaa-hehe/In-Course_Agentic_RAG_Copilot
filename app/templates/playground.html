@@ -1465,8 +1465,17 @@
                   renderMetadataThought(thoughtBody, meta);
 
                   // [Zero Auto-Seek Invariant - Phương Án A]
-                  // Video đứng yên hoàn toàn để giữ vững ngữ cảnh đọc của học viên.
-                  // Video chỉ tua khi người dùng chủ động nhấp vào nút timestamp.
+                  // Video đứng yên hoàn toàn để giữ vững ngữ cảnh đọc của học viên khi hỏi thông thường.
+                  // Video chỉ tua khi người dùng chủ động nhấp vào nút timestamp HOẶC đồng ý bằng lời nói qua hội thoại.
+
+                  // [Conversational Navigation Action Trigger]
+                  // Khi học viên đồng ý qua hội thoại ("ok", "ừ chuyển đi"), Agent gửi lệnh Action điều hướng
+                  if (meta.action && meta.action.type === 'navigate_and_seek') {
+                    const tSeq = meta.action.target_lesson_seq;
+                    const tSec = meta.action.sec;
+                    seekVideo(tSec, tSeq);
+                    showToast(`🎬 Đang tự động chuyển sang Bài ${tSeq} @ ${meta.action.label || (Math.floor(tSec/60) + ':' + (tSec%60))}`);
+                  }
                 } catch(e) {}
               } else if (curEvent === 'delta') {
                 try {
@@ -1650,7 +1659,10 @@
     function renderMetadataThought(bodyEl, meta) {
       let tagClass = 'tag-grounded';
       let tagLabel = 'Grounded (Xác thực bài học)';
-      if (meta.retrieval_status === 'out_of_lesson') {
+      if (meta.intent === 'confirm_navigation') {
+        tagClass = 'tag-grounded';
+        tagLabel = `Action: Điều hướng Bài ${meta.target_lesson_seq || '?'}`;
+      } else if (meta.retrieval_status === 'out_of_lesson') {
         tagClass = 'tag-out';
         tagLabel = `Out-of-Lesson (Bài tương lai: Seq ${meta.target_lesson_seq || '?'})`;
       } else if (meta.retrieval_status === 'coverage_gap') {

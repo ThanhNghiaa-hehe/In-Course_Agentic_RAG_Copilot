@@ -215,8 +215,15 @@ class ChatService:
             f"Chunks={len(final_state['retrieved_chunks'])}"
         )
 
-        # 2. Xử lý Fast-Path (Chào hỏi xã giao, cảm ơn, danh tính, ngoài lề)
+        # 2. Xử lý Fast-Path (Chào hỏi xã giao, cảm ơn, danh tính, ngoài lề, hoặc xác nhận điều hướng đàm thoại)
         if not final_state["is_course_query"]:
+            act = final_state.get("action")
+            target_seq = final_state.get("target_lesson_seq")
+            auto_seek = None
+            if act and act.get("type") == "navigate_and_seek":
+                target_seq = act.get("target_lesson_seq")
+                auto_seek = act.get("sec")
+
             fast_metadata = StreamMetadataEvent(
                 session_id=session_id,
                 turn_count=turn_count,
@@ -226,7 +233,9 @@ class ChatService:
                 is_approximate=False,
                 retrieval_status="fast_path",
                 is_low_confidence=False,
-                target_lesson_seq=None,
+                target_lesson_seq=target_seq,
+                auto_seek_sec=auto_seek,
+                action=act,
                 suggested_timestamps=[],
                 sources=[]
             )
@@ -301,7 +310,8 @@ class ChatService:
                 presence_penalty=0.5,
                 frequency_penalty=0.5,
                 stop=["\n\n\n", "Học viên:", "Sinh viên:", "<|im_end|>"],
-                stream=True
+                stream=True,
+                timeout=8.0
             )
 
             retrieval_status = final_state.get("retrieval_status", "coverage_gap")
@@ -311,8 +321,9 @@ class ChatService:
                 if chunk.choices and chunk.choices[0].delta.content:
                     token = chunk.choices[0].delta.content
 
-                    # Deterministic Decoding Guardrail: Chặn sinh thẻ timestamp nếu không phải grounded hoặc không có chunks
-                    if (retrieval_status != "grounded" or not retrieved_chunks) and ("<timestamp" in token or "</timestamp>" in token):
+                    # Deterministic Decoding Guardrail: Chặn sinh thẻ timestamp nếu không có mốc nào được bảo chứng
+                    has_verified_ts = bool(final_state.get("suggested_timestamps"))
+                    if (not has_verified_ts) and ("<timestamp" in token or "</timestamp>" in token):
                         continue
 
                     # Tri-Layer Anti-CJK Token Leakage Guardrail (Tầng 2 - Backend Streaming Sanitizer)

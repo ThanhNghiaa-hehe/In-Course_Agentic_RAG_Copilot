@@ -18,9 +18,9 @@ class SuggestedTimestamp(BaseModel):
 
 
 class RouterClassification(BaseModel):
-    intent: Literal["chit_chat", "out_of_scope", "course_query"] = Field(
+    intent: Literal["chit_chat", "out_of_scope", "course_query", "confirm_navigation"] = Field(
         ...,
-        description="Ý định người dùng: chào hỏi xã giao, ngoài lề, hoặc câu hỏi bài học"
+        description="Ý định người dùng: chào hỏi xã giao, ngoài lề, câu hỏi bài học, hoặc xác nhận hành động đàm thoại"
     )
     direct_response: Optional[str] = Field(
         default=None,
@@ -35,7 +35,7 @@ class RouterClassification(BaseModel):
 class StreamMetadataEvent(BaseModel):
     session_id: Optional[str] = Field(default=None, description="Mã phiên hội thoại được đồng bộ với LangGraph Checkpointer")
     turn_count: int = Field(default=1, description="Thứ tự lượt đối thoại trong phiên hiện tại")
-    intent: Literal["chit_chat", "out_of_scope", "course_query"] = "course_query"
+    intent: Literal["chit_chat", "out_of_scope", "course_query", "confirm_navigation", "rate_limited"] = "course_query"
     suggested_timestamps: List[SuggestedTimestamp] = Field(default_factory=list)
     retrieved_chunk_count: int = 0
     used_fast_path: bool = False
@@ -46,6 +46,10 @@ class StreamMetadataEvent(BaseModel):
     auto_seek_sec: Optional[int] = Field(
         default=None,
         description="Mốc giây video để Frontend tự động nhảy (seekTo) ngay lập tức tại miligiây thứ 350 (Ưu tiên 2: Fast-Path Progressive Streaming)"
+    )
+    action: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="Lệnh điều khiển tương tác (ví dụ: navigate_and_seek) do Agent kích hoạt khi học viên xác nhận đàm thoại"
     )
     sources: List[Dict[str, Any]] = Field(
         default_factory=list,

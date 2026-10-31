@@ -57,8 +57,13 @@ class AgentState(TypedDict):
     is_approximate: bool
     is_low_confidence: bool
     target_lesson_seq: Optional[int]
+    future_best_chunk: Optional[Dict[str, Any]]
     suggested_timestamps: List[Dict[str, Any]]
     sources: List[Dict[str, Any]]
+
+    # 4b. Điều hướng đàm thoại đa lượt (Conversational Navigation Agent)
+    pending_navigation: Optional[Dict[str, Any]]
+    action: Optional[Dict[str, Any]]
 
     # 5. Đóng gói Prompt Socratic & Danh sách ChatML cho LLM Generation
     system_prompt: str
@@ -115,6 +120,38 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     router = get_intent_router()
     history = state.get("messages", [])
     raw_prompt = state["prompt"]
+    pending_nav = state.get("pending_navigation")
+
+    # Kiểm tra xác nhận đàm thoại đa lượt (Conversational Navigation Confirmation - Zero Regex NLI)
+    if pending_nav:
+        is_confirmed, conf_score = router.check_confirmation(raw_prompt)
+        if is_confirmed:
+            target_seq = pending_nav.get("lesson_seq")
+            target_sec = pending_nav.get("sec", 0)
+            target_lbl = pending_nav.get("label", "")
+            logger.info(
+                f"[LangGraph:router_node] Xác nhận chuyển bài thành công qua NLI ({conf_score*100:.1f}%): "
+                f"Bài {target_seq} @ {target_lbl} ({target_sec}s)"
+            )
+            direct_resp = (
+                f"Đã rõ! Mình đang chuyển bạn sang **Bài {target_seq}** tại mốc **{target_lbl}** "
+                f"để bạn theo dõi video bài giảng ngay nhé! 🎬"
+            )
+            return {
+                "intent": "confirm_navigation",
+                "direct_response": direct_resp,
+                "is_course_query": False,
+                "target_lesson_seq": target_seq,
+                "action": {
+                    "type": "navigate_and_seek",
+                    "target_lesson_seq": target_seq,
+                    "sec": target_sec,
+                    "label": target_lbl
+                },
+                "pending_navigation": None
+            }
+        else:
+            logger.info("[LangGraph:router_node] Học viên đặt câu hỏi khác, tự động xóa pending_navigation.")
 
     # Nếu đang trong luồng hội thoại, kết hợp câu hỏi gần nhất của User làm ngữ cảnh toán học
     if history:
@@ -135,7 +172,9 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     return {
         "intent": classification.intent,
         "direct_response": classification.direct_response,
-        "is_course_query": classification.is_course_query
+        "is_course_query": classification.is_course_query,
+        "pending_navigation": None,
+        "action": None
     }
 
 
@@ -173,7 +212,8 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
         "retrieved_chunks": retrieval_res.chunks,
         "retrieval_status": retrieval_res.status,
         "is_low_confidence": retrieval_res.is_low_confidence,
-        "target_lesson_seq": retrieval_res.target_lesson_seq
+        "target_lesson_seq": retrieval_res.target_lesson_seq,
+        "future_best_chunk": getattr(retrieval_res, "future_best_chunk", None)
     }
 
 
@@ -192,6 +232,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     suggested_timestamps: List[Dict[str, Any]] = []
     sources: List[Dict[str, Any]] = []
     has_approximate = False
+    new_pending_nav: Optional[Dict[str, Any]] = None
 
     if retrieval_status == "grounded":
         for chunk in chunks:
@@ -247,13 +288,40 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     elif retrieval_status == "out_of_lesson":
         active_system_prompt = OUT_OF_LESSON_PROMPT
         target_desc = f"Bài {target_lesson_seq}" if target_lesson_seq else "các bài học sau"
+        f_chunk = state.get("future_best_chunk")
+        future_ts_info = ""
+        new_pending_nav = None
+        if f_chunk and f_chunk.get("start_sec") is not None:
+            f_sec = int(f_chunk["start_sec"])
+            f_lbl = f_chunk.get("start_label", f"{f_sec//60:02d}:{f_sec%60:02d}")
+            suggested_timestamps.append({
+                "sec": f_sec,
+                "label": f_lbl,
+                "title": f_chunk.get("video_title", f"Bài {target_lesson_seq}"),
+                "lesson_seq": target_lesson_seq
+            })
+            new_pending_nav = {
+                "lesson_seq": target_lesson_seq,
+                "sec": f_sec,
+                "label": f_lbl,
+                "title": f_chunk.get("video_title", f"Bài {target_lesson_seq}")
+            }
+            future_ts_info = (
+                f"\n\n[MỐC VIDEO BÀI GIẢNG TƯƠNG LAI]\n"
+                f"- Bài học giảng dạy: Bài {target_lesson_seq}\n"
+                f"- Mốc thời gian: {f_lbl} (giây {f_sec})\n"
+                f"- Thẻ click-to-seek bắt buộc chèn: <timestamp sec=\"{f_sec}\" lesson=\"{target_lesson_seq}\">{f_lbl}</timestamp>\n"
+                f"- CHỈ THỊ ĐÀM THOẠI: Kết thúc câu trả lời bằng câu hỏi gợi mở: "
+                f"\"Bạn có muốn mình chuyển sang Bài {target_lesson_seq} và mở ngay đoạn video này cho bạn không?\""
+            )
+
         user_message_content = f"""[CÂU HỎI CỦA HỌC VIÊN]
 {state['prompt']}
 
 [TIẾN ĐỘ BÀI HỌC]
 - Khóa học: {state['course_id']}
 - Bài học hiện tại của học viên: Bài {state['lesson_seq']}
-- Bài học giảng dạy nội dung này: {target_desc}"""
+- Bài học giảng dạy nội dung này: {target_desc}{future_ts_info}"""
 
     else:  # coverage_gap
         active_system_prompt = COVERAGE_GAP_PROMPT
@@ -270,7 +338,8 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
         "suggested_timestamps": suggested_timestamps,
         "sources": sources,
         "system_prompt": active_system_prompt,
-        "user_message_content": user_message_content
+        "user_message_content": user_message_content,
+        "pending_navigation": new_pending_nav
     }
 
 
@@ -471,7 +540,9 @@ def reset_session_state(session_id: str) -> None:
         "messages": [],
         "turn_count": 0,
         "conversation_summary": None,
-        "assembled_messages": []
+        "assembled_messages": [],
+        "pending_navigation": None,
+        "action": None
     })
     # Đồng bộ đặt lại lịch sử tần suất trong Rate Limiter
     get_session_rate_limiter().reset_session(session_id)
