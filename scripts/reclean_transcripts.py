@@ -114,14 +114,32 @@ def reclean_single_target(raw_or_chunk_file: Path):
                     "end": s.get("end", 0),
                     "text": c_text
                 })
+        with open(raw_or_chunk_file, "w", encoding="utf-8") as rf:
+            json.dump(cleaned_segments, rf, ensure_ascii=False, indent=2)
         chunks = time_aware_chunking(cleaned_segments, min_duration=60, max_duration=90, overlap=15)
         print(f"   Tạo lại {len(chunks)} chunks chuẩn hóa từ {len(cleaned_segments)} raw segments.")
     else:
         # Trường hợp B: Tệp chứa chunks đã cắt -> Chuẩn hóa lại text của từng chunk
         for c in data:
-            c["raw_text"] = normalize_text(c.get("raw_text", ""))
+            c["raw_text"] = normalize_text(c.get("raw_text") or c.get("text", ""))
+            if "text" in c:
+                c["text"] = c["raw_text"]
             chunks.append(c)
         print(f"   Chuẩn hóa lại văn bản cho {len(chunks)} chunks có sẵn.")
+
+        # Đồng thời kiểm tra nếu có raw_segments trong thư mục thì làm sạch luôn
+        raw_sibling = sub_dir / f"{lesson_id}_raw_segments.json"
+        if raw_sibling.exists():
+            try:
+                with open(raw_sibling, "r", encoding="utf-8") as rf:
+                    raw_data = json.load(rf)
+                for s in raw_data:
+                    if "text" in s:
+                        s["text"] = normalize_text(s["text"])
+                with open(raw_sibling, "w", encoding="utf-8") as rf:
+                    json.dump(raw_data, rf, ensure_ascii=False, indent=2)
+            except Exception as e:
+                print(f"   [Cảnh báo] Không thể đồng bộ raw_segments: {e}")
 
     if not chunks:
         print("   [Bỏ qua] Không có chunks hợp lệ.")

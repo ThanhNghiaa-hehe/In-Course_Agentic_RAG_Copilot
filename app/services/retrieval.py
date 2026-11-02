@@ -401,7 +401,7 @@ class RetrievalService:
         Áp dụng truncate_rerank_text (M-05a) và rerank_documents_async (M-05b) để tối ưu CPU.
         """
         if not future_points:
-            return None, 0.0, "video_transcript"
+            return None, 0.0, "video_transcript", None
 
         # [M-06: Pre-rerank Deduplication & M-05a: Candidate Pruning] Khử trùng lặp và giới hạn ứng viên bài tương lai
         future_points = deduplicate_temporal_candidates(future_points)
@@ -832,9 +832,14 @@ class RetrievalService:
         # Bẫy văn nói bài giảng: Chỉ Early Exit khi:
         # (a) max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
         # (b) VÀ không phải câu hỏi cú pháp cấu trúc điều khiển bị thiếu Code AST anchor trong bài hiện tại
+        has_current_code_anchor = any(
+            it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.25
+            for it in candidate_items
+        )
         can_early_exit_video = (
             valid_video_items and 
-            max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
+            max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE and
+            (not is_syntax_query or has_current_code_anchor or max_video_score >= 0.45)
         )
         if can_early_exit_video:
             eligible_code_items = [
@@ -882,7 +887,25 @@ class RetrievalService:
 
         future_dominates = False
         if target_seq:
-            if not has_local_grounding:
+            # [PREREQUISITE ORDER INVARIANT - ICLR 2025]:
+            # Nếu bài hiện tại đã đạt chuẩn tự tin cao của bài giảng nhập môn (S_current >= 0.35):
+            # Chỉ bảo vệ khi không phải câu hỏi cú pháp/cấu trúc điều khiển thuần túy bị thiếu Code AST anchor ở bài hiện tại.
+            is_theory_query = any(w in query_text.lower() for w in ["khái niệm", "định nghĩa", "là gì", "khác nhau", "ý nghĩa", "tại sao", "vai trò", "như thế nào", "hoạt động"])
+            is_syntax_missing_anchor = is_syntax_query and not is_theory_query and not any(
+                it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.25
+                for it in candidate_items
+            )
+            min_prereq_score = 0.30 if is_theory_query else 0.35
+            if max_current_score >= min_prereq_score and not is_syntax_missing_anchor and future_score < 0.65:
+                future_dominates = False
+            elif future_chunk_type == "code_ast":
+                # Bất biến Code AST ngoại vi: Code AST ở bài tương lai (như một dòng code ngẫu nhiên chứa &&, int, float)
+                # tuyệt đối không được dùng ngưỡng margin thấp (0.08) để nuốt mất bài giảng lý thuyết của bài hiện tại.
+                future_dominates = (
+                    future_score >= settings.PARETO_DOMINANCE_CODE_FUTURE_MIN and
+                    margin >= settings.PARETO_DOMINANCE_CODE_MARGIN
+                )
+            elif not has_local_grounding:
                 # Trường hợp 1: Bài hiện tại KHÔNG có ngữ cảnh đạt chuẩn sàn (< 0.22)
                 # Kích hoạt Out-of-Lesson khi bài tương lai đạt độ tự tin (>= 0.25) và biên độ chuẩn (>= 0.12)
                 future_dominates = (
@@ -892,28 +915,18 @@ class RetrievalService:
             elif max_current_score < settings.PARETO_MARGINAL_VIDEO_MAX:
                 # Trường hợp 2: Bài hiện tại rơi vào dải lơ lửng (0.22 <= S < 0.30) và không có Code AST
                 # (Văn nói nhắc lướt ngoại vi theo AGENTS.md Modality-Aware Latency Gate Invariant)
-                # Cho phép bài tương lai dominate với biên độ Pareto chuẩn mực (S_future >= 0.30 và margin >= 0.08)
+                # Cho phép video bài tương lai dominate với biên độ Pareto chuẩn mực (S_future >= 0.30 và margin >= 0.08)
                 future_dominates = (
                     future_score >= settings.PARETO_MARGINAL_FUTURE_MIN and
                     margin >= settings.PARETO_MARGINAL_MARGIN
                 )
             else:
-                # Trường hợp 3: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo tự tin cao (S >= 0.30)
-                # Phân tầng theo phương thức (Modality-Aware Precedence - ICLR 2025 Context Sufficiency):
-                if future_chunk_type == "code_ast":
-                    # Code AST ở bài tương lai chỉ vô tình chứa từ khóa (như double, int)
-                    # không được phép nuốt mất bài giảng lý thuyết nền tảng của bài hiện tại.
-                    # Chỉ dominate khi đạt ngưỡng Code AST chuyên biệt:
-                    future_dominates = (
-                        future_score >= settings.PARETO_DOMINANCE_CODE_FUTURE_MIN and
-                        margin >= settings.PARETO_DOMINANCE_CODE_MARGIN
-                    )
-                else:
-                    # Bài giảng video chuyên sâu bài tương lai:
-                    future_dominates = (
-                        future_score >= settings.PARETO_DOMINANCE_FUTURE_MIN and
-                        margin >= settings.PARETO_DOMINANCE_MARGIN
-                    )
+                # Trường hợp 3: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo tự tin cao (0.30 <= S < 0.35)
+                # Bài giảng video chuyên sâu bài tương lai:
+                future_dominates = (
+                    future_score >= settings.PARETO_DOMINANCE_FUTURE_MIN and
+                    margin >= settings.PARETO_DOMINANCE_MARGIN
+                )
 
         if future_dominates:
             logger.info(

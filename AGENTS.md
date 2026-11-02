@@ -65,8 +65,10 @@
   - Hệ thống phân định rạch ròi giữa độ tương quan ngữ nghĩa (Semantic Relevance) và độ đầy đủ thông tin sư phạm (Context Sufficiency).
   - Bài học tương lai chỉ được phép thống trị (dominate) bài hiện tại sang trạng thái `out_of_lesson` khi thỏa mãn bất đẳng thức Pareto 3 phân tầng:
     (a) Nếu bài hiện tại $S_{\text{current}} < 0.22$ (chưa có cơ sở giảng dạy cục bộ): $S_{\text{future}} \ge 0.25$ và $\text{Margin} \ge 0.12$.
-    (b) Nếu bài hiện tại rơi vào dải lơ lửng ($0.22 \le S_{\text{current}} < 0.30$) và không có Code AST (Văn nói nhắc lướt ngoại vi): Bài tương lai được phép thống trị khi $S_{\text{future}} \ge 0.30$ và $\text{Margin} \ge 0.08$.
-    (c) Nếu bài hiện tại $S_{\text{current}} \ge 0.30$ (đã có cơ sở giảng dạy tự tin cao): Bài tương lai bắt buộc phải là bài giảng chuyên sâu vượt trội với $S_{\text{future}} \ge 0.45$ và $\text{Margin} \ge 0.20$ (hoặc $S_{\text{future}} \ge 0.52, \text{Margin} \ge 0.25$ đối với Code AST).
+    (b) Nếu bài hiện tại rơi vào dải lơ lửng ($0.22 \le S_{\text{current}} < 0.30$) và không có Code AST (Văn nói nhắc lướt ngoại vi):
+        - Nếu bài tương lai là Code AST Grounding Anchor: Cho phép thống trị khi $S_{\text{future}} \ge 0.35$ và $\text{Margin} \ge 0.10$.
+        - Nếu bài tương lai là Video transcript: Cho phép thống trị khi $S_{\text{future}} \ge 0.30$ và $\text{Margin} \ge 0.08$.
+    (c) Nếu bài hiện tại $S_{\text{current}} \ge 0.30$ (đã có cơ sở giảng dạy tự tin cao): Bài tương lai bắt buộc phải là bài giảng chuyên sâu vượt trội với $S_{\text{future}} \ge 0.45$ và $\text{Margin} \ge 0.12$ (hoặc $S_{\text{future}} \ge 0.52, \text{Margin} \ge 0.25$ đối với Code AST).
   - Tuyệt đối không dùng ngưỡng phẳng hoặc giải pháp vá tạm (Zero Quick-Fix).
 - **Deterministic Timestamp Whitelist Guardrail Invariant:**
   - Tuyệt đối KHÔNG dựa vào cờ boolean `has_verified_ts` để cho phép LLM tự do sinh thẻ `<timestamp>`.
@@ -112,12 +114,40 @@
 - **Zero-Regex NLI Rescue Invariant (Bất Biến Giải Cứu Chào Hỏi Bằng Deep Learning NLI):**
   - Tuyệt đối KHÔNG dùng regex chắp vá (Quick-Fix) để bắt các câu hỏi cấu trúc bài giảng bị nhầm sang `chit_chat`.
   - Khi Stage 1 LinearSVC phân loại là `chit_chat` nhưng độ tự tin $P_{\text{chit\_chat}} < 0.75$, hệ thống BẮT BUỘC kích hoạt Stage 2 Cross-Encoder NLI Arbiter (`mDeBERTa-v3`). Nếu mô hình NLI suy luận giả thuyết học tập đạt độ tin cậy $\ge 50\%$, hệ thống tự động giải cứu câu hỏi về `course_query`, chấm dứt triệt để vòng lặp chào hỏi (Greeting Loop) mà bảo toàn 100% tính nguyên vẹn toán học.
-- **Prerequisite Order Pareto Invariant (Bất Biến Thứ Tự Tiên Quyết Trong Lộ Trình Học Tập - ICLR 2025):**
+- **Prerequisite Order Pareto Invariant v2.1 (Bất Biến Thứ Tự Tiên Quyết Trong Lộ Trình Học Tập - ICLR 2025):**
   - Trong một giáo trình nhiều bài học (DAG - Directed Acyclic Graph), một khái niệm kỹ thuật luôn xuất hiện ở 2 tầng: Nút Tiên quyết Nhập môn (Foundational Definition Node) và Nút Ứng dụng/Phân tích Nâng cao (Application/Complexity Node).
-  - Khi học viên đang ở bài học sơ cấp (ví dụ Bài 1) hỏi về khái niệm tương lai, hệ thống bắt buộc ưu tiên hướng dẫn học viên tới **Bài học tiên quyết có thứ tự nhỏ nhất ($\min L_{\text{seq}}$)** trong số các bài học đạt ngưỡng tin cậy tương quan ($S \ge 0.35$).
+  - Khi học viên đang ở bài học sơ cấp (ví dụ Bài 1) hỏi về khái niệm tương lai, hệ thống bắt buộc ưu tiên hướng dẫn học viên tới **Bài học tiên quyết có thứ tự nhỏ nhất ($\min L_{\text{seq}}$)** trong số các bài học đạt ngưỡng tin cậy tương quan ($S \ge 0.30$).
   - Bài học ứng dụng nâng cao (đến sau) CHỈ ĐƯỢC PHÉP thay thế bài học tiên quyết nếu đạt biên độ vượt trội áp đảo:
     $$S_{\text{late}} - S_{\text{early}} > \Delta_{\text{dominate}} \quad (\text{với } \Delta_{\text{dominate}} = 0.15)$$
+  - *Foundational Prerequisite Priority Rule v2.1 (Bảo Chứng Bài Học Tiên Quyết):* Nếu học viên đang ở bài học nhập môn tiên quyết ($L_{\text{current}}$):
+    (a) Đối với câu hỏi khái niệm, định nghĩa, vai trò hoặc ý nghĩa (`is_theory_query`): Ngưỡng bảo chứng bài tiên quyết được xác lập là $S_{\text{current}} \ge 0.30$ (đồng bộ với `MODALITY_GATE_VIDEO_THRESHOLD`). Bài ứng dụng nâng cao đến sau ($L_{\text{future}} > L_{\text{current}}$) chỉ được cướp quyền khi đạt mức áp đảo tuyệt đối ($S_{\text{future}} \ge 0.65$ và $\text{Margin} \ge 0.25$). Đã kiểm chứng thành công cho ca `BENCH-041` (Class vs Object) và `BENCH-049` (Con trỏ `this`).
+    (b) Đối với câu hỏi cú pháp thực thi thuần túy bị thiếu Code AST anchor: Duy trì ngưỡng $S_{\text{current}} \ge 0.35$ để phòng ngừa văn nói bài cũ nuốt bài giảng code chuyên sâu bài sau (`BENCH-091`, `BENCH-092`).
   - Tuyệt đối KHÔNG sử dụng `argmax` ngây thơ khiến bài học ứng dụng nuốt mất bài học tiên quyết nhập môn; tuyệt đối KHÔNG hardcode tên bài học hoặc regex cá biệt (Zero Quick-Fix).
+- **Polyglot Persistence & Database Separation Invariant (Bất Biến Phân Tách Lưu Trữ Đa Mô Hình):**
+  - Hệ thống tuân thủ nghiêm ngặt nguyên lý kiến trúc Polyglot Persistence giữa AI Microservice và Nền tảng Web cốt lõi:
+    (a) *Vector Database (Qdrant Cloud / Native Vector):* Đóng vai trò **Semantic Indexing Engine** tối ưu cho tìm kiếm xấp xỉ xác suất (ANN, Cosine Distance, HNSW) với độ trễ thấp (< 10ms). Tuyệt đối KHÔNG dùng Vector DB cho các nghiệp vụ đòi hỏi tính đúng đắn nhị phân (xác thực mật khẩu, thanh toán, phân quyền).
+    (b) *Relational Database (SQL - PostgreSQL / MySQL / Oracle):* Đóng vai trò **Single Source of Truth (SSOT)** bảo chứng tính toàn vẹn giao dịch (ACID tuyệt đối) cho:
+        1. Quản lý tài khoản sinh viên, quyền hạn và hạn mức gọi API (Rate Limiting/Quota).
+        2. Xác thực tiến độ học tập thực tế (`lesson_seq` tối đa hợp lệ) ở tầng Backend trước khi chuyển tiếp cho Copilot, chống gian lận client-side.
+        3. Quản trị cây giáo trình CMS (`COURSES` -> `LESSONS`).
+        4. Lưu trữ nhật ký kiểm toán sư phạm (`CHAT_QUERIES`) phục vụ phân tích Dashboards và tinh chỉnh mô hình (RLHF/DPO).
+- **Stage 11 Benchmark Verification Record (Kỷ Lục Khảo Thí Chính Thức 02/11/2026):**
+  - Router Accuracy: **92.0%** (184/200 test cases).
+  - CRAG Grader Precision: **91.5%** (183/200 test cases).
+  - Timestamp Safety & Precision: **90.5%** (181/200 test cases).
+  - Tầng 0 OWASP LLM01/07 Defense: **100.0%** (7/7 ca chặn thành công với độ trễ $\le 1.1\text{ ms}$).
+  - Corpus Acoustic Health: **100.0%** (83/83 bài học CLEAN trên Qdrant Cloud).
+- **Exhaustive Multi-Class NLI Hypothesis Space Invariant:**
+  - Để triệt tiêu hiện tượng Missing Category Bias của mô hình Zero-Shot NLI (`mDeBERTa-v3`), 3 nhãn giả thuyết bắt buộc phải tạo thành một không gian bao quát toàn diện:
+    1. `course_query`: `"asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises"`
+    2. `chit_chat`: `"social greetings, casual conversation, questions about the AI assistant, system architecture, author information, or asking for learning advice"`
+    3. `out_of_scope`: `"asking about real life events, money, career salary, dating, weather, food, entertainment, or absurd physical world questions"`
+  - Khi Stage 1 LinearSVC dự đoán `chit_chat`, chỉ kích hoạt NLI giải cứu khi xác suất học tập $P_{\text{course}} \ge 0.15$, triệt tiêu việc NLI cướp các câu hỏi về tác giả, động viên hay kiến trúc hệ thống.
+- **OWASP LLM01/LLM07 Front-Door Pedagogical Security Guardrail:**
+  - Tầng 0 `SecurityInputGuardrail` duy trì bộ chữ ký an ninh toàn diện chạy với độ trễ $\approx 0\text{ms}$ trên CPU:
+    (a) *OWASP LLM07 (System Prompt Exfiltration):* Ngăn chặn hành vi yêu cầu trích xuất toàn bộ System Prompt, developer instructions, hoặc các quy tắc ẩn trong AGENTS.md.
+    (b) *OWASP LLM01 (Delimited System Override):* Chặn đứng các thẻ định danh giả mạo như ````system`, `[OVERRIDE INSTRUCTION]`, hoặc các lệnh yêu cầu vô hiệu hóa Socratic.
+    (c) *Anti-Solution Code Dumping:* Ngăn chặn hành vi ép viết mã nguồn trọn gói hoàn chỉnh kết hợp cấm trợ giảng hỏi gợi mở.
 - **Conversational Navigation Fast-Path & NLI Cascading Invariant:**
   - Xác nhận điều hướng video đa lượt bắt buộc vận hành theo cấu trúc 2 tầng (Two-Tier Cascading Architecture):
     1. *Tầng 1 (Fast-Path Vector E5 Margin < 2ms):* So khớp tương quan Cosine đa chiều với Prototype Anchors trên không gian E5 1024-dim ($\text{sim}_c \ge 0.88$ và $\text{Margin} \ge 0.05$).

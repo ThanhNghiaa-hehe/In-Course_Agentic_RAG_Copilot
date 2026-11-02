@@ -113,16 +113,16 @@ class NLIArbiter:
         self._confirm_vecs = None
         self._reject_vecs = None
         self._candidate_labels = [
-            "câu hỏi học tập, tìm hiểu nội dung bài học, giáo trình hoặc kỹ thuật lập trình",
-            "lời chào hỏi, cảm ơn, tạm biệt hoặc giao tiếp xã giao thông thường",
-            "câu hỏi ngoài lề đời sống, thời tiết, giải trí hoặc phim ảnh"
+            "asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises",
+            "social greetings, casual conversation, questions about the AI assistant, system architecture, author information, or asking for learning advice",
+            "asking about real life events, money, career salary, dating, weather, food, entertainment, or absurd physical world questions"
         ]
         self._label_map = {
-            "câu hỏi học tập, tìm hiểu nội dung bài học, giáo trình hoặc kỹ thuật lập trình": "course_query",
-            "lời chào hỏi, cảm ơn, tạm biệt hoặc giao tiếp xã giao thông thường": "chit_chat",
-            "câu hỏi ngoài lề đời sống, thời tiết, giải trí hoặc phim ảnh": "out_of_scope"
+            "asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises": "course_query",
+            "social greetings, casual conversation, questions about the AI assistant, system architecture, author information, or asking for learning advice": "chit_chat",
+            "asking about real life events, money, career salary, dating, weather, food, entertainment, or absurd physical world questions": "out_of_scope"
         }
-        self._template = "Văn bản này có mục đích là {}."
+        self._template = "The user is {}."
 
     def _get_pipeline(self):
         """Khởi tạo trễ (Lazy Loading) để không làm chậm thời gian khởi động server."""
@@ -343,8 +343,8 @@ class IntentRouter:
                 #    (Dấu hiệu câu hỏi giáo trình/bài tập có đại từ nhân xưng 'thầy', 'bài học này' bị LinearSVC nhầm sang chào hỏi)
                 is_ambiguous = (margin < MARGIN_THRESHOLD)
                 is_potential_study_query = (
-                    (top1_class == "out_of_scope" and p_oos < 0.75 and p_course >= 0.15 and p_chit < 0.35) or
-                    (top1_class == "chit_chat" and p_chit < 0.75)
+                    (top1_class == "out_of_scope" and p_course >= 0.15 and p_chit < 0.35) or
+                    (top1_class == "chit_chat" and p_chit < 0.75 and p_course >= 0.15)
                 )
 
                 if is_ambiguous or is_potential_study_query:

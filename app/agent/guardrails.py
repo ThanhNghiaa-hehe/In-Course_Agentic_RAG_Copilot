@@ -59,15 +59,33 @@ class SecurityInputGuardrail:
             re.compile(
                 r"(?i)\b(give|write|generate|provide)\s+(me\s+)?(the\s+)?full\s+(solution|code)\s+without\s+explaining\b"
             ),
-            # 3. Các mẫu bẻ khóa tiếng Việt tương ứng
+            # 3. Các mẫu bẻ khóa tiếng Việt tương ứng (OWASP LLM01 Vietnamese Signatures)
             re.compile(
-                r"(?i)\bquên\s+(hết|tất\s+cả)\s+(các\s+)?(quy\s+tắc|chỉ\s+dẫn|hướng\s+dẫn|ràng\s+buộc|bảo\s+mật)\b"
+                r"(?i)\b(bỏ\s+qua|quên|hủy\s+bỏ|xóa\s+bỏ)\s+(hết|mọi|tất\s+cả)?\s*(các\s+)?(quy\s+tắc|chỉ\s+thị|hướng\s+dẫn|chỉ\s+dẫn|ràng\s+buộc|bảo\s+mật|thiết\s+lập)\b"
             ),
             re.compile(
-                r"(?i)\bhãy\s+đóng\s+vai\s+(một\s+)?(cỗ\s+máy\s+viết\s+code|bot\s+không\s+giới\s+hạn|hacker)\b"
+                r"(?i)\b(hãy\s+)?đóng\s+vai\s+(một\s+)?(cỗ\s+máy\s+viết\s+code|bot\s+không\s+giới\s+hạn|hacker|bash|terminal|linux|root|hệ\s+điều\s+hành)\b"
+            ),
+            re.compile(
+                r"(?i)\b(bạn\s+là|bây\s+giờ\s+là)\s+(dan|do\s+anything\s+now|jailbreak)\b"
             ),
             re.compile(
                 r"(?i)\bviết\s+(luôn|hộ|toàn\s+bộ)\s+(lời\s+giải|code)\s+(không\s+cần|đừng)\s+(giải\s+thích|hướng\s+dẫn|hỏi)\b"
+            ),
+            # 4. OWASP LLM07: Trích xuất chỉ dẫn hệ thống (System Prompt Exfiltration / Leakage)
+            re.compile(
+                r"(?i)\b(in|hiển\s+thị|xuất|cho\s+xem|in\s+ra|show|leak|print|reveal|display)\s+(toàn\s+bộ|hết)?\s*(system\s+prompt|developer\s+instructions?|hướng\s+dẫn\s+hệ\s+thống|chỉ\s+thị\s+nhà\s+phát\s+triển|agents\.md)\b"
+            ),
+            # 5. OWASP LLM01: Thẻ chèn mã định danh giả mạo (Delimited System Tag Injection)
+            re.compile(
+                r"(?i)(```\s*system|\[\s*OVERRIDE\s+INSTRUCTION\s*\]|vô\s+hiệu\s+hóa\s+(thẻ\s+timestamp|socratic|quy\s+tắc))"
+            ),
+            # 6. Anti-Solution Dumping: Ép viết mã nguồn hoàn chỉnh và cấm gợi mở sư phạm
+            re.compile(
+                r"(?i)\b(đừng\s+hỏi\s+gợi\s+mở|đừng\s+gợi\s+mở\s+nữa|đừng\s+có\s+nói\s+nhảm\s+gợi\s+ý|không\s+cần\s+gợi\s+ý)\b"
+            ),
+            re.compile(
+                r"(?i)\b(viết|cung\s+cấp|gửi|cho)\s+full\s+code\b"
             ),
         ]
 
