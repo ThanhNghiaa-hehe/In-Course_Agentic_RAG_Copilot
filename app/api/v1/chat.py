@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from sse_starlette.sse import EventSourceResponse
 
-from app.schemas.chat import ChatRequest
+from app.schemas.chat import ChatRequest, ChatExportLogRequest, ChatExportLogResponse
 from app.services.chat import ChatService, get_chat_service
+from app.services.telemetry_critic import get_telemetry_critic_service
 
 router = APIRouter(prefix="/chat", tags=["Socratic Chat"])
 
@@ -51,3 +52,25 @@ async def reset_chat_session(session_id: str):
         "session_id": session_id,
         "message": "Đã đặt lại trạng thái phiên hội thoại và bộ nhớ đa lượt thành công."
     }
+
+
+@router.post(
+    "/export-log",
+    summary="Xuất log phiên hội thoại Playground ra thư mục máy chủ và đánh giá nhận xét",
+    description="""
+    Nhận telemetry log của toàn bộ phiên từ Playground, tự động lưu file JSON & Markdown Report
+    vào thư mục logs/playground_debug/, đồng thời trả về đánh giá nhận xét Socratic & RAG chi tiết.
+    """,
+    response_model=ChatExportLogResponse
+)
+async def export_chat_log(request: ChatExportLogRequest):
+    critic_service = get_telemetry_critic_service()
+    session_id = request.session_id or "session_unknown"
+    result = critic_service.export_and_critique_session(
+        session_id=session_id,
+        course_id=request.course_id or "cpp-core",
+        lesson_seq=request.lesson_seq or 1,
+        turns=request.turns,
+        client_timestamp=request.client_timestamp
+    )
+    return result

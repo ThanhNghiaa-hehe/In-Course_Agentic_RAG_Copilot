@@ -201,6 +201,17 @@
   - Tuyệt đối KHÔNG phụ thuộc duy nhất vào System Prompt để chặn tiếng Trung trên các mô hình nguồn gốc Trung Quốc (như Qwen Coder).
   - Bắt buộc kích hoạt tầng Stream Sanitizer kép (Backend `ChatService` và Frontend `formatMarkdownWithTimestamps`) với biểu thức chính quy Unicode CJK `[\u4e00-\u9fff]`.
   - Tự động thay thế các cụm từ toán học/khoảng giá trị phổ biến (`大约从` -> `khoảng từ`, `浮点数` -> `số thực`, `。` -> `.`) và thanh trừng triệt để mọi ký tự Hán tự đơn lẻ trước khi gửi đến người dùng, bảo đảm 100% phản hồi thuần Tiếng Việt & Anh ngữ kỹ thuật.
+- **Factual Faithfulness & Anti-Extrapolation Invariant (Bất Biến Bảo Chứng Sự Thật Kỹ Thuật & Chống Ngoại Suy - ICLR 2025):**
+  - Mọi phân tích kỹ thuật trong câu trả lời bắt buộc bám sát nghiêm ngặt nội dung đã được xác thực trong `[NGỮ CẢNH BÀI GIẢNG]`.
+  - Khi ngữ cảnh bài giảng video chỉ dạy cú pháp và thao tác căn bản, TUYỆT ĐỐI CẤM LLM tự ý ngoại suy hoặc bịa đặt kiến thức phần cứng, thanh ghi, hoặc cơ chế bộ nhớ sâu ngoài bài giảng.
+  - *Bất biến kỹ thuật C/C++ chuẩn mực:* Mảng nhiều chiều trong C/C++ LUÔN LUÔN được lưu trữ liên tục theo cơ chế **Row-Major Order (hàng ngang trước, các phần tử trên cùng một hàng nằm liền kề nhau trong RAM)**: `arr[0][0], arr[0][1], arr[0][2]...` rồi mới đến hàng kế tiếp `arr[1][0]`. Tuyệt đối cấm nói Column-Major (hàng dọc trước).
+  - *Socratic Response Budget:* Cấm liệt kê lan man 7–10 gạch đầu dòng gây loãng ngữ cảnh và tăng nguy cơ ảo giác; bắt buộc cô đọng từ 2 đến tối đa 3 điểm cốt lõi then chốt nhất kèm câu hỏi gợi mở.
+- **Outro Semantic Trap & Multi-Grounding Chronological Retrieval Invariant (Bất Biến Bẫy Đoạn Kết & Truy Xuất Đa Mốc Lộ Trình):**
+  - Tuyệt đối KHÔNG áp dụng các giải pháp vá tạm (Zero Quick-Fix) như ép mốc cứng `00:01` hoặc dùng ngưỡng ma thuật `sec > 90% duration` khi xử lý các câu hỏi về bài học tương lai.
+  - Một video bài giảng dài (30–80 phút) không bao giờ được đại diện bởi phép tính cận thị `argmax(score)` phân đoạn đơn.
+  - Đối với các câu hỏi tìm hiểu bài học tương lai (`out_of_lesson`), hệ thống bắt buộc áp dụng **Multi-Grounding Chronological Retrieval**: Trích xuất tập hợp mốc lộ trình tuyến tính (Mốc lý thuyết mở đầu $\rightarrow$ Mốc minh họa code $\rightarrow$ Mốc bài tập mở rộng/dặn dò) kết hợp **Query Entity Expansion** từ Syllabus SSOT để bảo toàn tính đầy đủ thông tin mà không làm gãy các câu hỏi bài tập cuối video.
+- **Dimension-Aware Curriculum Disambiguation Rule (Quy Tắc Phân Định Số Chiều Giáo Trình):**
+  - Trong logic phân giải bài học của `CurriculumService`, hệ thống bắt buộc phân định rạch ròi số chiều dữ liệu (1D vs 2D): Khi câu hỏi chứa từ khóa "2 chiều", tuyệt đối không cho phép các bài học có tiêu đề chứa "1 chiều" cướp quyền (và ngược lại), loại trừ các từ dừng ngữ cảnh chung chung như "lập trình", "dữ liệu".
 
 
 

@@ -703,6 +703,354 @@
       transform: translateY(0);
     }
 
+    /* --- AUTO-EXPORT TOGGLE & CRITIQUE MODAL (DEBUG OBSERVABILITY) --- */
+    .auto-export-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .auto-export-toggle:hover {
+      background: var(--brand-primary-light);
+      color: var(--brand-primary);
+    }
+    .auto-export-toggle input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: var(--brand-primary);
+      width: 12px;
+      height: 12px;
+    }
+
+    .critique-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .critique-modal-container {
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      max-width: 840px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .critique-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+    }
+    .critique-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .critique-header-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--brand-primary-light);
+      color: var(--brand-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .critique-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .critique-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+    .critique-badge.badge-mid {
+      background: #fefce8;
+      color: #ca8a04;
+      border-color: #fde047;
+    }
+    .critique-badge.badge-low {
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fecaca;
+    }
+    .critique-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .critique-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .critique-close-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+    .critique-modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .critique-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .critique-kpi-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .critique-kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .critique-kpi-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 4px 0 2px 0;
+    }
+    .critique-kpi-val.text-green { color: #059669; }
+    .critique-kpi-val.text-amber { color: #d97706; }
+    .critique-kpi-val.text-red { color: #dc2626; }
+    .critique-kpi-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .critique-file-box {
+      background: #f1f5f9;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .critique-file-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .critique-file-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .critique-path-text {
+      font-size: 11.5px;
+      color: var(--brand-primary);
+      background: #ffffff;
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+      font-family: var(--font-mono);
+    }
+    .critique-file-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .critique-btn-sm {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .critique-btn-sm:hover {
+      background: #f8fafc;
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
+    }
+    .critique-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .critique-turns-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .critique-turn-card {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      padding: 12px 14px;
+      transition: border-color 0.15s;
+    }
+    .critique-turn-card:hover {
+      border-color: #cbd5e1;
+    }
+    .critique-turn-card.card-violation {
+      border-left: 3px solid #ef4444;
+      background: #fffafa;
+    }
+    .critique-turn-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .critique-turn-prompt {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .critique-turn-score {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .critique-turn-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .critique-tag {
+      background: #f1f5f9;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+    }
+    .critique-turn-summary {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #334155;
+    }
+    .critique-markdown-box {
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .critique-md-toggle {
+      background: #f8fafc;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+    .critique-md-toggle:hover {
+      background: #f1f5f9;
+    }
+    .critique-md-preview {
+      margin: 0;
+      padding: 14px;
+      background: #0f172a;
+      color: #f1f5f9;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 1.6;
+      max-height: 240px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .critique-modal-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f8fafc;
+    }
+    .critique-btn-secondary {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      color: #475569;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .critique-btn-secondary:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+    .critique-btn-primary {
+      background: var(--brand-primary);
+      border: none;
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .critique-btn-primary:hover {
+      background: #4338ca;
+    }
+
     pre {
       background: #181b34;
       color: #f8fafc;
@@ -992,7 +1340,11 @@
           </div>
         </div>
         <div class="chat-header-actions">
-          <button class="export-telemetry-btn" onclick="exportSessionTelemetry()" title="Xuất toàn bộ Telemetry của phiên (JSON)">Xuất Log</button>
+          <label class="auto-export-toggle" title="Tự động lưu log vào logs/playground_debug/ sau mỗi lượt chat">
+            <input type="checkbox" id="auto-export-checkbox" onchange="toggleAutoExport(this.checked)">
+            <span>Tự lưu</span>
+          </label>
+          <button class="export-telemetry-btn" id="export-log-btn" onclick="exportSessionTelemetry()" title="Xuất toàn bộ Telemetry của phiên và xem nhận xét kiểm toán">Xuất Log & Nhận Xét</button>
           <button class="clear-btn" onclick="clearChat()" title="Xóa lịch sử hội thoại">Làm mới</button>
           <button class="collapse-chat-btn" onclick="toggleChat(false)" title="Thu gọn khung chat (Mở rộng video)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1537,6 +1889,11 @@
 
         renderTelemetryBar(assistantElem, telemetryEntry, turnIndex);
 
+        // Tự động xuất log ra logs/playground_debug nếu bật tùy chọn Auto-Export
+        if (isAutoExport) {
+          exportSessionTelemetry(true);
+        }
+
       } catch (err) {
         textElem.innerHTML = `<span style="color:#dc2626">Không thể kết nối tới mô hình LLM (${err.message}). Khi bạn bật lại Kaggle Notebook, hệ thống sẽ tự động kết nối lại ngay lập tức!</span>`;
       } finally {
@@ -1592,19 +1949,244 @@
       });
     }
 
-    function exportSessionTelemetry() {
+    // --- AUTO-EXPORT & CRITIQUE DIAGNOSTIC STATE ---
+    let currentCritiqueData = null;
+    let isAutoExport = localStorage.getItem('auto_export_logs') === 'true';
+
+    function initAutoExportUI() {
+      const cb = document.getElementById('auto-export-checkbox');
+      if (cb) cb.checked = isAutoExport;
+    }
+
+    function toggleAutoExport(checked) {
+      isAutoExport = checked;
+      localStorage.setItem('auto_export_logs', checked ? 'true' : 'false');
+      showToast(checked ? 'Đã bật tự động lưu log sau mỗi lượt!' : 'Đã tắt tự động lưu log.');
+    }
+
+    async function exportSessionTelemetry(isSilent = false) {
       if (sessionTelemetryLog.length === 0) {
-        showToast('Chưa có lượt đối thoại nào để xuất!');
+        if (!isSilent) showToast('Chưa có lượt đối thoại nào để xuất!');
         return;
       }
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sessionTelemetryLog, null, 2));
+
+      const btn = document.getElementById('export-log-btn');
+      const originalText = btn ? btn.innerText : 'Xuất Log';
+      if (!isSilent && btn) {
+        btn.disabled = true;
+        btn.innerText = 'Đang phân tích...';
+      }
+
+      const sid = (sessionTelemetryLog.length > 0 && sessionTelemetryLog[0].session_id) 
+        ? sessionTelemetryLog[0].session_id 
+        : getOrCreateSessionId();
+
+      try {
+        const payload = {
+          session_id: sid,
+          course_id: activeCourse,
+          lesson_seq: currentLesson ? currentLesson.seq : 1,
+          turns: sessionTelemetryLog,
+          client_timestamp: new Date().toISOString()
+        };
+
+        const response = await fetch('/api/v1/chat/export-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('Máy chủ trả về mã lỗi: ' + response.status);
+        }
+
+        const data = await response.json();
+        currentCritiqueData = data;
+
+        if (!isSilent) {
+          showToast(`Đã lưu log & nhận xét vào ${data.relative_path}!`);
+          openCritiqueModal(data);
+        } else {
+          console.log(`[AutoExport] Đã lưu tự động: ${data.relative_path}`);
+        }
+      } catch (err) {
+        console.error('Lỗi khi xuất log lên server:', err);
+        if (!isSilent) {
+          showToast('Lỗi lưu server: ' + err.message + '. Chuyển sang tải về máy...');
+          downloadSessionJSON();
+        }
+      } finally {
+        if (!isSilent && btn) {
+          btn.disabled = false;
+          btn.innerText = originalText;
+        }
+      }
+    }
+
+    function openCritiqueModal(data) {
+      const modal = document.getElementById('critique-modal');
+      if (!modal) return;
+
+      // 1. Header Badges & Subtitle
+      const scoreBadge = document.getElementById('critique-score-badge');
+      if (scoreBadge) {
+        scoreBadge.innerText = `${data.overall_health_score}/100`;
+        scoreBadge.className = 'critique-badge';
+        if (data.overall_health_score < 75) scoreBadge.classList.add('badge-low');
+        else if (data.overall_health_score < 90) scoreBadge.classList.add('badge-mid');
+      }
+
+      const sub = document.getElementById('critique-folder-sub');
+      if (sub) {
+        sub.innerText = `Đã lưu tự động tại: ${data.relative_path}`;
+      }
+
+      // 2. KPI Cards
+      const kpiScore = document.getElementById('critique-kpi-score');
+      if (kpiScore) {
+        kpiScore.innerText = `${data.overall_health_score}/100`;
+        kpiScore.className = 'critique-kpi-val ' + (data.overall_health_score >= 90 ? 'text-green' : (data.overall_health_score >= 75 ? 'text-amber' : 'text-red'));
+      }
+      const kpiLabel = document.getElementById('critique-kpi-label');
+      if (kpiLabel) kpiLabel.innerText = data.rating_label;
+
+      const kpiSocratic = document.getElementById('critique-kpi-socratic');
+      if (kpiSocratic) {
+        kpiSocratic.innerText = `${data.socratic_compliance_rate}%`;
+        kpiSocratic.className = 'critique-kpi-val ' + (data.socratic_compliance_rate >= 80 ? 'text-green' : 'text-red');
+      }
+
+      const kpiTtft = document.getElementById('critique-kpi-ttft');
+      if (kpiTtft) kpiTtft.innerText = `${data.avg_ttft_ms} ms`;
+
+      const kpiTurns = document.getElementById('critique-kpi-turns');
+      if (kpiTurns) kpiTurns.innerText = `${data.total_turns} lượt`;
+
+      // 3. File Path Box
+      const pathText = document.getElementById('critique-json-path');
+      if (pathText) pathText.innerText = data.relative_path;
+
+      // 4. Turn-by-Turn Diagnostic Cards
+      const container = document.getElementById('critique-turns-list');
+      if (container) {
+        container.innerHTML = '';
+        (data.turn_critiques || []).forEach(tc => {
+          const card = document.createElement('div');
+          card.className = 'critique-turn-card' + (!tc.socratic_compliance ? ' card-violation' : '');
+
+          let scoreBadgeColor = tc.turn_score >= 90 ? '#ecfdf5;color:#059669;' : (tc.turn_score >= 75 ? '#fefce8;color:#ca8a04;' : '#fef2f2;color:#dc2626;');
+          let socraticTag = tc.socratic_compliance 
+            ? '<span class="critique-tag" style="background:#ecfdf5;color:#059669;font-weight:700;">✓ Socratic OK</span>'
+            : '<span class="critique-tag" style="background:#fef2f2;color:#dc2626;font-weight:700;">✗ Vi Phạm Socratic</span>';
+
+          let violationsHtml = '';
+          if (tc.socratic_violations && tc.socratic_violations.length > 0) {
+            violationsHtml = `<div style="margin-top:6px;color:#dc2626;font-size:11.5px;font-weight:600;">
+              ${tc.socratic_violations.map(v => `<div>❌ ${escapeHtml(v)}</div>`).join('')}
+            </div>`;
+          }
+
+          let warningsHtml = '';
+          if (tc.warnings && tc.warnings.length > 0) {
+            warningsHtml = `<div style="margin-top:4px;color:#d97706;font-size:11px;">
+              ${tc.warnings.map(w => `<div>⚠️ ${escapeHtml(w)}</div>`).join('')}
+            </div>`;
+          }
+
+          let meritsHtml = '';
+          if (tc.merits && tc.merits.length > 0) {
+            meritsHtml = `<div style="margin-top:4px;color:#059669;font-size:11px;">
+              ${tc.merits.map(m => `<div>✅ ${escapeHtml(m)}</div>`).join('')}
+            </div>`;
+          }
+
+          card.innerHTML = `
+            <div class="critique-turn-header">
+              <span class="critique-turn-prompt">#${tc.turn}: "${escapeHtml(tc.prompt)}"</span>
+              <span class="critique-turn-score" style="background:${scoreBadgeColor}">${tc.turn_score}đ</span>
+            </div>
+            <div class="critique-turn-meta">
+              <span class="critique-tag">Intent: ${tc.intent}</span>
+              ${tc.used_fast_path ? '<span class="critique-tag" style="background:#eff6ff;color:#2563eb;font-weight:600;">Fast-Path</span>' : ''}
+              <span class="critique-tag">CRAG: ${tc.retrieval_status}</span>
+              <span class="critique-tag">TTFT: ${tc.latency.ttft_ms}ms</span>
+              <span class="critique-tag">${tc.latency.tokens_per_sec} tok/s</span>
+              ${socraticTag}
+            </div>
+            ${violationsHtml}
+            ${warningsHtml}
+            ${meritsHtml}
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      // 5. Markdown Report Content
+      const mdPre = document.getElementById('critique-md-content');
+      if (mdPre) {
+        mdPre.textContent = data.critique_markdown;
+        mdPre.style.display = 'none';
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeCritiqueModal() {
+      const modal = document.getElementById('critique-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function toggleMarkdownReport() {
+      const pre = document.getElementById('critique-md-content');
+      const icon = document.getElementById('md-toggle-icon');
+      if (!pre) return;
+      const isOpen = pre.style.display !== 'none';
+      pre.style.display = isOpen ? 'none' : 'block';
+      if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    function copyFilePath(type) {
+      if (!currentCritiqueData) return;
+      const path = type === 'json' ? currentCritiqueData.relative_path : currentCritiqueData.relative_critique_path;
+      navigator.clipboard.writeText(path).then(() => {
+        showToast('Đã copy đường dẫn: ' + path);
+      }).catch(() => {
+        prompt('Đường dẫn file:', path);
+      });
+    }
+
+    function copyMarkdownReport() {
+      if (!currentCritiqueData || !currentCritiqueData.critique_markdown) {
+        showToast('Chưa có báo cáo để copy!');
+        return;
+      }
+      navigator.clipboard.writeText(currentCritiqueData.critique_markdown).then(() => {
+        showToast('Đã sao chép toàn bộ báo cáo Markdown vào Clipboard!');
+      }).catch(() => {
+        prompt('Nội dung Markdown:', currentCritiqueData.critique_markdown);
+      });
+    }
+
+    function downloadSessionJSON() {
+      if (!sessionTelemetryLog || sessionTelemetryLog.length === 0) {
+        showToast('Chưa có dữ liệu để tải!');
+        return;
+      }
+      const sid = (sessionTelemetryLog.length > 0 && sessionTelemetryLog[0].session_id) 
+        ? sessionTelemetryLog[0].session_id 
+        : getOrCreateSessionId();
+      const exportObj = currentCritiqueData || {
+        session_id: sid,
+        turns: sessionTelemetryLog
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `telemetry_session_${new Date().toISOString().replace(/[:.]/g, '-')}.json`);
+      downloadAnchor.setAttribute("download", `telemetry_session_${(sid || 'session')}_${new Date().toISOString().replace(/[:.]/g, '-')}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
-      showToast(`Đã xuất ${sessionTelemetryLog.length} lượt telemetry thành công!`);
+      showToast('Đã tải tệp JSON về máy!');
     }
 
     function showToast(text) {
@@ -1718,7 +2300,8 @@
     }
 
     function escapeHtml(s) {
-      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      if (s == null) return '';
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function scrollChatToBottom() {
@@ -1786,8 +2369,99 @@
       renderLessonList(CPP_OOP_LESSONS);
       selectLesson(currentLesson);
       initChatState();
+      initAutoExportUI();
     });
   </script>
+
+  <!-- Critique & Debug Modal (Kiểm Toán & Nhận Xét Phiên Chat) -->
+  <div id="critique-modal" class="critique-modal-backdrop" style="display:none;" onclick="if(event.target === this) closeCritiqueModal()">
+    <div class="critique-modal-container" onclick="event.stopPropagation()">
+      <div class="critique-modal-header">
+        <div class="critique-title-group">
+          <div class="critique-header-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <div>
+            <div class="critique-header-title">
+              <span>Kiểm Toán & Nhận Xét Phiên Chat</span>
+              <span id="critique-score-badge" class="critique-badge">100/100</span>
+            </div>
+            <p id="critique-folder-sub" class="critique-subtitle">Đã lưu tự động tại: logs/playground_debug/session_...</p>
+          </div>
+        </div>
+        <button class="critique-close-btn" onclick="closeCritiqueModal()" title="Đóng">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="critique-modal-body">
+        <!-- KPI Stats Grid -->
+        <div class="critique-kpi-grid">
+          <div class="critique-kpi-card">
+            <div class="critique-kpi-label">Điểm Chất Lượng Phiên</div>
+            <div id="critique-kpi-score" class="critique-kpi-val text-green">100/100</div>
+            <div id="critique-kpi-label" class="critique-kpi-desc">Xuất sắc (SOTA Quality)</div>
+          </div>
+          <div class="critique-kpi-card">
+            <div class="critique-kpi-label">Tuân Thủ Socratic</div>
+            <div id="critique-kpi-socratic" class="critique-kpi-val text-green">100%</div>
+            <div class="critique-kpi-desc">Không giải bài hộ học viên</div>
+          </div>
+          <div class="critique-kpi-card">
+            <div class="critique-kpi-label">TTFT Trung Bình</div>
+            <div id="critique-kpi-ttft" class="critique-kpi-val">0 ms</div>
+            <div class="critique-kpi-desc">Độ trễ phản hồi tức thì</div>
+          </div>
+          <div class="critique-kpi-card">
+            <div class="critique-kpi-label">Tổng Lượt Chat</div>
+            <div id="critique-kpi-turns" class="critique-kpi-val">0 lượt</div>
+            <div id="critique-kpi-fastpath" class="critique-kpi-desc">0 lượt Fast-Path</div>
+          </div>
+        </div>
+
+        <!-- File Path Action Box -->
+        <div class="critique-file-box">
+          <div class="critique-file-info">
+            <span class="critique-file-tag">Đã lưu tại:</span>
+            <code id="critique-json-path" class="critique-path-text">logs/playground_debug/...</code>
+          </div>
+          <div class="critique-file-actions">
+            <button class="critique-btn-sm" onclick="copyFilePath('json')">Copy Path</button>
+            <button class="critique-btn-sm" onclick="downloadSessionJSON()">Tải JSON</button>
+          </div>
+        </div>
+
+        <!-- Turn by Turn Diagnostic List -->
+        <div class="critique-section-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Nhận Xét Chi Tiết Từng Lượt (Turn-by-Turn Diagnostic)
+        </div>
+        <div id="critique-turns-list" class="critique-turns-container">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Markdown Report View Toggle -->
+        <div class="critique-markdown-box">
+          <div class="critique-md-toggle" onclick="toggleMarkdownReport()">
+            <span>Xem Toàn Văn Báo Cáo Kiểm Toán (Markdown Report)</span>
+            <svg id="md-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <pre id="critique-md-content" class="critique-md-preview" style="display:none;"></pre>
+        </div>
+      </div>
+
+      <div class="critique-modal-footer">
+        <button class="critique-btn-secondary" onclick="copyMarkdownReport()">Sao Chép Báo Cáo Markdown</button>
+        <button class="critique-btn-primary" onclick="closeCritiqueModal()">Đã Hiểu & Tiếp Tục Debug</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Floating Action Button: Hiển thị khi chat thu gọn -->
   <button id="chat-fab-toggle" class="chat-fab-toggle" onclick="toggleChat(true)" title="Mở Trợ Giảng Socratic AI">

@@ -56,3 +56,46 @@ class StreamMetadataEvent(BaseModel):
         description="Danh sách nguồn trích dẫn phục vụ hiển thị source cards trên UI"
     )
 
+
+class ChatExportLogRequest(BaseModel):
+    session_id: Optional[str] = Field(default=None, description="Mã phiên hội thoại")
+    course_id: Optional[str] = Field(default="cpp-core", description="Khóa học hiện tại")
+    lesson_seq: Optional[int] = Field(default=1, description="Thứ tự bài học hiện tại")
+    turns: List[Dict[str, Any]] = Field(default_factory=list, description="Danh sách các turn telemetry của phiên")
+    client_timestamp: Optional[str] = Field(default=None, description="Thời điểm xuất phía client")
+
+
+class TurnCritiqueModel(BaseModel):
+    turn: int
+    prompt: str
+    intent: str
+    retrieval_status: str
+    target_lesson_seq: Optional[int] = None
+    used_fast_path: bool = False
+    latency: Dict[str, Any]
+    socratic_compliance: bool
+    socratic_violations: List[str] = Field(default_factory=list)
+    warnings: List[str] = Field(default_factory=list)
+    merits: List[str] = Field(default_factory=list)
+    turn_score: int
+    critique_summary: str
+
+
+class ChatExportLogResponse(BaseModel):
+    status: str
+    message: str
+    file_path: str
+    relative_path: str
+    critique_file_path: str
+    relative_critique_path: str
+    session_id: str
+    total_turns: int
+    overall_health_score: int
+    rating_label: str
+    socratic_compliance_rate: float
+    avg_ttft_ms: int
+    summary: str
+    critique_markdown: str
+    turn_critiques: List[TurnCritiqueModel]
+
+
