@@ -220,7 +220,7 @@ class CurriculumService:
     def get_lesson_timestamps(self, seq: int) -> List[Dict[str, Any]]:
         """Lấy danh sách các mốc thời gian video chuẩn xác của bài học."""
         prefix = f"lesson-{seq:02d}:"
-        ts_list = [{"sec": 1, "label": "00:01", "title": "Mở đầu bài học"}]
+        ts_list: List[Dict[str, Any]] = []
         for k, sec in self._bindings.items():
             if k.startswith(prefix):
                 part = k.split(":")[1].replace("function_", "").replace("header_", "").replace("type_", "")
@@ -290,11 +290,6 @@ class CurriculumService:
                 # Chỉ xem xét bài đến trước nếu điểm cực sát (chênh <= 0.02)
                 if best_course_score - cand_score <= 0.02:
                     if cand_lesson.get("seq", 999) < chosen_lesson.get("seq", 999):
-                        # Tránh trường hợp hỏi '2 chiều' nhưng bài đến trước là '1 chiều'
-                        if "2 chiều" in norm_prompt and "1 chiều" in cand_lesson.get("title", "").lower():
-                            continue
-                        if "1 chiều" in norm_prompt and "2 chiều" in cand_lesson.get("title", "").lower():
-                            continue
                         if _has_topical_overlap(cand_lesson, prompt):
                             chosen_score, chosen_lesson = cand_score, cand_lesson
 
@@ -430,8 +425,14 @@ class CurriculumService:
             related_lessons = [
                 f"- **Bài {les.get('seq')}**: {les.get('title')}"
                 for les in self._all_lessons
-                if les.get("course_id") == target_course and les.get("seq") in [53, 54, 56, 69, 75, 83]
+                if les.get("course_id") == target_course and les.get("is_foundational", False)
             ]
+            if not related_lessons:
+                related_lessons = [
+                    f"- **Bài {les.get('seq')}**: {les.get('title')}"
+                    for les in self._all_lessons
+                    if les.get("course_id") == target_course
+                ][:4]
             related_str = "\n".join(related_lessons[:4])
             return (
                 f"Chào bạn! Chủ đề bạn đang quan tâm thuộc về khóa học **{target_course_name}** (`{target_course}`), "

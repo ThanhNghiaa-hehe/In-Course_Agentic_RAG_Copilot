@@ -220,6 +220,20 @@ def sigmoid(z: float) -> float:
     return float(1.0 / (1.0 + math.exp(-clipped)))
 
 
+def compute_length_compensated_sigmoid(z: float, query_text: str) -> float:
+    """
+    Length-Compensated Temperature Scaling cho Cross-Encoder:
+    Chuẩn hóa logit z theo độ dài câu hỏi |q|:
+    scaled_logit = (z - 0.0) / (1.25 * math.sqrt(max(len(query.split()), 5) / 10.0))
+    cross_score = 1.0 / (1.0 + math.exp(-scaled_logit))
+    """
+    num_words = max(len(query_text.split()), 5)
+    temp_scale = 1.25 * math.sqrt(num_words / 10.0)
+    scaled_logit = (z - 0.0) / temp_scale
+    clipped = max(-250.0, min(250.0, scaled_logit))
+    return float(1.0 / (1.0 + math.exp(-clipped)))
+
+
 def grade_document_relevance(query: str, item: Dict[str, Any], min_confidence: float = 0.40) -> str:
     """
     CRAG Document Relevance Grader (Yan et al., Meta AI 2024 & Self-RAG ICLR 2024):
@@ -430,10 +444,14 @@ class RetrievalService:
             raw_logits = await self.embedding_service.rerank_documents_async(query=query_text, documents=future_texts)
             scores = []
             alpha = 1.0 - settings.CRAG_RRF_WEIGHT
+            all_rrfs = [float(p.score) for p in future_points] if future_points else [0.0]
+            min_rrf = min(all_rrfs) if all_rrfs else 0.0
+            max_rrf = max(all_rrfs) if all_rrfs else 1.0
             for idx, val in enumerate(raw_logits):
-                raw_prob = sigmoid(val)
+                raw_prob = compute_length_compensated_sigmoid(val, query_text)
                 rrf_raw = float(future_points[idx].score) if idx < len(future_points) else 0.0
-                rrf_norm = min(1.0, max(0.0, rrf_raw / 0.8333))
+                rrf_norm = (rrf_raw - min_rrf) / (max_rrf - min_rrf + 1e-6)
+                rrf_norm = min(1.0, max(0.0, rrf_norm))
                 fused_score = min(1.0, max(0.0, alpha * raw_prob + settings.CRAG_RRF_WEIGHT * rrf_norm))
                 scores.append(fused_score)
         except Exception as re_err:
@@ -549,16 +567,6 @@ class RetrievalService:
             f"[RetrievalService] Query: '{query_text}' | Course: {course_id} | Window: lesson_seq <= {current_lesson_seq}"
         )
 
-        is_syntax_query = bool(
-            re.search(
-                r"(\+\=|\-\=|\*\=|\/\=|\%\=|\+\+|\-\-|==|!=|<=|>=|&&|\|\||<<|>>|%|"
-                r"toán tử|cú pháp|cách viết|viết rút gọn|khai báo|hàm|lớp|class|struct|"
-                r"code|cài đặt|vòng lặp|for|while|do-while|if|else|switch|case|break|continue|"
-                r"vector|string|cin|cout|swap|tham chiếu|pointer|con trỏ)",
-                query_text,
-                re.IGNORECASE
-            )
-        )
 
         # 1. Sinh Dual Vectors bất đồng bộ / fast ONNX (Áp dụng Compiler Error Semantic Bridge nếu có)
         dense_query_text, has_bridge = self.bridge_compiler_error_semantics(query_text)
@@ -569,7 +577,7 @@ class RetrievalService:
         sparse_indices, sparse_values = self.embedding_service.embed_query_sparse(query_text)
 
         # 2. Xây dựng In-HNSW Pre-filter động (Ngăn ngừa triệt để hiện tượng lộ bài học tương lai)
-        query_filter = models.Filter(
+        current_code_filter = models.Filter(
             must=[
                 models.FieldCondition(
                     key="course_id",
@@ -578,21 +586,41 @@ class RetrievalService:
                 models.FieldCondition(
                     key="lesson_seq",
                     range=models.Range(lte=current_lesson_seq)
+                ),
+                models.FieldCondition(
+                    key="content_type",
+                    match=models.MatchValue(value="code_ast")
+                )
+            ]
+        )
+        current_video_filter = models.Filter(
+            must=[
+                models.FieldCondition(
+                    key="course_id",
+                    match=models.MatchValue(value=course_id)
+                ),
+                models.FieldCondition(
+                    key="lesson_seq",
+                    range=models.Range(lte=current_lesson_seq)
+                ),
+                models.FieldCondition(
+                    key="content_type",
+                    match=models.MatchValue(value="video_transcript")
                 )
             ]
         )
 
         # 3. [CHẶNG 6 SÁNG KIẾN 2]: SCATTER-GATHER ASYNC PARALLEL FUTURE PROBING
-        # Phát song song 2 luồng I/O mạng tới Qdrant Cloud:
-        # Task A: Truy vấn bài hiện tại (lesson_seq <= current_lesson_seq)
-        # Task B: Tải trước ứng viên bài tương lai (lesson_seq > current_lesson_seq)
+        # Phát song song 2 luồng I/O mạng tới Qdrant Cloud với cấu trúc Prefetch đối xứng đa phương thức:
+        # Task A: Truy vấn bài hiện tại (Video + Code AST tách biệt)
+        # Task B: Tải trước ứng viên bài tương lai (Video + Code AST tách biệt)
         current_query_coro = self.client.query_points(
             collection_name=settings.QDRANT_COLLECTION_NAME,
             prefetch=[
                 models.Prefetch(
                     query=query_dense,
                     using="dense",
-                    filter=query_filter,
+                    filter=current_video_filter,
                     limit=top_candidates
                 ),
                 models.Prefetch(
@@ -601,12 +629,27 @@ class RetrievalService:
                         values=sparse_values
                     ),
                     using="sparse",
-                    filter=query_filter,
+                    filter=current_video_filter,
                     limit=top_candidates
+                ),
+                models.Prefetch(
+                    query=query_dense,
+                    using="dense",
+                    filter=current_code_filter,
+                    limit=max(4, top_candidates // 2)
+                ),
+                models.Prefetch(
+                    query=models.SparseVector(
+                        indices=sparse_indices,
+                        values=sparse_values
+                    ),
+                    using="sparse",
+                    filter=current_code_filter,
+                    limit=max(4, top_candidates // 2)
                 )
             ],
             query=models.FusionQuery(fusion=models.Fusion.RRF),
-            limit=top_candidates
+            limit=top_candidates + 4
         )
 
         future_fetch_coro = self._fetch_future_points(
@@ -680,9 +723,6 @@ class RetrievalService:
                     manifest_sec = self._code_video_bindings.get(lookup_key)
                     if manifest_sec is not None:
                         approx_vid_sec = manifest_sec
-                    elif approx_vid_sec is None:
-                        lesson_fallback = f"{item['lesson_id']}:function_main"
-                        approx_vid_sec = self._code_video_bindings.get(lesson_fallback)
 
                 parsed_vid_sec = int(approx_vid_sec) if approx_vid_sec is not None else None
                 item.update({
@@ -737,20 +777,23 @@ class RetrievalService:
             min_score_threshold if min_score_threshold is not None else settings.VIDEO_SCORE_THRESHOLD
         )
 
-        # Áp dụng Logistic Sigmoid và Lọc theo ngưỡng phân tầng
+        # Áp dụng Dynamic Min-Max Scaling và Logistic Sigmoid theo ngưỡng phân tầng
         scored_items: List[Dict[str, Any]] = []
         discarded_videos: List[Dict[str, Any]] = []
-        has_high_confidence_code = False
+
+        all_candidate_rrfs = [float(it.get("rrf_score", 0.0)) for it in candidate_items] if candidate_items else [0.0]
+        min_rrf = min(all_candidate_rrfs) if all_candidate_rrfs else 0.0
+        max_rrf = max(all_candidate_rrfs) if all_candidate_rrfs else 1.0
 
         for i, item in enumerate(candidate_items):
             score_val = raw_logits[i] if i < len(raw_logits) else 0.0
-            raw_prob = score_val if is_fallback_rrf else sigmoid(score_val)
+            raw_prob = score_val if is_fallback_rrf else compute_length_compensated_sigmoid(score_val, rerank_query)
 
             # CRAG Joint Confidence Fusion (Meta AI 2024 & Self-RAG ICLR 2024)
-            # Kết hợp điểm xác suất ngữ nghĩa sâu (Cross-Encoder) và độ tương quan từ vựng khách quan (Hybrid RRF)
-            # Không dùng regex hay magic number, đảm bảo tính chuẩn xác toán học
+            # Min-Max Dynamic Scaling trên tập ứng viên thực tế thay thế hoàn toàn phép chia cứng 0.8333
             rrf_raw = float(item.get("rrf_score", 0.0))
-            rrf_norm = min(1.0, max(0.0, rrf_raw / 0.8333))
+            rrf_norm = (rrf_raw - min_rrf) / (max_rrf - min_rrf + 1e-6)
+            rrf_norm = min(1.0, max(0.0, rrf_norm))
             alpha = 1.0 - settings.CRAG_RRF_WEIGHT
             prob = alpha * raw_prob + settings.CRAG_RRF_WEIGHT * rrf_norm
             prob = min(1.0, max(0.0, prob))
@@ -764,8 +807,6 @@ class RetrievalService:
 
             if prob >= threshold:
                 scored_items.append(item)
-                if c_type == "code_ast" and prob >= 0.60:
-                    has_high_confidence_code = True
             else:
                 if c_type == "video_transcript":
                     discarded_videos.append(item)
@@ -799,12 +840,12 @@ class RetrievalService:
         valid_ast_items = [
             it for it in candidate_items
             if it.get("content_type") == "code_ast"
-            and it.get("confidence_score", 0.0) >= settings.MODALITY_GATE_AST_THRESHOLD
+            and it.get("confidence_score", 0.0) >= max(effective_code_threshold, settings.MODALITY_GATE_AST_THRESHOLD)
         ]
         valid_video_items = [
             it for it in candidate_items
             if it.get("content_type") == "video_transcript"
-            and it.get("confidence_score", 0.0) >= settings.MODALITY_GATE_VIDEO_THRESHOLD
+            and it.get("confidence_score", 0.0) >= max(effective_video_threshold, settings.MODALITY_GATE_VIDEO_THRESHOLD)
         ]
         max_video_score = max([it.get("confidence_score", 0.0) for it in valid_video_items], default=0.0)
 
@@ -832,6 +873,7 @@ class RetrievalService:
         # Bẫy văn nói bài giảng: Chỉ Early Exit khi:
         # (a) max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
         # (b) VÀ không phải câu hỏi cú pháp cấu trúc điều khiển bị thiếu Code AST anchor trong bài hiện tại
+        has_code_chunk = any(it.get("content_type") == "code_ast" for it in candidate_items)
         has_current_code_anchor = any(
             it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.25
             for it in candidate_items
@@ -839,7 +881,7 @@ class RetrievalService:
         can_early_exit_video = (
             valid_video_items and 
             max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE and
-            (not is_syntax_query or has_current_code_anchor or max_video_score >= 0.45)
+            (not has_code_chunk or has_current_code_anchor or max_video_score >= 0.45)
         )
         if can_early_exit_video:
             eligible_code_items = [
@@ -851,7 +893,7 @@ class RetrievalService:
                 video_items=valid_video_items,
                 code_items=eligible_code_items,
                 final_top_k=final_top_k,
-                prefer_balanced=(is_syntax_query or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
+                prefer_balanced=(has_code_chunk or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
@@ -888,45 +930,23 @@ class RetrievalService:
         future_dominates = False
         if target_seq:
             # [PREREQUISITE ORDER INVARIANT - ICLR 2025]:
-            # Nếu bài hiện tại đã đạt chuẩn tự tin cao của bài giảng nhập môn (S_current >= 0.35):
-            # Chỉ bảo vệ khi không phải câu hỏi cú pháp/cấu trúc điều khiển thuần túy bị thiếu Code AST anchor ở bài hiện tại.
-            is_theory_query = any(w in query_text.lower() for w in ["khái niệm", "định nghĩa", "là gì", "khác nhau", "ý nghĩa", "tại sao", "vai trò", "như thế nào", "hoạt động"])
-            is_syntax_missing_anchor = is_syntax_query and not is_theory_query and not any(
-                it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.25
-                for it in candidate_items
-            )
-            min_prereq_score = 0.30 if is_theory_query else 0.35
-            if max_current_score >= min_prereq_score and not is_syntax_missing_anchor and future_score < 0.65:
+            # Kiểm tra cấu trúc phương thức: Nếu có Code AST chunk -> xác định là câu hỏi code/cú pháp, ngược lại là lý thuyết.
+            min_prereq_score = 0.35 if has_code_chunk else 0.30
+            if max_current_score >= min_prereq_score and future_score < 0.65:
                 future_dominates = False
-            elif future_chunk_type == "code_ast":
-                # Bất biến Code AST ngoại vi: Code AST ở bài tương lai (như một dòng code ngẫu nhiên chứa &&, int, float)
-                # tuyệt đối không được dùng ngưỡng margin thấp (0.08) để nuốt mất bài giảng lý thuyết của bài hiện tại.
-                future_dominates = (
-                    future_score >= settings.PARETO_DOMINANCE_CODE_FUTURE_MIN and
-                    margin >= settings.PARETO_DOMINANCE_CODE_MARGIN
-                )
-            elif not has_local_grounding:
-                # Trường hợp 1: Bài hiện tại KHÔNG có ngữ cảnh đạt chuẩn sàn (< 0.22)
-                # Kích hoạt Out-of-Lesson khi bài tương lai đạt độ tự tin (>= 0.25) và biên độ chuẩn (>= 0.12)
-                future_dominates = (
-                    future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and
-                    margin >= settings.FUTURE_PROBE_MARGIN
-                )
-            elif max_current_score < settings.PARETO_MARGINAL_VIDEO_MAX:
-                # Trường hợp 2: Bài hiện tại rơi vào dải lơ lửng (0.22 <= S < 0.30) và không có Code AST
-                # (Văn nói nhắc lướt ngoại vi theo AGENTS.md Modality-Aware Latency Gate Invariant)
-                # Cho phép video bài tương lai dominate với biên độ Pareto chuẩn mực (S_future >= 0.30 và margin >= 0.08)
-                future_dominates = (
-                    future_score >= settings.PARETO_MARGINAL_FUTURE_MIN and
-                    margin >= settings.PARETO_MARGINAL_MARGIN
-                )
             else:
-                # Trường hợp 3: Bài hiện tại ĐÃ CÓ ngữ cảnh tham khảo tự tin cao (0.30 <= S < 0.35)
-                # Bài giảng video chuyên sâu bài tương lai:
-                future_dominates = (
-                    future_score >= settings.PARETO_DOMINANCE_FUTURE_MIN and
-                    margin >= settings.PARETO_DOMINANCE_MARGIN
-                )
+                # Hàm Pareto tăng đơn điệu: margin_req = 0.08 + 0.20 * max(0.0, (max_current_score - 0.20) / 0.15)
+                margin_req = 0.08 + 0.20 * max(0.0, (max_current_score - 0.20) / 0.15)
+                if future_chunk_type == "code_ast":
+                    future_dominates = (
+                        future_score >= settings.PARETO_DOMINANCE_CODE_FUTURE_MIN and
+                        margin >= max(margin_req, settings.PARETO_DOMINANCE_CODE_MARGIN)
+                    )
+                else:
+                    future_dominates = (
+                        future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and
+                        margin >= margin_req
+                    )
 
         if future_dominates:
             logger.info(
@@ -953,7 +973,7 @@ class RetrievalService:
                 video_items=valid_video_items,
                 code_items=eligible_code_items,
                 final_top_k=final_top_k,
-                prefer_balanced=(is_syntax_query or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
+                prefer_balanced=(has_code_chunk or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
@@ -970,8 +990,15 @@ class RetrievalService:
         # -------------------------------------------------------------------------
         # TẦNG 3: GRACEFUL DEGRADATION (CRAG Ambiguous State: 0.20 <= S < 0.30)
         # -------------------------------------------------------------------------
-        # Chỉ kích hoạt khi bài tương lai KHÔNG vượt trội, và bài hiện tại có cơ sở tham khảo:
-        # S_current >= 0.20 VÀ S_semantic_raw >= VIDEO_FALLBACK_MIN_THRESHOLD (0.15)
+        # Chỉ kích hoạt khi bài tương lai KHÔNG vượt trội, bài hiện tại có cơ sở tham khảo,
+        # và người gọi không yêu cầu ngưỡng nghiêm ngặt (min_score_threshold < 0.30):
+        if min_score_threshold is not None and min_score_threshold >= 0.30:
+            logger.info(
+                f"[RetrievalService] Tầng 4 Coverage Gap: min_score_threshold ({min_score_threshold}) >= 0.30, "
+                f"bỏ qua Graceful Degradation để bảo toàn bộ lọc ngoài phạm vi."
+            )
+            return RetrievalResult(chunks=[], status="coverage_gap")
+
         low_confidence_items = [
             it for it in candidate_items
             if it.get("confidence_score", 0.0) >= 0.20

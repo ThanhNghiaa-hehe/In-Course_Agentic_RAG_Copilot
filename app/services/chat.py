@@ -79,60 +79,130 @@ def sanitize_timestamp_tags(text: str, valid_secs: set) -> str:
 
 class StreamingTimestampSanitizer:
     """
-    Bộ đệm luồng kiểm chuẩn thẻ Timestamp thời gian thực:
-    - Bắt và đệm thẻ <timestamp ... </timestamp> trong luồng SSE.
-    - Kiểm chứng thuộc tính sec="" đối chiếu với tập Whitelist valid_secs.
-    - Nếu mốc thời gian không nằm trong Whitelist (LLM bịa đặt), lập tức gỡ bỏ thẻ và chỉ phát text trơn.
+    Máy trạng thái hữu hạn (FSM) 3 trạng thái kiểm chuẩn thẻ Timestamp thời gian thực trong luồng SSE:
+    - Trạng thái EMIT: Phát trực tiếp các token văn bản thông thường. Khi gặp ký tự '<' có thể là thẻ mở, chuyển sang ACCUMULATE_TAG.
+    - Trạng thái ACCUMULATE_TAG: Đệm toàn bộ thẻ mở <timestamp sec="X">. Bóc tách sec và đối chiếu Whitelist valid_secs.
+    - Trạng thái STREAM_BODY: Thu thập nhãn hiển thị bên trong cho tới khi gặp </timestamp>.
+      Nếu sec in valid_secs: giữ lại thẻ hoàn chỉnh <timestamp sec="X">label</timestamp>.
+      Nếu sec not in valid_secs hoặc thẻ bị lỗi/cắt cụt: triệt tiêu thẻ, chỉ phát nhãn hiển thị.
+    Hoàn toàn không dùng heuristic xả buffer len > 150.
     """
+    STATE_EMIT = "EMIT"
+    STATE_ACCUMULATE_TAG = "ACCUMULATE_TAG"
+    STATE_STREAM_BODY = "STREAM_BODY"
+
     def __init__(self, valid_secs: set):
         self.valid_secs = valid_secs
+        self.state = self.STATE_EMIT
         self.buffer = ""
+        self.tag_open = ""
+        self.is_valid_sec = False
+        self.body_buffer = ""
 
     def process(self, token: str) -> List[str]:
         self.buffer += token
-        out = []
+        out: List[str] = []
 
         while self.buffer:
-            if "<timestamp" in self.buffer:
-                idx = self.buffer.find("<timestamp")
-                if idx > 0:
-                    out.append(self.buffer[:idx])
-                    self.buffer = self.buffer[idx:]
-
-                close_idx = self.buffer.find("</timestamp>")
-                if close_idx != -1:
-                    tag_end = close_idx + len("</timestamp>")
-                    full_tag = self.buffer[:tag_end]
-                    self.buffer = self.buffer[tag_end:]
-                    sanitized = sanitize_timestamp_tags(full_tag, self.valid_secs)
-                    if sanitized:
-                        out.append(sanitized)
-                else:
-                    if len(self.buffer) > 150:
-                        out.append(self.buffer)
-                        self.buffer = ""
-                    break
-            elif "<" in self.buffer:
-                last_lt = self.buffer.rfind("<")
-                if last_lt > 0:
-                    out.append(self.buffer[:last_lt])
-                    self.buffer = self.buffer[last_lt:]
-                if not "<timestamp".startswith(self.buffer):
+            if self.state == self.STATE_EMIT:
+                lt_idx = self.buffer.find("<")
+                if lt_idx == -1:
                     out.append(self.buffer)
                     self.buffer = ""
-                break
-            else:
-                out.append(self.buffer)
-                self.buffer = ""
-                break
+                    break
+                elif lt_idx > 0:
+                    out.append(self.buffer[:lt_idx])
+                    self.buffer = self.buffer[lt_idx:]
+
+                # Buffer bắt đầu bằng '<'
+                if "<timestamp".startswith(self.buffer):
+                    # Đang khớp một phần của '<timestamp', chờ thêm token
+                    break
+                elif self.buffer.startswith("<timestamp"):
+                    self.state = self.STATE_ACCUMULATE_TAG
+                else:
+                    # Ký tự '<' thông thường không phải thẻ timestamp (ví dụ i < n hoặc template <T>)
+                    out.append(self.buffer[0])
+                    self.buffer = self.buffer[1:]
+
+            elif self.state == self.STATE_ACCUMULATE_TAG:
+                gt_idx = self.buffer.find(">")
+                if gt_idx == -1:
+                    # Chưa đóng thẻ mở, chờ thêm token
+                    break
+
+                full_open_tag = self.buffer[:gt_idx + 1]
+                self.buffer = self.buffer[gt_idx + 1:]
+
+                # Bóc tách thuộc tính sec
+                sec_match = re.search(r'sec=["\']?(\d+)["\']?', full_open_tag)
+                if sec_match:
+                    sec_val = int(sec_match.group(1))
+                    self.is_valid_sec = (sec_val in self.valid_secs)
+                    self.tag_open = full_open_tag
+                else:
+                    self.is_valid_sec = False
+                    self.tag_open = ""
+
+                self.body_buffer = ""
+                self.state = self.STATE_STREAM_BODY
+
+            elif self.state == self.STATE_STREAM_BODY:
+                close_tag = "</timestamp>"
+                close_idx = self.buffer.find(close_tag)
+                if close_idx != -1:
+                    body = self.body_buffer + self.buffer[:close_idx]
+                    self.buffer = self.buffer[close_idx + len(close_tag):]
+
+                    if self.is_valid_sec:
+                        out.append(f"{self.tag_open}{body}{close_tag}")
+                    else:
+                        out.append(body)
+
+                    # Reset trạng thái về EMIT
+                    self.tag_open = ""
+                    self.body_buffer = ""
+                    self.is_valid_sec = False
+                    self.state = self.STATE_EMIT
+                else:
+                    # Tìm tiền tố dài nhất của </timestamp> ở cuối buffer để tránh bị cắt vụn
+                    matched_prefix_len = 0
+                    for p_len in range(min(len(self.buffer), len(close_tag) - 1), 0, -1):
+                        if close_tag.startswith(self.buffer[-p_len:]):
+                            matched_prefix_len = p_len
+                            break
+
+                    if matched_prefix_len > 0:
+                        safe_chunk = self.buffer[:-matched_prefix_len]
+                        self.body_buffer += safe_chunk
+                        self.buffer = self.buffer[-matched_prefix_len:]
+                    else:
+                        self.body_buffer += self.buffer
+                        self.buffer = ""
+                    break
+
         return out
 
     def flush(self) -> List[str]:
-        if not self.buffer:
-            return []
-        res = sanitize_timestamp_tags(self.buffer, self.valid_secs)
+        out: List[str] = []
+        if self.state == self.STATE_STREAM_BODY:
+            # Thẻ bị cắt cụt trước khi có </timestamp>: triệt tiêu thẻ mở, chỉ phát nhãn hiển thị
+            body = self.body_buffer + self.buffer
+            if body:
+                out.append(body)
+        elif self.state == self.STATE_ACCUMULATE_TAG:
+            # Thẻ mở bị cắt cụt: triệt tiêu hoàn toàn thẻ mở lỗi
+            pass
+        elif self.state == self.STATE_EMIT:
+            if self.buffer:
+                out.append(self.buffer)
+
         self.buffer = ""
-        return [res] if res else []
+        self.body_buffer = ""
+        self.tag_open = ""
+        self.is_valid_sec = False
+        self.state = self.STATE_EMIT
+        return out
 
 
 class ChatService:
