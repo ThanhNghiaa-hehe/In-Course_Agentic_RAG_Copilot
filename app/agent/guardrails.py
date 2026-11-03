@@ -74,7 +74,7 @@ class SecurityInputGuardrail:
             ),
             # 4. OWASP LLM07: Trích xuất chỉ dẫn hệ thống (System Prompt Exfiltration / Leakage)
             re.compile(
-                r"(?i)\b(in|hiển\s+thị|xuất|cho\s+xem|in\s+ra|show|leak|print|reveal|display)\s+(toàn\s+bộ|hết)?\s*(system\s+prompt|developer\s+instructions?|hướng\s+dẫn\s+hệ\s+thống|chỉ\s+thị\s+nhà\s+phát\s+triển|agents\.md)\b"
+                r"(?i)\b(in|hiển\s+thị|xuất|cho\s+xem|in\s+ra|show|leak|print|reveal|display)\s+(toàn\s+bộ|hết)?\s*(system\s+prompt|developer\s+instructions?|hướng\s+dẫn\s+hệ\s+thống|chỉ\s+thị\s+nhà\s+phát\s+triển)\b"
             ),
             # 5. OWASP LLM01: Thẻ chèn mã định danh giả mạo (Delimited System Tag Injection)
             re.compile(
@@ -84,21 +84,38 @@ class SecurityInputGuardrail:
             re.compile(
                 r"(?i)\b(đừng\s+hỏi\s+gợi\s+mở|đừng\s+gợi\s+mở\s+nữa|đừng\s+có\s+nói\s+nhảm\s+gợi\s+ý|không\s+cần\s+gợi\s+ý)\b"
             ),
-            re.compile(
-                r"(?i)\b(viết|cung\s+cấp|gửi|cho)\s+full\s+code\b"
-            ),
         ]
 
     def validate_input(self, prompt: str) -> Tuple[bool, Optional[str]]:
         """
         Kiểm tra tính an toàn của câu hỏi đầu vào:
-        Trả về (True, None) nếu an toàn.
-        Trả về (False, SECURITY_REFUSAL_RESPONSE) nếu phát hiện tấn công.
+        - Context-Aware Socratic Input Gate: Nếu câu hỏi có chứa code học viên tự viết
+          hoặc thông báo lỗi lập trình (segmentation fault, compile error, error:, warning:),
+          cho phép đi tiếp vào chế độ Socratic Debugging, không bao giờ từ chối phục vụ.
+        - Trả về (True, None) nếu an toàn.
+        - Trả về (False, SECURITY_REFUSAL_RESPONSE) nếu phát hiện tấn công cố ý.
         """
         if not prompt or not prompt.strip():
             return True, None
 
         normalized_prompt = prompt.strip()
+        lower_prompt = normalized_prompt.lower()
+
+        # Context-Aware Socratic Input Gate:
+        # Nếu học viên cung cấp code hoặc log lỗi compiler / runtime để nhờ giải thích hoặc debug
+        error_signatures = [
+            "segmentation fault", "compile error", "compiler error", "error:", "warning:",
+            "core dumped", "undefined reference", "stack overflow", "runtime error"
+        ]
+        has_compiler_error = any(sig in lower_prompt for sig in error_signatures)
+        has_student_code = "```" in prompt or any(
+            kw in lower_prompt for kw in ["int main", "void main", "#include", "std::cin", "std::cout", "for(", "while(", "return 0"]
+        )
+
+        if has_compiler_error or has_student_code:
+            logger.info("[SecurityInputGuardrail] Context-Aware Socratic Gate: Kích hoạt chế độ Socratic Debugging.")
+            return True, None
+
         for pattern in self._attack_patterns:
             if pattern.search(normalized_prompt):
                 logger.warning(
@@ -108,6 +125,36 @@ class SecurityInputGuardrail:
                 return False, SECURITY_REFUSAL_RESPONSE
 
         return True, None
+
+
+def compute_ast_cyclomatic_complexity(node) -> int:
+    """
+    Đo lường độ phức tạp chu trình AST Cyclomatic Complexity (McCabe 1976):
+    M = E - N + 2P
+    Đối với một hàm đơn (P = 1), M = 1 + số lượng điểm quyết định rẽ nhánh (Decision Points).
+    Các điểm rẽ nhánh trong Tree-sitter C++ AST gồm:
+    - Cấu trúc điều khiển: if_statement, for_statement, while_statement, do_statement, case_statement
+    - Toán tử điều kiện: conditional_expression (? :)
+    - Phép toán logic: binary_expression có toán tử '&&' hoặc '||'
+    """
+    decision_types = {
+        "if_statement", "for_statement", "while_statement", "do_statement",
+        "case_statement", "conditional_expression"
+    }
+    complexity = 1
+    stack = [node]
+    while stack:
+        curr = stack.pop()
+        if curr.type in decision_types:
+            complexity += 1
+        elif curr.type == "binary_expression":
+            for child in curr.children:
+                if child.type in ("&&", "||"):
+                    complexity += 1
+                    break
+        for child in curr.children:
+            stack.append(child)
+    return complexity
 
 
 class SocraticOutputGuardrail:
@@ -138,7 +185,7 @@ class SocraticOutputGuardrail:
         Kiểm tra và hiệu chỉnh văn bản đầu ra của LLM:
         - Trích xuất các khối mã nguồn ```cpp ... ```
         - Phát hiện và triệt tiêu vi phạm P10 (sinh trọn vẹn chương trình có #include và int main()).
-        - Cắt tỉa các hàm giải hoàn chỉnh (> 6 câu lệnh thân hàm) thành khung gợi mở Socratic Scaffolding.
+        - Cắt tỉa các hàm giải hoàn chỉnh (Cyclomatic Complexity M >= 3) thành khung gợi mở Socratic Scaffolding.
         - Trả về (was_modified, safe_text).
         """
         if not text or "```" not in text:
@@ -175,8 +222,10 @@ class SocraticOutputGuardrail:
 
                         body_node = next((c for c in fnode.children if c.type == "compound_statement"), None)
                         if body_node:
-                            # Nếu là hàm main khi có include, HOẶC hàm có logic hoàn chỉnh (>= 8 AST children)
-                            if (is_main_func and has_include) or len(body_node.children) >= 8:
+                            # Đo độ hoàn chỉnh của code bằng Tree-sitter AST Cyclomatic Complexity (M = E - N + 2P)
+                            cyclomatic_m = compute_ast_cyclomatic_complexity(body_node)
+                            # Nếu là hàm main khi có include, HOẶC hàm có logic hoàn chỉnh (M >= 3)
+                            if (is_main_func and has_include) or (cyclomatic_m >= 3):
                                 body_bytes = current_code.encode("utf-8")[body_node.start_byte:body_node.end_byte].decode("utf-8")
                                 socratic_body = (
                                     "{\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n"

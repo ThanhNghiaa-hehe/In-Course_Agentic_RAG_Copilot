@@ -58,24 +58,32 @@ class TelemetryCriticService:
         merits = []
 
         # 1. Kiểm tra ranh giới mã nguồn Socratic (SOCRATIC CODE POLICY)
-        has_include = bool(re.search(r'#\s*include\b', response_text))
-        has_main = bool(re.search(r'\b(?:int|void)\s+main\s*\(', response_text))
-        
-        if has_include:
-            violations.append("Vi phạm ranh giới mã nguồn: Xuất hiện chỉ thị khai báo thư viện `#include`.")
-        if has_main:
-            violations.append("Vi phạm nghiêm trọng ranh giới Socratic: Sinh toàn bộ hàm `main()`, giải bài tập thay vì định hướng tư duy.")
-            
-        # Kiểm tra độ dài khối code C++
+        # Chỉ phạt vi phạm khi #include hoặc int main() nằm trong một khối mã nguồn Markdown (```) có độ dài > 10 dòng.
+        # Miễn trừ hoàn toàn khi xuất hiện trong câu văn giải thích lý thuyết.
         code_blocks = re.findall(r'```(?:cpp|c\+\+)?\s*([\s\S]*?)```', response_text)
         total_code_lines = 0
+        has_include_in_long_code = False
+        has_main_in_long_code = False
+
         for block in code_blocks:
             lines = [l for l in block.strip().split("\n") if l.strip()]
-            total_code_lines += len(lines)
-            
+            num_lines = len(lines)
+            total_code_lines += num_lines
+
+            if num_lines > 10:
+                if re.search(r'#\s*include\b', block):
+                    has_include_in_long_code = True
+                if re.search(r'\b(?:int|void)\s+main\s*\(', block):
+                    has_main_in_long_code = True
+
+        if has_include_in_long_code:
+            violations.append("Vi phạm ranh giới mã nguồn: Xuất hiện chỉ thị khai báo thư viện `#include` trong khối mã nguồn dài (> 10 dòng).")
+        if has_main_in_long_code:
+            violations.append("Vi phạm nghiêm trọng ranh giới Socratic: Sinh toàn bộ hàm `main()` trong khối mã nguồn dài (> 10 dòng), giải bài tập thay vì định hướng tư duy.")
+
         if total_code_lines > 25:
             warnings.append(f"Khối mã nguồn minh họa khá dài ({total_code_lines} dòng). Nên ưu tiên dùng Mã giả (Pseudocode) hoặc đoạn code khuyết.")
-        elif total_code_lines > 0 and not has_main and not has_include:
+        elif total_code_lines > 0 and not has_main_in_long_code and not has_include_in_long_code:
             merits.append("Minh họa cú pháp ngắn gọn, tuân thủ nguyên tắc không giải bài hộ.")
 
         # Kiểm tra câu hỏi gợi mở Socratic
@@ -88,7 +96,7 @@ class TelemetryCriticService:
         # 2. Kiểm toán thẻ Timestamp Video
         ts_tags = re.findall(r'<timestamp\s+sec=["\'](\d+)["\'][^>]*>(.*?)</timestamp>', response_text)
         whitelist_secs = {t.get("sec") for t in suggested_ts if "sec" in t}
-        
+
         unverified_ts = []
         for sec_str, label in ts_tags:
             sec_val = int(sec_str)
@@ -103,12 +111,12 @@ class TelemetryCriticService:
         # 3. Đánh giá Router & CRAG
         if used_fast_path:
             merits.append(f"Kích hoạt Fast-Path thành công (< {total_ms}ms), tối ưu tài nguyên và độ trễ phản hồi.")
-            
+
         # Tính điểm lượt này (0 - 100)
         score = 100
-        if has_main:
+        if has_main_in_long_code:
             score -= 40
-        if has_include:
+        if has_include_in_long_code:
             score -= 20
         if unverified_ts:
             score -= 15
