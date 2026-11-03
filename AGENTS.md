@@ -212,6 +212,37 @@
   - Đối với các câu hỏi tìm hiểu bài học tương lai (`out_of_lesson`), hệ thống bắt buộc áp dụng **Multi-Grounding Chronological Retrieval**: Trích xuất tập hợp mốc lộ trình tuyến tính (Mốc lý thuyết mở đầu $\rightarrow$ Mốc minh họa code $\rightarrow$ Mốc bài tập mở rộng/dặn dò) kết hợp **Query Entity Expansion** từ Syllabus SSOT để bảo toàn tính đầy đủ thông tin mà không làm gãy các câu hỏi bài tập cuối video.
 - **Dimension-Aware Curriculum Disambiguation Rule (Quy Tắc Phân Định Số Chiều Giáo Trình):**
   - Trong logic phân giải bài học của `CurriculumService`, hệ thống bắt buộc phân định rạch ròi số chiều dữ liệu (1D vs 2D): Khi câu hỏi chứa từ khóa "2 chiều", tuyệt đối không cho phép các bài học có tiêu đề chứa "1 chiều" cướp quyền (và ngược lại), loại trừ các từ dừng ngữ cảnh chung chung như "lập trình", "dữ liệu".
+- **Dynamic Min-Max RRF Scaling Invariant (Bất Biến Chuẩn Hóa RRF Động):**
+  - Tuyệt đối CẤM chia điểm RRF cho các hằng số vô căn cứ (như `0.8333`).
+  - Điểm RRF bắt buộc phải được chuẩn hóa động theo min-max của tập ứng viên $\mathcal{C}$ trong lượt truy vấn hiện tại:
+    $$S_{\text{RRF}}(d) = \frac{\text{RRF}(d) - \min_{c \in \mathcal{C}} \text{RRF}(c)}{\max_{c \in \mathcal{C}} \text{RRF}(c) - \min_{c \in \mathcal{C}} \text{RRF}(c) + \epsilon}$$
+  - Đảm bảo $S_{\text{RRF}} \in [0, 1]$ bảo toàn thứ tự xếp hạng và không làm méo mó trọng số khi kết hợp với Cross-Encoder.
+- **Length-Compensated Cross-Encoder Temperature Scaling Invariant (Bất Biến Bù Chiều Dài Câu Hỏi - NeurIPS):**
+  - Hàm Logistic Sigmoid của Re-ranker bắt buộc phải áp dụng chuẩn hóa bù trừ độ dài câu hỏi $|q|$ kết hợp nhiệt độ làm mượt $\tau$:
+    $$S(q, d) = \sigma\left( \frac{z(q, d) - \mu_z}{\tau \cdot \sqrt{\frac{\max(|q|, L_{\min})}{|q|_0}}} \right)$$
+  - Triệt tiêu hoàn toàn hiện tượng nén điểm của câu ngắn (1–4 từ) và thổi phồng điểm của câu hỏi đối nghịch dài (25–40 từ lặp từ khóa), chặn đứng tận gốc lỗi sinh mốc video ảo.
+- **Strictly Monotonic Pareto Frontier Invariant (Bất Biến Biên Độ Pareto Đơn Điệu - ICLR 2025):**
+  - Biên độ thống trị của bài học tương lai bắt buộc phải là hàm tăng đơn điệu theo độ tin cậy của bài hiện tại:
+    $$\text{Margin}_{\text{req}}(S_{\text{current}}) = 0.08 + 0.20 \cdot \max\left(0, \frac{S_{\text{current}} - 0.20}{0.15}\right)$$
+  - Triệt tiêu 100% nghịch lý đảo ngược Pareto (Pareto Inversion Paradox).
+  - Phân loại bản chất câu hỏi (Cú pháp vs Lý thuyết) dựa trên cấu trúc ranh giới AST Code Chunk thực tế; nghiêm cấm sử dụng regex bắt chữ như `is_theory_query` hay `is_syntax_query`.
+- **Finite State Machine (FSM) Token Stream Sanitizer Invariant (Bất Biến Máy Trạng Thái Lọc Stream):**
+  - Bộ giải mã luồng Server-Sent Events (SSE) bắt buộc vận hành theo Máy trạng thái hữu hạn 3 trạng thái (EMIT, ACCUMULATE_TAG, STREAM_BODY).
+  - Tuyệt đối KHÔNG dùng heuristic ngắt xả buffer theo độ dài ký tự (`len > 150`).
+  - Bất kỳ thẻ `<timestamp sec="X">` nào mà $X \notin \mathcal{W}$ (Whitelist bảo chứng từ CRAG Grader) đều bị bóc tách và loại bỏ thẻ tức thì, chỉ giữ lại văn bản hiển thị.
+  - Áp dụng Zero-Hallucination Policy: Nếu bài học chưa có manifest binding, trả về `suggested_timestamps = []`, tuyệt đối không sinh mốc giả lập `sec=1`.
+- **Compiler-Level AST Control Flow & Cyclomatic Complexity Invariant:**
+  - Tầng Socratic Code Guardrail bắt buộc sử dụng Tree-sitter đo Độ phức tạp chu trình (Cyclomatic Complexity $M = E - N + 2P$) của khối mã nguồn C++/Java.
+  - Nghiêm cấm dùng biểu thức regex bắt chữ cá biệt (`viết full code`) làm chặn nhầm học viên thật lòng hỏi sửa lỗi cú pháp.
+  - Chỉ kích hoạt cơ chế Scaffolding (cắt tỉa thành khung sườn) khi hàm có $M \ge 3$ và chứa luồng I/O + Return có thể thực thi nộp bài trọn vẹn.
+- **Fast-Path ONNX Discriminative Encoder SLM Invariant (Bất Biến Router Encoder Siêu Tốc):**
+  - Tầng định tuyến ý định Fast-Path vận hành bằng mô hình Encoder SLM gọn nhẹ (`mDeBERTa-v3` hoặc `Qwen2.5-0.5B` sequence classification head qua SetFit Few-Shot), chạy trên CPU qua ONNX Runtime INT8.
+  - Độ trễ cam kết $\le 10\text{ ms}$ trên CPU (1 Forward Pass duy nhất), độ chính xác $\ge 98\%$.
+  - Triệt tiêu 100% các bảng tra cứu từ khóa hardcode (`is_confirmation`, `_select_chitchat_response`).
+- **Data-Centric Benchmark Decoupling & Test Integrity Invariant:**
+  - Khôi phục câu hỏi `BENCH-010` về nguyên bản không kèm alias gợi ý, giải quyết bẫy từ vựng ở tầng tìm kiếm bằng FastEmbed Domain Vocabulary Expansion.
+  - Phân tách rạch ròi mẫu số khảo nghiệm: CRAG Grader Precision và Timestamp Safety chỉ đo trên đúng **160 câu học tập thực tế có gọi RAG** ($N_{\text{RAG}} = 160$); không mượn 40 câu Chit-chat để làm phồng chỉ số.
+  - Cột đánh giá độ trễ bắt buộc sử dụng logic động theo SLA thực tế.
 
 
 

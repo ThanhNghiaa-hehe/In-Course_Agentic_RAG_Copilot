@@ -40,27 +40,30 @@ description: Professional 4-week Agile engineering roadmap, enterprise Git commi
 
 ### Tuần 4: Evaluation, Full-Stack Integration & Final Defense Preparation (Active)
 
-Hệ thống bước vào giai đoạn nước rút hoàn thiện đồ án với chuỗi **5 Cột mốc tuần tự (5 Sequential Milestones)**:
+Hệ thống bước vào giai đoạn nước rút hoàn thiện đồ án với chuỗi **4 Chặng Cải Tiến Chuẩn Mực & Săn Lỗi Production**:
 
-1. **Milestone 1 (Batch Video Ingestion - GPU CUDA):**
-   - Chạy bóc băng tự động toàn bộ 83 video OOP 28tech trên card đồ họa NVIDIA RTX 2050 (CUDA 12, FP16).
-   - Chuẩn hóa ranh giới câu bằng Silero VAD, sửa ngữ âm bằng Tech Canonicalizer, cắt chunk 60–90s (overlap 15s) và nạp dual vectors (`multilingual-e5-large` + `bm25`) lên Qdrant Cloud.
-2. **Milestone 2 (Automated LLM Code Extraction & AST Binding):**
-   - Ứng dụng script tự động dùng LLM đọc transcript, trích xuất mã nguồn C++ chuẩn cú pháp cho các bài lý thuyết OOP trọng điểm (Class, Kế thừa, Đa hình, Virtual Destructor, Operator Overloading).
-   - Tự động đánh dấu mốc video `approx_video_sec` vào file `data/metadata/lesson_code_video_binding.json` và dùng `tree-sitter` nạp AST chunks vào Qdrant (Phase 2 Ground-Truth Binding).
-3. **Milestone 3 (Full-Stack Frontend Copilot Integration):**
-   - Dựng tab "Trợ Giảng AI (Socratic Copilot)" trực tiếp trên giao diện học bài `CourseContent.jsx` (React 19, Tailwind v4).
-   - Kết nối luồng Server-Sent Events (SSE) thời gian thực tới FastAPI (`/api/v1/chat/stream`), tự động truyền ngữ cảnh `course_id` và `lesson_seq`.
-   - Bắt sự kiện click thẻ `<timestamp sec="...">` để kích hoạt giao thức `player.seekTo(sec)` điều khiển YouTube Iframe (`postMessage`) hoặc HTML5 `<video>`.
-4. **Milestone 4 (Data-Centric Benchmark v2.1, Cascade Router & Kaggle 7B Playground):**
-   - **Bước 1 (Đã hoàn thành 100%):** Tối ưu hóa & làm sạch nhãn Ground-Truth bộ đề thi `benchmark_golden_dataset.json` (v2.1) theo chuẩn Data-Centric AI (loại bỏ hoàn toàn Label Noise ở Tầng 3 Adversarial Hybrid, tích hợp 10 kịch bản kiểm thử an ninh, thiết lập Baseline Score 85.50%).
-   - **Chặng 1 (Active - Đang thực hiện):** Triển khai kiến trúc **Cascade Router & Multi-tier Socratic Guardrail** (Stage 1: LinearSVC Fast-Path 1.99ms $\rightarrow$ Stage 2: Cross-Encoder Arbiter `jinaai/jina-reranker-v2-base-multilingual` ~20ms tái sử dụng mô hình có sẵn trong RAM; Input Security Gate + Tree-sitter Socratic Output Guardrail) để đưa Router Accuracy từ 85.50% lên $\ge 98.0\%$.
-   - **Chặng 2 (Thử nghiệm Trực quan):** Thiết lập Môi trường thử nghiệm trực quan **Interactive Chatbot Playground** (`/playground`) kết nối trực tiếp với mô hình 7B host trên Kaggle (GPU T4 16GB + Ollama + Ngrok Free Static Domain) để trực tiếp đối thoại kiểm chứng năng lực Socratic thực tế và mốc video timestamp.
-   - **Chặng 3 (Tái cấu trúc State Machine):** Chuyển dịch `ChatService` sang kiến trúc **LangGraph StateGraph** (4 discrete nodes, conditional edges, Redis sliding window checkpointer 4–6 turns).
-   - **Chặng 4 (Hợp nhất & Nghiệm thu):** Tích hợp giao diện React 19 `CourseContent.jsx` và đo lường benchmark Stage 11 tổng kết toàn diện.
-5. **Milestone 5 (E2E System Verification, Final Thesis & Defense Preparation):**
-   - Kiểm thử toàn diện môi trường tích hợp: Spring Boot (:8080) + MongoDB Docker + FastAPI (:8000) + Qdrant Cloud + React Frontend (:5173).
-   - Hoàn thiện bản thảo Luận văn tốt nghiệp và bộ Slide thuyết trình bảo vệ trước Hội đồng chấm đồ án HUFLIT.
+1. **Chặng 1 (Zero-Risk Security, FSM Stream Sanitizer & Score Normalization):**
+   - Triển khai Finite State Machine (FSM) Token Stream Sanitizer tại `app/services/chat.py`, chặn đứng 100% nguy cơ lọt thẻ timestamp do Buffer Overflow.
+   - Thay thế phép chia cứng `0.8333` bằng Dynamic Rank-Based Min-Max RRF Scaling trong `app/services/retrieval.py`.
+   - Bổ sung Length-Compensated Temperature Scaling cho Cross-Encoder, triệt tiêu ảo giác điểm số trên câu hỏi dài/ẩn dụ (`BENCH-138`, `BENCH-151`).
+   - Xóa bỏ regex `viết full code` trong `app/agent/guardrails.py`, kích hoạt Context-Aware Debug Gate chống chặn nhầm học viên.
+
+2. **Chặng 2 (Monotonic Pareto Frontier & Compiler-Level AST Scaffolding):**
+   - Triển khai hàm Pareto tăng đơn điệu $\text{Margin}_{\text{req}}(S_{\text{current}})$ trong `retrieval.py`, xóa bỏ hoàn toàn nghịch lý đảo ngược Pareto.
+   - Thay thế regex `is_theory_query` bằng nhận diện cấu trúc ranh giới phương thức AST Code Chunk thực tế.
+   - Chuyển đổi bảng tra cứu bài học hardcode `[53, 54, 56...]` sang duyệt đồ thị DAG trong cơ sở dữ liệu giáo trình `curriculum_syllabus.json`.
+   - Nâng cấp Socratic Guardrail bằng Tree-sitter Cyclomatic Complexity ($M = E - N + 2P$).
+
+3. **Chặng 3 (Fast-Path ONNX Encoder SLM Router & Query Rewriting Engine):**
+   - Huấn luyện mô hình Encoder SLM (SetFit Few-Shot trên `mDeBERTa-v3` hoặc `Qwen-0.5B`) với 60 mẫu/lớp đã làm sạch dữ liệu, đạt độ chính xác $\ge 98\%$.
+   - Xuất sang định dạng ONNX Runtime INT8, chạy trực tiếp trên CPU với độ trễ $\le 10\text{ ms}$ tại `app/agent/router.py`.
+   - Triển khai Query Rewriter tại `chat_graph.py`: Ghép ngữ cảnh lịch sử cho câu ngắn đa lượt (Standalone Query) và tách câu phức/so sánh thành Sub-queries truy xuất song song.
+
+4. **Chặng 4 (Live Evaluation LLM-as-a-Judge & Full-Stack React 19 Defense Release):**
+   - Xây dựng tập kiểm chuẩn 100 câu `production_edge_cases.json` từ nhật ký `logs/playground_debug/` và chạy khảo thí tự động bằng LLM-as-a-Judge (RAGAS Triad).
+   - Chuẩn hóa bộ benchmark Stage 11: Revert `BENCH-010`, đo CRAG Precision trên mẫu số thực $N=160$, xuất ma trận nhầm lẫn 3x3 và logic SLA độ trễ động.
+   - Tích hợp trọn gói luồng SSE vào `fe-codelearning` (`ChatWidget.jsx`), đồng bộ `player.seekTo(sec)` YouTube IFrame / HTML5 video.
+   - Hoàn thiện Luận văn tốt nghiệp và bộ Slide thuyết trình bảo vệ trước Hội đồng Khoa học HUFLIT.
 
 > 🔒 **Cadence Invariant (Quy Chuẩn Chuyển Giao Tự Động):**
 > Khi hoàn tất bất kỳ Milestone nào trong danh sách trên, AI **BẮT BUỘC** phải:
