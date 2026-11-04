@@ -445,5 +445,27 @@
 - **Full-Corpus 83-Lesson Video Coverage Verification:**
   - Bảo chứng 100% độ phủ Video Transcript trên toàn bộ 83 bài học (52 bài `cpp-core` và 31 bài `cpp-oop`), kết nối trực tiếp với metadata binding `approx_video_sec` trong `data/metadata/lesson_code_video_binding.json`.
 
+## 14. Data Decontamination, Probability Calibration & Zero-Regex Invariants (Kỷ Luật Liêm Chính Dữ Liệu & Hiệu Chuẩn Xác Suất)
+- **Data Decontamination & Disjoint Guardrail Invariant (Bất Biến Khử Nhiễm Đề Thi & Chống Rò Rỉ Tuyệt Đối):**
+  - Nghiêm cấm tuyệt đối việc sử dụng các mẫu câu có độ trùng lặp hoặc cận trùng Jaccard ($J \ge 0.70$) với bộ đề thi Golden Dataset đưa vào tập huấn luyện của Router hay bất kỳ mô hình học máy nào.
+  - Tỷ lệ rò rỉ đề thi (Data Leakage Rate) bắt buộc phải được kiểm toán tự động và duy trì ở mức **0.00% tuyệt đối**.
+  - Mọi báo cáo học thuật bắt buộc phải công khai đồng thời hai chỉ số: **K-Fold Cross-Validation Score** (đo lường nội bộ tập train) và **True Generalization Score** (đo lường trên Frozen Held-Out Test Set 100% Unseen) cùng độ chênh lệch Generalization Gap ($\text{Gap} = \text{Score}_{\text{CV}} - \text{Score}_{\text{Unseen}}$).
+- **Expected Calibration Error (ECE) & Multi-Class Brier Score Safety Bounds:**
+  - Một bộ phân loại ý định (Router) hoặc thẩm định chất lượng (Grader) chỉ được phép đưa vào vận hành khi vượt qua bài kiểm tra độ tin cậy xác suất thực nghiệm:
+    $$\text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{N} \left| \text{acc}(B_m) - \text{conf}(B_m) \right| \le 0.1200 \quad (M = 10 \text{ bins})$$
+    $$\text{Brier} = \frac{1}{N} \sum_{i=1}^N \sum_{k=1}^K (p_{ik} - y_{ik})^2 \le 0.1200$$
+  - Ngăn chặn triệt để hiện tượng mô hình quá tự tin (Overconfident) sinh ra các quyết định định tuyến sai lệch nhưng gán xác suất cao.
+- **Confident Learning & Socratic Pedagogical Grounding Invariant (Chuẩn Hóa Nhiễu Nhãn Câu Hỏi Ẩn Dụ Đời Sống):**
+  - Áp dụng thuật toán Confident Learning (Northcutt et al., MIT JAIR 2021) qua ma trận đồng xuất hiện $C_{\tilde{y}, y^*}$ để tự động phát hiện và thanh lọc nhiễu nhãn nội tại, tuyệt đối không đoán mò cảm tính.
+  - *Quy chuẩn Socratic Grounding cho câu hỏi đời sống:*
+    (a) Bất kỳ câu hỏi nào mượn tình huống đời sống (đi nhậu, bánh mì, tỏ tình, du lịch) nhưng **có chứa thực thể cú pháp hoặc cấu trúc C++ hợp lệ** (toán tử `%`, `if-else`, `switch-case`, `class SinhVien`) và hỏi về khả năng biểu diễn logic lập trình $\rightarrow$ BẮT BUỘC gán nhãn `course_query` để trợ giảng AI tiếp nhận, định hướng tư duy lập trình và từ chối phần đời sống theo phương pháp Socratic.
+    (b) Các câu hỏi đời sống mượn từ khóa lập trình chỉ để làm thơ, hỏi triết lý tình cảm, hoặc hỏi ý kiến cá nhân phi kỹ thuật $\rightarrow$ Gán nhãn `out_of_scope`.
+- **Zero-Regex Core Mandate (Kỷ Luật Cấm Regex Tuyệt Đối Trong Mã Nguồn Backend Core):**
+  - Thư mục `app/` bắt buộc duy trì **0% biểu thức chính quy (Regex)**:
+    (a) Việc bóc tách thẻ HTML/XML (`<timestamp>`, `<thought>`) bắt buộc sử dụng `TimestampWhitelistHTMLParser` kế thừa chuẩn `html.parser.HTMLParser` (W3C event-driven).
+    (b) Việc lọc ký tự ngoại lai (Hangul, CJK) bắt buộc sử dụng kiểm tra khoảng mã Unicode (`is_cjk_char`, `is_hangul_or_cjk`).
+    (c) Việc bóc tách số thứ tự bài học (`lesson_seq`) bắt buộc dùng token splitting và đối chiếu danh mục giáo trình có cấu trúc.
+
+
 
 

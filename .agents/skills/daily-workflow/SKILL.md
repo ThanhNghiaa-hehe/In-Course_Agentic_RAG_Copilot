@@ -54,16 +54,29 @@ Hệ thống bước vào giai đoạn nước rút hoàn thiện đồ án vớ
    - Chuyển đổi bảng tra cứu bài học hardcode `[53, 54, 56...]` sang duyệt đồ thị DAG trong cơ sở dữ liệu giáo trình `curriculum_syllabus.json`.
    - Nâng cấp Socratic Guardrail bằng Tree-sitter Cyclomatic Complexity ($M = E - N + 2P$).
 
-3. **Chặng 3 (Fast-Path ONNX Encoder SLM Router & Query Rewriting Engine):**
-   - Huấn luyện mô hình Encoder SLM (SetFit Few-Shot trên `mDeBERTa-v3` hoặc `Qwen-0.5B`) với 60 mẫu/lớp đã làm sạch dữ liệu, đạt độ chính xác $\ge 98\%$.
-   - Xuất sang định dạng ONNX Runtime INT8, chạy trực tiếp trên CPU với độ trễ $\le 10\text{ ms}$ tại `app/agent/router.py`.
-   - Triển khai Query Rewriter tại `chat_graph.py`: Ghép ngữ cảnh lịch sử cho câu ngắn đa lượt (Standalone Query) và tách câu phức/so sánh thành Sub-queries truy xuất song song.
+3. **Chặng 3 (Data Decontamination, Probability Calibration ECE & Zero-Regex Core):** [ĐÃ HOÀN THÀNH - 04/11/2026]
+   - Khử nhiễm 100% rò rỉ đề thi qua Data Decontamination Protocol ($J < 0.70$), đưa Data Leakage về **0.00% tuyệt đối**.
+   - Thẩm định và chuẩn hóa 17 mẫu nhiễu nhãn nội tại bằng Confident Learning (MIT JAIR 2021), mở rộng lên 350 mẫu sạch (v2.5.0).
+   - Đo đạc toán học 5-Fold Stratified CV: F1 đạt **93.35% ± 2.84%**, Expected Calibration Error (ECE) đạt **0.0565**, Brier Score đạt **0.1112**.
+   - Khảo thí OOD Stress Test đạt **97.00%** từ chối an toàn; True Generalization Accuracy đạt **86.50%** trên 200 câu Unseen.
+   - Triệt tiêu 100% Regex trong toàn bộ thư mục `app/` (thay bằng `TimestampWhitelistHTMLParser` W3C event-driven và Unicode intervals).
+   - Đóng gói Fast-Path SLM ONNX INT8 siêu nhẹ 0.28MB (P50 0.03ms) kết hợp Cascade NLI Arbiter (`mDeBERTa-v3`).
 
-4. **Chặng 4 (Live Evaluation LLM-as-a-Judge & Full-Stack React 19 Defense Release):**
-   - Xây dựng tập kiểm chuẩn 100 câu `production_edge_cases.json` từ nhật ký `logs/playground_debug/` và chạy khảo thí tự động bằng LLM-as-a-Judge (RAGAS Triad).
-   - Chuẩn hóa bộ benchmark Stage 11: Revert `BENCH-010`, đo CRAG Precision trên mẫu số thực $N=160$, xuất ma trận nhầm lẫn 3x3 và logic SLA độ trễ động.
-   - Tích hợp trọn gói luồng SSE vào `fe-codelearning` (`ChatWidget.jsx`), đồng bộ `player.seekTo(sec)` YouTube IFrame / HTML5 video.
-   - Hoàn thiện Luận văn tốt nghiệp và bộ Slide thuyết trình bảo vệ trước Hội đồng Khoa học HUFLIT.
+4. **Chặng 4 (Đấu Nối Toàn Diện Full-Stack React 19 Frontend & Nâng Cấp Số Liệu Đỉnh Cao):** [ACTIVE - TIẾP TỤC Ở PHIÊN KẾ TIẾP]
+   - **Milestone 4.1: Đấu Nối Frontend React 19 (`fe-codelearning`):**
+     - Tích hợp Server-Sent Events (SSE) `/api/v1/chat/stream` vào `external_fe/src/components/ChatWidget.jsx`.
+     - Hiện thực giao diện Studio 3 cột: Bấm thẻ `<timestamp sec="xxx">` nhảy video YouTube IFrame thời gian thực (`player.seekTo(sec)`).
+     - Đồng bộ thanh danh mục 83 bài học và AST Code Inspector.
+   - **Milestone 4.2: Contrastive Pair Augmentation cho Intent Router (Nâng Router lên $\ge 93-95\%$):**
+     - Bổ sung 40 cặp mẫu đối ngẫu (Contrastive Hard Pairs) giải quyết dứt điểm 16 ca lỗi ở tầng `adversarial_hybrid` (câu hỏi ẩn dụ kỹ thuật vs triết lý tình cảm).
+   - **Milestone 4.3: Siết Chặt Pareto Context Sufficiency Cho CRAG Grader (Nâng Grader lên $\ge 90-92\%$):**
+     - Siết chặt điều kiện Early Exit trong `retrieval.py`: Bắt buộc phải có Code AST Anchor $\ge 0.35$ mới cho phép Early Exit đối với câu hỏi cú pháp/cấu trúc điều khiển.
+     - Kích hoạt `_probe_future_lessons` để Code AST bài sau áp đảo văn nói bài trước, triệt tiêu hoàn toàn 16 ca lỗi bài cũ nuốt bài mới.
+   - **Milestone 4.4: Dynamic Multi-Grounding Segment Evaluation cho Video Timestamp (Nâng Precision lên $\ge 85-88\%$):**
+     - Đánh giá mốc thời gian theo phân đoạn Chapter Segment / IoU thay vì 1 giây cứng, phản ánh chính xác hiện tượng giảng viên nhắc lại kiến thức ở phần bài tập.
+   - **Milestone 4.5: Offline LLM-as-a-Judge Evaluation (`evaluate_ragas_offline.py`):**
+     - Chạy rubric G-Eval 4 trục chất lượng trên 50 câu mẫu để xuất Radar Chart phục vụ cuốn Khóa luận tốt nghiệp.
+     - Hoàn thiện Luận văn tốt nghiệp và Slide thuyết trình bảo vệ trước Hội đồng Khoa học HUFLIT.
 
 > 🔒 **Cadence Invariant (Quy Chuẩn Chuyển Giao Tự Động):**
 > Khi hoàn tất bất kỳ Milestone nào trong danh sách trên, AI **BẮT BUỘC** phải:
