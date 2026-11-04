@@ -359,16 +359,16 @@ class IntentRouter:
                         f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, P_course={p_course:.3f}"
                     )
                     nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
-                    if nli_intent == "course_query" and nli_conf >= 0.45:
+                    if nli_intent == "course_query" and nli_conf >= 0.55:
                         logger.info(f"[IntentRouter-Cascade] NLI Arbiter giải cứu thành công -> course_query ({nli_conf*100:.1f}%)")
                         return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                    elif nli_intent == "chit_chat" and nli_conf >= 0.45:
+                    elif nli_intent == "chit_chat" and nli_conf >= 0.50:
                         return RouterClassification(
                             intent="chit_chat",
                             direct_response=self._select_chitchat_response(clean_prompt),
                             is_course_query=False
                         )
-                    elif nli_intent == "out_of_scope" and nli_conf >= 0.60:
+                    elif nli_intent == "out_of_scope" and nli_conf >= 0.55:
                         return RouterClassification(
                             intent="out_of_scope",
                             direct_response=OFFTOPIC_CASUAL_RESPONSES,

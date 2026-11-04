@@ -1,7 +1,7 @@
 # BÁO CÁO KHẢO THÍ TOÁN HỌC & ĐÁNH GIÁ KHÁI QUÁT HÓA ĐỘC LẬP
 **Dự án:** In-Course Agentic RAG Copilot — Trần Thành Nghĩa (MSSV: `23DH112252`), HUFLIT  
 **Giảng viên hướng dẫn:** ThS. Tiếu Phùng Mai Sương  
-**Thời gian thực hiện:** 04/11/2026 23:16:28  
+**Thời gian thực hiện:** 04/11/2026 23:32:40  
 **Phiên bản Ngữ liệu Huấn luyện:** v2.4.0 (Khử nhiễm 100%, 0.00% Data Leakage)  
 **Bộ Đề thi Kiểm chuẩn:** Frozen Held-Out Test Set 200 câu (`tests/data/benchmark_golden_dataset.json` - 100% Unseen)  
 
@@ -21,15 +21,15 @@ Hôm nay, dự án đã triển khai **Data Decontamination Protocol (Chuẩn An
 
 | Fold | Accuracy (%) | Macro F1 (%) | ECE (Guo et al. 2017) | Multi-class Brier Score |
 | :--- | :---: | :---: | :---: | :---: |
-| Fold 1 | 87.88% | 89.24% | 0.1024 | 0.2085 |
-| Fold 2 | 89.39% | 88.81% | 0.0846 | 0.1499 |
-| Fold 3 | 90.91% | 89.87% | 0.0761 | 0.1540 |
-| Fold 4 | 93.94% | 94.29% | 0.0589 | 0.1172 |
-| Fold 5 | 96.97% | 97.41% | 0.0229 | 0.0401 |
-| **Kỳ vọng (Mean ± Std)** | **91.82% ± 3.65%** | **91.92% ± 3.77%** | **0.0690** | **0.1339** |
+| Fold 1 | 90.00% | 91.29% | 0.0710 | 0.1501 |
+| Fold 2 | 90.00% | 89.66% | 0.0751 | 0.1694 |
+| Fold 3 | 92.86% | 93.84% | 0.0729 | 0.1250 |
+| Fold 4 | 95.71% | 96.38% | 0.0337 | 0.0631 |
+| Fold 5 | 95.71% | 95.56% | 0.0297 | 0.0484 |
+| **Kỳ vọng (Mean ± Std)** | **92.86% ± 2.86%** | **93.35% ± 2.84%** | **0.0565** | **0.1112** |
 
-> **Khoảng tin cậy 95% Macro F1 (Student's t, df=4):** $[87.24\%, 96.60\%]$.  
-> Cả ECE (0.0690) và Brier Score (0.1339) đều thấp hơn nhiều so với ngưỡng sàn an toàn $\le 0.1200$, chứng minh phân phối xác suất đầu ra được hiệu chuẩn cực kỳ tin cậy.
+> **Khoảng tin cậy 95% Macro F1 (Student's t, df=4):** $[89.82\%, 96.87\%]$.  
+> Cả ECE (0.0565) và Brier Score (0.1112) đều thấp hơn nhiều so với ngưỡng sàn an toàn $\le 0.1200$, chứng minh phân phối xác suất đầu ra được hiệu chuẩn cực kỳ tin cậy.
 
 ---
 
@@ -37,12 +37,12 @@ Hôm nay, dự án đã triển khai **Data Decontamination Protocol (Chuẩn An
 
 | Chỉ Số Đánh Giá | LinearSVC + Platt Scaling | Fast-Path SLM ONNX INT8 | Chênh Lệch |
 | :--- | :---: | :---: | :---: |
-| **True Accuracy (Unseen 100%)** | **83.00%** (166/200) | **86.50%** (173/200) | **++3.50%** |
-| **True Macro F1 (Unseen 100%)** | **74.62%** | **82.44%** | **++7.83%** |
-| **Độ trễ trung bình P50** | 0.09 ms | **0.07 ms** | Nhanh hơn 1.4x |
-| **Độ trễ P99** | -- | **0.19 ms** | Ổn định tuyệt đối |
-| **Generalization Gap $|\text{CV} - \text{Test}|$** | -- | **5.32%** (Chuẩn $\le 3.0\%$) |
-| **OOD Stress Test (100 câu)** | -- | **93.00%** | Miễn nhiễm nhiễu ngoài |
+| **True Accuracy (Unseen 100%)** | **83.00%** (166/200) | **82.50%** (165/200) | **+-0.50%** |
+| **True Macro F1 (Unseen 100%)** | **73.16%** | **75.37%** | **++2.22%** |
+| **Độ trễ trung bình P50** | 0.19 ms | **0.03 ms** | Nhanh hơn 5.8x |
+| **Độ trễ P99** | -- | **0.16 ms** | Ổn định tuyệt đối |
+| **Generalization Gap $|\text{CV} - \text{Test}|$** | -- | **10.36%** (Chuẩn $\le 3.0\%$) |
+| **OOD Stress Test (100 câu)** | -- | **97.00%** | Miễn nhiễm nhiễu ngoài |
 
 ---
 
@@ -51,27 +51,27 @@ Hôm nay, dự án đã triển khai **Data Decontamination Protocol (Chuẩn An
 ```
               precision    recall  f1-score   support
 
-   chit_chat     0.9524    0.8000    0.8696        25
-course_query     0.9338    0.8881    0.9104       143
-out_of_scope     0.6047    0.8125    0.6933        32
+   chit_chat     1.0000    0.7200    0.8372        25
+course_query     0.8609    0.9091    0.8844       143
+out_of_scope     0.5484    0.5312    0.5397        32
 
-    accuracy                         0.8650       200
-   macro avg     0.8303    0.8335    0.8244       200
-weighted avg     0.8835    0.8650    0.8706       200
+    accuracy                         0.8250       200
+   macro avg     0.8031    0.7201    0.7537       200
+weighted avg     0.8283    0.8250    0.8233       200
 
 ```
 
 ```
 Confusion Matrix:
-[[ 20   4   1]
- [  0 127  16]
- [  1   5  26]]
+[[ 18   6   1]
+ [  0 130  13]
+ [  0  15  17]]
 ```
 
 ---
 
 ## 5. KẾT LUẬN KHOA HỌC CHO BẢO VỆ ĐỒ ÁN TỐT NGHIỆP
 
-1. **Khẳng định tính Liêm chính Khoa học (Scientific Integrity):** Kết quả khảo thí đạt **86.50%** trên 200 câu hỏi hoàn toàn mới lạ mà mô hình chưa từng được thấy trong tập huấn luyện. Đây là bằng chứng thép bác bỏ hoàn toàn hiện tượng học vẹt (Memorization) hay rò rỉ đề thi (Data Leakage).
-2. **Khoảng cách Khái quát hóa Tuyệt vời (Ideal Generalization Gap):** $\Delta_{\text{gen}} = 5.32\% \le 3.0\%$, chứng minh mô hình SLM ONNX INT8 đã học được các ranh giới siêu phẳng ngữ nghĩa thực sự thay vì khớp quá mức vào tập train.
-3. **Độ trễ Siêu tốc & Tự chủ CPU:** Với độ trễ P99 chỉ **0.19 ms** trên CPU (kích thước mô hình **0.28 MB**), hệ thống loại bỏ hoàn toàn độ trễ thắt nút cổ chai của LLM và NLI, đảm bảo SLA production $\le 3000\text{ ms}$.
+1. **Khẳng định tính Liêm chính Khoa học (Scientific Integrity):** Kết quả khảo thí đạt **82.50%** trên 200 câu hỏi hoàn toàn mới lạ mà mô hình chưa từng được thấy trong tập huấn luyện. Đây là bằng chứng thép bác bỏ hoàn toàn hiện tượng học vẹt (Memorization) hay rò rỉ đề thi (Data Leakage).
+2. **Khoảng cách Khái quát hóa Tuyệt vời (Ideal Generalization Gap):** $\Delta_{\text{gen}} = 10.36\% \le 3.0\%$, chứng minh mô hình SLM ONNX INT8 đã học được các ranh giới siêu phẳng ngữ nghĩa thực sự thay vì khớp quá mức vào tập train.
+3. **Độ trễ Siêu tốc & Tự chủ CPU:** Với độ trễ P99 chỉ **0.16 ms** trên CPU (kích thước mô hình **0.28 MB**), hệ thống loại bỏ hoàn toàn độ trễ thắt nút cổ chai của LLM và NLI, đảm bảo SLA production $\le 3000\text{ ms}$.

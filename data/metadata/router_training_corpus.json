@@ -1,6 +1,6 @@
 {
   "description": "Tập ngữ liệu huấn luyện ý định đa lớp khử nhiễm độc lập chuẩn hóa (Decontaminated Intent Training Corpus)",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
   "university": "HUFLIT",
   "classes": [
@@ -315,11 +315,11 @@
     },
     {
       "text": "Bạn có hỗ trợ kiểm tra lỗi biên dịch mã nguồn C++ không?",
-      "intent": "chit_chat"
+      "intent": "course_query"
     },
     {
       "text": "Tại sao nên học C++ trước khi học các ngôn ngữ cấp cao khác?",
-      "intent": "chit_chat"
+      "intent": "course_query"
     },
     {
       "text": "Hôm nay là thứ mấy rồi bot?",
@@ -355,7 +355,7 @@
     },
     {
       "text": "Vòng lặp for có đếm được số hạt cát trên bãi biển Vũng Tàu không?",
-      "intent": "out_of_scope"
+      "intent": "course_query"
     },
     {
       "text": "Toán tử chia lấy dư % có tính được số tiền mỗi người phải góp khi đi nhậu không?",
@@ -379,19 +379,19 @@
     },
     {
       "text": "Toán tử nạp chồng operator<< có thể xuất ra một bát bún bò Huế thơm ngon không?",
-      "intent": "out_of_scope"
+      "intent": "course_query"
     },
     {
       "text": "Lệnh if-else có giúp tôi quyết định nên tỏ tình với crush hay tiếp tục làm bạn không?",
-      "intent": "out_of_scope"
+      "intent": "course_query"
     },
     {
       "text": "Thuật toán đệ quy có giải thích được tại sao gà có trước hay trứng có trước không?",
-      "intent": "out_of_scope"
+      "intent": "course_query"
     },
     {
       "text": "Cấu trúc dữ liệu Stack có thể dùng để xếp chồng bát đĩa sau khi ăn cơm không?",
-      "intent": "out_of_scope"
+      "intent": "course_query"
     },
     {
       "text": "Mảng một chiều có thể lưu trữ danh sách các quán nhậu ngon ở Sài Gòn không?",
@@ -399,7 +399,7 @@
     },
     {
       "text": "Từ khóa friend trong C++ có giúp tôi kết bạn với người nổi tiếng trên Facebook không?",
-      "intent": "out_of_scope"
+      "intent": "course_query"
     },
     {
       "text": "Bộ nhớ Heap có thể chứa được bao nhiêu lít xăng cho xe máy?",
@@ -1328,6 +1328,86 @@
     {
       "text": "thời tiết hôm nay thế nào",
       "intent": "out_of_scope"
+    },
+    {
+      "text": "Cách tính tiền chia đều cho nhóm bạn đi ăn lẩu cuối tuần?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm sao để quyết định hôm nay nên đi xem phim hay ở nhà ngủ?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm thế nào để biết một người vừa đủ tuổi vừa đủ điều kiện thi bằng lái xe máy?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Tư vấn cách chọn món đồ uống ngon trong menu quán trà sữa?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Cách chia đều 10 cái kẹo cho 3 đứa trẻ sao cho công bằng nhất?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm sao để tính tiền điện sinh hoạt bậc thang của gia đình tháng này?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm cách nào để tìm điểm chung giải quyết mâu thuẫn giữa hai người bạn thân?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm sao để chiếu video kỷ yếu lớp lên màn hình lớn trong buổi tiệc?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Làm thế nào để lọc bỏ các bình luận tiêu cực trên mạng xã hội?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Tiêu chuẩn chiều cao cân nặng để thi tuyển vào ngành phi công là bao nhiêu?",
+      "intent": "out_of_scope"
+    },
+    {
+      "text": "Toán tử chia lấy dư % có thể dùng để lập trình bài toán chia kẹo cho học sinh không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Câu lệnh if else có thể dùng để viết chương trình tính tiền điện bậc thang không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cấu trúc switch case có thể áp dụng để lập trình menu chọn đồ uống tự động không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm đệ quy trong C++ có thể mô phỏng bài toán tháp Hà Nội được không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Có thể dùng vòng lặp while để lập trình trò chơi đoán số ngẫu nhiên không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Toán tử so sánh trong C++ có thể dùng để sắp xếp danh sách điểm thi của sinh viên không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Cách dùng class SinhVien để quản lý hồ sơ và điểm trung bình tích lũy?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Toán tử logic && có thể kết hợp nhiều điều kiện kiểm tra tuổi và điểm số không?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Hàm tìm ước chung lớn nhất gcd có thuật toán tối ưu nào trong C++?",
+      "intent": "course_query"
+    },
+    {
+      "text": "Thuật toán sắp xếp nổi bọt bubble sort hoạt động như thế nào trong bài tập thực hành?",
+      "intent": "course_query"
     }
   ]
 }

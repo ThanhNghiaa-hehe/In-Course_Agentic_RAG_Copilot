@@ -1,35 +1,35 @@
 {
-  "timestamp": "2026-11-04 23:16:28",
+  "timestamp": "2026-11-04 23:32:40",
   "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
   "university": "HUFLIT",
-  "training_samples": 330,
+  "training_samples": 350,
   "test_samples": 200,
   "leakage_rate": 0.0,
   "cv_5fold": {
-    "mean_accuracy": 91.8181818181818,
-    "std_accuracy": 3.6489680541794844,
-    "mean_macro_f1": 91.92340689304311,
-    "std_macro_f1": 3.7685260036913184,
-    "mean_ece": 0.06896308588259151,
-    "mean_brier": 0.13392831048391415,
+    "mean_accuracy": 92.85714285714286,
+    "std_accuracy": 2.857142857142861,
+    "mean_macro_f1": 93.3457090746513,
+    "std_macro_f1": 2.837466792441702,
+    "mean_ece": 0.056486558914184595,
+    "mean_brier": 0.11118635233134984,
     "ci95_macro_f1": [
-      87.24491397980694,
-      96.60189980627928
+      89.82309353027708,
+      96.86832461902551
     ]
   },
   "held_out_test_results": {
     "slm_int8": {
-      "accuracy": 86.5,
-      "macro_f1": 82.44309386525374,
-      "latency_p50_ms": 0.0652999997328152,
-      "latency_p99_ms": 0.18567100049040122,
-      "generalization_gap": 5.318181818181799
+      "accuracy": 82.5,
+      "macro_f1": 75.37485278349067,
+      "latency_p50_ms": 0.0333500001943321,
+      "latency_p99_ms": 0.15547100087132779,
+      "generalization_gap": 10.357142857142861
     },
     "linearsvc": {
       "accuracy": 83.0,
-      "macro_f1": 74.61750144676974,
-      "latency_avg_ms": 0.08875600000465056
+      "macro_f1": 73.15797169886008,
+      "latency_avg_ms": 0.19307949999529228
     }
   },
-  "ood_stress_test_accuracy": 93.0
+  "ood_stress_test_accuracy": 97.0
 }
