@@ -9,7 +9,6 @@ Kiến trúc phòng vệ 3 tầng sâu (Defense-in-Depth):
 """
 
 import logging
-import re
 import unicodedata
 from pathlib import Path
 from typing import Optional, List, Dict, Any
@@ -331,11 +330,50 @@ class IntentRouter:
                 top1_idx = int(np.argmax(probs))
                 top1_class = self._classes[top1_idx]
                 top1_prob = float(probs[top1_idx])
+                sorted_p = np.sort(probs)
+                margin = float(sorted_p[-1] - sorted_p[-2])
+
+                p_chit = float(probs[0])
+                p_course = float(probs[1])
+                p_oos = float(probs[2])
 
                 logger.info(
-                    f"[IntentRouter-SLM] Intent={top1_class} (Conf={top1_prob*100:.1f}%) | "
-                    f"Probs: chit_chat={probs[0]:.3f}, course={probs[1]:.3f}, oos={probs[2]:.3f}"
+                    f"[IntentRouter-SLM] Intent={top1_class} (Conf={top1_prob*100:.1f}%, Margin={margin:.3f}) | "
+                    f"Probs: chit_chat={p_chit:.3f}, course={p_course:.3f}, oos={p_oos:.3f}"
                 )
+
+                # ----------------------------------------------------
+                # ĐIỀU PHỐI CASCADE: STAGE 1 (SLM) -> STAGE 2 (NLI ARBITER)
+                # ----------------------------------------------------
+                # Kích hoạt NLI Arbiter khi rơi vào vùng phân vân:
+                # 1. SLM chọn out_of_scope nhưng p_course >= 0.04 hoặc margin < 0.35 (dấu hiệu câu hỏi ẩn dụ đời sống)
+                # 2. Hoặc SLM chọn chit_chat nhưng p_chit < 0.85 và p_course >= 0.10 (dấu hiệu hỏi bài có đại từ xưng hô)
+                is_ambiguous_slm = (
+                    (top1_class == "out_of_scope" and (p_course >= 0.04 or margin < 0.35)) or
+                    (top1_class == "chit_chat" and p_chit < 0.85 and p_course >= 0.08)
+                )
+
+                if is_ambiguous_slm:
+                    logger.info(
+                        f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter cho SLM: "
+                        f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, P_course={p_course:.3f}"
+                    )
+                    nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
+                    if nli_intent == "course_query" and nli_conf >= 0.45:
+                        logger.info(f"[IntentRouter-Cascade] NLI Arbiter giải cứu thành công -> course_query ({nli_conf*100:.1f}%)")
+                        return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                    elif nli_intent == "chit_chat" and nli_conf >= 0.45:
+                        return RouterClassification(
+                            intent="chit_chat",
+                            direct_response=self._select_chitchat_response(clean_prompt),
+                            is_course_query=False
+                        )
+                    elif nli_intent == "out_of_scope" and nli_conf >= 0.60:
+                        return RouterClassification(
+                            intent="out_of_scope",
+                            direct_response=OFFTOPIC_CASUAL_RESPONSES,
+                            is_course_query=False
+                        )
 
                 if top1_class == "course_query":
                     return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)

@@ -14,7 +14,6 @@ Tuân thủ bất biến Data/Code Separation Invariant:
 
 import json
 import logging
-import re
 import unicodedata
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
@@ -31,21 +30,15 @@ NAVIGATION_INTENT_TRIGGERS = [
     "trong playlist", "trong lộ trình", "lộ trình học", "ở bài nào",
     "xem bài nào", "học ở đâu", "bài số mấy", "tìm bài", "playlist này",
     "học bài gì", "hôm nay học gì", "hôm nay học bài gì", "bài này học gì",
-    "hôm nay chúng ta học", "chúng ta học bài gì", "giảng dạy", "dạy ở đâu"
+    "hôm nay chúng ta học", "chúng ta học bài gì", "giảng dạy", "dạy ở đâu",
+    "chỗ nào học", "khóa học có dạy", "nằm ở bài nào", "thuộc bài nào", "dạy phần nào"
 ]
 
-OVERVIEW_QUERY_PATTERNS = [
-    r"học\s+(?:\w+\s+)?gì",
-    r"sẽ\s+học\s+(?:\w+\s+)?gì",
-    r"hôm\s+nay\s+(?:chúng\s+ta\s+)?học",
-    r"nội\s+dung\s+(?:của\s+)?bài",
-    r"nói\s+về\s+(?:gì|cái\s+gì)",
-    r"dạy\s+(?:gì|về\s+gì)",
-    r"tổng\s+quan\s+bài",
-    r"mục\s+tiêu\s+bài",
-    r"tìm\s+hiểu\s+(?:gì|về\s+gì)",
-    r"có\s+những\s+gì",
-    r"chủ\s+đề\s+bài"
+OVERVIEW_QUERY_TRIGGERS = [
+    "học gì", "sẽ học gì", "hôm nay học", "hôm nay chúng ta học",
+    "nội dung của bài", "nội dung bài", "nói về gì", "nói về cái gì",
+    "dạy gì", "dạy về gì", "tổng quan bài", "mục tiêu bài",
+    "tìm hiểu gì", "tìm hiểu về gì", "chủ đề bài", "có những gì"
 ]
 
 
@@ -68,7 +61,8 @@ def _has_topical_overlap(lesson: Dict[str, Any], prompt: str) -> bool:
         "trong", "playlist", "này", "khóa", "có", "phần", "dạy", "không", "gì", "là", 
         "về", "các", "những", "của", "được", "sẽ", "đến", "mới", "lập", "trình", "dữ", "liệu"
     }
-    tokens = [w for w in re.findall(r"\w+", norm_prompt) if w not in stop_words and len(w) > 1]
+    clean_words = "".join(c if c.isalnum() else " " for c in norm_prompt).split()
+    tokens = [w for w in clean_words if w not in stop_words and len(w) > 1]
     
     title_lower = lesson.get("title", "").lower()
     keywords = [k.lower() for k in lesson.get("keywords", [])]
@@ -190,32 +184,40 @@ class CurriculumService:
     def is_navigation_query(self, prompt: str) -> bool:
         """
         Nhận diện xem học viên có đang đặt câu hỏi điều hướng lộ trình / playlist
-        hoặc hỏi về tổng quan nội dung của bài học hay không.
+        hoặc hỏi về tổng quan nội dung của bài học hay không (Zero Regex).
         """
         norm_prompt = _normalize_text(prompt)
 
-        # 1. Các mẫu câu hỏi cấu trúc ngữ pháp tự nhiên về bài học / giáo trình
-        nav_patterns = [
-            r"bài\s*(?:học\s*)?(?:nào|mấy|bao\s*nhiêu|gì|số\s*mấy)",
-            r"(?:học|dạy|tìm\s*hiểu|giảng\s*dạy)\s+.*(?:ở\s*đâu|chỗ\s*nào|bài\s*nào|bài\s*mấy|chương\s*nào|phần\s*nào|khi\s*nào|bao\s*giờ)",
-            r"(?:ở\s*đâu|chỗ\s*nào|khi\s*nào|bao\s*giờ)\s*(?:mới\s*)?(?:học|dạy|có)",
-            r"(?:khóa\s*học|giáo\s*trình|lộ\s*trình|playlist|danh\s*mục)\s*(?:có\s*)?.*(?:dạy|học|phần\s*nào|bài\s*nào|chương\s*nào|không)",
-            r"(?:thuộc|nằm\s*ở|nằm\s*trong)\s*(?:bài|chương|khóa|phần)\s*nào",
-            r"(?:tìm|xem)\s*(?:bài|video|chuyên\s*đề)",
-            r"chủ\s*đề\s+.*(?:ở\s*đâu|bài\s*nào|bài\s*mấy)",
-            r"có\s+dạy\s+.*(?:ở\s*đâu|bài\s*nào|không)"
-        ]
-        if any(re.search(pat, norm_prompt) for pat in nav_patterns):
+        # 1. Trực tiếp có số thứ tự bài học (ví dụ "bài 4", "lesson 4")
+        if self._extract_lesson_seq(norm_prompt) is not None:
             return True
 
+        # 2. Khớp các cụm từ ý định điều hướng
         if any(trigger in norm_prompt for trigger in NAVIGATION_INTENT_TRIGGERS):
             return True
-        return any(re.search(pat, norm_prompt) for pat in OVERVIEW_QUERY_PATTERNS)
+
+        # 3. Khớp các cụm từ hỏi tổng quan bài học
+        return self.is_overview_query(norm_prompt)
 
     def is_overview_query(self, prompt: str) -> bool:
-        """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học hay không."""
+        """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học hay không (Zero Regex)."""
         norm_prompt = _normalize_text(prompt)
-        return any(re.search(pat, norm_prompt) for pat in OVERVIEW_QUERY_PATTERNS)
+        return any(trig in norm_prompt for trig in OVERVIEW_QUERY_TRIGGERS)
+
+    @staticmethod
+    def _extract_lesson_seq(prompt: str) -> Optional[int]:
+        """Trích xuất số thứ tự bài học từ câu hỏi bằng duyệt token thuần túy (Zero Regex)."""
+        words = [w.strip(".,;:?!'\"-") for w in prompt.lower().split()]
+        for i, w in enumerate(words):
+            if w in ("bài", "lesson") and i + 1 < len(words):
+                nxt = words[i + 1]
+                if nxt == "số" and i + 2 < len(words):
+                    cand = words[i + 2]
+                    if cand.isdigit():
+                        return int(cand)
+                elif nxt.isdigit():
+                    return int(nxt)
+        return None
 
     def get_lesson_timestamps(self, seq: int) -> List[Dict[str, Any]]:
         """Lấy danh sách các mốc thời gian video chuẩn xác của bài học."""
@@ -244,10 +246,9 @@ class CurriculumService:
         """
         norm_prompt = _normalize_text(prompt)
 
-        # 1. Khớp theo số thứ tự bài học tường minh
-        match_seq = re.search(r"\bbài\s*(?:số\s*)?(\d+)\b|\blesson\s*(\d+)\b", norm_prompt)
-        if match_seq:
-            seq_num = int(match_seq.group(1) or match_seq.group(2))
+        # 1. Khớp theo số thứ tự bài học tường minh (Zero Regex)
+        seq_num = self._extract_lesson_seq(norm_prompt)
+        if seq_num is not None:
             for lesson in self._all_lessons:
                 if lesson.get("seq") == seq_num:
                     if preferred_course_id and lesson.get("course_id") == preferred_course_id:

@@ -1,9 +1,9 @@
 import asyncio
 import json
 import logging
-import re
 import uuid
-from typing import AsyncGenerator, Dict, Any, List, Optional
+from html.parser import HTMLParser
+from typing import AsyncGenerator, Dict, Any, List, Optional, Tuple
 from openai import AsyncOpenAI
 
 from app.config import settings
@@ -35,46 +35,94 @@ CJK_REPLACEMENTS = {
     "、": ", "
 }
 
-CJK_REGEX = re.compile(r'[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f]')
+def is_cjk_char(c: str) -> bool:
+    """Kiểm tra ký tự thuộc khối CJK (Trung/Hàn/dấu câu CJK) dựa trên khoảng Unicode (Zero Regex)."""
+    code = ord(c)
+    return (
+        (0x4E00 <= code <= 0x9FFF) or
+        (0x3400 <= code <= 0x4DBF) or
+        (0xF900 <= code <= 0xFAFF) or
+        (0x3000 <= code <= 0x303F)
+    )
+
 
 def sanitize_cjk_tokens(text: str) -> str:
     """
-    Bắt và loại trừ 100% token chữ Hán hoặc dấu câu CJK từ mô hình Qwen 2.5 Coder.
+    Bắt và loại trừ 100% token chữ Hán hoặc dấu câu CJK từ mô hình Qwen 2.5 Coder (Zero Regex).
     """
     if not text:
         return text
     for zh, vi in CJK_REPLACEMENTS.items():
         if zh in text:
             text = text.replace(zh, vi)
-    if CJK_REGEX.search(text):
-        text = CJK_REGEX.sub('', text)
+    if any(is_cjk_char(c) for c in text):
+        text = "".join(c for c in text if not is_cjk_char(c))
     return text
+
+
+class TimestampWhitelistHTMLParser(HTMLParser):
+    """
+    Bộ phân tích cú pháp HTML event-driven chuẩn W3C (Zero Regex) để lọc thẻ <timestamp>.
+    Chỉ giữ lại thẻ có thuộc tính sec nằm trong Whitelist valid_secs.
+    """
+    def __init__(self, valid_secs: set):
+        super().__init__()
+        self.valid_secs = valid_secs
+        self.result: List[str] = []
+        self.in_timestamp = False
+        self.is_valid = False
+        self.tag_attrs: str = ""
+
+    def handle_starttag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
+        if tag == "timestamp":
+            self.in_timestamp = True
+            attr_dict = dict(attrs)
+            sec_str = attr_dict.get("sec", "")
+            if sec_str and sec_str.isdigit() and int(sec_str) in self.valid_secs:
+                self.is_valid = True
+                attr_text = " ".join(f'{k}="{v}"' for k, v in attrs if v is not None)
+                self.tag_attrs = f" {attr_text}" if attr_text else ""
+            else:
+                self.is_valid = False
+                self.tag_attrs = ""
+        else:
+            attr_text = (" " + " ".join(f'{k}="{v}"' for k, v in attrs if v is not None)) if attrs else ""
+            self.result.append(f"<{tag}{attr_text}>")
+
+    def handle_endtag(self, tag: str):
+        if tag == "timestamp":
+            if self.is_valid:
+                self.result.append("</timestamp>")
+            self.in_timestamp = False
+            self.is_valid = False
+            self.tag_attrs = ""
+        else:
+            self.result.append(f"</{tag}>")
+
+    def handle_data(self, data: str):
+        if self.in_timestamp and self.is_valid and self.tag_attrs:
+            self.result.append(f"<timestamp{self.tag_attrs}>")
+            self.tag_attrs = ""
+        self.result.append(data)
 
 
 def sanitize_timestamp_tags(text: str, valid_secs: set) -> str:
     """
-    Deterministic Timestamp Whitelist Guardrail (ERR-02):
-    Loại bỏ triệt để các thẻ <timestamp sec="X"> không nằm trong danh mục Whitelist được bảo chứng.
-    - Nếu valid_secs rỗng: Loại bỏ toàn bộ thẻ <timestamp>.
+    Deterministic Timestamp Whitelist Guardrail (Zero Regex):
+    Loại bỏ triệt để các thẻ <timestamp sec=\"X\"> không nằm trong danh mục Whitelist được bảo chứng.
+    - Nếu valid_secs rỗng hoặc không có thẻ: Loại bỏ toàn bộ thẻ <timestamp>, giữ lại nội dung trơn.
     - Nếu valid_secs có phần tử: Bắt buộc sec phải thuộc valid_secs.
-    - Các mốc bịa đặt (như LLM tự tăng giây 218, 219, 220) sẽ bị gỡ bỏ thẻ, giữ lại text trơn.
     """
-    if not text:
+    if not text or "<timestamp" not in text:
         return text
-    if not valid_secs:
-        return re.sub(r'<timestamp\b[^>]*>(.*?)</timestamp>', r'\1', text)
 
-    def _tag_verifier(m: re.Match) -> str:
-        full_tag = m.group(0)
-        inner_content = m.group(1)
-        sec_m = re.search(r'sec=["\'](\d+)["\']', full_tag)
-        if sec_m:
-            sec_val = int(sec_m.group(1))
-            if sec_val in valid_secs:
-                return full_tag
-        return inner_content
-
-    return re.sub(r'<timestamp\b[^>]*>(.*?)</timestamp>', _tag_verifier, text)
+    parser = TimestampWhitelistHTMLParser(valid_secs)
+    try:
+        parser.feed(text)
+        return "".join(parser.result)
+    except Exception as e:
+        logger.warning(f"[sanitize_timestamp_tags] Lỗi HTML parser: {e}. Trả về văn bản gốc.")
+        return text
 
 
 class StreamingTimestampSanitizer:
@@ -134,10 +182,21 @@ class StreamingTimestampSanitizer:
                 full_open_tag = self.buffer[:gt_idx + 1]
                 self.buffer = self.buffer[gt_idx + 1:]
 
-                # Bóc tách thuộc tính sec
-                sec_match = re.search(r'sec=["\']?(\d+)["\']?', full_open_tag)
-                if sec_match:
-                    sec_val = int(sec_match.group(1))
+                # Bóc tách thuộc tính sec không dùng regex
+                sec_val = None
+                sec_idx = full_open_tag.find("sec=")
+                if sec_idx != -1:
+                    val_part = full_open_tag[sec_idx + 4:].lstrip(" \"'")
+                    digits = []
+                    for c in val_part:
+                        if c.isdigit():
+                            digits.append(c)
+                        else:
+                            break
+                    if digits:
+                        sec_val = int("".join(digits))
+
+                if sec_val is not None:
                     self.is_valid_sec = (sec_val in self.valid_secs)
                     self.tag_open = full_open_tag
                 else:

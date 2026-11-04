@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import math
-import re
 import json
 from pathlib import Path
 from dataclasses import dataclass, field
@@ -48,16 +47,27 @@ class RetrievalResult:
         return bool(self.chunks)
 
 
+def is_hangul_or_cjk(c: str) -> bool:
+    """Kiểm tra ký tự thuộc khối Hangul hoặc CJK dựa trên mã Unicode (Zero Regex)."""
+    code = ord(c)
+    return (
+        (0xAC00 <= code <= 0xD7AF) or
+        (0x1100 <= code <= 0x11FF) or
+        (0x4E00 <= code <= 0x9FFF)
+    )
+
+
 def sanitize_text(text: str) -> str:
     """
-    Chuẩn hóa văn bản trả về:
+    Chuẩn hóa văn bản trả về (Zero Regex):
     - Loại bỏ ký tự carriage return và các ký tự điều khiển.
     - Lọc bỏ các ký tự ngoại ngữ lạ (Hangul, Hanja,...) do lỗi âm học mô hình sinh ra.
     """
     if not text:
         return ""
     text = text.replace("\r", " ").replace("\ufffd", "")
-    text = re.sub(r"[\uac00-\ud7af\u1100-\u11ff\u4e00-\u9fff]", "", text)
+    if any(is_hangul_or_cjk(c) for c in text):
+        text = "".join(c for c in text if not is_hangul_or_cjk(c))
     return " ".join(text.split())
 
 
