@@ -1,0 +1,119 @@
+{
+  "timestamp": "2026-11-04 22:25:11",
+  "author": "Trần Thành Nghĩa (23DH112252)",
+  "total_test_samples": 200,
+  "model_a_linearsvc_nli": {
+    "accuracy": 89.0,
+    "macro_f1": 84.43,
+    "p50_ms": 1.72,
+    "p95_ms": 376.63,
+    "p99_ms": 508.15,
+    "confusion_matrix": [
+      [
+        21,
+        4,
+        0
+      ],
+      [
+        2,
+        135,
+        6
+      ],
+      [
+        0,
+        10,
+        22
+      ]
+    ],
+    "classification_report": {
+      "chit_chat": {
+        "precision": 0.9130434782608695,
+        "recall": 0.84,
+        "f1-score": 0.875,
+        "support": 25.0
+      },
+      "course_query": {
+        "precision": 0.9060402684563759,
+        "recall": 0.9440559440559441,
+        "f1-score": 0.9246575342465754,
+        "support": 143.0
+      },
+      "out_of_scope": {
+        "precision": 0.7857142857142857,
+        "recall": 0.6875,
+        "f1-score": 0.7333333333333333,
+        "support": 32.0
+      },
+      "accuracy": 0.89,
+      "macro avg": {
+        "precision": 0.8682660108105104,
+        "recall": 0.8238519813519813,
+        "f1-score": 0.8443302891933029,
+        "support": 200.0
+      },
+      "weighted avg": {
+        "precision": 0.8876635124432032,
+        "recall": 0.89,
+        "f1-score": 0.8878384703196347,
+        "support": 200.0
+      }
+    }
+  },
+  "model_b_slm_onnx_int8": {
+    "accuracy": 96.0,
+    "macro_f1": 95.34,
+    "p50_ms": 0.06,
+    "p95_ms": 0.12,
+    "p99_ms": 0.17,
+    "confusion_matrix": [
+      [
+        25,
+        0,
+        0
+      ],
+      [
+        0,
+        135,
+        8
+      ],
+      [
+        0,
+        0,
+        32
+      ]
+    ],
+    "classification_report": {
+      "chit_chat": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 25.0
+      },
+      "course_query": {
+        "precision": 1.0,
+        "recall": 0.9440559440559441,
+        "f1-score": 0.9712230215827338,
+        "support": 143.0
+      },
+      "out_of_scope": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1-score": 0.8888888888888888,
+        "support": 32.0
+      },
+      "accuracy": 0.96,
+      "macro avg": {
+        "precision": 0.9333333333333332,
+        "recall": 0.9813519813519814,
+        "f1-score": 0.9533706368238741,
+        "support": 200.0
+      },
+      "weighted avg": {
+        "precision": 0.968,
+        "recall": 0.96,
+        "f1-score": 0.9616466826538769,
+        "support": 200.0
+      }
+    }
+  }
+}
