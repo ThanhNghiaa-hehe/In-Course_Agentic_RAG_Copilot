@@ -331,7 +331,7 @@ class ChatService:
                     }
                     await asyncio.sleep(0.012)
 
-                commit_assistant_turn(session_id, request.prompt, nav_response)
+                commit_assistant_turn(session_id, request.prompt, nav_response, current_lesson_seq=request.lesson_seq)
                 yield {
                     "event": "done",
                     "data": "[DONE]"
@@ -409,7 +409,7 @@ class ChatService:
                 await asyncio.sleep(0.015)
 
             # Lưu vết lượt Fast-Path vào Checkpointer
-            commit_assistant_turn(session_id, request.prompt, direct_text)
+            commit_assistant_turn(session_id, request.prompt, direct_text, current_lesson_seq=request.lesson_seq)
 
             yield {
                 "event": "done",
@@ -510,7 +510,7 @@ class ChatService:
             if full_assistant_response.strip():
                 # Hàng rào bảo vệ lần 2: Đảm bảo 100% không lọt bất kỳ thẻ timestamp ảo giác nào vào DB
                 full_assistant_response = sanitize_timestamp_tags(full_assistant_response, valid_secs)
-                commit_assistant_turn(session_id, request.prompt, full_assistant_response)
+                commit_assistant_turn(session_id, request.prompt, full_assistant_response, current_lesson_seq=request.lesson_seq)
 
         except Exception as e:
             logger.error(f"[ChatService] Lỗi kết nối LLM Server ({settings.LLM_BASE_URL}): {str(e)}")

@@ -13,10 +13,78 @@ Cung cấp:
 """
 
 import json
-import re
 from datetime import datetime
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
+
+from markdown_it import MarkdownIt
+from tree_sitter import Parser, Language
+import tree_sitter_cpp as tscpp
+
+CPP_LANGUAGE = Language(tscpp.language())
+_CPP_PARSER = Parser(CPP_LANGUAGE)
+_MD_PARSER = MarkdownIt()
+
+
+class TimestampTagExtractor(HTMLParser):
+    """Bộ bóc tách thẻ XML <timestamp> thuần AST/Event-driven, triệt tiêu 100% regex."""
+    def __init__(self):
+        super().__init__()
+        self.tags: List[Tuple[str, str]] = []
+        self._active_sec: Optional[str] = None
+        self._active_text: List[str] = []
+
+    def handle_starttag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
+        if tag == "timestamp":
+            attr_dict = dict(attrs)
+            if "sec" in attr_dict and attr_dict["sec"] is not None:
+                self._active_sec = str(attr_dict["sec"])
+                self._active_text = []
+
+    def handle_data(self, data: str):
+        if self._active_sec is not None:
+            self._active_text.append(data)
+
+    def handle_endtag(self, tag: str):
+        if tag == "timestamp" and self._active_sec is not None:
+            label = "".join(self._active_text).strip()
+            self.tags.append((self._active_sec, label))
+            self._active_sec = None
+            self._active_text = []
+
+
+def _inspect_cpp_code_ast(code: str) -> Tuple[bool, bool]:
+    """
+    Phân tích cú pháp AST mã nguồn C++ qua Tree-sitter:
+    - has_include: Phát hiện chỉ thị #include (preproc_include).
+    - has_main: Phát hiện định nghĩa hàm main() thực thi (function_declarator -> main).
+    """
+    try:
+        tree = _CPP_PARSER.parse(bytes(code, "utf8"))
+        has_include = False
+        has_main = False
+
+        def traverse(node):
+            nonlocal has_include, has_main
+            if node.type == "preproc_include":
+                has_include = True
+            elif node.type == "function_definition":
+                for child in node.children:
+                    if child.type == "function_declarator":
+                        for sub in child.children:
+                            if sub.type == "identifier" and sub.text.decode("utf8") == "main":
+                                has_main = True
+            for child in node.children:
+                traverse(child)
+
+        traverse(tree.root_node)
+        return has_include, has_main
+    except Exception:
+        # Dự phòng phân tích dòng thuần túy nếu Tree-sitter lỗi
+        has_inc = any(line.strip().startswith("#") and "include" in line for line in code.splitlines())
+        has_m = any("main(" in line.replace(" ", "") for line in code.splitlines() if not line.strip().startswith("//"))
+        return has_inc, has_m
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 LOGS_DIR = PROJECT_ROOT / "logs" / "playground_debug"
@@ -57,10 +125,11 @@ class TelemetryCriticService:
         warnings = []
         merits = []
 
-        # 1. Kiểm tra ranh giới mã nguồn Socratic (SOCRATIC CODE POLICY)
-        # Chỉ phạt vi phạm khi #include hoặc int main() nằm trong một khối mã nguồn Markdown (```) có độ dài > 10 dòng.
+        # 1. Kiểm tra ranh giới mã nguồn Socratic qua Markdown AST & Tree-sitter C++ AST
+        # Chỉ phạt vi phạm khi #include hoặc int main() nằm trong một khối mã nguồn Markdown có độ dài > 10 dòng.
         # Miễn trừ hoàn toàn khi xuất hiện trong câu văn giải thích lý thuyết.
-        code_blocks = re.findall(r'```(?:cpp|c\+\+)?\s*([\s\S]*?)```', response_text)
+        md_tokens = _MD_PARSER.parse(response_text)
+        code_blocks = [t.content for t in md_tokens if t.type in ("fence", "code_block")]
         total_code_lines = 0
         has_include_in_long_code = False
         has_main_in_long_code = False
@@ -71,9 +140,10 @@ class TelemetryCriticService:
             total_code_lines += num_lines
 
             if num_lines > 10:
-                if re.search(r'#\s*include\b', block):
+                inc, main_fn = _inspect_cpp_code_ast(block)
+                if inc:
                     has_include_in_long_code = True
-                if re.search(r'\b(?:int|void)\s+main\s*\(', block):
+                if main_fn:
                     has_main_in_long_code = True
 
         if has_include_in_long_code:
@@ -93,15 +163,20 @@ class TelemetryCriticService:
         else:
             warnings.append("Thiếu câu hỏi gợi mở ở cuối câu trả lời để kích thích học viên tự suy luận.")
 
-        # 2. Kiểm toán thẻ Timestamp Video
-        ts_tags = re.findall(r'<timestamp\s+sec=["\'](\d+)["\'][^>]*>(.*?)</timestamp>', response_text)
+        # 2. Kiểm toán thẻ Timestamp Video qua HTMLParser AST (Zero Regex)
+        ts_parser = TimestampTagExtractor()
+        ts_parser.feed(response_text)
+        ts_tags = ts_parser.tags
         whitelist_secs = {t.get("sec") for t in suggested_ts if "sec" in t}
 
         unverified_ts = []
         for sec_str, label in ts_tags:
-            sec_val = int(sec_str)
-            if whitelist_secs and sec_val not in whitelist_secs:
-                unverified_ts.append(f"{label} ({sec_val}s)")
+            try:
+                sec_val = int(sec_str)
+                if whitelist_secs and sec_val not in whitelist_secs:
+                    unverified_ts.append(f"{label} ({sec_val}s)")
+            except ValueError:
+                unverified_ts.append(f"{label} ({sec_str}s)")
 
         if unverified_ts:
             warnings.append(f"Mốc thời gian không nằm trong Whitelist nguồn xác thực: {', '.join(unverified_ts)}.")
@@ -302,7 +377,7 @@ class TelemetryCriticService:
         """
         logs_dir = _ensure_logs_dir()
         timestamp_clean = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe_sid = re.sub(r'[^a-zA-Z0-9_\-]', '', session_id) or "session"
+        safe_sid = "".join(c for c in session_id if c.isalnum() or c in ("_", "-")) or "session"
         
         # 1. Chạy đánh giá kiểm toán
         analysis = self.analyze_session(

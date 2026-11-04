@@ -430,4 +430,20 @@
   - Mọi câu hỏi kiểm thử trong tập Golden Dataset hoặc OOD Stress-Test bắt buộc phải được đối soát trực tiếp với `data/curriculum/lessons_manifest.json` và file transcript thực tế.
   - Tuyệt đối không gán nhãn `lesson_seq` theo phỏng đoán. Nếu bài giảng thực tế không dạy kiến thức đó, nhãn `expected_retrieval_status` bắt buộc phải là `coverage_gap` và `expected_has_timestamp: false`.
 
+## 13. Production Hardening & Zero-Regex Invariants (Kỷ Luật Chuẩn Hóa Production - 04/11/2026)
+- **Contrastive Semantic Vector Guardrail Invariant:**
+  - Tuyệt đối cấm sử dụng các danh sách biểu thức chính quy (Regex) tĩnh để làm chốt chặn an ninh Prompt Injection hay Jailbreak.
+  - Hệ thống an ninh đầu vào bắt buộc vận hành theo cơ chế Biên độ Tương phản Véc-tơ (Contrastive Relative Margin) trên không gian `multilingual-e5-large`:
+    $$\Delta_{\text{margin}}(q) = \max_{a \in \mathcal{A}} \cos(\mathbf{e}_q, \mathbf{e}_a) - \max_{b \in \mathcal{B}} \cos(\mathbf{e}_q, \mathbf{e}_b)$$
+    Chỉ gắn cờ vi phạm khi $\Delta_{\text{margin}} \ge +0.02$ và $\cos(q, a) \ge 0.86$. Đồng thời duy trì 100% cơ chế Context-Aware Socratic Input Gate bảo vệ học viên hỏi lỗi biên dịch hoặc gửi code tự làm.
+- **Markdown AST & Compiler-Level Telemetry Invariant:**
+  - Tuyệt đối cấm dùng `re.findall` hay `re.search` để bóc tách khối Markdown hoặc đếm dòng code trong kiểm toán phản hồi.
+  - Toàn bộ việc bóc tách mã nguồn bắt buộc phải qua `markdown-it-py` AST parser, phân tích cú pháp C++ bằng Tree-sitter (`preproc_include`, `function_declarator`), và trích xuất thẻ `<timestamp>` bằng `HTMLParser` event-driven.
+- **AST Line-Slicing Context Pruning & Lesson Continuity Invariant:**
+  - Cắt tỉa lịch sử hội thoại đa lượt trong LangGraph StateGraph bằng tọa độ dòng AST `token.map = (start_line, end_line)`. Tuyệt đối không dùng regex `re.sub(r"```.*?```", ..., flags=re.DOTALL)`.
+  - Cơ chế Conversation Summarizer bắt buộc kẹp chặt mỏ neo bài học hiện tại (`current_lesson_seq`) vào nội dung tóm tắt, ngăn chặn hiện tượng trôi ngữ cảnh khi học viên tương tác liên tục $> 10$ lượt.
+- **Full-Corpus 83-Lesson Video Coverage Verification:**
+  - Bảo chứng 100% độ phủ Video Transcript trên toàn bộ 83 bài học (52 bài `cpp-core` và 31 bài `cpp-oop`), kết nối trực tiếp với metadata binding `approx_video_sec` trong `data/metadata/lesson_code_video_binding.json`.
+
+
 

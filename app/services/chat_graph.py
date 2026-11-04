@@ -11,11 +11,13 @@ Kiến trúc:
 - Conditional Edges: Phân luồng rẽ nhánh linh hoạt giữa Fast-Path và Course Retrieval.
 """
 
-import re
 import logging
 from typing import TypedDict, List, Dict, Any, Optional
+from markdown_it import MarkdownIt
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
+
+_MD_PARSER = MarkdownIt()
 
 from app.agent.router import get_intent_router
 from app.services.retrieval import get_retrieval_service, RetrievalResult
@@ -381,14 +383,31 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
         content = msg.get("content", "")
         role = msg.get("role", "user")
 
-        # Rút gọn code block dài trong các câu trả lời cũ của assistant
-        if role == "assistant" and "```" in content and len(content) > 350:
-            content = re.sub(
-                r"```(?:cpp|c\+\+|c)?\n.*?```",
-                "[...khung code minh họa ở lượt trước...]",
-                content,
-                flags=re.DOTALL
-            )
+        # Rút gọn code block dài trong các câu trả lời cũ của assistant bằng Markdown AST (Zero Regex)
+        if role == "assistant" and "```" in content and len(content) > 180:
+            try:
+                tokens = _MD_PARSER.parse(content)
+                ranges = [t.map for t in tokens if t.type in ("fence", "code_block") and t.map]
+                if ranges:
+                    lines = content.splitlines()
+                    new_lines = []
+                    skip_until = -1
+                    for i, l in enumerate(lines):
+                        in_range = False
+                        for start, end in ranges:
+                            if i == start:
+                                new_lines.append("[...khung code minh họa ở lượt trước...]")
+                                skip_until = end
+                                in_range = True
+                                break
+                            elif start < i < end:
+                                in_range = True
+                                break
+                        if not in_range and i >= skip_until:
+                            new_lines.append(l)
+                    content = "\n".join(new_lines)
+            except Exception:
+                pass
 
         msg_len = len(content)
         if accumulated_chars + msg_len > MAX_HISTORY_CHARS and len(sliding_history) >= 2:
@@ -494,10 +513,16 @@ def get_chat_graph():
     return _compiled_chat_graph
 
 
-def commit_assistant_turn(session_id: str, user_prompt: str, assistant_response: str) -> None:
+def commit_assistant_turn(
+    session_id: str,
+    user_prompt: str,
+    assistant_response: str,
+    current_lesson_seq: Optional[int] = None
+) -> None:
     """
     Lưu vết cặp tin nhắn (User + Assistant) vào StateGraph Checkpointer theo thread_id.
-    Tự động kích hoạt thuật toán nén Conversation Summarizer khi số lượt > 6.
+    Tự động kích hoạt thuật toán nén Conversation Summarizer khi số lượt > 6,
+    bảo toàn tuyệt đối thông tin bài học hiện tại (current_lesson_seq).
     """
     graph = get_chat_graph()
     config = {"configurable": {"thread_id": session_id}}
@@ -512,6 +537,8 @@ def commit_assistant_turn(session_id: str, user_prompt: str, assistant_response:
 
     current_turn = len(history) // 2
 
+    lesson_seq_ref = current_lesson_seq or current_values.get("current_lesson_seq", "hiện tại")
+
     # Nén tóm tắt nếu vượt quá 6 lượt đối thoại (> 10 tin nhắn lịch sử)
     summary = current_values.get("conversation_summary")
     if current_turn > 6 and len(history) > 10:
@@ -520,12 +547,13 @@ def commit_assistant_turn(session_id: str, user_prompt: str, assistant_response:
             f"Lượt {idx//2 + 1}: {m['content'][:60]}"
             for idx, m in enumerate(overflow_msgs) if m["role"] == "user"
         ]
-        summary = f"Học viên đã thảo luận về: {'; '.join(topics)}."
+        summary = f"Học viên đang theo học Bài {lesson_seq_ref}. Tiến trình thảo luận trước đó: {'; '.join(topics)}."
 
     graph.update_state(config, {
         "messages": history,
         "turn_count": current_turn,
-        "conversation_summary": summary
+        "conversation_summary": summary,
+        "current_lesson_seq": lesson_seq_ref
     })
     logger.info(f"[LangGraph:Checkpointer] Đã lưu snapshot Turn {current_turn} cho Session '{session_id}' ({len(history)} messages).")
 
