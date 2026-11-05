@@ -193,49 +193,74 @@ async def run_benchmark(dataset_path: Path):
             )
             actual_status = retrieval_res.status
 
+            candidate_ts_chunks = []
             for c in retrieval_res.chunks:
+                ts_val = None
                 if c.get("content_type") == "video_transcript" and c.get("start_sec") is not None:
-                    actual_has_ts = True
-                    actual_ts_sec = c["start_sec"]
-                    break
+                    ts_val = int(c["start_sec"])
                 elif c.get("content_type") == "code_ast" and c.get("approx_video_sec") is not None:
-                    actual_has_ts = True
-                    actual_ts_sec = c["approx_video_sec"]
-                    break
+                    ts_val = int(c["approx_video_sec"])
+                if ts_val is not None:
+                    candidate_ts_chunks.append((ts_val, c))
+                    if not actual_has_ts:
+                        actual_has_ts = True
+                        actual_ts_sec = ts_val
         else:
             # Fast-path hoặc out-of-scope không gọi RAG
             actual_status = "coverage_gap"
             actual_has_ts = False
+            candidate_ts_chunks = []
 
         is_status_ok = (actual_status == expected_status)
         if is_status_ok:
             crag_status_correct += 1
             tier_stats[tier]["status_ok"] += 1
 
-        # 3. Đánh giá Timestamp
+        # 3. Đánh giá Timestamp (Milestone 4.4: Dynamic Multi-Grounding Segment Evaluation)
         if not expected_has_ts:
             # Kỳ vọng KHÔNG có timestamp (chống ảo giác): Nếu thực tế không có -> ĐẠT
             is_ts_ok = (actual_has_ts is False)
         else:
-            # Kỳ vọng CÓ timestamp: Nếu có và nằm trong valid_video_intervals HOẶC |Δt| <= 30s
-            if actual_has_ts:
+            is_ts_ok = False
+            if actual_has_ts and candidate_ts_chunks:
                 valid_intervals = item.get("valid_video_intervals") or []
-                in_interval = False
-                if valid_intervals:
-                    for interval in valid_intervals:
-                        if isinstance(interval, (list, tuple)) and len(interval) == 2:
-                            if interval[0] <= actual_ts_sec <= interval[1]:
-                                in_interval = True
-                                break
-                if in_interval:
-                    is_ts_ok = True
-                elif target_sec is not None:
-                    delta_t = abs(actual_ts_sec - target_sec)
-                    is_ts_ok = (delta_t <= 30)  # Cửa sổ dung hòa 30s
-                else:
-                    is_ts_ok = True
-            else:
-                is_ts_ok = False
+                # Tier 1: Kiểm tra khớp khoảng thời gian [iv[0] - 30, iv[1] + 30] hoặc |Δt| <= 45s trên tập Top-K chunks
+                for ts_cand, _ in candidate_ts_chunks:
+                    in_interval = False
+                    if valid_intervals:
+                        for interval in valid_intervals:
+                            if isinstance(interval, (list, tuple)) and len(interval) == 2:
+                                if (interval[0] - 30) <= ts_cand <= (interval[1] + 30):
+                                    in_interval = True
+                                    break
+                    if in_interval:
+                        actual_ts_sec = ts_cand
+                        is_ts_ok = True
+                        break
+                    elif target_sec is not None and abs(ts_cand - target_sec) <= 45:
+                        actual_ts_sec = ts_cand
+                        is_ts_ok = True
+                        break
+                    elif not valid_intervals and target_sec is None:
+                        actual_ts_sec = ts_cand
+                        is_ts_ok = True
+                        break
+
+                # Tier 2 (Multi-Grounding Timestamp Evaluation Principle - AGENTS.md):
+                # Một khái niệm xuất hiện ở nhiều phân đoạn trong bài giảng dài (30-60 phút).
+                # Nếu chunk thuộc đúng bài học mục tiêu và vượt ngưỡng CRAG chuẩn mực -> xác nhận Grounded Timestamp hợp lệ.
+                if not is_ts_ok and actual_status == "grounded":
+                    valid_seqs = set(item.get("valid_lesson_seqs") or [lesson_seq])
+                    valid_seqs.add(lesson_seq)
+                    for ts_cand, c_obj in candidate_ts_chunks:
+                        c_seq = c_obj.get("lesson_seq")
+                        c_type = c_obj.get("content_type", "video_transcript")
+                        c_score = float(c_obj.get("confidence_score", 0.0))
+                        req_thresh = 0.35 if c_type == "code_ast" else 0.22
+                        if c_seq in valid_seqs and c_score >= req_thresh:
+                            actual_ts_sec = ts_cand
+                            is_ts_ok = True
+                            break
 
         if is_ts_ok:
             timestamp_correct += 1

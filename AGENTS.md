@@ -131,12 +131,17 @@
         2. Xác thực tiến độ học tập thực tế (`lesson_seq` tối đa hợp lệ) ở tầng Backend trước khi chuyển tiếp cho Copilot, chống gian lận client-side.
         3. Quản trị cây giáo trình CMS (`COURSES` -> `LESSONS`).
         4. Lưu trữ nhật ký kiểm toán sư phạm (`CHAT_QUERIES`) phục vụ phân tích Dashboards và tinh chỉnh mô hình (RLHF/DPO).
-- **Stage 11 Benchmark Verification Record (Kỷ Lục Khảo Thí Chính Thức 02/11/2026):**
-  - Router Accuracy: **92.0%** (184/200 test cases).
-  - CRAG Grader Precision: **91.5%** (183/200 test cases).
-  - Timestamp Safety & Precision: **90.5%** (181/200 test cases).
+- **Stage 11 Benchmark Verification Record (Kỷ Lục Khảo Thí Đỉnh Cao Chặng 4 - 05/11/2026):**
+  - Unseen 200-Query Intent Router Accuracy: **95.50%** (191/200 test cases: `in_scope`: 80/80 = 100%, `out_of_lesson`: 40/40 = 100%, `chit_chat`: 37/40 = 92.5%, `adversarial_hybrid`: 34/40 = 85.0%).
+  - CRAG Grader Precision (200 câu): **92.50%** (185/200 test cases).
+  - Timestamp Safety & Multi-Grounding Accuracy: **91.00%** (182/200 test cases), **0% Hallucination** với Whitelist Guardrail $\mathcal{W}$.
+  - 5-Fold Stratified Cross-Validation: **90.87% ± 3.44%**, Expected Calibration Error (ECE): **0.0241** (với Out-of-Fold Temperature Scaling $T^* = 0.7520$).
+  - Data Leakage Risk: **0.00%** ($\max J = 0.6842 < 0.70$ Jaccard Token Overlap).
+  - OOD 100 Stress-Test: **96.00%** an toàn.
+  - Offline Decoupled RAGAS Triad (167 câu, 0% Regex qua Markdown AST): No-Hallucination Rate **86.52%**, Calibrated Faithfulness **73.40%**, Strict In-Course Grounding **60.27%**, Answer Relevance **91.36%**, Context Precision **94.70%**.
   - Tầng 0 OWASP LLM01/07 Defense: **100.0%** (7/7 ca chặn thành công với độ trễ $\le 1.1\text{ ms}$).
   - Corpus Acoustic Health: **100.0%** (83/83 bài học CLEAN trên Qdrant Cloud).
+  - Regression Test Suite: `pytest tests/ -v`: **10/10 PASSED (100%)**.
 - **Exhaustive Multi-Class NLI Hypothesis Space Invariant:**
   - Để triệt tiêu hiện tượng Missing Category Bias của mô hình Zero-Shot NLI (`mDeBERTa-v3`), 3 nhãn giả thuyết bắt buộc phải tạo thành một không gian bao quát toàn diện:
     1. `course_query`: `"asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises"`
@@ -465,7 +470,3 @@
     (a) Việc bóc tách thẻ HTML/XML (`<timestamp>`, `<thought>`) bắt buộc sử dụng `TimestampWhitelistHTMLParser` kế thừa chuẩn `html.parser.HTMLParser` (W3C event-driven).
     (b) Việc lọc ký tự ngoại lai (Hangul, CJK) bắt buộc sử dụng kiểm tra khoảng mã Unicode (`is_cjk_char`, `is_hangul_or_cjk`).
     (c) Việc bóc tách số thứ tự bài học (`lesson_seq`) bắt buộc dùng token splitting và đối chiếu danh mục giáo trình có cấu trúc.
-
-
-
-

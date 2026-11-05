@@ -8,6 +8,7 @@ Kiến trúc phòng vệ 3 tầng sâu (Defense-in-Depth):
 - Tầng 3: Margin Decision Boundary (ΔP >= 0.12) kết hợp cơ chế Abstention Fallback vào RAG an toàn.
 """
 
+import json
 import logging
 import unicodedata
 from pathlib import Path
@@ -21,11 +22,11 @@ from app.agent.guardrails import get_security_input_guardrail, SECURITY_REFUSAL_
 
 logger = logging.getLogger("uvicorn.error")
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-
+ROUTER_MANIFEST_PATH = PROJECT_ROOT / "data" / "metadata" / "router_intent_manifest.json"
 
 
 # ==========================================
-# 2. Phản hồi Sư phạm Chuẩn (Pedagogical Responses)
+# Phản hồi Sư phạm Chuẩn (Pedagogical Responses)
 # ==========================================
 GREETING_RESPONSES = (
     "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng lập trình của khóa học. "
@@ -48,15 +49,26 @@ GOODBYE_RESPONSES = (
 IDENTITY_RESPONSES = (
     "Tôi là **In-Course Agentic RAG Copilot** - Trợ giảng lập trình thông minh theo phương pháp Socratic, "
     "được phát triển bởi sinh viên **Trần Thành Nghĩa** (MSSV: `23DH112252`), "
-    "Trường **Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)**.\n\n"
-    "Hệ thống được xây dựng trên nền tảng **FastAPI**, **Python 3.11**, **Qdrant Vector DB** "
-    "kết hợp mô hình embedding đa ngữ `multilingual-e5-large` và trích xuất mốc thời gian video chuẩn xác!"
+    "Trường **Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)** "
+    "(Kho lưu trữ GitHub: `ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot`).\n\n"
+    "Hệ thống được xây dựng trên nền tảng:\n"
+    "- **Backend & Vector DB:** **FastAPI**, **Python 3.11**, **Qdrant** với cơ chế **dual vector** (`dense` 1024-dim và `sparse` BM25).\n"
+    "- **Embedding & Re-ranker:** Mô hình nhúng `multilingual-e5-large` (1024 chiều qua `fastembed`) kết hợp bộ xếp hạng **Cross-Encoder** `jinaai/jina-reranker-v2`.\n"
+    "- **Speech & Video Sync:** Bóc băng âm thanh bằng `faster-whisper` kết hợp `Silero VAD`, trích xuất thẻ `<timestamp sec=\"...\">` điều khiển trình phát `seekTo` trên giao diện **React 19** + **Vite**!"
+)
+
+SOCRATIC_PEDAGOGY_RESPONSES = (
+    "Theo nguyên tắc sư phạm **Socratic**, tôi đóng vai trò là người đồng hành **gợi mở** **tư duy** "
+    "chứ **không chép bài** hay viết sẵn toàn bộ code giải hoàn chỉnh thay cho **học viên**.\n\n"
+    "Việc **tự lập trình**, tự suy nghĩ qua từng câu hỏi định hướng và đối chiếu với mốc video bài giảng "
+    "sẽ giúp bạn nắm vững bản chất thuật toán C++ bền vững nhất!"
 )
 
 ADVICE_RESPONSES = (
     "Học lập trình ban đầu có thể có nhiều bỡ ngỡ với các khái niệm như bộ nhớ, con trỏ hay cú pháp nghiêm ngặt của C++. "
-    "Lời khuyên tốt nhất là hãy **kiên trì thực hành viết code mỗi ngày**, tự tay gõ từng dòng lệnh "
-    "và học cách đọc hiểu các thông báo lỗi biên dịch. Tôi luôn ở đây đồng hành và hướng dẫn bạn từng bước!"
+    "Lời khuyên tốt nhất là hãy **kiên trì** **thực hành** giải **bài tập** và viết code mỗi ngày, tự tay gõ từng dòng lệnh "
+    "và cố gắng từng bước đọc hiểu thông báo lỗi. Trí tuệ nhân tạo chỉ là **công cụ** **hỗ trợ** giúp **lập trình viên** "
+    "tăng hiệu suất chứ không thể thay thế tư duy thiết kế phần mềm của bạn. Tôi luôn ở đây **đồng hành** cùng bạn!"
 )
 
 OFFTOPIC_CASUAL_RESPONSES = (
@@ -66,36 +78,14 @@ OFFTOPIC_CASUAL_RESPONSES = (
 )
 
 
-CONFIRM_ANCHORS = [
-    "query: ok",
-    "query: oke",
-    "query: okie",
-    "query: có",
-    "query: có nha",
-    "query: có nhé",
-    "query: có chứ",
-    "query: dạ có",
-    "query: vâng",
-    "query: vâng ạ",
-    "query: dạ được",
-    "query: ừ",
-    "query: chuyển đi",
-    "query: chuyển giúp mình",
-    "query: ừ chuyển giúp mình",
-    "query: mở giúp mình",
-    "query: mở video đó lên",
-    "query: đồng ý",
-    "query: yes",
-    "query: được đấy"
-]
-
-REJECT_ANCHORS = [
-    "query: không",
-    "query: không cần",
-    "query: không cần đâu",
-    "query: thôi khỏi",
-    "query: không muốn xem"
-]
+def _load_router_manifest() -> Dict[str, Any]:
+    try:
+        if ROUTER_MANIFEST_PATH.exists():
+            with open(ROUTER_MANIFEST_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception as e:
+        logger.warning(f"[IntentRouter] Không thể đọc {ROUTER_MANIFEST_PATH}: {e}")
+    return {}
 
 
 class NLIArbiter:
@@ -103,25 +93,26 @@ class NLIArbiter:
     Stage 2 Cross-Encoder NLI Arbiter:
     Sử dụng mô hình MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7 (chạy GPU/CPU).
     Nhiệm vụ: Phán xử logic ngữ nghĩa (Entailment / Contradiction) cho các câu hỏi
-    rơi vào vùng phân vân (Margin < 0.12 hoặc P_course >= 0.20 khi bị Stage 1 kéo về out_of_scope).
-    Tuyệt đối Zero-Regex, 100% Machine Learning.
+    rơi vào vùng phân vân của cổng Bi-Directional Entropy/Margin Gate.
+    Tuyệt đối Zero-Regex, Zero-Hardcoded-Anchors, 100% Machine Learning & Data-Driven Manifest.
     """
 
-    def __init__(self):
+    def __init__(self, manifest_data: Optional[Dict[str, Any]] = None):
         self._pipeline = None
         self._confirm_vecs = None
         self._reject_vecs = None
-        self._candidate_labels = [
-            "asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises",
-            "social greetings, casual conversation, questions about the AI assistant, system architecture, author information, or asking for learning advice",
-            "asking about real life events, money, career salary, dating, weather, food, entertainment, or absurd physical world questions"
-        ]
-        self._label_map = {
-            "asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises": "course_query",
-            "social greetings, casual conversation, questions about the AI assistant, system architecture, author information, or asking for learning advice": "chit_chat",
-            "asking about real life events, money, career salary, dating, weather, food, entertainment, or absurd physical world questions": "out_of_scope"
-        }
-        self._template = "The user is {}."
+        data = manifest_data if manifest_data is not None else _load_router_manifest()
+        self._confirm_anchors: List[str] = data.get("confirm_anchors", [])
+        self._reject_anchors: List[str] = data.get("reject_anchors", [])
+        hypotheses: Dict[str, str] = data.get("nli_hypotheses", {})
+        self._candidate_labels: List[str] = []
+        self._label_map: Dict[str, str] = {}
+        for intent_key in ("course_query", "chit_chat", "out_of_scope"):
+            hyp_text = hypotheses.get(intent_key)
+            if hyp_text:
+                self._candidate_labels.append(hyp_text)
+                self._label_map[hyp_text] = intent_key
+        self._template = "{}"
 
     def _get_pipeline(self):
         """Khởi tạo trễ (Lazy Loading) để không làm chậm thời gian khởi động server."""
@@ -146,7 +137,7 @@ class NLIArbiter:
     def arbitrate(self, prompt: str) -> tuple[str, float]:
         """Phán định ý định bằng suy luận logic Zero-Shot NLI."""
         pipe = self._get_pipeline()
-        if pipe is None:
+        if pipe is None or not self._candidate_labels:
             return "out_of_scope", 0.0
         try:
             res = pipe(
@@ -167,24 +158,26 @@ class NLIArbiter:
     def is_confirmation(self, prompt: str) -> tuple[bool, float]:
         """
         Phán xử ý định xác nhận hành động đàm thoại qua Vector E5 Prototype Alignment & Dual Margin.
-        Độ trễ < 3ms, bảo đảm 100% toán học ML, 0% regex chắp vá.
+        Độ trễ < 3ms, bảo đảm 100% toán học ML từ manifest JSON, 0% từ khóa hardcode.
         """
         try:
             emb_svc = get_embedding_service()
-            if self._confirm_vecs is None:
-                self._confirm_vecs = [emb_svc.embed_query_dense(a) for a in CONFIRM_ANCHORS]
-                self._reject_vecs = [emb_svc.embed_query_dense(a) for a in REJECT_ANCHORS]
+            if self._confirm_vecs is None and self._confirm_anchors and self._reject_anchors:
+                self._confirm_vecs = [emb_svc.embed_query_dense(a) for a in self._confirm_anchors]
+                self._reject_vecs = [emb_svc.embed_query_dense(a) for a in self._reject_anchors]
+
+            if not self._confirm_vecs or not self._reject_vecs:
+                return False, 0.0
 
             q_vec = emb_svc.embed_query_dense(f"query: {prompt}")
             sim_c = max([float(np.dot(q_vec, cv) / (np.linalg.norm(q_vec) * np.linalg.norm(cv))) for cv in self._confirm_vecs])
             sim_r = max([float(np.dot(q_vec, rv) / (np.linalg.norm(q_vec) * np.linalg.norm(rv))) for rv in self._reject_vecs])
 
-            # Kiểm tra câu hỏi mới (chứa từ để hỏi hoặc dấu ?)
-            is_q = any(w in prompt.lower() for w in ["?", "là gì", "thế nào", "như thế nào", "sao vậy", "giải thích", "hỏi", "dạy gì", "học gì"])
-            is_agree = (sim_c >= 0.88) and (sim_c > sim_r + 0.05) and not is_q
+            is_question_punct = prompt.strip().endswith("?")
+            is_agree = (sim_c >= 0.88) and (sim_c > sim_r + 0.05) and not is_question_punct
 
             # [Stage 2 NLI Arbiter]: Cứu xét bằng Cross-Encoder khi câu nói tự nhiên dài hoặc phân vân
-            if not is_agree and not is_q and len(prompt.split()) >= 2:
+            if not is_agree and not is_question_punct and len(prompt.split()) >= 2:
                 pipe = self._get_pipeline()
                 if pipe is not None:
                     premise = f"Trợ giảng hỏi: 'Bạn có muốn mình chuyển sang bài học tiếp theo và mở video cho bạn không?'. Học viên trả lời: '{prompt}'."
@@ -203,19 +196,18 @@ class NLIArbiter:
 
             logger.info(
                 f"[ConfirmationClassifier:E5-NLI] '{prompt[:35]}' -> "
-                f"Cos_C={sim_c:.3f} | Cos_R={sim_r:.3f} | IsQuestion={is_q} -> IsAgree={is_agree}"
+                f"Cos_C={sim_c:.3f} | Cos_R={sim_r:.3f} -> IsAgree={is_agree}"
             )
             return is_agree, sim_c
         except Exception as e:
             logger.error(f"[ConfirmationClassifier] Lỗi tính tương quan vector: {e}")
-            norm = prompt.strip().lower()
-            return norm in ["ok", "ừ", "u", "ừm", "yes", "yep", "chuyển đi", "mở đi", "bật đi", "đồng ý", "được", "okie", "có", "vâng"], 0.9
+            return False, 0.0
 
     def warmup(self) -> None:
         """Khởi động nóng mô hình NLI Arbiter trên CPU/RAM để khử triệt để Cold-Start."""
         try:
             pipe = self._get_pipeline()
-            if pipe is not None:
+            if pipe is not None and self._candidate_labels:
                 pipe("khởi động hệ thống", candidate_labels=self._candidate_labels[:1], hypothesis_template=self._template)
                 logger.info("[NLIArbiter] Khởi động nóng (Warmup) hoàn tất.")
         except Exception as e:
@@ -224,22 +216,23 @@ class NLIArbiter:
 
 class IntentRouter:
     """
-    Bộ định tuyến phân loại ý định người dùng chuẩn SOTA:
-    - Loại bỏ hoàn toàn các danh sách prototype tĩnh trong mã nguồn.
+    Bộ định tuyến phân loại ý định người dùng chuẩn SOTA (Milestone 4.2):
     - Kiến trúc Cascade 2 Tầng (Cascading Multi-Tier Router):
-      + Tầng 1: Platt-Calibrated LinearSVC trên không gian E5 1024-dim (Fast-Path ~2 ms).
-      + Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli trên CPU khi phân vân).
-    - Biên độ tự tin Margin Decision Boundary (ΔP >= 0.12) chống phân vân ngữ nghĩa.
+      + Tầng 1: Calibrated Convex-Neural Soft-Voting Ensemble (0.45 * P_SLM(T*) + 0.55 * P_SVC) trên E5 1024-dim.
+      + Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli) kích hoạt qua cổng Bi-Directional Entropy/Margin Gate.
     """
 
     def __init__(self):
         self._calibrated_clf = None
         self._slm_session = None
         self._classes = ["chit_chat", "course_query", "out_of_scope"]
-        self._nli_arbiter = NLIArbiter()
+        self._manifest_data = _load_router_manifest()
+        self._nli_arbiter = NLIArbiter(self._manifest_data)
         self._security_guardrail = get_security_input_guardrail()
+        self._chitchat_proto_matrix: Optional[np.ndarray] = None
+        self._chitchat_proto_responses: List[str] = []
 
-        # 1. Ưu tiên nạp Fast-Path SLM ONNX INT8 Router (Độ chính xác 96.0%, P99 <= 0.3ms)
+        # 1. Nạp Fast-Path SLM ONNX INT8 Router (Temperature-Scaled T*)
         slm_path = PROJECT_ROOT / "app" / "agent" / "models" / "slm_router_int8.onnx"
         if slm_path.exists():
             try:
@@ -248,16 +241,16 @@ class IntentRouter:
                 opts.intra_op_num_threads = 2
                 opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
                 self._slm_session = ort.InferenceSession(str(slm_path), opts, providers=["CPUExecutionProvider"])
-                logger.info(f"[IntentRouter] 🚀 Nạp thành công Fast-Path SLM ONNX INT8 Router từ {slm_path} (Acc=96.0%, Latency=0.04ms).")
+                logger.info(f"[IntentRouter] 🚀 Nạp thành công Fast-Path SLM ONNX INT8 Router từ {slm_path}.")
             except Exception as e:
                 logger.warning(f"[IntentRouter] Lỗi nạp slm_router_int8.onnx ({e}).")
 
-        # 2. Nạp mô hình dự phòng Platt-Calibrated LinearSVC (Fallback)
+        # 2. Nạp mô hình Platt-Calibrated LinearSVC (Convex Ensemble Partner / Fallback)
         model_path = PROJECT_ROOT / "app" / "agent" / "models" / "calibrated_router.joblib"
         if model_path.exists():
             try:
                 self._calibrated_clf = joblib.load(model_path)
-                logger.info(f"[IntentRouter] Nạp thành công mô hình Platt-Calibrated Router dự phòng từ {model_path}.")
+                logger.info(f"[IntentRouter] Nạp thành công mô hình Platt-Calibrated LinearSVC từ {model_path}.")
             except Exception as e:
                 logger.error(f"[IntentRouter] Lỗi khi nạp calibrated_router.joblib ({e}).")
         else:
@@ -274,24 +267,60 @@ class IntentRouter:
         normalized = unicodedata.normalize("NFC", text.strip())
         return " ".join(normalized.split())
 
-    def _select_chitchat_response(self, prompt: str) -> str:
-        """Lựa chọn câu phản hồi sư phạm phù hợp cho nhóm Chit-Chat."""
-        lower_p = prompt.lower()
-        if any(w in lower_p for w in ["cảm ơn", "thank", "tuyệt", "hiểu rồi"]):
-            return GRATITUDE_RESPONSES
-        elif any(w in lower_p for w in ["tạm biệt", "bye", "hẹn gặp", "ngủ ngon"]):
-            return GOODBYE_RESPONSES
-        elif any(w in lower_p for w in ["tác giả", "là ai", "nghĩa", "huflit", "đồ án", "mã số", "tạo ra", "phát triển", "giới thiệu", "bản thân"]):
-            return IDENTITY_RESPONSES
-        elif any(w in lower_p for w in ["khuyên", "kinh nghiệm", "khó không", "nản", "bắt đầu"]):
-            return ADVICE_RESPONSES
+    def _ensure_chitchat_prototypes(self) -> None:
+        """Khởi tạo ma trận prototype E5 1024-dim cho 6 nhóm phản hồi chit_chat từ manifest JSON."""
+        if self._chitchat_proto_matrix is not None:
+            return
+        subintents = self._manifest_data.get("chitchat_subintents", {})
+        if not subintents:
+            return
+        try:
+            emb_svc = get_embedding_service()
+            vecs: List[np.ndarray] = []
+            resps: List[str] = []
+            for _sub_key, sub_cfg in subintents.items():
+                resp_txt = sub_cfg.get("response_text", GREETING_RESPONSES)
+                for proto_str in sub_cfg.get("prototypes", []):
+                    v = np.array(emb_svc.embed_query_dense(proto_str), dtype=np.float32)
+                    norm_v = np.linalg.norm(v)
+                    if norm_v > 0:
+                        v /= norm_v
+                    vecs.append(v)
+                    resps.append(resp_txt)
+            if vecs:
+                self._chitchat_proto_matrix = np.vstack(vecs)
+                self._chitchat_proto_responses = resps
+        except Exception as e:
+            logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận chitchat prototypes ({e}).")
+
+    def _select_chitchat_response(self, prompt: str, query_vec: Optional[np.ndarray] = None) -> str:
+        """
+        Lựa chọn câu phản hồi sư phạm cho nhóm Chit-Chat bằng 100% Dense Vector Cosine Matching
+        trên ma trận prototype nạp từ router_intent_manifest.json (0% từ khóa cứng, 0% Regex).
+        """
+        self._ensure_chitchat_prototypes()
+        if self._chitchat_proto_matrix is not None and self._chitchat_proto_responses:
+            try:
+                if query_vec is None:
+                    emb_svc = get_embedding_service()
+                    qv = np.array(emb_svc.embed_query_dense(prompt), dtype=np.float32)
+                    norm_q = np.linalg.norm(qv)
+                    if norm_q > 0:
+                        qv /= norm_q
+                else:
+                    qv = query_vec
+                sims = np.dot(self._chitchat_proto_matrix, qv)
+                best_idx = int(np.argmax(sims))
+                return self._chitchat_proto_responses[best_idx]
+            except Exception as e:
+                logger.debug(f"[IntentRouter] Lỗi tính Cosine chitchat subintent ({e}).")
         return GREETING_RESPONSES
 
     def classify(self, prompt: str) -> RouterClassification:
         """
-        Phân loại câu hỏi của học viên thuần túy bằng Machine Learning (Zero-Regex):
-        - Tầng 1: Platt-Calibrated Classifier (Scikit-Learn LinearSVC + CalibratedClassifierCV)
-        - Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli trên CPU) khi phân vân
+        Phân loại câu hỏi của học viên thuần túy bằng Machine Learning (Zero-Regex / Zero-Hardcoded-Triggers):
+        - Tầng 1: Calibrated Convex-Neural Soft-Voting Ensemble (0.45 * P_SLM(T*) + 0.55 * P_SVC)
+        - Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli) qua cổng Bi-Directional Entropy/Margin Gate
         - Tầng 3: An toàn mặc định (Abstention) -> Đẩy vào RAG (course_query)
         """
         clean_prompt = self._normalize_text(prompt)
@@ -314,161 +343,115 @@ class IntentRouter:
             )
 
         # ----------------------------------------------------
-        # 1. TẦNG 1: Fast-Path SLM ONNX INT8 Router (Acc=96.0%, P99<=0.3ms)
+        # 1. TẦNG 1: Calibrated Convex-Neural Soft-Voting Ensemble
+        #    P_ens(y|x) = 0.45 * P_SLM(y|x; T*) + 0.55 * P_SVC(y|x)
         # ----------------------------------------------------
-        if self._slm_session is not None:
+        if self._slm_session is not None or self._calibrated_clf is not None:
             try:
                 emb_svc = get_embedding_service()
                 query_vec = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
                 q_norm = np.linalg.norm(query_vec)
                 if q_norm > 0:
                     query_vec /= q_norm
+                vec_2d = query_vec.reshape(1, -1)
 
-                logits = self._slm_session.run(None, {"dense_vector": query_vec.reshape(1, -1)})[0][0]
-                exp_l = np.exp(logits - np.max(logits))
-                probs = exp_l / np.sum(exp_l)
-                top1_idx = int(np.argmax(probs))
-                top1_class = self._classes[top1_idx]
-                top1_prob = float(probs[top1_idx])
-                sorted_p = np.sort(probs)
-                margin = float(sorted_p[-1] - sorted_p[-2])
+                slm_probs = None
+                svc_probs = None
 
-                p_chit = float(probs[0])
-                p_course = float(probs[1])
-                p_oos = float(probs[2])
+                if self._slm_session is not None:
+                    try:
+                        logits = self._slm_session.run(None, {"dense_vector": vec_2d})[0][0]
+                        exp_l = np.exp(logits - np.max(logits))
+                        slm_probs = exp_l / np.sum(exp_l)
+                    except Exception as slm_err:
+                        logger.warning(f"[IntentRouter] Lỗi suy luận SLM ({slm_err}).")
 
-                logger.info(
-                    f"[IntentRouter-SLM] Intent={top1_class} (Conf={top1_prob*100:.1f}%, Margin={margin:.3f}) | "
-                    f"Probs: chit_chat={p_chit:.3f}, course={p_course:.3f}, oos={p_oos:.3f}"
-                )
+                if self._calibrated_clf is not None:
+                    try:
+                        svc_probs = self._calibrated_clf.predict_proba(vec_2d)[0]
+                    except Exception as svc_err:
+                        logger.warning(f"[IntentRouter] Lỗi suy luận LinearSVC ({svc_err}).")
 
-                # ----------------------------------------------------
-                # ĐIỀU PHỐI CASCADE: STAGE 1 (SLM) -> STAGE 2 (NLI ARBITER)
-                # ----------------------------------------------------
-                # Kích hoạt NLI Arbiter khi rơi vào vùng phân vân:
-                # 1. SLM chọn out_of_scope nhưng p_course >= 0.04 hoặc margin < 0.35 (dấu hiệu câu hỏi ẩn dụ đời sống)
-                # 2. Hoặc SLM chọn chit_chat nhưng p_chit < 0.85 và p_course >= 0.10 (dấu hiệu hỏi bài có đại từ xưng hô)
-                is_ambiguous_slm = (
-                    (top1_class == "out_of_scope" and (p_course >= 0.04 or margin < 0.35)) or
-                    (top1_class == "chit_chat" and p_chit < 0.85 and p_course >= 0.08)
-                )
+                if slm_probs is not None and svc_probs is not None:
+                    probs = 0.45 * slm_probs + 0.55 * svc_probs
+                    mode_tag = "Ensemble(0.45*SLM+0.55*SVC)"
+                elif slm_probs is not None:
+                    probs = slm_probs
+                    mode_tag = "SLM-Only"
+                elif svc_probs is not None:
+                    probs = svc_probs
+                    mode_tag = "SVC-Only"
+                else:
+                    probs = None
+                    mode_tag = "None"
 
-                if is_ambiguous_slm:
+                if probs is not None:
+                    top1_idx = int(np.argmax(probs))
+                    top1_class = self._classes[top1_idx]
+                    top1_prob = float(probs[top1_idx])
+                    sorted_p = np.sort(probs)
+                    margin = float(sorted_p[-1] - sorted_p[-2])
+
+                    p_chit = float(probs[0])
+                    p_course = float(probs[1])
+                    p_oos = float(probs[2])
+
                     logger.info(
-                        f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter cho SLM: "
-                        f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, P_course={p_course:.3f}"
+                        f"[IntentRouter-{mode_tag}] Intent={top1_class} (Conf={top1_prob*100:.1f}%, Margin={margin:.3f}) | "
+                        f"Probs: chit_chat={p_chit:.3f}, course={p_course:.3f}, oos={p_oos:.3f}"
                     )
-                    nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
-                    if nli_intent == "course_query" and nli_conf >= 0.55:
-                        logger.info(f"[IntentRouter-Cascade] NLI Arbiter giải cứu thành công -> course_query ({nli_conf*100:.1f}%)")
+
+                    # ----------------------------------------------------
+                    # ĐIỀU PHỐI CASCADE: STAGE 1 (ENSEMBLE) -> STAGE 2 (NLI ARBITER)
+                    # Cổng độ trễ đa chiều Bi-Directional Entropy/Margin Gate
+                    # ----------------------------------------------------
+                    is_ambiguous_slm = (
+                        (margin < 0.18) or
+                        (top1_class == "out_of_scope" and p_course >= 0.22) or
+                        (top1_class == "course_query" and (p_oos >= 0.28 or p_chit >= 0.25))
+                    )
+
+                    if is_ambiguous_slm:
+                        logger.info(
+                            f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter ({mode_tag}): "
+                            f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, "
+                            f"P_course={p_course:.3f}, P_chit={p_chit:.3f}, P_oos={p_oos:.3f}"
+                        )
+                        nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
+                        if nli_intent == "course_query" and (nli_conf >= 0.44 or p_course >= 0.35):
+                            logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> course_query ({nli_conf*100:.1f}%)")
+                            return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                        elif nli_intent == "chit_chat" and (nli_conf >= 0.55 or (nli_conf >= 0.42 and p_chit >= 0.30)):
+                            logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> chit_chat ({nli_conf*100:.1f}%)")
+                            return RouterClassification(
+                                intent="chit_chat",
+                                direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
+                                is_course_query=False
+                            )
+                        elif nli_intent == "out_of_scope" and nli_conf >= 0.65:
+                            logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> out_of_scope ({nli_conf*100:.1f}%)")
+                            return RouterClassification(
+                                intent="out_of_scope",
+                                direct_response=OFFTOPIC_CASUAL_RESPONSES,
+                                is_course_query=False
+                            )
+
+                    if top1_class == "course_query":
                         return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                    elif nli_intent == "chit_chat" and nli_conf >= 0.50:
+                    elif top1_class == "chit_chat":
                         return RouterClassification(
                             intent="chit_chat",
-                            direct_response=self._select_chitchat_response(clean_prompt),
+                            direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
                             is_course_query=False
                         )
-                    elif nli_intent == "out_of_scope" and nli_conf >= 0.55:
+                    else:
                         return RouterClassification(
                             intent="out_of_scope",
                             direct_response=OFFTOPIC_CASUAL_RESPONSES,
                             is_course_query=False
                         )
-
-                if top1_class == "course_query":
-                    return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                elif top1_class == "chit_chat":
-                    return RouterClassification(
-                        intent="chit_chat",
-                        direct_response=self._select_chitchat_response(clean_prompt),
-                        is_course_query=False
-                    )
-                else:
-                    return RouterClassification(
-                        intent="out_of_scope",
-                        direct_response=OFFTOPIC_CASUAL_RESPONSES,
-                        is_course_query=False
-                    )
-            except Exception as e:
-                logger.warning(f"[IntentRouter-SLM] Lỗi suy luận SLM ({e}). Chuyển sang Fallback LinearSVC.")
-
-        # ----------------------------------------------------
-        # 2. TẦNG DỰ PHÒNG: Platt-Calibrated Classifier Gate (Scikit-Learn Fallback)
-        # ----------------------------------------------------
-        if self._calibrated_clf is not None:
-            try:
-                emb_svc = get_embedding_service()
-                query_vec = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
-                q_norm = np.linalg.norm(query_vec)
-                if q_norm > 0:
-                    query_vec /= q_norm
-
-                # Dự đoán phân phối xác suất đã hiệu chuẩn P(y=c|x)
-                probs = self._calibrated_clf.predict_proba(query_vec.reshape(1, -1))[0]
-                sorted_indices = np.argsort(probs)[::-1]
-                top1_idx = sorted_indices[0]
-                top2_idx = sorted_indices[1]
-
-                top1_class = self._classes[top1_idx]
-                top1_prob = float(probs[top1_idx])
-                top2_prob = float(probs[top2_idx])
-                margin = top1_prob - top2_prob
-
-                p_chit = float(probs[0])
-                p_course = float(probs[1])
-                p_oos = float(probs[2])
-
-                logger.info(
-                    f"[IntentRouter-Calibrated] Probs: chit_chat={p_chit:.3f} | "
-                    f"course_query={p_course:.3f} | out_of_scope={p_oos:.3f} (Margin={margin:.3f})"
-                )
-
-                # ----------------------------------------------------
-                # ĐIỀU PHỐI CASCADE: STAGE 1 (LinearSVC) -> STAGE 2 (NLI ARBITER)
-                # ----------------------------------------------------
-                MARGIN_THRESHOLD = 0.12
-
-                # Điều kiện kích hoạt Stage 2 NLI Arbiter (Zero Quick-Fix / Pure ML Inference):
-                # 1. Rơi vào vùng phân vân ngữ nghĩa (margin < 0.12)
-                # 2. Hoặc Stage 1 chọn out_of_scope nhưng chưa đủ tự tin (p_oos < 0.75 và p_course >= 0.15)
-                # 3. Hoặc Stage 1 chọn chit_chat nhưng chưa đủ tự tin áp đảo (p_chit < 0.75)
-                #    (Dấu hiệu câu hỏi giáo trình/bài tập có đại từ nhân xưng 'thầy', 'bài học này' bị LinearSVC nhầm sang chào hỏi)
-                is_ambiguous = (margin < MARGIN_THRESHOLD)
-                is_potential_study_query = (
-                    (top1_class == "out_of_scope" and p_course >= 0.15 and p_chit < 0.35) or
-                    (top1_class == "chit_chat" and p_chit < 0.75 and p_course >= 0.15)
-                )
-
-                if is_ambiguous or is_potential_study_query:
-                    logger.info(
-                        f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter: "
-                        f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, P_course={p_course:.3f}"
-                    )
-                    nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
-
-                    # Nếu NLI khẳng định đây là câu hỏi học tập (Entailment >= 0.50): Cứu về course_query
-                    if nli_intent == "course_query" and nli_conf >= 0.50:
-                        logger.info(f"[IntentRouter-Cascade] NLI Arbiter giải cứu thành công -> course_query ({nli_conf*100:.1f}%)")
-                        return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-
-                    # Nếu NLI khẳng định out_of_scope và tự tin cao (>= 0.65)
-                    elif nli_intent == "out_of_scope" and nli_conf >= 0.65 and top1_class != "chit_chat":
-                        return RouterClassification(intent="out_of_scope", direct_response=OFFTOPIC_CASUAL_RESPONSES, is_course_query=False)
-
-                    # Nếu NLI khẳng định chit_chat và tự tin cao (>= 0.50)
-                    elif nli_intent == "chit_chat" and nli_conf >= 0.50:
-                        return RouterClassification(intent="chit_chat", direct_response=self._select_chitchat_response(clean_prompt), is_course_query=False)
-
-                # Trường hợp thông thường: Tuân thủ phán quyết Stage 1 LinearSVC
-                if top1_class == "course_query":
-                    return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                elif top1_class == "chit_chat":
-                    return RouterClassification(intent="chit_chat", direct_response=self._select_chitchat_response(clean_prompt), is_course_query=False)
-                elif top1_class == "out_of_scope":
-                    return RouterClassification(intent="out_of_scope", direct_response=OFFTOPIC_CASUAL_RESPONSES, is_course_query=False)
-
             except Exception as err:
-                logger.warning(f"[IntentRouter] Lỗi tính toán Calibrated Router ({err}).")
+                logger.warning(f"[IntentRouter] Lỗi tính toán Ensemble Router ({err}).")
 
         # ----------------------------------------------------
         # 3. TẦNG 3: Mặc định an toàn chuyển tiếp vào RAG Pipeline

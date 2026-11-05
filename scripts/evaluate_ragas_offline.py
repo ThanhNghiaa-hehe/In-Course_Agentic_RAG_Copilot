@@ -26,7 +26,6 @@ Mục tiêu & Nguyên lý Thiết kế:
 
 import sys
 import os
-import re
 import json
 import time
 import argparse
@@ -35,6 +34,9 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any, Tuple, Optional, Union
 import numpy as np
+from markdown_it import MarkdownIt
+
+_MD_PARSER = MarkdownIt()
 
 # Thiết lập đường dẫn gốc dự án
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -56,44 +58,109 @@ from app.services.retrieval import RetrievalService, get_retrieval_service
 from app.services.qdrant import close_async_qdrant_client
 
 
+def _strip_leading_bullet(text: str) -> str:
+    """Loại bỏ ký hiệu danh sách (bullet/numbering) ở đầu dòng bằng xử lý chuỗi thuần túy (Zero-Regex)."""
+    s = text.strip()
+    if not s:
+        return s
+    if s[0] in ("-", "*", "+"):
+        return s[1:].strip()
+    idx = 0
+    while idx < len(s) and s[idx].isdigit():
+        idx += 1
+    if idx > 0 and idx < len(s) and s[idx] == ".":
+        return s[idx + 1:].strip()
+    return s
+
+
+def _replace_code_blocks_ast(markdown_text: str, replacement: str = "") -> str:
+    """Sử dụng MarkdownIt AST để loại bỏ hoặc thay thế các khối mã nguồn (fence / code_block) không dùng Regex."""
+    tokens = _MD_PARSER.parse(markdown_text)
+    out_parts: List[str] = []
+    in_heading = False
+    for tok in tokens:
+        if tok.type == "heading_open":
+            in_heading = True
+        elif tok.type == "heading_close":
+            in_heading = False
+        elif tok.type in ("fence", "code_block"):
+            if replacement:
+                out_parts.append(replacement)
+        elif tok.type == "inline" and not in_heading:
+            if tok.content:
+                out_parts.append(tok.content)
+    return "\n".join(out_parts)
+
+
 def extract_technical_claims(answer_text: str) -> List[str]:
     """
     Bóc tách các khẳng định lý thuyết / cú pháp sư phạm thực sự từ câu trả lời của LLM.
-    Loại bỏ khối mã nguồn, câu hỏi Socratic gợi mở, câu chào xã giao, các dòng chú thích số dòng code
-    (Line 4, Dòng 12...) và các biến minh họa giả định trong ví dụ.
+    Loại bỏ khối mã nguồn (qua MarkdownIt AST), câu hỏi Socratic gợi mở, câu chào xã giao,
+    các dòng chú thích số dòng code (Line 4, Dòng 12...) và các biến minh họa giả định trong ví dụ.
     """
     if not answer_text or not answer_text.strip():
         return []
 
-    # 1. Loại bỏ các khối code block markdown ```cpp ... ```
-    text_without_code = re.sub(r"```[\s\S]*?```", "", answer_text)
+    # 1. Loại bỏ các khối code block và tiêu đề Markdown bằng MarkdownIt AST
+    text_without_code = _replace_code_blocks_ast(answer_text, replacement="")
 
-    # 2. Loại bỏ các dòng tiêu đề Markdown, phân cách hoặc bullet headers
+    # 2. Lọc bỏ các dòng chú thích số dòng code, biến minh họa hoặc tiêu đề phân mục rỗng
     lines = text_without_code.split("\n")
     cleaned_lines = []
+    illustrative_markers = ("tên biến", "tên của biến", "giá trị khởi tạo", "giá trị gán", "ví dụ:")
+
     for line in lines:
         line_s = line.strip()
         if not line_s or line_s.startswith("#") or line_s.startswith("---"):
             continue
 
+        line_no_bullet = _strip_leading_bullet(line_s)
+        if not line_no_bullet:
+            continue
+        lower_nb = line_no_bullet.lower()
+
         # Loại bỏ các dòng chú thích số dòng code (vd: "Dòng 4: Khai báo thư viện...", "Line 12: ...")
-        if re.match(r"^(\-|\*|\d+\.)?\s*(Dòng|Line)\s*\d+.*:", line_s, re.IGNORECASE):
+        is_line_annotation = False
+        for prefix in ("dòng", "line"):
+            if lower_nb.startswith(prefix) and ":" in lower_nb:
+                after_prefix = lower_nb[len(prefix):lower_nb.index(":")].strip()
+                if after_prefix and after_prefix[0].isdigit():
+                    is_line_annotation = True
+                    break
+        if is_line_annotation:
             continue
 
         # Loại bỏ các bullet giải thích tên biến minh họa hoặc giá trị gán giả định trong ví dụ code
-        if re.search(r"(Tên biến|Tên của biến|Giá trị khởi tạo|Giá trị gán|Ví dụ:)", line_s, re.IGNORECASE):
+        if any(marker in lower_nb for marker in illustrative_markers):
             continue
 
         # Loại bỏ các bullet chỉ là tiêu đề phân mục (vd: "1. **Phân tích lỗi**:")
-        if re.match(r"^(\d+\.|\-|\*)\s*\*\*[^*]+\*\*:\s*$", line_s):
+        if (
+            line_no_bullet.startswith("**")
+            and line_no_bullet.endswith("**:")
+            and line_no_bullet.count("**") == 2
+        ):
             continue
 
         cleaned_lines.append(line_s)
 
     raw_text = " ".join(cleaned_lines)
 
-    # 3. Tách câu dựa trên dấu chấm câu
-    sentences = re.split(r"(?<=[.!?])\s+", raw_text)
+    # 3. Tách câu dựa trên dấu chấm câu (. ! ?) bằng duyệt ký tự tuần tự (Zero-Regex)
+    sentences: List[str] = []
+    buf: List[str] = []
+    n_chars = len(raw_text)
+    for idx, ch in enumerate(raw_text):
+        buf.append(ch)
+        if ch in (".", "!", "?") and (idx + 1 == n_chars or raw_text[idx + 1].isspace()):
+            sent = "".join(buf).strip()
+            if sent:
+                sentences.append(sent)
+            buf = []
+    if buf:
+        tail = "".join(buf).strip()
+        if tail:
+            sentences.append(tail)
 
     raw_claims = []
     greetings = [
@@ -103,9 +170,7 @@ def extract_technical_claims(answer_text: str) -> List[str]:
     ]
 
     for s in sentences:
-        s_clean = s.strip()
-        # Loại bỏ bullet points ở đầu dòng
-        s_clean = re.sub(r"^(\d+\.|\-|\*|\+)\s*", "", s_clean).strip()
+        s_clean = _strip_leading_bullet(s)
 
         # Bỏ qua câu quá ngắn (< 15 ký tự)
         if len(s_clean) < 15:
@@ -295,8 +360,8 @@ class OfflineRagasEvaluator:
         if not query or not answer_text:
             return 0.0
 
-        # Làm sạch câu trả lời để tập trung vào nội dung diễn giải sư phạm
-        cleaned_ans = re.sub(r"```[\s\S]*?```", "[Code minh họa]", answer_text).strip()
+        # Làm sạch câu trả lời để tập trung vào nội dung diễn giải sư phạm (qua MarkdownIt AST, Zero-Regex)
+        cleaned_ans = _replace_code_blocks_ast(answer_text, replacement="[Code minh họa]").strip()
         if len(cleaned_ans) < 20:
             cleaned_ans = answer_text[:500]
         else:

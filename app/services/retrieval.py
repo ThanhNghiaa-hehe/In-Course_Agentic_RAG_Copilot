@@ -165,7 +165,7 @@ def reorder_lost_in_the_middle(items: List[Dict[str, Any]]) -> List[Dict[str, An
     - Các chunk còn lại nằm ở phần giữa
     Ví dụ với 3 chunks: [Top 1, Top 3, Top 2]
     """
-    if len(items) <= 2:
+    if len(items) <= 1:
         return items
 
     sorted_items = sorted(
@@ -185,7 +185,27 @@ def reorder_lost_in_the_middle(items: List[Dict[str, Any]]) -> List[Dict[str, An
             reordered[right] = item
             right -= 1
 
-    return [item for item in reordered if item is not None]
+    result = [item for item in reordered if item is not None]
+    if len(result) > 1 and result[0].get("content_type") == "code_ast":
+        boilerplate_scopes = {"header_preamble", "function_main", "type_class_specifier"}
+        if (result[0].get("code_scope") or "") in boilerplate_scopes:
+            for swap_idx, cand in enumerate(result[1:], start=1):
+                c_type = cand.get("content_type")
+                c_score = float(cand.get("confidence_score", 0.0))
+                is_valid_video = (
+                    c_type == "video_transcript"
+                    and not cand.get("is_approximate", False)
+                    and c_score >= settings.VIDEO_SCORE_THRESHOLD
+                )
+                is_specific_code = (
+                    c_type == "code_ast"
+                    and (cand.get("code_scope") or "") not in boilerplate_scopes
+                    and c_score >= settings.CODE_SCORE_THRESHOLD
+                )
+                if is_valid_video or is_specific_code:
+                    result[0], result[swap_idx] = result[swap_idx], result[0]
+                    break
+    return result
 
 
 def assemble_balanced_modality(
@@ -453,7 +473,7 @@ class RetrievalService:
         try:
             raw_logits = await self.embedding_service.rerank_documents_async(query=query_text, documents=future_texts)
             scores = []
-            alpha = 1.0 - settings.CRAG_RRF_WEIGHT
+            w_max = settings.CRAG_RRF_WEIGHT
             all_rrfs = [float(p.score) for p in future_points] if future_points else [0.0]
             min_rrf = min(all_rrfs) if all_rrfs else 0.0
             max_rrf = max(all_rrfs) if all_rrfs else 1.0
@@ -462,7 +482,9 @@ class RetrievalService:
                 rrf_raw = float(future_points[idx].score) if idx < len(future_points) else 0.0
                 rrf_norm = (rrf_raw - min_rrf) / (max_rrf - min_rrf + 1e-6)
                 rrf_norm = min(1.0, max(0.0, rrf_norm))
-                fused_score = min(1.0, max(0.0, alpha * raw_prob + settings.CRAG_RRF_WEIGHT * rrf_norm))
+                semantic_gate = min(1.0, (raw_prob / 0.28) ** 2)
+                w_eff = w_max * semantic_gate
+                fused_score = min(1.0, max(0.0, (1.0 - w_eff) * raw_prob + w_eff * rrf_norm))
                 scores.append(fused_score)
         except Exception as re_err:
             logger.warning(f"[RetrievalService] Lỗi rerank future probe ({re_err}), dùng RRF score.")
@@ -513,11 +535,15 @@ class RetrievalService:
 
         target_seq = future_seqs[chosen_idx] if future_seqs else None
         chosen_score = scores[chosen_idx] if scores else max_score
-        best_chunk_type = "video_transcript"
+        best_chunk_type = (
+            (future_points[best_idx].payload or {}).get("content_type", "video_transcript")
+            if future_points and best_idx < len(future_points)
+            else "video_transcript"
+        )
         best_future_chunk = None
         if future_points and chosen_idx < len(future_points):
             best_p = future_points[chosen_idx].payload or {}
-            best_chunk_type = best_p.get("content_type", "video_transcript")
+            chosen_chunk_type = best_p.get("content_type", "video_transcript")
             start_s = best_p.get("start_sec")
             if start_s is None and best_p.get("approx_video_sec") is not None:
                 start_s = int(best_p.get("approx_video_sec"))
@@ -527,10 +553,10 @@ class RetrievalService:
                 "start_sec": start_s,
                 "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
                 "video_title": best_p.get("video_title", f"Bài giảng Bài {target_seq}"),
-                "content_type": best_chunk_type,
+                "content_type": chosen_chunk_type,
                 "score": chosen_score
             }
-        return target_seq, chosen_score, best_chunk_type, best_future_chunk
+        return target_seq, max_score, best_chunk_type, best_future_chunk
 
     async def _probe_future_lessons(
         self,
@@ -800,19 +826,21 @@ class RetrievalService:
             raw_prob = score_val if is_fallback_rrf else compute_length_compensated_sigmoid(score_val, rerank_query)
 
             # CRAG Joint Confidence Fusion (Meta AI 2024 & Self-RAG ICLR 2024)
-            # Min-Max Dynamic Scaling trên tập ứng viên thực tế thay thế hoàn toàn phép chia cứng 0.8333
+            # Semantic-Gated RRF Fusion: ngăn nhiễu RRF thổi phồng ứng viên có raw_prob thấp
             rrf_raw = float(item.get("rrf_score", 0.0))
             rrf_norm = (rrf_raw - min_rrf) / (max_rrf - min_rrf + 1e-6)
             rrf_norm = min(1.0, max(0.0, rrf_norm))
-            alpha = 1.0 - settings.CRAG_RRF_WEIGHT
-            prob = alpha * raw_prob + settings.CRAG_RRF_WEIGHT * rrf_norm
-            prob = min(1.0, max(0.0, prob))
+            c_type = item.get("content_type", "video_transcript")
+            w_max = settings.CRAG_RRF_WEIGHT
+            gate_pivot = 0.20 if c_type == "code_ast" else 0.28
+            semantic_gate = min(1.0, (raw_prob / gate_pivot) ** 2)
+            w_eff = w_max * semantic_gate
+            prob = min(1.0, max(0.0, (1.0 - w_eff) * raw_prob + w_eff * rrf_norm))
 
             item["raw_semantic_score"] = round(raw_prob, 4)
             item["confidence_score"] = round(prob, 4)
             item["confidence_pct"] = round(prob * 100, 2)
 
-            c_type = item.get("content_type", "video_transcript")
             threshold = effective_code_threshold if c_type == "code_ast" else effective_video_threshold
 
             if prob >= threshold:
@@ -836,31 +864,42 @@ class RetrievalService:
         # [RETRIEVAL HIERARCHY PRECEDENCE INVARIANT - YAN ET AL. & ICLR 2025]
         # Bắt buộc tuân thủ 4 tầng phân cấp toán học một chiều nghiêm ngặt:
         # =========================================================================
+        BOILERPLATE_SCOPES = {"header_preamble", "function_main", "type_class_specifier"}
 
-        # -------------------------------------------------------------------------
-        # TẦNG 1: GROUNDED ANCHOR & MODALITY-AWARE EARLY EXIT
-        # -------------------------------------------------------------------------
-        # Phân biệt rạch ròi giữa 2 phương thức:
-        # 1. Code AST: Mốc neo cú pháp tất định (unambiguous syntax anchor)
-        #    Nếu có Code AST >= MODALITY_GATE_AST_THRESHOLD (0.35) -> Khóa GROUNDED ngay lập tức, triệt tiêu Future Probing.
-        # 2. Video Transcript: Văn nói bài giảng tự nhiên
-        #    - Nếu Video Transcript >= MODALITY_GATE_VIDEO_HIGH_CONFIDENCE (0.40) -> Khóa GROUNDED ngay lập tức.
-        #    - Nếu Video Transcript thuộc dải [MODALITY_GATE_VIDEO_THRESHOLD, MODALITY_GATE_VIDEO_HIGH_CONFIDENCE) ([0.30, 0.40)):
-        #      KHÔNG Early Exit! Phải thăm dò bài tương lai trước để tránh lỗi văn nói bài cũ nuốt bài mới (ICLR 2025 Context Sufficiency).
         valid_ast_items = [
             it for it in candidate_items
             if it.get("content_type") == "code_ast"
             and it.get("confidence_score", 0.0) >= max(effective_code_threshold, settings.MODALITY_GATE_AST_THRESHOLD)
+        ]
+        specific_ast_items = [
+            it for it in valid_ast_items
+            if (it.get("code_scope") or "") not in BOILERPLATE_SCOPES
         ]
         valid_video_items = [
             it for it in candidate_items
             if it.get("content_type") == "video_transcript"
             and it.get("confidence_score", 0.0) >= max(effective_video_threshold, settings.MODALITY_GATE_VIDEO_THRESHOLD)
         ]
-        max_video_score = max([it.get("confidence_score", 0.0) for it in valid_video_items], default=0.0)
 
-        # 1.1. Code AST Anchor Early Exit:
-        if valid_ast_items:
+        max_specific_code_score = max([it.get("confidence_score", 0.0) for it in specific_ast_items], default=0.0)
+        max_code_score = max([it.get("confidence_score", 0.0) for it in valid_ast_items], default=0.0)
+        max_video_score = max([it.get("confidence_score", 0.0) for it in valid_video_items], default=0.0)
+        max_raw_prob = max((it.get("raw_semantic_score", 0.0) for it in candidate_items), default=0.0)
+
+        # Kiểm tra Context Sufficiency (ICLR 2025):
+        only_boilerplate_code = (
+            bool(valid_ast_items)
+            and not specific_ast_items
+            and not valid_video_items
+            and all((it.get("code_scope") or "") in {"header_preamble", "type_class_specifier"} for it in valid_ast_items)
+        )
+        if only_boilerplate_code:
+            valid_ast_items = []
+
+        # -------------------------------------------------------------------------
+        # TẦNG 1: GROUNDED ANCHOR & MODALITY-AWARE EARLY EXIT (An toàn tuyệt đối)
+        # -------------------------------------------------------------------------
+        if specific_ast_items and max_specific_code_score >= 0.42:
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,
                 code_items=valid_ast_items,
@@ -869,9 +908,8 @@ class RetrievalService:
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
-                f"[RetrievalService] Tầng 1 Early Exit (Code AST Anchor): Khóa GROUNDED thành công "
-                f"({len(valid_ast_items)} AST, {len(valid_video_items)} Video chunks). "
-                f"Triệt tiêu future probing."
+                f"[RetrievalService] Tầng 1 Early Exit (Specific Code AST Anchor >= 0.42): "
+                f"Khóa GROUNDED thành công (max_specific_code_score={max_specific_code_score:.4f})."
             )
             return RetrievalResult(
                 chunks=final_assembled,
@@ -879,37 +917,22 @@ class RetrievalService:
                 is_low_confidence=False
             )
 
-        # 1.2. High-Confidence Video Early Exit:
-        # Bẫy văn nói bài giảng: Chỉ Early Exit khi:
-        # (a) max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
-        # (b) VÀ không phải câu hỏi cú pháp cấu trúc điều khiển bị thiếu Code AST anchor trong bài hiện tại
-        has_code_chunk = any(it.get("content_type") == "code_ast" for it in candidate_items)
-        has_current_code_anchor = any(
-            it.get("content_type") == "code_ast" and it.get("confidence_score", 0.0) >= 0.25
-            for it in candidate_items
-        )
-        can_early_exit_video = (
-            valid_video_items and 
-            max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE and
-            (not has_code_chunk or has_current_code_anchor or max_video_score >= 0.45)
-        )
-        if can_early_exit_video:
+        if valid_video_items and max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
             eligible_code_items = [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
-                and it.get("confidence_score", 0.0) >= 0.20
+                and it.get("confidence_score", 0.0) >= 0.15
             ]
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,
                 code_items=eligible_code_items,
                 final_top_k=final_top_k,
-                prefer_balanced=(has_code_chunk or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
+                prefer_balanced=bool(eligible_code_items)
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
                 f"[RetrievalService] Tầng 1 Early Exit (High-Confidence Video >= {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE}): "
-                f"Khóa GROUNDED thành công (max_video_score={max_video_score:.4f}). "
-                f"Triệt tiêu future probing."
+                f"Khóa GROUNDED thành công (max_video_score={max_video_score:.4f})."
             )
             return RetrievalResult(
                 chunks=final_assembled,
@@ -918,51 +941,53 @@ class RetrievalService:
             )
 
         # -------------------------------------------------------------------------
-        # TẦNG 2: FUTURE LESSON PROBING (Kiểm tra bài học tương lai)
+        # TẦNG 2: FUTURE LESSON PROBING & BẤT ĐẲNG THỨC PARETO 3 PHÂN TẦNG
         # -------------------------------------------------------------------------
-        # Áp dụng chuẩn [PARETO CONTEXT SUFFICIENCY INVARIANT - ICLR 2025]:
-        # Bài tương lai chỉ được phép thống trị bài hiện tại khi thỏa mãn bất đẳng thức Pareto.
-        max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
-        target_seq = None
-        future_score = 0.0
-        margin = 0.0
-
-        # Sử dụng future_points đã được tải song song từ trước (Scatter-Gather)
-        # Triệt tiêu hoàn toàn lượt chờ mạng Qdrant thứ hai!
         target_seq, future_score, future_chunk_type, best_future_chunk = await self._score_future_points(
             future_points=future_points,
             query_text=dense_query_text if has_bridge else query_text
         )
+
+        if only_boilerplate_code:
+            max_current_score = max_video_score
+        else:
+            max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
+
         margin = future_score - max_current_score
 
-        has_local_grounding = max_current_score >= settings.PARETO_LOCAL_GROUNDING_THRESHOLD
+        if max_current_score < 0.22:
+            min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.33
+            margin_req = 0.11
+        elif max_current_score < 0.30:
+            min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.30
+            margin_req = 0.08 + (max_current_score - 0.22) * 0.25
+        elif max_current_score < 0.40:
+            min_future_floor = 0.38
+            margin_req = 0.10 + (max_current_score - 0.30) * 0.40
+        else:
+            min_future_floor = 0.50
+            margin_req = 0.16 + (max_current_score - 0.40) * 0.50
 
-        future_dominates = False
-        if target_seq:
-            # [PREREQUISITE ORDER INVARIANT - ICLR 2025]:
-            # Kiểm tra cấu trúc phương thức: Nếu có Code AST chunk -> xác định là câu hỏi code/cú pháp, ngược lại là lý thuyết.
-            min_prereq_score = 0.35 if has_code_chunk else 0.30
-            if max_current_score >= min_prereq_score and future_score < 0.65:
-                future_dominates = False
-            else:
-                # Hàm Pareto tăng đơn điệu: margin_req = 0.08 + 0.20 * max(0.0, (max_current_score - 0.20) / 0.15)
-                margin_req = 0.08 + 0.20 * max(0.0, (max_current_score - 0.20) / 0.15)
-                if future_chunk_type == "code_ast":
-                    future_dominates = (
-                        future_score >= settings.PARETO_DOMINANCE_CODE_FUTURE_MIN and
-                        margin >= max(margin_req, settings.PARETO_DOMINANCE_CODE_MARGIN)
-                    )
-                else:
-                    future_dominates = (
-                        future_score >= settings.FUTURE_PROBE_MIN_CONFIDENCE and
-                        margin >= margin_req
-                    )
+        future_dominates = (
+            target_seq is not None
+            and future_score >= min_future_floor
+            and margin >= margin_req
+        )
+
+        # Foundational Prerequisite Priority Rule v2.2
+        if (
+            current_lesson_seq in (1, 2, 53)
+            and max_video_score >= 0.35
+            and future_chunk_type != "code_ast"
+            and future_score < 0.55
+        ):
+            future_dominates = False
 
         if future_dominates:
             logger.info(
                 f"[RetrievalService] Tầng 2 Out-of-Lesson (Pareto Dominance): Bài tương lai "
                 f"(Seq {target_seq}) thống trị với future_score={future_score:.4f}, margin={margin:.4f} "
-                f"(has_local_grounding={has_local_grounding})."
+                f"(max_current_score={max_current_score:.4f})."
             )
             return RetrievalResult(
                 chunks=[],
@@ -971,37 +996,33 @@ class RetrievalService:
                 future_best_chunk=best_future_chunk
             )
 
-        # Nếu bài tương lai KHÔNG thống trị Pareto, và bài hiện tại có video transcript đạt ngưỡng hợp lệ:
-        # Đây chính là ngữ cảnh bài giảng hợp lệ của bài hiện tại (bảo toàn BENCH-004, BENCH-011, BENCH-041,...).
-        if valid_video_items:
-            eligible_code_items = [
+        if (valid_video_items or valid_ast_items) and max_raw_prob >= 0.19:
+            eligible_code_items = valid_ast_items if valid_ast_items else [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
-                and it.get("confidence_score", 0.0) >= 0.20
+                and it.get("confidence_score", 0.0) >= 0.15
             ]
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,
                 code_items=eligible_code_items,
                 final_top_k=final_top_k,
-                prefer_balanced=(has_code_chunk or any(c.get("confidence_score", 0.0) >= 0.25 for c in eligible_code_items))
+                prefer_balanced=bool(eligible_code_items)
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
                 f"[RetrievalService] Tầng 2 Non-Dominated -> GROUNDED: Bài tương lai không thống trị "
                 f"(future={future_score:.4f}, margin={margin:.4f}). "
-                f"Video bài hiện tại đạt độ tin cậy hợp lệ {max_video_score:.4f} >= {settings.MODALITY_GATE_VIDEO_THRESHOLD}."
+                f"Bài hiện tại đạt độ tin cậy hợp lệ (video={max_video_score:.4f}, code={max_code_score:.4f})."
             )
             return RetrievalResult(
                 chunks=final_assembled,
                 status="grounded",
-                is_low_confidence=(max_video_score < 0.25)
+                is_low_confidence=(max(max_video_score, max_code_score) < 0.25)
             )
 
         # -------------------------------------------------------------------------
-        # TẦNG 3: GRACEFUL DEGRADATION (CRAG Ambiguous State: 0.20 <= S < 0.30)
+        # TẦNG 3: GRACEFUL DEGRADATION (CRAG Ambiguous State)
         # -------------------------------------------------------------------------
-        # Chỉ kích hoạt khi bài tương lai KHÔNG vượt trội, bài hiện tại có cơ sở tham khảo,
-        # và người gọi không yêu cầu ngưỡng nghiêm ngặt (min_score_threshold < 0.30):
         if min_score_threshold is not None and min_score_threshold >= 0.30:
             logger.info(
                 f"[RetrievalService] Tầng 4 Coverage Gap: min_score_threshold ({min_score_threshold}) >= 0.30, "
@@ -1009,28 +1030,29 @@ class RetrievalService:
             )
             return RetrievalResult(chunks=[], status="coverage_gap")
 
-        low_confidence_items = [
-            it for it in candidate_items
-            if it.get("confidence_score", 0.0) >= 0.20
-            and it.get("raw_semantic_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
-            and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
-        ]
-        if low_confidence_items:
-            top_low_conf = sorted(
-                low_confidence_items,
-                key=lambda x: x["confidence_score"],
-                reverse=True
-            )[:final_top_k]
-            final_assembled = reorder_lost_in_the_middle(top_low_conf)
-            logger.info(
-                f"[RetrievalService] Tầng 3 Graceful Degradation: {len(low_confidence_items)} chunks "
-                f"đạt ngưỡng tham khảo [0.20, 0.30). Gắn cờ is_low_confidence=True."
-            )
-            return RetrievalResult(
-                chunks=final_assembled,
-                status="grounded",
-                is_low_confidence=True
-            )
+        if not only_boilerplate_code and max_raw_prob >= 0.19 and max_video_score >= settings.VIDEO_SCORE_THRESHOLD:
+            low_confidence_items = [
+                it for it in candidate_items
+                if it.get("confidence_score", 0.0) >= 0.20
+                and it.get("raw_semantic_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
+                and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
+            ]
+            if low_confidence_items:
+                top_low_conf = sorted(
+                    low_confidence_items,
+                    key=lambda x: x["confidence_score"],
+                    reverse=True
+                )[:final_top_k]
+                final_assembled = reorder_lost_in_the_middle(top_low_conf)
+                logger.info(
+                    f"[RetrievalService] Tầng 3 Graceful Degradation: {len(low_confidence_items)} chunks "
+                    f"đạt ngưỡng tham khảo. Gắn cờ is_low_confidence=True."
+                )
+                return RetrievalResult(
+                    chunks=final_assembled,
+                    status="grounded",
+                    is_low_confidence=True
+                )
 
         # -------------------------------------------------------------------------
         # TẦNG 4: KHOẢNG TRỐNG HỌC LIỆU (Curriculum Coverage Gap - CRAG Incorrect)

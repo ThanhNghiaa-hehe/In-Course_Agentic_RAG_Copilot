@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "description": "Data-Driven Intent Router & Chit-Chat Sub-Intent Semantic Prototype Manifest (Zero Hardcoded Triggers)",
+  "confirm_anchors": [
+    "query: ok",
+    "query: oke",
+    "query: okie",
+    "query: có",
+    "query: có nha",
+    "query: có nhé",
+    "query: có chứ",
+    "query: dạ có",
+    "query: vâng",
+    "query: vâng ạ",
+    "query: dạ được",
+    "query: ừ",
+    "query: chuyển đi",
+    "query: chuyển giúp mình",
+    "query: ừ chuyển giúp mình",
+    "query: mở giúp mình",
+    "query: mở video đó lên",
+    "query: đồng ý",
+    "query: yes",
+    "query: được đấy"
+  ],
+  "reject_anchors": [
+    "query: không",
+    "query: không cần",
+    "query: không cần đâu",
+    "query: thôi khỏi",
+    "query: không muốn xem",
+    "query: đây là câu hỏi mới giải thích khái niệm bài học là gì thế nào"
+  ],
+  "nli_hypotheses": {
+    "course_query": "Học viên đang hỏi kiến thức lập trình C++, cú pháp, thuật toán, hàm, lớp hoặc cách dùng mã nguồn để tính toán dữ liệu trong chương trình máy tính",
+    "chit_chat": "Người dùng đang chào hỏi, cảm ơn, xin lời khuyên học tập, hoặc hỏi về thông tin tác giả, kiến trúc hệ thống trợ giảng AI (cơ sở dữ liệu vector, mô hình embedding, reranker, định dạng thẻ timestamp) hay lý do trợ giảng không giải bài hộ",
+    "out_of_scope": "Người dùng đang nói chuyện phiếm đời sống, tình yêu, tình bạn, ăn uống, mua sắm, thời tiết, gán ghép từ khóa lập trình vào các hành động vật lý phi lý ngoài đời thực, hoặc yêu cầu đóng vai hệ thống khác"
+  },
+  "chitchat_subintents": {
+    "socratic_pedagogy": {
+      "response_text": "Theo nguyên tắc sư phạm **Socratic**, tôi đóng vai trò là người đồng hành **gợi mở** **tư duy** chứ **không chép bài** hay viết sẵn toàn bộ code giải hoàn chỉnh thay cho **học viên**.\n\nViệc **tự lập trình**, tự suy nghĩ qua từng câu hỏi định hướng và đối chiếu với mốc video bài giảng sẽ giúp bạn nắm vững bản chất thuật toán C++ bền vững nhất!",
+      "prototypes": [
+        "vì sao bạn không viết luôn code giải bài tập cho học sinh mà chỉ hướng dẫn gợi mở",
+        "tại sao trợ giảng lại từ chối giải bài hộ sinh viên mà chỉ đặt câu hỏi socratic",
+        "nguyên tắc sư phạm socratic không chép bài hướng dẫn tư duy hoạt động như thế nào"
+      ]
+    },
+    "identity_architecture": {
+      "response_text": "Tôi là **In-Course Agentic RAG Copilot** - Trợ giảng lập trình thông minh theo phương pháp Socratic, được phát triển bởi sinh viên **Trần Thành Nghĩa** (MSSV: `23DH112252`), Trường **Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)** (Kho lưu trữ GitHub: `ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot`).\n\nHệ thống được xây dựng trên nền tảng:\n- **Backend & Vector DB:** **FastAPI**, **Python 3.11**, **Qdrant** với cơ chế **dual vector** (`dense` 1024-dim và `sparse` BM25).\n- **Embedding & Re-ranker:** Mô hình nhúng `multilingual-e5-large` (1024 chiều qua `fastembed`) kết hợp bộ xếp hạng **Cross-Encoder** `jinaai/jina-reranker-v2`.\n- **Speech & Video Sync:** Bóc băng âm thanh bằng `faster-whisper` kết hợp `Silero VAD`, trích xuất thẻ `<timestamp sec=\"...\">` điều khiển trình phát `seekTo` trên giao diện **React 19** + **Vite**!",
+      "prototypes": [
+        "bạn là ai",
+        "ai tạo ra bạn",
+        "giới thiệu về bản thân bạn",
+        "tác giả sinh viên nào phát triển đồ án trợ giảng này ở trường huflit",
+        "hệ thống đang sử dụng cơ sở dữ liệu vector nào qdrant và mô hình embedding nào để lưu trữ bài giảng",
+        "bộ xếp hạng lại re-ranker cross-encoder và công nghệ bóc băng âm thanh speech-to-text của hệ thống là gì",
+        "cú pháp định dạng thẻ timestamp sec trong câu trả lời và kiến trúc backend fastapi frontend react vite github"
+      ]
+    },
+    "gratitude": {
+      "response_text": "Rất vui vì đã đồng hành và gợi mở được hướng đi cho bạn! Hãy tiếp tục thực hành viết code nhé, nếu gặp bất kỳ lỗi cú pháp hay logic nào khác, tôi luôn ở đây hỗ trợ bạn!",
+      "prototypes": [
+        "cảm ơn bạn nhiều nhé",
+        "cảm ơn trợ giảng nhiều nhé mình đã hiểu bài và tự sửa được lỗi code rồi",
+        "thank you bot tuyệt vời quá mình làm chạy đúng kết quả rồi"
+      ]
+    },
+    "goodbye": {
+      "response_text": "Tạm biệt bạn nhé! Chúc bạn có một buổi học tập và thực hành hiệu quả. Khi nào cần hỗ trợ giải đáp về bài học hay sửa lỗi code C++, tôi luôn sẵn sàng đồng hành cùng bạn!",
+      "prototypes": [
+        "tạm biệt nhé",
+        "tạm biệt trợ giảng nhé mình nghỉ đi ngủ đây hẹn gặp lại vào buổi học sau",
+        "bye bye bot mình tắt máy nghỉ giải lao đây",
+        "chúc ngủ ngon nhé"
+      ]
+    },
+    "advice": {
+      "response_text": "Học lập trình ban đầu có thể có nhiều bỡ ngỡ với các khái niệm như bộ nhớ, con trỏ hay cú pháp nghiêm ngặt của C++. Lời khuyên tốt nhất là hãy **kiên trì** **thực hành** giải **bài tập** và viết code mỗi ngày, tự tay gõ từng dòng lệnh và cố gắng từng bước đọc hiểu thông báo lỗi. Trí tuệ nhân tạo chỉ là **công cụ** **hỗ trợ** giúp **lập trình viên** tăng hiệu suất chứ không thể thay thế tư duy thiết kế phần mềm của bạn. Tôi luôn ở đây **đồng hành** cùng bạn!",
+      "prototypes": [
+        "học lập trình C++ có khó không cho mình xin lời khuyên và kinh nghiệm cho người mới bắt đầu",
+        "mình thấy học thuật toán và code khó quá dễ nản lòng làm sao để học tốt hơn",
+        "trí tuệ nhân tạo AI có thay thế hoàn toàn lập trình viên trong tương lai không"
+      ]
+    },
+    "greeting": {
+      "response_text": "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng lập trình của khóa học. Hôm nay bạn đang học đến bài nào và gặp khó khăn gì với cú pháp hay thuật toán C++, hãy gửi cho tôi để chúng ta cùng giải quyết nhé!",
+      "prototypes": [
+        "xin chào",
+        "chào bạn",
+        "hello bot",
+        "hi chào buổi sáng",
+        "chúc buổi sáng vui vẻ",
+        "chào trợ giảng hôm nay mình bắt đầu vào học"
+      ]
+    }
+  }
+}

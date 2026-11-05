@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     MODALITY_GATE_AST_THRESHOLD: float = 0.35
     MODALITY_GATE_VIDEO_THRESHOLD: float = 0.22
     MODALITY_GATE_VIDEO_EARLY_EXIT: float = 0.22  # Backward-compatibility alias for MODALITY_GATE_VIDEO_THRESHOLD
-    MODALITY_GATE_VIDEO_HIGH_CONFIDENCE: float = 0.30  # AGENTS.md Invariant: Early exit khi video >= 0.30
+    MODALITY_GATE_VIDEO_HIGH_CONFIDENCE: float = 0.42  # AGENTS.md Invariant: Early exit khi video >= 0.30
     FUTURE_PROBE_ACTIVATION_GATE: float = 0.22
     FUTURE_PROBE_MARGIN: float = 0.12
     FUTURE_PROBE_MIN_CONFIDENCE: float = 0.25

@@ -25,22 +25,6 @@ MANIFEST_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "curric
 BINDING_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "metadata" / "lesson_code_video_binding.json"
 EMBEDDINGS_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "curriculum" / "syllabus_embeddings.npz"
 
-NAVIGATION_INTENT_TRIGGERS = [
-    "bài nào", "bài học nào", "chọn bài nào", "học bài nào", "bài mấy", "bài bao nhiêu",
-    "trong playlist", "trong lộ trình", "lộ trình học", "ở bài nào",
-    "xem bài nào", "học ở đâu", "bài số mấy", "tìm bài", "playlist này",
-    "học bài gì", "hôm nay học gì", "hôm nay học bài gì", "bài này học gì",
-    "hôm nay chúng ta học", "chúng ta học bài gì", "giảng dạy", "dạy ở đâu",
-    "chỗ nào học", "khóa học có dạy", "nằm ở bài nào", "thuộc bài nào", "dạy phần nào"
-]
-
-OVERVIEW_QUERY_TRIGGERS = [
-    "học gì", "sẽ học gì", "hôm nay học", "hôm nay chúng ta học",
-    "nội dung của bài", "nội dung bài", "nói về gì", "nói về cái gì",
-    "dạy gì", "dạy về gì", "tổng quan bài", "mục tiêu bài",
-    "tìm hiểu gì", "tìm hiểu về gì", "chủ đề bài", "có những gì"
-]
-
 
 def _normalize_text(text: str) -> str:
     """Chuẩn hóa chuỗi về Unicode NFC và chữ thường để so khớp chính xác."""
@@ -50,39 +34,37 @@ def _normalize_text(text: str) -> str:
     return " ".join(text.split())
 
 
-def _has_topical_overlap(lesson: Dict[str, Any], prompt: str) -> bool:
+def _has_topical_overlap(
+    lesson: Dict[str, Any],
+    prompt: str,
+    stop_words: Optional[set] = None
+) -> bool:
     """
     Kiểm tra xem bài học có từ khóa hoặc tiêu đề thực sự chứa khái niệm trong câu hỏi hay không.
-    Ngăn chặn bài học chung chung (như Bài 1 hoặc Bài 43 Stack) cướp quyền của bài học chuyên sâu.
+    Đối chiếu trực tiếp token/bigram của câu hỏi với lesson['title'] và lesson['keywords'] từ manifest JSON (Zero Hardcoded Keys).
     """
     norm_prompt = prompt.lower()
-    stop_words = {
-        "học", "bài", "nào", "ở", "đâu", "cho", "tôi", "em", "muốn", "thì", "chọn", 
-        "trong", "playlist", "này", "khóa", "có", "phần", "dạy", "không", "gì", "là", 
-        "về", "các", "những", "của", "được", "sẽ", "đến", "mới", "lập", "trình", "dữ", "liệu"
-    }
+    active_stops = stop_words or set()
     clean_words = "".join(c if c.isalnum() else " " for c in norm_prompt).split()
-    tokens = [w for w in clean_words if w not in stop_words and len(w) > 1]
-    
+    tokens = [w for w in clean_words if w not in active_stops and len(w) > 1]
+
     title_lower = lesson.get("title", "").lower()
+    title_words = set("".join(c if c.isalnum() else " " for c in title_lower).split())
     keywords = [k.lower() for k in lesson.get("keywords", [])]
-    
-    # Kiểm tra cụm 2 từ liên tiếp (bigram)
+    keyword_words = set()
+    for kw in keywords:
+        keyword_words.update("".join(c if c.isalnum() else " " for c in kw).split())
+
+    # 1. Kiểm tra cụm 2 từ liên tiếp (bigram)
     for i in range(len(tokens) - 1):
         bigram = f"{tokens[i]} {tokens[i+1]}"
         if bigram in title_lower or any(bigram in k for k in keywords):
             return True
-            
-    # Kiểm tra các từ khóa kỹ thuật then chốt
-    technical_keys = {
-        "vòng", "lặp", "loop", "for", "while", "class", "oop", "struct", "mảng", "array", 
-        "hàm", "function", "con", "trỏ", "pointer", "đối", "tượng", "vector", "string", 
-        "chuỗi", "xâu", "đệ", "quy", "sắp", "xếp", "sort", "tìm", "kiếm", "search"
-    }
+
+    # 2. Kiểm tra đối chiếu trực tiếp token với từ vựng trong tiêu đề và danh sách keywords của bài học
     for t in tokens:
-        if t in technical_keys:
-            if t in title_lower or any(t in k for k in keywords):
-                return True
+        if t in keyword_words or t in title_words or any(t == k for k in keywords):
+            return True
     return False
 
 
@@ -99,6 +81,10 @@ class CurriculumService:
         self._all_lessons: List[Dict[str, Any]] = []
         self._bindings: Dict[str, int] = {}
         self._syllabus_matrix: Optional[np.ndarray] = None
+        self._nav_prototypes: List[str] = []
+        self._overview_prototypes: List[str] = []
+        self._current_lesson_refs: List[str] = []
+        self._stop_words: set = set()
         self._load_manifest()
         self._load_bindings()
         self._load_syllabus_embeddings()
@@ -110,6 +96,17 @@ class CurriculumService:
                 with open(self.manifest_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                     self._courses = data.get("courses", {})
+                    nav_meta = data.get("navigation_metadata", {})
+                    self._nav_prototypes = [
+                        _normalize_text(p) for p in nav_meta.get("navigation_prototypes", [])
+                    ]
+                    self._overview_prototypes = [
+                        _normalize_text(p) for p in nav_meta.get("overview_prototypes", [])
+                    ]
+                    self._current_lesson_refs = [
+                        _normalize_text(p) for p in nav_meta.get("current_lesson_refs", [])
+                    ]
+                    self._stop_words = set(nav_meta.get("stop_words", []))
                     # Tạo danh sách phẳng toàn bộ 83 bài học
                     self._all_lessons = []
                     for c_id, c_data in self._courses.items():
@@ -184,7 +181,7 @@ class CurriculumService:
     def is_navigation_query(self, prompt: str) -> bool:
         """
         Nhận diện xem học viên có đang đặt câu hỏi điều hướng lộ trình / playlist
-        hoặc hỏi về tổng quan nội dung của bài học hay không (Zero Regex).
+        hoặc hỏi về tổng quan nội dung của bài học hay không (Zero Regex, Data-Driven Manifest).
         """
         norm_prompt = _normalize_text(prompt)
 
@@ -192,17 +189,17 @@ class CurriculumService:
         if self._extract_lesson_seq(norm_prompt) is not None:
             return True
 
-        # 2. Khớp các cụm từ ý định điều hướng
-        if any(trigger in norm_prompt for trigger in NAVIGATION_INTENT_TRIGGERS):
+        # 2. Khớp các cụm mẫu điều hướng từ manifest
+        if any(proto in norm_prompt for proto in self._nav_prototypes):
             return True
 
-        # 3. Khớp các cụm từ hỏi tổng quan bài học
+        # 3. Khớp các cụm mẫu tổng quan bài học từ manifest
         return self.is_overview_query(norm_prompt)
 
     def is_overview_query(self, prompt: str) -> bool:
-        """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học hay không (Zero Regex)."""
+        """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học hay không (Data-Driven Manifest)."""
         norm_prompt = _normalize_text(prompt)
-        return any(trig in norm_prompt for trig in OVERVIEW_QUERY_TRIGGERS)
+        return any(proto in norm_prompt for proto in self._overview_prototypes)
 
     @staticmethod
     def _extract_lesson_seq(prompt: str) -> Optional[int]:
@@ -241,8 +238,8 @@ class CurriculumService:
         """
         Tìm kiếm bài học phù hợp nhất dựa trên:
         1. Số thứ tự bài học tường minh (ví dụ: "bài 4", "bài 04", "lesson 4").
-        2. Ngữ cảnh bài học hiện tại (ví dụ: "bài này", "hôm nay", "bài hiện tại").
-        3. Khớp từ khóa khái niệm kỹ thuật (ví dụ: "vòng lặp" -> Bài 6).
+        2. Ngữ cảnh bài học hiện tại nạp từ manifest.
+        3. Chỉ mục Ngữ nghĩa Giáo trình (Syllabus Vector Index) kết hợp đối chiếu từ khóa manifest.
         """
         norm_prompt = _normalize_text(prompt)
 
@@ -258,8 +255,8 @@ class CurriculumService:
                 if lesson.get("seq") == seq_num:
                     return lesson, lesson.get("title", f"Bài {seq_num}")
 
-        # 2. Khớp theo ngữ cảnh bài học hiện tại nếu người dùng hỏi "bài này", "hôm nay"
-        if any(ref in norm_prompt for ref in ["bài này", "bài hiện tại", "hôm nay", "video này", "tiết này"]):
+        # 2. Khớp theo ngữ cảnh bài học hiện tại nạp từ manifest
+        if any(ref in norm_prompt for ref in self._current_lesson_refs):
             if current_lesson_seq is not None:
                 for lesson in self._all_lessons:
                     if lesson.get("seq") == current_lesson_seq:
@@ -279,7 +276,7 @@ class CurriculumService:
                     best_curr_score, best_curr_lesson = curr_cands[0]
                     # Điểm rất sát (chênh <= 0.03) và có topical overlap thực sự với câu hỏi
                     if (top_score - best_curr_score) <= 0.03:
-                        if _has_topical_overlap(best_curr_lesson, prompt):
+                        if _has_topical_overlap(best_curr_lesson, prompt, self._stop_words):
                             target_course = preferred_course_id
 
             # Trong target_course, chọn bài học lý thuyết tiên quyết:
@@ -291,7 +288,7 @@ class CurriculumService:
                 # Chỉ xem xét bài đến trước nếu điểm cực sát (chênh <= 0.02)
                 if best_course_score - cand_score <= 0.02:
                     if cand_lesson.get("seq", 999) < chosen_lesson.get("seq", 999):
-                        if _has_topical_overlap(cand_lesson, prompt):
+                        if _has_topical_overlap(cand_lesson, prompt, self._stop_words):
                             chosen_score, chosen_lesson = cand_score, cand_lesson
 
             logger.info(

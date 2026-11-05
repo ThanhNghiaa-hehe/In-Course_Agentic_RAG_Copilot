@@ -1,35 +1,56 @@
 {
-  "timestamp": "2026-11-04 23:32:40",
+  "timestamp": "2026-11-05 21:19:46",
   "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
   "university": "HUFLIT",
-  "training_samples": 350,
+  "corpus_version": "2.7.0",
+  "training_samples": 416,
   "test_samples": 200,
   "leakage_rate": 0.0,
+  "max_jaccard_benchmark": 0.6842105263157895,
+  "max_jaccard_contrastive_ood": 0.19047619047619047,
+  "optimal_temperature_T": 0.752,
   "cv_5fold": {
-    "mean_accuracy": 92.85714285714286,
-    "std_accuracy": 2.857142857142861,
-    "mean_macro_f1": 93.3457090746513,
-    "std_macro_f1": 2.837466792441702,
-    "mean_ece": 0.056486558914184595,
-    "mean_brier": 0.11118635233134984,
+    "mean_accuracy": 90.87205966724039,
+    "std_accuracy": 3.441647472730758,
+    "mean_macro_f1": 90.93927119156754,
+    "std_macro_f1": 3.3459212244097585,
+    "mean_ece_uncalibrated": 0.07652382990510999,
+    "mean_ece_calibrated": 0.02413025362273824,
+    "mean_brier_calibrated": 0.1325936358440707,
+    "oof_ensemble_accuracy": 91.82692307692307,
+    "oof_ensemble_macro_f1": 91.94235708386653,
     "ci95_macro_f1": [
-      89.82309353027708,
-      96.86832461902551
+      86.78542729575406,
+      95.09311508738102
     ]
   },
   "held_out_test_results": {
     "slm_int8": {
-      "accuracy": 82.5,
-      "macro_f1": 75.37485278349067,
-      "latency_p50_ms": 0.0333500001943321,
-      "latency_p99_ms": 0.15547100087132779,
-      "generalization_gap": 10.357142857142861
+      "accuracy": 92.5,
+      "macro_f1": 91.16522366522366,
+      "ece": 0.01648938670754432,
+      "latency_p50_ms": 0.04510000871960074,
+      "latency_p99_ms": 0.13516299412003693,
+      "generalization_gap": 1.6279403327596071
     },
     "linearsvc": {
-      "accuracy": 83.0,
-      "macro_f1": 73.15797169886008,
-      "latency_avg_ms": 0.19307949999529228
+      "accuracy": 92.5,
+      "macro_f1": 90.53742543937138,
+      "ece": 0.12177482823078524,
+      "latency_avg_ms": 0.08451949994196184
+    },
+    "convex_neural_ensemble": {
+      "accuracy": 92.0,
+      "macro_f1": 90.31226764806783,
+      "ece": 0.05785425101412815,
+      "brier": 0.12168705975829341,
+      "latency_avg_ms": 0.12961950866156258,
+      "generalization_gap": 0.173076923076934
     }
   },
-  "ood_stress_test_accuracy": 97.0
+  "ood_stress_test_results": {
+    "linearsvc_accuracy": 96.0,
+    "slm_int8_accuracy": 96.0,
+    "ensemble_accuracy": 96.0
+  }
 }
