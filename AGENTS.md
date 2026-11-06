@@ -133,7 +133,7 @@
         4. Lưu trữ nhật ký kiểm toán sư phạm (`CHAT_QUERIES`) phục vụ phân tích Dashboards và tinh chỉnh mô hình (RLHF/DPO).
 - **Stage 11 Benchmark Verification Record (Kỷ Lục Khảo Thí Đỉnh Cao Chặng 4 - 05/11/2026):**
   - Unseen 200-Query Intent Router Accuracy: **95.50%** (191/200 test cases: `in_scope`: 80/80 = 100%, `out_of_lesson`: 40/40 = 100%, `chit_chat`: 37/40 = 92.5%, `adversarial_hybrid`: 34/40 = 85.0%).
-  - CRAG Grader Precision (200 câu): **92.50%** (185/200 test cases).
+  - CRAG Grader Precision (200 câu): **89.00%** (178/200 test cases thực đo Stage 11; con số 92.50% trước đó là ước tính lý thuyết chưa qua kiểm chuẩn).
   - Timestamp Safety & Multi-Grounding Accuracy: **91.00%** (182/200 test cases), **0% Hallucination** với Whitelist Guardrail $\mathcal{W}$.
   - 5-Fold Stratified Cross-Validation: **90.87% ± 3.44%**, Expected Calibration Error (ECE): **0.0241** (với Out-of-Fold Temperature Scaling $T^* = 0.7520$).
   - Data Leakage Risk: **0.00%** ($\max J = 0.6842 < 0.70$ Jaccard Token Overlap).
@@ -470,3 +470,21 @@
     (a) Việc bóc tách thẻ HTML/XML (`<timestamp>`, `<thought>`) bắt buộc sử dụng `TimestampWhitelistHTMLParser` kế thừa chuẩn `html.parser.HTMLParser` (W3C event-driven).
     (b) Việc lọc ký tự ngoại lai (Hangul, CJK) bắt buộc sử dụng kiểm tra khoảng mã Unicode (`is_cjk_char`, `is_hangul_or_cjk`).
     (c) Việc bóc tách số thứ tự bài học (`lesson_seq`) bắt buộc dùng token splitting và đối chiếu danh mục giáo trình có cấu trúc.
+
+## 15. Multi-Turn Interactive Integrity & Anti-Imitation Invariants (Kỷ Luật Toàn Vẹn Tương Tác Đa Lượt & Chống Bắt Chước Ngữ Cảnh - 05/11/2026)
+- **Multi-Turn Context Isolation & Anti-Pollution Invariant (Bất Biến Cách Ly Ngữ Cảnh Đa Lượt):**
+  - TUYỆT ĐỐI CẤM ghép chuỗi thô thiển `search_query = f"{last_user_query} {raw_prompt}"` vào query tìm kiếm RAG một cách mù quáng.
+  - Khi chuyển turn, hệ thống bắt buộc phải xác định tính tự lập (Self-containedness) của câu hỏi mới:
+    (a) Nếu câu hỏi mới đã chứa chủ thể kỹ thuật rõ ràng (Entity/Syntax Anchor: `do-while`, `vòng lặp`, `vector`, `class`, `con trỏ`, `struct`,...), truy vấn RAG bắt buộc phải giữ nguyên tính độc lập của câu hỏi đó để không bị chủ đề của bài học cũ nuốt mất.
+    (b) Chỉ kết hợp ngữ cảnh lượt trước khi câu hỏi mới là **câu cụt phụ thuộc ngữ cảnh (Ellipsis/Anaphora)** thiếu chủ ngữ kỹ thuật (ví dụ: *"tại sao lại như vậy"*, *"nó dùng để làm gì"*, *"cho ví dụ minh họa"*).
+- **In-Context AST Sanitization & Imitation Firewall (Bất Biến Bóc Tách AST Khỏi Khung Vỏ & Chống Bắt Chước):**
+  - TUYỆT ĐỐI CẤM đưa các khối mã nguồn có chứa `#include` hoặc vỏ hàm `int main()` từ database vào `[NGỮ CẢNH BÀI GIẢNG]` của Prompt.
+  - Trước khi đưa mã nguồn bài giảng cho LLM, hệ thống bắt buộc phải bóc tách bằng Tree-sitter AST parser: chỉ giữ lại phần thân hàm/logic giải thuật cốt lõi, tước bỏ hoàn toàn vỏ `main()` và các tiền xử lý `#include`.
+  - Bắt buộc gắn nhãn minh bạch: `[MÃ NGUỒN BÀI GIẢNG THAM KHẢO - ĐÂY KHÔNG PHẢI CODE CỦA HỌC VIÊN]` để triệt tiêu 100% bẫy In-Context Imitation (khiến LLM lầm tưởng là code của học viên rồi viết code giải hộ bài tập).
+- **Stateful Navigation & History-Aware Dispatcher (Bất Biến Điều Hướng Giáo Trình Có Trạng Thái):**
+  - Tuyệt đối cấm vận hành Fast-Path Navigation độc lập ngoài rìa mà không kết nối với LangGraph Checkpointer.
+  - Khi câu hỏi điều hướng giáo trình chứa các đại từ chỉ định lịch sử (`"câu hỏi trên"`, `"vấn đề vừa rồi"`, `"nội dung đó"`, `"bài vừa rồi"`), hệ thống bắt buộc phải truy xuất `last_user_query` từ lịch sử phiên để phân giải bài học, chấm dứt triệt để việc đoán mò không căn cứ.
+- **Scientific Honesty & Zero Test-Set Snooping (Bất Biến Liêm Chính Học Thuật & Chống Gian Lận Đề Thi):**
+  - Tuyệt đối KHÔNG ĐƯỢC công bố hoặc đưa vào báo cáo bất kỳ số liệu khảo thí nào (Router, CRAG, Timestamp, RAGAS) nếu chưa có log thực thi đo đạc thực tế (Data-Inspected Verification). Nghiêm cấm đưa số liệu ước lượng giả định.
+  - Tuyệt đối KHÔNG copy nguyên văn chuỗi câu hỏi trong bộ test suite (`pytest`) vào file manifests hoặc prototypes để "đối phó" cho bài test pass.
+  - Mọi tối ưu hóa phải giải quyết một lớp bài toán tổng quát (Problem Class), bảo toàn tính khách quan của tập kiểm thử.
