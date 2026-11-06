@@ -19,6 +19,15 @@ from langgraph.checkpoint.memory import MemorySaver
 
 _MD_PARSER = MarkdownIt()
 
+_CPP_PARSER = None
+try:
+    import tree_sitter
+    import tree_sitter_cpp as tscpp
+    _CPP_LANG = tree_sitter.Language(tscpp.language())
+    _CPP_PARSER = tree_sitter.Parser(_CPP_LANG)
+except Exception:
+    _CPP_PARSER = None
+
 from app.agent.router import get_intent_router
 from app.services.retrieval import get_retrieval_service, RetrievalResult
 from app.agent.guardrails import get_session_rate_limiter
@@ -73,10 +82,58 @@ class AgentState(TypedDict):
     assembled_messages: List[Dict[str, str]]
 
 
+def _sanitize_context_code_ast(code: str) -> str:
+    """
+    Bóc tách và tước bỏ khung vỏ #include và int main() bằng Tree-sitter C++ AST (Zero Regex).
+    Chỉ giữ lại phần logic, giải thuật và các định nghĩa hàm/lớp trọng tâm.
+    Tuân thủ nghiêm ngặt Invariant 2 (In-Context AST Sanitization & Imitation Firewall).
+    """
+    if not code:
+        return ""
+    if _CPP_PARSER is None:
+        clean_lines = []
+        for line in code.splitlines():
+            s = line.strip()
+            if s.startswith("#include") or s.startswith("using namespace"):
+                continue
+            clean_lines.append(line)
+        return "\n".join(clean_lines).strip()
+
+    try:
+        tree = _CPP_PARSER.parse(code.encode("utf-8"))
+        preserved_parts = []
+        for child in tree.root_node.children:
+            if child.type in ("preproc_include", "using_declaration"):
+                continue
+            if child.type == ";" and preserved_parts:
+                preserved_parts[-1] += ";"
+                continue
+            if child.type == "function_definition":
+                decl = child.child_by_field_name("declarator")
+                if decl and b"main" in decl.text:
+                    body = child.child_by_field_name("body")
+                    if body:
+                        stmts = [
+                            c.text.decode("utf-8")
+                            for c in body.children
+                            if c.type not in ("{", "}") and not (c.type == "return_statement" and b"0" in c.text)
+                        ]
+                        if stmts:
+                            preserved_parts.append("\n".join(stmts))
+                        continue
+            preserved_parts.append(child.text.decode("utf-8"))
+        res = "\n\n".join(preserved_parts).strip()
+        return res if res else code.strip()
+    except Exception as e:
+        logger.warning(f"[chat_graph] Lỗi Tree-sitter AST sanitize ({e}), giữ nguyên code.")
+        return code.strip()
+
+
 def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = 2400) -> str:
     """
     Định dạng các chunks ngữ cảnh thành khối văn bản có cấu trúc súc tích (Context Distillation).
     Áp trần tối đa ~800 tokens (~2400 ký tự) để tối ưu thời gian Prefill Attention trên GPU.
+    Áp dụng In-Context AST Sanitization để triệt tiêu 100% bẫy In-Context Imitation.
     Bảo toàn 100% thẻ <timestamp> và mã nguồn Code AST.
     """
     if not chunks:
@@ -91,7 +148,12 @@ def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = 2400) -
         if c_type == "code_ast":
             scope = chunk.get("code_scope", "")
             code_content = (chunk.get("context_code") or chunk.get("raw_text", "")).strip()
-            item_text = f"[Mã nguồn Bài {lesson_seq} - {scope}]:\n```cpp\n{code_content}\n```"
+            sanitized_code = _sanitize_context_code_ast(code_content)
+            item_text = (
+                f"[MÃ NGUỒN BÀI GIẢNG THAM KHẢO - ĐÂY KHÔNG PHẢI CODE CỦA HỌC VIÊN]\n"
+                f"// Trích đoạn logic Bài {lesson_seq} ({scope}):\n"
+                f"```cpp\n{sanitized_code}\n```"
+            )
         else:
             tag = chunk.get("timestamp_tag", "")
             raw_t = (chunk.get("raw_text", "")).strip()
@@ -155,21 +217,25 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         else:
             logger.info("[LangGraph:router_node] Học viên đặt câu hỏi khác, tự động xóa pending_navigation.")
 
-    # Nếu đang trong luồng hội thoại, kết hợp câu hỏi gần nhất của User làm ngữ cảnh toán học
+    # 1. Phân loại ý định trên câu hỏi độc lập (raw_prompt) trước
+    raw_clf = router.classify(raw_prompt)
+
+    last_user_query = ""
     if history:
         last_user_query = next((m["content"] for m in reversed(history) if m.get("role") == "user"), "")
-        if last_user_query:
-            contextual_prompt = f"{last_user_query} -> {raw_prompt}"
-        else:
-            contextual_prompt = raw_prompt
-    else:
-        contextual_prompt = raw_prompt
 
-    classification = router.classify(contextual_prompt)
-    logger.info(
-        f"[LangGraph:router_node] Query: '{raw_prompt[:35]}...' "
-        f"(Contextual: '{contextual_prompt[:45]}...') -> Intent: {classification.intent}"
-    )
+    # Invariant 1: Nếu câu hỏi mới rõ ràng là chào hỏi, cảm ơn, hoặc ngoài lề, TUYỆT ĐỐI KHÔNG ghép ngữ cảnh cũ
+    if not raw_clf.is_course_query:
+        classification = raw_clf
+        logger.info(f"[LangGraph:router_node] Query độc lập xác định ({raw_clf.intent}): '{raw_prompt[:35]}...'")
+    elif last_user_query and len(raw_prompt.split()) < 4:
+        # Chỉ khi câu hỏi kỹ thuật quá ngắn (câu cụt ellipsis, ví dụ 'tại sao?', 'nó dùng làm gì?') mới bổ sung ngữ cảnh
+        contextual_prompt = f"{last_user_query} -> {raw_prompt}"
+        classification = router.classify(contextual_prompt)
+        logger.info(f"[LangGraph:router_node] Query cụt nối tiếp: '{raw_prompt}' -> Contextual: '{contextual_prompt[:45]}...'")
+    else:
+        classification = raw_clf
+        logger.info(f"[LangGraph:router_node] Query kỹ thuật tự lập (Self-Contained): '{raw_prompt[:35]}...' -> course_query")
 
     return {
         "intent": classification.intent,
@@ -186,29 +252,51 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
 async def retrieval_node(state: AgentState) -> Dict[str, Any]:
     """
     Node 2: Thực hiện True Hybrid Retrieval (Dense E5 + Sparse BM25) có In-HNSW Pre-filter.
-    Áp dụng Conversational Query Reformulation để tăng cường độ hội tụ của vector tìm kiếm.
+    Áp dụng Dual Retrieval with Confidence-Gated Selection (Invariant 1 - Zero Context Pollution):
+    - Bước 1: Luôn ưu tiên truy xuất với câu hỏi gốc tự lập (raw_prompt) để bảo đảm cách ly 100% ngữ cảnh cũ.
+    - Bước 2: Chỉ khi raw_prompt rơi vào coverage_gap hoặc is_low_confidence (dấu hiệu câu cụt thiếu thực thể),
+      hệ thống mới kích hoạt truy xuất cứu xét bằng query bổ sung ngữ cảnh (last_user_query + raw_prompt).
     """
     retrieval_service = get_retrieval_service()
     history = state.get("messages", [])
     raw_prompt = state["prompt"]
-
+    last_user_query = ""
     if history:
         last_user_query = next((m["content"] for m in reversed(history) if m.get("role") == "user"), "")
-        search_query = f"{last_user_query} {raw_prompt}" if last_user_query else raw_prompt
-    else:
-        search_query = raw_prompt
 
+    # Bước 1: Truy xuất độc lập với raw_prompt
     try:
         retrieval_res: RetrievalResult = await retrieval_service.search(
-            query_text=search_query,
+            query_text=raw_prompt,
             course_id=state["course_id"],
             current_lesson_seq=state["lesson_seq"],
             top_candidates=settings.DEFAULT_TOP_CANDIDATES,
             final_top_k=settings.DEFAULT_FINAL_TOP_K
         )
     except Exception as e:
-        logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG: {e}")
+        logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với raw_prompt: {e}")
         retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
+
+    # Bước 2: Confidence-Gated Selection - Chỉ kích hoạt Fallback khi raw_prompt không đủ thực thể
+    if last_user_query and (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence):
+        contextual_query = f"{last_user_query} {raw_prompt}"
+        logger.info(
+            f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}), "
+            f"kích hoạt Fallback Contextual Query: '{contextual_query[:45]}...'"
+        )
+        try:
+            fallback_res: RetrievalResult = await retrieval_service.search(
+                query_text=contextual_query,
+                course_id=state["course_id"],
+                current_lesson_seq=state["lesson_seq"],
+                top_candidates=settings.DEFAULT_TOP_CANDIDATES,
+                final_top_k=settings.DEFAULT_FINAL_TOP_K
+            )
+            # Chỉ nhận fallback nếu tìm được kết quả tốt hơn
+            if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
+                retrieval_res = fallback_res
+        except Exception as fb_err:
+            logger.warning(f"[LangGraph:retrieval_node] Lỗi truy xuất Fallback Contextual: {fb_err}")
 
     return {
         "retrieved_chunks": retrieval_res.chunks,

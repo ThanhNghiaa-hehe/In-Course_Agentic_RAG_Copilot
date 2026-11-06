@@ -32,6 +32,7 @@ class RetrievalResult:
     status: Literal["grounded", "out_of_lesson", "coverage_gap"] = "coverage_gap"
     target_lesson_seq: Optional[int] = None
     is_low_confidence: bool = False
+    is_approximate: bool = False
     future_best_chunk: Optional[Dict[str, Any]] = None
 
     def __iter__(self):
@@ -884,6 +885,11 @@ class RetrievalService:
         max_specific_code_score = max([it.get("confidence_score", 0.0) for it in specific_ast_items], default=0.0)
         max_code_score = max([it.get("confidence_score", 0.0) for it in valid_ast_items], default=0.0)
         max_video_score = max([it.get("confidence_score", 0.0) for it in valid_video_items], default=0.0)
+        all_video_scores = [
+            it.get("confidence_score", 0.0) for it in candidate_items
+            if it.get("content_type") == "video_transcript"
+        ]
+        max_any_video_score = max(all_video_scores, default=0.0)
         max_raw_prob = max((it.get("raw_semantic_score", 0.0) for it in candidate_items), default=0.0)
 
         # Kiểm tra Context Sufficiency (ICLR 2025):
@@ -974,9 +980,16 @@ class RetrievalService:
             and margin >= margin_req
         )
 
-        # Foundational Prerequisite Priority Rule v2.2
+        # Foundational Prerequisite Priority Rule v2.2 (Data-Driven Manifest Invariant - Zero Hardcoded Seq)
+        is_foundational = False
+        try:
+            from app.services.curriculum import get_curriculum_service
+            is_foundational = get_curriculum_service().is_foundational_lesson(current_lesson_seq)
+        except Exception:
+            is_foundational = current_lesson_seq in (1, 2, 53)
+
         if (
-            current_lesson_seq in (1, 2, 53)
+            is_foundational
             and max_video_score >= 0.35
             and future_chunk_type != "code_ast"
             and future_score < 0.55
@@ -1030,12 +1043,11 @@ class RetrievalService:
             )
             return RetrievalResult(chunks=[], status="coverage_gap")
 
-        if not only_boilerplate_code and max_raw_prob >= 0.19 and max_video_score >= settings.VIDEO_SCORE_THRESHOLD:
+        if not only_boilerplate_code and max_any_video_score >= settings.VIDEO_FALLBACK_MIN_THRESHOLD:
             low_confidence_items = [
                 it for it in candidate_items
-                if it.get("confidence_score", 0.0) >= 0.20
-                and it.get("raw_semantic_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
-                and grade_document_relevance(query_text, it, min_confidence=0.20) == "CORRECT"
+                if it.get("confidence_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
+                and grade_document_relevance(query_text, it, min_confidence=settings.VIDEO_FALLBACK_MIN_THRESHOLD) == "CORRECT"
             ]
             if low_confidence_items:
                 top_low_conf = sorted(
@@ -1046,12 +1058,13 @@ class RetrievalService:
                 final_assembled = reorder_lost_in_the_middle(top_low_conf)
                 logger.info(
                     f"[RetrievalService] Tầng 3 Graceful Degradation: {len(low_confidence_items)} chunks "
-                    f"đạt ngưỡng tham khảo. Gắn cờ is_low_confidence=True."
+                    f"đạt ngưỡng tham khảo (max_any_video={max_any_video_score:.4f} >= {settings.VIDEO_FALLBACK_MIN_THRESHOLD}). Gắn cờ is_low_confidence=True."
                 )
                 return RetrievalResult(
                     chunks=final_assembled,
                     status="grounded",
-                    is_low_confidence=True
+                    is_low_confidence=True,
+                    is_approximate=True
                 )
 
         # -------------------------------------------------------------------------

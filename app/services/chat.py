@@ -9,6 +9,7 @@ from openai import AsyncOpenAI
 from app.config import settings
 from app.services.curriculum import get_curriculum_service, CurriculumService
 from app.services.chat_graph import get_chat_graph, commit_assistant_turn, reset_session_state
+from app.agent.router import get_intent_router
 from app.agent.guardrails import get_session_rate_limiter
 from app.schemas.chat import ChatRequest, SuggestedTimestamp, StreamMetadataEvent
 
@@ -280,6 +281,7 @@ class ChatService:
         openai_client: Optional[AsyncOpenAI] = None
     ):
         self.curriculum_service = get_curriculum_service()
+        self.router = get_intent_router()
         self.client = openai_client or AsyncOpenAI(
             base_url=settings.LLM_BASE_URL,
             api_key=settings.OPENAI_API_KEY or "vllm",
@@ -335,15 +337,42 @@ class ChatService:
 
         # 0. Fast-Path Curriculum Navigation Intent Dispatcher (< 20ms)
         # Bắt các câu hỏi hỏi về bài học trong playlist ("học vòng lặp thì chọn bài nào...")
-        if self.curriculum_service.is_navigation_query(request.prompt):
+        # Bất biến phân cấp: Chỉ kích hoạt điều hướng giáo trình khi Router xác nhận là câu hỏi học tập (is_course_query == True)
+        quick_clf = self.router.classify(request.prompt)
+        if quick_clf.is_course_query and self.curriculum_service.is_navigation_query(request.prompt):
+            # Invariant 3 (Stateful Navigation & History-Aware Dispatcher):
+            # Kiểm tra xem câu hỏi có chứa đại từ chỉ định lịch sử ("câu hỏi trên", "vừa rồi", "nội dung đó")
+            lookup_prompt = request.prompt
+            history_prefix = ""
+
+            try:
+                graph = get_chat_graph()
+                state_snapshot = graph.get_state({"configurable": {"thread_id": session_id}})
+                current_values = state_snapshot.values if state_snapshot else {}
+                history_msgs = current_values.get("messages", [])
+                last_user_query = ""
+                if history_msgs:
+                    last_user_query = next((m["content"] for m in reversed(history_msgs) if m.get("role") == "user"), "")
+
+                norm_p = request.prompt.lower()
+                is_anaphora = any(ref in norm_p for ref in ("trên", "vừa rồi", "vừa hỏi", "đó", "nội dung đó"))
+                if is_anaphora and last_user_query:
+                    lookup_prompt = last_user_query
+                    history_prefix = f"Về câu hỏi *\"{last_user_query}\"* của bạn:\n\n"
+                    logger.info(f"[ChatService:Navigation] Phát hiện câu hỏi quy chiếu lịch sử -> Lookup theo last_user_query: '{last_user_query[:40]}...'")
+            except Exception as e:
+                logger.debug(f"[ChatService:Navigation] Lỗi đọc state checkpointer: {e}")
+
             nav_response = self.curriculum_service.generate_navigation_response(
-                prompt=request.prompt,
+                prompt=lookup_prompt,
                 current_lesson_seq=request.lesson_seq,
                 course_id=request.course_id
             )
             if nav_response:
+                if history_prefix:
+                    nav_response = history_prefix + nav_response
                 match_res = self.curriculum_service.find_lesson_for_query(
-                    request.prompt,
+                    lookup_prompt,
                     current_lesson_seq=request.lesson_seq,
                     preferred_course_id=request.course_id
                 )
@@ -565,6 +594,16 @@ class ChatService:
                     "data": json.dumps({"content": tok})
                 }
 
+            # Deterministic Timestamp Fallback: Nếu có mốc bảo chứng nhưng LLM quên sinh thẻ, tự động gắn mốc video
+            if valid_secs and "<timestamp" not in full_assistant_response and suggested_ts:
+                ts_items = [f'<timestamp sec="{ts.sec}">{ts.label}</timestamp>' for ts in suggested_ts[:2]]
+                ts_footer = f"\n\n📍 **Mốc video bài giảng:** {' | '.join(ts_items)}"
+                full_assistant_response += ts_footer
+                yield {
+                    "event": "delta",
+                    "data": json.dumps({"content": ts_footer})
+                }
+
             # Lưu vết câu trả lời hoàn chỉnh của Trợ giảng vào LangGraph Checkpointer
             if full_assistant_response.strip():
                 # Hàng rào bảo vệ lần 2: Đảm bảo 100% không lọt bất kỳ thẻ timestamp ảo giác nào vào DB
@@ -573,10 +612,12 @@ class ChatService:
 
         except Exception as e:
             logger.error(f"[ChatService] Lỗi kết nối LLM Server ({settings.LLM_BASE_URL}): {str(e)}")
+            fallback_msg = f"\n\n*(Hệ thống đang gặp sự cố kết nối tới LLM Local ({settings.LLM_MODEL_NAME}). Bạn vui lòng kiểm tra xem Ollama đã chạy chưa: `ollama run {settings.LLM_MODEL_NAME}`)*"
+            commit_assistant_turn(session_id, request.prompt, fallback_msg, current_lesson_seq=request.lesson_seq)
             yield {
                 "event": "delta",
                 "data": json.dumps({
-                    "content": f"\n\n*(Hệ thống đang gặp sự cố kết nối tới LLM Local ({settings.LLM_MODEL_NAME}). Bạn vui lòng kiểm tra xem Ollama đã chạy chưa: `ollama run {settings.LLM_MODEL_NAME}`)*"
+                    "content": fallback_msg
                 })
             }
 

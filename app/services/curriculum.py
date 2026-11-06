@@ -83,6 +83,8 @@ class CurriculumService:
         self._syllabus_matrix: Optional[np.ndarray] = None
         self._nav_prototypes: List[str] = []
         self._overview_prototypes: List[str] = []
+        self._nav_vectors: Optional[np.ndarray] = None
+        self._overview_vectors: Optional[np.ndarray] = None
         self._current_lesson_refs: List[str] = []
         self._stop_words: set = set()
         self._load_manifest()
@@ -178,10 +180,42 @@ class CurriculumService:
             logger.error(f"[CurriculumService] Lỗi tìm kiếm vector giáo trình: {e}")
             return []
 
+    def _ensure_nav_embeddings(self) -> None:
+        """Khởi tạo trước ma trận embedding cho các mẫu câu điều hướng và tổng quan giáo trình (0% Hardcoded Rules)."""
+        if self._nav_vectors is not None and self._overview_vectors is not None:
+            return
+        try:
+            from app.services.embedding import get_embedding_service
+            emb_svc = get_embedding_service()
+            if self._nav_prototypes and self._nav_vectors is None:
+                vecs = [emb_svc.embed_query_dense(f"query: {p}") for p in self._nav_prototypes]
+                arr = np.array(vecs, dtype=np.float32)
+                norms = np.linalg.norm(arr, axis=1, keepdims=True)
+                norms[norms == 0] = 1.0
+                self._nav_vectors = arr / norms
+            if self._overview_prototypes and self._overview_vectors is None:
+                vecs_o = [emb_svc.embed_query_dense(f"query: {p}") for p in self._overview_prototypes]
+                arr_o = np.array(vecs_o, dtype=np.float32)
+                norms_o = np.linalg.norm(arr_o, axis=1, keepdims=True)
+                norms_o[norms_o == 0] = 1.0
+                self._overview_vectors = arr_o / norms_o
+        except Exception as e:
+            logger.debug(f"[CurriculumService] Khởi tạo nav embeddings: {e}")
+
+    def is_foundational_lesson(self, seq: int) -> bool:
+        """
+        Kiểm tra xem bài học có phải là bài học nền tảng/tiên quyết (is_foundational) từ manifest JSON hay không.
+        Tuân thủ Data/Code Separation Invariant (triệt tiêu hoàn toàn hardcode danh sách bài học trong code).
+        """
+        for les in self._all_lessons:
+            if les.get("seq") == seq:
+                return bool(les.get("is_foundational", False))
+        return False
+
     def is_navigation_query(self, prompt: str) -> bool:
         """
         Nhận diện xem học viên có đang đặt câu hỏi điều hướng lộ trình / playlist
-        hoặc hỏi về tổng quan nội dung của bài học hay không (Zero Regex, Data-Driven Manifest).
+        hoặc hỏi về tổng quan nội dung của bài học hay không bằng 100% Machine Learning (Dense Vector Cosine).
         """
         norm_prompt = _normalize_text(prompt)
 
@@ -189,17 +223,46 @@ class CurriculumService:
         if self._extract_lesson_seq(norm_prompt) is not None:
             return True
 
-        # 2. Khớp các cụm mẫu điều hướng từ manifest
-        if any(proto in norm_prompt for proto in self._nav_prototypes):
+        # 2. Khớp vector ngữ nghĩa Cosine Similarity với prototype matrix (ngưỡng chuẩn hóa E5 >= 0.87)
+        self._ensure_nav_embeddings()
+        if self._nav_vectors is not None:
+            try:
+                from app.services.embedding import get_embedding_service
+                emb_svc = get_embedding_service()
+                qv = np.array(emb_svc.embed_query_dense(f"query: {prompt}"), dtype=np.float32)
+                q_norm = np.linalg.norm(qv)
+                if q_norm > 0:
+                    qv /= q_norm
+                sims = np.dot(self._nav_vectors, qv)
+                if float(np.max(sims)) >= 0.87:
+                    return True
+            except Exception as e:
+                logger.debug(f"[CurriculumService] Lỗi tính Cosine navigation: {e}")
+
+        # 3. Khớp ngữ nghĩa tổng quan bài học qua Dense Cosine Similarity
+        if self.is_overview_query(norm_prompt):
             return True
 
-        # 3. Khớp các cụm mẫu tổng quan bài học từ manifest
-        return self.is_overview_query(norm_prompt)
+        return False
 
     def is_overview_query(self, prompt: str) -> bool:
-        """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học hay không (Data-Driven Manifest)."""
-        norm_prompt = _normalize_text(prompt)
-        return any(proto in norm_prompt for proto in self._overview_prototypes)
+        """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học qua Dense Cosine Similarity."""
+        self._ensure_nav_embeddings()
+        if self._overview_vectors is not None:
+            try:
+                from app.services.embedding import get_embedding_service
+                emb_svc = get_embedding_service()
+                qv = np.array(emb_svc.embed_query_dense(f"query: {prompt}"), dtype=np.float32)
+                q_norm = np.linalg.norm(qv)
+                if q_norm > 0:
+                    qv /= q_norm
+                sims_o = np.dot(self._overview_vectors, qv)
+                if float(np.max(sims_o)) >= 0.87:
+                    return True
+            except Exception as e:
+                logger.debug(f"[CurriculumService] Lỗi tính Cosine overview: {e}")
+
+        return False
 
     @staticmethod
     def _extract_lesson_seq(prompt: str) -> Optional[int]:
