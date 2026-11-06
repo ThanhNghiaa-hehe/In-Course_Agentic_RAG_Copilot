@@ -29,9 +29,6 @@ import onnxruntime as ort
 from onnxruntime.quantization import quantize_dynamic, QuantType
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import classification_report, confusion_matrix, f1_score, accuracy_score
-from sklearn.svm import LinearSVC
-from sklearn.calibration import CalibratedClassifierCV
-import joblib
 
 from app.services.embedding import get_embedding_service
 
@@ -186,21 +183,20 @@ def main():
             if sim >= 0.70:
                 leaked_bench.append((idx_tr, tr_q, te_q, sim))
 
-    leaked_contrastive_ood = []
-    max_j_contrastive_ood = 0.0
-    contrastive_new = train_texts[350:]
-    for tr_q in contrastive_new:
-        for ood_q in ood_texts:
+    leaked_ood = []
+    max_j_ood = 0.0
+    for idx_tr, tr_q in enumerate(train_texts):
+        for idx_ood, ood_q in enumerate(ood_texts):
             sim = jaccard_similarity(tr_q, ood_q)
-            if sim > max_j_contrastive_ood:
-                max_j_contrastive_ood = sim
-            if sim >= 0.70:
-                leaked_contrastive_ood.append((tr_q, ood_q, sim))
+            if sim > max_j_ood:
+                max_j_ood = sim
+            if sim >= 0.70 or norm_text_for_jaccard(tr_q) == norm_text_for_jaccard(ood_q):
+                leaked_ood.append((idx_tr, tr_q, ood_q, sim))
 
     print(f"[KIỂM TOÁN ĐỘC LẬP] Max Jaccard (Train vs 200 Golden Benchmark) = {max_j_bench:.4f} (< 0.70) -> Leakage: {len(leaked_bench)} mẫu (0.00%)")
-    print(f"[KIỂM TOÁN ĐỘC LẬP] Max Jaccard ({len(contrastive_new)} New Contrastive Pairs vs 100 OOD) = {max_j_contrastive_ood:.4f} (< 0.70) -> Leakage: {len(leaked_contrastive_ood)} mẫu (0.00%)")
+    print(f"[KIỂM TOÁN ĐỘC LẬP] Max Jaccard (Train vs 100 OOD Stress Test)   = {max_j_ood:.4f} (< 0.70) -> Leakage: {len(leaked_ood)} mẫu (0.00%)")
     assert len(leaked_bench) == 0, f"PHÁT HIỆN DATA LEAKAGE VỚI GOLDEN BENCHMARK: {leaked_bench}"
-    assert len(leaked_contrastive_ood) == 0, f"PHÁT HIỆN DATA LEAKAGE VỚI OOD DATASET: {leaked_contrastive_ood}"
+    assert len(leaked_ood) == 0, f"PHÁT HIỆN DATA LEAKAGE VỚI OOD DATASET: {leaked_ood}"
 
     class_to_idx = {c: i for i, c in enumerate(classes)}
     idx_to_class = {i: c for i, c in enumerate(classes)}
@@ -234,20 +230,10 @@ def main():
     cv_eces = []
     cv_briers = []
     oof_slm_logits = np.zeros((len(train_texts), len(classes)), dtype=np.float32)
-    oof_svc_probs = np.zeros((len(train_texts), len(classes)), dtype=np.float32)
 
     for fold, (train_idx, val_idx) in enumerate(skf.split(X_train, y_train), 1):
         X_tr, y_tr = X_train[train_idx], y_train[train_idx]
         X_val, y_val = X_train[val_idx], y_train[val_idx]
-
-        # Huấn luyện Fold LinearSVC Platt
-        fold_svc = CalibratedClassifierCV(
-            estimator=LinearSVC(C=1.0, dual=False, random_state=42),
-            method="sigmoid",
-            cv=3
-        )
-        fold_svc.fit(X_tr, y_tr)
-        oof_svc_probs[val_idx] = fold_svc.predict_proba(X_val)
 
         # Huấn luyện Fold RouterSLMNet với Label Smoothing = 0.08
         torch.manual_seed(42 + fold)
@@ -295,13 +281,6 @@ def main():
     cal_oof_ece = compute_ece(y_train, oof_slm_probs_cal)
     cal_oof_brier = compute_brier_score(y_train, oof_slm_probs_cal)
 
-    oof_ens_probs = 0.45 * oof_slm_probs_cal + 0.55 * oof_svc_probs
-    oof_ens_preds = np.argmax(oof_ens_probs, axis=1)
-    oof_ens_acc = accuracy_score(y_train, oof_ens_preds) * 100.0
-    oof_ens_f1 = f1_score(y_train, oof_ens_preds, average="macro") * 100.0
-    oof_ens_ece = compute_ece(y_train, oof_ens_probs)
-    oof_ens_brier = compute_brier_score(y_train, oof_ens_probs)
-
     mean_acc = float(np.mean(cv_accs))
     std_acc = float(np.std(cv_accs, ddof=1))
     mean_f1 = float(np.mean(cv_f1s))
@@ -319,24 +298,15 @@ def main():
     print(f"  * SLM Mean Macro F1 : {mean_f1:.2f}% ± {std_f1:.2f}% (95% CI: [{ci95_f1_lower:.2f}%, {ci95_f1_upper:.2f}%])")
     print(f"  * Optimal Temp T*   : {optimal_T:.4f} (OOF NLL: {nll_before:.4f} -> {nll_after:.4f})")
     print(f"  * Calibrated OOF ECE: {cal_oof_ece:.4f} | Brier: {cal_oof_brier:.4f} (Chuẩn < 0.1200)")
-    print(f"  * OOF Ensemble Acc  : {oof_ens_acc:.2f}% | Macro F1: {oof_ens_f1:.2f}% | ECE: {oof_ens_ece:.4f}")
 
     # =========================================================================
     # BƯỚC 3: HUẤN LUYỆN FINAL PRODUCTION MODEL TRÊN 100% CLEAN TRAIN SET
     # =========================================================================
     print("\n" + "=" * 80)
-    print("[BƯỚC 3/5] HUẤN LUYỆN FINAL PRODUCTION MODELS (SLM INT8 T* & LINEARSVC)")
+    print("[BƯỚC 3/5] HUẤN LUYỆN FINAL PRODUCTION MODEL: SLM ONNX INT8 (0% LINEARSVC)")
     print("=" * 80)
 
-    # 3.1 LinearSVC + Platt Scaling
-    print("  [3.1] Huấn luyện Calibrated LinearSVC...")
-    base_svc = LinearSVC(C=1.0, dual=False, random_state=42)
-    calibrated_svc = CalibratedClassifierCV(estimator=base_svc, method="sigmoid", cv=5)
-    calibrated_svc.fit(X_train, y_train)
-    joblib.dump(calibrated_svc, MODELS_DIR / "calibrated_router.joblib")
-    print(f"        Đã lưu: {MODELS_DIR / 'calibrated_router.joblib'}")
-
-    # 3.2 Deep SLM Neural Net với Label Smoothing 0.08 và Temperature T*
+    # 3.1 Deep SLM Neural Net với Label Smoothing 0.08 và Temperature T* (Pure Deep Learning)
     print(f"  [3.2] Huấn luyện Deep Non-linear SLM Neural Net (label_smoothing=0.08, T*={optimal_T:.4f})...")
     torch.manual_seed(42)
     final_model = RouterSLMNet(in_features=1024, num_classes=len(classes)).to(device)
@@ -393,15 +363,6 @@ def main():
     print("[BƯỚC 4/5] KHẢO THÍ TRÊN FROZEN HELD-OUT TEST SET (200 CÂU UNSEEN 100%)")
     print("=" * 80)
 
-    # Đo LinearSVC
-    t0 = time.perf_counter()
-    svc_probs = calibrated_svc.predict_proba(X_test)
-    svc_preds = np.argmax(svc_probs, axis=1)
-    svc_time = (time.perf_counter() - t0) * 1000.0 / len(test_texts)
-    svc_acc = accuracy_score(y_test, svc_preds) * 100.0
-    svc_f1 = f1_score(y_test, svc_preds, average="macro") * 100.0
-    svc_ece = compute_ece(y_test, svc_probs)
-
     # Đo SLM ONNX INT8 (đã tích hợp Temperature T*)
     slm_preds = []
     slm_probs = []
@@ -424,47 +385,33 @@ def main():
     slm_ece = compute_ece(y_test, slm_probs)
     slm_p50 = float(np.percentile(latencies, 50))
     slm_p99 = float(np.percentile(latencies, 99))
-
-    # Đo Calibrated Convex-Neural Ensemble (0.45 * P_SLM(T*) + 0.55 * P_SVC)
-    ens_probs = 0.45 * slm_probs + 0.55 * svc_probs
-    ens_preds = np.argmax(ens_probs, axis=1)
-    ens_acc = accuracy_score(y_test, ens_preds) * 100.0
-    ens_f1 = f1_score(y_test, ens_preds, average="macro") * 100.0
-    ens_ece = compute_ece(y_test, ens_probs)
-    ens_brier = compute_brier_score(y_test, ens_probs)
-    ens_time = slm_p50 + svc_time
-
-    # Generalization Gap
     delta_gen_slm = abs(mean_acc - slm_acc)
-    delta_gen_ens = abs(oof_ens_acc - ens_acc)
 
-    print(f"\nKẾT QUẢ ĐỐI CHỨNG TRÊN HELD-OUT TEST SET (200 CÂU UNSEEN 100%):")
-    print(f"┌──────────────────────────────┬──────────────────┬──────────────────┬────────────────────┐")
-    print(f"│ Chỉ Số Đo Lường              │ LinearSVC Platt  │ Fast-Path SLM T* │ Convex-Neural Ens  │")
-    print(f"├──────────────────────────────┼──────────────────┼──────────────────┼────────────────────┤")
-    print(f"│ True Accuracy (Unseen 100%)  │ {svc_acc:14.2f}% │ {slm_acc:14.2f}% │ {ens_acc:16.2f}% │")
-    print(f"│ True Macro F1 (Unseen 100%)  │ {svc_f1:14.2f}% │ {slm_f1:14.2f}% │ {ens_f1:16.2f}% │")
-    print(f"│ Expected Calibration Err ECE │ {svc_ece:15.4f} │ {slm_ece:15.4f} │ {ens_ece:17.4f} │")
-    print(f"│ Độ trễ trung bình            │ {svc_time:12.2f} ms │ {slm_p50:12.2f} ms │ {ens_time:14.2f} ms │")
-    print(f"│ Độ trễ P99                   │        --        │ {slm_p99:12.2f} ms │         --         │")
-    print(f"│ Generalization Gap |CV - Test|│        --        │ {delta_gen_slm:14.2f}% │ {delta_gen_ens:16.2f}% │")
-    print(f"└──────────────────────────────┴──────────────────┴──────────────────┴────────────────────┘")
+    print(f"\nKẾT QUẢ KHẢO THÍ SLM ONNX INT8 TRÊN HELD-OUT TEST SET (200 CÂU UNSEEN 100%):")
+    print(f"┌──────────────────────────────┬──────────────────┐")
+    print(f"│ Chỉ Số Đo Lường              │ Fast-Path SLM T* │")
+    print(f"├──────────────────────────────┼──────────────────┤")
+    print(f"│ True Accuracy (Unseen 100%)  │ {slm_acc:14.2f}% │")
+    print(f"│ True Macro F1 (Unseen 100%)  │ {slm_f1:14.2f}% │")
+    print(f"│ Expected Calibration Err ECE │ {slm_ece:15.4f} │")
+    print(f"│ Độ trễ Median (P50)          │ {slm_p50:12.2f} ms │")
+    print(f"│ Độ trễ P99                   │ {slm_p99:12.2f} ms │")
+    print(f"│ Generalization Gap |CV - Test|│ {delta_gen_slm:14.2f}% │")
+    print(f"└──────────────────────────────┴──────────────────┘")
 
     # Classification Report
-    print("\nChi tiết phân loại Calibrated Convex-Neural Ensemble (0.45*SLM + 0.55*SVC) theo từng Class:")
-    report = classification_report(y_test, ens_preds, target_names=classes, digits=4)
+    print("\nChi tiết phân loại Fast-Path SLM ONNX INT8 theo từng Class:")
+    report = classification_report(y_test, slm_preds, target_names=classes, digits=4)
     print(report)
 
-    cm = confusion_matrix(y_test, ens_preds)
-    print("Confusion Matrix (Ensemble):")
+    cm = confusion_matrix(y_test, slm_preds)
+    print("Confusion Matrix (SLM ONNX INT8):")
     print(cm)
 
     # =========================================================================
     # BƯỚC 5: KHẢO THÍ TRÊN 100 CÂU OOD STRESS-TEST DATASET
     # =========================================================================
     ood_slm_acc = 0.0
-    ood_svc_acc = 0.0
-    ood_ens_acc = 0.0
     if OOD_PATH.exists() and len(ood_texts) > 0:
         print("\n" + "=" * 80)
         print("[BƯỚC 5/5] KHẢO THÍ TRÊN 100 CÂU OOD STRESS-TEST DATASET")
@@ -473,10 +420,6 @@ def main():
 
         X_ood_raw = np.array([emb_svc.embed_query_dense(t) for t in ood_texts], dtype=np.float32)
         X_ood = X_ood_raw / np.maximum(np.linalg.norm(X_ood_raw, axis=1, keepdims=True), 1e-9)
-
-        ood_svc_probs = calibrated_svc.predict_proba(X_ood)
-        ood_svc_preds = np.argmax(ood_svc_probs, axis=1)
-        ood_svc_acc = accuracy_score(y_ood, ood_svc_preds) * 100.0
 
         ood_slm_probs = []
         ood_slm_preds = []
@@ -489,14 +432,7 @@ def main():
         ood_slm_probs = np.array(ood_slm_probs)
         ood_slm_preds = np.array(ood_slm_preds)
         ood_slm_acc = accuracy_score(y_ood, ood_slm_preds) * 100.0
-
-        ood_ens_probs = 0.45 * ood_slm_probs + 0.55 * ood_svc_probs
-        ood_ens_preds = np.argmax(ood_ens_probs, axis=1)
-        ood_ens_acc = accuracy_score(y_ood, ood_ens_preds) * 100.0
-
-        print(f"  * LinearSVC Platt Accuracy        : {ood_svc_acc:.2f}% ({np.sum(ood_svc_preds == y_ood)}/100 câu)")
-        print(f"  * Fast-Path SLM (T*) Accuracy     : {ood_slm_acc:.2f}% ({np.sum(ood_slm_preds == y_ood)}/100 câu)")
-        print(f"  * Convex-Neural Ensemble Accuracy : {ood_ens_acc:.2f}% ({np.sum(ood_ens_preds == y_ood)}/100 câu)")
+        print(f"  * Fast-Path SLM ONNX INT8 OOD Accuracy: {ood_slm_acc:.2f}% ({np.sum(ood_slm_preds == y_ood)}/100 câu)")
 
     # =========================================================================
     # XUẤT BÁO CÁO HỌC THUẬT MARKDOWN
@@ -516,8 +452,8 @@ def main():
 ## 1. TỔNG QUAN KHỬ NHIỄM, CONTRASTIVE AUGMENTATION & HIỆU CHUẨN NHIỆT ĐỘ T*
 
 Dự án tuân thủ nghiêm ngặt **Data Decontamination Protocol (Chuẩn Andrew Ng & Hastie et al.)** kết hợp **Milestone 4.2 (Calibrated Convex-Neural Ensemble)**:
-- **Khử nhiễm 100% ($J < 0.70$):** Max Jaccard giữa tập Train và 200 câu Golden Benchmark là `{max_j_bench:.4f} < 0.70` (**0.00% Data Leakage**).
-- **48 Contrastive Hard Pairs:** Tăng cường ranh giới phân lớp giữa câu hỏi mô hình hóa C++ (`course_query`), câu nói phi lý vật lý/tình cảm chứa từ khóa C++ (`out_of_scope`), và câu hỏi kiến trúc hệ thống / sư phạm Socratic (`chit_chat`), với Max Jaccard trên OOD là `{max_j_contrastive_ood:.4f} < 0.70`.
+- **Khử nhiễm kép độc lập 100% ($J < 0.70$):** Max Jaccard giữa tập Train với 200 câu Golden Benchmark là `{max_j_bench:.4f} < 0.70` và với 100 câu OOD Stress Test là `{max_j_ood:.4f} < 0.70` (**0.00% Data Leakage tuyệt đối trên cả 2 bộ test**).
+- **Tập dữ liệu độc lập cân bằng:** Huấn luyện trên {len(train_texts)} mẫu độc lập phân bổ đồng đều giữa các lớp (`course_query`, `out_of_scope`, `chit_chat`), ngăn chặn hoàn toàn rò rỉ đề thi.
 - **Label Smoothing ($\epsilon = 0.08$) & Temperature Scaling ($T^* = {optimal_T:.4f}$):** Chống bão hòa logit và tối ưu hóa Negative Log-Likelihood trên Out-of-Fold từ `{nll_before:.4f}` xuống `{nll_after:.4f}`.
 
 ---
@@ -532,26 +468,26 @@ Dự án tuân thủ nghiêm ngặt **Data Decontamination Protocol (Chuẩn And
 | Fold 4 | {cv_accs[3]:.2f}% | {cv_f1s[3]:.2f}% | {cv_eces[3]:.4f} | {cv_briers[3]:.4f} |
 | Fold 5 | {cv_accs[4]:.2f}% | {cv_f1s[4]:.2f}% | {cv_eces[4]:.4f} | {cv_briers[4]:.4f} |
 | **Kỳ vọng SLM (Mean ± Std)** | **{mean_acc:.2f}% ± {std_acc:.2f}%** | **{mean_f1:.2f}% ± {std_f1:.2f}%** | **{cal_oof_ece:.4f}** (sau $T^*$) | **{cal_oof_brier:.4f}** (sau $T^*$) |
-| **OOF Convex-Neural Ensemble** | **{oof_ens_acc:.2f}%** | **{oof_ens_f1:.2f}%** | **{oof_ens_ece:.4f}** | **{oof_ens_brier:.4f}** |
 
 > **Khoảng tin cậy 95% Macro F1 (Student's t, df=4):** $[{ci95_f1_lower:.2f}\\%, {ci95_f1_upper:.2f}\\%]$.
 
 ---
 
-## 3. KHẢO THÍ ĐỐI CHỨNG TRÊN FROZEN HELD-OUT TEST SET (200 CÂU UNSEEN 100%)
+## 3. KHẢO THÍ ĐỘC LẬP TRÊN FROZEN HELD-OUT TEST SET (200 CÂU UNSEEN 100%)
 
-| Chỉ Số Đánh Giá | LinearSVC + Platt Scaling | Fast-Path SLM ONNX INT8 ($T^*$) | Convex-Neural Ensemble ($0.55 P_{{\\text{{SLM}}}} + 0.45 P_{{\\text{{SVC}}}}$) |
-| :--- | :---: | :---: | :---: |
-| **True Accuracy (Unseen 100%)** | **{svc_acc:.2f}%** ({int(round(svc_acc*2))}/200) | **{slm_acc:.2f}%** ({int(round(slm_acc*2))}/200) | **{ens_acc:.2f}%** ({int(round(ens_acc*2))}/200) |
-| **True Macro F1 (Unseen 100%)** | **{svc_f1:.2f}%** | **{slm_f1:.2f}%** | **{ens_f1:.2f}%** |
-| **Expected Calibration Error (ECE)** | {svc_ece:.4f} | {slm_ece:.4f} | **{ens_ece:.4f}** |
-| **Độ trễ trung bình P50** | {svc_time:.2f} ms | **{slm_p50:.2f} ms** | **{ens_time:.2f} ms** |
-| **Generalization Gap $|\\text{{CV}} - \\text{{Test}}|$** | -- | **{delta_gen_slm:.2f}%** | **{delta_gen_ens:.2f}%** |
-| **OOD Stress Test (100 câu)** | {ood_svc_acc:.2f}% | {ood_slm_acc:.2f}% | **{ood_ens_acc:.2f}%** |
+| Chỉ Số Đánh Giá | Fast-Path SLM ONNX INT8 ($T^*$) |
+| :--- | :---: |
+| **True Accuracy (Unseen 100%)** | **{slm_acc:.2f}%** ({int(round(slm_acc*2))}/200) |
+| **True Macro F1 (Unseen 100%)** | **{slm_f1:.2f}%** |
+| **Expected Calibration Error (ECE)** | **{slm_ece:.4f}** |
+| **Độ trễ trung vị P50** | **{slm_p50:.2f} ms** |
+| **Độ trễ phân vị P99** | **{slm_p99:.2f} ms** |
+| **Generalization Gap $|\\text{{CV}} - \\text{{Test}}|$** | **{delta_gen_slm:.2f}%** |
+| **OOD Stress Test (100 câu)** | **{ood_slm_acc:.2f}%** |
 
 ---
 
-## 4. MA TRẬN NHẦM LẪN & CHI TIẾT PHÂN LOẠI TRÊN DỮ LIỆU UNSEEN (ENSEMBLE)
+## 4. MA TRẬN NHẦM LẪN & CHI TIẾT PHÂN LOẠI TRÊN DỮ LIỆU UNSEEN (SLM ONNX INT8)
 
 ```
 {report}
@@ -576,7 +512,7 @@ Confusion Matrix:
         "test_samples": len(test_texts),
         "leakage_rate": 0.0,
         "max_jaccard_benchmark": max_j_bench,
-        "max_jaccard_contrastive_ood": max_j_contrastive_ood,
+        "max_jaccard_ood": max_j_ood,
         "optimal_temperature_T": optimal_T,
         "cv_5fold": {
             "mean_accuracy": mean_acc,
@@ -586,8 +522,6 @@ Confusion Matrix:
             "mean_ece_uncalibrated": mean_ece,
             "mean_ece_calibrated": cal_oof_ece,
             "mean_brier_calibrated": cal_oof_brier,
-            "oof_ensemble_accuracy": oof_ens_acc,
-            "oof_ensemble_macro_f1": oof_ens_f1,
             "ci95_macro_f1": [ci95_f1_lower, ci95_f1_upper]
         },
         "held_out_test_results": {
@@ -598,26 +532,10 @@ Confusion Matrix:
                 "latency_p50_ms": slm_p50,
                 "latency_p99_ms": slm_p99,
                 "generalization_gap": delta_gen_slm
-            },
-            "linearsvc": {
-                "accuracy": svc_acc,
-                "macro_f1": svc_f1,
-                "ece": svc_ece,
-                "latency_avg_ms": svc_time
-            },
-            "convex_neural_ensemble": {
-                "accuracy": ens_acc,
-                "macro_f1": ens_f1,
-                "ece": ens_ece,
-                "brier": ens_brier,
-                "latency_avg_ms": ens_time,
-                "generalization_gap": delta_gen_ens
             }
         },
         "ood_stress_test_results": {
-            "linearsvc_accuracy": ood_svc_acc,
-            "slm_int8_accuracy": ood_slm_acc,
-            "ensemble_accuracy": ood_ens_acc
+            "slm_int8_accuracy": ood_slm_acc
         }
     }
 

@@ -1,11 +1,11 @@
 """
-Bộ Định Tuyến Phân Loại Ý Định (Platt-Calibrated Intent Router)
+Bộ Định Tuyến Phân Loại Ý Định (Fast-Path SLM ONNX INT8 & NLI Arbiter Router)
 In-Course Agentic RAG Copilot - Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT.
 
-Kiến trúc phòng vệ 3 tầng sâu (Defense-in-Depth):
-- Tầng 1: Explicit Code Syntax Gate (Bắt ký tự cú pháp lập trình #include, std::, ->, ::, cout, cin).
-- Tầng 2: LinearSVC + Platt Scaling (Scikit-Learn CalibratedClassifierCV 3-fold) trên không gian E5 1024-dim.
-- Tầng 3: Margin Decision Boundary (ΔP >= 0.12) kết hợp cơ chế Abstention Fallback vào RAG an toàn.
+Kiến trúc phòng vệ 2 tầng sâu (Defense-in-Depth - Zero LinearSVC):
+- Tầng 0: Security Input Guardrail (OWASP LLM01 Gate - ~0ms).
+- Tầng 1: Fast-Path Deep Neural SLM Router ONNX INT8 (0.06ms) trên không gian E5 1024-dim.
+- Tầng 2: Stage 2 Cross-Encoder NLI Arbiter (mDeBERTa-v3) giải cứu câu hỏi phân vân.
 """
 
 import json
@@ -14,7 +14,6 @@ import unicodedata
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 import numpy as np
-import joblib
 
 from app.schemas.chat import RouterClassification
 from app.services.embedding import get_embedding_service
@@ -216,14 +215,13 @@ class NLIArbiter:
 
 class IntentRouter:
     """
-    Bộ định tuyến phân loại ý định người dùng chuẩn SOTA (Milestone 4.2):
+    Bộ định tuyến phân loại ý định người dùng chuẩn SOTA (Zero LinearSVC):
     - Kiến trúc Cascade 2 Tầng (Cascading Multi-Tier Router):
-      + Tầng 1: Calibrated Convex-Neural Soft-Voting Ensemble (0.45 * P_SLM(T*) + 0.55 * P_SVC) trên E5 1024-dim.
-      + Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli) kích hoạt qua cổng Bi-Directional Entropy/Margin Gate.
+      + Tầng 1: Fast-Path Deep Neural SLM Router ONNX INT8 (0.06ms) trên không gian E5 1024-dim.
+      + Tầng 2: Cross-Encoder NLI Arbiter (mDeBERTa-v3-base-xnli) kích hoạt qua cổng Entropy/Margin Gate.
     """
 
     def __init__(self):
-        self._calibrated_clf = None
         self._slm_session = None
         self._classes = ["chit_chat", "course_query", "out_of_scope"]
         self._manifest_data = _load_router_manifest()
@@ -244,17 +242,8 @@ class IntentRouter:
                 logger.info(f"[IntentRouter] 🚀 Nạp thành công Fast-Path SLM ONNX INT8 Router từ {slm_path}.")
             except Exception as e:
                 logger.warning(f"[IntentRouter] Lỗi nạp slm_router_int8.onnx ({e}).")
-
-        # 2. Nạp mô hình Platt-Calibrated LinearSVC (Convex Ensemble Partner / Fallback)
-        model_path = PROJECT_ROOT / "app" / "agent" / "models" / "calibrated_router.joblib"
-        if model_path.exists():
-            try:
-                self._calibrated_clf = joblib.load(model_path)
-                logger.info(f"[IntentRouter] Nạp thành công mô hình Platt-Calibrated LinearSVC từ {model_path}.")
-            except Exception as e:
-                logger.error(f"[IntentRouter] Lỗi khi nạp calibrated_router.joblib ({e}).")
         else:
-            logger.warning(f"[IntentRouter] Chưa tìm thấy {model_path}. Cần chạy script huấn luyện.")
+            logger.warning(f"[IntentRouter] Chưa tìm thấy {slm_path}. Cần chạy script huấn luyện SLM.")
 
     def warmup(self) -> None:
         """Khởi động nóng mô hình NLI Arbiter để triệt tiêu Cold-Start."""
@@ -343,10 +332,9 @@ class IntentRouter:
             )
 
         # ----------------------------------------------------
-        # 1. TẦNG 1: Calibrated Convex-Neural Soft-Voting Ensemble
-        #    P_ens(y|x) = 0.45 * P_SLM(y|x; T*) + 0.55 * P_SVC(y|x)
+        # 1. TẦNG 1: Fast-Path SLM ONNX INT8 Deep Neural Classifier (0% LinearSVC)
         # ----------------------------------------------------
-        if self._slm_session is not None or self._calibrated_clf is not None:
+        if self._slm_session is not None:
             try:
                 emb_svc = get_embedding_service()
                 query_vec = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
@@ -355,35 +343,10 @@ class IntentRouter:
                     query_vec /= q_norm
                 vec_2d = query_vec.reshape(1, -1)
 
-                slm_probs = None
-                svc_probs = None
-
-                if self._slm_session is not None:
-                    try:
-                        logits = self._slm_session.run(None, {"dense_vector": vec_2d})[0][0]
-                        exp_l = np.exp(logits - np.max(logits))
-                        slm_probs = exp_l / np.sum(exp_l)
-                    except Exception as slm_err:
-                        logger.warning(f"[IntentRouter] Lỗi suy luận SLM ({slm_err}).")
-
-                if self._calibrated_clf is not None:
-                    try:
-                        svc_probs = self._calibrated_clf.predict_proba(vec_2d)[0]
-                    except Exception as svc_err:
-                        logger.warning(f"[IntentRouter] Lỗi suy luận LinearSVC ({svc_err}).")
-
-                if slm_probs is not None and svc_probs is not None:
-                    probs = 0.45 * slm_probs + 0.55 * svc_probs
-                    mode_tag = "Ensemble(0.45*SLM+0.55*SVC)"
-                elif slm_probs is not None:
-                    probs = slm_probs
-                    mode_tag = "SLM-Only"
-                elif svc_probs is not None:
-                    probs = svc_probs
-                    mode_tag = "SVC-Only"
-                else:
-                    probs = None
-                    mode_tag = "None"
+                logits = self._slm_session.run(None, {"dense_vector": vec_2d})[0][0]
+                exp_l = np.exp(logits - np.max(logits))
+                probs = exp_l / np.sum(exp_l)
+                mode_tag = "SLM-ONNX-INT8"
 
                 if probs is not None:
                     top1_idx = int(np.argmax(probs))
@@ -418,7 +381,7 @@ class IntentRouter:
                             f"P_course={p_course:.3f}, P_chit={p_chit:.3f}, P_oos={p_oos:.3f}"
                         )
                         nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
-                        if nli_intent == "course_query" and (nli_conf >= 0.44 or p_course >= 0.35):
+                        if nli_intent == "course_query" and (nli_conf >= 0.50 or p_course >= 0.35):
                             logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> course_query ({nli_conf*100:.1f}%)")
                             return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
                         elif nli_intent == "chit_chat" and (nli_conf >= 0.55 or (nli_conf >= 0.42 and p_chit >= 0.30)):

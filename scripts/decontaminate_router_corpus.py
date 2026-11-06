@@ -1,24 +1,28 @@
 """
-Script Khử Nhiễm Dữ Liệu Ngữ Liệu Huấn Luyện Router (Data Decontamination & Augmentation)
+Script Khử Nhiễm Toàn Diện Dữ Liệu Ngữ Liệu Huấn Luyện Router (Double Decontamination Protocol v2.8.0)
 In-Course Agentic RAG Copilot - Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT.
 
 Mục tiêu khoa học:
-1. Sao lưu router_training_corpus.json sang router_training_corpus_v2_3_legacy.json.
-2. Quét và loại bỏ 100% các mẫu trùng lặp (Exact Match) và cận trùng lặp (Jaccard >= 0.80) với 200 câu Golden Benchmark.
-3. Sinh bổ sung các mẫu mới độc lập (Disjoint Guardrail: Jaccard < 0.70 so với Golden Benchmark) để đạt ~300 mẫu cân bằng.
-4. Ghi đè router_training_corpus.json phiên bản 2.4.0 sạch hoàn toàn (Zero Data Leakage).
+1. Sao lưu an toàn router_training_corpus.json sang router_training_corpus_v2_7_legacy.json.
+2. Quét và loại bỏ 100% các mẫu trùng lặp và cận trùng lặp (Jaccard >= 0.70) với CẢ 2 bộ test độc lập:
+   - 200 câu Frozen Held-Out Golden Benchmark (tests/data/benchmark_golden_dataset.json)
+   - 100 câu Unseen OOD Stress Test (tests/data/ood_stress_test_dataset.json)
+3. Tăng cường các mẫu độc lập (Disjoint Augmentation Pool) bảo chứng Jaccard < 0.70 trên cả 2 tập test.
+4. Xuất bản router_training_corpus.json phiên bản 2.8.0 sạch 100% (0.00% Data Leakage) với phân phối cân bằng.
 """
 
 import json
 import shutil
 import unicodedata
+from collections import Counter
 from pathlib import Path
 from typing import List, Dict, Any, Set
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CORPUS_PATH = PROJECT_ROOT / "data" / "metadata" / "router_training_corpus.json"
-BACKUP_PATH = PROJECT_ROOT / "data" / "metadata" / "router_training_corpus_v2_3_legacy.json"
+BACKUP_PATH = PROJECT_ROOT / "data" / "metadata" / "router_training_corpus_v2_7_legacy.json"
 BENCHMARK_PATH = PROJECT_ROOT / "tests" / "data" / "benchmark_golden_dataset.json"
+OOD_PATH = PROJECT_ROOT / "tests" / "data" / "ood_stress_test_dataset.json"
 
 
 def norm(text: str) -> str:
@@ -39,157 +43,157 @@ def jaccard_similarity(s1: str, s2: str) -> float:
 
 # =========================================================================
 # DANH SÁCH MẪU MỚI ĐỘC LẬP CHUẨN BỊ BỔ SUNG (DISJOINT AUGMENTATION POOL)
-# Tất cả đều không trùng với 200 câu Golden Benchmark
+# Tất cả đều không trùng với 200 câu Golden Benchmark và 100 câu OOD
 # =========================================================================
 
-NEW_COURSE_QUERY_SAMPLES = [
-    # Cú pháp & Kiểu dữ liệu cơ bản
-    "Làm sao để dùng toán tử sizeof để kiểm tra kích thước bộ nhớ của một biến trong C++?",
-    "Cách khai báo một biến tham chiếu reference và sự khác nhau với biến con trỏ thông thường?",
-    "Tại sao không nên dùng biến toàn cục global variable một cách bừa bãi trong chương trình C++?",
-    "Cú pháp sử dụng kiểu dữ liệu auto để tự động suy luận kiểu trong C++11?",
-    "Khái niệm về phạm vi biến variable scope và thời gian sống variable lifetime trong C++?",
-    "Làm thế nào để ép kiểu an toàn bằng static_cast thay vì ép kiểu kiểu C (C-style cast)?",
-    "Ý nghĩa của từ khóa explicit trong hàm khởi tạo constructor của C++ là gì?",
-    "Sự khác biệt giữa nullptr và NULL trong C++ hiện đại?",
-    "Cách dùng toán tử 3 ngôi conditional operator để viết ngắn gọn câu lệnh if else?",
-    "Tại sao chia cho số 0 trong C++ lại gây ra lỗi runtime crash chương trình?",
-    
+CANDIDATE_COURSE_QUERY = [
+    # Cú pháp & Kiểu dữ liệu C++ nâng cao
+    "Làm sao để dùng static_cast để chuyển đổi an toàn giữa float và int trong C++?",
+    "Cú pháp sử dụng kiểu dữ liệu auto để trình biên dịch tự suy luận kiểu biến trong C++11?",
+    "Tại sao không nên khai báo biến toàn cục bừa bãi trong các project C++ lớn?",
+    "Ý nghĩa của từ khóa explicit trước constructor 1 tham số trong C++ là gì?",
+    "Sự khác biệt về an toàn bộ nhớ giữa nullptr và con trỏ NULL kiểu C?",
+    "Cách dùng toán tử 3 ngôi ternary operator lồng nhau để phân loại kết quả học lực?",
+    "Tại sao chia cho số nguyên 0 trong C++ lại làm ứng dụng crash ngay lập tức?",
+    "Khái niệm const reference tham chiếu hằng giúp tối ưu hiệu năng truyền tham số ra sao?",
+    "Làm thế nào để sử dụng typedef hoặc using để định nghĩa bí danh kiểu dữ liệu trong C++?",
+    "Ý nghĩa của từ khóa volatile khi khai báo biến phần cứng trong lập trình C++ là gì?",
+
     # Cấu trúc điều khiển & Vòng lặp
-    "Làm sao để thoát khỏi 2 vòng lặp for lồng nhau mà không dùng lệnh goto?",
-    "Sự khác nhau giữa vòng lặp do-while và vòng lặp while thông thường khi điều kiện sai ngay lần đầu?",
-    "Lệnh continue trong vòng lặp bỏ qua những câu lệnh nào?",
-    "Làm cách nào để duyệt qua từng phần tử của mảng bằng range-based for loop trong C++?",
-    "Cấu trúc switch case có hỗ trợ so sánh chuỗi std::string trực tiếp không?",
-    "Làm sao để phòng ngừa lỗi vòng lặp vô tận infinite loop khi lập trình C++?",
-    "Cách viết chương trình in ra bảng cửu chương bằng 2 vòng for lồng nhau?",
-    "Khi nào dùng câu lệnh break trong cấu trúc rẽ nhánh switch case?",
+    "Làm sao để thoát khỏi 2 vòng lặp lồng nhau mà không cần dùng câu lệnh goto?",
+    "Cấu trúc switch case có cho phép kiểm tra biến kiểu chuỗi std::string không?",
+    "Khi nào ta nên ưu tiên dùng vòng lặp do while thay vì vòng lặp while trong bài toán menu?",
+    "Làm cách nào để duyệt qua từng phần tử của mảng một chiều bằng range based for loop?",
+    "Cơ chế ngắn mạch short circuit evaluation trong biểu thức logic AND và OR hoạt động ra sao?",
+    "Làm sao để viết cấu trúc điều khiển lặp lùi từ n về 0 mà không bị lỗi dưới ngưỡng unsigned int?",
+    "Cách dùng enum class trong C++11 để định nghĩa các trạng thái an toàn kiểu?",
 
-    # Hàm & Đệ quy & Bộ nhớ Stack/Heap
-    "Cơ chế truyền tham trị pass-by-value và truyền tham chiếu pass-by-reference hoạt động ra sao?",
-    "Điều kiện dừng base case trong hàm đệ quy có vai trò quan trọng như thế nào?",
-    "Hiện tượng tràn bộ nhớ stack overflow xảy ra khi đệ quy quá sâu là do đâu?",
-    "Hàm nạp chồng function overloading trong C++ phân biệt các hàm dựa trên tiêu chí nào?",
-    "Cách viết hàm trả về nhiều giá trị bằng cách dùng std::pair hoặc std::tuple?",
-    "Hàm inline trong C++ giúp cải thiện hiệu năng thực thi như thế nào?",
-    "Toán tử new và delete quản lý vùng nhớ heap khác gì so với vùng nhớ stack?",
-    "Làm sao để giải phóng bộ nhớ động đúng cách để tránh memory leak?",
-    "Con trỏ lơ lửng dangling pointer là gì và cách phòng tránh như thế nào?",
-    "Toán tử tham chiếu & và toán tử giải tham chiếu * khác nhau ra sao khi thao tác con trỏ?",
+    # Hàm, Phạm vi biến & Bộ nhớ
+    "Điều kiện dừng base condition trong giải thuật đệ quy có vai trò quyết định ra sao?",
+    "Hiện tượng stack overflow khi đệ quy quá sâu xảy ra do cấu trúc vùng nhớ nào bị đầy?",
+    "Hàm nạp chồng function overloading phân biệt các phiên bản dựa trên chữ ký hàm thế nào?",
+    "Cách khai báo hàm inline để giảm chi phí overhead gọi hàm trong vòng lặp lớn?",
+    "Hàm trả về con trỏ vùng nhớ stack có gây ra lỗi lơ lửng dangling pointer không?",
+    "Sự khác biệt về tốc độ truy xuất và dung lượng giữa bộ nhớ stack và heap trong C++?",
+    "Làm sao dùng con trỏ thông minh std::unique_ptr để tự động thu hồi vùng nhớ heap?",
+    "Tại sao toán tử new[] cho mảng phải đi kèm với delete[] tương ứng?",
+    "Con trỏ hằng const int* khác với hằng con trỏ int* const ở vị trí nào?",
+    "Làm thế nào để truyền mảng 2 chiều kích thước động vào một hàm xử lý ma trận?",
 
-    # Mảng, Chuỗi & STL Container
-    "Làm sao để truyền mảng 1 chiều vào hàm như một tham số con trỏ trong C++?",
-    "Sự khác nhau giữa mảng tĩnh C-style array và std::vector trong thư viện chuẩn STL?",
-    "Cách dùng hàm push_back và pop_back để thêm bớt phần tử trong std::vector?",
-    "Hàm size() và capacity() của std::vector khác nhau như thế nào?",
-    "Cách xóa một ký tự bất kỳ trong chuỗi std::string bằng phương thức erase()?",
-    "Làm sao để chuyển đổi một chuỗi std::string thành số nguyên bằng std::stoi?",
-    "Cách dùng thuật toán std::sort để sắp xếp một vector theo thứ tự giảm dần?",
-    "Cấu trúc dữ liệu std::set trong C++ tự động loại bỏ phần tử trùng lặp như thế nào?",
-    "Sự khác biệt về độ phức tạp thời gian giữa std::map và std::unordered_map?",
-    "Cách sử dụng iterator để duyệt qua các phần tử của một std::vector?",
+    # Mảng, Chuỗi & Cấu trúc dữ liệu STL
+    "Sự khác biệt giữa mảng tĩnh C-style và std::vector về mặt tự động cấp phát lại bộ nhớ?",
+    "Hàm capacity() và size() của std::vector phản ánh điều gì về dung lượng mảng động?",
+    "Cách sử dụng std::sort với hàm so sánh tùy biến lambda để sắp xếp mảng cấu trúc?",
+    "Cấu trúc dữ liệu std::set trong STL tự động cân bằng cây và loại bỏ phần tử trùng ra sao?",
+    "Độ phức tạp thời gian khi tìm kiếm phần tử trong std::unordered_map so với std::map?",
+    "Cách duyệt và xóa an toàn một phần tử trong std::vector bằng iterator và erase?",
+    "Làm sao để tách một chuỗi std::string thành các từ riêng biệt bằng std::stringstream?",
+    "Hàm substr() trong thư viện string nhận tham số vị trí bắt đầu và số lượng ký tự như thế nào?",
 
-    # Lập trình Hướng đối tượng (OOP)
-    "Bốn tính chất cốt lõi của lập trình hướng đối tượng OOP trong C++ là gì?",
-    "Tại sao nên đặt thuộc tính là private và cung cấp các hàm getter setter?",
-    "Constructor mặc định default constructor được trình biên dịch tự sinh ra khi nào?",
-    "Hàm hủy destructor có vai trò gì và có thể nạp chồng destructor được không?",
-    "Cách khởi tạo giá trị cho thuộc tính bằng Member Initializer List trong constructor?",
-    "Từ khóa const đặt ở cuối phương thức của class có ý nghĩa gì?",
-    "Hiện tượng che khuất tên biến name shadowing và cách dùng con trỏ this để phân biệt?",
-    "Hàm bạn friend function có thể truy cập các thành viên private của class như thế nào?",
-    "Kế thừa công khai public inheritance trong C++ thiết lập quan hệ IS-A ra sao?",
-    "Hàm ảo virtual function và cơ chế đa hình runtime polymorphism hoạt động như thế nào?",
-    "Bảng hàm ảo vtable và con trỏ vptr được tổ chức như thế nào trong bộ nhớ?",
-    "Hàm ảo thuần túy pure virtual function và khái niệm Abstract Class là gì?",
-    "Tại sao hàm hủy của lớp cơ sở base class luôn cần khai báo là virtual?",
-    "Vấn đề hình thoi diamond problem trong đa kế thừa C++ được giải quyết bằng virtual inheritance ra sao?",
-    "Nạp chồng toán tử cộng operator+ để cộng hai đối tượng phân số như thế nào?"
+    # Lập trình Hướng đối tượng OOP
+    "Bốn trụ cột chính của lập trình hướng đối tượng trong C++ gồm những tính chất nào?",
+    "Tại sao nên che giấu dữ liệu bằng phạm vi private và cung cấp getter setter trong class?",
+    "Hàm tạo sao chép copy constructor được kích hoạt tự động trong những tình huống nào?",
+    "Cách dùng danh sách khởi tạo member initializer list để khởi tạo thuộc tính const trong class?",
+    "Từ khóa const đặt ở đuôi của phương thức class có tác dụng bảo vệ dữ liệu ra sao?",
+    "Hàm bạn friend function có thể truy cập vào vùng private của class như thế nào?",
+    "Hàm ảo virtual function giúp trình biên dịch thực hiện liên kết muộn late binding ra sao?",
+    "Bảng hàm ảo vtable và con trỏ vptr được tổ chức như thế nào cho từng đối tượng đa hình?",
+    "Hàm thuần ảo pure virtual function và khái niệm Abstract Class được thiết kế ra sao?",
+    "Tại sao hàm hủy của lớp cơ sở base class luôn bắt buộc phải khai báo là virtual?",
+    "Vấn đề hình thoi diamond problem trong đa kế thừa được giải quyết bằng virtual inheritance thế nào?",
+    "Nạp chồng toán tử gán assignment operator= cần kiểm tra điều kiện tự gán this != &other ra sao?",
+    "Thành viên tĩnh static variable trong class được chia sẻ chung cho mọi thực thể như thế nào?",
+    "Cơ chế nạp chồng toán tử cộng operator+ để thực hiện phép cộng trên hai vector toán học?",
+    "Cách viết class khuôn mẫu template để tái sử dụng cấu trúc ngăn xếp cho mọi kiểu dữ liệu?"
 ]
 
-NEW_OUT_OF_SCOPE_SAMPLES = [
-    # Lập trình ngôn ngữ khác (Python, Java, JS, C#)
-    "Làm sao để tạo một môi trường ảo virtualenv trong Python?",
-    "Cú pháp khai báo decorator trong Python hoạt động như thế nào?",
-    "Cách kết nối cơ sở dữ liệu MongoDB bằng Mongoose trong Node.js?",
-    "Sự khác nhau giữa Interface và Abstract Class trong ngôn ngữ Java?",
-    "Làm thế nào để cài đặt framework React 19 với Vite?",
-    "Cách viết truy vấn SELECT JOIN giữa hai bảng trong PostgreSQL?",
-    "Làm sao để cấu hình Dockerfile để đóng gói một ứng dụng FastAPI?",
-    "Cách sử dụng async await trong JavaScript để gọi API?",
-    "Làm thế nào để deploy một ứng dụng web lên Kubernetes cluster?",
-    "Sự khác nhau giữa CSS Flexbox và CSS Grid khi căn chỉnh giao diện?",
-    "Cách dùng Git rebase để gộp các commit trước khi tạo Pull Request?",
-    "Làm sao để cấu hình CI/CD pipeline với GitHub Actions?",
-    "Khái niệm microservices khác gì so với monolithic architecture?",
-    
-    # Khoa học, Toán cao cấp & Đời sống
-    "Công thức tính đạo hàm riêng cấp 2 của hàm nhiều biến là gì?",
-    "Giải thích định lý Bayes trong xác suất thống kê ứng dụng?",
-    "Thời tiết ngày mai ở Hà Nội có mưa không hả bạn?",
-    "Chỉ cho mình công thức nấu món bún bò Huế chuẩn vị truyền thống",
-    "Đội tuyển bóng đá nào vô địch World Cup 2022?",
-    "Giá vàng SJC hôm nay tăng hay giảm bao nhiêu một chỉ?",
-    "Tư vấn cho mình lộ trình học tiếng Anh để đạt IELTS 7.0 từ con số 0",
-    "Gợi ý cho mình một cuốn sách hay về tâm lý học hành vi",
-    "Làm thế nào để giảm cân an toàn trong vòng 1 tháng?",
-    "Thủ đô của nước Úc là thành phố nào vậy bạn?",
-    "Tư vấn cấu hình máy tính để chơi game mượt trong tầm giá 20 triệu",
-    "Cách khắc phục tình trạng mất ngủ ban đêm hiệu quả nhất?",
-    "Kinh tế thế giới năm nay có dấu hiệu suy thoái hay phục hồi?",
-    "Giá vé máy bay khứ hồi từ Sài Gòn ra Đà Nẵng tháng này bao nhiêu?",
-    "Tư vấn giúp em chọn trường đại học khối A1 ở TP.HCM",
-    "Chỉ cho em cách viết CV xin việc ngành Marketing ấn tượng",
-    "Cách làm món cà phê muối thơm béo tại nhà đơn giản nhất",
-    "Tại sao bầu trời ban ngày lại có màu xanh lam?",
-    "Giải thích nguyên lý hoạt động của động cơ phản lực trên máy bay",
-    "Cho em hỏi quy trình đăng ký giấy phép lái xe A1 gồm những bước nào?"
+CANDIDATE_OUT_OF_SCOPE = [
+    # Ngôn ngữ lập trình & Framework khác ngoài phạm vi C++
+    "Làm sao để tạo một môi trường ảo virtualenv bằng lệnh python -m venv trong Python?",
+    "Cú pháp khai báo decorator @staticmethod và @classmethod trong Python khác nhau ra sao?",
+    "Cách kết nối cơ sở dữ liệu MongoDB bằng thư viện Mongoose trong môi trường Node.js?",
+    "Sự khác biệt giữa Interface và Abstract Class trong ngôn ngữ lập trình Java?",
+    "Làm thế nào để khởi tạo một dự án React 19 kết hợp với Vite bằng lệnh npm create vite?",
+    "Cách viết câu lệnh truy vấn SELECT lồng nhau kết hợp LEFT JOIN trong PostgreSQL?",
+    "Làm sao để viết tệp Dockerfile nhiều giai đoạn multi-stage build để tối ưu dung lượng image?",
+    "Cách xử lý bất đồng bộ bằng async await kết hợp Promise.all trong JavaScript?",
+    "Làm thế nào để triển khai một ứng dụng web microservices lên cụm Kubernetes?",
+    "Sự khác biệt giữa CSS Grid và CSS Flexbox khi căn chỉnh bố cục giao diện web responsive?",
+    "Cách dùng lệnh git rebase -i để gộp các commit lịch sử trước khi tạo pull request?",
+    "Làm sao để viết workflow CI/CD tự động chạy kiểm thử bằng GitHub Actions?",
+    "Kiến trúc Clean Architecture trong backend Java Spring Boot gồm những tầng nào?",
+    "Làm thế nào để deploy mô hình Machine Learning lên Hugging Face Spaces?",
+
+    # Đời sống, thể thao, khoa học & văn hóa
+    "Công thức tính tích phân suy rộng cấp 1 của hàm số vô tỷ trong giải tích toán học?",
+    "Giải thích ý nghĩa của định lý giới hạn trung tâm Central Limit Theorem trong xác suất?",
+    "Dự báo thời tiết cuối tuần này tại thành phố Đà Lạt có thích hợp đi dã ngoại không?",
+    "Hướng dẫn công thức nấu món lẩu thái hải sản chua cay thơm ngon chuẩn vị?",
+    "Cầu thủ bóng đá nào đang nắm giữ kỷ lục ghi nhiều bàn thắng nhất lịch sử Champions League?",
+    "Biến động giá vàng thế giới và tỷ giá đồng USD hôm nay có xu hướng tăng hay giảm?",
+    "Lộ trình ôn thi chứng chỉ IELTS Academic từ band 5.0 lên band 7.5 trong vòng 6 tháng?",
+    "Gợi ý một số cuốn sách kinh điển về phát triển tư duy phản biện và quản lý tài chính cá nhân?",
+    "Các phương pháp khoa học giúp giảm mỡ bụng an toàn mà không làm mất cơ bắp?",
+    "Thủ đô hành chính của đất nước Nam Phi nằm ở thành phố nào vậy bạn?",
+    "Tư vấn cấu hình máy tính bàn để dựng phim 4K và render 3D trong tầm giá 30 triệu?",
+    "Những thói quen tốt vào buổi tối giúp cải thiện chất lượng giấc ngủ sâu?",
+    "Hiện tượng nguyệt thực toàn phần xảy ra khi vị trí của Trái Đất, Mặt Trời và Mặt Trăng ra sao?",
+    "Nguyên lý hoạt động của hệ thống phanh chống bó cứng ABS trên xe ô tô hiện đại?"
 ]
 
-NEW_CHIT_CHAT_SAMPLES = [
-    # Chào hỏi tự nhiên
-    "Chào buổi sáng trợ giảng nhé!",
-    "Chào buổi tối bot, hôm nay bạn thế nào?",
-    "Hi copilot, chúc bạn một ngày làm việc hiệu quả nhé!",
-    "Alo có ai ở đây không?",
-    "Hello bot thân mến",
-    "Chào bạn nha, mình vừa mới vào học bài",
-    "Chào bạn, rất vui được làm quen với bạn!",
-    "Good morning trợ giảng AI!",
-    "Yo copilot!",
-    "Chào bạn nhé, hôm nay mình lại tiếp tục học code nè",
+CANDIDATE_CHIT_CHAT = [
+    # Chào hỏi sư phạm & Khởi động buổi học
+    "Chào buổi sáng trợ giảng AI, chúc bạn một ngày làm việc tràn đầy năng lượng!",
+    "Chào buổi tối bot, hôm nay mình tiếp tục đồng hành cùng bạn học code nhé!",
+    "Hi copilot, mình đã sẵn sàng cho buổi học hôm nay rồi nè!",
+    "Alo trợ giảng ơi, bạn có đang trực ca trực tuyến không?",
+    "Hello bot thân mến, rất vui được gặp lại bạn trong khóa học này!",
+    "Chào bạn nhé, hôm nay mình sẽ cố gắng hoàn thành hết bài tập C++!",
+    "Chào trợ giảng, hôm nay tâm trạng của bạn thế nào?",
+    "Good evening copilot, hy vọng hôm nay bạn sẽ giúp mình khai sáng nhiều kiến thức hay!",
+    "Chào bot nhé, chúc bạn có một ca hỗ trợ học viên thật hiệu quả!",
+    "Hi bạn trợ lý ảo dễ thương của môn lập trình C++!",
 
-    # Cảm ơn & Khen ngợi
-    "Cảm ơn bot rất nhiều, bạn giải thích dễ hiểu lắm!",
-    "Thanks bạn nhé, nhờ bạn mà mình hiểu ra bản chất vấn đề rồi!",
-    "Tuyệt vời quá, trợ giảng nhiệt tình số 1 luôn!",
-    "Mình cảm ơn copilot nhiều nha, câu trả lời rất có tâm!",
-    "Cảm ơn trợ giảng đã kiên nhẫn hướng dẫn mình!",
-    "Bạn thông minh và hỗ trợ rất nhanh, cảm ơn nhé!",
-    "Cảm ơn bạn nhiều, giải thích theo kiểu gợi mở này thích thật!",
-    "Bạn giảng hay hơn cả thầy trên lớp nữa, cảm ơn bạn!",
+    # Cảm ơn & Ghi nhận giá trị sư phạm gợi mở
+    "Cảm ơn bot rất nhiều, cách bạn đặt câu hỏi gợi ý làm mình tự nhận ra chỗ sai!",
+    "Cảm ơn trợ giảng đã kiên nhẫn dẫn dắt mà không giải bài hộ mình!",
+    "Nhờ bạn giải thích cặn kẽ bản chất mà mình đã thông suốt phần logic này rồi, cảm ơn nhé!",
+    "Tuyệt vời lắm bot, phong cách giảng dạy Socratic của bạn rất cuốn hút!",
+    "Mình cảm ơn copilot nhiều nha, bạn là người bạn học tập tuyệt vời nhất của mình!",
+    "Cảm ơn bạn đã luôn hỗ trợ nhiệt tình mỗi khi mình gặp bài toán khó!",
+    "Cách bạn hướng dẫn từng bước nhỏ giúp mình nhớ kiến thức lâu hơn rất nhiều, thanks bạn!",
+    "Cảm ơn trợ giảng, nhờ bạn mà mình thấy việc học C++ không còn quá đáng sợ nữa!",
+    "Giải thích rất sắc sảo và đi đúng trọng tâm, mình cảm ơn bạn nhiều nhé!",
+    "Cảm ơn bot nha, bạn kiên nhẫn hơn cả mong đợi của mình luôn!",
 
-    # Hỏi thăm danh tính & Trò chuyện sư phạm
-    "Bạn là ai và có thể giúp gì cho mình trong khóa học này?",
-    "Tên của bạn là gì vậy bot?",
-    "Bạn được tạo ra bởi ai thế?",
-    "Bạn có phải là trợ giảng chính thức của khóa học C++ này không?",
-    "Phương pháp giảng dạy Socratic của bạn là gì vậy?",
-    "Hôm nay bạn có khỏe không copilot?",
-    "Bạn học lập trình C++ từ đâu mà giỏi thế?",
-    
-    # Tạm biệt
-    "Tạm biệt bot nhé, hôm nay mình học đến đây thôi mai học tiếp!",
-    "Bye bye copilot, chúc bạn buổi tối vui vẻ!",
-    "Mình đi ngủ đây, hẹn gặp lại bạn vào ngày mai nhé!",
-    "Hẹn gặp lại trợ giảng trong buổi học sau!",
-    "Tạm biệt nhé, cảm ơn bạn đã đồng hành cùng mình tối nay!"
+    # Hỏi thăm danh tính, vai trò & Nguyên tắc Socratic
+    "Bạn là ai và sứ mệnh của bạn trong hệ thống học tập này là gì?",
+    "Ai là người đã thiết kế và lập trình ra bạn vậy copilot?",
+    "Tên gọi chính thức của bạn trong đồ án này là gì?",
+    "Tại sao bạn lại luôn từ chối viết sẵn toàn bộ code giải bài mà chỉ đưa ra gợi ý?",
+    "Phương pháp vấn đáp Socratic mà bạn đang áp dụng có nguồn gốc từ triết gia nào?",
+    "Bạn có thể hỗ trợ những môn học lập trình nào trong nền tảng web này?",
+    "Mục tiêu đào tạo của bạn là giúp sinh viên rèn luyện tư duy tự giải quyết vấn đề đúng không?",
+    "Hôm nay bạn đã trợ giúp cho bao nhiêu bạn sinh viên rồi bot?",
+    "Bạn có cảm thấy mệt mỏi khi phải trả lời hàng trăm câu hỏi mỗi ngày không?",
+
+    # Tạm biệt, động viên & Hẹn gặp lại
+    "Hôm nay mình học đến đây thôi, cảm ơn trợ giảng và chúc bạn ngủ ngon!",
+    "Tạm biệt bot nhé, ngày mai mình sẽ quay lại học tiếp phần nạp chồng toán tử!",
+    "Bye bye copilot, hẹn gặp lại bạn trong buổi học tiếp theo vào tối mai!",
+    "Mình hoàn thành xong bài tập của ngày hôm nay rồi, tạm biệt bạn nhé!",
+    "Cảm ơn bạn đã đồng hành cùng mình suốt buổi học hôm nay, bye bye!",
+    "Hẹn gặp lại trợ giảng thân yêu vào ngày mai, chúc bạn một buổi tối an lành!",
+    "Mình tắt máy đi nghỉ ngơi đây, cảm ơn bạn rất nhiều vì sự hướng dẫn tận tình!",
+    "Tạm biệt nhé, mai mình sẽ lại nhờ bạn giải đáp thêm các thắc mắc về con trỏ!"
 ]
 
 
 def main():
     print("=" * 80)
-    print("QUY TRÌNH KHỬ NHIỄM DỮ LIỆU HUẤN LUYỆN (DATA DECONTAMINATION PROTOCOL)")
+    print("QUY TRÌNH KHỬ NHIỄM KÉP TOÀN DIỆN (DATA DECONTAMINATION PROTOCOL v2.8.0)")
+    print("In-Course Agentic RAG Copilot - Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT")
     print("=" * 80)
 
     # 1. Sao lưu corpus cũ
@@ -199,95 +203,136 @@ def main():
     # 2. Đọc tập benchmark 200 câu
     with open(BENCHMARK_PATH, "r", encoding="utf-8") as f:
         benchmark_data = json.load(f)
-    print(f"[BƯỚC 2] Nạp {len(benchmark_data)} câu từ Frozen Held-out Benchmark.")
+    benchmark_queries = [item.get("query") or item.get("prompt") or "" for item in benchmark_data]
+    print(f"[BƯỚC 2] Nạp {len(benchmark_queries)} câu từ Frozen Held-out Golden Benchmark.")
 
-    benchmark_queries = []
-    for item in benchmark_data:
-        q = item.get("query") or item.get("prompt") or ""
-        if q:
-            benchmark_queries.append(q)
+    # 3. Đọc tập OOD Stress Test 100 câu
+    with open(OOD_PATH, "r", encoding="utf-8") as f:
+        ood_data = json.load(f)
+    ood_queries = [item.get("query") or item.get("prompt") or "" for item in ood_data]
+    print(f"[BƯỚC 3] Nạp {len(ood_queries)} câu từ Unseen OOD Stress Test.")
 
-    # 3. Đọc tập huấn luyện hiện tại
+    # 4. Đọc tập huấn luyện hiện tại
     with open(CORPUS_PATH, "r", encoding="utf-8") as f:
         corpus_data = json.load(f)
     raw_samples = corpus_data.get("samples", [])
-    print(f"[BƯỚC 3] Tập huấn luyện hiện tại có: {len(raw_samples)} mẫu.")
+    print(f"[BƯỚC 4] Tập huấn luyện hiện tại có: {len(raw_samples)} mẫu.")
 
-    # 4. Lọc bỏ các mẫu bị leak (Exact Match hoặc Jaccard >= 0.80)
+    # 5. Lọc bỏ các mẫu bị leak với Benchmark HOẶC OOD
     clean_retained_samples = []
-    leaked_count = 0
+    leaked_bench_count = 0
+    leaked_ood_count = 0
+
+    bench_norm_set = {norm(q) for q in benchmark_queries}
+    ood_norm_set = {norm(q) for q in ood_queries}
 
     for sample in raw_samples:
         s_text = sample.get("text", "")
-        is_leaked = False
-        max_sim = 0.0
+        n_text = norm(s_text)
 
-        for b_q in benchmark_queries:
-            # Check exact match sau khi chuẩn hóa
-            if norm(s_text) == norm(b_q):
-                is_leaked = True
-                max_sim = 1.0
-                break
-            # Check Jaccard
-            sim = jaccard_similarity(s_text, b_q)
-            if sim > max_sim:
-                max_sim = sim
-            if sim >= 0.80:
-                is_leaked = True
-                break
-
-        if is_leaked:
-            leaked_count += 1
+        # Check Golden Benchmark
+        is_leak = False
+        if n_text in bench_norm_set:
+            is_leak = True
+            leaked_bench_count += 1
         else:
+            max_sim = max((jaccard_similarity(s_text, b_q) for b_q in benchmark_queries), default=0.0)
+            if max_sim >= 0.70:
+                is_leak = True
+                leaked_bench_count += 1
+
+        if is_leak:
+            continue
+
+        # Check OOD Stress Test
+        if n_text in ood_norm_set:
+            is_leak = True
+            leaked_ood_count += 1
+        else:
+            max_sim = max((jaccard_similarity(s_text, o_q) for o_q in ood_queries), default=0.0)
+            if max_sim >= 0.70:
+                is_leak = True
+                leaked_ood_count += 1
+
+        if not is_leak:
             clean_retained_samples.append(sample)
 
-    print(f"[BƯỚC 4] Đã loại bỏ triệt để: {leaked_count} mẫu bị nhiễm độc / rò rỉ đề thi.")
+    print(f"[BƯỚC 5] Đã loại bỏ triệt để: {leaked_bench_count} mẫu rò rỉ Golden Benchmark.")
+    print(f"         Đã loại bỏ triệt để: {leaked_ood_count} mẫu rò rỉ OOD Stress Test.")
     print(f"         Số mẫu sạch giữ lại: {len(clean_retained_samples)} mẫu.")
+    print(f"         Phân phối nhãn sạch: {Counter(s['intent'] for s in clean_retained_samples)}")
 
-    # 5. Thẩm định và bổ sung mẫu mới độc lập (Disjoint Check)
-    print(f"\n[BƯỚC 5] Kiểm chuẩn và bổ sung mẫu mới độc lập...")
+    # 6. Thẩm định và bổ sung mẫu mới độc lập (Disjoint Check)
+    print(f"\n[BƯỚC 6] Kiểm chuẩn và bổ sung mẫu mới độc lập từ Disjoint Pool...")
+    existing_norm_set = {norm(s["text"]) for s in clean_retained_samples}
 
     def check_and_add_samples(sample_list: List[str], intent_label: str):
         added = 0
         for text in sample_list:
-            # Bắt buộc max Jaccard với benchmark < 0.70
-            max_sim = max((jaccard_similarity(text, b_q) for b_q in benchmark_queries), default=0.0)
-            if max_sim < 0.70:
-                clean_retained_samples.append({
-                    "text": text,
-                    "intent": intent_label
-                })
-                added += 1
-            else:
-                print(f"  [BỎ QUA] Mẫu có độ tương đồng cao với benchmark (J={max_sim:.2f}): '{text}'")
+            n_t = norm(text)
+            if n_t in existing_norm_set:
+                continue
+            max_sim_bench = max((jaccard_similarity(text, b_q) for b_q in benchmark_queries), default=0.0)
+            if max_sim_bench >= 0.70:
+                print(f"  [BỎ QUA - Bench J={max_sim_bench:.2f}]: '{text}'")
+                continue
+            max_sim_ood = max((jaccard_similarity(text, o_q) for o_q in ood_queries), default=0.0)
+            if max_sim_ood >= 0.70:
+                print(f"  [BỎ QUA - OOD J={max_sim_ood:.2f}]: '{text}'")
+                continue
+
+            clean_retained_samples.append({
+                "text": text,
+                "intent": intent_label
+            })
+            existing_norm_set.add(n_t)
+            added += 1
         return added
 
-    n_added_course = check_and_add_samples(NEW_COURSE_QUERY_SAMPLES, "course_query")
-    n_added_oos = check_and_add_samples(NEW_OUT_OF_SCOPE_SAMPLES, "out_of_scope")
-    n_added_chat = check_and_add_samples(NEW_CHIT_CHAT_SAMPLES, "chit_chat")
+    n_added_course = check_and_add_samples(CANDIDATE_COURSE_QUERY, "course_query")
+    n_added_oos = check_and_add_samples(CANDIDATE_OUT_OF_SCOPE, "out_of_scope")
+    n_added_chat = check_and_add_samples(CANDIDATE_CHIT_CHAT, "chit_chat")
 
     print(f"  + Đã bổ sung thành công course_query: {n_added_course} mẫu.")
     print(f"  + Đã bổ sung thành công out_of_scope: {n_added_oos} mẫu.")
     print(f"  + Đã bổ sung thành công chit_chat   : {n_added_chat} mẫu.")
     print(f"  -> Tổng số mẫu sạch sau tăng cường: {len(clean_retained_samples)} mẫu.")
+    print(f"  -> Phân phối nhãn cuối cùng: {Counter(s['intent'] for s in clean_retained_samples)}")
 
-    # 6. Kiểm toán lần cuối: Zero Leakage Verification
-    final_leak_check = 0
+    # 7. Kiểm toán chốt hạ: Zero Leakage Verification
+    max_j_bench_final = 0.0
+    final_leak_bench = 0
     for s in clean_retained_samples:
         s_text = s["text"]
         for b_q in benchmark_queries:
-            if norm(s_text) == norm(b_q) or jaccard_similarity(s_text, b_q) >= 0.80:
-                final_leak_check += 1
+            j = jaccard_similarity(s_text, b_q)
+            if j > max_j_bench_final:
+                max_j_bench_final = j
+            if norm(s_text) == norm(b_q) or j >= 0.70:
+                final_leak_bench += 1
+
+    max_j_ood_final = 0.0
+    final_leak_ood = 0
+    for s in clean_retained_samples:
+        s_text = s["text"]
+        for o_q in ood_queries:
+            j = jaccard_similarity(s_text, o_q)
+            if j > max_j_ood_final:
+                max_j_ood_final = j
+            if norm(s_text) == norm(o_q) or j >= 0.70:
+                final_leak_ood += 1
 
     print("-" * 80)
     print(f"KẾT QUẢ KIỂM TOÁN CHỐT HẠ (FINAL ZERO-LEAKAGE VERIFICATION):")
-    print(f"Số mẫu trùng lặp còn lại: {final_leak_check} (0.00% Leakage)")
-    assert final_leak_check == 0, "LỖI BẤT BIẾN: Vẫn còn mẫu rò rỉ dữ liệu trong tập huấn luyện!"
+    print(f"Max Jaccard với Golden Benchmark: {max_j_bench_final:.4f} (< 0.70) | Leakage: {final_leak_bench} (0.00%)")
+    print(f"Max Jaccard với OOD Stress Test:   {max_j_ood_final:.4f} (< 0.70) | Leakage: {final_leak_ood} (0.00%)")
+    assert final_leak_bench == 0, "LỖI BẤT BIẾN: Vẫn còn mẫu rò rỉ Golden Benchmark!"
+    assert final_leak_ood == 0, "LỖI BẤT BIẾN: Vẫn còn mẫu rò rỉ OOD Stress Test!"
 
-    # 7. Ghi đè tập ngữ liệu sạch chuẩn 2.4.0
+    # 8. Ghi đè tập ngữ liệu sạch chuẩn 2.8.0
     decontaminated_data = {
-        "description": "Tập ngữ liệu huấn luyện ý định đa lớp khử nhiễm độc lập chuẩn hóa (Decontaminated Intent Training Corpus)",
-        "version": "2.4.0",
+        "description": "Tập ngữ liệu huấn luyện ý định đa lớp khử nhiễm độc lập kép chuẩn hóa (Double-Decontaminated Intent Training Corpus)",
+        "version": "2.8.0",
         "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
         "university": "HUFLIT",
         "classes": [
@@ -301,7 +346,7 @@ def main():
     with open(CORPUS_PATH, "w", encoding="utf-8") as f:
         json.dump(decontaminated_data, f, ensure_ascii=False, indent=2)
 
-    print(f"[BƯỚC 7] Đã lưu thành công tập ngữ liệu sạch v2.4.0 tại: {CORPUS_PATH.name}")
+    print(f"[BƯỚC 8] Đã lưu thành công tập ngữ liệu sạch v2.8.0 tại: {CORPUS_PATH.name}")
     print("=" * 80)
 
 
