@@ -69,6 +69,27 @@ def find_latest_evaluation_file() -> Path | None:
     return find_latest_benchmark_file()
 
 
+def find_latest_multiturn_file() -> Path | None:
+    """
+    Tìm tệp kết quả khảo thí Đa Lượt (Stage 12 Multi-Turn LangGraph Orchestrator Benchmark):
+    1. Ưu tiên multiturn_benchmark_results.json.
+    2. Quét các tệp multiturn_benchmark_results_*.json.
+    """
+    if not BENCHMARK_DIR.exists():
+        return None
+
+    latest_link = BENCHMARK_DIR / "multiturn_benchmark_results.json"
+    if latest_link.exists():
+        return latest_link
+
+    files = list(BENCHMARK_DIR.glob("multiturn_benchmark_results_*.json"))
+    if files:
+        files.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+        return files[0]
+
+    return None
+
+
 @router.get(
     "/latest",
     summary="Lấy kết quả khảo thí Stage 11 Benchmark mới nhất",
@@ -100,6 +121,26 @@ async def get_latest_evaluation():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Chưa có dữ liệu khảo thí nào. Vui lòng chạy `scripts/run_full_evaluation.py`."
+        )
+
+    return FileResponse(
+        target_file,
+        media_type="application/json",
+        headers=NO_CACHE_HEADERS
+    )
+
+
+@router.get(
+    "/multiturn/latest",
+    summary="Lấy kết quả khảo thí Đa Lượt Multi-Turn LangGraph Orchestrator mới nhất",
+    description="Trả về tệp kết quả JSON khảo thí đa lượt 50 sessions / 222 turns phục vụ Interactive Multi-Turn Observability Dashboard."
+)
+async def get_latest_multiturn_benchmark():
+    target_file = find_latest_multiturn_file()
+    if not target_file or not target_file.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Chưa có dữ liệu khảo thí đa lượt nào. Vui lòng chạy `scripts/run_multiturn_benchmark.py`."
         )
 
     return FileResponse(

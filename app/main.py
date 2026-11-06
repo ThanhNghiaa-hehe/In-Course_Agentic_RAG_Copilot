@@ -77,7 +77,8 @@ async def root():
         "docs_url": "/docs",
         "workflow_simulator_url": "/workflow",
         "playground_url": "/playground",
-        "evaluation_dashboard_url": "/evaluation"
+        "evaluation_dashboard_url": "/evaluation",
+        "multiturn_evaluation_dashboard_url": "/multiturn-evaluation"
     }
 
 
@@ -97,6 +98,15 @@ async def get_evaluation_dashboard():
     if dashboard_path.exists():
         return FileResponse(dashboard_path, media_type="text/html", headers=NO_CACHE_HEADERS)
     return HTMLResponse("<h1>Tệp evaluation_dashboard.html chưa sẵn sàng</h1>", status_code=404)
+
+
+@app.get("/multiturn-evaluation")
+async def get_multiturn_evaluation_dashboard():
+    """Phục vụ trực tiếp trang Interactive Multi-Turn Observability Dashboard."""
+    dashboard_path = Path(__file__).resolve().parent / "templates" / "multiturn_evaluation_dashboard.html"
+    if dashboard_path.exists():
+        return FileResponse(dashboard_path, media_type="text/html", headers=NO_CACHE_HEADERS)
+    return HTMLResponse("<h1>Tệp multiturn_evaluation_dashboard.html chưa sẵn sàng</h1>", status_code=404)
 
 
 @app.get("/workflow")
