@@ -29,16 +29,16 @@ ANTIGRAVITY_SERVER = Path(r"D:\PooL_quota\Antigravity Tools\antigravity-server.e
 # Chuẩn hóa 100% theo danh mục mô hình chính thức được hỗ trợ bởi agy CLI
 ACCOUNT_MODEL_PROFILES = {
     "thanhnghiaa1402@gmail.com": {
-        "thinker": "gemini-4-argon-high",       # Account 1 có Argon còn 100%
-        "auditor": "claude-sonnet-5-5-medium",   # Claude 5.5
+        "thinker": "gemini-4-argon-high",       # Account 1: Có Argon (High/Med/Low) + Claude 5.5
+        "auditor": "claude-sonnet-5-5-medium",   # Claude 5.5 Medium
         "coder":   "gemini-3.8-flash-high",     # Gemini Flash High
-        "verifier": "gemini-4-argon-high"       # Tận dụng Argon dồi dào
+        "verifier": "gemini-4-argon-high"       # Argon High thẩm định
     },
     "seanpaul1402@gmail.com": {
-        "thinker": "claude-sonnet-5-5-high",    # Account 2: Claude Sonnet 5.5 High
-        "auditor": "claude-sonnet-5-5-medium",  # Claude Sonnet 5.5 Medium
-        "coder":   "gemini-3.8-flash-high",     # Gemini Flash High
-        "verifier": "claude-sonnet-5-5-high"    # Claude Sonnet 5.5 High
+        "thinker": "claude-sonnet-4-6",          # Account 2: Claude Sonnet 4.6 (Thinking 100%) - KHÔNG có Argon
+        "auditor": "claude-sonnet-4-6",          # Claude Sonnet 4.6 (Thinking)
+        "coder":   "gemini-3.8-flash-high",     # Gemini Flash High (100%)
+        "verifier": "claude-sonnet-4-6"          # Claude Sonnet 4.6 (Thinking 100%)
     }
 }
 
