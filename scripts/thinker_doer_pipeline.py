@@ -18,6 +18,7 @@ import subprocess
 import sys
 import time
 import re
+import shutil
 import argparse
 from pathlib import Path
 
@@ -25,7 +26,7 @@ from pathlib import Path
 ANTIGRAVITY_SERVER = Path(r"D:\PooL_quota\Antigravity Tools\antigravity-server.exe")
 
 # BẢNG ÁNH XẠ MÔ HÌNH ĐỘNG THEO TỪNG TÀI KHOẢN (ACCOUNT-AWARE MODEL MAPPING)
-# Giải quyết triệt để sự không đồng nhất giữa các tài khoản trong Pool
+# Chuẩn hóa 100% theo danh mục mô hình chính thức được hỗ trợ bởi agy CLI
 ACCOUNT_MODEL_PROFILES = {
     "thanhnghiaa1402@gmail.com": {
         "thinker": "gemini-4-argon-high",       # Account 1 có Argon còn 100%
@@ -34,10 +35,10 @@ ACCOUNT_MODEL_PROFILES = {
         "verifier": "gemini-4-argon-high"       # Tận dụng Argon dồi dào
     },
     "seanpaul1402@gmail.com": {
-        "thinker": "claude-sonnet-4-6",          # Account 2 có Claude Thinking còn 100%!
-        "auditor": "claude-sonnet-4-6",          # Claude 4.6 Thinking
+        "thinker": "claude-sonnet-5-5-high",    # Account 2: Claude Sonnet 5.5 High
+        "auditor": "claude-sonnet-5-5-medium",  # Claude Sonnet 5.5 Medium
         "coder":   "gemini-3.8-flash-high",     # Gemini Flash High
-        "verifier": "claude-sonnet-4-6"          # Claude Thinking 100% Quota
+        "verifier": "claude-sonnet-5-5-high"    # Claude Sonnet 5.5 High
     }
 }
 
@@ -84,7 +85,7 @@ POOL_ACCOUNT_COUNT = 2      # Số tài khoản trong pool (thanhnghiaa & seanpa
 COOLDOWN_SLEEP_SEC = 60     # Thời gian chờ khi toàn bộ tài khoản trong pool đều cạn hạn mức
 
 QUOTA_ERROR_REGEX = re.compile(
-    r"(quota exceeded|rate limit|resource_exhausted|429|too many requests|overloaded|capacity exceeded|credit balance|server error|service unavailable|503|504)",
+    r"(quota exceeded|rate limit|resource_exhausted|429|too many requests|overloaded|capacity exceeded|credit balance|server error|service unavailable|503|504|invalid model selection)",
     re.IGNORECASE
 )
 
@@ -132,8 +133,9 @@ def execute_phase(phase_title: str, prompt: str, role_key: str, is_continue: boo
         print(f"[*] Chế độ: {'Nối tiếp phiên (--continue)' if is_continue else 'Khởi tạo phiên mới'}")
         print("=" * 75 + "\n")
 
-        # Đặt --model và --dangerously-skip-permissions lên trước --print để tránh lỗi cmd.exe nuốt cờ
-        cmd = ["agy", "--model", active_model, "--dangerously-skip-permissions"]
+        # Định vị đường dẫn agy thực tế trên Windows để tránh phụ thuộc PATH môi trường
+        agy_bin = shutil.which("agy") or "agy"
+        cmd = [agy_bin, "--model", active_model, "--dangerously-skip-permissions"]
         if is_continue:
             cmd.append("--continue")
         cmd.extend(["--print", prompt])
@@ -153,10 +155,11 @@ def execute_phase(phase_title: str, prompt: str, role_key: str, is_continue: boo
             quota_hit = False
             for line in process.stdout:
                 sys.stdout.write(line)
+                sys.stdout.flush()
                 if QUOTA_ERROR_REGEX.search(line):
                     quota_hit = True
 
-            process.wait()
+            process.wait(timeout=1800)
 
             # Nếu chạy thành công mỹ mãn
             if not quota_hit and process.returncode == 0:
@@ -180,6 +183,12 @@ def execute_phase(phase_title: str, prompt: str, role_key: str, is_continue: boo
             else:
                 time.sleep(3) # Nghỉ ngắn khi đổi tài khoản mới
 
+        except subprocess.TimeoutExpired:
+            print("\n[Timeout Warning] Lượt chạy vượt quá 30 phút, đang tái khởi động an toàn...")
+            process.kill()
+            switch_quota_account()
+            is_continue = True
+            continue
         except KeyboardInterrupt:
             print("\n[User Cancel] Người dùng chủ động dừng pipeline (Ctrl+C).")
             return False
@@ -204,13 +213,16 @@ def run_pipeline(task: str):
     # NHỊP 1A: THANH TRA PHẢN BIỆN (auditor)
     # =========================================================================
     p1a_prompt = (
-        f"KÍCH HOẠT QUY TRÌNH PSTACK - NHỊP 1A: THANH TRA BÓC TRẦN NỢ KỸ THUẬT.\n"
+        f"KÍCH HOẠT QUY TRÌNH PSTACK - NHỊP 1A: THANH TRA BÓC TRẦN NỢ KỸ THUẬT & ĐIỂM NGHẼN ĐA LƯỢT.\n"
         f"Bạn là Thanh tra phản biện cấp cao.\n"
         f"BẮT BUỘC TRIỆU HỒI SUBAGENT 'codebase-auditor' bằng invoke_subagent:\n"
-        f"- Quét sâu toàn bộ chat_graph.py, telemetry_critic.py và router.py.\n"
-        f"- Bóc trần toàn bộ hardcode regex, magic numbers (như len < 4), bẫy if not is_course_query.\n"
+        f"- Đọc kỹ báo cáo kết quả benchmark tại 'docs/benchmarks/multiturn_benchmark_results.json' và 'multiturn_benchmark_results.md'.\n"
+        f"- Quét sâu 'app/services/chat_graph.py' và 'app/services/retrieval.py'.\n"
+        f"- Bóc tách căn nguyên toán học của 30 ca lỗi ARR (hiện đạt 68.09%) và 38 ca lỗi Retrieval Status (82.88%).\n"
+        f"- Phân tích tại sao Tier 3 Topic Switching chỉ đạt 59.52% độ chính xác trạng thái.\n"
+        f"- BÀI TRỪ 100% REGEX CHỮA CHÁY: Không được đề xuất hardcode từ khóa hay sửa đề thi.\n"
         f"- Xuất bản báo cáo nợ kỹ thuật vào '.agent/technical_debt_audit.md'.\n"
-        f"Đề bài cần audit: {task}"
+        f"Đề bài chi tiết: {task}"
     )
     if not execute_phase("Nhịp 1A: Thanh Tra Bóc Trần Nợ Kỹ Thuật (Subagent: codebase-auditor)", p1a_prompt, role_key="auditor", is_continue=False):
         return
@@ -219,12 +231,14 @@ def run_pipeline(task: str):
     # NHỊP 1B: ĐẦU NÃO KIẾN TRÚC TOÁN HỌC (thinker)
     # =========================================================================
     p1b_prompt = (
-        f"KÍCH HOẠT QUY TRÌNH PSTACK - NHỊP 1B: THIẾT KẾ KIẾN TRÚC TOÁN HỌC & SPEC.\n"
+        f"KÍCH HOẠT QUY TRÌNH PSTACK - NHỊP 1B: THIẾT KẾ KIẾN TRÚC TOÁN HỌC & SPEC ĐỘT PHÁ.\n"
         f"Bạn là Kiến trúc sư trưởng.\n"
         f"BẮT BUỘC TRIỆU HỒI SUBAGENT 'rag-architect' và 'solution-analyst' bằng invoke_subagent:\n"
         f"- Đọc báo cáo '.agent/technical_debt_audit.md' của Thanh tra.\n"
         f"- Áp dụng chuẩn Context-Aware Query Formulation (SIGIR/Google Research) và phân định Pareto (ICLR 2025).\n"
-        f"- BÀI TRỪ 100% QUICK-FIX: Thiết kế cơ chế phân luồng đa lượt sạch sẽ, không hardcode.\n"
+        f"- Thiết kế giải thuật Semantic Context Fusion: Hợp nhất thực thể câu hỏi trước vào dense/sparse vector mà không làm loãng semantic embedding.\n"
+        f"- Thiết kế Topic Shift Gate: Nhận diện ranh giới đổi chủ đề khi học viên nhảy bài học để điều chỉnh target_lesson_seq.\n"
+        f"- BÀI TRỪ 100% QUICK-FIX: Thiết kế cơ chế phân luồng đa lượt tổng quát hóa.\n"
         f"- Xuất bản bản đặc tả '.agent/implementation_spec.md' và checklist '.agent/task_plan.md'."
     )
     if not execute_phase("Nhịp 1B: Thiết Kế Kiến Trúc & Xuất Bản Spec (Subagents: rag-architect, solution-analyst)", p1b_prompt, role_key="thinker", is_continue=True):
@@ -238,7 +252,8 @@ def run_pipeline(task: str):
         f"Bạn là Kỹ sư lập trình lõi.\n"
         f"BẮT BUỘC TRIỆU HỒI SUBAGENT 'core-coder' bằng invoke_subagent:\n"
         f"- Đọc kỹ '.agent/implementation_spec.md' của Hội đồng Đầu não.\n"
-        f"- Tiến hành gõ và sửa mã nguồn trong app/services/chat_graph.py và telemetry_critic.py.\n"
+        f"- Tiến hành gõ và sửa mã nguồn trong 'app/services/chat_graph.py' và 'app/services/retrieval.py'.\n"
+        f"- Triển khai Semantic Context Fusion và Topic Shift Gate.\n"
         f"- Tuân thủ strict typing, Pydantic v2, không làm gãy cú pháp, cập nhật trạng thái trong .agent/task_plan.md."
     )
     if not execute_phase("Nhịp 2: Gõ Code Siêu Tốc (Subagent: core-coder)", p2_prompt, role_key="coder", is_continue=True):
@@ -251,9 +266,9 @@ def run_pipeline(task: str):
         f"KÍCH HOẠT QUY TRÌNH PSTACK - NHỊP 3: CỔNG NGHIỆM THU BẰNG CHỨNG (EVIDENCE GATE).\n"
         f"Bạn là Trưởng ban thẩm định.\n"
         f"BẮT BUỘC TRIỆU HỒI 2 SUBAGENT:\n"
-        f"1. Subagent 'grounding-evaluator': Thẩm tra tính trung thực của bộ chấm điểm, chống 100% fake data và overfitting.\n"
-        f"2. Subagent 'qa-tester': Chạy bộ test 'pytest tests/' và giả lập kịch bản chat 5 lượt trong playground.\n"
-        f"Chỉ tick [x] hoàn tất toàn bộ checklist trong .agent/task_plan.md khi có log test PASS 100%!"
+        f"1. Subagent 'grounding-evaluator': Thẩm tra tính trung thực của toàn bộ git diff, chống 100% fake data và overfitting.\n"
+        f"2. Subagent 'qa-tester': Chạy 'pytest tests/ -v' và chạy lại toàn bộ 'python scripts/run_multiturn_benchmark.py'.\n"
+        f"So sánh số liệu ARR, Status Precision và Latency trước/sau khi tối ưu. Chỉ tick [x] hoàn tất checklist khi các bài test PASS 100%!"
     )
     if not execute_phase("Nhịp 3: Hội Đồng Thẩm Định & Nghiệm Thu Khách Quan (Subagents: grounding-evaluator, qa-tester)", p3_prompt, role_key="verifier", is_continue=True):
         return
