@@ -1,7 +1,7 @@
 ---
 name: core-coder
 description: Kỹ sư Lập trình Lõi Retrieval, Router và Backend FastAPI. Triển khai code chính xác, typing nghiêm ngặt, tuân thủ Pydantic v2 và không sinh bug hồi quy.
-model: inherit
+model: flash
 tools:
   - view_file
   - replace_file_content

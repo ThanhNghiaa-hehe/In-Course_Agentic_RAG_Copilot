@@ -1,7 +1,7 @@
 ---
 name: solution-analyst
 description: Chuyên gia Thẩm định Toán học, Đối chiếu Bài báo Khoa học và Tối ưu Hóa Biên Độ Quyết Định (Mathematical & Decision Boundary Specialist). Phân tích phân phối xác suất, tính toán ngưỡng tối ưu Pareto, triệt tiêu hiện tượng đánh đổi (trade-off) và loại bỏ 100% giải pháp chữa cháy (Zero Quick-Fix).
-model: inherit
+model: pro
 tools:
   - view_file
   - grep_search

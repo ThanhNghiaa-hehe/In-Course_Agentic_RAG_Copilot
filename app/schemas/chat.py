@@ -72,6 +72,8 @@ class TurnCritiqueModel(BaseModel):
     retrieval_status: str
     target_lesson_seq: Optional[int] = None
     used_fast_path: bool = False
+    is_intent_hijacked: bool = False
+    multi_turn_intent_fidelity: float = 1.0
     latency: Dict[str, Any]
     socratic_compliance: bool
     socratic_violations: List[str] = Field(default_factory=list)
@@ -93,6 +95,8 @@ class ChatExportLogResponse(BaseModel):
     overall_health_score: int
     rating_label: str
     socratic_compliance_rate: float
+    intent_fidelity_rate: float = 100.0
+    hijacked_turns: List[int] = Field(default_factory=list)
     avg_ttft_ms: int
     summary: str
     critique_markdown: str

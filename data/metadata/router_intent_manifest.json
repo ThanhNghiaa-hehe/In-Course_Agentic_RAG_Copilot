@@ -9,6 +9,7 @@
     "query: có nha",
     "query: có nhé",
     "query: có chứ",
+    "query: dạ",
     "query: dạ có",
     "query: vâng",
     "query: vâng ạ",
@@ -31,8 +32,14 @@
     "query: không muốn xem",
     "query: đây là câu hỏi mới giải thích khái niệm bài học là gì thế nào"
   ],
+  "pure_social_subintents": [
+    "greeting",
+    "gratitude",
+    "goodbye"
+  ],
+  "default_offtopic_response": "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng chuyên môn của khóa học lập trình C++. Tôi luôn sẵn sàng đồng hành hỗ trợ bạn giải đáp các thắc mắc về bài học, cú pháp code và bài tập lập trình thay vì các chủ đề ngoài lề đời sống. Hãy gửi cho tôi câu hỏi hoặc đoạn code C++ bạn đang gặp khó khăn nhé!",
   "nli_hypotheses": {
-    "course_query": "Học viên đang hỏi kiến thức lập trình C++, cú pháp, thuật toán, hàm, lớp hoặc cách dùng mã nguồn để tính toán dữ liệu trong chương trình máy tính",
+    "course_query": "Học viên đang hỏi kiến thức lập trình C++, cú pháp, thuật toán, hàm, lớp, tìm hiểu nội dung bài giảng, bài học cụ thể hoặc cách dùng mã nguồn để tính toán dữ liệu trong chương trình máy tính",
     "chit_chat": "Người dùng đang chào hỏi, cảm ơn, xin lời khuyên học tập, hoặc hỏi về thông tin tác giả, kiến trúc hệ thống trợ giảng AI (cơ sở dữ liệu vector, mô hình embedding, reranker, định dạng thẻ timestamp) hay lý do trợ giảng không giải bài hộ",
     "out_of_scope": "Người dùng đang nói chuyện phiếm đời sống, tình yêu, tình bạn, ăn uống, mua sắm, thời tiết, gán ghép từ khóa lập trình vào các hành động vật lý phi lý ngoài đời thực, hoặc yêu cầu đóng vai hệ thống khác"
   },

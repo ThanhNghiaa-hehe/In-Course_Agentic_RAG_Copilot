@@ -22,6 +22,9 @@ from markdown_it import MarkdownIt
 from tree_sitter import Parser, Language
 import tree_sitter_cpp as tscpp
 
+from app.config import settings
+from app.agent.router import get_intent_router
+
 CPP_LANGUAGE = Language(tscpp.language())
 _CPP_PARSER = Parser(CPP_LANGUAGE)
 _MD_PARSER = MarkdownIt()
@@ -100,8 +103,13 @@ class TelemetryCriticService:
     Dịch vụ kiểm toán tự động & Phê bình chất lượng phiên đối thoại Socratic AI.
     """
 
-    def analyze_turn(self, entry: Dict[str, Any]) -> Dict[str, Any]:
-        """Kiểm toán chi tiết 1 turn đối thoại."""
+    def analyze_turn(
+        self,
+        entry: Dict[str, Any],
+        prev_entry: Optional[Dict[str, Any]] = None,
+        had_prior_course_query: bool = False
+    ) -> Dict[str, Any]:
+        """Kiểm toán chi tiết 1 turn đối thoại (Zero Self-Flattery, Multi-Turn Intent Fidelity & Zero Magic Numbers)."""
         turn_num = entry.get("turn", 1)
         prompt = entry.get("prompt", "")
         response_text = entry.get("response_text", "")
@@ -109,15 +117,15 @@ class TelemetryCriticService:
         ttft_ms = latency.get("ttft_ms", 0)
         total_ms = latency.get("total_ms", 0)
         tokens_per_sec = latency.get("tokens_per_sec", 0.0)
-        
+
         router = entry.get("router", {})
         intent = router.get("intent", "unknown")
         used_fast_path = router.get("used_fast_path", False)
-        
+
         crag = entry.get("crag", {})
         retrieval_status = crag.get("retrieval_status", "unknown")
         target_lesson_seq = crag.get("target_lesson_seq")
-        
+
         suggested_ts = entry.get("timestamps", [])
         sources = entry.get("sources", [])
 
@@ -125,43 +133,53 @@ class TelemetryCriticService:
         warnings = []
         merits = []
 
-        # 1. Kiểm tra ranh giới mã nguồn Socratic qua Markdown AST & Tree-sitter C++ AST
-        # Chỉ phạt vi phạm khi #include hoặc int main() nằm trong một khối mã nguồn Markdown có độ dài > 10 dòng.
-        # Miễn trừ hoàn toàn khi xuất hiện trong câu văn giải thích lý thuyết.
+        score = 100
+
+        # 1. Kiểm tra ranh giới mã nguồn Socratic qua Markdown AST & Tree-sitter C++ AST (Zero Magic Numbers)
         md_tokens = _MD_PARSER.parse(response_text)
         code_blocks = [t.content for t in md_tokens if t.type in ("fence", "code_block")]
         total_code_lines = 0
-        has_include_in_long_code = False
-        has_main_in_long_code = False
+        has_include_in_code = False
+        has_main_in_code = False
 
         for block in code_blocks:
             lines = [l for l in block.strip().split("\n") if l.strip()]
             num_lines = len(lines)
             total_code_lines += num_lines
 
-            if num_lines > 10:
-                inc, main_fn = _inspect_cpp_code_ast(block)
-                if inc:
-                    has_include_in_long_code = True
-                if main_fn:
-                    has_main_in_long_code = True
+            inc, main_fn = _inspect_cpp_code_ast(block)
+            if inc and num_lines > 5:
+                has_include_in_code = True
+            if main_fn:
+                has_main_in_code = True
 
-        if has_include_in_long_code:
-            violations.append("Vi phạm ranh giới mã nguồn: Xuất hiện chỉ thị khai báo thư viện `#include` trong khối mã nguồn dài (> 10 dòng).")
-        if has_main_in_long_code:
-            violations.append("Vi phạm nghiêm trọng ranh giới Socratic: Sinh toàn bộ hàm `main()` trong khối mã nguồn dài (> 10 dòng), giải bài tập thay vì định hướng tư duy.")
+        if has_include_in_code:
+            violations.append("Vi phạm ranh giới mã nguồn: Xuất hiện chỉ thị khai báo thư viện `#include` trong khối mã nguồn hoàn chỉnh.")
+            score -= settings.CRITIC_INCLUDE_VIOLATION_PENALTY
+        if has_main_in_code:
+            violations.append("Vi phạm nghiêm trọng ranh giới Socratic: Khối mã nguồn chứa hàm `main()` thực thi, giải bài tập thay vì định hướng tư duy.")
+            score -= settings.CRITIC_MAIN_VIOLATION_PENALTY
 
-        if total_code_lines > 25:
-            warnings.append(f"Khối mã nguồn minh họa khá dài ({total_code_lines} dòng). Nên ưu tiên dùng Mã giả (Pseudocode) hoặc đoạn code khuyết.")
-        elif total_code_lines > 0 and not has_main_in_long_code and not has_include_in_long_code:
+        if total_code_lines > settings.MAX_CODE_ILLUSTRATION_LINES:
+            warnings.append(
+                f"Khối mã nguồn minh họa khá dài ({total_code_lines} dòng > {settings.MAX_CODE_ILLUSTRATION_LINES} dòng). "
+                f"Nên ưu tiên dùng Mã giả (Pseudocode) hoặc đoạn code khuyết."
+            )
+        elif total_code_lines > 0 and not has_main_in_code and not has_include_in_code:
             merits.append("Minh họa cú pháp ngắn gọn, tuân thủ nguyên tắc không giải bài hộ.")
 
-        # Kiểm tra câu hỏi gợi mở Socratic
-        has_question = "?" in response_text
+        # Kiểm tra câu hỏi gợi mở Socratic trên phần văn bản ngoài code blocks
+        text_outside_code = response_text
+        for block in code_blocks:
+            text_outside_code = text_outside_code.replace(block, "")
+        text_outside_code = text_outside_code.replace("```cpp", "").replace("```", "").strip()
+
+        has_question = "?" in text_outside_code
         if has_question:
             merits.append("Có đặt câu hỏi gợi mở định hướng tư duy (Socratic Questioning).")
-        else:
+        elif intent == "course_query":
             warnings.append("Thiếu câu hỏi gợi mở ở cuối câu trả lời để kích thích học viên tự suy luận.")
+            score -= settings.CRITIC_MISSING_QUESTION_PENALTY
 
         # 2. Kiểm toán thẻ Timestamp Video qua HTMLParser AST (Zero Regex)
         ts_parser = TimestampTagExtractor()
@@ -180,26 +198,46 @@ class TelemetryCriticService:
 
         if unverified_ts:
             warnings.append(f"Mốc thời gian không nằm trong Whitelist nguồn xác thực: {', '.join(unverified_ts)}.")
+            score -= settings.CRITIC_UNVERIFIED_TS_PENALTY
         elif ts_tags:
             merits.append(f"Trích xuất thành công {len(ts_tags)} mốc video chuẩn xác từ nguồn bài giảng.")
 
-        # 3. Đánh giá Router & CRAG
-        if used_fast_path:
-            merits.append(f"Kích hoạt Fast-Path thành công (< {total_ms}ms), tối ưu tài nguyên và độ trễ phản hồi.")
+        # Kiểm tra độ trễ phản hồi
+        if ttft_ms > settings.CRITIC_LATENCY_THRESHOLD_MS and not used_fast_path:
+            warnings.append(f"Độ trễ TTFT cao ({ttft_ms}ms > {settings.CRITIC_LATENCY_THRESHOLD_MS}ms).")
+            score -= settings.CRITIC_HIGH_LATENCY_PENALTY
 
-        # Tính điểm lượt này (0 - 100)
-        score = 100
-        if has_main_in_long_code:
-            score -= 40
-        if has_include_in_long_code:
-            score -= 20
-        if unverified_ts:
-            score -= 15
-        if not has_question and intent == "course_query":
-            score -= 10
-        if ttft_ms > 4000 and not used_fast_path:
-            score -= 10
-        score = max(0, min(100, score))
+        # 3. Đánh giá Router & Multi-Turn Intent Fidelity (Zero Self-Flattery)
+        router_svc = get_intent_router()
+        is_pure_soc, soc_sim = router_svc.is_pure_social(prompt)
+
+        is_intent_hijacked = False
+        multi_turn_intent_fidelity = 1.0
+
+        if intent == "chit_chat":
+            prev_intent = prev_entry.get("router", {}).get("intent") if prev_entry else None
+            is_continuing_course = (had_prior_course_query or prev_intent == "course_query")
+
+            # Trường hợp 1: Chuyển trạng thái Markov bất hợp lệ (đang học tập bị ép về chit_chat nhưng không phải pure social)
+            if is_continuing_course and not is_pure_soc:
+                is_intent_hijacked = True
+
+            # Trường hợp 2: Trả về văn mẫu chào hỏi mở đầu cho một câu hỏi không phải lời chào thuần túy
+            if ("Chào bạn! Tôi là" in response_text or "In-Course AI Copilot" in response_text) and not is_pure_soc:
+                is_intent_hijacked = True
+
+        if is_intent_hijacked:
+            multi_turn_intent_fidelity = 0.0
+            violations.append(
+                "Vi phạm Multi-Turn Intent Fidelity (Conversational Hijacking): "
+                "Câu hỏi học tập/nối tiếp bị phân loại nhầm thành chit_chat, cuốn học viên vào vòng lặp chào hỏi."
+            )
+            score -= settings.CRITIC_HIJACKING_PENALTY
+            score = max(0, min(20, score))  # Ràng buộc bắt buộc: Lượt bị cướp luồng không vượt quá 20/100
+        else:
+            if used_fast_path:
+                merits.append(f"Kích hoạt Fast-Path thành công (< {total_ms}ms), tối ưu tài nguyên và độ trễ phản hồi.")
+            score = max(0, min(100, score))
 
         # Tóm tắt nhận xét
         critique_parts = []
@@ -219,6 +257,8 @@ class TelemetryCriticService:
             "retrieval_status": retrieval_status,
             "target_lesson_seq": target_lesson_seq,
             "used_fast_path": used_fast_path,
+            "is_intent_hijacked": is_intent_hijacked,
+            "multi_turn_intent_fidelity": multi_turn_intent_fidelity,
             "latency": {
                 "ttft_ms": ttft_ms,
                 "total_ms": total_ms,
@@ -242,10 +282,24 @@ class TelemetryCriticService:
     ) -> Dict[str, Any]:
         """
         Kiểm toán toàn diện toàn bộ phiên đối thoại (Session Holistic Critique).
+        Phát hiện Greeting Loop Incident và ép điểm phiên <= 35 khi đứt gãy luồng học tập liên tiếp.
         """
-        turn_critiques = [self.analyze_turn(turn) for turn in turns]
+        turn_critiques = []
+        hijacked_turns = []
+        had_prior_course_query = False
+        prev_entry = None
+
+        for turn in turns:
+            tc = self.analyze_turn(turn, prev_entry=prev_entry, had_prior_course_query=had_prior_course_query)
+            turn_critiques.append(tc)
+            if tc.get("is_intent_hijacked"):
+                hijacked_turns.append(tc["turn"])
+            if turn.get("router", {}).get("intent") == "course_query" or tc.get("intent") == "course_query":
+                had_prior_course_query = True
+            prev_entry = turn
+
         total_turns = len(turn_critiques)
-        
+
         if total_turns == 0:
             return {
                 "session_id": session_id,
@@ -255,6 +309,8 @@ class TelemetryCriticService:
                 "overall_health_score": 100,
                 "rating_label": "CHƯA CÓ DỮ LIỆU (EMPTY SESSION)",
                 "socratic_compliance_rate": 100.0,
+                "intent_fidelity_rate": 100.0,
+                "hijacked_turns": [],
                 "avg_ttft_ms": 0,
                 "fast_path_count": 0,
                 "grounded_count": 0,
@@ -266,16 +322,29 @@ class TelemetryCriticService:
 
         compliant_turns = sum(1 for tc in turn_critiques if tc["socratic_compliance"])
         compliance_rate = round((compliant_turns / total_turns) * 100, 1)
-        
+
+        fidelity_turns = sum(1 for tc in turn_critiques if tc.get("multi_turn_intent_fidelity", 1.0) == 1.0)
+        intent_fidelity_rate = round((fidelity_turns / total_turns) * 100, 1)
+
         avg_score = round(sum(tc["turn_score"] for tc in turn_critiques) / total_turns)
         avg_ttft = round(sum(tc["latency"]["ttft_ms"] for tc in turn_critiques) / total_turns)
-        
+
         fast_path_count = sum(1 for tc in turn_critiques if tc["used_fast_path"])
         grounded_count = sum(1 for tc in turn_critiques if tc["retrieval_status"] == "grounded")
         coverage_gap_count = sum(1 for tc in turn_critiques if tc["retrieval_status"] == "coverage_gap")
-        
-        # Đánh giá tổng quát
-        if avg_score >= 90:
+
+        # Đánh giá tổng quát & Greeting Loop Incident Detector
+        num_hijacks = len(hijacked_turns)
+        if num_hijacks >= 2:
+            # Biến cố Greeting Loop: Học viên bị kẹt vào vòng lặp chào hỏi liên tiếp
+            avg_score = min(avg_score, settings.CRITIC_MAX_SESSION_SCORE_ON_GREETING_LOOP)  # <= 35
+            rating_label = "CẦN TINH CHỈNH KHẨN CẤP (GREETING LOOP / INTENT DRIFT)"
+            rating_badge = "🔴"
+        elif num_hijacks == 1:
+            avg_score = min(avg_score, 65)
+            rating_label = "CẦN TINH CHỈNH (CONVERSATIONAL HIJACKING DETECTED)"
+            rating_badge = "🔴"
+        elif avg_score >= 90:
             rating_label = "XUẤT SẮC (SOTA PRODUCTION QUALITY)"
             rating_badge = "🟢"
         elif avg_score >= 75:
@@ -301,6 +370,7 @@ class TelemetryCriticService:
             f"| Chỉ số kiểm chuẩn | Kết quả thực nghiệm | Đánh giá kỹ thuật |",
             f"| :--- | :---: | :--- |",
             f"| **Điểm chất lượng phiên (Health Score)** | **{avg_score} / 100** | {'Tối ưu' if avg_score >= 85 else 'Có điểm cần cải thiện'} |",
+            f"| **Chỉ số Multi-Turn Intent Fidelity** | **{intent_fidelity_rate}%** ({total_turns - num_hijacks}/{total_turns} lượt) | {'Không đứt gãy luồng học tập' if num_hijacks == 0 else f'Phát hiện {num_hijacks} lượt bị cướp luồng (Greeting Loop / Hijacking)'} |",
             f"| **Tỷ lệ tuân thủ Socratic** | **{compliance_rate}%** | {f'{compliant_turns}/{total_turns} lượt đạt chuẩn không giải hộ' if compliance_rate >= 80 else 'Có lượt vi phạm sinh code hoàn chỉnh'} |",
             f"| **Độ trễ TTFT trung bình** | **{avg_ttft} ms** | {'Rất nhanh (Fast-path / Stream)' if avg_ttft < 1500 else 'Bình thường (LLM Inference)'} |",
             f"| **Tỷ lệ kích hoạt Fast-Path** | **{fast_path_count}/{total_turns}** | Giảm tải gọi GPU/LLM không cần thiết |",
@@ -318,15 +388,16 @@ class TelemetryCriticService:
             t_score = tc["turn_score"]
             lat = tc["latency"]
             s_check = "✅ Đạt chuẩn" if tc["socratic_compliance"] else "❌ Vi phạm"
-            
+            h_flag = " | 🚨 **Đứt gãy ý định (Hijacked)**" if tc.get("is_intent_hijacked") else ""
+
             md_lines.append(f"### Lượt #{t_num}: \"{p}\"")
-            md_lines.append(f"- **Điểm lượt:** `{t_score}/100` | **Tuân thủ Socratic:** {s_check}")
+            md_lines.append(f"- **Điểm lượt:** `{t_score}/100` | **Tuân thủ Socratic:** {s_check}{h_flag}")
             md_lines.append(f"- **Ý định:** `{intent}` (Fast-Path: `{tc['used_fast_path']}`) | **CRAG:** `{r_status}`")
             md_lines.append(f"- **Độ trễ:** TTFT `{lat['ttft_ms']}ms` | Tổng `{lat['total_ms']}ms` ({lat['tokens_per_sec']} tok/s)")
-            
+
             if tc["socratic_violations"]:
                 for v in tc["socratic_violations"]:
-                    md_lines.append(f"  - ❌ **Vi phạm ranh giới:** {v}")
+                    md_lines.append(f"  - ❌ **Vi phạm:** {v}")
             if tc["warnings"]:
                 for w in tc["warnings"]:
                     md_lines.append(f"  - ⚠️ **Cảnh báo:** {w}")
@@ -337,6 +408,8 @@ class TelemetryCriticService:
 
         md_lines.append("---")
         md_lines.append("## Khuyến Nghị Kỹ Thuật & Tối Ưu Hóa Tiếp Theo")
+        if num_hijacks > 0:
+            md_lines.append(f"- **Multi-Turn Intent Router:** Khắc phục triệt để {num_hijacks} lượt đứt gãy luồng học tập, đảm bảo câu hỏi tiếp nối mang ngữ cảnh học thuật không bị chuyển thành chit_chat.")
         if compliance_rate < 100:
             md_lines.append("- **Socratic Guardrail:** Siết chặt hơn nữa quy tắc cấm hàm `main()` và `#include` trong System Prompt.")
         if avg_ttft > 3000:
@@ -355,13 +428,15 @@ class TelemetryCriticService:
             "overall_health_score": avg_score,
             "rating_label": rating_label,
             "socratic_compliance_rate": compliance_rate,
+            "intent_fidelity_rate": intent_fidelity_rate,
+            "hijacked_turns": hijacked_turns,
             "avg_ttft_ms": avg_ttft,
             "fast_path_count": fast_path_count,
             "grounded_count": grounded_count,
             "coverage_gap_count": coverage_gap_count,
             "turn_critiques": turn_critiques,
             "critique_markdown": critique_markdown,
-            "summary": f"Phiên {total_turns} lượt đạt {avg_score}/100 điểm ({rating_label}). Tuân thủ Socratic: {compliance_rate}%. TTFT trung bình: {avg_ttft}ms."
+            "summary": f"Phiên {total_turns} lượt đạt {avg_score}/100 điểm ({rating_label}). Tuân thủ Socratic: {compliance_rate}%. Multi-Turn Intent Fidelity: {intent_fidelity_rate}%. TTFT trung bình: {avg_ttft}ms."
         }
 
     def export_and_critique_session(

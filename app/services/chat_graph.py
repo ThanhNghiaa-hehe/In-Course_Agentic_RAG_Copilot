@@ -61,6 +61,8 @@ class AgentState(TypedDict):
     intent: str
     direct_response: Optional[str]
     is_course_query: bool
+    search_query: Optional[str]
+    last_course_query: Optional[str]
 
     # 4. Kết quả truy xuất & Thẩm định CRAG
     retrieval_status: str
@@ -129,7 +131,7 @@ def _sanitize_context_code_ast(code: str) -> str:
         return code.strip()
 
 
-def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = 2400) -> str:
+def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = settings.MAX_CONTEXT_CHARS) -> str:
     """
     Định dạng các chunks ngữ cảnh thành khối văn bản có cấu trúc súc tích (Context Distillation).
     Áp trần tối đa ~800 tokens (~2400 ký tự) để tối ưu thời gian Prefill Attention trên GPU.
@@ -217,30 +219,53 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         else:
             logger.info("[LangGraph:router_node] Học viên đặt câu hỏi khác, tự động xóa pending_navigation.")
 
-    # 1. Phân loại ý định trên câu hỏi độc lập (raw_prompt) trước
+    # 1. Phân loại ý định qua Dual-Track Contextual Formulation (SIGIR/ICLR 2025)
     raw_clf = router.classify(raw_prompt)
+    anchor_query = state.get("last_course_query")
+    if not anchor_query and history:
+        # Tìm câu hỏi user gần nhất trong history mà không phải là pure social greeting
+        for m in reversed(history):
+            if m.get("role") == "user":
+                cand = m.get("content", "")
+                is_soc, _ = router.is_pure_social(cand)
+                if not is_soc and router.classify(cand).is_course_query:
+                    anchor_query = cand
+                    break
 
-    last_user_query = ""
-    if history:
-        last_user_query = next((m["content"] for m in reversed(history) if m.get("role") == "user"), "")
+    search_query: Optional[str] = raw_prompt if raw_clf.is_course_query else None
+    new_last_course_query: Optional[str] = anchor_query
 
-    # Invariant 1: Nếu câu hỏi mới rõ ràng là chào hỏi, cảm ơn, hoặc ngoài lề, TUYỆT ĐỐI KHÔNG ghép ngữ cảnh cũ
-    if not raw_clf.is_course_query:
+    if raw_clf.is_course_query:
         classification = raw_clf
-        logger.info(f"[LangGraph:router_node] Query độc lập xác định ({raw_clf.intent}): '{raw_prompt[:35]}...'")
-    elif last_user_query and len(raw_prompt.split()) < 4:
-        # Chỉ khi câu hỏi kỹ thuật quá ngắn (câu cụt ellipsis, ví dụ 'tại sao?', 'nó dùng làm gì?') mới bổ sung ngữ cảnh
-        contextual_prompt = f"{last_user_query} -> {raw_prompt}"
-        classification = router.classify(contextual_prompt)
-        logger.info(f"[LangGraph:router_node] Query cụt nối tiếp: '{raw_prompt}' -> Contextual: '{contextual_prompt[:45]}...'")
+        search_query = raw_prompt
+        new_last_course_query = raw_prompt
+        logger.info(f"[LangGraph:router_node] Query học thuật tự lập: '{raw_prompt[:40]}...' -> course_query")
+    elif anchor_query:
+        is_soc, soc_sim = router.is_pure_social(raw_prompt)
+        if is_soc:
+            classification = raw_clf
+            search_query = None
+            logger.info(f"[LangGraph:router_node] Phát ngôn xã giao thuần khiết (Sim={soc_sim:.3f}): '{raw_prompt[:35]}...' -> chit_chat")
+        else:
+            classification, formulated_q = router.classify_contextual(raw_prompt, anchor_query)
+            if classification.is_course_query:
+                search_query = formulated_q
+                # Giữ nguyên anchor_query gốc để các lượt tỉnh lược kế tiếp (Turn 3 -> Turn 4) không bị mất thực thể gốc
+                new_last_course_query = anchor_query
+                logger.info(f"[LangGraph:router_node] Cứu xét đa lượt thành công: '{raw_prompt}' -> SearchQuery: '{search_query[:55]}...'")
+            else:
+                search_query = None
     else:
         classification = raw_clf
-        logger.info(f"[LangGraph:router_node] Query kỹ thuật tự lập (Self-Contained): '{raw_prompt[:35]}...' -> course_query")
+        search_query = None
+        logger.info(f"[LangGraph:router_node] Query đơn lượt ({raw_clf.intent}): '{raw_prompt[:35]}...'")
 
     return {
         "intent": classification.intent,
         "direct_response": classification.direct_response,
         "is_course_query": classification.is_course_query,
+        "search_query": search_query,
+        "last_course_query": new_last_course_query,
         "pending_navigation": None,
         "action": None
     }
@@ -253,50 +278,48 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
     """
     Node 2: Thực hiện True Hybrid Retrieval (Dense E5 + Sparse BM25) có In-HNSW Pre-filter.
     Áp dụng Dual Retrieval with Confidence-Gated Selection (Invariant 1 - Zero Context Pollution):
-    - Bước 1: Luôn ưu tiên truy xuất với câu hỏi gốc tự lập (raw_prompt) để bảo đảm cách ly 100% ngữ cảnh cũ.
-    - Bước 2: Chỉ khi raw_prompt rơi vào coverage_gap hoặc is_low_confidence (dấu hiệu câu cụt thiếu thực thể),
-      hệ thống mới kích hoạt truy xuất cứu xét bằng query bổ sung ngữ cảnh (last_user_query + raw_prompt).
+    - Bước 1: Luôn ưu tiên truy xuất với search_query (đã được router_node chuẩn hóa ngữ cảnh).
+    - Bước 2: Chỉ khi retrieval_res rơi vào coverage_gap hoặc is_low_confidence (dấu hiệu thiếu thực thể),
+      hệ thống mới kích hoạt truy xuất dự phòng bằng query bổ sung mỏ neo (last_course_query + raw_prompt).
     """
     retrieval_service = get_retrieval_service()
-    history = state.get("messages", [])
     raw_prompt = state["prompt"]
-    last_user_query = ""
-    if history:
-        last_user_query = next((m["content"] for m in reversed(history) if m.get("role") == "user"), "")
+    search_query = state.get("search_query") or raw_prompt
+    anchor_query = state.get("last_course_query")
 
-    # Bước 1: Truy xuất độc lập với raw_prompt
+    # Bước 1: Truy xuất với search_query
     try:
         retrieval_res: RetrievalResult = await retrieval_service.search(
-            query_text=raw_prompt,
+            query_text=search_query,
             course_id=state["course_id"],
             current_lesson_seq=state["lesson_seq"],
             top_candidates=settings.DEFAULT_TOP_CANDIDATES,
             final_top_k=settings.DEFAULT_FINAL_TOP_K
         )
     except Exception as e:
-        logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với raw_prompt: {e}")
+        logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với search_query: {e}")
         retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
 
-    # Bước 2: Confidence-Gated Selection - Chỉ kích hoạt Fallback khi raw_prompt không đủ thực thể
-    if last_user_query and (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence):
-        contextual_query = f"{last_user_query} {raw_prompt}"
-        logger.info(
-            f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}), "
-            f"kích hoạt Fallback Contextual Query: '{contextual_query[:45]}...'"
-        )
-        try:
-            fallback_res: RetrievalResult = await retrieval_service.search(
-                query_text=contextual_query,
-                course_id=state["course_id"],
-                current_lesson_seq=state["lesson_seq"],
-                top_candidates=settings.DEFAULT_TOP_CANDIDATES,
-                final_top_k=settings.DEFAULT_FINAL_TOP_K
+    # Bước 2: Contextual Fallback nếu search_query bị coverage_gap hoặc is_low_confidence
+    if anchor_query and (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence):
+        fallback_query = f"{anchor_query} {raw_prompt}"
+        if fallback_query != search_query:
+            logger.info(
+                f"[LangGraph:retrieval_node] search_query thiếu thực thể ({retrieval_res.status}), "
+                f"kích hoạt Fallback Contextual Query: '{fallback_query[:45]}...'"
             )
-            # Chỉ nhận fallback nếu tìm được kết quả tốt hơn
-            if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
-                retrieval_res = fallback_res
-        except Exception as fb_err:
-            logger.warning(f"[LangGraph:retrieval_node] Lỗi truy xuất Fallback Contextual: {fb_err}")
+            try:
+                fallback_res: RetrievalResult = await retrieval_service.search(
+                    query_text=fallback_query,
+                    course_id=state["course_id"],
+                    current_lesson_seq=state["lesson_seq"],
+                    top_candidates=settings.DEFAULT_TOP_CANDIDATES,
+                    final_top_k=settings.DEFAULT_FINAL_TOP_K
+                )
+                if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
+                    retrieval_res = fallback_res
+            except Exception as fb_err:
+                logger.warning(f"[LangGraph:retrieval_node] Lỗi truy xuất Fallback Contextual: {fb_err}")
 
     return {
         "retrieved_chunks": retrieval_res.chunks,
@@ -451,8 +474,8 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     user_message_content = state.get("user_message_content", state["prompt"])
     turn_count = (len(history_messages) // 2) + 1
 
-    # 1. Thuật toán Sliding Window: Giữ lại tối đa 5 turns gần nhất (10 tin nhắn)
-    SLIDING_WINDOW_TURNS = 5
+    # 1. Thuật toán Sliding Window: Giữ lại tối đa settings.SLIDING_WINDOW_TURNS turns gần nhất
+    SLIDING_WINDOW_TURNS = settings.SLIDING_WINDOW_TURNS
     max_history_count = SLIDING_WINDOW_TURNS * 2
     raw_sliding_history = (
         history_messages[-max_history_count:]
@@ -460,9 +483,9 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
         else list(history_messages)
     )
 
-    # 2. Token Budget Pruning: Khống chế độ dài lịch sử <= 2,400 ký tự (~800 tokens)
+    # 2. Token Budget Pruning: Khống chế độ dài lịch sử <= settings.MAX_HISTORY_CHARS ký tự
     # Cắt tỉa các khối code dài ở các lượt cũ để bảo vệ KV Cache Prefill
-    MAX_HISTORY_CHARS = 2400
+    MAX_HISTORY_CHARS = settings.MAX_HISTORY_CHARS
     sliding_history: List[Dict[str, str]] = []
     accumulated_chars = 0
 
@@ -511,7 +534,7 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
         full_system_prompt += f"\n\n[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]:\n{conv_summary}"
 
     # Pedagogical Soft Nudge: Khích lệ tự thực hành khi phiên kéo dài liên tục
-    if turn_count > 6:
+    if turn_count > settings.SOFT_NUDGE_TURN_TRIGGER:
         full_system_prompt += (
             "\n\n[HƯỚNG DẪN SƯ PHẠM ĐA LƯỢT]: Phiên học đã qua nhiều lượt trao đổi chi tiết. "
             "Ở cuối câu trả lời, hãy đính kèm một câu động viên ngắn gọn khuyến khích học viên "
@@ -605,12 +628,13 @@ def commit_assistant_turn(
     session_id: str,
     user_prompt: str,
     assistant_response: str,
-    current_lesson_seq: Optional[int] = None
+    current_lesson_seq: Optional[int] = None,
+    last_course_query: Optional[str] = None
 ) -> None:
     """
     Lưu vết cặp tin nhắn (User + Assistant) vào StateGraph Checkpointer theo thread_id.
-    Tự động kích hoạt thuật toán nén Conversation Summarizer khi số lượt > 6,
-    bảo toàn tuyệt đối thông tin bài học hiện tại (current_lesson_seq).
+    Tự động kích hoạt thuật toán nén Conversation Summarizer khi số lượt > SUMMARIZER_TURN_TRIGGER,
+    bảo toàn tuyệt đối thông tin bài học hiện tại (current_lesson_seq) và mỏ neo (last_course_query).
     """
     graph = get_chat_graph()
     config = {"configurable": {"thread_id": session_id}}
@@ -627,22 +651,29 @@ def commit_assistant_turn(
 
     lesson_seq_ref = current_lesson_seq or current_values.get("current_lesson_seq", "hiện tại")
 
-    # Nén tóm tắt nếu vượt quá 6 lượt đối thoại (> 10 tin nhắn lịch sử)
+    # Nén tóm tắt nếu vượt quá SUMMARIZER_TURN_TRIGGER lượt đối thoại
     summary = current_values.get("conversation_summary")
-    if current_turn > 6 and len(history) > 10:
-        overflow_msgs = history[:-10]
+    max_history_before_summary = settings.SLIDING_WINDOW_TURNS * 2
+    if current_turn > settings.SUMMARIZER_TURN_TRIGGER and len(history) > max_history_before_summary:
+        overflow_msgs = history[:-max_history_before_summary]
         topics = [
             f"Lượt {idx//2 + 1}: {m['content'][:60]}"
             for idx, m in enumerate(overflow_msgs) if m["role"] == "user"
         ]
         summary = f"Học viên đang theo học Bài {lesson_seq_ref}. Tiến trình thảo luận trước đó: {'; '.join(topics)}."
 
-    graph.update_state(config, {
+    update_payload: Dict[str, Any] = {
         "messages": history,
         "turn_count": current_turn,
         "conversation_summary": summary,
         "current_lesson_seq": lesson_seq_ref
-    })
+    }
+    if last_course_query is not None:
+        update_payload["last_course_query"] = last_course_query
+    elif "last_course_query" in current_values and current_values["last_course_query"] is not None:
+        update_payload["last_course_query"] = current_values["last_course_query"]
+
+    graph.update_state(config, update_payload)
     logger.info(f"[LangGraph:Checkpointer] Đã lưu snapshot Turn {current_turn} cho Session '{session_id}' ({len(history)} messages).")
 
 
@@ -656,6 +687,8 @@ def reset_session_state(session_id: str) -> None:
         "messages": [],
         "turn_count": 0,
         "conversation_summary": None,
+        "search_query": None,
+        "last_course_query": None,
         "assembled_messages": [],
         "pending_navigation": None,
         "action": None

@@ -497,7 +497,13 @@ class ChatService:
                 await asyncio.sleep(0.015)
 
             # Lưu vết lượt Fast-Path vào Checkpointer
-            commit_assistant_turn(session_id, request.prompt, direct_text, current_lesson_seq=request.lesson_seq)
+            commit_assistant_turn(
+                session_id,
+                request.prompt,
+                direct_text,
+                current_lesson_seq=request.lesson_seq,
+                last_course_query=final_state.get("last_course_query")
+            )
 
             yield {
                 "event": "done",
@@ -608,12 +614,24 @@ class ChatService:
             if full_assistant_response.strip():
                 # Hàng rào bảo vệ lần 2: Đảm bảo 100% không lọt bất kỳ thẻ timestamp ảo giác nào vào DB
                 full_assistant_response = sanitize_timestamp_tags(full_assistant_response, valid_secs)
-                commit_assistant_turn(session_id, request.prompt, full_assistant_response, current_lesson_seq=request.lesson_seq)
+                commit_assistant_turn(
+                    session_id,
+                    request.prompt,
+                    full_assistant_response,
+                    current_lesson_seq=request.lesson_seq,
+                    last_course_query=final_state.get("last_course_query")
+                )
 
         except Exception as e:
             logger.error(f"[ChatService] Lỗi kết nối LLM Server ({settings.LLM_BASE_URL}): {str(e)}")
             fallback_msg = f"\n\n*(Hệ thống đang gặp sự cố kết nối tới LLM Local ({settings.LLM_MODEL_NAME}). Bạn vui lòng kiểm tra xem Ollama đã chạy chưa: `ollama run {settings.LLM_MODEL_NAME}`)*"
-            commit_assistant_turn(session_id, request.prompt, fallback_msg, current_lesson_seq=request.lesson_seq)
+            commit_assistant_turn(
+                session_id,
+                request.prompt,
+                fallback_msg,
+                current_lesson_seq=request.lesson_seq,
+                last_course_query=final_state.get("last_course_query")
+            )
             yield {
                 "event": "delta",
                 "data": json.dumps({

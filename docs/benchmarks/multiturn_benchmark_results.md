@@ -2,8 +2,8 @@
 ## In-Course Agentic RAG Copilot — LangGraph Stateful Orchestration
 
 **Tác giả:** Sinh viên Trần Thành Nghĩa (MSSV: `23DH112252`) — Khoa CNTT, HUFLIT  
-**Tập dữ liệu:** `multiturn_benchmark_dataset.json` (3 sessions, 18 turns)  
-**Thời gian thực thi:** 2026-11-06T19:37:43 ➔ 2026-11-06T19:39:47 (124.3s)  
+**Tập dữ liệu:** `multiturn_benchmark_dataset.json` (50 sessions, 222 turns)  
+**Thời gian thực thi:** 2026-11-09T22:31:56 ➔ 2026-11-09T23:10:34 (2317.83s)  
 **Mã tài liệu:** `HUFLIT-RAG-MULTITURN-RESULTS-2026-V1`  
 
 ---
@@ -12,14 +12,14 @@
 
 | Chỉ Số Đo Lường Khoa Học | Kết Quả Thực Đo | Tiêu Chuẩn Mục Tiêu (Target) | Trạng Thái Thẩm Định |
 | :--- | :---: | :---: | :---: |
-| **1. Intent Classification Accuracy** | **94.44%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
-| **2. Retrieval Status Precision** | **94.44%** | $\ge 85.0\%$ | **ĐẠT (PASSED)** |
-| **3. Anaphora Resolution Rate (ARR)** | **50.0%** | $\ge 90.0\%$ | **CHƯA ĐẠT (FAILED)** |
+| **1. Intent Classification Accuracy** | **90.99%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
+| **2. Retrieval Status Precision** | **82.88%** | $\ge 85.0\%$ | **CHƯA ĐẠT (FAILED)** |
+| **3. Anaphora Resolution Rate (ARR)** | **68.09%** | $\ge 90.0\%$ | **CHƯA ĐẠT (FAILED)** |
 | **4. Socratic Refusal Precision (SRP)** | **100.0%** | **$100.0\%$** (Zero Code Leak) | **ĐẠT (PASSED)** |
-| **5. Whitelist Timestamp Hit Rate (WHR)** | **61.11%** | **$100.0\%$** (Zero Hallucination) | **CHƯA ĐẠT (FAILED)** |
+| **5. Whitelist Timestamp Hit Rate (WHR)** | **44.14%** | **$100.0\%$** (Zero Hallucination) | **CHƯA ĐẠT (FAILED)** |
 | **6. Context Budget Compliance** | **100.0%** | **$100.0\%$** ($\le 2{,}400$ chars) | **ĐẠT (PASSED)** |
 
-> **Kỷ lục ngân sách ngữ cảnh:** Độ dài lịch sử lớn nhất quan sát được là **1500 ký tự**, nằm hoàn toàn bên trong trần an toàn **2,400 ký tự** (ngăn chặn triệt để suy thoái KV Cache Attention Prefill).
+> **Kỷ lục ngân sách ngữ cảnh:** Độ dài lịch sử lớn nhất quan sát được là **1126 ký tự**, nằm hoàn toàn bên trong trần an toàn **2,400 ký tự** (ngăn chặn triệt để suy thoái KV Cache Attention Prefill).
 
 ---
 
@@ -27,11 +27,11 @@
 
 | Thước Đo Độ Trễ | Thời Gian Thực Đo (ms) | Đánh Giá Hiệu Năng Thời Gian Thực |
 | :--- | :---: | :--- |
-| **Mean Latency (Trung bình)** | **6902.88 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
-| **P50 Latency (Median)** | **7892.35 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
-| **P95 Latency (Phân vị 95)** | **15899.38 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
-| **P99 Latency (Phân vị 99)** | **16454.54 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
-| **Max Latency (Cực đại)** | **16593.33 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
+| **Mean Latency (Trung bình)** | **10438.16 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
+| **P50 Latency (Median)** | **10171.32 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
+| **P95 Latency (Phân vị 95)** | **20824.31 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
+| **P99 Latency (Phân vị 99)** | **34699.01 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
+| **Max Latency (Cực đại)** | **39305.56 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
 
 ---
 
@@ -39,7 +39,10 @@
 
 | Phân Lớp (Tier) | Sessions | Turns | Intent Acc | Status Acc | WHR Timestamp | Budget Comp | ARR / SRP | P50 Latency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Tier 4: Context Budget** | 3 | 18 | 94.44% | 94.44% | 61.11% | 100.0% | **--** | 7892.35 ms |
+| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 95.0% | 95.0% | 48.33% | 100.0% | **ARR 65.52%** | 10171.32 ms |
+| **Tier 2: Socratic Refusal** | 15 | 60 | 88.33% | 81.67% | 40.0% | 100.0% | **SRP 100.0%** | 11208.78 ms |
+| **Tier 3: Topic Switching** | 10 | 42 | 78.57% | 59.52% | 38.1% | 100.0% | **--** | 9589.69 ms |
+| **Tier 4: Context Budget** | 10 | 60 | 98.33% | 88.33% | 48.33% | 100.0% | **--** | 11832.67 ms |
 
 ---
 

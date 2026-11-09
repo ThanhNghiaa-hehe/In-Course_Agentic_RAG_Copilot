@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from typing import Optional, Dict, Any
 from qdrant_client import AsyncQdrantClient
@@ -6,22 +7,30 @@ from app.config import settings
 logger = logging.getLogger("uvicorn.error")
 
 _async_qdrant_client: Optional[AsyncQdrantClient] = None
+_client_loop: Optional[asyncio.AbstractEventLoop] = None
 
 
 def get_async_qdrant_client() -> AsyncQdrantClient:
     """
     Singleton Dependency Provider cho AsyncQdrantClient.
     Tái sử dụng Connection Pool bất đồng bộ, tránh khởi tạo lại TCP connection liên tục.
+    Tự động khởi tạo lại nếu event loop bị thay đổi (chống lỗi 'Event loop is closed' khi chạy test).
     Tuân thủ quy tắc kiến trúc: timeout=60.0s chống nghẽn đường truyền quốc tế.
     """
-    global _async_qdrant_client
-    if _async_qdrant_client is None:
+    global _async_qdrant_client, _client_loop
+    try:
+        current_loop = asyncio.get_running_loop()
+    except RuntimeError:
+        current_loop = None
+
+    if _async_qdrant_client is None or (_client_loop is not None and current_loop is not None and _client_loop != current_loop):
         logger.info(f"[QdrantService] Khởi tạo AsyncQdrantClient kết nối tới: {settings.QDRANT_URL}")
         _async_qdrant_client = AsyncQdrantClient(
             url=settings.QDRANT_URL,
             api_key=settings.QDRANT_API_KEY,
             timeout=settings.QDRANT_TIMEOUT
         )
+        _client_loop = current_loop
     return _async_qdrant_client
 
 

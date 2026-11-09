@@ -1,7 +1,7 @@
 ---
 name: rag-architect
 description: Chuyên gia Phân tích Chuyên môn & Quyết định Phương án Kiến trúc RAG/CRAG. Thẩm định lý thuyết Yan et al. (arXiv:2401.15884) và ICLR 2025, phản biện kỹ thuật, ngăn chặn giải pháp vá tạm (Zero Quick-Fix).
-model: inherit
+model: pro
 tools:
   - view_file
   - grep_search

@@ -66,5 +66,37 @@ class Settings(BaseSettings):
     WHISPER_DEVICE: str = "cpu"
     WHISPER_COMPUTE_TYPE: str = "int8"
 
+    # Multi-Turn Memory & Context Budget Settings (LangGraph)
+    SLIDING_WINDOW_TURNS: int = 5
+    MAX_HISTORY_CHARS: int = 2400
+    MAX_CONTEXT_CHARS: int = 2400
+    SUMMARIZER_TURN_TRIGGER: int = 6
+    SOFT_NUDGE_TURN_TRIGGER: int = 6
+
+    # Multi-Turn Intent Router & Semantic Formulation Settings
+    ROUTER_PURE_SOCIAL_THRESHOLD: float = 0.88
+    ROUTER_SOCIAL_PURE_THRESHOLD: float = 0.88  # Backward-compatibility alias
+    ROUTER_CONTEXTUAL_COURSE_MIN_PROB: float = 0.35
+    ROUTER_CONTEXTUAL_COURSE_MIN: float = 0.35  # Backward-compatibility alias
+    ROUTER_CONTEXTUAL_GAIN_MARGIN: float = 0.05
+    ROUTER_CONTEXTUAL_NLI_MIN_CONF: float = 0.45
+    ROUTER_CONFIRM_COSINE_THRESHOLD: float = 0.88
+    ROUTER_CONFIRM_MARGIN: float = 0.05
+    ROUTER_CONFIRM_NLI_THRESHOLD: float = 0.70
+
+    # Telemetry Critic Rigor & Multi-Turn Intent Fidelity Settings
+    CRITIC_HIJACKING_PENALTY: int = 80
+    MARKOV_HIJACK_PENALTY: int = 80  # Backward-compatibility alias
+    CRITIC_GREETING_LOOP_PENALTY: int = 20
+    GREETING_LOOP_PENALTY: int = 20  # Backward-compatibility alias
+    CRITIC_MAIN_VIOLATION_PENALTY: int = 40
+    CRITIC_INCLUDE_VIOLATION_PENALTY: int = 20
+    CRITIC_UNVERIFIED_TS_PENALTY: int = 15
+    CRITIC_MISSING_QUESTION_PENALTY: int = 10
+    CRITIC_HIGH_LATENCY_PENALTY: int = 10
+    CRITIC_LATENCY_THRESHOLD_MS: int = 4000
+    CRITIC_MAX_SESSION_SCORE_ON_GREETING_LOOP: int = 35
+    MAX_CODE_ILLUSTRATION_LINES: int = 25
+
 
 settings = Settings()

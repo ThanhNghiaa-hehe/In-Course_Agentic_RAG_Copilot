@@ -313,7 +313,7 @@ class RetrievalService:
         client: Optional[AsyncQdrantClient] = None,
         embedding_service: Optional[EmbeddingService] = None
     ):
-        self.client = client or get_async_qdrant_client()
+        self._client = client
         self.embedding_service = embedding_service or get_embedding_service()
         self._code_video_bindings: Dict[str, int] = {}
         if BINDING_MANIFEST_PATH.exists():
@@ -334,6 +334,10 @@ class RetrievalService:
                 logger.info(f"[RetrievalService] Nạp thành công {len(self._compiler_diagnostics)} Compiler Diagnostics từ manifest.")
             except Exception as cd_err:
                 logger.warning(f"[RetrievalService] Không thể đọc compiler diagnostics manifest ({cd_err}).")
+
+    @property
+    def client(self) -> AsyncQdrantClient:
+        return self._client or get_async_qdrant_client()
 
     def bridge_compiler_error_semantics(self, query_text: str) -> Tuple[str, bool]:
         """

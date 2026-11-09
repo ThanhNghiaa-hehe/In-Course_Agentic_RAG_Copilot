@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 import numpy as np
 
+from app.config import settings
 from app.schemas.chat import RouterClassification
 from app.services.embedding import get_embedding_service
 from app.agent.guardrails import get_security_input_guardrail, SECURITY_REFUSAL_RESPONSE
@@ -22,59 +23,6 @@ from app.agent.guardrails import get_security_input_guardrail, SECURITY_REFUSAL_
 logger = logging.getLogger("uvicorn.error")
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 ROUTER_MANIFEST_PATH = PROJECT_ROOT / "data" / "metadata" / "router_intent_manifest.json"
-
-
-# ==========================================
-# Phản hồi Sư phạm Chuẩn (Pedagogical Responses)
-# ==========================================
-GREETING_RESPONSES = (
-    "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng lập trình của khóa học. "
-    "Hôm nay bạn đang học đến bài nào và gặp khó khăn gì với cú pháp hay thuật toán C++, "
-    "hãy gửi cho tôi để chúng ta cùng giải quyết nhé!"
-)
-
-GRATITUDE_RESPONSES = (
-    "Rất vui vì đã đồng hành và gợi mở được hướng đi cho bạn! "
-    "Hãy tiếp tục thực hành viết code nhé, nếu gặp bất kỳ lỗi cú pháp hay logic nào khác, "
-    "tôi luôn ở đây hỗ trợ bạn!"
-)
-
-GOODBYE_RESPONSES = (
-    "Tạm biệt bạn nhé! Chúc bạn có một buổi học tập và thực hành hiệu quả. "
-    "Khi nào cần hỗ trợ giải đáp về bài học hay sửa lỗi code C++, "
-    "tôi luôn sẵn sàng đồng hành cùng bạn!"
-)
-
-IDENTITY_RESPONSES = (
-    "Tôi là **In-Course Agentic RAG Copilot** - Trợ giảng lập trình thông minh theo phương pháp Socratic, "
-    "được phát triển bởi sinh viên **Trần Thành Nghĩa** (MSSV: `23DH112252`), "
-    "Trường **Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)** "
-    "(Kho lưu trữ GitHub: `ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot`).\n\n"
-    "Hệ thống được xây dựng trên nền tảng:\n"
-    "- **Backend & Vector DB:** **FastAPI**, **Python 3.11**, **Qdrant** với cơ chế **dual vector** (`dense` 1024-dim và `sparse` BM25).\n"
-    "- **Embedding & Re-ranker:** Mô hình nhúng `multilingual-e5-large` (1024 chiều qua `fastembed`) kết hợp bộ xếp hạng **Cross-Encoder** `jinaai/jina-reranker-v2`.\n"
-    "- **Speech & Video Sync:** Bóc băng âm thanh bằng `faster-whisper` kết hợp `Silero VAD`, trích xuất thẻ `<timestamp sec=\"...\">` điều khiển trình phát `seekTo` trên giao diện **React 19** + **Vite**!"
-)
-
-SOCRATIC_PEDAGOGY_RESPONSES = (
-    "Theo nguyên tắc sư phạm **Socratic**, tôi đóng vai trò là người đồng hành **gợi mở** **tư duy** "
-    "chứ **không chép bài** hay viết sẵn toàn bộ code giải hoàn chỉnh thay cho **học viên**.\n\n"
-    "Việc **tự lập trình**, tự suy nghĩ qua từng câu hỏi định hướng và đối chiếu với mốc video bài giảng "
-    "sẽ giúp bạn nắm vững bản chất thuật toán C++ bền vững nhất!"
-)
-
-ADVICE_RESPONSES = (
-    "Học lập trình ban đầu có thể có nhiều bỡ ngỡ với các khái niệm như bộ nhớ, con trỏ hay cú pháp nghiêm ngặt của C++. "
-    "Lời khuyên tốt nhất là hãy **kiên trì** **thực hành** giải **bài tập** và viết code mỗi ngày, tự tay gõ từng dòng lệnh "
-    "và cố gắng từng bước đọc hiểu thông báo lỗi. Trí tuệ nhân tạo chỉ là **công cụ** **hỗ trợ** giúp **lập trình viên** "
-    "tăng hiệu suất chứ không thể thay thế tư duy thiết kế phần mềm của bạn. Tôi luôn ở đây **đồng hành** cùng bạn!"
-)
-
-OFFTOPIC_CASUAL_RESPONSES = (
-    "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng chuyên môn của khóa học lập trình C++. "
-    "Tôi luôn sẵn sàng đồng hành hỗ trợ bạn giải đáp các thắc mắc về bài học, cú pháp code và bài tập lập trình "
-    "thay vì các chủ đề ngoài lề đời sống. Hãy gửi cho tôi câu hỏi hoặc đoạn code C++ bạn đang gặp khó khăn nhé!"
-)
 
 
 def _load_router_manifest() -> Dict[str, Any]:
@@ -85,6 +33,76 @@ def _load_router_manifest() -> Dict[str, Any]:
     except Exception as e:
         logger.warning(f"[IntentRouter] Không thể đọc {ROUTER_MANIFEST_PATH}: {e}")
     return {}
+
+
+_MANIFEST_DATA = _load_router_manifest()
+
+
+def _get_subintent_response(subintent_key: str, default_fallback: str) -> str:
+    subintents = _MANIFEST_DATA.get("chitchat_subintents", {})
+    if subintent_key in subintents:
+        return subintents[subintent_key].get("response_text", default_fallback)
+    return default_fallback
+
+
+# ==========================================
+# Phản hồi Sư phạm Chuẩn (Data-Driven Manifest + Fallbacks)
+# ==========================================
+GREETING_RESPONSES = _get_subintent_response(
+    "greeting",
+    "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng lập trình của khóa học. "
+    "Hôm nay bạn đang học đến bài nào và gặp khó khăn gì với cú pháp hay thuật toán C++, "
+    "hãy gửi cho tôi để chúng ta cùng giải quyết nhé!"
+)
+
+GRATITUDE_RESPONSES = _get_subintent_response(
+    "gratitude",
+    "Rất vui vì đã đồng hành và gợi mở được hướng đi cho bạn! "
+    "Hãy tiếp tục thực hành viết code nhé, nếu gặp bất kỳ lỗi cú pháp hay logic nào khác, "
+    "tôi luôn ở đây hỗ trợ bạn!"
+)
+
+GOODBYE_RESPONSES = _get_subintent_response(
+    "goodbye",
+    "Tạm biệt bạn nhé! Chúc bạn có một buổi học tập và thực hành hiệu quả. "
+    "Khi nào cần hỗ trợ giải đáp về bài học hay sửa lỗi code C++, "
+    "tôi luôn sẵn sàng đồng hành cùng bạn!"
+)
+
+IDENTITY_RESPONSES = _get_subintent_response(
+    "identity_architecture",
+    "Tôi là **In-Course Agentic RAG Copilot** - Trợ giảng lập trình thông minh theo phương pháp Socratic, "
+    "được phát triển bởi sinh viên **Trần Thành Nghĩa** (MSSV: `23DH112252`), "
+    "Trường **Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)** "
+    "(Kho lưu trữ GitHub: `ThanhNghiaa-hehe/In-Course_Agentic_RAG_Copilot`).\n\n"
+    "Hệ thống được xây dựng trên nền tảng:\n"
+    "- **Backend & Vector DB:** **FastAPI**, **Python 3.11**, **Qdrant** với cơ chế **dual vector** (`dense` 1024-dim và `sparse` BM25).\n"
+    "- **Embedding & Re-ranker:** Mô hình nhúng `multilingual-e5-large` (1024 chiều qua `fastembed`) kết hợp bộ xếp hạng **Cross-Encoder** `jinaai/jina-reranker-v2`.\n"
+    "- **Speech & Video Sync:** Bóc băng âm thanh bằng `faster-whisper` kết hợp `Silero VAD`, trích xuất thẻ `<timestamp sec=\"...\">` điều khiển trình phát `seekTo` trên giao diện **React 19** + **Vite**!"
+)
+
+SOCRATIC_PEDAGOGY_RESPONSES = _get_subintent_response(
+    "socratic_pedagogy",
+    "Theo nguyên tắc sư phạm **Socratic**, tôi đóng vai trò là người đồng hành **gợi mở** **tư duy** "
+    "chứ **không chép bài** hay viết sẵn toàn bộ code giải hoàn chỉnh thay cho **học viên**.\n\n"
+    "Việc **tự lập trình**, tự suy nghĩ qua từng câu hỏi định hướng và đối chiếu với mốc video bài giảng "
+    "sẽ giúp bạn nắm vững bản chất thuật toán C++ bền vững nhất!"
+)
+
+ADVICE_RESPONSES = _get_subintent_response(
+    "advice",
+    "Học lập trình ban đầu có thể có nhiều bỡ ngỡ với các khái niệm như bộ nhớ, con trỏ hay cú pháp nghiêm ngặt của C++. "
+    "Lời khuyên tốt nhất là hãy **kiên trì** **thực hành** giải **bài tập** và viết code mỗi ngày, tự tay gõ từng dòng lệnh "
+    "và cố gắng từng bước đọc hiểu thông báo lỗi. Trí tuệ nhân tạo chỉ là **công cụ** **hỗ trợ** giúp **lập trình viên** "
+    "tăng hiệu suất chứ không thể thay thế tư duy thiết kế phần mềm của bạn. Tôi luôn ở đây **đồng hành** cùng bạn!"
+)
+
+OFFTOPIC_CASUAL_RESPONSES = _MANIFEST_DATA.get(
+    "default_offtopic_response",
+    "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng chuyên môn của khóa học lập trình C++. "
+    "Tôi luôn sẵn sàng đồng hành hỗ trợ bạn giải đáp các thắc mắc về bài học, cú pháp code và bài tập lập trình "
+    "thay vì các chủ đề ngoài lề đời sống. Hãy gửi cho tôi câu hỏi hoặc đoạn code C++ bạn đang gặp khó khăn nhé!"
+)
 
 
 class NLIArbiter:
@@ -173,10 +191,14 @@ class NLIArbiter:
             sim_r = max([float(np.dot(q_vec, rv) / (np.linalg.norm(q_vec) * np.linalg.norm(rv))) for rv in self._reject_vecs])
 
             is_question_punct = prompt.strip().endswith("?")
-            is_agree = (sim_c >= 0.88) and (sim_c > sim_r + 0.05) and not is_question_punct
+            is_agree = (
+                (sim_c >= settings.ROUTER_CONFIRM_COSINE_THRESHOLD)
+                and (sim_c > sim_r + settings.ROUTER_CONFIRM_MARGIN)
+                and not is_question_punct
+            )
 
-            # [Stage 2 NLI Arbiter]: Cứu xét bằng Cross-Encoder khi câu nói tự nhiên dài hoặc phân vân
-            if not is_agree and not is_question_punct and len(prompt.split()) >= 2:
+            # [Stage 2 NLI Arbiter]: Cứu xét bằng Cross-Encoder khi câu nói tự nhiên phân vân
+            if not is_agree and not is_question_punct:
                 pipe = self._get_pipeline()
                 if pipe is not None:
                     premise = f"Trợ giảng hỏi: 'Bạn có muốn mình chuyển sang bài học tiếp theo và mở video cho bạn không?'. Học viên trả lời: '{prompt}'."
@@ -188,7 +210,7 @@ class NLIArbiter:
                     )
                     top_lbl = nli_res["labels"][0]
                     top_score = float(nli_res["scores"][0])
-                    if top_lbl == "đồng ý mở video bài học" and top_score >= 0.70:
+                    if top_lbl == "đồng ý mở video bài học" and top_score >= settings.ROUTER_CONFIRM_NLI_THRESHOLD:
                         is_agree = True
                         sim_c = top_score
                         logger.info(f"[ConfirmationClassifier:NLI-Rescue] Cứu xét thành công qua NLI: '{prompt[:35]}' -> {top_score*100:.1f}%")
@@ -229,6 +251,7 @@ class IntentRouter:
         self._security_guardrail = get_security_input_guardrail()
         self._chitchat_proto_matrix: Optional[np.ndarray] = None
         self._chitchat_proto_responses: List[str] = []
+        self._pure_social_proto_matrix: Optional[np.ndarray] = None
 
         # 1. Nạp Fast-Path SLM ONNX INT8 Router (Temperature-Scaled T*)
         slm_path = PROJECT_ROOT / "app" / "agent" / "models" / "slm_router_int8.onnx"
@@ -257,30 +280,142 @@ class IntentRouter:
         return " ".join(normalized.split())
 
     def _ensure_chitchat_prototypes(self) -> None:
-        """Khởi tạo ma trận prototype E5 1024-dim cho 6 nhóm phản hồi chit_chat từ manifest JSON."""
-        if self._chitchat_proto_matrix is not None:
+        """Khởi tạo ma trận prototype E5 1024-dim cho chitchat và pure social từ manifest JSON."""
+        if self._chitchat_proto_matrix is not None and self._pure_social_proto_matrix is not None:
             return
         subintents = self._manifest_data.get("chitchat_subintents", {})
         if not subintents:
             return
+        pure_keys = set(self._manifest_data.get("pure_social_subintents", ["greeting", "gratitude", "goodbye"]))
         try:
             emb_svc = get_embedding_service()
-            vecs: List[np.ndarray] = []
-            resps: List[str] = []
-            for _sub_key, sub_cfg in subintents.items():
+            all_vecs: List[np.ndarray] = []
+            all_resps: List[str] = []
+            pure_vecs: List[np.ndarray] = []
+            for sub_key, sub_cfg in subintents.items():
                 resp_txt = sub_cfg.get("response_text", GREETING_RESPONSES)
                 for proto_str in sub_cfg.get("prototypes", []):
                     v = np.array(emb_svc.embed_query_dense(proto_str), dtype=np.float32)
                     norm_v = np.linalg.norm(v)
                     if norm_v > 0:
                         v /= norm_v
-                    vecs.append(v)
-                    resps.append(resp_txt)
-            if vecs:
-                self._chitchat_proto_matrix = np.vstack(vecs)
-                self._chitchat_proto_responses = resps
+                    all_vecs.append(v)
+                    all_resps.append(resp_txt)
+                    if sub_key in pure_keys:
+                        pure_vecs.append(v)
+            if all_vecs:
+                self._chitchat_proto_matrix = np.vstack(all_vecs)
+                self._chitchat_proto_responses = all_resps
+            if pure_vecs:
+                self._pure_social_proto_matrix = np.vstack(pure_vecs)
         except Exception as e:
             logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận chitchat prototypes ({e}).")
+
+    def get_pure_social_similarity(self, prompt: str) -> float:
+        """
+        Tính độ tương đồng Cosine tối đa giữa prompt và các prototype xã giao thuần túy
+        (greeting, gratitude, goodbye) nạp từ router_intent_manifest.json (100% Data-Driven).
+        """
+        clean_p = self._normalize_text(prompt)
+        if not clean_p:
+            return 1.0
+        self._ensure_chitchat_prototypes()
+        if self._pure_social_proto_matrix is None or len(self._pure_social_proto_matrix) == 0:
+            return 0.0
+        try:
+            emb_svc = get_embedding_service()
+            qv = np.array(emb_svc.embed_query_dense(clean_p), dtype=np.float32)
+            norm_q = np.linalg.norm(qv)
+            if norm_q > 0:
+                qv /= norm_q
+            sims = np.dot(self._pure_social_proto_matrix, qv)
+            return float(np.max(sims))
+        except Exception as e:
+            logger.warning(f"[IntentRouter] Lỗi tính tương đồng pure social ({e}).")
+            return 0.0
+
+    def is_pure_social(self, prompt: str) -> tuple[bool, float]:
+        """
+        Kiểm định độ thuần khiết xã giao (Pure Social Prototype Gate):
+        Trả về (True, sim) nếu sim >= settings.ROUTER_PURE_SOCIAL_THRESHOLD.
+        """
+        sim = self.get_pure_social_similarity(prompt)
+        return (sim >= settings.ROUTER_PURE_SOCIAL_THRESHOLD, sim)
+
+    def _get_slm_probs(self, clean_prompt: str) -> Optional[np.ndarray]:
+        """Tính phân phối xác suất Softmax qua Fast-Path SLM ONNX INT8."""
+        if self._slm_session is None or not clean_prompt:
+            return None
+        try:
+            emb_svc = get_embedding_service()
+            query_vec = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
+            q_norm = np.linalg.norm(query_vec)
+            if q_norm > 0:
+                query_vec /= q_norm
+            vec_2d = query_vec.reshape(1, -1)
+            logits = self._slm_session.run(None, {"dense_vector": vec_2d})[0][0]
+            exp_l = np.exp(logits - np.max(logits))
+            probs = exp_l / np.sum(exp_l)
+            return probs
+        except Exception as err:
+            logger.debug(f"[IntentRouter] Lỗi tính SLM probs: {err}")
+            return None
+
+    def classify_contextual(self, raw_prompt: str, anchor_query: str) -> tuple[RouterClassification, str]:
+        """
+        Đánh giá ý định ngữ cảnh kép (Dual-Track Contextual Formulation - SIGIR/ICLR 2025):
+        Phân định câu hỏi nối tiếp/tỉnh lược dựa trên mỏ neo học thuật (anchor_query).
+        Trả về (RouterClassification, search_query).
+        """
+        clean_raw = self._normalize_text(raw_prompt)
+        clean_anchor = self._normalize_text(anchor_query)
+
+        if not clean_anchor:
+            clf = self.classify(clean_raw)
+            return clf, clean_raw
+
+        # 1. Kiểm định Pure Social Gate
+        is_soc, soc_sim = self.is_pure_social(clean_raw)
+        if is_soc:
+            logger.info(f"[IntentRouter:Contextual] Phát ngôn xã giao thuần khiết (Sim={soc_sim:.3f}): '{clean_raw[:35]}'")
+            return self.classify(clean_raw), clean_raw
+
+        # 2. Xây dựng câu truy vấn hợp nhất theo chuẩn SIGIR
+        contextual_prompt = f"{clean_anchor} -> {clean_raw}"
+        search_query = f"{clean_anchor} {clean_raw}"
+
+        # 3. Tính phân phối xác suất SLM trên contextual_prompt và raw_prompt
+        p_raw = self._get_slm_probs(clean_raw)
+        p_ctx = self._get_slm_probs(contextual_prompt)
+
+        if p_ctx is not None and p_raw is not None:
+            # Classes: [0: chit_chat, 1: course_query, 2: out_of_scope]
+            p_course_raw = float(p_raw[1])
+            p_oos_raw = float(p_raw[2])
+            p_course_ctx = float(p_ctx[1])
+            delta_course = p_course_ctx - p_course_raw
+
+            logger.info(
+                f"[IntentRouter:Contextual] P_course_ctx={p_course_ctx:.3f}, "
+                f"P_course_raw={p_course_raw:.3f}, Delta={delta_course:.3f}, P_oos_raw={p_oos_raw:.3f}"
+            )
+
+            # (i) Trội xác suất ngữ cảnh hoặc (ii) Độ lợi thông tin ngữ cảnh dương
+            if (p_course_ctx >= settings.ROUTER_CONTEXTUAL_COURSE_MIN_PROB) or (
+                delta_course >= settings.ROUTER_CONTEXTUAL_GAIN_MARGIN and p_oos_raw < 0.65
+            ):
+                logger.info(f"[IntentRouter:Contextual] Cứu xét Pareto SLM thành công: '{clean_raw}' -> course_query")
+                return RouterClassification(intent="course_query", direct_response=None, is_course_query=True), search_query
+
+        # (iii) Thẩm định qua Stage 2 NLI Arbiter
+        nli_intent, nli_conf = self._nli_arbiter.arbitrate(contextual_prompt)
+        if nli_intent == "course_query" or nli_conf >= settings.ROUTER_CONTEXTUAL_NLI_MIN_CONF:
+            logger.info(f"[IntentRouter:Contextual] Cứu xét NLI Arbiter thành công ({nli_conf*100:.1f}%): '{clean_raw}' -> course_query")
+            return RouterClassification(intent="course_query", direct_response=None, is_course_query=True), search_query
+
+        # Fallback về phân loại raw_prompt
+        raw_clf = self.classify(clean_raw)
+        return raw_clf, clean_raw
 
     def _select_chitchat_response(self, prompt: str, query_vec: Optional[np.ndarray] = None) -> str:
         """

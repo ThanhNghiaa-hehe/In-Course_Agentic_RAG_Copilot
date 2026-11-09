@@ -142,6 +142,16 @@
   - Tầng 0 OWASP LLM01/07 Defense: **100.0%** (7/7 ca chặn thành công với độ trễ $\le 1.1\text{ ms}$).
   - Corpus Acoustic Health: **100.0%** (83/83 bài học CLEAN trên Qdrant Cloud).
   - Regression Test Suite: `pytest tests/ -v`: **10/10 PASSED (100%)**.
+- **Deterministic Multi-Turn LangGraph Benchmark Record (Chặng 5 - 09/11/2026):**
+  - **Dữ liệu thực nghiệm:** `multiturn_benchmark_dataset.json` gồm **50 sessions (222 turns)** kiểm chuẩn qua LangGraph StateGraph, MemorySaver checkpointer và Qdrant Cloud (**100% Live Execution — Zero Mock — Zero Fake Data**).
+  - **Intent Classification Accuracy:** **90.99%** (202/222 turns) — ĐẠT CHUẨN ($\ge 90.0\%$).
+  - **Socratic Refusal Precision (SRP):** **100.00%** (15/15 turns) — ĐẠT CHUẨN TUYỆT ĐỐI (**0% rò rỉ mã nguồn giải bài hộ**, 100% kích hoạt chốt chặn Socratic Scaffolding).
+  - **Context Budget Compliance:** **100.00%** (222/222 turns) — ĐẠT CHUẨN TUYỆT ĐỐI (Lịch sử lớn nhất: 1,126 / 2,400 chars, triệt tiêu nguy cơ OOM/suy thoái Attention).
+  - **Retrieval Status Precision:** **82.88%** (184/222 turns) — CẬN ĐẠT (Mục tiêu: $\ge 85.0\%$).
+  - **Anaphora Resolution Rate (ARR):** **68.09%** (64/94 turns) — CHƯA ĐẠT (Mục tiêu: $\ge 90.0\%$, điểm nghẽn tại Tier 1 & Tier 3).
+  - **Deterministic Timestamp Whitelist Hit (WHR):** **44.14%** (98/222 turns) — CHƯA ĐẠT (Hiện tượng Single-Label Annotation Discrepancy khi video có nhiều mốc tương quan).
+  - **Độ trễ trung vị P50 / P95:** **10,171 ms / 20,824 ms** (Mean: 10,438 ms).
+  - **Chỉ thị Tối ưu hóa Xuyên đêm (Overnight Optimization Mandate):** Kích hoạt quy trình pstack / thinker-doer pipeline xuyên đêm để áp dụng Context-Aware Query Formulation bậc cao (SIGIR) và Pareto Sufficiency (ICLR 2025) nhằm nâng ARR $\ge 90\%$ và Status $\ge 85\%$, tuyệt đối bài trừ 100% Quick-Fix/Regex.
 - **Exhaustive Multi-Class NLI Hypothesis Space Invariant:**
   - Để triệt tiêu hiện tượng Missing Category Bias của mô hình Zero-Shot NLI (`mDeBERTa-v3`), 3 nhãn giả thuyết bắt buộc phải tạo thành một không gian bao quát toàn diện:
     1. `course_query`: `"asking to learn programming concepts, C++ syntax, functions, classes, algorithms, or course exercises"`
