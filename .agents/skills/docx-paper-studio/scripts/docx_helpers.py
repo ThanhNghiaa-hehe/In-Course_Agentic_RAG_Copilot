@@ -255,6 +255,7 @@ def add_three_line_table(
         p.paragraph_format.space_after = Pt(0)
         p.paragraph_format.line_spacing = 1.05
         if is_header:
+            p.paragraph_format.keep_with_next = True
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         elif align_cols and col_idx < len(align_cols):
             p.alignment = align_cols[col_idx]
