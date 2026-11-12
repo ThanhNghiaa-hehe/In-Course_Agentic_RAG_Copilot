@@ -141,6 +141,7 @@ async def run_benchmark(dataset_path: Path):
     router_correct = 0
     crag_status_correct = 0
     timestamp_correct = 0
+    timestamp_strict_correct = 0
     total_time_ms = 0.0
 
     tier_stats = {
@@ -216,11 +217,13 @@ async def run_benchmark(dataset_path: Path):
             crag_status_correct += 1
             tier_stats[tier]["status_ok"] += 1
 
-        # 3. Đánh giá Timestamp (Milestone 4.4: Dynamic Multi-Grounding Segment Evaluation)
+        # 3. Đánh giá Timestamp (Milestone 4.4: Strict Tier 1 vs Multi-Grounding Tier 2)
         if not expected_has_ts:
             # Kỳ vọng KHÔNG có timestamp (chống ảo giác): Nếu thực tế không có -> ĐẠT
-            is_ts_ok = (actual_has_ts is False)
+            is_ts_strict_ok = (actual_has_ts is False)
+            is_ts_ok = is_ts_strict_ok
         else:
+            is_ts_strict_ok = False
             is_ts_ok = False
             if actual_has_ts and candidate_ts_chunks:
                 valid_intervals = item.get("valid_video_intervals") or []
@@ -235,14 +238,17 @@ async def run_benchmark(dataset_path: Path):
                                     break
                     if in_interval:
                         actual_ts_sec = ts_cand
+                        is_ts_strict_ok = True
                         is_ts_ok = True
                         break
                     elif target_sec is not None and abs(ts_cand - target_sec) <= 45:
                         actual_ts_sec = ts_cand
+                        is_ts_strict_ok = True
                         is_ts_ok = True
                         break
                     elif not valid_intervals and target_sec is None:
                         actual_ts_sec = ts_cand
+                        is_ts_strict_ok = True
                         is_ts_ok = True
                         break
 
@@ -262,6 +268,8 @@ async def run_benchmark(dataset_path: Path):
                             is_ts_ok = True
                             break
 
+        if is_ts_strict_ok:
+            timestamp_strict_correct += 1
         if is_ts_ok:
             timestamp_correct += 1
             tier_stats[tier]["ts_ok"] += 1
@@ -307,6 +315,7 @@ async def run_benchmark(dataset_path: Path):
                 "router_ok": is_router_ok,
                 "status_ok": is_status_ok,
                 "ts_ok": is_ts_ok,
+                "ts_strict_ok": is_ts_strict_ok,
                 "overall_pass": (is_router_ok and is_status_ok and is_ts_ok)
             },
             "fail_reasons": fail_reasons,
@@ -336,6 +345,7 @@ async def run_benchmark(dataset_path: Path):
     router_acc = (router_correct / total_cases) * 100.0
     crag_acc = (crag_status_correct / total_cases) * 100.0
     ts_acc = (timestamp_correct / total_cases) * 100.0
+    ts_strict_acc = (timestamp_strict_correct / total_cases) * 100.0
     avg_latency = total_time_ms / total_cases
 
     print("\n" + "=" * 74)
@@ -345,7 +355,8 @@ async def run_benchmark(dataset_path: Path):
     print(f" - Tổng số ca kiểm thử:       {total_cases}")
     print(f" - Router Accuracy:            {router_acc:5.1f}% ({router_correct}/{total_cases})")
     print(f" - CRAG Grader Precision:      {crag_acc:5.1f}% ({crag_status_correct}/{total_cases})")
-    print(f" - Timestamp Precision/Safety: {ts_acc:5.1f}% ({timestamp_correct}/{total_cases})")
+    print(f" - Timestamp Multi-Grounding:  {ts_acc:5.1f}% ({timestamp_correct}/{total_cases})")
+    print(f" - Timestamp Strict (Tier 1):  {ts_strict_acc:5.1f}% ({timestamp_strict_correct}/{total_cases})")
     print(f" - Thời gian trung bình/câu:   {avg_latency:5.1f} ms")
     print("=" * 74)
 
@@ -391,8 +402,9 @@ async def run_benchmark(dataset_path: Path):
 | :--- | :---: | :---: | :---: |
 | **Router Accuracy** (Phân luồng ý định) | **{router_acc:.1f}%** ({router_correct}/{total_cases}) | $\\ge 90.0\\%$ | {'✅ ĐẠT' if router_acc >= 90 else '⚠️ CẦN TỐI ƯU'} |
 | **CRAG Grader Precision** (Thẩm định ngữ cảnh) | **{crag_acc:.1f}%** ({crag_status_correct}/{total_cases}) | $\\ge 85.0\\%$ | {'✅ ĐẠT' if crag_acc >= 85 else '⚠️ CẦN TỐI ƯU'} |
-| **Timestamp Safety & Accuracy** (|Δt| $\\le$ 15s / 0 ảo giác) | **{ts_acc:.1f}%** ({timestamp_correct}/{total_cases}) | $\\ge 88.0\\%$ | {'✅ ĐẠT' if ts_acc >= 88 else '⚠️ CẦN TỐI ƯU'} |
-| **Độ trễ trung bình truy xuất** | **{avg_latency:.1f} ms** | $\\le 300.0 \\text{{ ms}}$ | ✅ ĐẠT |
+| **Timestamp Safety & Multi-Grounding** (Đúng bài & 0 ảo giác) | **{ts_acc:.1f}%** ({timestamp_correct}/{total_cases}) | $\\ge 88.0\\%$ | {'✅ ĐẠT' if ts_acc >= 88 else '⚠️ CẦN TỐI ƯU'} |
+| **Timestamp Strict Hit** (Intervals $\\pm$ 30s / $|\\Delta t| \\le$ 45s / 0 ảo giác) | **{ts_strict_acc:.1f}%** ({timestamp_strict_correct}/{total_cases}) | Báo cáo song song | ℹ️ THAM CHIẾU |
+| **Độ trễ trung bình E2E** (Qdrant Cloud + CPU Rerank) | **{avg_latency:.1f} ms** | $\\le 6000.0 \\text{{ ms}}$ | {'✅ ĐẠT' if avg_latency <= 6000.0 else '⚠️ CẦN TỐI ƯU'} |
 
 ---
 
@@ -431,6 +443,8 @@ async def run_benchmark(dataset_path: Path):
             "crag_correct": crag_status_correct,
             "timestamp_safety": round(ts_acc, 1),
             "timestamp_correct": timestamp_correct,
+            "timestamp_strict_accuracy": round(ts_strict_acc, 1),
+            "timestamp_strict_correct": timestamp_strict_correct,
             "avg_latency_ms": round(avg_latency, 1),
             "tier_breakdown": {
                 t_key: {
