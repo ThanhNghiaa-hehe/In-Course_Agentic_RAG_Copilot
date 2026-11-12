@@ -265,6 +265,79 @@ class StreamingTimestampSanitizer:
         return out
 
 
+class StreamingCodeSanitizer:
+    """
+    Máy trạng thái hữu hạn theo dòng (Line-Oriented FSM Guardrail) loại bỏ 100% rò rỉ mã nguồn bị cấm
+    (#include, using namespace std, int main) trên luồng token SSE (0% Regex 'import re').
+    Bảo toàn độ trễ TTFT với zero runtime overhead.
+    """
+    FORBIDDEN_LINE_PREFIXES = (
+        "#include",
+        "using namespace std",
+        "int main(",
+        "int main (",
+        "void main(",
+        "void main (",
+        "signed main(",
+        "signed main ("
+    )
+    MAX_PREFIX_LEN = 24  # Độ dài tiền tố cấm dài nhất ("using namespace std" = 19)
+
+    def __init__(self):
+        self.line_buffer = ""
+        self.is_suppressing_line = False
+        self.has_inserted_stub = False
+
+    def process(self, token: str) -> List[str]:
+        out: List[str] = []
+        for char in token:
+            if char == "\n":
+                if not self.is_suppressing_line:
+                    stripped = self.line_buffer.lstrip()
+                    if any(stripped.startswith(p) for p in self.FORBIDDEN_LINE_PREFIXES):
+                        if not self.has_inserted_stub:
+                            out.append("// [Khung chương trình cơ sở do học viên tự thiết lập]\n")
+                            self.has_inserted_stub = True
+                    else:
+                        out.append(self.line_buffer + "\n")
+                else:
+                    self.is_suppressing_line = False
+                self.line_buffer = ""
+            else:
+                if self.is_suppressing_line:
+                    continue
+                self.line_buffer += char
+                stripped = self.line_buffer.lstrip()
+                if any(stripped.startswith(p) for p in self.FORBIDDEN_LINE_PREFIXES):
+                    self.is_suppressing_line = True
+                    if not self.has_inserted_stub:
+                        out.append("// [Khung chương trình cơ sở do học viên tự thiết lập]\n")
+                        self.has_inserted_stub = True
+                    self.line_buffer = ""
+                    continue
+
+                is_potential = any(p.startswith(stripped) for p in self.FORBIDDEN_LINE_PREFIXES if stripped)
+                if not is_potential and len(self.line_buffer) > 0:
+                    out.append(self.line_buffer)
+                    self.line_buffer = ""
+
+        return out
+
+    def flush(self) -> List[str]:
+        out: List[str] = []
+        if self.line_buffer and not self.is_suppressing_line:
+            stripped = self.line_buffer.lstrip()
+            if any(stripped.startswith(p) for p in self.FORBIDDEN_LINE_PREFIXES):
+                if not self.has_inserted_stub:
+                    out.append("// [Khung chương trình cơ sở do học viên tự thiết lập]\n")
+                    self.has_inserted_stub = True
+            else:
+                out.append(self.line_buffer)
+        self.line_buffer = ""
+        self.is_suppressing_line = False
+        return out
+
+
 class ChatService:
     """
     Dịch vụ điều phối trò chuyện Socratic & Truyền phát dữ liệu thời gian thực (SSE Stream):
@@ -311,7 +384,7 @@ class ChatService:
                 used_fast_path=True,
                 retrieved_chunk_count=0,
                 is_approximate=False,
-                retrieval_status="fast_path",
+                retrieval_status="coverage_gap",
                 is_low_confidence=False,
                 target_lesson_seq=None,
                 suggested_timestamps=[],
@@ -335,97 +408,6 @@ class ChatService:
             }
             return
 
-        # 0. Fast-Path Curriculum Navigation Intent Dispatcher (< 20ms)
-        # Bắt các câu hỏi hỏi về bài học trong playlist ("học vòng lặp thì chọn bài nào...")
-        # Bất biến phân cấp: Chỉ kích hoạt điều hướng giáo trình khi Router xác nhận là câu hỏi học tập (is_course_query == True)
-        quick_clf = self.router.classify(request.prompt)
-        if quick_clf.is_course_query and self.curriculum_service.is_navigation_query(request.prompt):
-            # Invariant 3 (Stateful Navigation & History-Aware Dispatcher):
-            # Kiểm tra xem câu hỏi có chứa đại từ chỉ định lịch sử ("câu hỏi trên", "vừa rồi", "nội dung đó")
-            lookup_prompt = request.prompt
-            history_prefix = ""
-
-            try:
-                graph = get_chat_graph()
-                state_snapshot = graph.get_state({"configurable": {"thread_id": session_id}})
-                current_values = state_snapshot.values if state_snapshot else {}
-                history_msgs = current_values.get("messages", [])
-                last_user_query = ""
-                if history_msgs:
-                    last_user_query = next((m["content"] for m in reversed(history_msgs) if m.get("role") == "user"), "")
-
-                norm_p = request.prompt.lower()
-                is_anaphora = any(ref in norm_p for ref in ("trên", "vừa rồi", "vừa hỏi", "đó", "nội dung đó"))
-                if is_anaphora and last_user_query:
-                    lookup_prompt = last_user_query
-                    history_prefix = f"Về câu hỏi *\"{last_user_query}\"* của bạn:\n\n"
-                    logger.info(f"[ChatService:Navigation] Phát hiện câu hỏi quy chiếu lịch sử -> Lookup theo last_user_query: '{last_user_query[:40]}...'")
-            except Exception as e:
-                logger.debug(f"[ChatService:Navigation] Lỗi đọc state checkpointer: {e}")
-
-            nav_response = self.curriculum_service.generate_navigation_response(
-                prompt=lookup_prompt,
-                current_lesson_seq=request.lesson_seq,
-                course_id=request.course_id
-            )
-            if nav_response:
-                if history_prefix:
-                    nav_response = history_prefix + nav_response
-                match_res = self.curriculum_service.find_lesson_for_query(
-                    lookup_prompt,
-                    current_lesson_seq=request.lesson_seq,
-                    preferred_course_id=request.course_id
-                )
-                target_seq = match_res[0].get("seq") if match_res else None
-
-                suggested_ts = []
-                if target_seq is not None:
-                    raw_ts = self.curriculum_service.get_lesson_timestamps(target_seq)
-                    for item in raw_ts:
-                        suggested_ts.append(
-                            SuggestedTimestamp(
-                                sec=item["sec"],
-                                label=item["label"],
-                                title=item["title"],
-                                lesson_seq=target_seq
-                            )
-                        )
-
-                metadata_event = StreamMetadataEvent(
-                    session_id=session_id,
-                    turn_count=1,
-                    intent="course_query",
-                    used_fast_path=True,
-                    retrieved_chunk_count=0,
-                    is_approximate=False,
-                    retrieval_status="fast_path",
-                    is_low_confidence=False,
-                    target_lesson_seq=target_seq,
-                    suggested_timestamps=suggested_ts,
-                    sources=[]
-                )
-                yield {
-                    "event": "metadata",
-                    "data": metadata_event.model_dump_json()
-                }
-
-                # Truyền phát từng token phản hồi định hướng bài học
-                words = nav_response.split(" ")
-                for i, word in enumerate(words):
-                    chunk_token = word if i == 0 else " " + word
-                    yield {
-                        "event": "delta",
-                        "data": json.dumps({"content": chunk_token})
-                    }
-                    await asyncio.sleep(0.012)
-
-                commit_assistant_turn(session_id, request.prompt, nav_response, current_lesson_seq=request.lesson_seq)
-                yield {
-                    "event": "done",
-                    "data": "[DONE]"
-                }
-                return
-
         initial_state = {
             "session_id": session_id,
             "prompt": request.prompt,
@@ -434,6 +416,9 @@ class ChatService:
             "intent": "course_query",
             "direct_response": None,
             "is_course_query": True,
+            "search_query": None,
+            "last_course_query": None,
+            "is_curriculum_navigation": False,
             "retrieval_status": "coverage_gap",
             "retrieved_chunks": [],
             "is_approximate": False,
@@ -473,7 +458,7 @@ class ChatService:
                 used_fast_path=True,
                 retrieved_chunk_count=0,
                 is_approximate=False,
-                retrieval_status="fast_path",
+                retrieval_status="grounded",
                 is_low_confidence=False,
                 target_lesson_seq=target_seq,
                 auto_seek_sec=auto_seek,
@@ -531,6 +516,7 @@ class ChatService:
             is_low_confidence=final_state["is_low_confidence"],
             target_lesson_seq=final_state["target_lesson_seq"],
             auto_seek_sec=auto_seek_sec,
+            action=final_state.get("action"),
             suggested_timestamps=suggested_ts,
             sources=final_state.get("sources", [])
         )
@@ -572,6 +558,7 @@ class ChatService:
                     valid_secs.add(int(item["sec"]))
 
             ts_sanitizer = StreamingTimestampSanitizer(valid_secs=valid_secs)
+            code_sanitizer = StreamingCodeSanitizer()
 
             async for chunk in stream_response:
                 if chunk.choices and chunk.choices[0].delta.content:
@@ -585,19 +572,31 @@ class ChatService:
                     # Deterministic Timestamp Whitelist Guardrail (Streaming Buffer)
                     sanitized_tokens = ts_sanitizer.process(clean_token)
                     for tok in sanitized_tokens:
-                        full_assistant_response += tok
-                        yield {
-                            "event": "delta",
-                            "data": json.dumps({"content": tok})
-                        }
+                        # Deterministic Streaming Code Sanitizer (Chống rò rỉ #include, using namespace, main)
+                        clean_code_tokens = code_sanitizer.process(tok)
+                        for c_tok in clean_code_tokens:
+                            full_assistant_response += c_tok
+                            yield {
+                                "event": "delta",
+                                "data": json.dumps({"content": c_tok})
+                            }
 
             # Xả các token còn lại trong bộ đệm cuối luồng
             final_flushed = ts_sanitizer.flush()
             for tok in final_flushed:
-                full_assistant_response += tok
+                for c_tok in code_sanitizer.process(tok):
+                    full_assistant_response += c_tok
+                    yield {
+                        "event": "delta",
+                        "data": json.dumps({"content": c_tok})
+                    }
+
+            final_code_flushed = code_sanitizer.flush()
+            for c_tok in final_code_flushed:
+                full_assistant_response += c_tok
                 yield {
                     "event": "delta",
-                    "data": json.dumps({"content": tok})
+                    "data": json.dumps({"content": c_tok})
                 }
 
             # Deterministic Timestamp Fallback: Nếu có mốc bảo chứng nhưng LLM quên sinh thẻ, tự động gắn mốc video

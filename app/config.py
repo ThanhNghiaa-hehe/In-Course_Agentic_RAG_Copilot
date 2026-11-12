@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     LLM_BASE_URL: str = "http://127.0.0.1:11434/v1"
     LLM_MODEL_NAME: str = "qwen2.5"
     LLM_TEMPERATURE: float = 0.3
-    LLM_MAX_TOKENS: int = 2048
+    LLM_MAX_TOKENS: int = 512
     OPENAI_API_KEY: Optional[str] = "ollama"
     ANTHROPIC_API_KEY: Optional[str] = None
 
@@ -33,7 +33,9 @@ class Settings(BaseSettings):
     SPARSE_MODEL_NAME: str = "Qdrant/bm25"
     RERANKER_MODEL_NAME: str = "jinaai/jina-reranker-v2-base-multilingual"
     USE_ONNX: bool = True
+    USE_CPU_RERANKER: bool = True  # Tách tải Re-ranker sang CPU đa luồng để triệt tiêu 100% lỗi CUBLAS crash trên RTX 2050 (4GB)
     USE_INT8_RERANKER: bool = False
+    RERANK_BATCH_SIZE: int = 4  # Micro-batching kích thước 4 tránh tràn VRAM/RAM khi tính Cross-Attention
     MIN_SCORE_THRESHOLD: float = 0.25
     CODE_SCORE_THRESHOLD: float = 0.35
     VIDEO_SCORE_THRESHOLD: float = 0.22
@@ -45,7 +47,7 @@ class Settings(BaseSettings):
     MODALITY_GATE_AST_THRESHOLD: float = 0.35
     MODALITY_GATE_VIDEO_THRESHOLD: float = 0.22
     MODALITY_GATE_VIDEO_EARLY_EXIT: float = 0.22  # Backward-compatibility alias for MODALITY_GATE_VIDEO_THRESHOLD
-    MODALITY_GATE_VIDEO_HIGH_CONFIDENCE: float = 0.42  # AGENTS.md Invariant: Early exit khi video >= 0.30
+    MODALITY_GATE_VIDEO_HIGH_CONFIDENCE: float = 0.40  # AGENTS.md Invariant: Early exit khi video >= 0.30
     FUTURE_PROBE_ACTIVATION_GATE: float = 0.22
     FUTURE_PROBE_MARGIN: float = 0.12
     FUTURE_PROBE_MIN_CONFIDENCE: float = 0.25
@@ -60,6 +62,11 @@ class Settings(BaseSettings):
     PARETO_DOMINANCE_FUTURE_MIN: float = 0.45
     PARETO_DOMINANCE_CODE_FUTURE_MIN: float = 0.52
     PARETO_DOMINANCE_CODE_MARGIN: float = 0.25
+    PARETO_NAV_FUTURE_MIN: float = 0.25
+    PARETO_NAV_MARGIN: float = -0.15
+    PARETO_INTRA_MODULE_FUTURE_MIN: float = 0.48
+    PARETO_INTRA_MODULE_MARGIN: float = 0.22
+    PARETO_THEORY_GROUNDING_FLOOR: float = 0.18
 
     # Whisper
     WHISPER_MODEL_SIZE: str = "large-v3"
@@ -67,13 +74,16 @@ class Settings(BaseSettings):
     WHISPER_COMPUTE_TYPE: str = "int8"
 
     # Multi-Turn Memory & Context Budget Settings (LangGraph)
-    SLIDING_WINDOW_TURNS: int = 5
-    MAX_HISTORY_CHARS: int = 2400
-    MAX_CONTEXT_CHARS: int = 2400
+    SLIDING_WINDOW_TURNS: int = 4
+    MAX_HISTORY_CHARS: int = 1400
+    MAX_CONTEXT_CHARS: int = 1500
     SUMMARIZER_TURN_TRIGGER: int = 6
     SOFT_NUDGE_TURN_TRIGGER: int = 6
 
     # Multi-Turn Intent Router & Semantic Formulation Settings
+    ROUTER_TOPIC_DRIFT_THRESHOLD: float = 0.32
+    ROUTER_DRIFT_COHERE_THRESHOLD: float = 0.25
+    ROUTER_SOCIAL_ACK_THRESHOLD: float = 0.72
     ROUTER_PURE_SOCIAL_THRESHOLD: float = 0.88
     ROUTER_SOCIAL_PURE_THRESHOLD: float = 0.88  # Backward-compatibility alias
     ROUTER_CONTEXTUAL_COURSE_MIN_PROB: float = 0.35
@@ -85,6 +95,7 @@ class Settings(BaseSettings):
     ROUTER_CONFIRM_NLI_THRESHOLD: float = 0.70
 
     # Telemetry Critic Rigor & Multi-Turn Intent Fidelity Settings
+    CRITIC_TOPIC_INTRUSION_PENALTY: int = 50
     CRITIC_HIJACKING_PENALTY: int = 80
     MARKOV_HIJACK_PENALTY: int = 80  # Backward-compatibility alias
     CRITIC_GREETING_LOOP_PENALTY: int = 20

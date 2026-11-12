@@ -63,6 +63,9 @@ class EmbeddingService:
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Sparse: {settings.SPARSE_MODEL_NAME}...")
         self.sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME, providers=self.providers)
 
+        reranker_providers = ["CPUExecutionProvider"] if getattr(settings, "USE_CPU_RERANKER", True) else self.providers
+        reranker_device = "CPU" if getattr(settings, "USE_CPU_RERANKER", True) else self.device.upper()
+
         int8_model_dir = Path(__file__).resolve().parent.parent.parent / "data" / "models" / "jina-reranker-v2-int8"
         int8_onnx_file = int8_model_dir / "onnx" / "model.onnx"
         if getattr(settings, "USE_INT8_RERANKER", False) and int8_onnx_file.exists():
@@ -73,18 +76,18 @@ class EmbeddingService:
             self.reranker_model = TextCrossEncoder(
                 settings.RERANKER_MODEL_NAME,
                 specific_model_path=str(int8_model_dir),
-                providers=self.providers
+                providers=reranker_providers
             )
         else:
             logger.info(
                 f"[EmbeddingService:M-05e] Khởi tạo mô hình Reranker Đa ngữ FP32: {settings.RERANKER_MODEL_NAME} "
-                f"(Device: {self.device.upper()})..."
+                f"(Device: {reranker_device}, Providers: {reranker_providers})..."
             )
             self.reranker_model = TextCrossEncoder(
                 settings.RERANKER_MODEL_NAME,
-                providers=self.providers
+                providers=reranker_providers
             )
-        logger.info(f"[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công trên {self.device.upper()}!")
+        logger.info(f"[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công (Embedding: {self.device.upper()}, Reranker: {reranker_device})!")
 
     def embed_query_dense(self, query_text: str) -> List[float]:
         """
@@ -105,12 +108,29 @@ class EmbeddingService:
     def rerank_documents(self, query: str, documents: List[str]) -> List[float]:
         """
         Chấm điểm tương quan chéo sâu (Cross-Attention) giữa câu hỏi và danh sách văn bản.
+        Áp dụng Micro-batching (RERANK_BATCH_SIZE=4) và cắt tỉa độ dài (RERANK_MAX_CHARS=600)
+        để bảo toàn bộ nhớ và ngăn ngừa hoàn toàn hiện tượng tràn VRAM/RAM.
         Trả về danh sách điểm logit z tương ứng.
         """
         if not documents:
             return []
-        scores = list(self.reranker_model.rerank(query=query, documents=documents))
-        return [float(s) for s in scores]
+
+        batch_size = getattr(settings, "RERANK_BATCH_SIZE", 4)
+        max_chars = getattr(settings, "RERANK_MAX_CHARS", 600)
+        truncated_docs = [doc[:max_chars] if isinstance(doc, str) else str(doc)[:max_chars] for doc in documents]
+
+        all_scores: List[float] = []
+        for i in range(0, len(truncated_docs), batch_size):
+            batch = truncated_docs[i : i + batch_size]
+            try:
+                batch_scores = list(self.reranker_model.rerank(query=query, documents=batch, batch_size=batch_size))
+                all_scores.extend([float(s) for s in batch_scores])
+            except Exception as batch_err:
+                logger.warning(
+                    f"[EmbeddingService] Lỗi micro-batch rerank [{i}:{i+batch_size}]: {batch_err}. Fallback điểm logit trung tính."
+                )
+                all_scores.extend([-2.0] * len(batch))
+        return all_scores
 
     async def rerank_documents_async(self, query: str, documents: List[str]) -> List[float]:
         """

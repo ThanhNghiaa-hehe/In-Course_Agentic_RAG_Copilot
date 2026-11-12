@@ -212,19 +212,29 @@ class TelemetryCriticService:
         is_pure_soc, soc_sim = router_svc.is_pure_social(prompt)
 
         is_intent_hijacked = False
+        is_topic_intruded = False
         multi_turn_intent_fidelity = 1.0
 
         if intent == "chit_chat":
             prev_intent = prev_entry.get("router", {}).get("intent") if prev_entry else None
             is_continuing_course = (had_prior_course_query or prev_intent == "course_query")
+            is_ack, _ = router_svc.is_social_acknowledgment(prompt)
 
-            # Trường hợp 1: Chuyển trạng thái Markov bất hợp lệ (đang học tập bị ép về chit_chat nhưng không phải pure social)
-            if is_continuing_course and not is_pure_soc:
+            # Chuyển trạng thái Markov bất hợp lệ (đang học tập bị ép về chit_chat nhưng không phải pure social hay acknowledgment)
+            if is_continuing_course and not is_pure_soc and not is_ack:
                 is_intent_hijacked = True
-
-            # Trường hợp 2: Trả về văn mẫu chào hỏi mở đầu cho một câu hỏi không phải lời chào thuần túy
-            if ("Chào bạn! Tôi là" in response_text or "In-Course AI Copilot" in response_text) and not is_pure_soc:
-                is_intent_hijacked = True
+        elif intent == "course_query":
+            # Trường hợp 3: Topic Intrusion Hijacking (Reverse Intent Hijacking)
+            # Câu hỏi ngoài lề hoặc xã giao bị ép phân loại thành course_query và kích hoạt RAG
+            standalone_clf = router_svc.classify(prompt)
+            is_nav_res = router_svc.is_curriculum_navigation(prompt)
+            is_nav = is_nav_res[0] if isinstance(is_nav_res, tuple) else bool(is_nav_res)
+            if (
+                standalone_clf.intent in ("chit_chat", "out_of_scope")
+                and not router_svc.is_context_dependent(prompt)
+                and not is_nav
+            ):
+                is_topic_intruded = True
 
         if is_intent_hijacked:
             multi_turn_intent_fidelity = 0.0
@@ -234,9 +244,17 @@ class TelemetryCriticService:
             )
             score -= settings.CRITIC_HIJACKING_PENALTY
             score = max(0, min(20, score))  # Ràng buộc bắt buộc: Lượt bị cướp luồng không vượt quá 20/100
+        elif is_topic_intruded:
+            multi_turn_intent_fidelity = 0.0
+            violations.append(
+                "Vi phạm Multi-Turn Intent Fidelity (Topic Intrusion Hijacking): "
+                "Câu hỏi ngoài lề/xã giao bị ép phân loại thành course_query và kích hoạt RAG không phù hợp."
+            )
+            score -= settings.CRITIC_TOPIC_INTRUSION_PENALTY
+            score = max(0, min(25, score))  # Ràng buộc bắt buộc: Khống chế trần điểm lượt <= 25/100
         else:
-            if used_fast_path:
-                merits.append(f"Kích hoạt Fast-Path thành công (< {total_ms}ms), tối ưu tài nguyên và độ trễ phản hồi.")
+            if used_fast_path and intent in ("chit_chat", "out_of_scope", "confirm_navigation"):
+                merits.append(f"Kích hoạt Fast-Path Zero-Compute thành công (< {total_ms}ms), tối ưu tài nguyên và độ trễ phản hồi.")
             score = max(0, min(100, score))
 
         # Tóm tắt nhận xét
@@ -258,6 +276,7 @@ class TelemetryCriticService:
             "target_lesson_seq": target_lesson_seq,
             "used_fast_path": used_fast_path,
             "is_intent_hijacked": is_intent_hijacked,
+            "is_topic_intruded": is_topic_intruded,
             "multi_turn_intent_fidelity": multi_turn_intent_fidelity,
             "latency": {
                 "ttft_ms": ttft_ms,
@@ -292,7 +311,7 @@ class TelemetryCriticService:
         for turn in turns:
             tc = self.analyze_turn(turn, prev_entry=prev_entry, had_prior_course_query=had_prior_course_query)
             turn_critiques.append(tc)
-            if tc.get("is_intent_hijacked"):
+            if tc.get("is_intent_hijacked") or tc.get("is_topic_intruded"):
                 hijacked_turns.append(tc["turn"])
             if turn.get("router", {}).get("intent") == "course_query" or tc.get("intent") == "course_query":
                 had_prior_course_query = True

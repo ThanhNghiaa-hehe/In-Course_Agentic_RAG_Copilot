@@ -29,12 +29,15 @@ except Exception:
     _CPP_PARSER = None
 
 from app.agent.router import get_intent_router
+from app.services.curriculum import get_curriculum_service
 from app.services.retrieval import get_retrieval_service, RetrievalResult
 from app.agent.guardrails import get_session_rate_limiter
 from app.agent.prompts import (
     SOCRATIC_GROUNDED_PROMPT,
     OUT_OF_LESSON_PROMPT,
+    CURRICULUM_OVERVIEW_PROMPT,
     COVERAGE_GAP_PROMPT,
+    get_academic_glossary_prompt_extension,
 )
 from app.config import settings
 
@@ -63,6 +66,7 @@ class AgentState(TypedDict):
     is_course_query: bool
     search_query: Optional[str]
     last_course_query: Optional[str]
+    is_curriculum_navigation: bool
 
     # 4. Kết quả truy xuất & Thẩm định CRAG
     retrieval_status: str
@@ -134,12 +138,15 @@ def _sanitize_context_code_ast(code: str) -> str:
 def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = settings.MAX_CONTEXT_CHARS) -> str:
     """
     Định dạng các chunks ngữ cảnh thành khối văn bản có cấu trúc súc tích (Context Distillation).
-    Áp trần tối đa ~800 tokens (~2400 ký tự) để tối ưu thời gian Prefill Attention trên GPU.
+    Áp trần tối đa ~800 tokens (~1500 ký tự) để tối ưu thời gian Prefill Attention trên GPU (Mục 4.2 - Nhịp 1B).
     Áp dụng In-Context AST Sanitization để triệt tiêu 100% bẫy In-Context Imitation.
     Bảo toàn 100% thẻ <timestamp> và mã nguồn Code AST.
     """
     if not chunks:
         return "[LƯU Ý: Không tìm thấy tài liệu bài giảng nào vượt qua ngưỡng tin cậy cho câu hỏi này. Hãy hướng dẫn học viên dựa trên kiến thức chuẩn của C++]."
+
+    MAX_CODE_CHUNK_CHARS = 550
+    MAX_VIDEO_CHUNK_CHARS = 400
 
     blocks = ["[NGỮ CẢNH BÀI GIẢNG ĐÃ ĐƯỢC XÁC THỰC TỪ KHÓA HỌC]"]
     current_len = 0
@@ -151,6 +158,8 @@ def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = setting
             scope = chunk.get("code_scope", "")
             code_content = (chunk.get("context_code") or chunk.get("raw_text", "")).strip()
             sanitized_code = _sanitize_context_code_ast(code_content)
+            if len(sanitized_code) > MAX_CODE_CHUNK_CHARS:
+                sanitized_code = sanitized_code[:MAX_CODE_CHUNK_CHARS].rstrip() + "\n// [...đoạn mã tiếp theo được rút gọn...]"
             item_text = (
                 f"[MÃ NGUỒN BÀI GIẢNG THAM KHẢO - ĐÂY KHÔNG PHẢI CODE CỦA HỌC VIÊN]\n"
                 f"// Trích đoạn logic Bài {lesson_seq} ({scope}):\n"
@@ -160,6 +169,8 @@ def _format_context_block(chunks: List[Dict[str, Any]], max_chars: int = setting
             tag = chunk.get("timestamp_tag", "")
             raw_t = (chunk.get("raw_text", "")).strip()
             raw_t = " ".join(raw_t.split())
+            if len(raw_t) > MAX_VIDEO_CHUNK_CHARS:
+                raw_t = raw_t[:MAX_VIDEO_CHUNK_CHARS].rstrip() + "..."
             item_text = f"[Video Bài {lesson_seq} - {tag}]: {raw_t}"
 
         # Áp trần ngân sách ngữ cảnh (trừ item đầu tiên luôn giữ)
@@ -184,9 +195,36 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     nhận diện chính xác ngữ nghĩa câu hỏi nối tiếp (Coreference & Ellipsis) thuần túy bằng toán học ML.
     """
     router = get_intent_router()
+    curr_svc = get_curriculum_service()
     history = state.get("messages", [])
     raw_prompt = state["prompt"]
     pending_nav = state.get("pending_navigation")
+
+    # 0. Nhận diện Mệnh Lệnh Chuyển Bài Trực Tiếp (Conversational UI Action Dispatcher - Mục 3.2 & 4.1)
+    direct_nav_target = curr_svc.extract_direct_navigation_command(raw_prompt)
+    if direct_nav_target is not None:
+        logger.info(
+            f"[LangGraph:router_node] Nhận diện Mệnh Lệnh Chuyển Bài Trực Tiếp: "
+            f"'{raw_prompt}' -> target_lesson_seq={direct_nav_target}"
+        )
+        direct_resp = (
+            f"Đã rõ! Mình đang chuyển bạn sang **Bài {direct_nav_target}** "
+            f"để bạn theo dõi video bài giảng ngay nhé! 🎬"
+        )
+        return {
+            "intent": "confirm_navigation",
+            "direct_response": direct_resp,
+            "is_course_query": False,
+            "target_lesson_seq": direct_nav_target,
+            "action": {
+                "type": "navigate_and_seek",
+                "action": "navigate_lesson",
+                "target_lesson_seq": direct_nav_target,
+                "sec": 0,
+                "label": "00:00"
+            },
+            "pending_navigation": None
+        }
 
     # Kiểm tra xác nhận đàm thoại đa lượt (Conversational Navigation Confirmation - Zero Regex NLI)
     if pending_nav:
@@ -194,7 +232,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         if is_confirmed:
             target_seq = pending_nav.get("lesson_seq")
             target_sec = pending_nav.get("sec", 0)
-            target_lbl = pending_nav.get("label", "")
+            target_lbl = pending_nav.get("label", "00:00")
             logger.info(
                 f"[LangGraph:router_node] Xác nhận chuyển bài thành công qua NLI ({conf_score*100:.1f}%): "
                 f"Bài {target_seq} @ {target_lbl} ({target_sec}s)"
@@ -210,6 +248,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                 "target_lesson_seq": target_seq,
                 "action": {
                     "type": "navigate_and_seek",
+                    "action": "navigate_lesson",
                     "target_lesson_seq": target_seq,
                     "sec": target_sec,
                     "label": target_lbl
@@ -219,56 +258,138 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         else:
             logger.info("[LangGraph:router_node] Học viên đặt câu hỏi khác, tự động xóa pending_navigation.")
 
-    # 1. Phân loại ý định qua Dual-Track Contextual Formulation (SIGIR/ICLR 2025)
+    # 1. Phân loại ý định thô qua Router Machine Learning
     raw_clf = router.classify(raw_prompt)
     anchor_query = state.get("last_course_query")
     if not anchor_query and history:
-        # Tìm câu hỏi user gần nhất trong history mà không phải là pure social greeting
+        # Tìm câu hỏi user gần nhất trong history mà không phải là pure social greeting hay acknowledgment
         for m in reversed(history):
             if m.get("role") == "user":
                 cand = m.get("content", "")
                 is_soc, _ = router.is_pure_social(cand)
-                if not is_soc and router.classify(cand).is_course_query:
+                is_ack, _ = router.is_social_acknowledgment(cand)
+                if not is_soc and not is_ack and router.classify(cand).is_course_query:
                     anchor_query = cand
                     break
 
-    search_query: Optional[str] = raw_prompt if raw_clf.is_course_query else None
-    new_last_course_query: Optional[str] = anchor_query
+    # -------------------------------------------------------------------------
+    # BƯỚC 1: SOCIAL ACKNOWLEDGMENT & PURE SOCIAL CLOSURE GATE
+    # -------------------------------------------------------------------------
+    is_soc_ack, ack_sim = router.is_social_acknowledgment(raw_prompt)
+    is_pure_soc, soc_sim = router.is_pure_social(raw_prompt)
+    if (not raw_clf.is_course_query) and (is_soc_ack or is_pure_soc):
+        max_social_sim = max(ack_sim, soc_sim)
+        logger.info(
+            f"[LangGraph:router_node] Bước 1 Social Acknowledgment Gate (Sim={max_social_sim:.3f}): "
+            f"'{raw_prompt[:35]}...' -> chit_chat (skip RAG)"
+        )
+        return {
+            "intent": "chit_chat",
+            "direct_response": router._select_chitchat_response(raw_prompt),
+            "is_course_query": False,
+            "search_query": None,
+            "last_course_query": anchor_query,  # Bảo toàn anchor cho các lượt học tập tiếp theo!
+            "is_curriculum_navigation": False,
+            "pending_navigation": None,
+            "action": None
+        }
 
+    # -------------------------------------------------------------------------
+    # BƯỚC 2: CURRICULUM NAVIGATION GATE
+    # -------------------------------------------------------------------------
+    is_curriculum_nav, nav_sim = router.is_curriculum_navigation(raw_prompt)
+    if is_curriculum_nav:
+        logger.info(
+            f"[LangGraph:router_node] Bước 2 Curriculum Navigation Gate (NavSim={nav_sim:.3f}): "
+            f"'{raw_prompt[:40]}...' -> Tìm bài học mới trong playlist"
+        )
+        return {
+            "intent": "course_query",
+            "direct_response": None,
+            "is_course_query": True,
+            "search_query": raw_prompt,
+            "last_course_query": raw_prompt,
+            "is_curriculum_navigation": True,
+            "pending_navigation": None,
+            "action": None
+        }
+
+    # -------------------------------------------------------------------------
+    # BƯỚC 3: PHÂN NHÁNH THEO raw_clf VÀ anchor_query (CHỐNG Ô NHIỄM NGỮ CẢNH - MỤC 5.2)
+    # -------------------------------------------------------------------------
     if raw_clf.is_course_query:
-        classification = raw_clf
-        search_query = raw_prompt
-        new_last_course_query = raw_prompt
-        logger.info(f"[LangGraph:router_node] Query học thuật tự lập: '{raw_prompt[:40]}...' -> course_query")
-    elif anchor_query:
-        is_soc, soc_sim = router.is_pure_social(raw_prompt)
-        if is_soc:
-            classification = raw_clf
-            search_query = None
-            logger.info(f"[LangGraph:router_node] Phát ngôn xã giao thuần khiết (Sim={soc_sim:.3f}): '{raw_prompt[:35]}...' -> chit_chat")
+        # Kiểm tra Semantic Topic Shift Isolation Gate:
+        # Chỉ thực hiện Context Fusion khi câu hỏi phụ thuộc ngữ cảnh VÀ không bị đổi chủ đề
+        is_dep = router.is_context_dependent(raw_prompt, anchor_query=anchor_query) if anchor_query else False
+        is_shift, drift_sim = router.is_topic_shift(raw_prompt, anchor_query) if anchor_query else (False, 1.0)
+
+        if anchor_query and is_dep and not is_shift:
+            search_query = f"{anchor_query} — {raw_prompt}"
+            new_last_course_query = f"{anchor_query} | {raw_prompt}" if len(anchor_query) < 220 else raw_prompt
+            logger.info(f"[LangGraph:router_node] Bước 3 Context Fusion (Dependent & Coherent): '{search_query[:55]}...'")
         else:
+            search_query = raw_prompt
+            new_last_course_query = raw_prompt
+            if anchor_query and is_shift:
+                logger.info(f"[LangGraph:router_node] Bước 3 Topic Shift phát hiện (Sim={drift_sim:.3f}): Cô lập câu hỏi mới '{raw_prompt[:40]}...'")
+            else:
+                logger.info(f"[LangGraph:router_node] Bước 3 Course Query đơn lập: '{raw_prompt[:40]}...'")
+
+        return {
+            "intent": "course_query",
+            "direct_response": None,
+            "is_course_query": True,
+            "search_query": search_query,
+            "last_course_query": new_last_course_query,
+            "is_curriculum_navigation": False,
+            "pending_navigation": None,
+            "action": None
+        }
+    else:
+        # raw_clf.is_course_query == False
+        # CHỈ gọi router.classify_contextual(raw_prompt, anchor_query) khi anchor_query tồn tại VÀ router.is_context_dependent(raw_prompt) là True!
+        if anchor_query and router.is_context_dependent(raw_prompt, anchor_query=anchor_query):
             classification, formulated_q = router.classify_contextual(raw_prompt, anchor_query)
             if classification.is_course_query:
                 search_query = formulated_q
-                # Giữ nguyên anchor_query gốc để các lượt tỉnh lược kế tiếp (Turn 3 -> Turn 4) không bị mất thực thể gốc
-                new_last_course_query = anchor_query
-                logger.info(f"[LangGraph:router_node] Cứu xét đa lượt thành công: '{raw_prompt}' -> SearchQuery: '{search_query[:55]}...'")
+                new_last_course_query = f"{anchor_query} | {raw_prompt}" if len(anchor_query) < 220 else raw_prompt
+                logger.info(f"[LangGraph:router_node] Bước 3 Contextual Rescue thành công: '{raw_prompt}' -> SearchQuery: '{search_query[:55]}...'")
+                return {
+                    "intent": "course_query",
+                    "direct_response": None,
+                    "is_course_query": True,
+                    "search_query": search_query,
+                    "last_course_query": new_last_course_query,
+                    "is_curriculum_navigation": False,
+                    "pending_navigation": None,
+                    "action": None
+                }
             else:
-                search_query = None
-    else:
-        classification = raw_clf
-        search_query = None
-        logger.info(f"[LangGraph:router_node] Query đơn lượt ({raw_clf.intent}): '{raw_prompt[:35]}...'")
+                logger.info(f"[LangGraph:router_node] Bước 3 Non-course classification ({classification.intent}): '{raw_prompt[:35]}...'")
+                return {
+                    "intent": classification.intent,
+                    "direct_response": classification.direct_response,
+                    "is_course_query": False,
+                    "search_query": None,
+                    "last_course_query": anchor_query,
+                    "is_curriculum_navigation": False,
+                    "pending_navigation": None,
+                    "action": None
+                }
 
-    return {
-        "intent": classification.intent,
-        "direct_response": classification.direct_response,
-        "is_course_query": classification.is_course_query,
-        "search_query": search_query,
-        "last_course_query": new_last_course_query,
-        "pending_navigation": None,
-        "action": None
-    }
+        # Nếu không có anchor_query HOẶC not router.is_context_dependent(raw_prompt):
+        # Đây là Topic Shift sang out_of_scope / chit_chat (như trà sữa, nước Pháp, Đà Nẵng, bóng đá, chiên cá)!
+        logger.info(f"[LangGraph:router_node] Bước 3 Topic Shift / Non-course độc lập ({raw_clf.intent}): '{raw_prompt[:35]}...'")
+        return {
+            "intent": raw_clf.intent,
+            "direct_response": raw_clf.direct_response,
+            "is_course_query": False,
+            "search_query": None,
+            "last_course_query": anchor_query,  # Bảo toàn anchor cho tương lai
+            "is_curriculum_navigation": False,
+            "pending_navigation": None,
+            "action": None
+        }
 
 
 # ==========================================
@@ -278,43 +399,62 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
     """
     Node 2: Thực hiện True Hybrid Retrieval (Dense E5 + Sparse BM25) có In-HNSW Pre-filter.
     Áp dụng Dual Retrieval with Confidence-Gated Selection (Invariant 1 - Zero Context Pollution):
-    - Bước 1: Luôn ưu tiên truy xuất với search_query (đã được router_node chuẩn hóa ngữ cảnh).
+    - Bước 1: Khi không phải hỏi lộ trình, ưu tiên truy xuất với raw_prompt để không làm biến dạng phân phối điểm Cross-Encoder.
     - Bước 2: Chỉ khi retrieval_res rơi vào coverage_gap hoặc is_low_confidence (dấu hiệu thiếu thực thể),
-      hệ thống mới kích hoạt truy xuất dự phòng bằng query bổ sung mỏ neo (last_course_query + raw_prompt).
+      hệ thống mới kích hoạt truy xuất dự phòng bằng search_query bổ sung mỏ neo.
     """
     retrieval_service = get_retrieval_service()
     raw_prompt = state["prompt"]
     search_query = state.get("search_query") or raw_prompt
     anchor_query = state.get("last_course_query")
+    is_curriculum_nav = state.get("is_curriculum_navigation", False)
+    is_cont_turn = bool(anchor_query and state.get("messages"))
 
-    # Bước 1: Truy xuất với search_query
-    try:
-        retrieval_res: RetrievalResult = await retrieval_service.search(
-            query_text=search_query,
-            course_id=state["course_id"],
-            current_lesson_seq=state["lesson_seq"],
-            top_candidates=settings.DEFAULT_TOP_CANDIDATES,
-            final_top_k=settings.DEFAULT_FINAL_TOP_K
-        )
-    except Exception as e:
-        logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với search_query: {e}")
-        retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
+    if is_curriculum_nav:
+        try:
+            retrieval_res: RetrievalResult = await retrieval_service.search(
+                query_text=search_query,
+                course_id=state["course_id"],
+                current_lesson_seq=state["lesson_seq"],
+                top_candidates=settings.DEFAULT_TOP_CANDIDATES,
+                final_top_k=settings.DEFAULT_FINAL_TOP_K,
+                is_curriculum_navigation=True,
+                is_continuation_turn=False
+            )
+        except Exception as e:
+            logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG khi tìm lộ trình: {e}")
+            retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
+    else:
+        # Bước 1: Truy xuất với raw_prompt trước để bảo toàn phân phối Cross-Encoder
+        try:
+            retrieval_res: RetrievalResult = await retrieval_service.search(
+                query_text=raw_prompt,
+                course_id=state["course_id"],
+                current_lesson_seq=state["lesson_seq"],
+                top_candidates=settings.DEFAULT_TOP_CANDIDATES,
+                final_top_k=settings.DEFAULT_FINAL_TOP_K,
+                is_curriculum_navigation=False,
+                is_continuation_turn=is_cont_turn
+            )
+        except Exception as e:
+            logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với raw_prompt: {e}")
+            retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
 
-    # Bước 2: Contextual Fallback nếu search_query bị coverage_gap hoặc is_low_confidence
-    if anchor_query and (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence):
-        fallback_query = f"{anchor_query} {raw_prompt}"
-        if fallback_query != search_query:
+        # Bước 2: Contextual Fallback nếu raw_prompt bị coverage_gap hoặc is_low_confidence và search_query != raw_prompt
+        if (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence) and search_query != raw_prompt:
             logger.info(
-                f"[LangGraph:retrieval_node] search_query thiếu thực thể ({retrieval_res.status}), "
-                f"kích hoạt Fallback Contextual Query: '{fallback_query[:45]}...'"
+                f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}), "
+                f"kích hoạt Fallback với search_query: '{search_query[:45]}...'"
             )
             try:
                 fallback_res: RetrievalResult = await retrieval_service.search(
-                    query_text=fallback_query,
+                    query_text=search_query,
                     course_id=state["course_id"],
                     current_lesson_seq=state["lesson_seq"],
                     top_candidates=settings.DEFAULT_TOP_CANDIDATES,
-                    final_top_k=settings.DEFAULT_FINAL_TOP_K
+                    final_top_k=settings.DEFAULT_FINAL_TOP_K,
+                    is_curriculum_navigation=False,
+                    is_continuation_turn=is_cont_turn
                 )
                 if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
                     retrieval_res = fallback_res
@@ -341,6 +481,16 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     retrieval_status = state.get("retrieval_status", "coverage_gap")
     is_low_confidence = state.get("is_low_confidence", False)
     target_lesson_seq = state.get("target_lesson_seq")
+    raw_prompt = state["prompt"]
+    search_query = state.get("search_query")
+
+    # Xác định dòng liên kết ngữ cảnh hội thoại cho Anaphora Resolution
+    solicitation_markers = ("viết hộ", "viết giúp", "viết cho", "code hộ", "code giúp", "giải giúp", "giải hộ", "cho em xin code", "viết full", "code luôn", "viết code hoàn chỉnh", "chỉ em cách viết code hoàn chỉnh")
+    is_code_solicitation = any(w in raw_prompt.lower() for w in solicitation_markers)
+
+    context_linked_line = ""
+    if search_query and search_query != raw_prompt and not is_code_solicitation:
+        context_linked_line = f"\n[NGỮ CẢNH HỘI THOẠI LIÊN KẾT]: {search_query}"
 
     suggested_timestamps: List[Dict[str, Any]] = []
     sources: List[Dict[str, Any]] = []
@@ -394,16 +544,67 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
         context_block = _format_context_block(chunks)
         caution_notice = "\n[LƯU Ý: Một số tài liệu có độ tin cậy tham khảo, hãy định hướng học viên thận trọng.]\n" if is_low_confidence else ""
         user_message_content = f"""[CÂU HỎI THẮC MẮC CỦA HỌC VIÊN]
-{state['prompt']}
+{state['prompt']}{context_linked_line}
 {caution_notice}
 {context_block}"""
 
     elif retrieval_status == "out_of_lesson":
-        active_system_prompt = OUT_OF_LESSON_PROMPT
-        target_desc = f"Bài {target_lesson_seq}" if target_lesson_seq else "các bài học sau"
+        is_curriculum_nav = bool(state.get("is_curriculum_navigation", False))
         f_chunk = state.get("future_best_chunk")
         future_ts_info = ""
+        future_learning_text = ""
         new_pending_nav = None
+
+        if is_curriculum_nav:
+            # Hạng mục A & B (Mục 2.2 - Nhịp 1B): Chặn bơm raw future chunk khi điều hướng lộ trình
+            active_system_prompt = CURRICULUM_OVERVIEW_PROMPT
+            target_desc = f"Bài {target_lesson_seq}" if target_lesson_seq else "các bài học sau"
+            c_svc = get_curriculum_service()
+            match_res = c_svc.find_lesson_for_query(
+                state["prompt"],
+                current_lesson_seq=state["lesson_seq"],
+                preferred_course_id=state["course_id"]
+            )
+            target_lesson_dict = match_res[0] if match_res else None
+            roadmap_bullets = []
+            if target_lesson_dict:
+                t_course = target_lesson_dict.get("course_id", state["course_id"])
+                t_seq = target_lesson_dict.get("seq", target_lesson_seq)
+                target_desc = f"Bài {t_seq}: {target_lesson_dict.get('title')}"
+                related_lessons = [
+                    f"- Bài {les.get('seq')}: {les.get('title')}"
+                    for les in c_svc._all_lessons
+                    if les.get("course_id") == t_course
+                ]
+                roadmap_bullets = related_lessons[:6]
+
+            roadmap_str = "\n".join(roadmap_bullets) if roadmap_bullets else f"- {target_desc}"
+            future_learning_text = f"\n[DANH MỤC LỘ TRÌNH BÀI HỌC BẢO CHỨNG TỪ GIÁO TRÌNH]\n{roadmap_str}\n"
+
+        else:
+            active_system_prompt = OUT_OF_LESSON_PROMPT
+            target_desc = f"Bài {target_lesson_seq}" if target_lesson_seq else "các bài học sau"
+            if f_chunk:
+                c_type = f_chunk.get("content_type", "video_transcript")
+                if c_type == "code_ast":
+                    scope = f_chunk.get("code_scope", "Mã nguồn")
+                    code_raw = (f_chunk.get("context_code") or f_chunk.get("raw_text", "")).strip()
+                    sanitized_c = _sanitize_context_code_ast(code_raw)
+                    # Chỉ trích xuất chữ ký hàm / khai báo cấu trúc tối đa <= 5 dòng (loại bỏ chi tiết cài đặt và main)
+                    c_lines = [l for l in sanitized_c.splitlines() if l.strip()]
+                    short_c = "\n".join(c_lines[:5])
+                    if short_c:
+                        future_learning_text = f"\n[HỌC LIỆU BÀI GIẢNG TƯƠNG LAI ĐỂ GIẢI THÍCH BẢN CHẤT]\n// Trích đoạn khai báo logic Bài {target_lesson_seq} ({scope}):\n```cpp\n{short_c}\n```\n"
+                else:
+                    raw_t = (f_chunk.get("raw_text", "")).strip()
+                    raw_t = " ".join(raw_t.split())
+                    tag = f_chunk.get("timestamp_tag") or (f"mốc {f_chunk.get('start_label')}" if f_chunk.get("start_label") else "")
+                    tag_part = f" ({tag})" if tag else ""
+                    if len(raw_t) > 400:
+                        raw_t = raw_t[:400].rstrip() + "..."
+                    if raw_t:
+                        future_learning_text = f"\n[HỌC LIỆU BÀI GIẢNG TƯƠNG LAI ĐỂ GIẢI THÍCH BẢN CHẤT]\nTrích đoạn Bài {target_lesson_seq}{tag_part}: {raw_t}\n"
+
         if f_chunk and f_chunk.get("start_sec") is not None:
             f_sec = int(f_chunk["start_sec"])
             f_lbl = f_chunk.get("start_label", f"{f_sec//60:02d}:{f_sec%60:02d}")
@@ -429,17 +630,18 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             )
 
         user_message_content = f"""[CÂU HỎI CỦA HỌC VIÊN]
-{state['prompt']}
+{state['prompt']}{context_linked_line}
 
 [TIẾN ĐỘ BÀI HỌC]
 - Khóa học: {state['course_id']}
 - Bài học hiện tại của học viên: Bài {state['lesson_seq']}
-- Bài học giảng dạy nội dung này: {target_desc}{future_ts_info}"""
+- Bài học giảng dạy nội dung này: {target_desc}{future_ts_info}
+{future_learning_text}"""
 
     else:  # coverage_gap
         active_system_prompt = COVERAGE_GAP_PROMPT
         user_message_content = f"""[CÂU HỎI CỦA HỌC VIÊN]
-{state['prompt']}
+{state['prompt']}{context_linked_line}
 
 [THÔNG TIN PHẠM VI KHÓA HỌC]
 - Khóa học: Lập trình C++ ({state['course_id']}), đang ở Bài {state['lesson_seq']}.
@@ -490,9 +692,14 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     accumulated_chars = 0
 
     # Duyệt ngược từ tin nhắn mới nhất về cũ nhất trong cửa sổ trượt
-    for msg in reversed(raw_sliding_history):
+    for idx_from_end, msg in enumerate(reversed(raw_sliding_history)):
         content = msg.get("content", "")
         role = msg.get("role", "user")
+
+        # Nén các lượt trả lời xa của assistant (t < k - 1, tức idx_from_end >= 2) <= 200 ký tự (Mục 4.2 - Nhịp 1B)
+        if role == "assistant" and idx_from_end >= 2:
+            if len(content) > 200:
+                content = content[:200].rstrip() + "... [rút gọn lượt cũ]"
 
         # Rút gọn code block dài trong các câu trả lời cũ của assistant bằng Markdown AST (Zero Regex)
         if role == "assistant" and "```" in content and len(content) > 180:
@@ -532,6 +739,11 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     full_system_prompt = system_prompt
     if conv_summary:
         full_system_prompt += f"\n\n[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]:\n{conv_summary}"
+
+    # Dynamic Academic Glossary Injection (Mục 4.2): Khóa không gian sinh từ của LLM theo chuẩn đại học
+    glossary_ext = get_academic_glossary_prompt_extension(f"{user_message_content} {state.get('prompt', '')}")
+    if glossary_ext:
+        full_system_prompt += glossary_ext
 
     # Pedagogical Soft Nudge: Khích lệ tự thực hành khi phiên kéo dài liên tục
     if turn_count > settings.SOFT_NUDGE_TURN_TRIGGER:

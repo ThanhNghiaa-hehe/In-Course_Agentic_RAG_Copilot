@@ -40,7 +40,7 @@ class StreamMetadataEvent(BaseModel):
     retrieved_chunk_count: int = 0
     used_fast_path: bool = False
     is_approximate: bool = False
-    retrieval_status: Literal["grounded", "out_of_lesson", "coverage_gap", "fast_path"] = "grounded"
+    retrieval_status: Literal["grounded", "out_of_lesson", "coverage_gap"] = "grounded"
     is_low_confidence: bool = False
     target_lesson_seq: Optional[int] = None
     auto_seek_sec: Optional[int] = Field(

@@ -252,6 +252,9 @@ class IntentRouter:
         self._chitchat_proto_matrix: Optional[np.ndarray] = None
         self._chitchat_proto_responses: List[str] = []
         self._pure_social_proto_matrix: Optional[np.ndarray] = None
+        self._sys_proto_matrix: Optional[np.ndarray] = None
+        self._ack_proto_matrix: Optional[np.ndarray] = None
+        self._curriculum_nav_proto_matrix: Optional[np.ndarray] = None
 
         # 1. Nạp Fast-Path SLM ONNX INT8 Router (Temperature-Scaled T*)
         slm_path = PROJECT_ROOT / "app" / "agent" / "models" / "slm_router_int8.onnx"
@@ -280,36 +283,81 @@ class IntentRouter:
         return " ".join(normalized.split())
 
     def _ensure_chitchat_prototypes(self) -> None:
-        """Khởi tạo ma trận prototype E5 1024-dim cho chitchat và pure social từ manifest JSON."""
-        if self._chitchat_proto_matrix is not None and self._pure_social_proto_matrix is not None:
+        """Khởi tạo ma trận prototype E5 1024-dim cho chitchat, pure social, acknowledgment và curriculum nav từ manifest JSON."""
+        if (
+            self._chitchat_proto_matrix is not None
+            and self._pure_social_proto_matrix is not None
+            and self._ack_proto_matrix is not None
+            and self._curriculum_nav_proto_matrix is not None
+        ):
             return
+
+        emb_svc = get_embedding_service()
+
+        # 1. Chitchat & Pure Social & System Identity Prototypes
         subintents = self._manifest_data.get("chitchat_subintents", {})
-        if not subintents:
-            return
-        pure_keys = set(self._manifest_data.get("pure_social_subintents", ["greeting", "gratitude", "goodbye"]))
-        try:
-            emb_svc = get_embedding_service()
-            all_vecs: List[np.ndarray] = []
-            all_resps: List[str] = []
-            pure_vecs: List[np.ndarray] = []
-            for sub_key, sub_cfg in subintents.items():
-                resp_txt = sub_cfg.get("response_text", GREETING_RESPONSES)
-                for proto_str in sub_cfg.get("prototypes", []):
-                    v = np.array(emb_svc.embed_query_dense(proto_str), dtype=np.float32)
+        if subintents and (self._chitchat_proto_matrix is None or self._pure_social_proto_matrix is None or self._sys_proto_matrix is None):
+            pure_keys = set(self._manifest_data.get("pure_social_subintents", ["greeting", "gratitude", "goodbye"]))
+            sys_keys = {"identity_architecture", "socratic_pedagogy"}
+            try:
+                all_vecs: List[np.ndarray] = []
+                all_resps: List[str] = []
+                pure_vecs: List[np.ndarray] = []
+                sys_vecs: List[np.ndarray] = []
+                for sub_key, sub_cfg in subintents.items():
+                    resp_txt = sub_cfg.get("response_text", GREETING_RESPONSES)
+                    for proto_str in sub_cfg.get("prototypes", []):
+                        v = np.array(emb_svc.embed_query_dense(proto_str), dtype=np.float32)
+                        norm_v = np.linalg.norm(v)
+                        if norm_v > 0:
+                            v /= norm_v
+                        all_vecs.append(v)
+                        all_resps.append(resp_txt)
+                        if sub_key in pure_keys:
+                            pure_vecs.append(v)
+                        if sub_key in sys_keys:
+                            sys_vecs.append(v)
+                if all_vecs:
+                    self._chitchat_proto_matrix = np.vstack(all_vecs)
+                    self._chitchat_proto_responses = all_resps
+                if pure_vecs:
+                    self._pure_social_proto_matrix = np.vstack(pure_vecs)
+                if sys_vecs:
+                    self._sys_proto_matrix = np.vstack(sys_vecs)
+            except Exception as e:
+                logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận chitchat prototypes ({e}).")
+
+        # 2. Acknowledgment Prototypes
+        ack_protos = self._manifest_data.get("acknowledgment_prototypes", [])
+        if ack_protos and self._ack_proto_matrix is None:
+            try:
+                ack_vecs: List[np.ndarray] = []
+                for p in ack_protos:
+                    v = np.array(emb_svc.embed_query_dense(p), dtype=np.float32)
                     norm_v = np.linalg.norm(v)
                     if norm_v > 0:
                         v /= norm_v
-                    all_vecs.append(v)
-                    all_resps.append(resp_txt)
-                    if sub_key in pure_keys:
-                        pure_vecs.append(v)
-            if all_vecs:
-                self._chitchat_proto_matrix = np.vstack(all_vecs)
-                self._chitchat_proto_responses = all_resps
-            if pure_vecs:
-                self._pure_social_proto_matrix = np.vstack(pure_vecs)
-        except Exception as e:
-            logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận chitchat prototypes ({e}).")
+                    ack_vecs.append(v)
+                if ack_vecs:
+                    self._ack_proto_matrix = np.vstack(ack_vecs)
+            except Exception as e:
+                logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận acknowledgment prototypes ({e}).")
+
+        # 3. Curriculum Navigation Prototypes
+        nav_protos = self._manifest_data.get("curriculum_navigation_prototypes", [])
+        if nav_protos and self._curriculum_nav_proto_matrix is None:
+            try:
+                nav_vecs: List[np.ndarray] = []
+                for p in nav_protos:
+                    v = np.array(emb_svc.embed_query_dense(p), dtype=np.float32)
+                    norm_v = np.linalg.norm(v)
+                    if norm_v > 0:
+                        v /= norm_v
+                    nav_vecs.append(v)
+                if nav_vecs:
+                    self._curriculum_nav_proto_matrix = np.vstack(nav_vecs)
+            except Exception as e:
+                logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận curriculum navigation prototypes ({e}).")
 
     def get_pure_social_similarity(self, prompt: str) -> float:
         """
@@ -341,6 +389,208 @@ class IntentRouter:
         """
         sim = self.get_pure_social_similarity(prompt)
         return (sim >= settings.ROUTER_PURE_SOCIAL_THRESHOLD, sim)
+
+    def get_system_identity_similarity(self, prompt: str, query_vec: Optional[np.ndarray] = None) -> float:
+        """
+        Đo độ tương đồng Cosine tối đa giữa prompt và các prototype System Identity & Socratic Pedagogy
+        nạp từ router_intent_manifest.json (100% Vector Similarity, 0% Substring Hardcode).
+        """
+        clean_p = self._normalize_text(prompt)
+        if not clean_p:
+            return 0.0
+        self._ensure_chitchat_prototypes()
+        if self._sys_proto_matrix is None or len(self._sys_proto_matrix) == 0:
+            return 0.0
+        try:
+            if query_vec is None:
+                emb_svc = get_embedding_service()
+                qv = np.array(emb_svc.embed_query_dense(clean_p), dtype=np.float32)
+                norm_q = np.linalg.norm(qv)
+                if norm_q > 0:
+                    qv /= norm_q
+            else:
+                qv = query_vec
+            sims = np.dot(self._sys_proto_matrix, qv)
+            return float(np.max(sims))
+        except Exception as e:
+            logger.warning(f"[IntentRouter] Lỗi tính tương đồng system identity ({e}).")
+            return 0.0
+
+    def is_social_acknowledgment(self, raw_prompt: str) -> tuple[bool, float]:
+        """
+        Conversational Closure & Social Acknowledgment Gate (Nhận diện cảm thán / tiếp thu / đóng lượt):
+        Kiểm tra vắng mặt câu hỏi nghi vấn ('?' hoặc từ hỏi kỹ thuật),
+        BẮT BUỘC có acknowledgment_signatures từ manifest, KHÔNG chứa từ xin giải hộ,
+        và đo Cosine với acknowledgment_prototypes đạt >= settings.ROUTER_SOCIAL_ACK_THRESHOLD (0.80).
+        """
+        clean_p = self._normalize_text(raw_prompt)
+        if not clean_p:
+            return (False, 0.0)
+
+        # Nếu có dấu '?', đây là câu hỏi nghi vấn, không phải câu cảm thán/tiếp thu thuần túy
+        if "?" in clean_p:
+            return (False, 0.0)
+
+        # Kiểm tra từ để hỏi kỹ thuật mở đầu
+        lower_p = clean_p.lower()
+        question_starters = tuple(self._manifest_data.get("question_starters", ()))
+        if any(lower_p.startswith(w) for w in question_starters):
+            return (False, 0.0)
+
+        # Kiểm tra acknowledgment_signatures từ manifest
+        ack_sigs = self._manifest_data.get("acknowledgment_signatures", [])
+        has_ack_sig = any(sig in lower_p for sig in ack_sigs)
+        if not has_ack_sig:
+            return (False, 0.0)
+
+        # Loại trừ các yêu cầu giải hộ / xin code hoàn chỉnh
+        solicitation_words = tuple(self._manifest_data.get("solicitation_words", ()))
+        if any(w in lower_p for w in solicitation_words):
+            return (False, 0.0)
+
+        self._ensure_chitchat_prototypes()
+
+        max_sim = 0.0
+        # Đo tương đồng với acknowledgment prototypes
+        if self._ack_proto_matrix is not None and len(self._ack_proto_matrix) > 0:
+            try:
+                emb_svc = get_embedding_service()
+                qv = np.array(emb_svc.embed_query_dense(clean_p), dtype=np.float32)
+                norm_q = np.linalg.norm(qv)
+                if norm_q > 0:
+                    qv /= norm_q
+                sims = np.dot(self._ack_proto_matrix, qv)
+                max_sim = float(np.max(sims))
+            except Exception as e:
+                logger.warning(f"[IntentRouter] Lỗi tính acknowledgment similarity: {e}")
+
+        # KHÔNG gộp get_pure_social_similarity ở đây để tránh anisotropic cone của E5
+        is_ack = has_ack_sig and (max_sim >= settings.ROUTER_SOCIAL_ACK_THRESHOLD)
+        return (is_ack, max_sim)
+
+    def is_curriculum_navigation(self, prompt: str) -> tuple[bool, float]:
+        """
+        Curriculum Navigation Recognition Gate (Nhận diện câu hỏi lộ trình giáo trình):
+        BẮT BUỘC có curriculum_navigation_signatures từ manifest VÀ đo Cosine với curriculum_navigation_prototypes >= 0.78.
+        """
+        clean_p = self._normalize_text(prompt)
+        if not clean_p:
+            return (False, 0.0)
+
+        lower_p = clean_p.lower()
+        nav_sigs = self._manifest_data.get("curriculum_navigation_signatures", [])
+        has_nav_sig = any(sig in lower_p for sig in nav_sigs)
+        if not has_nav_sig:
+            return (False, 0.0)
+
+        self._ensure_chitchat_prototypes()
+        if self._curriculum_nav_proto_matrix is None or len(self._curriculum_nav_proto_matrix) == 0:
+            return (False, 0.0)
+
+        try:
+            emb_svc = get_embedding_service()
+            qv = np.array(emb_svc.embed_query_dense(clean_p), dtype=np.float32)
+            norm_q = np.linalg.norm(qv)
+            if norm_q > 0:
+                qv /= norm_q
+            sims = np.dot(self._curriculum_nav_proto_matrix, qv)
+            max_sim = float(np.max(sims))
+            return (max_sim >= 0.78, max_sim)
+        except Exception as e:
+            logger.warning(f"[IntentRouter] Lỗi tính curriculum navigation similarity: {e}")
+            return (False, 0.0)
+
+    def has_domain_entity(self, prompt: str) -> bool:
+        """
+        Kiểm tra xem văn bản có chứa thực thể kỹ thuật C++ từ bilingual_entity_mappings hay không.
+        Zero Regex, Data-Driven hoàn toàn từ router_intent_manifest.json (Mục 5.2 - Nhịp 1B).
+        """
+        clean_text = self._normalize_text(prompt).lower()
+        if not clean_text:
+            return False
+
+        entity_maps = self._manifest_data.get("bilingual_entity_mappings", {})
+        for entity_key, synonyms in entity_maps.items():
+            if entity_key in clean_text:
+                return True
+            for syn in synonyms:
+                if syn.lower() in clean_text:
+                    return True
+        return False
+
+    def compute_drift_similarity(self, prompt: str, anchor_query: Optional[str]) -> float:
+        """
+        Tính độ tương đồng Cosine trôi ngữ nghĩa (Topic Drift Cosine Similarity):
+        Sim_drift = e(prompt) . e(anchor_query) trên không gian E5 1024-dim chuẩn hóa.
+        """
+        clean_p = self._normalize_text(prompt)
+        clean_anchor = self._normalize_text(anchor_query or "")
+        if not clean_p or not clean_anchor:
+            return 0.0
+
+        try:
+            emb_svc = get_embedding_service()
+            v1 = np.array(emb_svc.embed_query_dense(clean_p), dtype=np.float32)
+            v2 = np.array(emb_svc.embed_query_dense(clean_anchor), dtype=np.float32)
+            norm1 = np.linalg.norm(v1)
+            norm2 = np.linalg.norm(v2)
+            if norm1 > 0 and norm2 > 0:
+                return float(np.dot(v1 / norm1, v2 / norm2))
+            return 0.0
+        except Exception as e:
+            logger.warning(f"[IntentRouter] Lỗi tính drift similarity: {e}")
+            return 0.0
+
+    def is_context_dependent(self, prompt: str, anchor_query: Optional[str] = None) -> bool:
+        """
+        Phán định tính phụ thuộc ngữ cảnh D(u_t) (Context Dependency Detector - Zero Hardcoded Entity):
+        Thỏa mãn ít nhất một trong 2 điều kiện chuẩn SIGIR/ICLR 2025:
+        1. Linguistic Anaphora Signatures: Chứa chỉ từ hồi chỉ cấu trúc tiếng Việt từ manifest.
+        2. Elliptical Fragmentary Interrogative: Câu hỏi ngắn (len <= 7 words) kết thúc bằng '?'.
+        (Đã loại bỏ hoàn toàn điều kiện Cosine similarity thô do anisotropic cone của E5).
+        """
+        clean_p = self._normalize_text(prompt)
+        if not clean_p:
+            return False
+
+        # 1. Anaphora Signatures từ manifest JSON
+        anaphora_sigs = self._manifest_data.get("anaphora_signatures", [])
+        clean_lower = f" {clean_p.lower()} "
+        for sig in anaphora_sigs:
+            sig_clean = sig.strip().lower()
+            if not sig_clean:
+                continue
+            if f" {sig_clean} " in clean_lower or clean_lower.startswith(f" {sig_clean} ") or clean_lower.endswith(f" {sig_clean} "):
+                return True
+
+        # 2. Elliptical Fragmentary Interrogative
+        words = clean_p.split()
+        if len(words) <= 7 and clean_p.endswith("?"):
+            return True
+
+        return False
+
+    def is_topic_shift(self, raw_prompt: str, anchor_query: str) -> tuple[bool, float]:
+        """
+        Semantic Drift Isolation Gate (Cách ly trôi ngữ nghĩa):
+        is_topic_shift <=> (Sim_drift < ROUTER_TOPIC_DRIFT_THRESHOLD) and not D(raw_prompt)
+        Trả về (True, sim) nếu phát hiện dịch chuyển chủ đề ngoài lề hoặc sang chủ đề độc lập mới.
+        """
+        clean_p = self._normalize_text(raw_prompt)
+        clean_anchor = self._normalize_text(anchor_query)
+        if not clean_anchor:
+            return (False, 1.0)
+
+        sim = self.compute_drift_similarity(clean_p, clean_anchor)
+
+        # Nếu câu hỏi có tính hồi chỉ/phụ thuộc ngữ cảnh thì bảo toàn luồng ngữ cảnh
+        if self.is_context_dependent(clean_p, anchor_query=clean_anchor):
+            return (False, sim)
+
+        if sim < settings.ROUTER_TOPIC_DRIFT_THRESHOLD:
+            return (True, sim)
+
+        return (False, sim)
 
     def _get_slm_probs(self, clean_prompt: str) -> Optional[np.ndarray]:
         """Tính phân phối xác suất Softmax qua Fast-Path SLM ONNX INT8."""
@@ -374,17 +624,39 @@ class IntentRouter:
             clf = self.classify(clean_raw)
             return clf, clean_raw
 
-        # 1. Kiểm định Pure Social Gate
+        # 1. Kiểm định Social Acknowledgment Gate
+        is_ack, ack_sim = self.is_social_acknowledgment(clean_raw)
+        if is_ack:
+            logger.info(f"[IntentRouter:Contextual] Phát ngôn cảm thán/tiếp thu học tập (Sim={ack_sim:.3f}): '{clean_raw[:35]}'")
+            resp = self._select_chitchat_response(clean_raw)
+            return RouterClassification(intent="chit_chat", direct_response=resp, is_course_query=False), clean_raw
+
+        # 2. Kiểm định Pure Social Gate
         is_soc, soc_sim = self.is_pure_social(clean_raw)
         if is_soc:
             logger.info(f"[IntentRouter:Contextual] Phát ngôn xã giao thuần khiết (Sim={soc_sim:.3f}): '{clean_raw[:35]}'")
             return self.classify(clean_raw), clean_raw
 
-        # 2. Xây dựng câu truy vấn hợp nhất theo chuẩn SIGIR
-        contextual_prompt = f"{clean_anchor} -> {clean_raw}"
-        search_query = f"{clean_anchor} {clean_raw}"
+        # 3. Kiểm định Topic Shift Gate (Semantic Drift Isolation)
+        is_shift, drift_sim = self.is_topic_shift(clean_raw, clean_anchor)
+        if is_shift:
+            logger.info(
+                f"[IntentRouter:Contextual] Phát hiện đổi chủ đề (DriftSim={drift_sim:.3f} < {settings.ROUTER_TOPIC_DRIFT_THRESHOLD}): "
+                f"Cô lập hoàn toàn khỏi anchor."
+            )
+            return self.classify(clean_raw), clean_raw
 
-        # 3. Tính phân phối xác suất SLM trên contextual_prompt và raw_prompt
+        # 4. Kiểm định Curriculum Navigation Gate
+        is_nav, nav_sim = self.is_curriculum_navigation(clean_raw)
+        if is_nav:
+            logger.info(f"[IntentRouter:Contextual] Phát hiện câu hỏi lộ trình giáo trình (NavSim={nav_sim:.3f}): '{clean_raw}'")
+            return RouterClassification(intent="course_query", direct_response=None, is_course_query=True), clean_raw
+
+        # 5. Xây dựng câu truy vấn hợp nhất theo chuẩn SIGIR
+        contextual_prompt = f"{clean_anchor} -> {clean_raw}"
+        search_query = f"{clean_anchor} — {clean_raw}"
+
+        # 6. Tính phân phối xác suất SLM trên contextual_prompt và raw_prompt
         p_raw = self._get_slm_probs(clean_raw)
         p_ctx = self._get_slm_probs(contextual_prompt)
 
@@ -467,6 +739,31 @@ class IntentRouter:
             )
 
         # ----------------------------------------------------
+        # 0b. TẦNG 0b: Exercise Statement Signatures (Data-Driven Manifest)
+        # ----------------------------------------------------
+        lower_prompt = clean_prompt.lower()
+        ex_sigs = self._manifest_data.get("exercise_statement_signatures", [])
+        if any(sig in lower_prompt for sig in ex_sigs):
+            logger.info(f"[IntentRouter] Nhận diện Exercise Statement signature: '{clean_prompt[:40]}...' -> course_query")
+            return RouterClassification(
+                intent="course_query",
+                direct_response=None,
+                is_course_query=True
+            )
+
+        # ----------------------------------------------------
+        # 0c. TẦNG 0c: Curriculum Navigation Gate (Data-Driven Manifest)
+        # ----------------------------------------------------
+        is_nav, nav_sim = self.is_curriculum_navigation(clean_prompt)
+        if is_nav:
+            logger.info(f"[IntentRouter] Nhận diện Curriculum Navigation (Sim={nav_sim:.3f}): '{clean_prompt[:40]}...' -> course_query")
+            return RouterClassification(
+                intent="course_query",
+                direct_response=None,
+                is_course_query=True
+            )
+
+        # ----------------------------------------------------
         # 1. TẦNG 1: Fast-Path SLM ONNX INT8 Deep Neural Classifier (0% LinearSVC)
         # ----------------------------------------------------
         if self._slm_session is not None:
@@ -500,39 +797,62 @@ class IntentRouter:
                     )
 
                     # ----------------------------------------------------
+                    # 0d. TẦNG 0d: System Identity & Socratic Pedagogy Prototype Gate (100% Vector Cosine, Zero Hardcode)
+                    # ----------------------------------------------------
+                    sim_sys = self.get_system_identity_similarity(clean_prompt, query_vec=query_vec)
+                    if sim_sys >= 0.88 and p_chit >= 0.15:
+                        logger.info(
+                            f"[IntentRouter] Tầng 0d Prototype Gate (sim_sys={sim_sys:.4f}, p_chit={p_chit:.3f}) -> chit_chat"
+                        )
+                        return RouterClassification(
+                            intent="chit_chat",
+                            direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
+                            is_course_query=False
+                        )
+
+                    # ----------------------------------------------------
                     # ĐIỀU PHỐI CASCADE: STAGE 1 (ENSEMBLE) -> STAGE 2 (NLI ARBITER)
-                    # Cổng độ trễ đa chiều Bi-Directional Entropy/Margin Gate
+                    # Cổng độ trễ đa chiều Bi-Directional Entropy/Margin Gate (Mục 2.2 - Nhịp 1B / Nhịp 2)
                     # ----------------------------------------------------
                     is_ambiguous_slm = (
-                        (margin < 0.18) or
-                        (top1_class == "out_of_scope" and p_course >= 0.22) or
-                        (top1_class == "course_query" and (p_oos >= 0.28 or p_chit >= 0.25))
+                        (margin < 0.22) or
+                        (top1_class == "out_of_scope" and (p_course >= 0.16 or is_nav)) or
+                        (top1_class == "course_query" and (p_oos >= 0.22 or p_chit >= 0.18)) or
+                        (top1_class == "chit_chat" and (p_course >= 0.20 or p_oos >= 0.25))
                     )
 
                     if is_ambiguous_slm:
                         logger.info(
                             f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter ({mode_tag}): "
                             f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, "
-                            f"P_course={p_course:.3f}, P_chit={p_chit:.3f}, P_oos={p_oos:.3f}"
+                            f"P_course={p_course:.3f}, P_chit={p_chit:.3f}, P_oos={p_oos:.3f}, "
+                            f"is_nav={is_nav}"
                         )
                         nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
-                        if nli_intent == "course_query" and (nli_conf >= 0.50 or p_course >= 0.35):
+                        if is_nav:
+                            logger.info(f"[IntentRouter-Cascade] Curriculum Navigation bảo chứng -> course_query")
+                            return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                        elif nli_intent == "course_query" and (nli_conf >= 0.45 or (nli_conf >= 0.38 and p_course >= 0.30)):
                             logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> course_query ({nli_conf*100:.1f}%)")
                             return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                        elif nli_intent == "chit_chat" and (nli_conf >= 0.55 or (nli_conf >= 0.42 and p_chit >= 0.30)):
+                        elif nli_intent == "chit_chat" and (nli_conf >= 0.50 or (nli_conf >= 0.38 and p_chit >= 0.22)):
                             logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> chit_chat ({nli_conf*100:.1f}%)")
                             return RouterClassification(
                                 intent="chit_chat",
                                 direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
                                 is_course_query=False
                             )
-                        elif nli_intent == "out_of_scope" and nli_conf >= 0.65:
+                        elif nli_intent == "out_of_scope" and (nli_conf >= 0.58 or (nli_conf >= 0.48 and p_oos >= 0.40)):
                             logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> out_of_scope ({nli_conf*100:.1f}%)")
                             return RouterClassification(
                                 intent="out_of_scope",
                                 direct_response=OFFTOPIC_CASUAL_RESPONSES,
                                 is_course_query=False
                             )
+
+                    if top1_class == "out_of_scope" and is_nav:
+                        logger.info(f"[IntentRouter] Post-SLM Curriculum Navigation Rescue -> course_query")
+                        return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
 
                     if top1_class == "course_query":
                         return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)

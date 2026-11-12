@@ -34,37 +34,87 @@ def _normalize_text(text: str) -> str:
     return " ".join(text.split())
 
 
+def _has_modifier_conflict(
+    prompt: str,
+    candidate_lesson: Dict[str, Any],
+    top_lesson: Optional[Dict[str, Any]] = None,
+    conflict_groups: Optional[List[Tuple[set, set]]] = None
+) -> bool:
+    """
+    Kiểm tra xung đột định ngữ giữa câu hỏi và bài học ứng viên.
+    Nếu câu hỏi yêu cầu định ngữ A (ví dụ '2 chiều', 'hai chiều') mà bài ứng viên lại thuộc định ngữ B ('1 chiều', 'một chiều'),
+    hoặc top_lesson bảo toàn đúng định ngữ của câu hỏi còn candidate_lesson làm mất định ngữ đó, trả về True (Xung đột).
+    Khi xảy ra xung đột, cấm tuyệt đối việc hoán đổi sang bài ứng viên này (Triệt tiêu lỗi Mảng 2 chiều -> Bài 12).
+    """
+    norm_prompt = _normalize_text(prompt)
+    cand_text = _normalize_text(
+        candidate_lesson.get("title", "") + " " + " ".join(candidate_lesson.get("keywords", []))
+    )
+
+    active_groups = conflict_groups or []
+
+    for set_a, set_b in active_groups:
+        prompt_has_a = any(m in norm_prompt for m in set_a)
+        prompt_has_b = any(m in norm_prompt for m in set_b)
+
+        cand_has_a = any(m in cand_text for m in set_a)
+        cand_has_b = any(m in cand_text for m in set_b)
+
+        if prompt_has_b and cand_has_a and not cand_has_b:
+            return True
+        if prompt_has_a and cand_has_b and not cand_has_a:
+            return True
+
+        if top_lesson:
+            top_text = _normalize_text(
+                top_lesson.get("title", "") + " " + " ".join(top_lesson.get("keywords", []))
+            )
+            top_has_a = any(m in top_text for m in set_a)
+            top_has_b = any(m in top_text for m in set_b)
+            if prompt_has_b and top_has_b and not cand_has_b:
+                return True
+            if prompt_has_a and top_has_a and not cand_has_a:
+                return True
+
+    return False
+
+
 def _has_topical_overlap(
     lesson: Dict[str, Any],
     prompt: str,
-    stop_words: Optional[set] = None
+    stop_words: Optional[set] = None,
+    conflict_groups: Optional[List[Tuple[set, set]]] = None,
+    domain_tokens: Optional[set] = None
 ) -> bool:
     """
     Kiểm tra xem bài học có từ khóa hoặc tiêu đề thực sự chứa khái niệm trong câu hỏi hay không.
-    Đối chiếu trực tiếp token/bigram của câu hỏi với lesson['title'] và lesson['keywords'] từ manifest JSON (Zero Hardcoded Keys).
+    Áp dụng N-gram Modifier Preservation: Kiểm tra xung đột định ngữ trước, sau đó đối chiếu N-grams (3-gram, bigram).
+    Triệt tiêu hiện tượng unigram đơn lẻ ('mảng') làm sai lệch phân loại bài học.
     """
+    if _has_modifier_conflict(prompt, lesson, conflict_groups=conflict_groups):
+        return False
+
     norm_prompt = prompt.lower()
     active_stops = stop_words or set()
     clean_words = "".join(c if c.isalnum() else " " for c in norm_prompt).split()
     tokens = [w for w in clean_words if w not in active_stops and len(w) > 1]
 
     title_lower = lesson.get("title", "").lower()
-    title_words = set("".join(c if c.isalnum() else " " for c in title_lower).split())
     keywords = [k.lower() for k in lesson.get("keywords", [])]
-    keyword_words = set()
-    for kw in keywords:
-        keyword_words.update("".join(c if c.isalnum() else " " for c in kw).split())
 
-    # 1. Kiểm tra cụm 2 từ liên tiếp (bigram)
-    for i in range(len(tokens) - 1):
-        bigram = f"{tokens[i]} {tokens[i+1]}"
-        if bigram in title_lower or any(bigram in k for k in keywords):
-            return True
+    # 1. Kiểm tra cụm 3 từ (trigram) và 2 từ liên tiếp (bigram)
+    for n in (3, 2):
+        for i in range(len(tokens) - n + 1):
+            ngram = " ".join(tokens[i : i + n])
+            if ngram in title_lower or any(ngram in k for k in keywords):
+                return True
 
-    # 2. Kiểm tra đối chiếu trực tiếp token với từ vựng trong tiêu đề và danh sách keywords của bài học
+    # 2. Khớp các từ khóa kỹ thuật nạp từ manifest (chỉ khi từ khóa dài > 3 ký tự hoặc là thuật ngữ C++ chuyên biệt)
+    domain_specific_tokens = domain_tokens or set()
     for t in tokens:
-        if t in keyword_words or t in title_words or any(t == k for k in keywords):
+        if t in domain_specific_tokens and (t in title_lower or any(t == k for k in keywords)):
             return True
+
     return False
 
 
@@ -87,6 +137,14 @@ class CurriculumService:
         self._overview_vectors: Optional[np.ndarray] = None
         self._current_lesson_refs: List[str] = []
         self._stop_words: set = set()
+        self._modifier_conflict_groups: List[Tuple[set, set]] = []
+        self._domain_specific_tokens: set = set()
+        self._action_verbs: Tuple[str, ...] = ()
+        self._question_starters: Tuple[str, ...] = ()
+        self._intro_navigation_markers: List[str] = []
+        self._introductory_lesson_seqs: List[int] = []
+        self._introductory_text_markers: List[str] = []
+        self._exercise_statement_signatures: List[str] = []
         self._load_manifest()
         self._load_bindings()
         self._load_syllabus_embeddings()
@@ -109,6 +167,33 @@ class CurriculumService:
                         _normalize_text(p) for p in nav_meta.get("current_lesson_refs", [])
                     ]
                     self._stop_words = set(nav_meta.get("stop_words", []))
+
+                    # Nạp metadata_rules (Data/Code Separation)
+                    meta_rules = data.get("metadata_rules", {})
+                    raw_mcg = meta_rules.get("modifier_conflict_groups", [])
+                    if raw_mcg:
+                        self._modifier_conflict_groups = [
+                            (set(group[0]), set(group[1])) for group in raw_mcg if len(group) == 2
+                        ]
+                    if "domain_specific_tokens" in meta_rules:
+                        self._domain_specific_tokens = set(meta_rules["domain_specific_tokens"])
+                    if "action_verbs" in meta_rules:
+                        self._action_verbs = tuple(meta_rules["action_verbs"])
+                    if "question_starters" in meta_rules:
+                        self._question_starters = tuple(_normalize_text(q) for q in meta_rules["question_starters"])
+                    if "intro_navigation_markers" in meta_rules:
+                        self._intro_navigation_markers = meta_rules["intro_navigation_markers"]
+                    if "introductory_lesson_seqs" in meta_rules:
+                        self._introductory_lesson_seqs = meta_rules["introductory_lesson_seqs"]
+                    if "introductory_text_markers" in meta_rules:
+                        self._introductory_text_markers = [
+                            _normalize_text(m) for m in meta_rules["introductory_text_markers"]
+                        ]
+                    if "exercise_statement_signatures" in meta_rules:
+                        self._exercise_statement_signatures = [
+                            _normalize_text(s) for s in meta_rules["exercise_statement_signatures"]
+                        ]
+
                     # Tạo danh sách phẳng toàn bộ 83 bài học
                     self._all_lessons = []
                     for c_id, c_data in self._courses.items():
@@ -212,6 +297,36 @@ class CurriculumService:
                 return bool(les.get("is_foundational", False))
         return False
 
+    def is_revision_of(self, target_seq: int, base_seq: int) -> bool:
+        """
+        Kiểm tra xem target_seq có phải là bài ôn tập/bài tập/cập nhật của base_seq từ manifest JSON không.
+        Tuân thủ Revision Non-Dominance Invariant (bảo vệ học viên tại bài gốc không bị đá sang bài update).
+        """
+        for les in self._all_lessons:
+            if les.get("seq") == target_seq:
+                return bool(les.get("is_revision", False) and les.get("updates_lesson_seq") == base_seq)
+        return False
+
+    def is_introductory_overview_chunk(self, chunk: Dict[str, Any]) -> bool:
+        """
+        Kiểm tra xem chunk tài liệu có phải là video giới thiệu tổng quan đầu khóa (nạp từ manifest) hay không.
+        Tuân thủ Data/Code Separation Invariant (triệt tiêu toàn bộ hardcode số bài hoặc chuỗi 'giới thiệu').
+        """
+        seq = chunk.get("lesson_seq", 0)
+        if seq in self._introductory_lesson_seqs:
+            raw_text_prefix = _normalize_text(chunk.get("raw_text", "")[:60])
+            return any(m in raw_text_prefix for m in self._introductory_text_markers)
+        return False
+
+    def is_exercise_statement(self, text: str) -> bool:
+        """
+        Nhận diện câu nói chứa đề bài hoặc yêu cầu bài tập của học viên nạp từ manifest JSON (0% Hardcode).
+        """
+        if not text:
+            return False
+        norm_text = _normalize_text(text)
+        return any(sig in norm_text for sig in self._exercise_statement_signatures)
+
     def is_navigation_query(self, prompt: str) -> bool:
         """
         Nhận diện xem học viên có đang đặt câu hỏi điều hướng lộ trình / playlist
@@ -279,6 +394,44 @@ class CurriculumService:
                     return int(nxt)
         return None
 
+    @classmethod
+    def extract_direct_navigation_command(cls, prompt: str) -> Optional[int]:
+        """
+        Nhận diện mệnh lệnh điều khiển UI chuyển bài trực tiếp từ học viên (Zero Hardcoded Patterns).
+        Ví dụ: 'hãy chuyển giùm tôi đến bài 12', 'chuyển sang bài 5 giúp em', 'mở bài 10', 'tới bài 7', 'tua sang bài 12'.
+        Trả về target_lesson_seq hoặc None.
+        Nếu câu hỏi mang tính nghi vấn (chứa '?' hoặc từ để hỏi), trả về None để nhường quyền cho IntentRouter và RetrievalService.
+        """
+        if "?" in prompt:
+            return None
+        norm = _normalize_text(prompt)
+        try:
+            curriculum_svc = get_curriculum_service()
+            action_verbs = curriculum_svc._action_verbs
+            question_starters = curriculum_svc._question_starters
+        except Exception:
+            action_verbs = ()
+            question_starters = ()
+
+        if any(qs in norm for qs in question_starters):
+            return None
+
+        has_nav_action = any(v in norm for v in action_verbs)
+        if has_nav_action:
+            words = [w.strip(".,;:?!'\"-") for w in norm.split()]
+            for i, w in enumerate(words):
+                if w in ("bài", "lesson") and i + 1 < len(words):
+                    nxt = words[i + 1]
+                    if nxt == "số" and i + 2 < len(words) and words[i + 2].isdigit():
+                        return int(words[i + 2])
+                    elif nxt.isdigit():
+                        return int(nxt)
+        return None
+
+    def get_course_ids(self) -> List[str]:
+        """Trả về danh sách định danh các khóa học nạp từ manifest (Data/Code Separation)."""
+        return list(self._courses.keys())
+
     def get_lesson_timestamps(self, seq: int) -> List[Dict[str, Any]]:
         """Lấy danh sách các mốc thời gian video chuẩn xác của bài học."""
         prefix = f"lesson-{seq:02d}:"
@@ -342,17 +495,65 @@ class CurriculumService:
                         if _has_topical_overlap(best_curr_lesson, prompt, self._stop_words):
                             target_course = preferred_course_id
 
-            # Trong target_course, chọn bài học lý thuyết tiên quyết:
+            # Trong target_course, chọn bài học phù hợp nhất dựa trên Semantic Dominance & Prerequisite Order
             course_cands = [c for c in semantic_results if c[1].get("course_id") == target_course]
             best_course_score, best_course_lesson = course_cands[0]
-            
-            chosen_score, chosen_lesson = best_course_score, best_course_lesson
-            for cand_score, cand_lesson in course_cands[1:]:
-                # Chỉ xem xét bài đến trước nếu điểm cực sát (chênh <= 0.02)
-                if best_course_score - cand_score <= 0.02:
-                    if cand_lesson.get("seq", 999) < chosen_lesson.get("seq", 999):
-                        if _has_topical_overlap(cand_lesson, prompt, self._stop_words):
-                            chosen_score, chosen_lesson = cand_score, cand_lesson
+
+            is_intro_query = any(m in norm_prompt for m in self._intro_navigation_markers)
+
+            # DAG Prerequisite Root Selection (Mục 3.1 - Nhịp 1B / Nhịp 2):
+            # Lọc các nút nền tảng (is_foundational và KHÔNG phải is_revision) trong target_course không có xung đột định ngữ
+            foundational_cands = [
+                c for c in course_cands
+                if c[1].get("is_foundational", False)
+                and not c[1].get("is_revision", False)
+                and not _has_modifier_conflict(prompt, c[1], top_lesson=best_course_lesson, conflict_groups=self._modifier_conflict_groups)
+            ]
+
+            if foundational_cands:
+                # Nút tiên quyết có số thứ tự nhỏ nhất (min seq) trong các nút nền tảng (Bài 53 cho cpp-oop)
+                root_cand = min(foundational_cands, key=lambda c: c[1].get("seq", 999))
+                root_score, root_lesson = root_cand
+
+                # Nếu là câu hỏi mở đầu/lộ trình (is_intro_query) hoặc điểm root rất sát top (chênh <= 0.12)
+                if is_intro_query or (best_course_score - root_score <= 0.12):
+                    chosen_score, chosen_lesson = root_score, root_lesson
+                else:
+                    chosen_score, chosen_lesson = best_course_score, best_course_lesson
+            else:
+                chosen_score, chosen_lesson = best_course_score, best_course_lesson
+
+            is_top_dominant = (best_course_score >= 0.85)
+
+            for cand_score, cand_lesson in course_cands:
+                if cand_lesson.get("seq") == chosen_lesson.get("seq"):
+                    continue
+
+                # Kiểm tra xung đột định ngữ: nếu xung đột, cấm tuyệt đối hoán đổi
+                if _has_modifier_conflict(prompt, cand_lesson, top_lesson=best_course_lesson, conflict_groups=self._modifier_conflict_groups):
+                    continue
+
+                # Revision Non-Dominance: Bài ôn tập / cập nhật không cướp quyền bài gốc
+                if cand_lesson.get("is_revision", False) and cand_lesson.get("updates_lesson_seq") == chosen_lesson.get("seq"):
+                    continue
+
+                cand_seq = cand_lesson.get("seq", 999)
+                chosen_seq = chosen_lesson.get("seq", 999)
+
+                # Prerequisite Dominance Rule: Nút đến sau chỉ được thay thế nút gốc nếu chênh lệch áp đảo (> 0.15) và không phải câu hỏi mở đầu lộ trình
+                if cand_seq > chosen_seq:
+                    if (cand_score - chosen_score > 0.15) and not is_intro_query:
+                        chosen_score, chosen_lesson = cand_score, cand_lesson
+                else:
+                    # Nút có thứ tự sớm hơn
+                    if is_top_dominant:
+                        if (best_course_score - cand_score) <= 0.012:
+                            if _has_topical_overlap(cand_lesson, prompt, self._stop_words, conflict_groups=self._modifier_conflict_groups, domain_tokens=self._domain_specific_tokens):
+                                chosen_score, chosen_lesson = cand_score, cand_lesson
+                    else:
+                        if (best_course_score - cand_score) <= 0.03:
+                            if _has_topical_overlap(cand_lesson, prompt, self._stop_words, conflict_groups=self._modifier_conflict_groups, domain_tokens=self._domain_specific_tokens):
+                                chosen_score, chosen_lesson = cand_score, cand_lesson
 
             logger.info(
                 f"[CurriculumService:SemanticMatch] '{prompt[:35]}...' -> "

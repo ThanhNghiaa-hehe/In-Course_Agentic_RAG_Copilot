@@ -373,24 +373,34 @@ class RetrievalService:
         sparse_indices: List[int],
         sparse_values: List[float],
         course_id: str,
-        current_lesson_seq: int
+        current_lesson_seq: int,
+        allow_cross_course: bool = False
     ) -> List[Any]:
         """
         [CHẶNG 6 SÁNG KIẾN 2: SCATTER-GATHER CONCURRENCY]
         Tải trước ứng viên điểm vector từ các bài học tương lai (> current_lesson_seq).
         Chạy song song (asynchronous) với lượt truy vấn bài hiện tại qua asyncio.gather,
         cắt giảm hoàn toàn 1 lượt Network RTT (~250-350ms) tới Qdrant Cloud.
+        Chỉ mở rộng cross-course (cpp-core <-> cpp-oop) khi allow_cross_course=True (điều hướng lộ trình).
         """
+        from app.services.curriculum import get_curriculum_service
+        c_svc = get_curriculum_service()
+        cpp_track_courses = c_svc.get_course_ids()
+        course_condition = (
+            models.FieldCondition(key="course_id", match=models.MatchAny(any=cpp_track_courses))
+            if (allow_cross_course and course_id in cpp_track_courses)
+            else models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id))
+        )
         future_code_filter = models.Filter(
             must=[
-                models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
+                course_condition,
                 models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq)),
                 models.FieldCondition(key="content_type", match=models.MatchValue(value="code_ast"))
             ]
         )
         future_video_filter = models.Filter(
             must=[
-                models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
+                course_condition,
                 models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq)),
                 models.FieldCondition(key="content_type", match=models.MatchValue(value="video_transcript"))
             ]
@@ -492,8 +502,17 @@ class RetrievalService:
                 fused_score = min(1.0, max(0.0, (1.0 - w_eff) * raw_prob + w_eff * rrf_norm))
                 scores.append(fused_score)
         except Exception as re_err:
-            logger.warning(f"[RetrievalService] Lỗi rerank future probe ({re_err}), dùng RRF score.")
-            scores = [float(hit.score) for hit in future_points]
+            logger.warning(f"[RetrievalService] Lỗi rerank future probe ({re_err}), dùng Calibrated RRF Fallback.")
+            all_rrfs = [float(hit.score) for hit in future_points] if future_points else [0.0]
+            min_rrf = min(all_rrfs) if all_rrfs else 0.0
+            max_rrf = max(all_rrfs) if all_rrfs else 1.0
+            scores = []
+            for hit in future_points:
+                r_i = float(hit.score)
+                r_norm = (r_i - min_rrf) / (max_rrf - min_rrf + 1e-6)
+                r_norm = min(1.0, max(0.0, r_norm))
+                # Calibrated Min-Max Scaling (Mục 1.3): S_fallback = 0.20 + 0.25 * r_norm
+                scores.append(0.20 + 0.25 * r_norm)
 
         # 1. Tìm ứng viên có điểm tuyệt đối cao nhất
         best_idx = 0
@@ -559,7 +578,12 @@ class RetrievalService:
                 "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
                 "video_title": best_p.get("video_title", f"Bài giảng Bài {target_seq}"),
                 "content_type": chosen_chunk_type,
-                "score": chosen_score
+                "score": chosen_score,
+                "raw_text": sanitize_text(best_p.get("raw_text", "")),
+                "context_code": best_p.get("context_code", ""),
+                "code_scope": best_p.get("code_scope", ""),
+                "timestamp_tag": best_p.get("timestamp_tag", ""),
+                "approx_video_sec": best_p.get("approx_video_sec")
             }
         return target_seq, max_score, best_chunk_type, best_future_chunk
 
@@ -596,6 +620,8 @@ class RetrievalService:
         min_score_threshold: Optional[float] = None,
         code_score_threshold: Optional[float] = None,
         video_score_threshold: Optional[float] = None,
+        is_curriculum_navigation: bool = False,
+        is_continuation_turn: bool = False,
     ) -> RetrievalResult:
         """
         Thực hiện tìm kiếm ngữ cảnh bài học bất đồng bộ (non-blocking).
@@ -607,6 +633,15 @@ class RetrievalService:
         logger.info(
             f"[RetrievalService] Query: '{query_text}' | Course: {course_id} | Window: lesson_seq <= {current_lesson_seq}"
         )
+
+        if not is_curriculum_navigation:
+            try:
+                from app.agent.router import get_intent_router
+                is_nav, _ = get_intent_router().is_curriculum_navigation(query_text)
+                if is_nav:
+                    is_curriculum_navigation = True
+            except Exception:
+                pass
 
 
         # 1. Sinh Dual Vectors bất đồng bộ / fast ONNX (Áp dụng Compiler Error Semantic Bridge nếu có)
@@ -698,7 +733,8 @@ class RetrievalService:
             sparse_indices=sparse_indices,
             sparse_values=sparse_values,
             course_id=course_id,
-            current_lesson_seq=current_lesson_seq
+            current_lesson_seq=current_lesson_seq,
+            allow_cross_course=is_curriculum_navigation
         )
 
         # Chạy đồng thời 2 luồng mạng I/O qua asyncio.gather, tiết kiệm 1 Network RTT (~250-350ms)
@@ -828,13 +864,19 @@ class RetrievalService:
 
         for i, item in enumerate(candidate_items):
             score_val = raw_logits[i] if i < len(raw_logits) else 0.0
-            raw_prob = score_val if is_fallback_rrf else compute_length_compensated_sigmoid(score_val, rerank_query)
-
-            # CRAG Joint Confidence Fusion (Meta AI 2024 & Self-RAG ICLR 2024)
-            # Semantic-Gated RRF Fusion: ngăn nhiễu RRF thổi phồng ứng viên có raw_prob thấp
             rrf_raw = float(item.get("rrf_score", 0.0))
             rrf_norm = (rrf_raw - min_rrf) / (max_rrf - min_rrf + 1e-6)
             rrf_norm = min(1.0, max(0.0, rrf_norm))
+
+            if is_fallback_rrf:
+                # Calibrated Min-Max Scaling cho RRF Fallback (Mục 1.3 - Nhịp 1B)
+                # Bảo toàn Top 1: 0.20 + 0.25 = 0.45 >= 0.35; Bottom: 0.20 < 0.22 (lọc bỏ tự nhiên)
+                raw_prob = 0.20 + 0.25 * rrf_norm
+            else:
+                raw_prob = compute_length_compensated_sigmoid(score_val, rerank_query)
+
+            # CRAG Joint Confidence Fusion (Meta AI 2024 & Self-RAG ICLR 2024)
+            # Semantic-Gated RRF Fusion: ngăn nhiễu RRF thổi phồng ứng viên có raw_prob thấp
             c_type = item.get("content_type", "video_transcript")
             w_max = settings.CRAG_RRF_WEIGHT
             gate_pivot = 0.20 if c_type == "code_ast" else 0.28
@@ -909,7 +951,14 @@ class RetrievalService:
         # -------------------------------------------------------------------------
         # TẦNG 1: GROUNDED ANCHOR & MODALITY-AWARE EARLY EXIT (An toàn tuyệt đối)
         # -------------------------------------------------------------------------
-        if specific_ast_items and max_specific_code_score >= 0.42:
+        has_strong_ast_grounding = (
+            len(specific_ast_items) > 0
+            and (
+                max_specific_code_score >= 0.46
+                or (max_specific_code_score >= 0.40 and max_video_score >= settings.VIDEO_SCORE_THRESHOLD)
+            )
+        )
+        if not is_curriculum_navigation and has_strong_ast_grounding:
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,
                 code_items=valid_ast_items,
@@ -918,8 +967,8 @@ class RetrievalService:
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
-                f"[RetrievalService] Tầng 1 Early Exit (Specific Code AST Anchor >= 0.42): "
-                f"Khóa GROUNDED thành công (max_specific_code_score={max_specific_code_score:.4f})."
+                f"[RetrievalService] Tầng 1 Early Exit (Specific Code AST Anchor >= 0.46 or balanced >= 0.40): "
+                f"Khóa GROUNDED thành công (max_specific_code_score={max_specific_code_score:.4f}, max_video={max_video_score:.4f})."
             )
             return RetrievalResult(
                 chunks=final_assembled,
@@ -927,7 +976,7 @@ class RetrievalService:
                 is_low_confidence=False
             )
 
-        if valid_video_items and max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
+        if not is_curriculum_navigation and valid_video_items and max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
             eligible_code_items = [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
@@ -958,47 +1007,131 @@ class RetrievalService:
             query_text=dense_query_text if has_bridge else query_text
         )
 
-        if only_boilerplate_code:
-            max_current_score = max_video_score
+        if is_curriculum_navigation:
+            # Loại trừ các chunk video giới thiệu tổng quan Bài 1/2 khỏi việc tính max_current_score
+            from app.services.curriculum import get_curriculum_service
+            c_svc = get_curriculum_service()
+            current_lesson_items = [
+                it for it in candidate_items
+                if not c_svc.is_introductory_overview_chunk(it)
+            ]
+            if only_boilerplate_code:
+                max_current_score = max_video_score
+            else:
+                max_current_score = max([it.get("confidence_score", 0.0) for it in current_lesson_items], default=0.0)
         else:
-            max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
+            if only_boilerplate_code:
+                max_current_score = max_video_score
+            else:
+                max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
 
         margin = future_score - max_current_score
 
-        if max_current_score < 0.22:
-            min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.33
-            margin_req = 0.11
-        elif max_current_score < 0.30:
-            min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.30
-            margin_req = 0.08 + (max_current_score - 0.22) * 0.25
-        elif max_current_score < 0.40:
-            min_future_floor = 0.38
-            margin_req = 0.10 + (max_current_score - 0.30) * 0.40
+        # Phân nhánh Pareto Dominance (ICLR 2025):
+        if is_curriculum_navigation:
+            # Phân nhánh 3A: Curriculum Navigation Dominance vs Introductory Video
+            min_future_floor = 0.18
+            margin_req = -0.35
+            logger.info(
+                f"[RetrievalService:Pareto 3A] Kích hoạt Curriculum Navigation Dominance: "
+                f"floor={min_future_floor}, margin_req={margin_req}"
+            )
+            if target_seq is None or future_score < 0.25 or is_curriculum_navigation:
+                try:
+                    from app.services.curriculum import get_curriculum_service
+                    c_svc = get_curriculum_service()
+                    c_match = c_svc.find_lesson_for_query(
+                        query_text,
+                        current_lesson_seq=current_lesson_seq,
+                        preferred_course_id=course_id,
+                    )
+                    if c_match:
+                        matched_lesson = c_match[0] if isinstance(c_match, (tuple, list)) else c_match
+                        if isinstance(matched_lesson, dict):
+                            c_seq = matched_lesson.get("seq") or matched_lesson.get("lesson_seq")
+                            c_course = matched_lesson.get("course_id", course_id)
+                            if c_seq is not None and (c_course != course_id or int(c_seq) > current_lesson_seq):
+                                target_seq = int(c_seq)
+                                future_score = max(future_score, 0.42)
+                                margin = future_score - max_current_score
+                                logger.info(f"[RetrievalService:Pareto 3A] Giải cứu target_seq qua CurriculumService: Khóa {c_course} - Bài {target_seq}")
+                except Exception as c_err:
+                    logger.warning(f"[RetrievalService:Pareto 3A] Lỗi giải cứu qua CurriculumService ({c_err})")
         else:
-            min_future_floor = 0.50
-            margin_req = 0.16 + (max_current_score - 0.40) * 0.50
+            # Kiểm tra exercise_statement_signatures từ CurriculumService (Data/Code Separation)
+            from app.services.curriculum import get_curriculum_service
+            c_svc = get_curriculum_service()
+            is_exercise_stmt = c_svc.is_exercise_statement(query_text)
+
+            # Phân nhánh 3B: Continuation & Exercise Shield + 4-Tier Pareto Sufficiency (ICLR 2025)
+            if (
+                (is_continuation_turn or is_exercise_stmt)
+                and max_any_video_score >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
+                and future_chunk_type != "code_ast"
+            ):
+                min_future_floor = 0.52
+                margin_req = 0.28
+                logger.info(
+                    f"[RetrievalService:Pareto 3B] Kích hoạt Continuation/Exercise Shield (cont={is_continuation_turn}, ex={is_exercise_stmt}): "
+                    f"floor={min_future_floor}, margin_req={margin_req}"
+                )
+            elif max_current_score < 0.22:
+                # Phân tầng (a): Bài hiện tại chưa có cơ sở giảng dạy
+                min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.33
+                margin_req = 0.11
+            elif max_current_score < 0.30:
+                # Phân tầng (b): Bài hiện tại ở dải văn nói lơ lửng, không có Code AST >= 0.35
+                min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.30
+                margin_req = 0.08 + (max_current_score - 0.22) * 0.25
+            elif max_current_score < 0.40:
+                # Phân tầng (c): Bài hiện tại có điểm video trung bình (0.30 <= S < 0.40) nhưng chưa có Code AST Anchor
+                min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.36
+                margin_req = 0.08 + (max_current_score - 0.30) * 0.25
+            else:
+                # Phân tầng (d): Bài hiện tại có độ tự tin rất cao
+                min_future_floor = 0.50
+                margin_req = 0.16 + (max_current_score - 0.40) * 0.50
 
         future_dominates = (
             target_seq is not None
+            and target_seq > current_lesson_seq
             and future_score >= min_future_floor
             and margin >= margin_req
         )
 
-        # Foundational Prerequisite Priority Rule v2.2 (Data-Driven Manifest Invariant - Zero Hardcoded Seq)
-        is_foundational = False
-        try:
-            from app.services.curriculum import get_curriculum_service
-            is_foundational = get_curriculum_service().is_foundational_lesson(current_lesson_seq)
-        except Exception:
-            is_foundational = current_lesson_seq in (1, 2, 53)
-
-        if (
-            is_foundational
-            and max_video_score >= 0.35
-            and future_chunk_type != "code_ast"
-            and future_score < 0.55
-        ):
+        if not is_curriculum_navigation and (is_continuation_turn or is_exercise_stmt) and future_chunk_type != "code_ast":
             future_dominates = False
+
+        # Foundational Prerequisite Priority Rule v2.3 & Revision Non-Dominance Shield (Zero Hardcoded Seq)
+        if not is_curriculum_navigation and target_seq is not None:
+            try:
+                from app.services.curriculum import get_curriculum_service
+                c_svc = get_curriculum_service()
+                is_foundational = c_svc.is_foundational_lesson(current_lesson_seq)
+                target_is_foundational = c_svc.is_foundational_lesson(target_seq)
+                is_target_revision = c_svc.is_revision_of(target_seq, current_lesson_seq)
+            except Exception:
+                is_foundational = False
+                target_is_foundational = False
+                is_target_revision = False
+
+            # Quy tắc 1: Revision Non-Dominance Shield (Bảo vệ học viên tại bài gốc khỏi bài update 2024-2026 / bài tập)
+            if is_target_revision:
+                future_dominates = False
+
+            # Quy tắc 2: Foundational Prerequisite Priority v2.3
+            if is_foundational:
+                if future_chunk_type == "code_ast":
+                    if max_video_score >= 0.22 and (future_score < settings.PARETO_DOMINANCE_CODE_FUTURE_MIN or margin < 0.20):
+                        future_dominates = False
+                elif max_video_score >= 0.35:
+                    # Nếu target_seq là một foundational node độc lập của chuyên đề mới (ví dụ Bài 6 for loop khi đang ở Bài 3 toán tử),
+                    # và bài hiện tại không có điểm khớp video thực chất rất cao (max_video_score < 0.40) hay Code AST anchor >= 0.35:
+                    # Cho phép future_dominates chuyển sang bài mới (giải quyết BENCH-092 mà bảo vệ BENCH-041)
+                    if target_is_foundational and max_video_score < 0.40 and max_code_score < 0.35:
+                        pass
+                    elif future_score < 0.65 or margin < 0.25:
+                        future_dominates = False
 
         if future_dominates:
             logger.info(
@@ -1013,7 +1146,8 @@ class RetrievalService:
                 future_best_chunk=best_future_chunk
             )
 
-        if (valid_video_items or valid_ast_items) and max_raw_prob >= 0.19:
+        is_raw_valid = (max_raw_prob >= 0.19) or (max_raw_prob >= settings.VIDEO_FALLBACK_MIN_THRESHOLD and max_video_score >= 0.25)
+        if (valid_video_items or valid_ast_items) and is_raw_valid:
             eligible_code_items = valid_ast_items if valid_ast_items else [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
@@ -1047,12 +1181,33 @@ class RetrievalService:
             )
             return RetrievalResult(chunks=[], status="coverage_gap")
 
-        if not only_boilerplate_code and max_any_video_score >= settings.VIDEO_FALLBACK_MIN_THRESHOLD:
-            low_confidence_items = [
-                it for it in candidate_items
-                if it.get("confidence_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
-                and grade_document_relevance(query_text, it, min_confidence=settings.VIDEO_FALLBACK_MIN_THRESHOLD) == "CORRECT"
-            ]
+        if not only_boilerplate_code:
+            try:
+                from app.services.curriculum import get_curriculum_service
+                c_svc = get_curriculum_service()
+                is_curr_foundational = c_svc.is_foundational_lesson(current_lesson_seq)
+            except Exception:
+                is_curr_foundational = False
+
+            low_confidence_items = []
+
+            # Điều kiện 1: Hội thoại nối tiếp hoặc bài hiện tại có neo ngữ cảnh mạnh (max_current_score >= 0.25)
+            if is_continuation_turn or max_current_score >= 0.25:
+                low_confidence_items = [
+                    it for it in candidate_items
+                    if it.get("confidence_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
+                    and it.get("raw_semantic_score", 0.0) >= 0.14
+                    and grade_document_relevance(query_text, it, min_confidence=0.15) == "CORRECT"
+                ]
+
+            # Điều kiện 2: Câu hỏi lý thuyết thuộc bài học nền tảng có video rơi vào dải Ambiguous (>= 0.18)
+            if not low_confidence_items and is_curr_foundational and max_any_video_score >= settings.PARETO_THEORY_GROUNDING_FLOOR and max_raw_prob >= 0.16:
+                low_confidence_items = [
+                    it for it in candidate_items
+                    if it.get("confidence_score", 0.0) >= settings.PARETO_THEORY_GROUNDING_FLOOR
+                    and grade_document_relevance(query_text, it, min_confidence=0.18) == "CORRECT"
+                ]
+
             if low_confidence_items:
                 top_low_conf = sorted(
                     low_confidence_items,
@@ -1062,7 +1217,8 @@ class RetrievalService:
                 final_assembled = reorder_lost_in_the_middle(top_low_conf)
                 logger.info(
                     f"[RetrievalService] Tầng 3 Graceful Degradation: {len(low_confidence_items)} chunks "
-                    f"đạt ngưỡng tham khảo (max_any_video={max_any_video_score:.4f} >= {settings.VIDEO_FALLBACK_MIN_THRESHOLD}). Gắn cờ is_low_confidence=True."
+                    f"đạt chuẩn CRAG Ambiguous (max_current={max_current_score:.4f}, max_video={max_video_score:.4f}). "
+                    f"Gắn cờ is_low_confidence=True, is_approximate=True."
                 )
                 return RetrievalResult(
                     chunks=final_assembled,

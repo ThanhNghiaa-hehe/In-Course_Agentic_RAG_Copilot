@@ -47,34 +47,49 @@ def _detect_student_cpp_ast(prompt: str) -> bool:
     """
     Phát hiện mã nguồn C++ của học viên bằng bộ phân tích cú pháp MarkdownIt AST & Tree-sitter C++ AST thực thụ.
     Tuyệt đối không dùng danh sách từ khóa hardcode hay biểu thức chính quy.
+    Chỉ chấp nhận markdown fence rỗng nhãn hoặc khai báo ngôn ngữ C/C++ có chứa node AST C++ hợp lệ,
+    ngăn chặn tấn công bọc chỉ thị tiêm lệnh trong khối ```system / ```prompt.
     """
+    cpp_langs = {"", "c", "cpp", "c++", "cxx", "cc", "h", "hpp"}
+    target_ast_nodes = {
+        "function_definition",
+        "preproc_include",
+        "for_statement",
+        "while_statement",
+        "if_statement",
+    }
+
+    def _has_valid_cpp_ast(text: str) -> bool:
+        if _CPP_PARSER is not None and any(ch in text for ch in ("{", "}", ";", "#")):
+            try:
+                tree = _CPP_PARSER.parse(text.encode("utf-8"))
+                stack = [tree.root_node]
+                while stack:
+                    node = stack.pop()
+                    if node.type in target_ast_nodes and not node.has_error:
+                        return True
+                    for child in node.children:
+                        stack.append(child)
+            except Exception:
+                pass
+        return False
+
     try:
         md_tokens = _MD_PARSER.parse(prompt)
-        if any(t.type in ("fence", "code_block") and t.content.strip() for t in md_tokens):
-            return True
+        for t in md_tokens:
+            if t.type == "fence" and t.content.strip():
+                lang = (t.info or "").strip().lower().split()[0] if (t.info or "").strip() else ""
+                if lang and lang not in cpp_langs:
+                    continue
+                if _has_valid_cpp_ast(t.content):
+                    return True
+            elif t.type == "code_block" and t.content.strip():
+                if _has_valid_cpp_ast(t.content):
+                    return True
     except Exception:
         pass
 
-    if _CPP_PARSER is not None and any(ch in prompt for ch in ("{", "}", ";", "#")):
-        try:
-            tree = _CPP_PARSER.parse(prompt.encode("utf-8"))
-            target_ast_nodes = {
-                "function_definition",
-                "preproc_include",
-                "for_statement",
-                "while_statement",
-                "if_statement",
-            }
-            stack = [tree.root_node]
-            while stack:
-                node = stack.pop()
-                if node.type in target_ast_nodes and not node.has_error:
-                    return True
-                for child in node.children:
-                    stack.append(child)
-        except Exception:
-            pass
-    return False
+    return _has_valid_cpp_ast(prompt)
 
 
 class SecurityInputGuardrail:
@@ -163,10 +178,17 @@ class SecurityInputGuardrail:
                 sim_benign = float(np.max(np.dot(self._benign_matrix, norm_vec)))
                 margin = sim_attack - sim_benign
 
-                if margin >= 0.02 and sim_attack >= 0.85:
+                # Calibrated Dual-Condition Decision Boundary (OWASP LLM01 Standard - Zero Quick-Fix)
+                is_attack = (
+                    (sim_attack >= 0.865 and margin >= 0.018)
+                    or (sim_attack >= 0.890 and margin >= 0.010)
+                    or (sim_attack >= 0.925 and margin >= 0.000)
+                )
+
+                if is_attack:
                     logger.warning(
                         f"[SecurityInputGuardrail] 🚨 PHÁT HIỆN TẤN CÔNG (Semantic Margin={margin:+.4f}, "
-                        f"AttackSim={sim_attack:.4f}): '{prompt[:50]}...'"
+                        f"AttackSim={sim_attack:.4f}, BenignSim={sim_benign:.4f}): '{prompt[:50]}...'"
                     )
                     return False, SECURITY_REFUSAL_RESPONSE
             except Exception as e:

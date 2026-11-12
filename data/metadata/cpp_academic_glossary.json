@@ -1,0 +1,122 @@
+{
+  "description": "Từ điển quy chuẩn thuật ngữ học thuật lập trình C++ theo chuẩn giáo trình đại học Việt Nam",
+  "version": "1.0.0",
+  "author": "Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT",
+  "glossary": {
+    "sorting_algorithms": [
+      {
+        "en": "Bubble Sort",
+        "vi": "Sắp xếp nổi bọt",
+        "forbidden_translations": ["chống đảo", "bong bóng", "bọt khí"],
+        "essence": "So sánh và hoán đổi hai phần tử kề nhau nếu chúng sai thứ tự (nghịch thế). Qua mỗi lượt duyệt, phần tử lớn nhất (hoặc nhỏ nhất) sẽ nổi dần về cuối dãy như bọt khí nổi lên mặt nước.",
+        "complexity": "O(N^2)"
+      },
+      {
+        "en": "Selection Sort",
+        "vi": "Sắp xếp chọn",
+        "forbidden_translations": ["nổi bọt", "lựa chọn bọt"],
+        "essence": "Tại mỗi bước thứ i, tìm phần tử nhỏ nhất trong đoạn chưa sắp xếp [i..N-1], sau đó hoán đổi nó với phần tử tại vị trí i. Mỗi lượt chỉ thực hiện đúng một lần hoán đổi.",
+        "complexity": "O(N^2)"
+      },
+      {
+        "en": "Insertion Sort",
+        "vi": "Sắp xếp chèn",
+        "forbidden_translations": ["chèn bọt", "đưa vào"],
+        "essence": "Xây dựng dần dãy có thứ tự bằng cách lấy từng phần tử từ đoạn chưa sắp xếp và tìm vị trí thích hợp để chèn vào đoạn con đã có thứ tự phía trước.",
+        "complexity": "O(N^2)"
+      },
+      {
+        "en": "Quick Sort",
+        "vi": "Sắp xếp nhanh",
+        "forbidden_translations": ["chạy nhanh", "mau lẹ"],
+        "essence": "Áp dụng chiến lược chia để trị (Divide and Conquer), chọn một phần tử chốt (pivot) và phân hoạch (partition) mảng thành hai nửa: các phần tử nhỏ hơn chốt ở bên trái, lớn hơn chốt ở bên phải, rồi đệ quy sắp xếp hai nửa.",
+        "complexity": "O(N log N) trung bình, O(N^2) xấu nhất"
+      },
+      {
+        "en": "Merge Sort",
+        "vi": "Sắp xếp trộn",
+        "forbidden_translations": ["gộp bọt", "hợp nhất"],
+        "essence": "Chiến lược chia để trị: chia đôi mảng đệ quy cho đến khi chỉ còn một phần tử, sau đó lần lượt trộn (merge) hai mảng con đã có thứ tự lại thành một mảng hoàn chỉnh.",
+        "complexity": "O(N log N)"
+      }
+    ],
+    "searching_algorithms": [
+      {
+        "en": "Linear Search",
+        "vi": "Tìm kiếm tuần tự (tuyến tính)",
+        "essence": "Duyệt lần lượt từ đầu mảng đến cuối mảng để so sánh từng phần tử với khóa cần tìm.",
+        "complexity": "O(N)"
+      },
+      {
+        "en": "Binary Search",
+        "vi": "Tìm kiếm nhị phân",
+        "essence": "Chỉ áp dụng trên mảng đã sắp xếp. So sánh khóa tìm kiếm với phần tử ở giữa, loại bỏ một nửa không gian tìm kiếm sau mỗi bước.",
+        "complexity": "O(log N)"
+      }
+    ],
+    "memory_and_pointers": [
+      {
+        "en": "Pointer",
+        "vi": "Con trỏ",
+        "essence": "Biến đặc biệt lưu trữ địa chỉ ô nhớ của một biến khác trong bộ nhớ RAM."
+      },
+      {
+        "en": "Reference",
+        "vi": "Tham chiếu",
+        "essence": "Bí danh (alias) của một biến đã tồn tại, dùng chung ô nhớ với biến gốc."
+      },
+      {
+        "en": "Dereference",
+        "vi": "Giải tham chiếu (toán tử *)",
+        "essence": "Truy xuất hoặc thay đổi giá trị tại vùng ô nhớ mà con trỏ đang trỏ tới."
+      },
+      {
+        "en": "Dynamic Allocation",
+        "vi": "Cấp phát động",
+        "essence": "Xin cấp phát vùng nhớ trong vùng nhớ Heap tại thời điểm chạy (runtime) bằng toán tử new, phải giải phóng bằng delete."
+      },
+      {
+        "en": "Memory Leak",
+        "vi": "Rò rỉ bộ nhớ",
+        "essence": "Hiện tượng bộ nhớ được cấp phát động trên Heap nhưng không được giải phóng sau khi sử dụng, làm cạn kiệt tài nguyên RAM."
+      },
+      {
+        "en": "2D Array",
+        "vi": "Mảng hai chiều (ma trận)",
+        "essence": "Mảng các mảng, được tổ chức theo hàng và cột, lưu trữ trong bộ nhớ liên tục theo thứ tự ưu tiên hàng (Row-Major Order), đánh chỉ số từ 0."
+      }
+    ],
+    "object_oriented_programming": [
+      {
+        "en": "Encapsulation",
+        "vi": "Tính đóng gói",
+        "essence": "Gói gọn dữ liệu (thuộc tính) và phương thức hoạt động trên dữ liệu đó trong cùng một lớp, đồng thời che giấu chi tiết cài đặt qua access specifiers (private, protected, public)."
+      },
+      {
+        "en": "Inheritance",
+        "vi": "Tính kế thừa",
+        "essence": "Cho phép một lớp con (derived/child class) tái sử dụng và mở rộng các thuộc tính, phương thức từ lớp cha (base/parent class)."
+      },
+      {
+        "en": "Polymorphism",
+        "vi": "Tính đa hình",
+        "essence": "Khả năng một hành vi (phương thức) có nhiều hình thái thực thi khác nhau tùy thuộc vào đối tượng đang gọi nó tại thời điểm chạy (qua virtual function và con trỏ lớp cha)."
+      },
+      {
+        "en": "Abstraction",
+        "vi": "Tính trừu tượng",
+        "essence": "Tập trung vào các đặc trưng cốt lõi của đối tượng và ẩn đi những chi tiết phức tạp bên trong (qua Pure Virtual Functions và Abstract Class)."
+      },
+      {
+        "en": "Constructor",
+        "vi": "Hàm khởi tạo",
+        "essence": "Phương thức đặc biệt tự động được gọi khi đối tượng được khởi tạo để thiết lập trạng thái ban đầu."
+      },
+      {
+        "en": "Destructor",
+        "vi": "Hàm hủy",
+        "essence": "Phương thức đặc biệt tự động được gọi khi đối tượng ra khỏi phạm vi (scope) hoặc bị delete để giải phóng tài nguyên."
+      }
+    ]
+  }
+}
