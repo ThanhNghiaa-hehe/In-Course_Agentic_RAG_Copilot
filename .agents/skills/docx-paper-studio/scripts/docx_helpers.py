@@ -97,7 +97,95 @@ def create_hjs_document(
     normal.font.size = Pt(active_size)
     normal.paragraph_format.line_spacing = 1.15
     normal.paragraph_format.space_after = Pt(4)
+
+    # Configure Native Word Heading 1/2/3 styles for Navigation Pane & TOC support
+    h_specs = {
+        "Heading 1": (12.0 if preset != "thesis_a4" else 13.0, True, False, (15, 23, 42)),
+        "Heading 2": (10.0 if preset != "thesis_a4" else 12.0, True, preset != "thesis_a4", (30, 41, 59)),
+        "Heading 3": (10.0 if preset != "thesis_a4" else 11.0, True, True, (51, 65, 85)),
+    }
+    for s_name, (sz, is_b, is_i, rgb) in h_specs.items():
+        if s_name in doc.styles:
+            st = doc.styles[s_name]
+            st.font.name = active_font
+            st.font.size = Pt(sz)
+            st.font.bold = is_b
+            st.font.italic = is_i
+            st.font.color.rgb = RGBColor(*rgb)
+            st.paragraph_format.keep_with_next = True
+            srpr = st.element.get_or_add_rPr()
+            srfonts = srpr.find(qn("w:rFonts"))
+            if srfonts is None:
+                srfonts = OxmlElement("w:rFonts")
+                srpr.insert(0, srfonts)
+            srfonts.set(qn("w:ascii"), active_font)
+            srfonts.set(qn("w:hAnsi"), active_font)
+            srfonts.set(qn("w:eastAsia"), active_font)
+
     return doc
+
+
+def add_hjs_journal_headers(
+    doc: Document,
+    running_title: str,
+    author_names: str,
+    journal_name: str = "HUFLIT Journal of Science",
+    right_tab_twips: int = 10200,
+) -> None:
+    """
+    Configure authentic 3-mode HUFLIT Journal of Science headers matching HJS@MTF-GCN_R3.pdf:
+    - Page 1: Centered journal title + thin horizontal rule underneath
+    - Even pages (2, 4, 6...): Page number left + uppercase paper title right
+    - Odd pages (3, 5, 7...): Author names left + page number right
+    """
+    doc.settings.odd_and_even_pages_header_footer = True
+    sec = doc.sections[0]
+    sec.different_first_page_header_footer = True
+    sec.header_distance = Cm(0.85)
+
+    # 1) Page 1 banner with thin horizontal bottom rule
+    p1 = sec.first_page_header.paragraphs[0]
+    p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p1.paragraph_format.space_after = Pt(4)
+    p1.paragraph_format.line_spacing = 1.0
+    set_run_font(p1.add_run(journal_name), name="Book Antiqua", size_pt=8.0, color_rgb=(51, 65, 85))
+    p1._p.get_or_add_pPr().append(
+        parse_xml(
+            f'<w:pBdr {nsdecls("w")}>'
+            '<w:bottom w:val="single" w:sz="4" w:space="4" w:color="334155"/>'
+            "</w:pBdr>"
+        )
+    )
+
+    # 2) Even pages (2, 4, 6...): PAGE left + UPPERCASE TITLE right
+    p_even = sec.even_page_header.paragraphs[0]
+    p_even.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_even.paragraph_format.space_after = Pt(2)
+    p_even._p.get_or_add_pPr().append(
+        parse_xml(f'<w:tabs {nsdecls("w")}><w:tab w:val="right" w:pos="{right_tab_twips}"/></w:tabs>')
+    )
+    p_even._p.append(parse_xml(r'<w:fldSimple %s w:instr="PAGE"/>' % nsdecls("w")))
+    set_run_font(
+        p_even.add_run(f"\t{running_title.upper()}"),
+        name=FONT_HJS,
+        size_pt=8.0,
+        color_rgb=(51, 65, 85),
+    )
+
+    # 3) Odd pages (3, 5, 7...): Author names left + PAGE right
+    p_odd = sec.header.paragraphs[0]
+    p_odd.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_odd.paragraph_format.space_after = Pt(2)
+    p_odd._p.get_or_add_pPr().append(
+        parse_xml(f'<w:tabs {nsdecls("w")}><w:tab w:val="right" w:pos="{right_tab_twips}"/></w:tabs>')
+    )
+    set_run_font(
+        p_odd.add_run(f"{author_names}\t"),
+        name=FONT_HJS,
+        size_pt=8.5,
+        color_rgb=(51, 65, 85),
+    )
+    p_odd._p.append(parse_xml(r'<w:fldSimple %s w:instr="PAGE"/>' % nsdecls("w")))
 
 
 def set_section_columns(section, num_cols: int = 2, space_cm: float = 0.6) -> None:
@@ -135,29 +223,71 @@ def add_page_number_footer(section, left_text: str = "") -> None:
     p._p.append(fld2)
 
 
-def add_academic_heading(doc: Document, text: str, level: int = 1, size_pt: Optional[float] = None):
-    """Add numbered academic heading with keep_with_next=True."""
-    p = doc.add_paragraph()
+def add_academic_heading(
+    doc: Document,
+    text: str,
+    level: int = 1,
+    size_pt: Optional[float] = None,
+    centered: bool = False,
+    italic: Optional[bool] = None,
+    font_name: str = FONT_HJS,
+):
+    """
+    Add a numbered academic heading using native Word Heading 1/2/3 styles
+    (enabling Navigation Pane, Outline View, and automatic TOC) with keep_with_next=True.
+    """
+    clamped_level = min(max(level, 1), 3)
+    style_name = f"Heading {clamped_level}"
+    p = doc.add_paragraph(style=style_name if style_name in doc.styles else None)
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER if centered else WD_ALIGN_PARAGRAPH.LEFT
     p.paragraph_format.keep_with_next = True
-    if level == 1:
-        p.paragraph_format.space_before = Pt(10)
+    if clamped_level == 1:
+        p.paragraph_format.space_before = Pt(11)
         p.paragraph_format.space_after = Pt(4)
         sz = size_pt or 12.0
+        is_italic = False if italic is None else italic
         r = p.add_run(text)
-        set_run_font(r, size_pt=sz, bold=True, color_rgb=(15, 23, 42))
-    elif level == 2:
+        set_run_font(r, name=font_name, size_pt=sz, bold=True, italic=is_italic, color_rgb=(15, 23, 42))
+    elif clamped_level == 2:
         p.paragraph_format.space_before = Pt(8)
         p.paragraph_format.space_after = Pt(3)
-        sz = size_pt or 11.0
+        sz = size_pt or 10.0
+        is_italic = True if italic is None else italic
         r = p.add_run(text)
-        set_run_font(r, size_pt=sz, bold=True, color_rgb=(30, 41, 59))
+        set_run_font(r, name=font_name, size_pt=sz, bold=True, italic=is_italic, color_rgb=(30, 41, 59))
     else:
         p.paragraph_format.space_before = Pt(6)
         p.paragraph_format.space_after = Pt(2)
-        sz = size_pt or 11.0
+        sz = size_pt or 10.0
+        is_italic = True if italic is None else italic
         r = p.add_run(text)
-        set_run_font(r, size_pt=sz, bold=True, italic=True, color_rgb=(51, 65, 85))
+        set_run_font(r, name=font_name, size_pt=sz, bold=True, italic=is_italic, color_rgb=(51, 65, 85))
     return p
+
+
+def replace_heading_text(docx_path: str | Path, old_text: str, new_text: str) -> int:
+    """
+    Programmatically update a heading's text inside an existing .docx without human-in-the-loop,
+    preserving its native Heading style, font, alignment, and surrounding XML.
+    Returns count of replaced headings.
+    """
+    p = Path(docx_path)
+    doc = Document(str(p))
+    updated = 0
+    for para in doc.paragraphs:
+        st_name = para.style.name if para.style else ""
+        if st_name.startswith("Heading") or old_text.strip() in para.text:
+            if para.text.strip() == old_text.strip():
+                if para.runs:
+                    para.runs[0].text = new_text
+                    for extra in para.runs[1:]:
+                        extra.text = ""
+                else:
+                    para.text = new_text
+                updated += 1
+    if updated > 0:
+        doc.save(str(p))
+    return updated
 
 
 def add_body_paragraph(
@@ -187,12 +317,14 @@ def add_three_line_table(
     caption: Optional[str] = None,
     font_size_pt: float = 9.5,
     align_cols: Optional[Sequence[WD_ALIGN_PARAGRAPH]] = None,
+    border_style: str = "booktabs",
+    font_name: str = FONT_HJS,
 ):
     """
-    Create an IEEE/HJS booktabs-style Three-Line Table:
-    - Optional bold caption above table with keep_with_next=True
-    - Top rule 1.5pt, header-bottom rule 0.75pt, bottom rule 1.5pt, no vertical lines
-    - Repeats header across page breaks (tblHeader) and prevents row splitting (cantSplit)
+    Create an academic table with tblHeader, cantSplit, and keep_with_next header rows:
+    - border_style='booktabs': IEEE 3-line horizontal rules + shaded header (default)
+    - border_style='hjs_grid': Authentic HUFLIT Journal of Science (HJS@MTF-GCN_R3.pdf)
+      full thin grid borders, plain white background, and 'Table X. <italic title>' caption
     """
     if caption:
         cap_p = doc.add_paragraph()
@@ -200,30 +332,47 @@ def add_three_line_table(
         cap_p.paragraph_format.keep_with_next = True
         cap_p.paragraph_format.space_before = Pt(6)
         cap_p.paragraph_format.space_after = Pt(3)
-        if ":" in caption:
+        if border_style == "hjs_grid" and "." in caption:
+            prefix, rest = caption.split(".", 1)
+            set_run_font(cap_p.add_run(f"{prefix}."), name=font_name, size_pt=9.5, bold=False)
+            set_run_font(cap_p.add_run(rest), name=font_name, size_pt=9.5, italic=True)
+        elif ":" in caption:
             prefix, rest = caption.split(":", 1)
-            set_run_font(cap_p.add_run(f"{prefix}:"), size_pt=10.0, bold=True)
-            set_run_font(cap_p.add_run(rest), size_pt=10.0, italic=True)
+            set_run_font(cap_p.add_run(f"{prefix}:"), name=font_name, size_pt=10.0, bold=True)
+            set_run_font(cap_p.add_run(rest), name=font_name, size_pt=10.0, italic=True)
         else:
-            set_run_font(cap_p.add_run(caption), size_pt=10.0, bold=True)
+            set_run_font(cap_p.add_run(caption), name=font_name, size_pt=10.0, bold=True)
 
     num_cols = len(headers)
     tbl = doc.add_table(rows=1 + len(rows), cols=num_cols)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     tbl.autofit = False
 
-    # Global Three-Line Borders: top & bottom 12 (1.5pt), no vertical/inner borders by default
     tblPr = tbl._tbl.tblPr
-    tblPr.append(
-        parse_xml(
-            f'<w:tblBorders {nsdecls("w")}>'
-            '<w:top w:val="single" w:sz="12" w:space="0" w:color="0F172A"/>'
-            '<w:bottom w:val="single" w:sz="12" w:space="0" w:color="0F172A"/>'
-            '<w:left w:val="none"/><w:right w:val="none"/>'
-            '<w:insideH w:val="none"/><w:insideV w:val="none"/>'
-            "</w:tblBorders>"
+    if border_style == "hjs_grid":
+        tblPr.append(
+            parse_xml(
+                f'<w:tblBorders {nsdecls("w")}>'
+                '<w:top w:val="single" w:sz="4" w:space="0" w:color="334155"/>'
+                '<w:bottom w:val="single" w:sz="4" w:space="0" w:color="334155"/>'
+                '<w:left w:val="single" w:sz="4" w:space="0" w:color="334155"/>'
+                '<w:right w:val="single" w:sz="4" w:space="0" w:color="334155"/>'
+                '<w:insideH w:val="single" w:sz="4" w:space="0" w:color="334155"/>'
+                '<w:insideV w:val="single" w:sz="4" w:space="0" w:color="334155"/>'
+                "</w:tblBorders>"
+            )
         )
-    )
+    else:
+        tblPr.append(
+            parse_xml(
+                f'<w:tblBorders {nsdecls("w")}>'
+                '<w:top w:val="single" w:sz="12" w:space="0" w:color="0F172A"/>'
+                '<w:bottom w:val="single" w:sz="12" w:space="0" w:color="0F172A"/>'
+                '<w:left w:val="none"/><w:right w:val="none"/>'
+                '<w:insideH w:val="none"/><w:insideV w:val="none"/>'
+                "</w:tblBorders>"
+            )
+        )
 
     def _style_cell(cell, text: str, is_header: bool, col_idx: int):
         cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
@@ -231,16 +380,15 @@ def add_three_line_table(
         if col_widths_cm and col_idx < len(col_widths_cm):
             w_dxa = int(col_widths_cm[col_idx] * 567)
             tcPr.append(parse_xml(f'<w:tcW {nsdecls("w")} w:w="{w_dxa}" w:type="dxa"/>'))
-        # Comfortable cell padding
         tcPr.append(
             parse_xml(
                 f'<w:tcMar {nsdecls("w")}>'
-                '<w:top w:w="70" w:type="dxa"/><w:bottom w:w="70" w:type="dxa"/>'
+                '<w:top w:w="60" w:type="dxa"/><w:bottom w:w="60" w:type="dxa"/>'
                 '<w:left w:w="90" w:type="dxa"/><w:right w:w="90" w:type="dxa"/>'
                 "</w:tcMar>"
             )
         )
-        if is_header:
+        if is_header and border_style != "hjs_grid":
             tcPr.append(parse_xml(f'<w:shd {nsdecls("w")} w:fill="F1F5F9"/>'))
             tcPr.append(
                 parse_xml(
@@ -256,14 +404,14 @@ def add_three_line_table(
         p.paragraph_format.line_spacing = 1.05
         if is_header:
             p.paragraph_format.keep_with_next = True
-            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT if border_style == "hjs_grid" and col_idx == 0 else WD_ALIGN_PARAGRAPH.CENTER
         elif align_cols and col_idx < len(align_cols):
             p.alignment = align_cols[col_idx]
         else:
             p.alignment = WD_ALIGN_PARAGRAPH.LEFT if col_idx == 0 else WD_ALIGN_PARAGRAPH.CENTER
 
         r = p.add_run(str(text))
-        set_run_font(r, size_pt=font_size_pt, bold=is_header, color_rgb=(15, 23, 42))
+        set_run_font(r, name=font_name, size_pt=font_size_pt, bold=is_header, color_rgb=(15, 23, 42))
 
     # Header row
     hdr_row = tbl.rows[0]
@@ -292,6 +440,8 @@ def add_figure_with_caption(
     image_path: str | Path,
     caption: str,
     width_cm: float = 15.5,
+    italic_body: bool = False,
+    font_name: str = FONT_HJS,
 ):
     """Insert a centered high-DPI figure with keep_with_next=True and formatted caption below."""
     img_p = doc.add_paragraph()
@@ -307,9 +457,94 @@ def add_figure_with_caption(
     cap_p.paragraph_format.space_after = Pt(6)
     if ":" in caption:
         prefix, rest = caption.split(":", 1)
-        set_run_font(cap_p.add_run(f"{prefix}:"), size_pt=10.0, bold=True)
-        set_run_font(cap_p.add_run(rest), size_pt=10.0, italic=True)
+        set_run_font(cap_p.add_run(f"{prefix}:"), name=font_name, size_pt=10.0, bold=True)
+        set_run_font(cap_p.add_run(rest), name=font_name, size_pt=10.0, italic=italic_body)
     else:
-        set_run_font(cap_p.add_run(caption), size_pt=10.0, italic=True)
+        set_run_font(cap_p.add_run(caption), name=font_name, size_pt=10.0, italic=italic_body)
     return img_p, cap_p
+
+
+def add_reference_entry(
+    doc: Document,
+    ref_num: int,
+    citation_text: str,
+    font_name: str = FONT_HJS,
+    size_pt: float = 9.5,
+):
+    """Add an IEEE-style hanging-indent reference entry matching HJS page 7-8."""
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    p.paragraph_format.left_indent = Cm(0.85)
+    p.paragraph_format.first_line_indent = Cm(-0.85)
+    p.paragraph_format.line_spacing = 1.1
+    p.paragraph_format.space_after = Pt(3)
+    p.paragraph_format.tab_stops.add_tab_stop(Cm(0.85))
+    set_run_font(p.add_run(f"[{ref_num}]\t{citation_text}"), name=font_name, size_pt=size_pt)
+    return p
+
+
+def add_author_bio_block(
+    doc: Document,
+    bios: Sequence[dict[str, str]],
+    font_name: str = FONT_HJS,
+):
+    """
+    Add a 2-column borderless Author Biography + Portrait placeholder block
+    at the end of the paper matching page 8 of HJS@MTF-GCN_R3.pdf.
+    Each item in bios: {'name': ..., 'bio': ..., 'research': ..., 'photo_path': optional}
+    """
+    if not bios:
+        return None
+    tbl = doc.add_table(rows=1, cols=min(2, len(bios)))
+    tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+    tbl.autofit = False
+    tblPr = tbl._tbl.tblPr
+    tblPr.append(
+        parse_xml(
+            f'<w:tblBorders {nsdecls("w")}>'
+            '<w:top w:val="none"/><w:left w:val="none"/><w:bottom w:val="none"/>'
+            '<w:right w:val="none"/><w:insideH w:val="none"/><w:insideV w:val="none"/>'
+            "</w:tblBorders>"
+        )
+    )
+    row = tbl.rows[0]
+    row._tr.get_or_add_trPr().append(parse_xml(f'<w:cantSplit {nsdecls("w")}/>'))
+
+    for idx, author in enumerate(bios[:2]):
+        outer_cell = row.cells[idx]
+        outer_tcPr = outer_cell._tc.get_or_add_tcPr()
+        outer_tcPr.append(parse_xml(f'<w:tcW {nsdecls("w")} w:w="5100" w:type="dxa"/>'))
+        p0 = outer_cell.paragraphs[0]
+        p0.paragraph_format.space_before = Pt(4)
+        p0.paragraph_format.space_after = Pt(2)
+        photo_path = author.get("photo_path")
+        if photo_path and Path(photo_path).exists():
+            p0.add_run().add_picture(str(photo_path), width=Cm(2.4))
+            p_bio = outer_cell.add_paragraph()
+        else:
+            set_run_font(
+                p0.add_run("[Ảnh chân dung 3x4 cm] "),
+                name=font_name,
+                size_pt=8.5,
+                italic=True,
+                color_rgb=(100, 116, 139),
+            )
+            p_bio = outer_cell.add_paragraph()
+
+        p_bio.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        p_bio.paragraph_format.space_after = Pt(2)
+        p_bio.paragraph_format.line_spacing = 1.08
+        set_run_font(p_bio.add_run(author.get("name", "") + " "), name=font_name, size_pt=9.0, bold=True)
+        set_run_font(p_bio.add_run(author.get("bio", "")), name=font_name, size_pt=9.0)
+
+        if author.get("research"):
+            p_res = outer_cell.add_paragraph()
+            p_res.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            p_res.paragraph_format.space_after = Pt(2)
+            set_run_font(
+                p_res.add_run(f"Hướng nghiên cứu chính: {author['research']}"),
+                name=font_name,
+                size_pt=9.0,
+            )
+    return tbl
 

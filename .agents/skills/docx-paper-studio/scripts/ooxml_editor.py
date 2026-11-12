@@ -112,6 +112,11 @@ def main():
     p_com = sub.add_parser("comments")
     p_com.add_argument("docx")
 
+    p_hdr = sub.add_parser("rename-heading", help="Programmatically rename a heading inside a DOCX")
+    p_hdr.add_argument("docx")
+    p_hdr.add_argument("old_text")
+    p_hdr.add_argument("new_text")
+
     args = parser.parse_args()
     if args.cmd == "unpack":
         unpack_docx(Path(args.docx), Path(args.out_dir))
@@ -125,6 +130,14 @@ def main():
         print("[OK] All OOXML parts valid.")
     elif args.cmd == "comments":
         extract_comments(Path(args.docx))
+    elif args.cmd == "rename-heading":
+        script_dir = Path(__file__).resolve().parent
+        if str(script_dir) not in sys.path:
+            sys.path.insert(0, str(script_dir))
+        from docx_helpers import replace_heading_text
+
+        n = replace_heading_text(Path(args.docx), args.old_text, args.new_text)
+        print(f"[OK] Updated {n} heading(s) in {args.docx}")
 
 
 if __name__ == "__main__":

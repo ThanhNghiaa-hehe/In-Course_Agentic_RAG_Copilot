@@ -24,7 +24,11 @@ if str(SCRIPT_DIR) not in sys.path:
 
 from docx_helpers import (
     FONT_HJS,
+    add_academic_heading,
+    add_author_bio_block,
     add_figure_with_caption,
+    add_hjs_journal_headers,
+    add_reference_entry,
     add_three_line_table,
     create_hjs_document,
     set_run_font,
@@ -33,55 +37,12 @@ from hjs_benchmark_charts import plot_multiturn_tiers, plot_stage11_tiers
 from omml_math import add_display_equation, add_inline_equation
 
 
-def _add_hjs_headers(doc, running_title: str) -> None:
-    sec = doc.sections[0]
-    sec.different_first_page_header_footer = True
-    sec.header_distance = Cm(0.9)
-
-    # First page header: centered "HUFLIT Journal of Science"
-    fp_hdr = sec.first_page_header
-    p1 = fp_hdr.paragraphs[0]
-    p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    set_run_font(p1.add_run("HUFLIT Journal of Science"), name="Book Antiqua", size_pt=8.0, color_rgb=(51, 65, 85))
-
-    # Subsequent pages header: Page number left, paper title right (using tab stop at right margin)
-    hdr = sec.header
-    p2 = hdr.paragraphs[0]
-    p2.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p2.paragraph_format.space_after = Pt(2)
-
-    pPr = p2._p.get_or_add_pPr()
-    pPr.append(
-        parse_xml(
-            f'<w:tabs {nsdecls("w")}>'
-            '<w:tab w:val="right" w:pos="10200"/>'
-            "</w:tabs>"
-        )
-    )
-    fld = parse_xml(r'<w:fldSimple %s w:instr="PAGE"/>' % nsdecls("w"))
-    p2._p.append(fld)
-    r_tab = p2.add_run(f"\t{running_title}")
-    set_run_font(r_tab, name=FONT_HJS, size_pt=8.0, color_rgb=(71, 85, 105))
-
-
 def _add_hjs_section_h1(doc, title: str):
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.keep_with_next = True
-    p.paragraph_format.space_before = Pt(11)
-    p.paragraph_format.space_after = Pt(4)
-    set_run_font(p.add_run(title.upper()), name=FONT_HJS, size_pt=12.0, bold=True, color_rgb=(15, 23, 42))
-    return p
+    return add_academic_heading(doc, title.upper(), level=1, size_pt=12.0, centered=True, italic=False, font_name=FONT_HJS)
 
 
 def _add_hjs_section_h2(doc, title: str):
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.paragraph_format.keep_with_next = True
-    p.paragraph_format.space_before = Pt(8)
-    p.paragraph_format.space_after = Pt(3)
-    set_run_font(p.add_run(title.upper()), name=FONT_HJS, size_pt=10.0, bold=True, color_rgb=(30, 41, 59))
-    return p
+    return add_academic_heading(doc, title.upper(), level=2, size_pt=10.0, centered=False, italic=True, font_name=FONT_HJS)
 
 
 def _add_hjs_para(doc, text: str = "", first_line_indent_cm: float = 0.0, size_pt: float = 10.0, italic: bool = False):
@@ -137,7 +98,11 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
         "PARETO-SUFFICIENT AGENTIC RAG WITH AST-VIDEO SYNCHRONIZATION "
         "FOR SOCRATIC IN-COURSE PROGRAMMING TUTORING"
     )
-    _add_hjs_headers(doc, eng_title)
+    add_hjs_journal_headers(
+        doc,
+        running_title=eng_title,
+        author_names="Tran Thanh Nghia, [Advisor Name]",
+    )
 
     # Title
     tp = doc.add_paragraph()
@@ -217,7 +182,7 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
         "(1) khó định vị chính xác phân đoạn video chứa lời giải thích cho lỗi cú pháp hiện tại, và "
         "(2) các hệ thống hỏi đáp LLM thông thường dễ sinh mã giải bài hộ (solution leakage) hoặc trả lời kiến thức "
         "vượt quá tiến độ bài học (out-of-lesson hallucination).",
-        first_line_indent_cm=0.5,
+        first_line_indent_cm=0.0,
     )
     _add_placeholder_note(
         doc,
@@ -244,7 +209,7 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
     _add_hjs_section_h1(doc, "III. SYSTEM ARCHITECTURE AND MATHEMATICAL FORMULATION")
     _add_hjs_section_h2(doc, "A. HYBRID RETRIEVAL AND SIGMOID CALIBRATION")
 
-    p_sig = _add_hjs_para(doc, first_line_indent_cm=0.5)
+    p_sig = _add_hjs_para(doc, first_line_indent_cm=0.0)
     set_run_font(
         p_sig.add_run(
             "Điểm tương quan thô từ Cross-Encoder thường bị lệch thang đo trên các truy vấn học thuật ngắn; "
@@ -272,7 +237,7 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
         doc,
         "Nhằm ngăn chặn văn nói nhắc lướt ở bài học hiện tại che lấp bài giảng chuyên sâu ở bài tương lai, "
         "bài học tương lai chỉ được phép kích hoạt trạng thái out_of_lesson khi thỏa mãn điều kiện biên độ Pareto:",
-        first_line_indent_cm=0.5,
+        first_line_indent_cm=0.0,
     )
     add_display_equation(
         doc,
@@ -281,10 +246,10 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
         content_width_twips=10200,
     )
 
-    # Table 1: Architectural Invariants (Three-Line Booktabs)
+    # Table 1: Architectural Invariants (Authentic HJS Full Grid Style)
     add_three_line_table(
         doc,
-        caption="Table 1: Core Architectural Components and Verification Thresholds",
+        caption="Table 1. Core Architectural Components and Verification Thresholds",
         headers=["Component", "Mechanism", "Verified Threshold / Budget"],
         rows=[
             ["Cascade Semantic Router", "LinearSVC + mDeBERTa-v3 NLI Arbiter", "P_oos < 0.75 triggers NLI rescue"],
@@ -294,6 +259,7 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
         ],
         col_widths_cm=[4.2, 6.8, 6.2],
         font_size_pt=9.0,
+        border_style="hjs_grid",
     )
 
     # IV. EXPERIMENTAL SETUP
@@ -329,6 +295,7 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
             fig1_png,
             "Figure 1: Stage 11 Golden 200 accuracy breakdown across tiers (Snapshot: Loop 2 baseline).",
             width_cm=15.0,
+            italic_body=False,
         )
 
     if mt_path.exists():
@@ -351,16 +318,18 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
             fig2_png,
             "Figure 2: Multi-turn stateful dialogue evaluation across 4 tiers (Mode: retrieval baseline).",
             width_cm=15.4,
+            italic_body=False,
         )
 
     if rows_res:
         add_three_line_table(
             doc,
-            caption="Table 2: Snapshot Benchmark Metrics Bound Dynamically from JSON Artifacts (Pending Loop 3 + E2E)",
+            caption="Table 2. Snapshot Benchmark Metrics Bound Dynamically from JSON Artifacts (Pending Loop 3 + E2E)",
             headers=["Benchmark Suite", "Router / Intent", "CRAG Status", "Timestamp Grounding", "Latency / Budget"],
             rows=rows_res,
             col_widths_cm=[4.2, 3.3, 3.2, 3.5, 3.0],
             font_size_pt=8.5,
+            border_style="hjs_grid",
         )
 
     # VI. CONCLUSION
@@ -371,17 +340,24 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
         "và phân tích các ca biên còn lại.",
     )
 
-    # VII. REFERENCES
-    _add_hjs_section_h1(doc, "VII. REFERENCES")
+    # VII. ACKNOWLEDGMENTS
+    _add_hjs_section_h1(doc, "VII. ACKNOWLEDGMENTS")
+    _add_placeholder_note(
+        doc,
+        "Lời cảm ơn dành cho Khoa Công nghệ Thông tin, Trường Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT) "
+        "và Giảng viên hướng dẫn đã hỗ trợ định hướng nghiên cứu.",
+    )
+
+    # VIII. REFERENCES
+    _add_hjs_section_h1(doc, "VIII. REFERENCES")
     refs = [
-        "[1] S.-Q. Yan et al., 'Corrective Retrieval Augmented Generation,' arXiv:2401.15884, 2024.",
-        "[2] H. Joren et al., 'Sufficient Context: A New Lens on Retrieval Augmented Generation Systems,' ICLR, 2025.",
-        "[3] N. F. Liu et al., 'Lost in the Middle: How Language Models Use Long Contexts,' TACL, 2024.",
-        "[4] L. Wang et al., 'Multilingual E5 Text Embeddings: A Technical Report,' arXiv:2402.05672, 2024.",
+        "S.-Q. Yan et al., \"Corrective Retrieval Augmented Generation,\" arXiv preprint arXiv:2401.15884, 2024.",
+        "H. Joren et al., \"Sufficient Context: A New Lens on Retrieval Augmented Generation Systems,\" in Proc. ICLR, 2025.",
+        "N. F. Liu et al., \"Lost in the Middle: How Language Models Use Long Contexts,\" Trans. Assoc. Comput. Linguist., vol. 12, pp. 157–173, 2024.",
+        "L. Wang et al., \"Multilingual E5 Text Embeddings: A Technical Report,\" arXiv preprint arXiv:2402.05672, 2024.",
     ]
-    for ref in refs:
-        p = _add_hjs_para(doc, ref, first_line_indent_cm=0.0, size_pt=9.0)
-        p.paragraph_format.space_after = Pt(2)
+    for idx, ref in enumerate(refs, start=1):
+        add_reference_entry(doc, idx, ref, font_name=FONT_HJS, size_pt=9.5)
 
     # Bilingual Vietnamese Closing Block (matching HJS@MTF-GCN_R3.pdf page 8)
     vi_title = (
@@ -397,7 +373,7 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
     va = doc.add_paragraph()
     va.alignment = WD_ALIGN_PARAGRAPH.CENTER
     va.paragraph_format.space_after = Pt(6)
-    set_run_font(va.add_run("Trần Thành Nghĩa"), name=FONT_HJS, size_pt=10.0, bold=True)
+    set_run_font(va.add_run("Trần Thành Nghĩa, [Tên Giảng Viên Hướng Dẫn]"), name=FONT_HJS, size_pt=10.0, bold=True, italic=True)
 
     vab = doc.add_paragraph()
     vab.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -414,11 +390,29 @@ def build_hjs_skeleton(out_docx: Path, benchmarks_dir: Path, figures_dir: Path) 
 
     vkw = doc.add_paragraph()
     vkw.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    vkw.paragraph_format.space_after = Pt(10)
     set_run_font(vkw.add_run("Từ khóa — "), name=FONT_HJS, size_pt=9.0, bold=True)
     set_run_font(
         vkw.add_run("Agentic RAG, Corrective RAG, Trợ giảng Socratic, Phân mảnh AST, Đồng bộ mốc thời gian video"),
         name=FONT_HJS,
         size_pt=9.0,
+    )
+
+    # Author Biography + Portrait grid (matching page 8 of HJS@MTF-GCN_R3.pdf)
+    add_author_bio_block(
+        doc,
+        bios=[
+            {
+                "name": "Trần Thành Nghĩa",
+                "bio": "hiện đang là sinh viên ngành Công nghệ Thông tin (MSSV: 23DH112252), Trường Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT).",
+                "research": "Retrieval-Augmented Generation, NLP Giáo dục, Trợ giảng AI Socratic.",
+            },
+            {
+                "name": "[Tên Giảng Viên Hướng Dẫn]",
+                "bio": "[Học vị, đơn vị công tác tại Khoa Công nghệ Thông tin, Trường Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)].",
+                "research": "[Hướng nghiên cứu chính của đồng tác giả].",
+            },
+        ],
     )
 
     out_docx.parent.mkdir(parents=True, exist_ok=True)
