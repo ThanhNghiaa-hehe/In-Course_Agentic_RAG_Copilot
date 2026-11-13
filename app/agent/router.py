@@ -129,7 +129,7 @@ class NLIArbiter:
             if hyp_text:
                 self._candidate_labels.append(hyp_text)
                 self._label_map[hyp_text] = intent_key
-        self._template = "{}"
+        self._template = data.get("nli_template", "This text is about {}.")
 
     def _get_pipeline(self):
         """Khởi tạo trễ (Lazy Loading) để không làm chậm thời gian khởi động server."""
@@ -247,6 +247,7 @@ class IntentRouter:
         self._slm_session = None
         self._classes = ["chit_chat", "course_query", "out_of_scope"]
         self._manifest_data = _load_router_manifest()
+        self._solicitation_words: List[str] = [w.lower() for w in self._manifest_data.get("solicitation_words", [])]
         self._nli_arbiter = NLIArbiter(self._manifest_data)
         self._security_guardrail = get_security_input_guardrail()
         self._chitchat_proto_matrix: Optional[np.ndarray] = None
@@ -800,9 +801,10 @@ class IntentRouter:
                     # 0d. TẦNG 0d: System Identity & Socratic Pedagogy Prototype Gate (100% Vector Cosine, Zero Hardcode)
                     # ----------------------------------------------------
                     sim_sys = self.get_system_identity_similarity(clean_prompt, query_vec=query_vec)
-                    if sim_sys >= 0.88 and p_chit >= 0.15:
+                    has_solicitation = any(w in lower_prompt for w in self._solicitation_words)
+                    if sim_sys >= 0.88 and p_chit >= 0.15 and p_oos < 0.45 and not has_solicitation:
                         logger.info(
-                            f"[IntentRouter] Tầng 0d Prototype Gate (sim_sys={sim_sys:.4f}, p_chit={p_chit:.3f}) -> chit_chat"
+                            f"[IntentRouter] Tầng 0d Prototype Gate (sim_sys={sim_sys:.4f}, p_chit={p_chit:.3f}, p_oos={p_oos:.3f}) -> chit_chat"
                         )
                         return RouterClassification(
                             intent="chit_chat",
@@ -814,10 +816,19 @@ class IntentRouter:
                     # ĐIỀU PHỐI CASCADE: STAGE 1 (ENSEMBLE) -> STAGE 2 (NLI ARBITER)
                     # Cổng độ trễ đa chiều Bi-Directional Entropy/Margin Gate (Mục 2.2 - Nhịp 1B / Nhịp 2)
                     # ----------------------------------------------------
+                    has_curriculum_topic = False
+                    if top1_class == "out_of_scope" and p_course < 0.16:
+                        try:
+                            from app.services.curriculum import get_curriculum_service
+                            c_svc = get_curriculum_service()
+                            has_curriculum_topic = c_svc.find_lesson_for_query(clean_prompt) is not None
+                        except Exception as e:
+                            logger.debug(f"[IntentRouter] Lỗi kiểm tra has_curriculum_topic ({e}).")
+
                     is_ambiguous_slm = (
                         (margin < 0.22) or
-                        (top1_class == "out_of_scope" and (p_course >= 0.16 or is_nav)) or
-                        (top1_class == "course_query" and (p_oos >= 0.22 or p_chit >= 0.18)) or
+                        (top1_class == "out_of_scope" and (p_course >= 0.10 or is_nav or has_curriculum_topic)) or
+                        (top1_class == "course_query" and (p_oos >= 0.25 or p_chit >= 0.22) and margin < 0.25) or
                         (top1_class == "chit_chat" and (p_course >= 0.20 or p_oos >= 0.25))
                     )
 
@@ -826,29 +837,72 @@ class IntentRouter:
                             f"[IntentRouter-Cascade] Kích hoạt Stage 2 NLI Arbiter ({mode_tag}): "
                             f"Top1={top1_class} (P={top1_prob:.3f}), Margin={margin:.3f}, "
                             f"P_course={p_course:.3f}, P_chit={p_chit:.3f}, P_oos={p_oos:.3f}, "
-                            f"is_nav={is_nav}"
+                            f"is_nav={is_nav}, has_curriculum={has_curriculum_topic}"
                         )
                         nli_intent, nli_conf = self._nli_arbiter.arbitrate(clean_prompt)
                         if is_nav:
                             logger.info(f"[IntentRouter-Cascade] Curriculum Navigation bảo chứng -> course_query")
                             return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                        elif nli_intent == "course_query" and (nli_conf >= 0.45 or (nli_conf >= 0.38 and p_course >= 0.30)):
+                        elif nli_intent == "course_query" and (nli_conf >= 0.35 or p_course >= 0.20 or has_curriculum_topic):
                             logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> course_query ({nli_conf*100:.1f}%)")
                             return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
-                        elif nli_intent == "chit_chat" and (nli_conf >= 0.50 or (nli_conf >= 0.38 and p_chit >= 0.22)):
-                            logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> chit_chat ({nli_conf*100:.1f}%)")
-                            return RouterClassification(
-                                intent="chit_chat",
-                                direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
-                                is_course_query=False
-                            )
-                        elif nli_intent == "out_of_scope" and (nli_conf >= 0.58 or (nli_conf >= 0.48 and p_oos >= 0.40)):
-                            logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> out_of_scope ({nli_conf*100:.1f}%)")
-                            return RouterClassification(
-                                intent="out_of_scope",
-                                direct_response=OFFTOPIC_CASUAL_RESPONSES,
-                                is_course_query=False
-                            )
+                        elif nli_intent == "chit_chat":
+                            if (nli_conf >= 0.65 and p_chit >= 0.12) or (nli_conf >= 0.45 and p_chit >= 0.22):
+                                logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> chit_chat ({nli_conf*100:.1f}%)")
+                                return RouterClassification(
+                                    intent="chit_chat",
+                                    direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
+                                    is_course_query=False
+                                )
+                            elif p_course >= 0.25 or has_curriculum_topic or top1_class == "course_query":
+                                logger.info(
+                                    f"[IntentRouter-Cascade] Rigorous Chit-Chat Verification Gate: "
+                                    f"Bác bỏ chit_chat (P_chit={p_chit:.3f} < 0.12, P_course={p_course:.3f}) -> course_query"
+                                )
+                                return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                            else:
+                                logger.info(
+                                    f"[IntentRouter-Cascade] Rigorous Chit-Chat Verification Gate: "
+                                    f"Bác bỏ chit_chat (P_chit={p_chit:.3f} < 0.12, P_course={p_course:.3f}) -> out_of_scope"
+                                )
+                                return RouterClassification(
+                                    intent="out_of_scope",
+                                    direct_response=OFFTOPIC_CASUAL_RESPONSES,
+                                    is_course_query=False
+                                )
+                        elif nli_intent == "out_of_scope":
+                            if top1_class == "course_query":
+                                if nli_conf >= 0.85 and p_oos > p_course:
+                                    logger.info(
+                                        f"[IntentRouter-Cascade] NLI Arbiter áp đảo SLM course_query (NLI={nli_conf*100:.1f}%, P_oos={p_oos:.3f}) -> out_of_scope"
+                                    )
+                                    return RouterClassification(
+                                        intent="out_of_scope",
+                                        direct_response=OFFTOPIC_CASUAL_RESPONSES,
+                                        is_course_query=False
+                                    )
+                                else:
+                                    logger.info(
+                                        f"[IntentRouter-Cascade] Recall-First Protection bảo vệ SLM course_query (NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
+                                    )
+                                    return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                            else:
+                                if (p_course >= 0.20 or has_curriculum_topic) and p_oos < 0.90:
+                                    from app.services.curriculum import get_curriculum_service
+                                    c_svc = get_curriculum_service()
+                                    matched_lesson = c_svc.find_lesson_for_query(clean_prompt)
+                                    if matched_lesson is not None and nli_conf < 0.72:
+                                        logger.info(
+                                            f"[IntentRouter-Cascade] Curriculum Semantic Rescue (Lesson {matched_lesson}, NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
+                                        )
+                                        return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+
+                                logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> out_of_scope ({nli_conf*100:.1f}%)")
+                                return RouterClassification(
+                                    intent="out_of_scope",
+                                    direct_response=OFFTOPIC_CASUAL_RESPONSES,
+                                    is_course_query=False
+                                )
 
                     if top1_class == "out_of_scope" and is_nav:
                         logger.info(f"[IntentRouter] Post-SLM Curriculum Navigation Rescue -> course_query")

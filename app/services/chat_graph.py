@@ -277,7 +277,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     # -------------------------------------------------------------------------
     is_soc_ack, ack_sim = router.is_social_acknowledgment(raw_prompt)
     is_pure_soc, soc_sim = router.is_pure_social(raw_prompt)
-    if (not raw_clf.is_course_query) and (is_soc_ack or is_pure_soc):
+    if is_soc_ack or ((not raw_clf.is_course_query) and is_pure_soc):
         max_social_sim = max(ack_sim, soc_sim)
         logger.info(
             f"[LangGraph:router_node] Bước 1 Social Acknowledgment Gate (Sim={max_social_sim:.3f}): "

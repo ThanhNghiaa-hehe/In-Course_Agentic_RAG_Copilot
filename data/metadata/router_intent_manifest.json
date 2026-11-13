@@ -37,11 +37,38 @@
     "gratitude",
     "goodbye"
   ],
+  "solicitation_words": [
+    "viết hộ",
+    "viết giúp",
+    "viết sẵn",
+    "viết full",
+    "viết hết",
+    "làm hộ",
+    "làm giúp",
+    "giải hộ",
+    "giải giúp",
+    "cho xin code",
+    "xin full code",
+    "xin code",
+    "code luôn",
+    "giải luôn",
+    "cho em xin",
+    "gõ nguyên",
+    "xuất code",
+    "xuất toàn bộ code",
+    "cung cấp toàn bộ code",
+    "cung cấp mã nguồn",
+    "không hỏi gợi mở",
+    "đừng hỏi gợi mở",
+    "ngừng hỏi gợi ý",
+    "ngừng hỏi gợi mở"
+  ],
   "default_offtopic_response": "Chào bạn! Tôi là **In-Course AI Copilot** - Trợ giảng chuyên môn của khóa học lập trình C++. Tôi luôn sẵn sàng đồng hành hỗ trợ bạn giải đáp các thắc mắc về bài học, cú pháp code và bài tập lập trình thay vì các chủ đề ngoài lề đời sống. Hãy gửi cho tôi câu hỏi hoặc đoạn code C++ bạn đang gặp khó khăn nhé!",
+  "nli_template": "This text is about {}.",
   "nli_hypotheses": {
-    "course_query": "Học viên đang hỏi về bài tập, xin mã nguồn giải bài, hỏi về cú pháp, thuật toán, hàm, lớp, lập trình hướng đối tượng C++, hoặc dùng ví dụ thực tế để mô hình hóa thuộc tính class, nạp chồng toán tử và xử lý dữ liệu trong phần mềm máy tính",
-    "chit_chat": "Người dùng đang chào hỏi, cảm ơn, tạm biệt, hoặc hỏi về danh tính tác giả sinh viên, trường đại học, kiến trúc trợ giảng AI (FastAPI, Qdrant, E5, re-ranker, timestamp), hay nguyên tắc sư phạm Socratic",
-    "out_of_scope": "Người dùng đang nói chuyện phiếm đời sống, thời tiết, ăn uống, hỏi lời khuyên thể lực, định hướng nghề nghiệp việc làm, hoặc hỏi về các công nghệ phần mềm nằm ngoài phạm vi môn học C++ (như lập trình web frontend ReactJS, làm AI trí tuệ nhân tạo, mobile app, hoặc gán ghép code vào hành động vật lý đời thực)"
+    "course_query": "programming question about C++ code syntax or algorithms",
+    "chit_chat": "social chit-chat, greeting, gratitude, or casual talk",
+    "out_of_scope": "unrealistic or humorous metaphor, everyday life question, or off-topic conversation"
   },
   "chitchat_subintents": {
     "socratic_pedagogy": {
@@ -118,6 +145,11 @@
     "làm được rồi",
     "làm được bài",
     "viết xong",
+    "xóa xong",
+    "tìm được",
+    "cài đặt xong",
+    "code xong",
+    "áp dụng được",
     "chuẩn hóa xong",
     "thành công rồi",
     "tự code được",
@@ -159,9 +191,6 @@
   ],
   "question_starters": [
     "tại sao", "vì sao", "sao", "làm sao", "thế nào", "như thế nào", "có phải", "là gì", "được không", "hả", "chưa", "không", "nhỉ", "có nên", "khi nào", "bao giờ"
-  ],
-  "solicitation_words": [
-    "xin", "cho", "hỏi", "biết", "muốn", "cần", "viết hết", "viết hộ", "viết sẵn", "code luôn", "giải luôn", "cho em xin", "gõ nguyên"
   ],
   "exercise_statement_signatures": [
     "em đang làm bài tập",
@@ -302,6 +331,15 @@
     "base": ["lớp cha", "hàm tạo", "constructor", "chạy trước"],
     "derived": ["lớp con", "lớp cha", "kế thừa"],
     "zero-based": ["bắt đầu từ 0", "từ 0 hay 1", "chỉ số"],
-    "time": ["mấy lần", "1 lần", "ít nhất 1 lần", "điều kiện sai"]
+    "time": ["mấy lần", "1 lần", "ít nhất 1 lần", "điều kiện sai", "thời gian"],
+    "february": ["tháng 2", "tháng hai", "tháng 02"],
+    "leap": ["năm nhuận", "nhuận", "29 ngày", "chia hết cho 400"],
+    "day": ["ngày", "số ngày", "28 ngày", "29 ngày"],
+    "month": ["tháng", "số ngày trong tháng"],
+    "handling": ["xử lý", "chia trường hợp", "trường hợp", "kiểm tra", "tính"],
+    "complexity": ["độ phức tạp", "thời gian chạy", "độ phức tạp thời gian", "big o", "o(n)", "o(log n)"],
+    "binary": ["nhị phân", "tìm kiếm nhị phân", "chia đôi"],
+    "search": ["tìm kiếm", "tìm", "quét"],
+    "matrix": ["ma trận", "mảng 2 chiều", "bảng vuông"]
   }
 }

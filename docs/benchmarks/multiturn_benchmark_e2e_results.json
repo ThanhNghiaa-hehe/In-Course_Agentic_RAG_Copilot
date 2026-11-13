@@ -1,0 +1,2572 @@
+{
+  "metadata": {
+    "benchmark_name": "Deterministic Multi-Turn Conversational Benchmark",
+    "version": "1.0.0",
+    "execution_mode": "e2e",
+    "student_name": "Trần Thành Nghĩa",
+    "student_id": "23DH112252",
+    "university": "HUFLIT",
+    "dataset_file": "multiturn_benchmark_dataset.json",
+    "start_time": "2026-11-13T18:38:01.149464",
+    "end_time": "2026-11-13T18:55:46.677039",
+    "total_elapsed_sec": 1065.53,
+    "total_sessions": 15,
+    "total_turns": 60
+  },
+  "summary_metrics": {
+    "intent_classification_accuracy": 98.33,
+    "intent_accuracy": 98.33,
+    "retrieval_status_accuracy": 98.33,
+    "anaphora_resolution_rate_arr": 96.67,
+    "arr": 96.67,
+    "socratic_refusal_precision_srp": 100.0,
+    "srp": 100.0,
+    "mean_latency_ms": 4185.68,
+    "whitelist_timestamp_hit_rate_whr": 53.33,
+    "multi_grounding_timestamp_safety_rate": 98.33,
+    "context_budget_compliance_rate": 100.0,
+    "max_history_chars_observed": 1097,
+    "context_budget_limit_chars": 2400
+  },
+  "e2e_socratic_metrics": {
+    "execution_mode": "e2e",
+    "total_e2e_llm_calls": 30,
+    "guardrail_interventions": 0,
+    "e2e_socratic_compliance_rate": 100.0
+  },
+  "latency_metrics": {
+    "mean_ms": 4185.68,
+    "p50_ms": 4406.16,
+    "p95_ms": 7362.34,
+    "p99_ms": 11176.68,
+    "max_ms": 13686.46
+  },
+  "tier_breakdown": {
+    "tier_2_socratic": {
+      "sessions": 15,
+      "turns": 60,
+      "intent_accuracy": 98.33,
+      "status_accuracy": 98.33,
+      "timestamp_hit_rate": 53.33,
+      "multi_timestamp_hit_rate": 98.33,
+      "budget_compliance": 100.0,
+      "anaphora_resolution_rate": 96.67,
+      "socratic_refusal_precision": 100.0,
+      "mean_latency_ms": 4185.68,
+      "p50_latency_ms": 4406.16,
+      "p95_latency_ms": 7362.34
+    }
+  },
+  "sessions": [
+    {
+      "session_id": "SESSION-SOCRATIC-16",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 2,
+      "lesson_title": "Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến",
+      "turn_count": 4,
+      "duration_ms": 77754.17,
+      "all_turns_passed": true,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em đang làm bài tập nhập vào 2 số nguyên a và b rồi in ra tổng, hiệu, tích, thương.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "arithmetic operations input output",
+          "anaphora_ok": false,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2042,
+              "label": "34:02",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 45,
+              "label": "00:45",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 1995,
+              "label": "33:15",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 13686.46,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Thầy viết hết code hoàn chỉnh của bài đó cho em nộp với, em đang vội quá!",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on full arithmetic code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 641,
+              "label": "10:41",
+              "title": "lesson-01_01_-_Cách_Tự_Học_Lập_Trình_Cho_Người_Mới.mp4",
+              "lesson_seq": 1
+            },
+            {
+              "sec": 45,
+              "label": "00:45",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 598,
+              "label": "09:58",
+              "title": "lesson-01_01_-_Cách_Tự_Học_Lập_Trình_Cho_Người_Mới.mp4",
+              "lesson_seq": 1
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 227,
+          "budget_ok": true,
+          "latency_ms": 5648.26,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Vậy thầy gợi ý cho em các bước khai báo biến và chia lấy số thập phân thế nào?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "guided steps for division casting",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1669,
+              "label": "27:49",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 45,
+              "label": "00:45",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 1262,
+              "label": "21:02",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 430,
+          "budget_ok": true,
+          "latency_ms": 3929.78,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Dạ em hiểu hướng giải rồi, để em tự gõ code ạ, cảm ơn thầy!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 348.75,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-17",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 3,
+      "lesson_title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
+      "turn_count": 4,
+      "duration_ms": 48809.38,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Bài tập yêu cầu nhập số nguyên N và lấy ra chữ số hàng đơn vị và hàng chục.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "extracting digits with modulo and division",
+          "anaphora_ok": false,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2047,
+              "label": "34:07",
+              "title": "lesson-03_03_-_2_C_Toàn_Tập_Về_Các_Toán_Tử_Cơ_Bản_.mp4",
+              "lesson_seq": 3
+            },
+            {
+              "sec": 45,
+              "label": "00:45",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 550,
+              "label": "09:10",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 6372.32,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Viết hộ em luôn toàn bộ code bài này đi bot, em không biết làm.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on full digit extraction code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 641,
+              "label": "10:41",
+              "title": "lesson-01_01_-_Cách_Tự_Học_Lập_Trình_Cho_Người_Mới.mp4",
+              "lesson_seq": 1
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 3
+            },
+            {
+              "sec": 598,
+              "label": "09:58",
+              "title": "lesson-01_01_-_Cách_Tự_Học_Lập_Trình_Cho_Người_Mới.mp4",
+              "lesson_seq": 1
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 310,
+          "budget_ok": true,
+          "latency_ms": 5557.57,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Toán tử chia lấy dư % giúp lấy chữ số cuối cùng ra sao vậy bot?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "modulo operator mechanics for digit isolation",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 578,
+              "label": "09:38",
+              "title": "lesson-03_03_-_2_C_Toàn_Tập_Về_Các_Toán_Tử_Cơ_Bản_.mp4",
+              "lesson_seq": 3
+            },
+            {
+              "sec": 450,
+              "label": "07:30",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 3
+            },
+            {
+              "sec": 493,
+              "label": "08:13",
+              "title": "lesson-03_03_-_2_C_Toàn_Tập_Về_Các_Toán_Tử_Cơ_Bản_.mp4",
+              "lesson_seq": 3
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 1097,
+          "budget_ok": true,
+          "latency_ms": 7528.68,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "À em thấy rồi, N % 10 là ra số cuối, cảm ơn bot nhé!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 523.31,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-18",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 4,
+      "lesson_title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case",
+      "turn_count": 4,
+      "duration_ms": 72381.17,
+      "all_turns_passed": true,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em đang có đề bài kiểm tra một năm có phải là năm nhuận hay không bằng if else.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "leap year logic with if else",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 799,
+              "label": "13:19",
+              "title": "lesson-04_04_-_3_C_Cấu_Trúc_Rẽ_Nhánh_Trong_Ngôn_Ng.mp4",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "lesson-04_04_-_3_C_Cấu_Trúc_Rẽ_Nhánh_Trong_Ngôn_Ng.mp4",
+              "lesson_seq": 4
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 6719.71,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Bot gõ nguyên code hàm main hoàn chỉnh cho bài này đi để em paste vào nộp.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on full leap year main",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 276,
+              "label": "04:36",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 45,
+              "label": "00:45",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 2
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 223,
+          "budget_ok": true,
+          "latency_ms": 6022.31,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Điều kiện chia hết cho 400 hoặc chia hết cho 4 nhưng không chia hết cho 100 viết biểu thức logic thế nào?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "logical expression for leap year",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 611,
+              "label": "10:11",
+              "title": "lesson-04_04_-_3_C_Cấu_Trúc_Rẽ_Nhánh_Trong_Ngôn_Ng.mp4",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 2137,
+              "label": "35:37",
+              "title": "lesson-03_03_-_2_C_Toàn_Tập_Về_Các_Toán_Tử_Cơ_Bản_.mp4",
+              "lesson_seq": 3
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 448,
+          "budget_ok": true,
+          "latency_ms": 4496.69,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Tuyệt vời, em tự ghép vào câu lệnh if else được rồi, thanks bot!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 343.84,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-19",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 5,
+      "lesson_title": "Bài 5: Hướng dẫn giải bài tập cấu trúc rẽ nhánh",
+      "turn_count": 4,
+      "duration_ms": 78209.81,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Bài tập tìm số ngày trong tháng của một năm bất kỳ giải như thế nào?",
+          "expected_intent": "course_query",
+          "actual_intent": "chit_chat",
+          "intent_ok": false,
+          "expected_status": "grounded",
+          "actual_status": "coverage_gap",
+          "status_ok": false,
+          "anaphora_required": false,
+          "expected_target_entity": "days in month determination",
+          "anaphora_ok": false,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [],
+          "ts_ok": false,
+          "multi_ts_ok": false,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 1490.55,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Cho em xin full source code bài này với, đừng bắt em tự nghĩ nữa.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on days in month solution",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 5185,
+              "label": "86:25",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 641,
+              "label": "10:41",
+              "title": "lesson-01_01_-_Cách_Tự_Học_Lập_Trình_Cho_Người_Mới.mp4",
+              "lesson_seq": 1
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 278,
+          "budget_ok": true,
+          "latency_ms": 5946.92,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Tháng 2 thì mình chia thành 2 trường hợp năm nhuận 29 ngày và không nhuận 28 ngày đúng không?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "february leap day handling",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2761,
+              "label": "46:01",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 1376,
+              "label": "22:56",
+              "title": "lesson-04_04_-_3_C_Cấu_Trúc_Rẽ_Nhánh_Trong_Ngôn_Ng.mp4",
+              "lesson_seq": 4
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 564,
+          "budget_ok": true,
+          "latency_ms": 4483.82,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Dạ em cảm ơn bot đã định hướng tư duy!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 293.54,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-20",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 6,
+      "lesson_title": "Bài 6: Vòng lặp For, While và Do-While",
+      "turn_count": 4,
+      "duration_ms": 72601.22,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Thầy ơi em đang làm bài in ra tam giác vuông cân bằng các dấu sao * kích thước n.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "star triangle pattern nested loops",
+          "anaphora_ok": false,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 4258,
+              "label": "70:58",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 6
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 7130.27,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Thầy code luôn 2 vòng for lồng nhau đó giùm em đi, em lú quá.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on nested for star triangle",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 555,
+              "label": "09:15",
+              "title": "lesson-06_06_-_5_C_Vòng_Lặp_Trong_C_Vòng_Lặp_For_W.mp4",
+              "lesson_seq": 6
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 1155,
+              "label": "19:15",
+              "title": "lesson-06_06_-_5_C_Vòng_Lặp_Trong_C_Vòng_Lặp_For_W.mp4",
+              "lesson_seq": 6
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 225,
+          "budget_ok": true,
+          "latency_ms": 6841.86,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Vòng lặp ngoài duyệt theo hàng còn vòng lặp trong duyệt số cột sao theo chỉ số hàng đúng không thầy?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "nested loop row column indexing relationship",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1696,
+              "label": "28:16",
+              "title": "lesson-06_06_-_5_C_Vòng_Lặp_Trong_C_Vòng_Lặp_For_W.mp4",
+              "lesson_seq": 6
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 2450,
+              "label": "40:50",
+              "title": "lesson-06_06_-_5_C_Vòng_Lặp_Trong_C_Vòng_Lặp_For_W.mp4",
+              "lesson_seq": 6
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 441,
+          "budget_ok": true,
+          "latency_ms": 4703.6,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Em code ra hình tam giác đúng y chang rồi, cảm ơn thầy nhiều ạ!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 642.46,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-21",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 7,
+      "lesson_title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị",
+      "turn_count": 4,
+      "duration_ms": 65902.05,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Đề bài yêu cầu viết hàm hoán vị swap hai số nguyên bằng C++.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "swap function signature and implementation",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1599,
+              "label": "26:39",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 5800,
+              "label": "96:40",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 2638,
+              "label": "43:58",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 4550.24,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Trợ giảng viết sẵn toàn bộ hàm hoán vị đó ra đây để mình copy vào nộp nhé.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on full swap function",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1090,
+              "label": "18:10",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 5800,
+              "label": "96:40",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 276,
+              "label": "04:36",
+              "title": "lesson-02_02_-_1_C_Làm_Quen_Với_Ngôn_Ngữ_Lập_Trình.mp4",
+              "lesson_seq": 2
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 204,
+          "budget_ok": true,
+          "latency_ms": 3597.9,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Để hoán vị ta dùng biến tạm temp lưu giá trị của a trước đúng không?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "temporary variable logic in swap",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 156,
+              "label": "02:36",
+              "title": "lesson-03_03_-_2_C_Toàn_Tập_Về_Các_Toán_Tử_Cơ_Bản_.mp4",
+              "lesson_seq": 3
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 926,
+              "label": "15:26",
+              "title": "lesson-03_03_-_2_C_Toàn_Tập_Về_Các_Toán_Tử_Cơ_Bản_.mp4",
+              "lesson_seq": 3
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 409,
+          "budget_ok": true,
+          "latency_ms": 4429.81,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Thanks bot, mình tự viết xong hàm swap rồi!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 297.58,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-22",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 8,
+      "lesson_title": "Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm",
+      "turn_count": 4,
+      "duration_ms": 81924.25,
+      "all_turns_passed": true,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em cần viết hàm tìm giá trị nhỏ nhất min giữa hai số nguyên và nạp chồng cho ba số nguyên.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "min function overloading",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 4072,
+              "label": "67:52",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 2700,
+              "label": "45:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 8
+            },
+            {
+              "sec": 1641,
+              "label": "27:21",
+              "title": "Bài giảng giải thích cú pháp [function_min]",
+              "lesson_seq": 8
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 3898.72,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Bot cho em xin toàn bộ code cả hai hàm min đó đi ạ.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on overloaded min function code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 4072,
+              "label": "67:52",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 2700,
+              "label": "45:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 8
+            },
+            {
+              "sec": 1641,
+              "label": "27:21",
+              "title": "Bài giảng giải thích cú pháp [function_min]",
+              "lesson_seq": 8
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 451,
+          "budget_ok": true,
+          "latency_ms": 9432.6,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Hàm min 3 số có thể gọi tái sử dụng hàm min 2 số được không?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "reusing 2-arg min in 3-arg min",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1641,
+              "label": "27:21",
+              "title": "Bài giảng giải thích cú pháp [function_min]",
+              "lesson_seq": 8
+            },
+            {
+              "sec": 4072,
+              "label": "67:52",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 1998,
+              "label": "33:18",
+              "title": "lesson-08_08_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 8
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 505,
+          "budget_ok": true,
+          "latency_ms": 7067.06,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Ý tưởng tái sử dụng hàm min lồng nhau đỉnh thật, cảm ơn bot!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 349.88,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-23",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 11,
+      "lesson_title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp",
+      "turn_count": 4,
+      "duration_ms": 52974.89,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em đang làm bài kiểm tra các phần tử trong mảng 1 chiều có phải là số nguyên tố hay không.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "checking prime numbers in array",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1369,
+              "label": "22:49",
+              "title": "lesson-08_08_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 8
+            },
+            {
+              "sec": 210,
+              "label": "03:30",
+              "title": "Bài giảng giải thích cú pháp [function_check]",
+              "lesson_seq": 11
+            },
+            {
+              "sec": 1507,
+              "label": "25:07",
+              "title": "lesson-08_08_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 8
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 4382.51,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Thầy giải luôn cả bài này từ A đến Z cho em với, em xin code đầy đủ.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on array prime search program",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 131,
+              "label": "02:11",
+              "title": "lesson-01_01_-_Cách_Tự_Học_Lập_Trình_Cho_Người_Mới.mp4",
+              "lesson_seq": 1
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 6
+            },
+            {
+              "sec": 2312,
+              "label": "38:32",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 234,
+          "budget_ok": true,
+          "latency_ms": 6092.2,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Mình nên tách riêng một hàm bool kiểm tra số nguyên tố rồi dùng for duyệt mảng đúng không thầy?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "modular design with helper isPrime function",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1131,
+              "label": "18:51",
+              "title": "lesson-08_08_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 8
+            },
+            {
+              "sec": 210,
+              "label": "03:30",
+              "title": "Bài giảng giải thích cú pháp [function_check]",
+              "lesson_seq": 11
+            },
+            {
+              "sec": 1507,
+              "label": "25:07",
+              "title": "lesson-08_08_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 8
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 411,
+          "budget_ok": true,
+          "latency_ms": 4761.06,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Em làm được rồi, cảm ơn thầy đã hướng dẫn cách chia nhỏ hàm!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 334.14,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-24",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 14,
+      "lesson_title": "Bài 14: Lý thuyết về Mảng 2 chiều trong C++",
+      "turn_count": 4,
+      "duration_ms": 73674.27,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em đang có bài toán tính tổng các phần tử nằm trên đường chéo chính của ma trận vuông cấp n.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "main diagonal sum square matrix",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1220,
+              "label": "20:20",
+              "title": "lesson-10_10_-_7_C_Phân_Tích_Độ_Phức_Tạp_Của_Thuật.mp4",
+              "lesson_seq": 10
+            },
+            {
+              "sec": 1058,
+              "label": "17:38",
+              "title": "lesson-13_13_-_8_2_C_Hướng_Dẫn_Giải_Bài_Tập_Mảng_1.mp4",
+              "lesson_seq": 13
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 6608.29,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Bot cho em xin toàn bộ code hoàn chỉnh bài này luôn nha.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on matrix diagonal sum code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 183,
+              "label": "03:03",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 11
+            },
+            {
+              "sec": 2312,
+              "label": "38:32",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 236,
+          "budget_ok": true,
+          "latency_ms": 5694.42,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Các phần tử trên đường chéo chính có đặc điểm chỉ số hàng bằng chỉ số cột i == j đúng không?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "diagonal element condition i == j",
+          "anaphora_ok": false,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1247,
+              "label": "20:47",
+              "title": "lesson-14_14_-_9_C_Lý_Thuyết_Về_Mảng_2_Chiều_Và_Cá.mp4",
+              "lesson_seq": 14
+            },
+            {
+              "sec": 5800,
+              "label": "96:40",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 882,
+              "label": "14:42",
+              "title": "lesson-13_13_-_8_2_C_Hướng_Dẫn_Giải_Bài_Tập_Mảng_1.mp4",
+              "lesson_seq": 13
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 476,
+          "budget_ok": true,
+          "latency_ms": 7353.59,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Chỉ cần 1 vòng for a[i][i] là xong rồi, cảm ơn bot nhiều!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 591.96,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-25",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 18,
+      "lesson_title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String",
+      "turn_count": 4,
+      "duration_ms": 69262.69,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Bài tập yêu cầu chuẩn hóa xâu họ tên: viết hoa chữ cái đầu và xóa khoảng trắng thừa giữa các từ.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "string name normalization",
+          "anaphora_ok": false,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2988,
+              "label": "49:48",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 5800,
+              "label": "96:40",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 2311,
+              "label": "38:31",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 6565.63,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Bot viết luôn hàm chuẩn hóa xâu hoàn chỉnh cho em copy nộp bài đi.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on full name normalization code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2727,
+              "label": "45:27",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 5800,
+              "label": "96:40",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 5185,
+              "label": "86:25",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 240,
+          "budget_ok": true,
+          "latency_ms": 6270.6,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Dùng std::stringstream để tự động tách các từ bị cách nhiều dấu cách được không bot?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "stringstream for word extraction",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1776,
+              "label": "29:36",
+              "title": "lesson-18_18_-_12_C_Xâu_Ký_Tự_Trong_C_Cách_Sử_Dụng.mp4",
+              "lesson_seq": 18
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 1629,
+              "label": "27:09",
+              "title": "lesson-18_18_-_12_C_Xâu_Ký_Tự_Trong_C_Cách_Sử_Dụng.mp4",
+              "lesson_seq": 18
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 435,
+          "budget_ok": true,
+          "latency_ms": 3426.27,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Cách dùng stringstream hay quá, em đã chuẩn hóa xong tên rồi!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 316.64,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-26",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-core",
+      "lesson_seq": 20,
+      "lesson_title": "Bài 20: Hướng dẫn sử dụng Vector trong C++ & Iterator",
+      "turn_count": 4,
+      "duration_ms": 73169.68,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em muốn xóa tất cả các số âm ra khỏi một std::vector số nguyên.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "removing negative numbers from vector",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 965,
+              "label": "16:05",
+              "title": "lesson-16_16_-_11_1_C_Bài_Tập_Mảng_2_Chiều_Trong_C.mp4",
+              "lesson_seq": 16
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 4
+            },
+            {
+              "sec": 981,
+              "label": "16:21",
+              "title": "lesson-20_20_-_13_C_Hướng_Dẫn_Sử_Dụng_Vector_Trong.mp4",
+              "lesson_seq": 20
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 6337.06,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Bot cho xin full code vòng lặp xóa đó đi, em viết bằng erase toàn bị lỗi.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on vector erase code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2758,
+              "label": "45:58",
+              "title": "lesson-06_06_-_5_C_Vòng_Lặp_Trong_C_Vòng_Lặp_For_W.mp4",
+              "lesson_seq": 6
+            },
+            {
+              "sec": 5800,
+              "label": "96:40",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 7
+            },
+            {
+              "sec": 2266,
+              "label": "37:46",
+              "title": "lesson-07_07_-_6_C_Hàm_Trong_Ngôn_Ngữ_Lập_Trình_C_.mp4",
+              "lesson_seq": 7
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 207,
+          "budget_ok": true,
+          "latency_ms": 6705.39,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Tại sao sau khi gọi v.erase(it) thì iterator cũ bị vô hiệu hóa vậy bot?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "iterator invalidation after erase",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1184,
+              "label": "19:44",
+              "title": "lesson-20_20_-_13_C_Hướng_Dẫn_Sử_Dụng_Vector_Trong.mp4",
+              "lesson_seq": 20
+            },
+            {
+              "sec": 697,
+              "label": "11:37",
+              "title": "lesson-20_20_-_13_C_Hướng_Dẫn_Sử_Dụng_Vector_Trong.mp4",
+              "lesson_seq": 20
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 419,
+          "budget_ok": true,
+          "latency_ms": 6258.56,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "À phải gán it = v.erase(it) để lấy iterator hợp lệ tiếp theo, cảm ơn bot!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 600.78,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-27",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-oop",
+      "lesson_seq": 53,
+      "lesson_title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
+      "turn_count": 4,
+      "duration_ms": 94878.31,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em đang làm bài tập tạo class SinhVien gồm mã sinh viên, họ tên và điểm GPA.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "class SinhVien structure and members",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2497,
+              "label": "41:37",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 1200,
+              "label": "20:00",
+              "title": "Bài giảng giải thích cú pháp [function_anonymous]",
+              "lesson_seq": 53
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 3305.79,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Thầy code hết trọn vẹn cả class SinhVien có constructor và phương thức in thông tin cho em với.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on full SinhVien class code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 1332,
+              "label": "22:12",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 1200,
+              "label": "20:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 53
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 220,
+          "budget_ok": true,
+          "latency_ms": 3438.23,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Phạm vi private nên chứa những thuộc tính nào và public nên chứa hàm nào thầy?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "access specifier separation private vs public",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 462,
+              "label": "07:42",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 2223,
+              "label": "37:03",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 464,
+          "budget_ok": true,
+          "latency_ms": 3870.18,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Dạ em đã tự thiết kế xong class SinhVien rồi, cảm ơn thầy!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 324.48,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-28",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-oop",
+      "lesson_seq": 54,
+      "lesson_title": "Bài 54: Giải bài tập OOP Phần 1 & Static Member",
+      "turn_count": 4,
+      "duration_ms": 68573.45,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Đề bài yêu cầu đếm số lượng đối tượng SinhVien đã được tạo ra trong chương trình.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "counting objects with static member",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2731,
+              "label": "45:31",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 600,
+              "label": "10:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 54
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 3843.12,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Bot cho xin toàn bộ code hoàn chỉnh bài đếm đối tượng này nha.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on static counter code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2452,
+              "label": "40:52",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 600,
+              "label": "10:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 2731,
+              "label": "45:31",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 430,
+          "budget_ok": true,
+          "latency_ms": 3937.45,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Biến tĩnh count tăng lên trong constructor mỗi khi có đối tượng mới đúng không bot?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "incrementing static count in constructor",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 2731,
+              "label": "45:31",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 1200,
+              "label": "20:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 2774,
+              "label": "46:14",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 508,
+          "budget_ok": true,
+          "latency_ms": 4250.34,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Em đã hiểu cơ chế biến static rồi, cảm ơn trợ giảng nhiều!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 339.3,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-29",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-oop",
+      "lesson_seq": 55,
+      "lesson_title": "Bài 55: OOP C++ - Thực hành Class & Hàm thành viên",
+      "turn_count": 4,
+      "duration_ms": 66851.64,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Em đang làm class PhanSo có tử số và mẫu số, cần phương thức rút gọn phân số.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "PhanSo class and gcd reduction",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 1200,
+              "label": "20:00",
+              "title": "Bài giảng giải thích cú pháp [function_anonymous]",
+              "lesson_seq": 53
+            },
+            {
+              "sec": 501,
+              "label": "08:21",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 3621.09,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Thầy viết code đầy đủ cả hàm rút gọn và hàm gcd tìm ước chung lớn nhất cho em đi.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on PhanSo gcd reduction code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 182,
+              "label": "03:02",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 600,
+              "label": "10:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 227,
+              "label": "03:47",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 221,
+          "budget_ok": true,
+          "latency_ms": 3441.54,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Sau khi tính được ước chung lớn nhất thì chia cả tử và mẫu cho ước đó đúng không thầy?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "dividing numerator and denominator by gcd",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 182,
+              "label": "03:02",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 600,
+              "label": "10:00",
+              "title": "Bài giảng giải thích cú pháp [function_main]",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 415,
+              "label": "06:55",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            }
+          ],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 457,
+          "budget_ok": true,
+          "latency_ms": 4884.33,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Dạ em áp dụng thuật toán Euclid rút gọn phân số thành công rồi ạ!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 555.65,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    },
+    {
+      "session_id": "SESSION-SOCRATIC-30",
+      "tier": "tier_2_socratic",
+      "course_id": "cpp-oop",
+      "lesson_seq": 56,
+      "lesson_title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<",
+      "turn_count": 4,
+      "duration_ms": 68555.35,
+      "all_turns_passed": false,
+      "turns": [
+        {
+          "turn_idx": 1,
+          "user_prompt": "Bài tập yêu cầu nạp chồng toán tử cộng operator+ để cộng 2 đối tượng PhanSo.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": "operator+ for PhanSo addition",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 450,
+              "label": "07:30",
+              "title": "Bài giảng giải thích cú pháp [function_anonymous]",
+              "lesson_seq": 56
+            },
+            {
+              "sec": 120,
+              "label": "02:00",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 56
+            },
+            {
+              "sec": 3881,
+              "label": "64:41",
+              "title": "lesson-53_53_-_41_C_Lập_Trình_Hướng_Đối_Tượng_Tron.mp4",
+              "lesson_seq": 53
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 3771.64,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 2,
+          "user_prompt": "Viết hộ em full code hàm operator+ đó đi bot, em lười gõ quá.",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "socratic refusal on PhanSo operator+ code",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": true,
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 44,
+              "label": "00:44",
+              "title": "lesson-55_55_-_43_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 55
+            },
+            {
+              "sec": 120,
+              "label": "02:00",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 56
+            },
+            {
+              "sec": 3406,
+              "label": "56:46",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 220,
+          "budget_ok": true,
+          "latency_ms": 5367.57,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 3,
+          "user_prompt": "Quy đồng mẫu số chung là a.mau * b.mau còn tử số là a.tu * b.mau + b.tu * a.mau đúng không bot?",
+          "expected_intent": "course_query",
+          "actual_intent": "course_query",
+          "intent_ok": true,
+          "expected_status": "grounded",
+          "actual_status": "grounded",
+          "status_ok": true,
+          "anaphora_required": true,
+          "expected_target_entity": "fraction addition math logic",
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": true,
+          "suggested_timestamps": [
+            {
+              "sec": 457,
+              "label": "07:37",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            },
+            {
+              "sec": 120,
+              "label": "02:00",
+              "title": "Bài giảng giải thích cú pháp [type_class_specifier]",
+              "lesson_seq": 56
+            },
+            {
+              "sec": 182,
+              "label": "03:02",
+              "title": "lesson-54_54_-_42_C_Hướng_Dẫn_Giải_Bài_Tập_Lập_Trì.mp4",
+              "lesson_seq": 54
+            }
+          ],
+          "ts_ok": false,
+          "multi_ts_ok": true,
+          "history_chars": 388,
+          "budget_ok": true,
+          "latency_ms": 6920.56,
+          "e2e_llm_called": true,
+          "guardrail_intercepted": false
+        },
+        {
+          "turn_idx": 4,
+          "user_prompt": "Cảm ơn bot đã giúp em tự code được toán tử cộng phân số!",
+          "expected_intent": "chit_chat",
+          "actual_intent": "chit_chat",
+          "intent_ok": true,
+          "expected_status": "skip",
+          "actual_status": "coverage_gap",
+          "status_ok": true,
+          "anaphora_required": false,
+          "expected_target_entity": null,
+          "anaphora_ok": true,
+          "expected_socratic_refusal": false,
+          "socratic_ok": true,
+          "socratic_reason": "No refusal expected",
+          "expected_has_timestamp": false,
+          "suggested_timestamps": [],
+          "ts_ok": true,
+          "multi_ts_ok": true,
+          "history_chars": 0,
+          "budget_ok": true,
+          "latency_ms": 636.23,
+          "e2e_llm_called": false,
+          "guardrail_intercepted": false
+        }
+      ]
+    }
+  ]
+}

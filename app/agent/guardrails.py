@@ -107,6 +107,7 @@ class SecurityInputGuardrail:
         self._attack_prototypes: List[str] = []
         self._benign_prototypes: List[str] = []
         self._compiler_error_tokens: List[str] = []
+        self._coercive_override_markers: List[str] = []
         self._load_manifest()
 
     def _load_manifest(self) -> None:
@@ -118,6 +119,9 @@ class SecurityInputGuardrail:
                 self._benign_prototypes = data.get("benign_prototypes", [])
                 self._compiler_error_tokens = [
                     str(tok).lower() for tok in data.get("compiler_error_tokens", [])
+                ]
+                self._coercive_override_markers = [
+                    str(m).lower() for m in data.get("coercive_override_markers", [])
                 ]
         except Exception as e:
             logger.warning(f"[SecurityInputGuardrail] Lỗi đọc manifest {self.manifest_path}: {e}")
@@ -178,11 +182,13 @@ class SecurityInputGuardrail:
                 sim_benign = float(np.max(np.dot(self._benign_matrix, norm_vec)))
                 margin = sim_attack - sim_benign
 
-                # Calibrated Dual-Condition Decision Boundary (OWASP LLM01 Standard - Zero Quick-Fix)
+                # Calibrated Dual-Condition Decision Boundary & Coercive Override Gate (OWASP LLM01 Standard - Zero Quick-Fix)
+                has_coercive_override = any(m in lower_prompt for m in self._coercive_override_markers)
                 is_attack = (
                     (sim_attack >= 0.865 and margin >= 0.018)
                     or (sim_attack >= 0.890 and margin >= 0.010)
                     or (sim_attack >= 0.925 and margin >= 0.000)
+                    or (has_coercive_override and sim_attack >= 0.850)
                 )
 
                 if is_attack:

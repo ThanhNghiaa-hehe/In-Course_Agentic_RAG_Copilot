@@ -307,6 +307,15 @@ class CurriculumService:
                 return bool(les.get("is_revision", False) and les.get("updates_lesson_seq") == base_seq)
         return False
 
+    def get_lesson_by_seq(self, seq: int) -> Optional[Dict[str, Any]]:
+        """
+        Lấy thông tin bài học theo số thứ tự seq từ manifest (Data/Code Separation).
+        """
+        for les in self._all_lessons:
+            if les.get("seq") == seq:
+                return les
+        return None
+
     def is_introductory_overview_chunk(self, chunk: Dict[str, Any]) -> bool:
         """
         Kiểm tra xem chunk tài liệu có phải là video giới thiệu tổng quan đầu khóa (nạp từ manifest) hay không.

@@ -59,8 +59,8 @@ MODEL_FALLBACK_CHAINS = {
     "gemini-4-argon-medium":     ["claude-sonnet-5-5-high", "gemini-3.8-flash-high"],
     "claude-opus-4-6-thinking":  ["claude-sonnet-4-6", "gemini-3.8-flash-high"],
     "claude-sonnet-4-6":         ["gemini-3.8-flash-high"],
-    "gemini-3.8-flash-high":     ["gemini-3.8-flash-medium", "gemini-3.8-flash-low"],
-    "gemini-3.8-flash-medium":   ["gemini-3.8-flash-low"],
+    "gemini-3.8-flash-high":     ["gemini-3.8-flash-medium", "gemini-4-argon-medium", "claude-sonnet-5-5-high", "gemini-3.8-flash-low"],
+    "gemini-3.8-flash-medium":   ["gemini-4-argon-medium", "claude-sonnet-5-5-high", "gemini-3.8-flash-low"],
 }
 
 DEFAULT_PROFILE = {
@@ -158,7 +158,123 @@ def switch_quota_account():
         print(f"[Quota Manager] Cảnh báo: Không tìm thấy {ANTIGRAVITY_SERVER}")
 
 
-def execute_phase(phase_title: str, prompt: str, role_key: str, is_continue: bool = True) -> bool:
+class PipelineProgressTracker:
+    """
+    Thanh tiến trình trực quan thời gian thực (Live Console Progress Tracker).
+    Sử dụng CONOUT$ để hiển thị trực tiếp lên màn hình Console của Windows
+    ngay cả khi toàn bộ stdout/stderr đang bị chuyển hướng qua file log (*> logs/overnight_loop.log).
+    """
+    def __init__(self, total_loops: int, total_phases: int = 4):
+        self.total_loops = total_loops
+        self.total_phases = total_phases
+        self.current_loop = 1
+        self.current_phase_idx = 1
+        self.current_phase_title = ""
+        self.current_role = ""
+        self.current_model = ""
+        self.start_time = time.time()
+        self.phase_start_time = time.time()
+        self._conout = None
+        if os.name == "nt":
+            try:
+                self._conout = open("CONOUT$", "w", encoding="utf-8", errors="replace")
+            except Exception:
+                self._conout = None
+
+    def _write_console(self, text: str, newline: bool = False):
+        full_text = text + ("\n" if newline else "")
+        if self._conout:
+            try:
+                self._conout.write(full_text)
+                self._conout.flush()
+                return
+            except Exception:
+                pass
+        # Fallback khi chạy tương tác không chuyển hướng file
+        if hasattr(sys.stderr, "isatty") and sys.stderr.isatty():
+            try:
+                sys.stderr.write(full_text)
+                sys.stderr.flush()
+            except Exception:
+                pass
+
+    def start_loop(self, loop_idx: int):
+        self.current_loop = loop_idx
+        sep = "=" * 75
+        msg = f"\n{sep}\n[Tracker] 🔄 VÒNG LẶP #{loop_idx}/{self.total_loops} - TỰ ĐỘNG HỘI TỤ & KIỂM CHUẨN CHẤT LƯỢNG\n{sep}\n"
+        self._write_console(msg, newline=True)
+
+    def start_phase(self, phase_idx: int, phase_title: str, role_key: str, active_model: str):
+        self.current_phase_idx = phase_idx
+        self.current_phase_title = phase_title
+        self.current_role = role_key
+        self.current_model = active_model
+        self.phase_start_time = time.time()
+        pct = int((phase_idx - 1) / self.total_phases * 100)
+        bar_len = 16
+        filled = int(bar_len * pct / 100)
+        bar = "█" * filled + "░" * (bar_len - filled)
+        header = f"\n[Tracker] [{bar}] {pct:>2}% | Khởi động: {phase_title} | Model: {active_model}\n"
+        self._write_console(header, newline=True)
+
+    def update_subagent(self, line_count: int, snippet: str = ""):
+        elapsed = int(time.time() - self.phase_start_time)
+        m, s = divmod(elapsed, 60)
+        time_frac = min(0.85, elapsed / 600.0)
+        pct = int(((self.current_phase_idx - 1) + time_frac) / self.total_phases * 100)
+        bar_len = 16
+        filled = int(bar_len * pct / 100)
+        bar = "█" * filled + "░" * (bar_len - filled)
+
+        snippet = snippet.strip()
+        if len(snippet) > 28:
+            snippet = snippet[:25] + "..."
+
+        status_line = (
+            f"\r[Tracker] [{bar}] {pct:>2}% | "
+            f"L{self.current_loop} P{self.current_phase_idx}/4 | "
+            f"{self.current_role.upper()[:8]} {m:02d}m{s:02d}s | "
+            f"Logs: {line_count:>4} | {snippet:<28}  "
+        )
+        self._write_console(status_line, newline=False)
+
+    def end_phase(self, phase_title: str, success: bool = True):
+        elapsed = int(time.time() - self.phase_start_time)
+        m, s = divmod(elapsed, 60)
+        status = "[✔] XONG" if success else "[!] GIÁN ĐOẠN"
+        pct = int(self.current_phase_idx / self.total_phases * 100)
+        bar_len = 16
+        filled = int(bar_len * pct / 100)
+        bar = "█" * filled + "░" * (bar_len - filled)
+        line = f"\r[Tracker] [{bar}] {pct:>2}% | {phase_title}: {status} ({m:02d}m{s:02d}s)                           \n"
+        self._write_console(line, newline=True)
+
+    def log_syntax_gate(self, errors: list):
+        if not errors:
+            self._write_console("[Tracker] [Fast AST Gate] [✔] 100% Cú pháp Python AST hợp lệ!\n", newline=True)
+        else:
+            self._write_console(f"[Tracker] [Fast AST Gate] [!] Lỗi cú pháp: {'; '.join(errors)}\n", newline=True)
+
+    def log_gate(self, is_passed: bool, report: str):
+        status = "[✔] TẤT CẢ QUALITY GATES ĐẠT CHUẨN 100%!" if is_passed else f"[!] QUALITY GATES CHƯA ĐẠT: {report}"
+        self._write_console(f"\n[Tracker] [Quality Gates] {status}\n", newline=True)
+
+    def close(self):
+        if self._conout:
+            try:
+                self._conout.close()
+            except Exception:
+                pass
+
+
+def execute_phase(
+    phase_title: str,
+    prompt: str,
+    role_key: str,
+    is_continue: bool = True,
+    phase_idx: int = 1,
+    tracker: "PipelineProgressTracker" = None
+) -> bool:
     """
     Thực thi một nhịp của quy trình với cơ chế TỰ ĐỘNG THÍCH ỨNG MODEL THEO TÀI KHOẢN:
     - Kiểm chứng danh sách model thực tế qua `agy models` trước khi gọi (0% lỗi invalid model selection).
@@ -196,6 +312,9 @@ def execute_phase(phase_title: str, prompt: str, role_key: str, is_continue: boo
         print(f"[*] Chế độ: {'Nối tiếp phiên (--continue)' if is_continue else 'Khởi tạo phiên mới'}")
         print("=" * 75 + "\n")
 
+        if tracker:
+            tracker.start_phase(phase_idx, phase_title, role_key, active_model)
+
         agy_bin = shutil.which("agy") or "agy"
         cmd = [agy_bin, "--model", active_model, "--dangerously-skip-permissions"]
         if is_continue:
@@ -214,20 +333,33 @@ def execute_phase(phase_title: str, prompt: str, role_key: str, is_continue: boo
             )
 
             quota_hit = False
+            line_count = 0
+            last_render = time.time()
             for line in process.stdout:
+                line_count += 1
                 sys.stdout.write(line)
                 sys.stdout.flush()
                 if QUOTA_ERROR_REGEX.search(line):
                     quota_hit = True
+                now = time.time()
+                if now - last_render >= 1.0:
+                    clean_snip = line.strip().replace("\r", " ").replace("\n", " ")
+                    if tracker:
+                        tracker.update_subagent(line_count, snippet=clean_snip)
+                    last_render = now
 
             phase_timeout = 3600 if role_key == "verifier" else 1800
             process.wait(timeout=phase_timeout)
 
             if not quota_hit and process.returncode == 0:
                 print(f"\n[✔] {phase_title} ĐÃ HOÀN TẤT THÀNH CÔNG!\n")
+                if tracker:
+                    tracker.end_phase(phase_title, success=True)
                 return True
 
             print(f"\n[!] Nhịp gặp lỗi hạn mức hoặc gián đoạn (Exit Code: {process.returncode}, quota_hit={quota_hit}).")
+            if tracker:
+                tracker.end_phase(phase_title, success=False)
 
             # 1. Thử fallback sang pool model độc lập NGAY TRÊN CÙNG TÀI KHOẢN trước khi switch
             same_account_chain = [
@@ -371,6 +503,7 @@ def run_pipeline(task: str, max_iterations: int = 3):
     """
     start_time = time.time()
     Path(".agent").mkdir(parents=True, exist_ok=True)
+    tracker = PipelineProgressTracker(total_loops=max_iterations, total_phases=4)
 
     print("\n" + "#" * 75)
     print("# DUAL-MASTERMIND & MULTI-SUBAGENT 24/7 AUTOMATED CLOSED-LOOP PIPELINE")
@@ -383,6 +516,7 @@ def run_pipeline(task: str, max_iterations: int = 3):
 
     for loop_idx in range(1, max_iterations + 1):
         loop_start = time.time()
+        tracker.start_loop(loop_idx)
         print("\n" + "=" * 75)
         print(f"🔄 BẮT ĐẦU VÒNG LẶP TỰ TỐI ƯU HÓA #{loop_idx} / {max_iterations}")
         print("=" * 75 + "\n")
@@ -409,7 +543,8 @@ def run_pipeline(task: str, max_iterations: int = 3):
             f"- Xuất bản báo cáo kiểm toán mới nhất vào '.agent/technical_debt_audit.md'.\n"
             f"Nhiệm vụ chi tiết:\n{task}{feedback_ctx}"
         )
-        if not execute_phase(f"Nhịp 1A: Thanh Tra Nợ Kỹ Thuật (Vòng #{loop_idx})", p1a_prompt, role_key="auditor", is_continue=False):
+        if not execute_phase(f"Nhịp 1A: Thanh Tra Nợ Kỹ Thuật (Vòng #{loop_idx})", p1a_prompt, role_key="auditor", is_continue=False, phase_idx=1, tracker=tracker):
+            tracker.close()
             return
 
         # =========================================================================
@@ -425,7 +560,8 @@ def run_pipeline(task: str, max_iterations: int = 3):
             f"đồng bộ MODALITY_GATE_VIDEO_HIGH_CONFIDENCE với AGENTS.md, gỡ bỏ nhánh pass/comment BENCH-xxx và tối ưu NLI Rescue.\n"
             f"- Xuất bản '.agent/implementation_spec.md' và cập nhật checklist '.agent/task_plan.md'."
         )
-        if not execute_phase(f"Nhịp 1B: Thiết Kế Kiến Trúc & Spec (Vòng #{loop_idx})", p1b_prompt, role_key="thinker", is_continue=False):
+        if not execute_phase(f"Nhịp 1B: Thiết Kế Kiến Trúc & Spec (Vòng #{loop_idx})", p1b_prompt, role_key="thinker", is_continue=False, phase_idx=2, tracker=tracker):
+            tracker.close()
             return
 
         # =========================================================================
@@ -439,7 +575,8 @@ def run_pipeline(task: str, max_iterations: int = 3):
             f"- Triển khai chính xác vào các file liên quan theo đúng thiết kế, giữ nguyên các invariant đã chốt.\n"
             f"- Tuân thủ strict typing, Pydantic v2, Zero Regex cheat, cập nhật trạng thái checklist trong '.agent/task_plan.md'."
         )
-        if not execute_phase(f"Nhịp 2: Gõ Code Siêu Tốc (Vòng #{loop_idx})", p2_prompt, role_key="coder", is_continue=False):
+        if not execute_phase(f"Nhịp 2: Gõ Code Siêu Tốc (Vòng #{loop_idx})", p2_prompt, role_key="coder", is_continue=False, phase_idx=3, tracker=tracker):
+            tracker.close()
             return
 
         # =========================================================================
@@ -459,6 +596,7 @@ def run_pipeline(task: str, max_iterations: int = 3):
         else:
             print("[✔] 100% Cú pháp AST các file Python trong app/ hợp lệ hoàn hảo!")
         print("-" * 75 + "\n")
+        tracker.log_syntax_gate(syntax_errors)
 
         # =========================================================================
         # NHỊP 3: HỘI ĐỒNG THẨM ĐỊNH & KIỂM THỬ ĐỘC LẬP (verifier)
@@ -472,7 +610,8 @@ def run_pipeline(task: str, max_iterations: int = 3):
             f"2. Subagent 'grounding-evaluator': CHỈ đối chiếu trên bộ kết quả benchmark MỚI NHẤT vừa được 'qa-tester' xuất sau Nhịp 2 (kiểm tra metadata.end_time, tuyệt đối không dùng số liệu cũ); thẩm tra tính trung thực của toàn bộ git diff, chống 100% fake data, overfitting, comment chứa BENCH-xxx và regex.\n"
             f"Chỉ cho phép kết luận ĐẠT khi 15/15 bài test PASS, SRP = 100% (0 code leak), CRAG Precision >= 88.0%, Multi-Turn Intent >= 94.0%, Multi-Turn Status >= 93.0% và 0% Quick-Fix/Hardcode!"
         )
-        if not execute_phase(f"Nhịp 3: Hội Đồng Thẩm Định & Nghiệm Thu (Vòng #{loop_idx})", p3_prompt, role_key="verifier", is_continue=False):
+        if not execute_phase(f"Nhịp 3: Hội Đồng Thẩm Định & Nghiệm Thu (Vòng #{loop_idx})", p3_prompt, role_key="verifier", is_continue=False, phase_idx=4, tracker=tracker):
+            tracker.close()
             return
 
         # =========================================================================
@@ -482,6 +621,7 @@ def run_pipeline(task: str, max_iterations: int = 3):
         print(f"[*] ĐANG KIỂM CHUẨN TỰ ĐỘNG QUALITY GATES CHO VÒNG #{loop_idx}...")
         is_passed, summary_report = evaluate_quality_gates()
         loop_duration = round(time.time() - loop_start, 1)
+        tracker.log_gate(is_passed, summary_report)
 
         if is_passed:
             print(f"[✔] VÒNG #{loop_idx} THÀNH CÔNG VƯỢT TRỘI ({loop_duration}s)!")
@@ -500,6 +640,7 @@ def run_pipeline(task: str, max_iterations: int = 3):
                 print(f"[!] Đã hoàn thành tối đa {max_iterations} vòng lặp. Dừng để báo cáo.")
 
     elapsed = round(time.time() - start_time, 1)
+    tracker.close()
     print("\n" + "=" * 75)
     print(f"🎉 TOÀN BỘ TIẾN TRÌNH PIPELINE TỐI ƯU HÓA HOÀN TẤT TRONG {elapsed} GIÂY!")
     print("=" * 75 + "\n")

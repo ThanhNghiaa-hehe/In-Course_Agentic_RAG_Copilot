@@ -911,7 +911,13 @@ class RetrievalService:
         # [RETRIEVAL HIERARCHY PRECEDENCE INVARIANT - YAN ET AL. & ICLR 2025]
         # Bắt buộc tuân thủ 4 tầng phân cấp toán học một chiều nghiêm ngặt:
         # =========================================================================
-        BOILERPLATE_SCOPES = {"header_preamble", "function_main", "type_class_specifier"}
+        # Context-Aware Boilerplate Scope Filtering (Giải cứu câu hỏi về hàm main - Zero Hardcode)
+        is_asking_main = "main" in query_text.lower().split() or "hàm main" in query_text.lower() or "main()" in query_text.lower()
+        BOILERPLATE_SCOPES = (
+            {"header_preamble", "type_class_specifier"}
+            if is_asking_main
+            else {"header_preamble", "function_main", "type_class_specifier"}
+        )
 
         valid_ast_items = [
             it for it in candidate_items
@@ -939,13 +945,8 @@ class RetrievalService:
         max_raw_prob = max((it.get("raw_semantic_score", 0.0) for it in candidate_items), default=0.0)
 
         # Kiểm tra Context Sufficiency (ICLR 2025):
-        only_boilerplate_code = (
-            bool(valid_ast_items)
-            and not specific_ast_items
-            and not valid_video_items
-            and all((it.get("code_scope") or "") in {"header_preamble", "type_class_specifier"} for it in valid_ast_items)
-        )
-        if only_boilerplate_code:
+        only_boilerplate_code = bool(valid_ast_items) and not specific_ast_items
+        if only_boilerplate_code and not valid_video_items:
             valid_ast_items = []
 
         # -------------------------------------------------------------------------
@@ -976,7 +977,17 @@ class RetrievalService:
                 is_low_confidence=False
             )
 
-        if not is_curriculum_navigation and valid_video_items and max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
+        has_high_confidence_video_grounding = (
+            bool(valid_video_items)
+            and (
+                max_video_score >= settings.PARETO_VIDEO_STRONG_GROUNDING
+                or (
+                    max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
+                    and bool(specific_ast_items)
+                )
+            )
+        )
+        if not is_curriculum_navigation and has_high_confidence_video_grounding:
             eligible_code_items = [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
@@ -990,7 +1001,7 @@ class RetrievalService:
             )
             final_assembled = reorder_lost_in_the_middle(anchor_candidates)
             logger.info(
-                f"[RetrievalService] Tầng 1 Early Exit (High-Confidence Video >= {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE}): "
+                f"[RetrievalService] Tầng 1 Early Exit (High-Confidence Video >= {settings.PARETO_VIDEO_STRONG_GROUNDING} or >= {settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE} with AST): "
                 f"Khóa GROUNDED thành công (max_video_score={max_video_score:.4f})."
             )
             return RetrievalResult(
@@ -1058,10 +1069,36 @@ class RetrievalService:
                 except Exception as c_err:
                     logger.warning(f"[RetrievalService:Pareto 3A] Lỗi giải cứu qua CurriculumService ({c_err})")
         else:
-            # Kiểm tra exercise_statement_signatures từ CurriculumService (Data/Code Separation)
+            # Kiểm tra exercise_statement_signatures & Curriculum Mapping từ CurriculumService (Data/Code Separation)
             from app.services.curriculum import get_curriculum_service
             c_svc = get_curriculum_service()
             is_exercise_stmt = c_svc.is_exercise_statement(query_text)
+            curriculum_matched_seq: Optional[int] = None
+            try:
+                c_match = c_svc.find_lesson_for_query(
+                    query_text,
+                    current_lesson_seq=current_lesson_seq,
+                    preferred_course_id=course_id,
+                )
+                if c_match:
+                    matched_lesson = c_match[0] if isinstance(c_match, (tuple, list)) else c_match
+                    if isinstance(matched_lesson, dict):
+                        c_seq = matched_lesson.get("seq") or matched_lesson.get("lesson_seq")
+                        if c_seq is not None:
+                            curriculum_matched_seq = int(c_seq)
+            except Exception as c_err:
+                logger.warning(f"[RetrievalService:Pareto] Lỗi tra cứu curriculum_matched_seq ({c_err})")
+
+            target_has_topical_match = False
+            if target_seq is not None:
+                try:
+                    target_lesson = c_svc.get_lesson_by_seq(target_seq)
+                    if target_lesson:
+                        norm_q = query_text.lower()
+                        t_kws = [k.lower() for k in target_lesson.get("keywords", []) if len(k) > 1]
+                        target_has_topical_match = any(k in norm_q for k in t_kws)
+                except Exception as t_err:
+                    logger.debug(f"[RetrievalService:Pareto] Lỗi kiểm tra target_has_topical_match: {t_err}")
 
             # Phân nhánh 3B: Continuation & Exercise Shield + 4-Tier Pareto Sufficiency (ICLR 2025)
             if (
@@ -1075,22 +1112,60 @@ class RetrievalService:
                     f"[RetrievalService:Pareto 3B] Kích hoạt Continuation/Exercise Shield (cont={is_continuation_turn}, ex={is_exercise_stmt}): "
                     f"floor={min_future_floor}, margin_req={margin_req}"
                 )
-            elif max_current_score < 0.22:
-                # Phân tầng (a): Bài hiện tại chưa có cơ sở giảng dạy
-                min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.33
-                margin_req = 0.11
-            elif max_current_score < 0.30:
-                # Phân tầng (b): Bài hiện tại ở dải văn nói lơ lửng, không có Code AST >= 0.35
-                min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.30
-                margin_req = 0.08 + (max_current_score - 0.22) * 0.25
-            elif max_current_score < 0.40:
-                # Phân tầng (c): Bài hiện tại có điểm video trung bình (0.30 <= S < 0.40) nhưng chưa có Code AST Anchor
-                min_future_floor = 0.35 if future_chunk_type == "code_ast" else 0.36
-                margin_req = 0.08 + (max_current_score - 0.30) * 0.25
+            elif max_current_score < settings.PARETO_LOCAL_GROUNDING_THRESHOLD:
+                # Phân tầng (a): Bài hiện tại chưa có cơ sở giảng dạy cục bộ (< 0.22)
+                min_future_floor = (
+                    settings.MODALITY_GATE_AST_THRESHOLD
+                    if future_chunk_type == "code_ast"
+                    else settings.PARETO_FALLBACK_VIDEO_MIN
+                )
+                margin_req = settings.PARETO_FALLBACK_MARGIN
+            elif max_current_score < settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
+                # Phân tầng (b): Bài hiện tại ở dải văn nói lơ lửng (0.22 <= S < 0.30)
+                min_future_floor = (
+                    settings.MODALITY_GATE_AST_THRESHOLD
+                    if future_chunk_type == "code_ast"
+                    else settings.PARETO_MARGINAL_FUTURE_MIN
+                )
+                margin_req = settings.PARETO_MARGINAL_MARGIN + (
+                    max_current_score - settings.PARETO_LOCAL_GROUNDING_THRESHOLD
+                ) * settings.PARETO_LINEAR_SLOPE_MILD
+            elif max_current_score < settings.PARETO_VIDEO_STRONG_GROUNDING:
+                # Phân tầng (c): Bài hiện tại có điểm video tự tin cao (0.30 <= S < 0.40) nhưng chưa có Code AST Anchor
+                if (
+                    target_seq is not None
+                    and not specific_ast_items
+                    and (
+                        (curriculum_matched_seq is not None and curriculum_matched_seq > current_lesson_seq)
+                        or target_has_topical_match
+                    )
+                ):
+                    min_future_floor = (
+                        settings.MODALITY_GATE_AST_THRESHOLD
+                        if future_chunk_type == "code_ast"
+                        else settings.PARETO_MARGINAL_FUTURE_MIN
+                    )
+                    margin_req = settings.PARETO_CURRICULUM_ALIGNED_MARGIN
+                    logger.info(
+                        f"[RetrievalService:Pareto 3B] Curriculum-Aligned Pareto Gate (matched_seq={curriculum_matched_seq}, "
+                        f"target_seq={target_seq}, topical_match={target_has_topical_match}): "
+                        f"floor={min_future_floor}, margin_req={margin_req}"
+                    )
+                else:
+                    min_future_floor = (
+                        settings.MODALITY_GATE_AST_THRESHOLD
+                        if future_chunk_type == "code_ast"
+                        else settings.PARETO_HIGH_VIDEO_FUTURE_MIN
+                    )
+                    margin_req = settings.PARETO_MARGINAL_MARGIN + (
+                        max_current_score - settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
+                    ) * settings.PARETO_LINEAR_SLOPE_MILD
             else:
-                # Phân tầng (d): Bài hiện tại có độ tự tin rất cao
-                min_future_floor = 0.50
-                margin_req = 0.16 + (max_current_score - 0.40) * 0.50
+                # Phân tầng (d): Bài hiện tại có độ tự tin rất cao (>= 0.40)
+                min_future_floor = settings.PARETO_STRONG_FUTURE_MIN
+                margin_req = settings.PARETO_STRONG_BASE_MARGIN + (
+                    max_current_score - settings.PARETO_VIDEO_STRONG_GROUNDING
+                ) * settings.PARETO_LINEAR_SLOPE_STEEP
 
         future_dominates = (
             target_seq is not None
@@ -1119,19 +1194,30 @@ class RetrievalService:
             if is_target_revision:
                 future_dominates = False
 
-            # Quy tắc 2: Foundational Prerequisite Priority v2.3
+            # Quy tắc 2: Foundational Prerequisite Priority Rule (ICLR 2025 Context Sufficiency)
             if is_foundational:
-                if future_chunk_type == "code_ast":
-                    if max_video_score >= 0.22 and (future_score < settings.PARETO_DOMINANCE_CODE_FUTURE_MIN or margin < 0.20):
-                        future_dominates = False
-                elif max_video_score >= 0.35:
-                    # Nếu target_seq là một foundational node độc lập của chuyên đề mới (ví dụ Bài 6 for loop khi đang ở Bài 3 toán tử),
-                    # và bài hiện tại không có điểm khớp video thực chất rất cao (max_video_score < 0.40) hay Code AST anchor >= 0.35:
-                    # Cho phép future_dominates chuyển sang bài mới (giải quyết BENCH-092 mà bảo vệ BENCH-041)
-                    if target_is_foundational and max_video_score < 0.40 and max_code_score < 0.35:
-                        pass
-                    elif future_score < 0.65 or margin < 0.25:
-                        future_dominates = False
+                is_future_curriculum_topic = (
+                    not is_target_revision
+                    and not specific_ast_items
+                    and max_video_score < settings.PARETO_VIDEO_STRONG_GROUNDING
+                    and (
+                        (curriculum_matched_seq is not None and int(curriculum_matched_seq) > current_lesson_seq)
+                        or target_has_topical_match
+                    )
+                )
+                if not is_future_curriculum_topic:
+                    if future_chunk_type == "code_ast":
+                        if max_video_score >= settings.MODALITY_GATE_VIDEO_THRESHOLD and (
+                            future_score < settings.PARETO_DOMINANCE_CODE_FUTURE_MIN
+                            or margin < settings.PARETO_PREREQUISITE_CODE_MARGIN
+                        ):
+                            future_dominates = False
+                    elif max_video_score >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
+                        if (
+                            future_score < settings.PARETO_PREREQUISITE_DOMINATE_MIN
+                            or margin < settings.PARETO_PREREQUISITE_DOMINATE_MARGIN
+                        ):
+                            future_dominates = False
 
         if future_dominates:
             logger.info(

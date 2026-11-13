@@ -43,7 +43,9 @@ class EmbeddingService:
         self.providers = ["CPUExecutionProvider"]
         try:
             import torch
-            if torch.cuda.is_available():
+            import onnxruntime as ort
+            available_ort_providers = ort.get_available_providers()
+            if torch.cuda.is_available() and "CUDAExecutionProvider" in available_ort_providers:
                 self.device = "cuda"
                 self.providers = ["CUDAExecutionProvider", "CPUExecutionProvider"]
                 gpu_name = torch.cuda.get_device_name(0)
@@ -53,7 +55,10 @@ class EmbeddingService:
                     f"({vram_mb:.0f} MB VRAM) - Providers: {self.providers}"
                 )
             else:
-                logger.info("[EmbeddingService] GPU CUDA không khả dụng, sử dụng CPUExecutionProvider.")
+                logger.info(
+                    f"[EmbeddingService] Sử dụng CPUExecutionProvider (torch.cuda={torch.cuda.is_available()}, "
+                    f"ort_providers={available_ort_providers})."
+                )
         except Exception as e:
             logger.warning(f"[EmbeddingService] Lỗi nhận diện CUDA ({e}), sử dụng CPUExecutionProvider.")
 
