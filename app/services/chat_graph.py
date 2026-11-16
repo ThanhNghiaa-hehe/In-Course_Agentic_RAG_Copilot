@@ -31,7 +31,7 @@ except Exception:
 from app.agent.router import get_intent_router
 from app.services.curriculum import get_curriculum_service
 from app.services.retrieval import get_retrieval_service, RetrievalResult
-from app.agent.guardrails import get_session_rate_limiter
+from app.agent.guardrails import get_session_rate_limiter, normalize_user_input
 from app.agent.prompts import (
     SOCRATIC_GROUNDED_PROMPT,
     OUT_OF_LESSON_PROMPT,
@@ -197,7 +197,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     router = get_intent_router()
     curr_svc = get_curriculum_service()
     history = state.get("messages", [])
-    raw_prompt = state["prompt"]
+    raw_prompt = normalize_user_input(state.get("prompt", ""))
     pending_nav = state.get("pending_navigation")
 
     # 0. Nhận diện Mệnh Lệnh Chuyển Bài Trực Tiếp (Conversational UI Action Dispatcher - Mục 3.2 & 4.1)
@@ -212,6 +212,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             f"để bạn theo dõi video bài giảng ngay nhé! 🎬"
         )
         return {
+            "prompt": raw_prompt,
             "intent": "confirm_navigation",
             "direct_response": direct_resp,
             "is_course_query": False,
@@ -242,6 +243,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                 f"để bạn theo dõi video bài giảng ngay nhé! 🎬"
             )
             return {
+                "prompt": raw_prompt,
                 "intent": "confirm_navigation",
                 "direct_response": direct_resp,
                 "is_course_query": False,
@@ -265,7 +267,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         # Tìm câu hỏi user gần nhất trong history mà không phải là pure social greeting hay acknowledgment
         for m in reversed(history):
             if m.get("role") == "user":
-                cand = m.get("content", "")
+                cand = normalize_user_input(m.get("content", ""))
                 is_soc, _ = router.is_pure_social(cand)
                 is_ack, _ = router.is_social_acknowledgment(cand)
                 if not is_soc and not is_ack and router.classify(cand).is_course_query:
@@ -284,6 +286,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             f"'{raw_prompt[:35]}...' -> chit_chat (skip RAG)"
         )
         return {
+            "prompt": raw_prompt,
             "intent": "chit_chat",
             "direct_response": router._select_chitchat_response(raw_prompt),
             "is_course_query": False,
@@ -304,11 +307,12 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             f"'{raw_prompt[:40]}...' -> Tìm bài học mới trong playlist"
         )
         return {
+            "prompt": raw_prompt,
             "intent": "course_query",
             "direct_response": None,
             "is_course_query": True,
             "search_query": raw_prompt,
-            "last_course_query": raw_prompt,
+            "last_course_query": anchor_query,
             "is_curriculum_navigation": True,
             "pending_navigation": None,
             "action": None
@@ -336,6 +340,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                 logger.info(f"[LangGraph:router_node] Bước 3 Course Query đơn lập: '{raw_prompt[:40]}...'")
 
         return {
+            "prompt": raw_prompt,
             "intent": "course_query",
             "direct_response": None,
             "is_course_query": True,
@@ -355,6 +360,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                 new_last_course_query = f"{anchor_query} | {raw_prompt}" if len(anchor_query) < 220 else raw_prompt
                 logger.info(f"[LangGraph:router_node] Bước 3 Contextual Rescue thành công: '{raw_prompt}' -> SearchQuery: '{search_query[:55]}...'")
                 return {
+                    "prompt": raw_prompt,
                     "intent": "course_query",
                     "direct_response": None,
                     "is_course_query": True,
@@ -367,6 +373,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             else:
                 logger.info(f"[LangGraph:router_node] Bước 3 Non-course classification ({classification.intent}): '{raw_prompt[:35]}...'")
                 return {
+                    "prompt": raw_prompt,
                     "intent": classification.intent,
                     "direct_response": classification.direct_response,
                     "is_course_query": False,
@@ -381,6 +388,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         # Đây là Topic Shift sang out_of_scope / chit_chat (như trà sữa, nước Pháp, Đà Nẵng, bóng đá, chiên cá)!
         logger.info(f"[LangGraph:router_node] Bước 3 Topic Shift / Non-course độc lập ({raw_clf.intent}): '{raw_prompt[:35]}...'")
         return {
+            "prompt": raw_prompt,
             "intent": raw_clf.intent,
             "direct_response": raw_clf.direct_response,
             "is_course_query": False,
@@ -404,8 +412,8 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
       hệ thống mới kích hoạt truy xuất dự phòng bằng search_query bổ sung mỏ neo.
     """
     retrieval_service = get_retrieval_service()
-    raw_prompt = state["prompt"]
-    search_query = state.get("search_query") or raw_prompt
+    raw_prompt = normalize_user_input(state.get("prompt", ""))
+    search_query = normalize_user_input(state.get("search_query") or raw_prompt)
     anchor_query = state.get("last_course_query")
     is_curriculum_nav = state.get("is_curriculum_navigation", False)
     is_cont_turn = bool(anchor_query and state.get("messages"))
@@ -481,8 +489,8 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     retrieval_status = state.get("retrieval_status", "coverage_gap")
     is_low_confidence = state.get("is_low_confidence", False)
     target_lesson_seq = state.get("target_lesson_seq")
-    raw_prompt = state["prompt"]
-    search_query = state.get("search_query")
+    raw_prompt = normalize_user_input(state.get("prompt", ""))
+    search_query = normalize_user_input(state["search_query"]) if state.get("search_query") else None
 
     # Xác định dòng liên kết ngữ cảnh hội thoại cho Anaphora Resolution
     solicitation_markers = ("viết hộ", "viết giúp", "viết cho", "code hộ", "code giúp", "giải giúp", "giải hộ", "cho em xin code", "viết full", "code luôn", "viết code hoàn chỉnh", "chỉ em cách viết code hoàn chỉnh")
@@ -526,7 +534,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
                 "is_approximate": chunk.get("is_approximate", False),
                 "lesson_id": chunk.get("lesson_id"),
                 "lesson_seq": chunk.get("lesson_seq"),
-                "start_sec": chunk.get("start_sec") or chunk.get("approx_video_sec"),
+                "start_sec": chunk.get("start_sec") if chunk.get("start_sec") is not None else chunk.get("approx_video_sec"),
                 "start_label": chunk.get("start_label") or (
                     f"{int(chunk['approx_video_sec'])//60:02d}:{int(chunk['approx_video_sec'])%60:02d}"
                     if chunk.get("approx_video_sec") is not None else None
@@ -544,7 +552,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
         context_block = _format_context_block(chunks)
         caution_notice = "\n[LƯU Ý: Một số tài liệu có độ tin cậy tham khảo, hãy định hướng học viên thận trọng.]\n" if is_low_confidence else ""
         user_message_content = f"""[CÂU HỎI THẮC MẮC CỦA HỌC VIÊN]
-{state['prompt']}{context_linked_line}
+{raw_prompt}{context_linked_line}
 {caution_notice}
 {context_block}"""
 
@@ -561,7 +569,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             target_desc = f"Bài {target_lesson_seq}" if target_lesson_seq else "các bài học sau"
             c_svc = get_curriculum_service()
             match_res = c_svc.find_lesson_for_query(
-                state["prompt"],
+                raw_prompt,
                 current_lesson_seq=state["lesson_seq"],
                 preferred_course_id=state["course_id"]
             )
@@ -630,7 +638,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             )
 
         user_message_content = f"""[CÂU HỎI CỦA HỌC VIÊN]
-{state['prompt']}{context_linked_line}
+{raw_prompt}{context_linked_line}
 
 [TIẾN ĐỘ BÀI HỌC]
 - Khóa học: {state['course_id']}
@@ -641,7 +649,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     else:  # coverage_gap
         active_system_prompt = COVERAGE_GAP_PROMPT
         user_message_content = f"""[CÂU HỎI CỦA HỌC VIÊN]
-{state['prompt']}{context_linked_line}
+{raw_prompt}{context_linked_line}
 
 [THÔNG TIN PHẠM VI KHÓA HỌC]
 - Khóa học: Lập trình C++ ({state['course_id']}), đang ở Bài {state['lesson_seq']}.
@@ -649,6 +657,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
 
 
     return {
+        "prompt": raw_prompt,
         "is_approximate": has_approximate,
         "suggested_timestamps": suggested_timestamps,
         "sources": sources,
@@ -673,7 +682,8 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     history_messages = state.get("messages", [])
     conv_summary = state.get("conversation_summary")
     system_prompt = state.get("system_prompt", SOCRATIC_GROUNDED_PROMPT)
-    user_message_content = state.get("user_message_content", state["prompt"])
+    raw_prompt = normalize_user_input(state.get("prompt", ""))
+    user_message_content = state.get("user_message_content") or raw_prompt
     turn_count = (len(history_messages) // 2) + 1
 
     # 1. Thuật toán Sliding Window: Giữ lại tối đa settings.SLIDING_WINDOW_TURNS turns gần nhất
@@ -741,7 +751,7 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
         full_system_prompt += f"\n\n[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]:\n{conv_summary}"
 
     # Dynamic Academic Glossary Injection (Mục 4.2): Khóa không gian sinh từ của LLM theo chuẩn đại học
-    glossary_ext = get_academic_glossary_prompt_extension(f"{user_message_content} {state.get('prompt', '')}")
+    glossary_ext = get_academic_glossary_prompt_extension(f"{user_message_content} {raw_prompt}")
     if glossary_ext:
         full_system_prompt += glossary_ext
 
@@ -855,8 +865,10 @@ def commit_assistant_turn(
     current_values = state_snapshot.values if state_snapshot else {}
     history = list(current_values.get("messages", []))
 
+    clean_user_prompt = normalize_user_input(user_prompt)
+
     # Bổ sung cặp câu hỏi - câu trả lời mới
-    history.append({"role": "user", "content": user_prompt})
+    history.append({"role": "user", "content": clean_user_prompt})
     history.append({"role": "assistant", "content": assistant_response})
 
     current_turn = len(history) // 2

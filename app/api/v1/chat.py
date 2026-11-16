@@ -4,6 +4,7 @@ from sse_starlette.sse import EventSourceResponse
 from app.schemas.chat import ChatRequest, ChatExportLogRequest, ChatExportLogResponse
 from app.services.chat import ChatService, get_chat_service
 from app.services.telemetry_critic import get_telemetry_critic_service
+from app.agent.guardrails import normalize_user_input
 
 router = APIRouter(prefix="/chat", tags=["Socratic Chat"])
 
@@ -28,6 +29,7 @@ async def stream_socratic_chat(
     """
     Endpoint phát luồng Server-Sent Events (SSE) theo chuẩn W3C EventSource.
     """
+    request.prompt = normalize_user_input(request.prompt)
     event_generator = chat_service.stream_chat(request)
     return EventSourceResponse(
         event_generator,

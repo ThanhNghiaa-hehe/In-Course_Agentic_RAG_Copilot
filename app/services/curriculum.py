@@ -14,10 +14,11 @@ Tuân thủ bất biến Data/Code Separation Invariant:
 
 import json
 import logging
-import unicodedata
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 import numpy as np
+
+from app.agent.guardrails import normalize_user_input
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -27,11 +28,8 @@ EMBEDDINGS_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "curr
 
 
 def _normalize_text(text: str) -> str:
-    """Chuẩn hóa chuỗi về Unicode NFC và chữ thường để so khớp chính xác."""
-    if not text:
-        return ""
-    text = unicodedata.normalize("NFC", text.lower().strip())
-    return " ".join(text.split())
+    """Chuẩn hóa chuỗi về Unicode NFC, loại bỏ ký tự ẩn/điều khiển và chuyển chữ thường để so khớp chính xác."""
+    return normalize_user_input(text, lowercase=True, preserve_newlines=False)
 
 
 def _has_modifier_conflict(
@@ -97,7 +95,7 @@ def _has_topical_overlap(
     norm_prompt = prompt.lower()
     active_stops = stop_words or set()
     clean_words = "".join(c if c.isalnum() else " " for c in norm_prompt).split()
-    tokens = [w for w in clean_words if w not in active_stops and len(w) > 1]
+    tokens = [w for w in clean_words if w not in active_stops and (len(w) > 1 or w.isdigit())]
 
     title_lower = lesson.get("title", "").lower()
     keywords = [k.lower() for k in lesson.get("keywords", [])]
@@ -244,10 +242,13 @@ class CurriculumService:
         """
         if self._syllabus_matrix is None or not self._all_lessons:
             return []
+        clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
+        if not clean_prompt:
+            return []
         try:
             from app.services.embedding import get_embedding_service
             emb_svc = get_embedding_service()
-            qv = np.array(emb_svc.embed_query_dense(f"query: {prompt}"), dtype=np.float32)
+            qv = np.array(emb_svc.embed_query_dense(f"query: {clean_prompt}"), dtype=np.float32)
             q_norm = np.linalg.norm(qv)
             if q_norm > 0:
                 qv /= q_norm
@@ -341,7 +342,10 @@ class CurriculumService:
         Nhận diện xem học viên có đang đặt câu hỏi điều hướng lộ trình / playlist
         hoặc hỏi về tổng quan nội dung của bài học hay không bằng 100% Machine Learning (Dense Vector Cosine).
         """
-        norm_prompt = _normalize_text(prompt)
+        clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
+        norm_prompt = _normalize_text(clean_prompt)
+        if not norm_prompt:
+            return False
 
         # 1. Trực tiếp có số thứ tự bài học (ví dụ "bài 4", "lesson 4")
         if self._extract_lesson_seq(norm_prompt) is not None:
@@ -353,7 +357,7 @@ class CurriculumService:
             try:
                 from app.services.embedding import get_embedding_service
                 emb_svc = get_embedding_service()
-                qv = np.array(emb_svc.embed_query_dense(f"query: {prompt}"), dtype=np.float32)
+                qv = np.array(emb_svc.embed_query_dense(f"query: {clean_prompt}"), dtype=np.float32)
                 q_norm = np.linalg.norm(qv)
                 if q_norm > 0:
                     qv /= q_norm
@@ -371,12 +375,15 @@ class CurriculumService:
 
     def is_overview_query(self, prompt: str) -> bool:
         """Kiểm tra xem câu hỏi có thuộc nhóm hỏi tổng quan nội dung bài học qua Dense Cosine Similarity."""
+        clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
+        if not clean_prompt:
+            return False
         self._ensure_nav_embeddings()
         if self._overview_vectors is not None:
             try:
                 from app.services.embedding import get_embedding_service
                 emb_svc = get_embedding_service()
-                qv = np.array(emb_svc.embed_query_dense(f"query: {prompt}"), dtype=np.float32)
+                qv = np.array(emb_svc.embed_query_dense(f"query: {clean_prompt}"), dtype=np.float32)
                 q_norm = np.linalg.norm(qv)
                 if q_norm > 0:
                     qv /= q_norm
@@ -411,9 +418,10 @@ class CurriculumService:
         Trả về target_lesson_seq hoặc None.
         Nếu câu hỏi mang tính nghi vấn (chứa '?' hoặc từ để hỏi), trả về None để nhường quyền cho IntentRouter và RetrievalService.
         """
-        if "?" in prompt:
+        clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
+        if not clean_prompt or "?" in clean_prompt:
             return None
-        norm = _normalize_text(prompt)
+        norm = _normalize_text(clean_prompt)
         try:
             curriculum_svc = get_curriculum_service()
             action_verbs = curriculum_svc._action_verbs
@@ -466,7 +474,10 @@ class CurriculumService:
         2. Ngữ cảnh bài học hiện tại nạp từ manifest.
         3. Chỉ mục Ngữ nghĩa Giáo trình (Syllabus Vector Index) kết hợp đối chiếu từ khóa manifest.
         """
+        prompt = normalize_user_input(prompt, preserve_newlines=False)
         norm_prompt = _normalize_text(prompt)
+        if not norm_prompt:
+            return None
 
         # 1. Khớp theo số thứ tự bài học tường minh (Zero Regex)
         seq_num = self._extract_lesson_seq(norm_prompt)
@@ -667,6 +678,9 @@ class CurriculumService:
         - Nếu hỏi tổng quan nội dung bài học: trả về dàn bài chi tiết kèm timestamps.
         - Nếu hỏi bài học ở đâu trong playlist: hướng dẫn chọn đúng bài trong danh mục.
         """
+        prompt = normalize_user_input(prompt, preserve_newlines=False)
+        if not prompt:
+            return None
         match_result = self.find_lesson_for_query(
             prompt,
             current_lesson_seq=current_lesson_seq,

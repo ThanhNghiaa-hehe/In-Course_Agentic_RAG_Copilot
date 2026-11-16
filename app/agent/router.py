@@ -564,9 +564,9 @@ class IntentRouter:
             if f" {sig_clean} " in clean_lower or clean_lower.startswith(f" {sig_clean} ") or clean_lower.endswith(f" {sig_clean} "):
                 return True
 
-        # 2. Elliptical Fragmentary Interrogative
+        # 2. Elliptical Fragmentary Interrogative (chỉ kích hoạt khi câu hỏi ngắn thiếu thực thể kỹ thuật độc lập)
         words = clean_p.split()
-        if len(words) <= 7 and clean_p.endswith("?"):
+        if len(words) <= 7 and clean_p.endswith("?") and not self.has_domain_entity(clean_p):
             return True
 
         return False
@@ -819,9 +819,16 @@ class IntentRouter:
                     has_curriculum_topic = False
                     if top1_class == "out_of_scope" and p_course < 0.16:
                         try:
-                            from app.services.curriculum import get_curriculum_service
+                            from app.services.curriculum import get_curriculum_service, _has_topical_overlap
                             c_svc = get_curriculum_service()
-                            has_curriculum_topic = c_svc.find_lesson_for_query(clean_prompt) is not None
+                            matched = c_svc.find_lesson_for_query(clean_prompt)
+                            if matched:
+                                m_lesson, _ = matched
+                                has_curriculum_topic = _has_topical_overlap(
+                                    m_lesson, clean_prompt, c_svc._stop_words,
+                                    conflict_groups=c_svc._modifier_conflict_groups,
+                                    domain_tokens=c_svc._domain_specific_tokens
+                                )
                         except Exception as e:
                             logger.debug(f"[IntentRouter] Lỗi kiểm tra has_curriculum_topic ({e}).")
 
@@ -888,14 +895,21 @@ class IntentRouter:
                                     return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
                             else:
                                 if (p_course >= 0.20 or has_curriculum_topic) and p_oos < 0.90:
-                                    from app.services.curriculum import get_curriculum_service
+                                    from app.services.curriculum import get_curriculum_service, _has_topical_overlap
                                     c_svc = get_curriculum_service()
-                                    matched_lesson = c_svc.find_lesson_for_query(clean_prompt)
-                                    if matched_lesson is not None and nli_conf < 0.72:
-                                        logger.info(
-                                            f"[IntentRouter-Cascade] Curriculum Semantic Rescue (Lesson {matched_lesson}, NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
+                                    matched = c_svc.find_lesson_for_query(clean_prompt)
+                                    if matched and nli_conf < 0.72:
+                                        m_lesson, _ = matched
+                                        is_verified_topic = _has_topical_overlap(
+                                            m_lesson, clean_prompt, c_svc._stop_words,
+                                            conflict_groups=c_svc._modifier_conflict_groups,
+                                            domain_tokens=c_svc._domain_specific_tokens
                                         )
-                                        return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                                        if is_verified_topic:
+                                            logger.info(
+                                                f"[IntentRouter-Cascade] Curriculum Semantic Rescue (Lesson {m_lesson.get('seq')}, NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
+                                            )
+                                            return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
 
                                 logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> out_of_scope ({nli_conf*100:.1f}%)")
                                 return RouterClassification(

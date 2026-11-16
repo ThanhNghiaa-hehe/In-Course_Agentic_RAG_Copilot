@@ -526,7 +526,7 @@ class RetrievalService:
         # Khắc phục triệt để bẫy đảo ngược giáo trình (Curriculum Inversion Trap):
         # Giữa bài học cơ sở tiên quyết (L_early) và bài học ứng dụng nâng cao (L_late),
         # bài học đến sau CHỈ ĐƯỢC PHÉP thống trị nếu đạt biên độ vượt trội áp đảo (Margin > 0.15).
-        CONFIDENCE_FLOOR = 0.35
+        CONFIDENCE_FLOOR = settings.PARETO_MARGINAL_FUTURE_MIN
         DOMINATE_MARGIN = 0.15
 
         confident_candidates = [
@@ -559,9 +559,9 @@ class RetrievalService:
 
         target_seq = future_seqs[chosen_idx] if future_seqs else None
         chosen_score = scores[chosen_idx] if scores else max_score
-        best_chunk_type = (
-            (future_points[best_idx].payload or {}).get("content_type", "video_transcript")
-            if future_points and best_idx < len(future_points)
+        chosen_chunk_type = (
+            (future_points[chosen_idx].payload or {}).get("content_type", "video_transcript")
+            if future_points and chosen_idx < len(future_points)
             else "video_transcript"
         )
         best_future_chunk = None
@@ -585,7 +585,7 @@ class RetrievalService:
                 "timestamp_tag": best_p.get("timestamp_tag", ""),
                 "approx_video_sec": best_p.get("approx_video_sec")
             }
-        return target_seq, max_score, best_chunk_type, best_future_chunk
+        return target_seq, chosen_score, chosen_chunk_type, best_future_chunk
 
     async def _probe_future_lessons(
         self,
@@ -634,7 +634,7 @@ class RetrievalService:
             f"[RetrievalService] Query: '{query_text}' | Course: {course_id} | Window: lesson_seq <= {current_lesson_seq}"
         )
 
-        if not is_curriculum_navigation:
+        if not is_curriculum_navigation and not is_continuation_turn:
             try:
                 from app.agent.router import get_intent_router
                 is_nav, _ = get_intent_router().is_curriculum_navigation(query_text)
@@ -1061,11 +1061,17 @@ class RetrievalService:
                         if isinstance(matched_lesson, dict):
                             c_seq = matched_lesson.get("seq") or matched_lesson.get("lesson_seq")
                             c_course = matched_lesson.get("course_id", course_id)
-                            if c_seq is not None and (c_course != course_id or int(c_seq) > current_lesson_seq):
-                                target_seq = int(c_seq)
-                                future_score = max(future_score, 0.42)
-                                margin = future_score - max_current_score
-                                logger.info(f"[RetrievalService:Pareto 3A] Giải cứu target_seq qua CurriculumService: Khóa {c_course} - Bài {target_seq}")
+                            if c_seq is not None:
+                                if c_course != course_id or int(c_seq) > current_lesson_seq:
+                                    target_seq = int(c_seq)
+                                    future_score = max(future_score, 0.42)
+                                    margin = future_score - max_current_score
+                                    logger.info(f"[RetrievalService:Pareto 3A] Giải cứu target_seq qua CurriculumService: Khóa {c_course} - Bài {target_seq}")
+                                else:
+                                    target_seq = None
+                                    future_score = 0.0
+                                    margin = -max_current_score
+                                    logger.info(f"[RetrievalService:Pareto 3A] Bài học khớp CurriculumService (Seq {c_seq}) đã nằm trong cửa sổ tiến độ (<= {current_lesson_seq}), xóa dominance tương lai.")
                 except Exception as c_err:
                     logger.warning(f"[RetrievalService:Pareto 3A] Lỗi giải cứu qua CurriculumService ({c_err})")
         else:

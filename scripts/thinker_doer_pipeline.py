@@ -29,19 +29,16 @@ from pathlib import Path
 ANTIGRAVITY_SERVER = Path(r"D:\PooL_quota\Antigravity Tools\antigravity-server.exe")
 
 # BẢNG ÁNH XẠ MÔ HÌNH ĐỘNG THEO TỪNG TÀI KHOẢN (ACCOUNT-AWARE MODEL MAPPING)
-# Chuẩn hóa 100% theo danh mục mô hình chính thức trả về từ `agy models` và quota thực tế (12/11/2026)
+# Cập nhật 16/11/2026: Cân bằng tải giữa 2 pool Gemini 4 độc lập còn quota dồi dào
+# (`gemini-4-argon-*` 86% và `gemini-4-hydrogen-*` 73%), tránh `claude-*-5-5-*` (đang 0% tới 19/11/2026).
 ACCOUNT_MODEL_PROFILES = {
     "thanhnghiat42@gmail.com": {
-        # Tài khoản chính (PRO - 100% Quota ở Gemini 4 Argon, Claude 5.5, Gemini 3.8):
-        # Chia tải thông minh giữa 2 pool độc lập: Claude 5.5 Weekly (100%) + Gemini 4 Argon Weekly (100%)
-        "auditor":  "claude-sonnet-5-5-high",   # Claude Sonnet 5.5 High (Thanh tra phản biện, diệt quick-fix)
-        "thinker":  "gemini-4-argon-high",      # Gemini 4 Argon High (Đầu não toán học RAG/CRAG/Pareto)
-        "coder":    "gemini-3.8-flash-high",    # Gemini 3.8 Flash High (Gõ code siêu tốc, strict typing)
-        "verifier": "claude-sonnet-5-5-high",   # Claude Sonnet 5.5 High (Thẩm định độc lập & Quality Gates)
+        "auditor":  "gemini-4-argon-high",      # Gemini 4 Argon High (86% quota — Thanh tra nợ kỹ thuật, diệt quick-fix)
+        "thinker":  "gemini-4-hydrogen-high",   # Gemini 4 Hydrogen High (73% quota — Deep Reasoning toán Pareto/CRAG/ChatGraph)
+        "coder":    "gemini-4-argon-medium",    # Gemini 4 Argon Medium (86% pool — tiết kiệm token suy nghĩ, code theo spec sẵn)
+        "verifier": "gemini-4-hydrogen-high",   # Gemini 4 Hydrogen High (73% quota — Thẩm định độc lập & Quality Gates)
     },
     "seanpaul1402@gmail.com": {
-        # Tài khoản dự phòng (PRO - KHÔNG có Argon/5.5; Claude 4.6 đang 0% 5H / 7% Weekly, Gemini 3.8 còn 88%-95%):
-        # Ưu tiên Gemini 3.8 Flash High (dồi dào quota); chỉ dùng Claude 4.6 khi thủ công bật lại sau reset
         "auditor":  "gemini-3.8-flash-high",
         "thinker":  "gemini-3.8-flash-high",
         "coder":    "gemini-3.8-flash-high",
@@ -50,24 +47,26 @@ ACCOUNT_MODEL_PROFILES = {
 }
 
 # CHUỖI DỰ PHÒNG MÔ HÌNH KHI CẠN HẠN MỨC HOẶC KHÔNG KHẢ DỤNG (TIERED MODEL FALLBACK CHAIN)
-# Thứ tự ưu tiên chuyển sang pool quota độc lập cùng tài khoản trước (ví dụ Claude 5.5 -> Gemini 4 Argon -> Gemini 3.8)
+# Loại bỏ tạm Claude (hiện 0% đến 19/11) để xoay sang pool Gemini còn quota hoặc chuyển ngay sang seanpaul1402.
 MODEL_FALLBACK_CHAINS = {
-    "claude-opus-5-5-high":      ["claude-sonnet-5-5-high", "gemini-4-argon-high", "gemini-3.8-flash-high"],
-    "claude-sonnet-5-5-high":    ["gemini-4-argon-high", "claude-sonnet-5-5-medium", "gemini-3.8-flash-high"],
-    "claude-sonnet-5-5-medium":  ["gemini-4-argon-high", "gemini-3.8-flash-high"],
-    "gemini-4-argon-high":       ["gemini-4-argon-medium", "claude-sonnet-5-5-high", "gemini-3.8-flash-high"],
-    "gemini-4-argon-medium":     ["claude-sonnet-5-5-high", "gemini-3.8-flash-high"],
-    "claude-opus-4-6-thinking":  ["claude-sonnet-4-6", "gemini-3.8-flash-high"],
-    "claude-sonnet-4-6":         ["gemini-3.8-flash-high"],
-    "gemini-3.8-flash-high":     ["gemini-3.8-flash-medium", "gemini-4-argon-medium", "claude-sonnet-5-5-high", "gemini-3.8-flash-low"],
-    "gemini-3.8-flash-medium":   ["gemini-4-argon-medium", "claude-sonnet-5-5-high", "gemini-3.8-flash-low"],
+    "gemini-4-hydrogen-high":    ["gemini-4-argon-high", "gemini-3.8-flash-high"],
+    "gemini-4-hydrogen-xhigh":   ["gemini-4-hydrogen-high", "gemini-4-argon-high", "gemini-3.8-flash-high"],
+    "gemini-4-argon-high":       ["gemini-4-hydrogen-high", "gemini-3.8-flash-high"],
+    "gemini-4-argon-medium":     ["gemini-4-hydrogen-medium", "gemini-3.8-flash-high"],
+    "claude-opus-5-5-high":      ["gemini-4-hydrogen-high", "gemini-4-argon-high", "gemini-3.8-flash-high"],
+    "claude-sonnet-5-5-high":    ["gemini-4-argon-high", "gemini-4-hydrogen-high", "gemini-3.8-flash-high"],
+    "claude-sonnet-5-5-medium":  ["gemini-4-argon-medium", "gemini-3.8-flash-high"],
+    "claude-opus-4-6-thinking":  ["gemini-4-hydrogen-high", "gemini-3.8-flash-high", "claude-sonnet-4-6"],
+    "claude-sonnet-4-6":         ["gemini-3.8-flash-high", "gemini-4-argon-high"],
+    "gemini-3.8-flash-high":     ["gemini-4-argon-high", "gemini-4-hydrogen-high", "gemini-3.8-flash-medium"],
+    "gemini-3.8-flash-medium":   ["gemini-4-argon-medium", "gemini-3.8-flash-low"],
 }
 
 DEFAULT_PROFILE = {
-    "thinker": "gemini-3.8-flash-high",
-    "auditor": "gemini-3.8-flash-high",
-    "coder":   "gemini-3.8-flash-high",
-    "verifier": "gemini-3.8-flash-high"
+    "thinker": "gemini-4-hydrogen-high",
+    "auditor": "gemini-4-argon-high",
+    "coder":   "gemini-4-argon-medium",
+    "verifier": "gemini-4-hydrogen-high"
 }
 
 
@@ -555,9 +554,9 @@ def run_pipeline(task: str, max_iterations: int = 3):
             f"Bạn là Kiến trúc sư trưởng.\n"
             f"BẮT BUỘC TRIỆU HỒI SUBAGENT 'rag-architect' và 'solution-analyst' bằng invoke_subagent:\n"
             f"- ĐỌC TRỰC TIẾP '.agent/prompt_mission.md' và báo cáo '.agent/technical_debt_audit.md' vừa xuất bản.\n"
-            f"- Thiết kế phương án chuẩn mực theo lớp bài toán (0% Quick-Fix, 0% Test-Set Snooping): phân tách OWASP LLM01 Prompt Injection vs "
-            f"Academic Code Solicitation (để giữ intent='course_query' + Socratic Scaffolding, giải quyết pytest 15/15 và Tier 2 Multi-Turn), "
-            f"đồng bộ MODALITY_GATE_VIDEO_HIGH_CONFIDENCE với AGENTS.md, gỡ bỏ nhánh pass/comment BENCH-xxx và tối ưu NLI Rescue.\n"
+            f"- Thiết kế phương án chuẩn mực theo lớp bài toán (0% Quick-Fix, 0% Test-Set Snooping, 0% tráo API thương mại) "
+            f"để xử lý dứt điểm toàn bộ các vấn đề nêu trong '.agent/prompt_mission.md' (Turn 3 sai Bài 64, Turn 4 nhiễm chunk Bài 64/63 ở Bài 1 & rò rỉ timestamp, "
+            f"dọn cấu hình chết trong app/config.py, và tối ưu TTFT RAG E2E mà vẫn giữ nguyên E5 GPU + INT8 CPU Reranker + LLM_MAX_TOKENS=650).\n"
             f"- Xuất bản '.agent/implementation_spec.md' và cập nhật checklist '.agent/task_plan.md'."
         )
         if not execute_phase(f"Nhịp 1B: Thiết Kế Kiến Trúc & Spec (Vòng #{loop_idx})", p1b_prompt, role_key="thinker", is_continue=False, phase_idx=2, tracker=tracker):
@@ -606,9 +605,9 @@ def run_pipeline(task: str, max_iterations: int = 3):
             f"Bạn là Trưởng ban thẩm định.\n"
             f"BẮT BUỘC TRIỆU HỒI 2 SUBAGENT:\n"
             f"1. Subagent 'qa-tester': Thực thi tuần tự '.\\.venv\\Scripts\\python.exe -m pytest tests/ -v', '.\\.venv\\Scripts\\python.exe scripts/run_multiturn_benchmark.py' và '.\\.venv\\Scripts\\python.exe scripts/run_rag_benchmark.py --dataset tests/data/benchmark_golden_dataset.json'. "
-            f"Đồng thời kiểm tra health của settings.LLM_BASE_URL: nếu server LLM đang Online (HTTP 200), chạy thêm '.\\.venv\\Scripts\\python.exe scripts/run_multiturn_benchmark.py --mode e2e --tier tier_2_socratic' (ghi ra multiturn_benchmark_e2e_results.json); nếu Offline thì ghi rõ trạng thái Offline.\n"
+            f"Đồng thời kiểm tra hồi quy cho 2 ca lỗi Playground trong '.agent/prompt_mission.md' (Turn 3 'int và double' ở Bài 3, Turn 4 tại Bài 1 không kéo Bài 64/63), xác minh onnxruntime-gpu + E5 CUDA, và kiểm tra health của settings.LLM_BASE_URL.\n"
             f"2. Subagent 'grounding-evaluator': CHỈ đối chiếu trên bộ kết quả benchmark MỚI NHẤT vừa được 'qa-tester' xuất sau Nhịp 2 (kiểm tra metadata.end_time, tuyệt đối không dùng số liệu cũ); thẩm tra tính trung thực của toàn bộ git diff, chống 100% fake data, overfitting, comment chứa BENCH-xxx và regex.\n"
-            f"Chỉ cho phép kết luận ĐẠT khi 15/15 bài test PASS, SRP = 100% (0 code leak), CRAG Precision >= 88.0%, Multi-Turn Intent >= 94.0%, Multi-Turn Status >= 93.0% và 0% Quick-Fix/Hardcode!"
+            f"Chỉ cho phép kết luận ĐẠT khi 100% pytest PASS, SRP = 100% (0 code leak), CRAG Precision >= 88.0%, Multi-Turn Intent >= 94.0%, Multi-Turn Status >= 93.0% và 0% Quick-Fix/Hardcode!"
         )
         if not execute_phase(f"Nhịp 3: Hội Đồng Thẩm Định & Nghiệm Thu (Vòng #{loop_idx})", p3_prompt, role_key="verifier", is_continue=False, phase_idx=4, tracker=tracker):
             tracker.close()

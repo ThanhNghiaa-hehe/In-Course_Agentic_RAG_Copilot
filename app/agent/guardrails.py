@@ -15,6 +15,7 @@ Bao gồm 2 chốt chặn kiến trúc:
 import json
 import time
 import logging
+import unicodedata
 from pathlib import Path
 from typing import Tuple, Optional, List, Dict
 import numpy as np
@@ -43,6 +44,112 @@ SECURITY_REFUSAL_RESPONSE = (
 )
 
 
+def normalize_user_input(
+    text: str,
+    *,
+    lowercase: bool = False,
+    preserve_newlines: bool = True,
+) -> str:
+    """
+    Chuẩn hóa đầu vào người dùng tại tầng cửa ngõ (Front-Door Entry Pipeline - Zero Regex):
+    1. Chuẩn hóa kiểu xuống dòng CRLF/CR về LF ('\\n').
+    2. Loại bỏ ký tự điều khiển ASCII/Unicode (Cc), ký tự định dạng ẩn/zero-width (Cf: \\u200b, \\u200c,
+       \\u200d, \\ufeff, \\u2060, \\u00ad,...), surrogate (Cs), private-use (Co), non-character (Cn),
+       nhưng bảo toàn ký tự xuống dòng ('\\n') và tab ('\\t') hợp lệ.
+    3. Quy đổi các khoảng trắng đặc biệt Unicode (Zs: \\u00a0, \\u3000,...) về khoảng trắng ASCII chuẩn (' ').
+    4. Chuẩn hóa tổ hợp dấu tiếng Việt từ Unicode NFD về dựng sẵn chuẩn NFC (sau khi đã gỡ các ký tự
+       zero-width chen giữa nguyên âm và dấu thanh).
+    5. Rút gọn khoảng trắng thừa mà vẫn bảo toàn 100% cấu trúc dòng và thụt lề (indentation)
+       của các khối mã nguồn C++ đa dòng (fenced hoặc unfenced).
+    """
+    if not text or not isinstance(text, str):
+        return ""
+
+    raw = text.replace("\r\n", "\n").replace("\r", "\n")
+    cleaned_chars: List[str] = []
+    for ch in raw:
+        if ch == "\n":
+            cleaned_chars.append("\n" if preserve_newlines else " ")
+            continue
+        if ch == "\t":
+            cleaned_chars.append("\t" if preserve_newlines else " ")
+            continue
+        cat = unicodedata.category(ch)
+        if cat in ("Zl", "Zp"):
+            cleaned_chars.append("\n" if preserve_newlines else " ")
+        elif cat == "Zs":
+            cleaned_chars.append(" ")
+        elif cat in ("Cc", "Cf", "Cs", "Co", "Cn"):
+            continue
+        else:
+            cleaned_chars.append(ch)
+
+    normalized = unicodedata.normalize("NFC", "".join(cleaned_chars))
+    if lowercase:
+        normalized = normalized.lower()
+
+    if not preserve_newlines or "\n" not in normalized:
+        return " ".join(normalized.split())
+
+    lines = normalized.split("\n")
+    out_lines: List[str] = []
+    in_fence = False
+    brace_depth = 0
+
+    for line in lines:
+        stripped = line.strip(" \t")
+        if stripped.startswith("```"):
+            info = " ".join(stripped[3:].split())
+            fence_line = f"```{info}" if info else "```"
+            out_lines.append(fence_line)
+            if stripped.count("```") == 1:
+                in_fence = not in_fence
+            continue
+
+        if in_fence:
+            out_lines.append(line.rstrip(" \t"))
+            continue
+
+        if not stripped:
+            out_lines.append("")
+            continue
+
+        is_cpp_indented = (
+            (brace_depth > 0 and (line.startswith(" ") or line.startswith("\t")))
+            or (
+                (line.startswith("    ") or line.startswith("\t"))
+                and any(tok in stripped for tok in (";", "{", "}", "#", "<<", ">>", "//", "/*"))
+            )
+        )
+        if is_cpp_indented:
+            indent_len = len(line) - len(line.lstrip(" \t"))
+            indent = line[:indent_len]
+            clean_line = indent + " ".join(stripped.split())
+        else:
+            clean_line = " ".join(stripped.split())
+
+        out_lines.append(clean_line)
+        brace_depth = max(0, brace_depth + stripped.count("{") - stripped.count("}"))
+
+    while out_lines and out_lines[0] == "":
+        out_lines.pop(0)
+    while out_lines and out_lines[-1] == "":
+        out_lines.pop()
+
+    compacted_lines: List[str] = []
+    prev_empty = False
+    for line in out_lines:
+        if line == "":
+            if not prev_empty:
+                compacted_lines.append("")
+            prev_empty = True
+        else:
+            compacted_lines.append(line)
+            prev_empty = False
+
+    return "\n".join(compacted_lines)
+
+
 def _detect_student_cpp_ast(prompt: str) -> bool:
     """
     Phát hiện mã nguồn C++ của học viên bằng bộ phân tích cú pháp MarkdownIt AST & Tree-sitter C++ AST thực thụ.
@@ -50,6 +157,9 @@ def _detect_student_cpp_ast(prompt: str) -> bool:
     Chỉ chấp nhận markdown fence rỗng nhãn hoặc khai báo ngôn ngữ C/C++ có chứa node AST C++ hợp lệ,
     ngăn chặn tấn công bọc chỉ thị tiêm lệnh trong khối ```system / ```prompt.
     """
+    prompt = normalize_user_input(prompt)
+    if not prompt:
+        return False
     cpp_langs = {"", "c", "cpp", "c++", "cxx", "cc", "h", "hpp"}
     target_ast_nodes = {
         "function_definition",
@@ -158,10 +268,10 @@ class SecurityInputGuardrail:
         - Trả về (True, None) nếu an toàn.
         - Trả về (False, SECURITY_REFUSAL_RESPONSE) nếu phát hiện tấn công cố ý.
         """
-        if not prompt or not prompt.strip():
+        normalized_prompt = normalize_user_input(prompt)
+        if not normalized_prompt:
             return True, None
 
-        normalized_prompt = prompt.strip()
         lower_prompt = normalized_prompt.lower()
 
         # 1. Context-Aware Socratic Input Gate (MarkdownIt AST & Tree-sitter C++ AST)
@@ -282,12 +392,14 @@ class SocraticOutputGuardrail:
             # 1. Xử lý qua Tree-sitter C++ AST (nếu có parser)
             if self._parser is not None:
                 try:
-                    tree = self._parser.parse(current_code.encode("utf-8"))
+                    code_bytes = current_code.encode("utf-8")
+                    tree = self._parser.parse(code_bytes)
                     root = tree.root_node
 
                     has_include = any(c.type == "preproc_include" for c in root.children)
                     func_nodes = [c for c in root.children if c.type == "function_definition"]
                     has_main = False
+                    body_replacements = []
 
                     for fnode in func_nodes:
                         is_main_func = False
@@ -302,7 +414,6 @@ class SocraticOutputGuardrail:
                         if body_node:
                             cyclomatic_m = compute_ast_cyclomatic_complexity(body_node)
                             if (is_main_func and has_include) or (cyclomatic_m >= 3):
-                                body_bytes = current_code.encode("utf-8")[body_node.start_byte:body_node.end_byte].decode("utf-8")
                                 socratic_body = (
                                     "{\n    // [SOCRATIC SCAFFOLDING]: Không cung cấp toàn bộ code giải bài.\n"
                                     "    // Gợi ý: Hãy đọc kỹ giải thích tư duy và mã giả bên trên để tự hoàn thiện logic!\n"
@@ -313,7 +424,13 @@ class SocraticOutputGuardrail:
                                     "    // Gợi ý: Kiểm tra điều kiện đầu vào trước khi thực hiện tính toán.\n"
                                     "    // TODO: Học viên tự hoàn thiện phần thân hàm này.\n}"
                                 )
-                                current_code = current_code.replace(body_bytes, socratic_body, 1)
+                                body_replacements.append((body_node.start_byte, body_node.end_byte, socratic_body.encode("utf-8")))
+
+                    if body_replacements:
+                        updated_bytes = bytearray(code_bytes)
+                        for start_b, end_b, rep_b in sorted(body_replacements, key=lambda x: x[0], reverse=True):
+                            updated_bytes[start_b:end_b] = rep_b
+                        current_code = updated_bytes.decode("utf-8")
 
                     # Khử thẻ #include nếu có hàm main đi kèm (ngăn chặn copy-run toàn bộ chương trình)
                     if has_main and has_include:

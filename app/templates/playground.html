@@ -1762,6 +1762,8 @@
       const textElem = assistantElem.querySelector('.assistant-body-text');
 
       const currentSid = getOrCreateSessionId();
+      const reqCourse = activeCourse;
+      const reqLessonSeq = currentLesson.seq;
       const startTime = performance.now();
       let firstTokenTime = null;
       let actionLatencyMs = null;
@@ -1774,8 +1776,8 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             prompt: text,
-            course_id: activeCourse,
-            lesson_seq: currentLesson.seq,
+            course_id: reqCourse,
+            lesson_seq: reqLessonSeq,
             session_id: currentSid
           })
         });
@@ -1862,8 +1864,8 @@
           turn: turnIndex + 1,
           timestamp: new Date().toISOString(),
           session_id: currentSid,
-          course_id: activeCourse,
-          lesson_seq: currentLesson.seq,
+          course_id: reqCourse,
+          lesson_seq: reqLessonSeq,
           prompt: text,
           latency: {
             action_latency_ms: actionLatencyMs,

@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     LLM_BASE_URL: str = "http://127.0.0.1:11434/v1"
     LLM_MODEL_NAME: str = "qwen2.5"
     LLM_TEMPERATURE: float = 0.3
-    LLM_MAX_TOKENS: int = 512
+    LLM_MAX_TOKENS: int = 650
     OPENAI_API_KEY: Optional[str] = "ollama"
     ANTHROPIC_API_KEY: Optional[str] = None
 
@@ -34,7 +34,8 @@ class Settings(BaseSettings):
     RERANKER_MODEL_NAME: str = "jinaai/jina-reranker-v2-base-multilingual"
     USE_ONNX: bool = True
     USE_CPU_RERANKER: bool = True  # Tách tải Re-ranker sang CPU đa luồng để triệt tiêu 100% lỗi CUBLAS crash trên RTX 2050 (4GB)
-    USE_INT8_RERANKER: bool = False
+    USE_INT8_RERANKER: bool = True
+    RERANK_CPU_THREADS: int = 4  # Giới hạn luồng ONNX CPU tránh tranh chấp spin-wait trên CPU lai/đa luồng
     RERANK_BATCH_SIZE: int = 4  # Micro-batching kích thước 4 tránh tràn VRAM/RAM khi tính Cross-Attention
     MIN_SCORE_THRESHOLD: float = 0.25
     CODE_SCORE_THRESHOLD: float = 0.35
@@ -52,7 +53,7 @@ class Settings(BaseSettings):
     FUTURE_PROBE_MARGIN: float = 0.12
     FUTURE_PROBE_MIN_CONFIDENCE: float = 0.25
     FUTURE_PROBE_LIMIT: int = 10
-    RERANK_MAX_CHARS: int = 1200
+    RERANK_MAX_CHARS: int = 600
     CRAG_RRF_WEIGHT: float = 0.10
     PARETO_LOCAL_GROUNDING_THRESHOLD: float = 0.22
     PARETO_MARGINAL_VIDEO_MAX: float = 0.30

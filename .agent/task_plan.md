@@ -44,3 +44,28 @@
   - [ ] Chạy `.venv\Scripts\python.exe scripts/run_rag_benchmark.py --dataset tests/data/benchmark_golden_dataset.json` đạt **Router Accuracy $\ge 90.5\%$ (mục tiêu $\ge 95.0\%$)**, **CRAG Grader Precision $\ge 88.0\%$ (mục tiêu $\ge 93.5\%$)**, **Timestamp Multi-Grounding Safety $\ge 88.0\%$**.
 - [ ] **Mục 10.8 (Evidence Gate 4 — Final Zero Quick-Fix & Grounding Audit):**
   - [ ] Triệu hồi `@codebase-auditor` & `@grounding-evaluator` đối chiếu trên kết quả mới nhất: 0% runtime regex, 0% comment/ID `BENCH-xxx` trong `app/`, 0% hardcode fallback, 0% test-set snooping.
+
+---
+
+## GIAI ĐOẠN 11: PSTACK VÒNG LẶP #5 — KHẮC PHỤC LỖI PLAYGROUND (`session_bgsi9hbkmwi6p227`), DỌN `app/config.py` & TỐI ƯU ĐỘ TRỄ E2E (2026-11-16)
+
+> **Model Profile đã cập nhật (tránh `claude-sonnet-5-5-*` / `claude-opus-5-5-*` đang 0% quota):** Auditor=`gemini-4-argon-high`, Thinker=`gemini-4-hydrogen-high`, Coder=`gemini-4-argon-medium`, Verifier=`gemini-4-hydrogen-high`.
+
+### Nhịp 1A & 1B: Kiểm Toán Nguyên Nhân Gốc & Đặc Tả Kiến Trúc
+- [ ] **Mục 11.1 (Auditing Vấn đề 1 — Turn 3 `int` vs `double` -> Bài 64):** Điều tra vì sao `lesson_seq=3` bị `future_points` / Pareto cướp quyền sang `lesson_seq=64` (`81:09`, TTFT `27,779 ms`) và xuất phương án tổng quát theo Prerequisite Priority (0% regex/keyword hardcode).
+- [ ] **Mục 11.2 (Auditing Vấn đề 2 — Turn 4 nhiễm chéo `lesson-64`/`lesson-63` tại `lesson_seq=1`):** Xác định nguyên nhân 3 chunk Bài 64/63 lọt vào `grounded`, lỗi `start_sec=null` -> `00:00`, rò rỉ text timestamp `"0:56"`, lời xin lỗi mở đầu, và mâu thuẫn mời Bài 2 / gắn tag Bài 64.
+- [ ] **Mục 11.3 (Auditing Vấn đề 3 — Config Hygiene `app/config.py`):** Phân loại `27/98` biến chưa có caller giữa "cấu hình chết cần xóa" và "tham số bị hardcode trong code chưa nối qua `settings`".
+- [ ] **Mục 11.4 (Profiling Vấn đề 4 — Độ trễ RAG E2E 11.3s–27.8s):** Đo tách từng node (`router`, `retrieval` + CPU rerank, `crag`, LLM prefill) trong khi giữ nguyên `onnxruntime-gpu==1.23.2` (E5 GPU), CPU INT8 Reranker, `LLM_MAX_TOKENS=650` và LLM tự lưu trữ `Qwen2.5-Coder-7B-Instruct`.
+
+### Nhịp 2 & Nhịp 3: Triển Khai & Nghiệm Thu Chống Hồi Quy
+- [ ] **Mục 11.5 (Triển khai nguyên tử):** Sửa triệt để các nguyên nhân gốc của Turn 3, Turn 4, timestamp guardrail (`start_sec=null`, plain-text `0:56`, anti-apology), dọn `app/config.py`, và tối ưu latency.
+- [ ] **Mục 11.6 (Evidence Gates & Test tái lập):** Chạy `pytest tests/ -v`, benchmark đa lượt + Golden 200, và test hồi quy cho 2 ca Turn 3/Turn 4 trong `session_bgsi9hbkmwi6p227`.
+
+---
+
+## GIAI ĐOẠN 12: KẾ HOẠCH PHIÊN TIẾP THEO — TỐI ƯU HÓA LATENCY TRÊN SERVER GPU REMOTE (KAGGLE / VLLM / NGROK)
+> **Mục tiêu:** Cắt giảm TTFT từ `~4.08 s` xuống dải tối ưu `< 1.2–1.8 s` cho mô hình tự lưu trữ `Qwen/Qwen2.5-Coder-7B-Instruct` mà không làm giảm năng lực sư phạm Socratic.
+- [ ] **Mục 12.1 (vLLM KV-Cache & Chunked Prefill):** Kích hoạt `--enable-chunked-prefill`, `--max-num-batched-tokens 2048` hoặc tối ưu hóa GPU memory utilization trên Kaggle vLLM runner.
+- [ ] **Mục 12.2 (System Prompt Prefix Caching):** Cấu trúc khối System Prompt cố định ở đầu ngữ cảnh để vLLM tái sử dụng KV-Cache giữa các lượt hội thoại, loại bỏ chi phí prefill lại 1,500+ token hệ thống.
+- [ ] **Mục 12.3 (Ngrok / Tunnel Latency Alternatives):** Kiểm tra các tùy chọn giảm RTT mạng từ `625–736 ms` (chọn region Singapore `ap` thay vì US mặc định, hoặc giải pháp Cloudflare Tunnel / SSH direct port forwarding).
+- [ ] **Mục 12.4 (Context Pruning & Early Stream Decoding):** Cắt tỉa token ngữ cảnh thừa trong `chat_graph.py` và tối ưu hóa giải mã SSE streaming tức thì tại `ChatService.stream_chat`.

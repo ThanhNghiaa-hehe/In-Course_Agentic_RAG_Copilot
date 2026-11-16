@@ -68,28 +68,32 @@ class EmbeddingService:
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Sparse: {settings.SPARSE_MODEL_NAME}...")
         self.sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME, providers=self.providers)
 
-        reranker_providers = ["CPUExecutionProvider"] if getattr(settings, "USE_CPU_RERANKER", True) else self.providers
-        reranker_device = "CPU" if getattr(settings, "USE_CPU_RERANKER", True) else self.device.upper()
+        use_cpu_reranker = getattr(settings, "USE_CPU_RERANKER", True)
+        reranker_providers = ["CPUExecutionProvider"] if use_cpu_reranker else self.providers
+        reranker_device = "CPU" if use_cpu_reranker else self.device.upper()
+        reranker_threads = getattr(settings, "RERANK_CPU_THREADS", 4) if use_cpu_reranker else None
 
         int8_model_dir = Path(__file__).resolve().parent.parent.parent / "data" / "models" / "jina-reranker-v2-int8"
         int8_onnx_file = int8_model_dir / "onnx" / "model.onnx"
         if getattr(settings, "USE_INT8_RERANKER", False) and int8_onnx_file.exists():
             size_mb = int8_onnx_file.stat().st_size / (1024 * 1024)
             logger.info(
-                f"[EmbeddingService] Kích hoạt mô hình Reranker INT8 (ONNX PTQ AVX-512 - {size_mb:.1f}MB) từ: {int8_model_dir}..."
+                f"[EmbeddingService] Kích hoạt mô hình Reranker INT8 (ONNX PTQ AVX-512 - {size_mb:.1f}MB, threads={reranker_threads}) từ: {int8_model_dir}..."
             )
             self.reranker_model = TextCrossEncoder(
                 settings.RERANKER_MODEL_NAME,
                 specific_model_path=str(int8_model_dir),
+                threads=reranker_threads,
                 providers=reranker_providers
             )
         else:
             logger.info(
                 f"[EmbeddingService:M-05e] Khởi tạo mô hình Reranker Đa ngữ FP32: {settings.RERANKER_MODEL_NAME} "
-                f"(Device: {reranker_device}, Providers: {reranker_providers})..."
+                f"(Device: {reranker_device}, Threads: {reranker_threads}, Providers: {reranker_providers})..."
             )
             self.reranker_model = TextCrossEncoder(
                 settings.RERANKER_MODEL_NAME,
+                threads=reranker_threads,
                 providers=reranker_providers
             )
         logger.info(f"[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công (Embedding: {self.device.upper()}, Reranker: {reranker_device})!")

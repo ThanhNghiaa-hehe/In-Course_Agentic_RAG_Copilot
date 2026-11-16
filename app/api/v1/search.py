@@ -2,6 +2,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.schemas.search import SearchRequest, SearchResponse, SearchChunkResult
 from app.services.retrieval import RetrievalService, get_retrieval_service
+from app.agent.guardrails import normalize_user_input
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -27,8 +28,9 @@ async def search_course_context(
     retrieval_service: RetrievalService = Depends(get_retrieval_service)
 ) -> SearchResponse:
     try:
+        clean_query = normalize_user_input(request.query)
         retrieval_result = await retrieval_service.search(
-            query_text=request.query,
+            query_text=clean_query,
             course_id=request.course_id,
             current_lesson_seq=request.lesson_seq,
             top_candidates=request.top_candidates,
@@ -39,7 +41,7 @@ async def search_course_context(
         results = [SearchChunkResult(**chunk) for chunk in retrieval_result.chunks]
 
         return SearchResponse(
-            query=request.query,
+            query=clean_query,
             course_id=request.course_id,
             current_lesson_seq=request.lesson_seq,
             total_retrieved=len(results),
