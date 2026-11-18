@@ -63,9 +63,30 @@
 
 ---
 
-## GIAI ĐOẠN 12: KẾ HOẠCH PHIÊN TIẾP THEO — TỐI ƯU HÓA LATENCY TRÊN SERVER GPU REMOTE (KAGGLE / VLLM / NGROK)
-> **Mục tiêu:** Cắt giảm TTFT từ `~4.08 s` xuống dải tối ưu `< 1.2–1.8 s` cho mô hình tự lưu trữ `Qwen/Qwen2.5-Coder-7B-Instruct` mà không làm giảm năng lực sư phạm Socratic.
-- [ ] **Mục 12.1 (vLLM KV-Cache & Chunked Prefill):** Kích hoạt `--enable-chunked-prefill`, `--max-num-batched-tokens 2048` hoặc tối ưu hóa GPU memory utilization trên Kaggle vLLM runner.
-- [ ] **Mục 12.2 (System Prompt Prefix Caching):** Cấu trúc khối System Prompt cố định ở đầu ngữ cảnh để vLLM tái sử dụng KV-Cache giữa các lượt hội thoại, loại bỏ chi phí prefill lại 1,500+ token hệ thống.
-- [ ] **Mục 12.3 (Ngrok / Tunnel Latency Alternatives):** Kiểm tra các tùy chọn giảm RTT mạng từ `625–736 ms` (chọn region Singapore `ap` thay vì US mặc định, hoặc giải pháp Cloudflare Tunnel / SSH direct port forwarding).
-- [ ] **Mục 12.4 (Context Pruning & Early Stream Decoding):** Cắt tỉa token ngữ cảnh thừa trong `chat_graph.py` và tối ưu hóa giải mã SSE streaming tức thì tại `ChatService.stream_chat`.
+## GIAI ĐOẠN 12: TỐI ƯU HÓA LATENCY TRÊN SERVER GPU REMOTE (ĐÃ HOÀN TẤT 17/11/2026)
+> **Kết quả thực đo:** Tiny streaming TTFT giảm từ `4,083.8 ms` (Ngrok) xuống `1,640.2 ms` (cold) và **`649.2 ms`** (prefix-cache hit) qua Cloudflare + vLLM; TTFT trung bình phiên Playground giảm từ `11,280 ms` xuống **`4,696 ms`**.
+- [x] **Mục 12.1 (vLLM KV-Cache & Chunked Prefill):** Bật `--enable-chunked-prefill`, `--max-num-batched-tokens 2048` và bỏ `--enforce-eager` trên Kaggle vLLM.
+- [x] **Mục 12.2 (System Prompt Prefix Caching):** Bật `--enable-prefix-caching` và giữ tĩnh 100% `messages[0]` trong `chat_graph.py`.
+- [x] **Mục 12.3 (Cloudflare Quick Tunnel):** Chuyển từ Ngrok sang `cloudflared` Quick Tunnel (`trycloudflare.com`).
+- [x] **Mục 12.4 (Cache Embedding & Cắt Rerank Dư Thừa):** Thêm `@lru_cache(maxsize=512)` trên `embed_query_dense`, khử double `"query: query: "`, cắt `deduped_candidates[:top_candidates]` và bỏ rerank thừa cho câu điều hướng.
+
+---
+
+## GIAI ĐOẠN 13: HOÀN THIỆN SINH VĂN 7B & KIỂM CHỨNG THỰC TẾ NGOÀI KỊCH BẢN (PHIÊN TIẾP THEO)
+> **Nguồn phát sinh:** Log Playground `session_ta0ppev2mwjkyk7s` (`17/11/2026 01:13:54`) — Retrieval & Timestamp Guardrail đã chuẩn, cần dứt điểm hiện tượng LLM 7B lặp văn Turn 2 và vỏ `[Video Bài 12 - ]`.
+- [x] **Mục 13.1 (Làm sạch `sliding_history` trong `app/services/chat_graph.py#L685-L778,L820-L821`):** Đã strip `<timestamp ...>...</timestamp>`, dòng `📍 **Mốc video bài giảng:** ...` và nhãn `[Video Bài ...]` khỏi các lượt `assistant` cũ trước khi nạp vào ngữ cảnh lượt mới (kể cả lượt `t-1`).
+- [x] **Mục 13.2 (Đổi format `_format_context_block` trong `app/services/chat_graph.py#L168-L175`):** Đã chuyển từ `[Video Bài {seq} - {tag}]:` sang `Nguồn Bài {seq} (mốc {tag}):` để LLM 7B không bắt chước bọc ngoặc vuông quanh `<timestamp>`.
+- [x] **Mục 13.3 (Neo lộ trình khi hỏi lùi bài `<= current_lesson_seq`):** Trong `crag_grader_node`, khi `is_curriculum_navigation=True` & `grounded`, đã chèn `[THÔNG TIN BÀI HỌC KHỚP GIÁO TRÌNH]` vào `user_message_content`.
+- [ ] **Mục 13.4 (Kiểm chứng thực tế Out-of-Script + Dọn `config.py` & Benchmark cuối):** Test tự do trên Playground với chủ đề mới (Con trỏ / Struct / Xâu ký tự), dọn sạch cấu hình chết trong `app/config.py` & class `SocraticOutputGuardrail`, rồi chạy 1 lượt benchmark tổng thể (`pytest` + Multi-Turn + Golden 200) xác nhận 0% hồi quy.
+
+---
+
+## GIAI ĐOẠN 14: PLAYBACK TEMPORAL RETRIEVAL, 83-LESSON CHAPTERS, ANTI-PARROTING & LIVE E2E MATRIX (18/11/2026)
+- [x] **Mục 14.1 (Playback-Aware Temporal & Video Chapters):** Nối `current_video_sec` từ Playground UI vào `RetrievalService`; xây dựng `scripts/build_video_chapters.py` tạo `video_chapters` cho **83/83 bài** trong `data/curriculum/lessons_manifest.json`; hỗ trợ phân rã mốc thời gian tương đối/tuyệt đối và câu hỏi đa chủ đề (`disjunction` như `"con trỏ hay vòng lặp"`).
+- [x] **Mục 14.2 (In-Video Temporal NLI Rescue & Anti-Parroting 7B):** Bổ sung `Bước 3b` NLI cứu xét câu hỏi có yếu tố thời gian trong `app/agent/router.py` đồng bộ với `TelemetryCritic`; xóa tag ngoặc vuông trong lịch sử `context_assembly_node`, thêm `StreamingInternalArtifactSanitizer` + `25s` timeout & sửa `last_course_query` checkpointer trong `app/services/chat.py`.
+- [x] **Mục 14.3 (AST Transcript Canonicalizer & Live E2E Matrix Harness):** Triển khai `scripts/canonicalize_transcripts_ast.py` (`--audit-hotwords`: 83/83 bài) và `scripts/e2e_matrix_harness.py` (mặc định GPU, có `--safe-cpu` và `--routing-only`).
+- [x] **Mục 14.4 (Kết quả chạy Live E2E `--suite all` lúc `17:14–17:20`):**
+  - `M1` (`cpp-oop` Bài 53): **10/10 PASS**, Health Score `93/100`, Socratic `100%`, avg TTFT `15,868ms` (lượt T3 cold load `96.5s`, T7 constructor từ chối giải full code đạt chuẩn).
+  - `M2` (`cpp-core` Bài 11): **5/7 PASS** (Health Score `91/100`, Socratic `100%`, avg TTFT `3,884ms`). Hai lượt còn lại: T1 bị lệch chữ phiên âm `"mạng"` thay vì `"mảng"` + thiếu `?` cuối câu; T3 sửa đúng bug `i<=n` không lộ full solution nhưng thiếu `?` cuối câu.
+  - `M3` (`cpp-oop` Bài 53 — Jailbreak & Edge): **5/5 PASS**, Health Score `96/100`, Socratic `100%`, avg TTFT `3,123ms`.
+- [ ] **Mục 14.5 (Việc tiếp theo cho phiên sau):** Chạy offline `scripts/canonicalize_transcripts_ast.py` (khử `"mạng một chiều"` -> `"mảng một chiều"` trong transcript/index bài 11), đảm bảo hậu kiểm đuôi `?` Socratic cho câu tổng quan/sửa lỗi ngắn của Qwen 7B, và chạy lại `M2` xác nhận `all_passed: true`.

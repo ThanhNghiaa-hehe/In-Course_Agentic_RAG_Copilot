@@ -18,12 +18,13 @@ description: >-
    - Reranker (`data/models/jina-reranker-v2-int8/onnx/model.onnx`) uses `['CPUExecutionProvider']` with `USE_CPU_RERANKER=True`, `USE_INT8_RERANKER=True`, `RERANK_CPU_THREADS=4`, `RERANK_MAX_CHARS=600`.
 3. Check GPU memory headroom with `nvidia-smi` to confirm comfortable margin under `4,096 MiB`.
 
-## 2. Layered Latency Profiling (No Guessing)
-When the user reports slow TTFT or suspects Ngrok:
-1. Measure raw tunnel RTT to `<LLM_BASE_URL>/v1/models`.
-2. Measure a tiny authenticated streaming call (`max_tokens=20`) directly to `Qwen/Qwen2.5-Coder-7B-Instruct` to separate network + cold/decode overhead from long prompt/RAG context overhead.
-3. Measure local `EmbeddingService` dense + INT8 rerank latencies separately.
-4. Inspect the newest `logs/playground_debug/session_*.json` and `*_critique.md` honestly: report both latency wins and any remaining routing, retrieval, or timestamp guardrail bugs verbatim.
+## 2. Layered Latency Profiling & Remote Kaggle vLLM + Cloudflare
+When tuning remote LLM latency or diagnosing slow TTFT:
+1. Run Kaggle vLLM with `--enable-prefix-caching --enable-chunked-prefill --max-num-batched-tokens 2048` (omit `--enforce-eager` unless CUDA graphs fail) and expose via `cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8000` (check `HF_TOKEN.startswith("hf_")` before `login()` to avoid ASCII header errors).
+2. Measure raw tunnel RTT to `<LLM_BASE_URL>/v1/models`.
+3. Measure a tiny authenticated streaming call (`max_tokens=20`) directly to `Qwen/Qwen2.5-Coder-7B-Instruct` (Run #1 cold vs Run #2 prefix-cache hit) to separate network/prefill overhead from local RAG.
+4. Measure local `EmbeddingService` dense + INT8 rerank latencies separately.
+5. Inspect the newest `logs/playground_debug/session_*.json` and `*_critique.md` honestly: report both latency wins and any remaining routing, retrieval, timestamp, or `sliding_history` 7B mimicry bugs verbatim.
 
 ## 3. `app/config.py` Hygiene Audit
 1. Cross-check every `Settings` field in `app/config.py` against references in `app/`, `scripts/`, and `tests/`.
