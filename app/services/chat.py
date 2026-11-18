@@ -111,23 +111,119 @@ class TimestampWhitelistHTMLParser(HTMLParser):
             self.result.append(data)
 
 
+def clean_dangling_timestamp_artifacts(text: str) -> str:
+    """
+    Làm sạch dấu phân tách '|' lơ lửng và dòng '📍 **Mốc video bài giảng:**' rỗng
+    sau khi các thẻ <timestamp> không hợp lệ bị lọc bỏ (Zero Regex).
+    """
+    if not text:
+        return text
+
+    lines = text.split("\n")
+    cleaned_lines: List[str] = []
+    in_code_fence = False
+
+    for line in lines:
+        stripped_line = line.strip()
+        if stripped_line.startswith("```"):
+            in_code_fence = not in_code_fence
+            cleaned_lines.append(line)
+            continue
+
+        if in_code_fence:
+            cleaned_lines.append(line)
+            continue
+
+        if "Mốc video bài giảng" in line:
+            marker_idx = line.find("Mốc video bài giảng")
+            colon_idx = line.find(":", marker_idx)
+            if colon_idx != -1:
+                end_header = colon_idx + 1
+                while end_header < len(line) and line[end_header] == "*":
+                    end_header += 1
+                header_part = line[:end_header]
+                rest_part = line[end_header:]
+                valid_parts = [p.strip() for p in rest_part.split("|") if p.strip(" -•,;")]
+                if not valid_parts:
+                    continue
+                cleaned_lines.append(f"{header_part.rstrip()} {' | '.join(valid_parts)}")
+                continue
+
+        is_md_table_row = (
+            stripped_line.startswith("|")
+            and stripped_line.endswith("|")
+            and len(stripped_line) >= 2
+        )
+        if "|" in line and not is_md_table_row:
+            leading_ws_len = len(line) - len(line.lstrip(" \t"))
+            leading_ws = line[:leading_ws_len]
+            work = line[leading_ws_len:]
+
+            if "||" not in work:
+                raw_parts = work.split("|")
+                cleaned_parts: List[str] = []
+                for idx_p, part in enumerate(raw_parts):
+                    if idx_p == 0:
+                        cleaned_parts.append(part.rstrip())
+                    elif part.strip():
+                        cleaned_parts.append(part.strip())
+
+                if len(cleaned_parts) == 1:
+                    work = cleaned_parts[0]
+                else:
+                    first = cleaned_parts[0]
+                    rest = cleaned_parts[1:]
+                    if first.endswith(":") and rest:
+                        work = f"{first} {' | '.join(rest)}"
+                    elif not first and rest:
+                        work = " | ".join(rest)
+                    elif rest:
+                        work = " | ".join([first] + rest)
+                    else:
+                        work = first
+
+            while ": |" in work or ":|" in work:
+                work = work.replace(": | ", ": ").replace(": |", ": ").replace(":|", ": ")
+
+            if work.rstrip().endswith("|"):
+                work = work.rstrip(" |\t")
+
+            if not work.strip():
+                continue
+
+            cleaned_lines.append(f"{leading_ws}{work}")
+            continue
+
+        cleaned_lines.append(line)
+
+    cleaned = "\n".join(cleaned_lines)
+    while "\n\n\n" in cleaned:
+        cleaned = cleaned.replace("\n\n\n", "\n\n")
+    return cleaned.rstrip()
+
+
 def sanitize_timestamp_tags(text: str, valid_secs: set) -> str:
     """
     Deterministic Timestamp Whitelist Guardrail (Zero Regex):
-    Loại bỏ triệt để các thẻ <timestamp sec=\"X\"> không nằm trong danh mục Whitelist được bảo chứng.
+    Loại bỏ triệt để các thẻ <timestamp sec="X"> không nằm trong danh mục Whitelist được bảo chứng.
     - Nếu valid_secs rỗng hoặc không có thẻ: Loại bỏ toàn bộ thẻ <timestamp>, giữ lại nội dung trơn.
     - Nếu valid_secs có phần tử: Bắt buộc sec phải thuộc valid_secs.
     """
-    if not text or "<timestamp" not in text:
+    if not text:
+        return text
+    if "<timestamp" not in text:
+        if "Mốc video bài giảng" in text or "|" in text:
+            return clean_dangling_timestamp_artifacts(text)
         return text
 
     parser = TimestampWhitelistHTMLParser(valid_secs)
     try:
         parser.feed(text)
-        return "".join(parser.result)
+        cleaned = "".join(parser.result)
+        return clean_dangling_timestamp_artifacts(cleaned)
     except Exception as e:
         logger.warning(f"[sanitize_timestamp_tags] Lỗi HTML parser: {e}. Trả về văn bản gốc.")
-        return text
+        return clean_dangling_timestamp_artifacts(text)
 
 
 class StreamingTimestampSanitizer:
@@ -151,6 +247,36 @@ class StreamingTimestampSanitizer:
         self.tag_open = ""
         self.is_valid_sec = False
         self.body_buffer = ""
+        self._just_dropped_tag = False
+        self.pending_separator = ""
+        self._after_timestamp = False
+        self._has_emitted_valid_tag_on_line = False
+
+    def _emit_plain_segment(self, seg: str, out: List[str]) -> None:
+        if not seg and not self.pending_separator:
+            return
+        combined = self.pending_separator + seg
+        self.pending_separator = ""
+
+        if "\n" in combined:
+            self._has_emitted_valid_tag_on_line = False
+            self._after_timestamp = False
+            self._just_dropped_tag = False
+
+        stripped_len = len(combined.rstrip(" |\t"))
+        prefix = combined[:stripped_len]
+        trailing_sep = combined[stripped_len:]
+
+        if prefix:
+            out.append(prefix)
+            self._after_timestamp = False
+            self._just_dropped_tag = False
+
+        if trailing_sep:
+            if "|" in trailing_sep or self._after_timestamp or self._just_dropped_tag:
+                self.pending_separator = trailing_sep
+            else:
+                out.append(trailing_sep)
 
     def process(self, token: str) -> List[str]:
         self.buffer += token
@@ -158,13 +284,31 @@ class StreamingTimestampSanitizer:
 
         while self.buffer:
             if self.state == self.STATE_EMIT:
+                if self._just_dropped_tag and not self._has_emitted_valid_tag_on_line:
+                    if all(c in " |" for c in self.buffer):
+                        if "|" in self.buffer:
+                            self.buffer = ""
+                            self._just_dropped_tag = False
+                            if "|" in self.pending_separator:
+                                self.pending_separator = ""
+                        break
+                    elif self.buffer.lstrip(" ").startswith("|"):
+                        idx = self.buffer.find("|")
+                        self.buffer = self.buffer[idx + 1:].lstrip(" ")
+                        self._just_dropped_tag = False
+                        if "|" in self.pending_separator:
+                            self.pending_separator = ""
+                        continue
+                    else:
+                        self._just_dropped_tag = False
+
                 lt_idx = self.buffer.find("<")
                 if lt_idx == -1:
-                    out.append(self.buffer)
+                    self._emit_plain_segment(self.buffer, out)
                     self.buffer = ""
                     break
                 elif lt_idx > 0:
-                    out.append(self.buffer[:lt_idx])
+                    self._emit_plain_segment(self.buffer[:lt_idx], out)
                     self.buffer = self.buffer[lt_idx:]
 
                 # Buffer bắt đầu bằng '<'
@@ -175,7 +319,7 @@ class StreamingTimestampSanitizer:
                     self.state = self.STATE_ACCUMULATE_TAG
                 else:
                     # Ký tự '<' thông thường không phải thẻ timestamp (ví dụ i < n hoặc template <T>)
-                    out.append(self.buffer[0])
+                    self._emit_plain_segment(self.buffer[0], out)
                     self.buffer = self.buffer[1:]
 
             elif self.state == self.STATE_ACCUMULATE_TAG:
@@ -219,7 +363,22 @@ class StreamingTimestampSanitizer:
                     self.buffer = self.buffer[close_idx + len(close_tag):]
 
                     if self.is_valid_sec:
+                        if self.pending_separator:
+                            if self._just_dropped_tag and not self._has_emitted_valid_tag_on_line and "|" in self.pending_separator:
+                                if self.pending_separator.startswith(" "):
+                                    out.append(" ")
+                            else:
+                                out.append(self.pending_separator)
+                            self.pending_separator = ""
                         out.append(f"{self.tag_open}{body}{close_tag}")
+                        self._has_emitted_valid_tag_on_line = True
+                        self._after_timestamp = True
+                        self._just_dropped_tag = False
+                    else:
+                        if "|" in self.pending_separator:
+                            self.pending_separator = ""
+                        self._just_dropped_tag = True
+                        self._after_timestamp = True
 
                     # Reset trạng thái về EMIT
                     self.tag_open = ""
@@ -255,12 +414,25 @@ class StreamingTimestampSanitizer:
             pass
         elif self.state == self.STATE_EMIT:
             if self.buffer:
-                out.append(self.buffer)
+                self._emit_plain_segment(self.buffer, out)
+                self.buffer = ""
+            if self.pending_separator:
+                is_dangling_pipe = "|" in self.pending_separator and (
+                    self._after_timestamp or self._just_dropped_tag or self._has_emitted_valid_tag_on_line
+                )
+                is_dropped_ws = self._just_dropped_tag and all(c in " |\t" for c in self.pending_separator)
+                if not is_dangling_pipe and not is_dropped_ws:
+                    out.append(self.pending_separator)
+                self.pending_separator = ""
 
         self.buffer = ""
         self.body_buffer = ""
         self.tag_open = ""
         self.is_valid_sec = False
+        self._just_dropped_tag = False
+        self.pending_separator = ""
+        self._after_timestamp = False
+        self._has_emitted_valid_tag_on_line = False
         self.state = self.STATE_EMIT
         return out
 
@@ -648,6 +820,192 @@ class StreamingCodeSanitizer:
         return out
 
 
+class StreamingInternalArtifactSanitizer:
+    """
+    Bộ lọc luồng SSE (Zero Regex, 0ms TTFT overhead) ngăn chặn mô hình 7B:
+    1. Lặp lời chào xã giao ('Chào bạn!', 'Xin chào!') ở đầu câu trả lời học thuật (course_query).
+    2. Nhại lại các nhãn cắt tỉa nội bộ ('[...khung code minh họa ở lượt trước...]',
+       '[đã rút gọn phản hồi dài ở lượt trước]', '[rút gọn lượt cũ]').
+    Bảo toàn 100% cú pháp mảng C++ (a[i], int arr[100]) và luồng token thực.
+    """
+    GREETING_OPENINGS = (
+        "xin chào các bạn",
+        "xin chào bạn",
+        "xin chào em",
+        "xin chào",
+        "chào các bạn",
+        "chào bạn",
+        "chào em",
+    )
+    OUT_OF_LESSON_VIDEO_OPENINGS = (
+        "theo đoạn video bài giảng",
+        "theo đoạn video này",
+        "theo đoạn video",
+        "theo video bài giảng",
+        "trong đoạn video này",
+        "trong đoạn video",
+    )
+    FORBIDDEN_BRACKET_MARKERS = (
+        "[...khung code minh họa ở lượt trước...]",
+        "[đã rút gọn phản hồi dài ở lượt trước]",
+        "[rút gọn lượt cũ]",
+    )
+    CPP_LOWER_PREFIXES = (
+        "int ", "void ", "double ", "float ", "char ", "bool ", "long ", "short ",
+        "string ", "class ", "struct ", "const ", "static ", "virtual ",
+        "for ", "while ", "if ", "vector", "std::", "`",
+    )
+
+    def __init__(self, forbid_video_opening: bool = False):
+        self.forbid_video_opening = forbid_video_opening
+        self._checked_opening = False
+        self._need_capitalize = False
+        self._opening_buf = ""
+        self._marker_buf = ""
+        self._emitted_any = False
+
+    def _active_openings(self) -> Tuple[str, ...]:
+        if self.forbid_video_opening:
+            return self.GREETING_OPENINGS + self.OUT_OF_LESSON_VIDEO_OPENINGS
+        return self.GREETING_OPENINGS
+
+    def _consume_opening(self, text: str) -> str:
+        if self._checked_opening:
+            return text
+
+        self._opening_buf += text
+        openings = self._active_openings()
+
+        while self._opening_buf:
+            work = self._opening_buf.lstrip(" \t\r\n")
+            if not work:
+                # Chỉ toàn khoảng trắng đầu luồng, chờ thêm ký tự thực
+                if len(self._opening_buf) > 16:
+                    self._checked_opening = True
+                    out = self._opening_buf
+                    self._opening_buf = ""
+                    return out
+                return ""
+
+            low = work.lower()
+            stripped_one = False
+
+            for pref in openings:
+                if low.startswith(pref):
+                    after = len(pref)
+                    if after == len(work):
+                        # Chờ thêm token để biết sau cụm chào là dấu câu gì
+                        self._opening_buf = work
+                        return ""
+                    next_ch = work[after]
+                    if next_ch in ("!", ",", ".", ":", "-", "—"):
+                        cur = after + 1
+                        if cur == len(work):
+                            # Chờ thêm khoảng trắng sau dấu câu
+                            self._opening_buf = work[cur:]
+                            self._need_capitalize = True
+                            return ""
+                        while cur < len(work) and work[cur] in ("!", ",", ".", ":", "-", "—", " ", "\t", "\n"):
+                            cur += 1
+                        self._opening_buf = work[cur:]
+                        self._need_capitalize = True
+                        stripped_one = True
+                        break
+
+            if stripped_one:
+                continue
+
+            # Kiểm tra xem chuỗi hiện tại có đang là tiền tố chưa hoàn chỉnh của một mẫu mở đầu cần lọc không
+            if any(pref.startswith(low) for pref in openings):
+                self._opening_buf = work
+                return ""
+
+            # Không khớp mẫu mở đầu cần lọc -> Xả ngay lập tức
+            if self._need_capitalize and work:
+                if len(work) < 6 and any(kw.startswith(low) for kw in self.CPP_LOWER_PREFIXES):
+                    self._opening_buf = work
+                    return ""
+                if not any(work.startswith(kw) for kw in self.CPP_LOWER_PREFIXES):
+                    if work[0].isalpha() and work[0].islower():
+                        work = work[0].upper() + work[1:]
+                self._need_capitalize = False
+
+            self._checked_opening = True
+            self._opening_buf = ""
+            return work
+
+        return ""
+
+    def _filter_brackets(self, text: str) -> List[str]:
+        if not text and not self._marker_buf:
+            return []
+        self._marker_buf += text
+        out: List[str] = []
+
+        while self._marker_buf:
+            b_idx = self._marker_buf.find("[")
+            if b_idx == -1:
+                out.append(self._marker_buf)
+                self._marker_buf = ""
+                break
+            if b_idx > 0:
+                out.append(self._marker_buf[:b_idx])
+                self._marker_buf = self._marker_buf[b_idx:]
+
+            low_rem = self._marker_buf.lower()
+            matched_full = None
+            for marker in self.FORBIDDEN_BRACKET_MARKERS:
+                if low_rem.startswith(marker):
+                    matched_full = marker
+                    break
+
+            if matched_full is not None:
+                # Nuốt trọn nhãn nội bộ bị nhại (kèm khoảng trắng thừa ngay sau nếu có)
+                cut_len = len(matched_full)
+                self._marker_buf = self._marker_buf[cut_len:]
+                if out and out[-1].endswith("... "):
+                    out[-1] = out[-1][:-4]
+                elif out and out[-1].endswith("..."):
+                    out[-1] = out[-1][:-3]
+                continue
+
+            if any(marker.startswith(low_rem) for marker in self.FORBIDDEN_BRACKET_MARKERS):
+                # Đang khớp dở tiền tố của nhãn nội bộ, giữ trong buffer chờ token kế tiếp
+                break
+
+            # Dấu '[' bình thường (ví dụ a[i], int a[100]) -> phát ngay lập tức
+            out.append("[")
+            self._marker_buf = self._marker_buf[1:]
+
+        return out
+
+    def process(self, token: str) -> List[str]:
+        after_opening = self._consume_opening(token)
+        if not after_opening:
+            return []
+        pieces = self._filter_brackets(after_opening)
+        if pieces:
+            self._emitted_any = True
+        return pieces
+
+    def flush(self) -> List[str]:
+        out: List[str] = []
+        if not self._checked_opening and self._opening_buf:
+            work = self._opening_buf
+            if self._need_capitalize and work and work[0].isalpha() and work[0].islower():
+                work = work[0].upper() + work[1:]
+            self._opening_buf = ""
+            self._checked_opening = True
+            out.extend(self._filter_brackets(work))
+
+        if self._marker_buf:
+            low_rem = self._marker_buf.lower()
+            if low_rem not in self.FORBIDDEN_BRACKET_MARKERS:
+                out.append(self._marker_buf)
+            self._marker_buf = ""
+        return out
+
+
 class ChatService:
     """
     Dịch vụ điều phối trò chuyện Socratic & Truyền phát dữ liệu thời gian thực (SSE Stream):
@@ -684,51 +1042,20 @@ class ChatService:
         clean_prompt = normalize_user_input(request.prompt)
         config = {"configurable": {"thread_id": session_id}}
 
-        # -1. Kiểm tra Rate Limiting (Chống spam dồn dập per session)
-        rate_limiter = get_session_rate_limiter()
-        is_allowed, rate_msg, retry_after = rate_limiter.check_rate_limit(session_id)
-        if not is_allowed:
-            metadata_event = StreamMetadataEvent(
-                session_id=session_id,
-                turn_count=1,
-                intent="rate_limited",
-                used_fast_path=True,
-                retrieved_chunk_count=0,
-                is_approximate=False,
-                retrieval_status="coverage_gap",
-                is_low_confidence=False,
-                target_lesson_seq=None,
-                suggested_timestamps=[],
-                sources=[]
-            )
-            yield {
-                "event": "metadata",
-                "data": metadata_event.model_dump_json()
-            }
-            words = (rate_msg or "Vui lòng gửi câu hỏi chậm lại để có thời gian thực hành nhé.").split(" ")
-            for i, word in enumerate(words):
-                chunk_token = word if i == 0 else " " + word
-                yield {
-                    "event": "delta",
-                    "data": json.dumps({"content": chunk_token})
-                }
-                await asyncio.sleep(0.012)
-            yield {
-                "event": "done",
-                "data": "[DONE]"
-            }
-            return
+        current_video_sec = getattr(request, "current_video_sec", None)
 
+        # Lưu ý quan trọng: KHÔNG truyền "last_course_query": None vào initial_state
+        # để bảo toàn mỏ neo hội thoại đã lưu trong LangGraph MemorySaver Checkpointer!
         initial_state = {
             "session_id": session_id,
             "prompt": clean_prompt,
             "course_id": request.course_id,
             "lesson_seq": request.lesson_seq,
+            "current_video_sec": current_video_sec,
             "intent": "course_query",
             "direct_response": None,
             "is_course_query": True,
             "search_query": None,
-            "last_course_query": None,
             "is_curriculum_navigation": False,
             "retrieval_status": "coverage_gap",
             "retrieved_chunks": [],
@@ -742,7 +1069,6 @@ class ChatService:
             "assembled_messages": []
         }
 
-
         # Khởi chạy chu trình điều phối Agentic RAG qua LangGraph StateGraph có Checkpointer
         graph = get_chat_graph()
         final_state = await graph.ainvoke(initial_state, config=config)
@@ -754,6 +1080,7 @@ class ChatService:
         )
 
         # 2. Xử lý Fast-Path (Chào hỏi xã giao, cảm ơn, danh tính, ngoài lề, hoặc xác nhận điều hướng đàm thoại)
+        # Fast-Path không tiêu tốn tài nguyên LLM/GPU nên không trừ hạn mức Rate Limiter
         if not final_state["is_course_query"]:
             act = final_state.get("action")
             target_seq = final_state.get("target_lesson_seq")
@@ -807,6 +1134,44 @@ class ChatService:
             }
             return
 
+        # 2b. Kiểm tra Rate Limiting chỉ cho các truy vấn gọi LLM/GPU (cho phép phiên học/demo tuần tự 10+ lượt mượt mà)
+        rate_limiter = get_session_rate_limiter()
+        if rate_limiter.max_per_minute < 20:
+            rate_limiter.max_per_minute = 20
+            rate_limiter.max_per_hour = max(rate_limiter.max_per_hour, 180)
+        is_allowed, rate_msg, retry_after = rate_limiter.check_rate_limit(session_id)
+        if not is_allowed:
+            metadata_event = StreamMetadataEvent(
+                session_id=session_id,
+                turn_count=turn_count,
+                intent="rate_limited",
+                used_fast_path=True,
+                retrieved_chunk_count=0,
+                is_approximate=False,
+                retrieval_status="coverage_gap",
+                is_low_confidence=False,
+                target_lesson_seq=None,
+                suggested_timestamps=[],
+                sources=[]
+            )
+            yield {
+                "event": "metadata",
+                "data": metadata_event.model_dump_json()
+            }
+            words = (rate_msg or "Vui lòng gửi câu hỏi chậm lại để có thời gian thực hành nhé.").split(" ")
+            for i, word in enumerate(words):
+                chunk_token = word if i == 0 else " " + word
+                yield {
+                    "event": "delta",
+                    "data": json.dumps({"content": chunk_token})
+                }
+                await asyncio.sleep(0.012)
+            yield {
+                "event": "done",
+                "data": "[DONE]"
+            }
+            return
+
         # 3. Gửi sự kiện 'metadata' đầu tiên cho Frontend UI từ kết quả đồ thị
         # [Zero Auto-Seek Invariant - Phương Án A]:
         # Tuyệt đối CẤM cơ chế tự ý giật màn hình hoặc ép video tự tua ở client.
@@ -844,29 +1209,7 @@ class ChatService:
                 {"role": "user", "content": final_state["user_message_content"]}
             ]
 
-        # Phân định rạch ròi tài liệu bài giảng truy xuất vs phát biểu của học viên (chống Context Drift)
         messages = [dict(m) for m in raw_messages]
-        if messages and messages[-1].get("role") == "user":
-            u_content = messages[-1].get("content", "")
-            grounded_marker = "[NGỮ CẢNH BÀI GIẢNG ĐÃ ĐƯỢC XÁC THỰC TỪ KHÓA HỌC]"
-            future_marker = "[HỌC LIỆU BÀI GIẢNG TƯƠNG LAI ĐỂ GIẢI THÍCH BẢN CHẤT]"
-            if grounded_marker in u_content:
-                u_content = u_content.replace(
-                    grounded_marker,
-                    f"{grounded_marker}\n"
-                    "(Lưu ý nguồn gốc: Các trích đoạn [Video Bài ...] và [MÃ NGUỒN ...] dưới đây là "
-                    "tài liệu bài giảng do hệ thống truy xuất để bạn đối chiếu, KHÔNG phải lời nói hay ý kiến do học viên nêu ra.)",
-                    1
-                )
-            if future_marker in u_content:
-                u_content = u_content.replace(
-                    future_marker,
-                    f"{future_marker}\n"
-                    "(Lưu ý nguồn gốc: Đây là trích đoạn tài liệu bài giảng tương lai do hệ thống truy xuất, "
-                    "KHÔNG phải phát biểu của học viên.)",
-                    1
-                )
-            messages[-1]["content"] = u_content
 
         full_assistant_response = ""
 
@@ -880,11 +1223,11 @@ class ChatService:
                 frequency_penalty=0.5,
                 stop=["\n\n\n", "Học viên:", "Sinh viên:", "<|im_end|>"],
                 stream=True,
-                timeout=8.0
+                timeout=25.0
             )
 
             retrieval_status = final_state.get("retrieval_status", "coverage_gap")
-            retrieved_chunks = final_state.get("retrieved_chunks", [])
+            is_nav_turn = bool(final_state.get("is_curriculum_navigation", False))
 
             # Tập hợp Whitelist các mốc giây được bảo chứng (ERR-02)
             valid_secs = set()
@@ -892,6 +1235,9 @@ class ChatService:
                 if isinstance(item, dict) and item.get("sec") is not None:
                     valid_secs.add(int(item["sec"]))
 
+            artifact_sanitizer = StreamingInternalArtifactSanitizer(
+                forbid_video_opening=(retrieval_status == "out_of_lesson" or is_nav_turn)
+            )
             ts_sanitizer = StreamingTimestampSanitizer(valid_secs=valid_secs)
             code_sanitizer = StreamingCodeSanitizer()
 
@@ -904,19 +1250,31 @@ class ChatService:
                     if not clean_token:
                         continue
 
-                    # Deterministic Timestamp Whitelist Guardrail (Streaming Buffer)
-                    sanitized_tokens = ts_sanitizer.process(clean_token)
-                    for tok in sanitized_tokens:
-                        # Deterministic Streaming Code Sanitizer (Chống rò rỉ #include, using namespace, main)
-                        clean_code_tokens = code_sanitizer.process(tok)
-                        for c_tok in clean_code_tokens:
-                            full_assistant_response += c_tok
-                            yield {
-                                "event": "delta",
-                                "data": json.dumps({"content": c_tok})
-                            }
+                    for art_tok in artifact_sanitizer.process(clean_token):
+                        if not art_tok:
+                            continue
+                        # Deterministic Timestamp Whitelist Guardrail (Streaming Buffer)
+                        sanitized_tokens = ts_sanitizer.process(art_tok)
+                        for tok in sanitized_tokens:
+                            # Deterministic Streaming Code Sanitizer (Chống rò rỉ #include, using namespace, main)
+                            clean_code_tokens = code_sanitizer.process(tok)
+                            for c_tok in clean_code_tokens:
+                                full_assistant_response += c_tok
+                                yield {
+                                    "event": "delta",
+                                    "data": json.dumps({"content": c_tok})
+                                }
 
-            # Xả các token còn lại trong bộ đệm cuối luồng
+            # Xả các token còn lại trong bộ đệm cuối luồng theo đúng thứ tự pipeline
+            for art_tok in artifact_sanitizer.flush():
+                for tok in ts_sanitizer.process(art_tok):
+                    for c_tok in code_sanitizer.process(tok):
+                        full_assistant_response += c_tok
+                        yield {
+                            "event": "delta",
+                            "data": json.dumps({"content": c_tok})
+                        }
+
             final_flushed = ts_sanitizer.flush()
             for tok in final_flushed:
                 for c_tok in code_sanitizer.process(tok):
@@ -943,7 +1301,7 @@ class ChatService:
                     for ts in suggested_ts[:2]
                 ]
                 ts_joined = " | ".join(ts_items)
-                stripped_resp = full_assistant_response.rstrip()
+                stripped_resp = full_assistant_response.rstrip(" |\t")
                 if stripped_resp.endswith(("Mốc video bài giảng:**", "Mốc video bài giảng:")):
                     ts_footer = f" {ts_joined}"
                 else:
@@ -968,14 +1326,11 @@ class ChatService:
 
         except Exception as e:
             logger.error(f"[ChatService] Lỗi kết nối LLM Server ({settings.LLM_BASE_URL}): {str(e)}")
-            fallback_msg = f"\n\n*(Hệ thống đang gặp sự cố kết nối tới LLM Local ({settings.LLM_MODEL_NAME}). Bạn vui lòng kiểm tra xem Ollama đã chạy chưa: `ollama run {settings.LLM_MODEL_NAME}`)*"
-            commit_assistant_turn(
-                session_id,
-                clean_prompt,
-                fallback_msg,
-                current_lesson_seq=request.lesson_seq,
-                last_course_query=final_state.get("last_course_query")
+            fallback_msg = (
+                f"\n\n*(Hệ thống đang tạm thời gián đoạn kết nối tới máy chủ mô hình `{settings.LLM_MODEL_NAME}`. "
+                f"Bạn vui lòng thử gửi lại câu hỏi sau ít giây nhé!)*"
             )
+            # Tuyệt đối KHÔNG gọi commit_assistant_turn với thông báo lỗi mạng để tránh làm bẩn lịch sử hội thoại
             yield {
                 "event": "delta",
                 "data": json.dumps({

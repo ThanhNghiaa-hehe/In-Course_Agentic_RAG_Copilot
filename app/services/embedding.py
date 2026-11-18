@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+from functools import lru_cache
 from pathlib import Path
 from typing import List, Tuple, Optional
 import numpy as np
@@ -98,14 +99,29 @@ class EmbeddingService:
             )
         logger.info(f"[EmbeddingService] Nạp toàn bộ mô hình Embedding & Reranker thành công (Embedding: {self.device.upper()}, Reranker: {reranker_device})!")
 
+    @staticmethod
+    def _normalize_query_key(query_text: str) -> str:
+        clean = (query_text or "").strip()
+        while clean.lower().startswith("query:"):
+            clean = clean[6:].strip()
+        return clean
+
+    @lru_cache(maxsize=512)
+    def _embed_query_dense_cached(self, clean_query: str) -> Tuple[float, ...]:
+        formatted_query = f"query: {clean_query}"
+        dense_vec = list(self.dense_model.embed([formatted_query]))[0]
+        return tuple(dense_vec.tolist() if hasattr(dense_vec, "tolist") else dense_vec)
+
     def embed_query_dense(self, query_text: str) -> List[float]:
         """
-        Sinh Dense Vector 1024 chiều.
-        BẮT BUỘC tuân thủ tiêu chuẩn E5: luôn có tiền tố 'query: ' cho câu truy vấn.
+        Sinh Dense Vector 1024 chiều (có LRU Cache maxsize=512 chống tính toán lặp E5 trong cùng lượt).
+        BẮT BUỘC tuân thủ tiêu chuẩn E5: luôn có đúng 1 tiền tố 'query: ' cho câu truy vấn.
         """
-        formatted_query = f"query: {query_text.strip()}"
-        dense_vec = list(self.dense_model.embed([formatted_query]))[0]
-        return dense_vec.tolist()
+        clean_query = self._normalize_query_key(query_text)
+        return list(self._embed_query_dense_cached(clean_query))
+
+    embed_query_dense.cache_info = _embed_query_dense_cached.cache_info
+    embed_query_dense.cache_clear = _embed_query_dense_cached.cache_clear
 
     def embed_query_sparse(self, query_text: str) -> Tuple[List[int], List[float]]:
         """

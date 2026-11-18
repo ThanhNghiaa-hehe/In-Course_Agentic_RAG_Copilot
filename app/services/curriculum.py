@@ -32,6 +32,230 @@ def _normalize_text(text: str) -> str:
     return normalize_user_input(text, lowercase=True, preserve_newlines=False)
 
 
+_PUNCT_STRIP = ".,;:?!'\"()[]{}<>`"
+
+
+def _strip_token_punct(token: str) -> str:
+    """Loại bỏ dấu câu bao quanh token bằng duyệt chuỗi thuần túy (Zero Regex)."""
+    return token.strip(_PUNCT_STRIP)
+
+
+def _clean_alpha_space(text: str) -> str:
+    """Thay thế ký tự không phải chữ/số bằng khoảng trắng và thu gọn dấu cách (Zero Regex)."""
+    chars = [c if c.isalnum() else " " for c in text.lower()]
+    return " ".join("".join(chars).split())
+
+
+def _parse_clock_timestamp(token: str) -> Optional[int]:
+    """Phân tích định dạng mm:ss hoặc hh:mm:ss bằng tách chuỗi thuần túy (Zero Regex)."""
+    cleaned = _strip_token_punct(token)
+    if ":" not in cleaned or "::" in cleaned:
+        return None
+    parts = cleaned.split(":")
+    if len(parts) not in (2, 3):
+        return None
+    if not all(p.isdigit() for p in parts):
+        return None
+    # Yêu cầu phần giây có đúng 2 chữ số (ví dụ 04:15, 4:05) để tránh nhầm tỷ lệ toán học 1:2
+    if len(parts[-1]) != 2:
+        return None
+    sec = int(parts[-1])
+    if sec < 0 or sec >= 60:
+        return None
+    if len(parts) == 2:
+        mins = int(parts[0])
+        if mins < 0 or mins > 300:
+            return None
+        return mins * 60 + sec
+    hours = int(parts[0])
+    mins = int(parts[1])
+    if hours < 0 or hours > 10 or mins < 0 or mins >= 60:
+        return None
+    return hours * 3600 + mins * 60 + sec
+
+
+def _parse_compact_minute_sec(token: str) -> Optional[int]:
+    """Phân tích viết tắt dạng 4p30s (Zero Regex)."""
+    cleaned = _strip_token_punct(token).lower()
+    if "p" not in cleaned or not cleaned.endswith("s"):
+        return None
+    p_idx = cleaned.find("p")
+    if p_idx <= 0:
+        return None
+    min_part = cleaned[:p_idx]
+    sec_part = cleaned[p_idx + 1 : -1]
+    if not (min_part.isdigit() and sec_part.isdigit()):
+        return None
+    mins = int(min_part)
+    secs = int(sec_part)
+    if 0 <= mins <= 300 and 0 <= secs < 60:
+        return mins * 60 + secs
+    return None
+
+
+_VN_BASE_DIGITS: Dict[str, int] = {
+    "không": 0,
+    "một": 1,
+    "hai": 2,
+    "ba": 3,
+    "bốn": 4,
+    "tư": 4,
+    "năm": 5,
+    "sáu": 6,
+    "bảy": 7,
+    "tám": 8,
+    "chín": 9,
+}
+
+_VN_POST_TENS_DIGITS: Dict[str, int] = {
+    "một": 1,
+    "mốt": 1,
+    "hai": 2,
+    "ba": 3,
+    "bốn": 4,
+    "tư": 4,
+    "năm": 5,
+    "lăm": 5,
+    "nhăm": 5,
+    "sáu": 6,
+    "bảy": 7,
+    "tám": 8,
+    "chín": 9,
+}
+
+_VN_SHORTHAND_SUFFIXES: Dict[str, int] = {
+    "mốt": 1,
+    "tư": 4,
+    "lăm": 5,
+    "nhăm": 5,
+}
+
+
+def _parse_vn_number_tokens(tokens: List[str], max_val: int = 300) -> Optional[int]:
+    """
+    Phân tích chuỗi token số đếm tiếng Việt hoặc chữ số (0..max_val, hỗ trợ đến 300)
+    bằng duyệt token thuần túy (Zero Regex).
+    """
+    if not tokens:
+        return None
+    if len(tokens) == 1 and tokens[0].isdigit():
+        val = int(tokens[0])
+        return val if 0 <= val <= max_val else None
+
+    idx = 0
+    n = len(tokens)
+    total = 0
+    has_hundreds = False
+
+    if n >= 2 and tokens[0] in ("một", "hai", "ba") and tokens[1] == "trăm":
+        total = _VN_BASE_DIGITS[tokens[0]] * 100
+        idx = 2
+        has_hundreds = True
+    elif n >= 2 and tokens[0] == "trăm":
+        total = 100
+        idx = 1
+        has_hundreds = True
+
+    if has_hundreds:
+        if idx == n:
+            return total if 0 <= total <= max_val else None
+        if tokens[idx] in ("linh", "lẻ"):
+            if idx + 2 != n:
+                return None
+            unit = _VN_BASE_DIGITS.get(tokens[idx + 1])
+            if unit is None or unit < 1:
+                return None
+            val = total + unit
+            return val if 0 <= val <= max_val else None
+
+    rem = tokens[idx:]
+    rem_len = len(rem)
+    rem_val: Optional[int] = None
+
+    if rem_len == 1:
+        if rem[0] == "mười":
+            rem_val = 10
+        elif not has_hundreds and rem[0] in _VN_BASE_DIGITS:
+            rem_val = _VN_BASE_DIGITS[rem[0]]
+    elif rem_len == 2:
+        if rem[0] == "mười" and rem[1] in _VN_POST_TENS_DIGITS and rem[1] != "mốt":
+            rem_val = 10 + _VN_POST_TENS_DIGITS[rem[1]]
+        elif rem[0] in _VN_BASE_DIGITS and 2 <= _VN_BASE_DIGITS[rem[0]] <= 9:
+            tens = _VN_BASE_DIGITS[rem[0]] * 10
+            if rem[1] == "mươi":
+                rem_val = tens
+            elif rem[1] in _VN_SHORTHAND_SUFFIXES:
+                rem_val = tens + _VN_SHORTHAND_SUFFIXES[rem[1]]
+    elif rem_len == 3:
+        if (
+            rem[0] in _VN_BASE_DIGITS
+            and 2 <= _VN_BASE_DIGITS[rem[0]] <= 9
+            and rem[1] == "mươi"
+            and rem[2] in _VN_POST_TENS_DIGITS
+        ):
+            rem_val = _VN_BASE_DIGITS[rem[0]] * 10 + _VN_POST_TENS_DIGITS[rem[2]]
+
+    if rem_val is None:
+        return None
+    val = total + rem_val
+    return val if 0 <= val <= max_val else None
+
+
+def _find_vn_number_before(tokens: List[str], end: int, max_val: int = 300) -> Optional[Tuple[int, int]]:
+    """Tìm số dài nhất kết thúc ngay trước chỉ số `end`, trả về `(value, start_idx)`."""
+    max_span = min(5, end)
+    for length in range(max_span, 0, -1):
+        start = end - length
+        val = _parse_vn_number_tokens(tokens[start:end], max_val=max_val)
+        if val is not None:
+            return val, start
+    return None
+
+
+def _find_vn_number_after(
+    tokens: List[str],
+    start: int,
+    max_val: int = 300,
+    allow_ordinal_nhat: bool = False,
+) -> Optional[Tuple[int, int]]:
+    """Tìm số dài nhất bắt đầu tại `start`, trả về `(value, end_idx)`."""
+    n = len(tokens)
+    if start >= n:
+        return None
+    max_span = min(5, n - start)
+    for length in range(max_span, 0, -1):
+        end = start + length
+        val = _parse_vn_number_tokens(tokens[start:end], max_val=max_val)
+        if val is not None:
+            return val, end
+    if allow_ordinal_nhat and tokens[start] == "nhất" and max_val >= 1:
+        return 1, start + 1
+    return None
+
+
+def _parse_seconds_after_minutes(tokens: List[str], sec_start: int) -> int:
+    """Phân tích phần giây đi sau mốc phút (`rưỡi`, `Y giây`, `giây [thứ] Y`, hoặc `<số>`)."""
+    n = len(tokens)
+    if sec_start >= n:
+        return 0
+    if tokens[sec_start] == "rưỡi":
+        return 30
+    if tokens[sec_start] == "giây":
+        has_thu = sec_start + 1 < n and tokens[sec_start + 1] == "thứ"
+        idx = sec_start + 2 if has_thu else sec_start + 1
+        res = _find_vn_number_after(tokens, idx, max_val=59, allow_ordinal_nhat=has_thu)
+        return res[0] if res is not None else 0
+    if tokens[sec_start].isdigit():
+        cand = int(tokens[sec_start])
+        return cand if 0 <= cand < 60 else 0
+    res = _find_vn_number_after(tokens, sec_start, max_val=59)
+    if res is not None:
+        cand, sec_end = res
+        if sec_end < n and tokens[sec_end] == "giây":
+            return cand
+    return 0
+
+
 def _has_modifier_conflict(
     prompt: str,
     candidate_lesson: Dict[str, Any],
@@ -54,6 +278,8 @@ def _has_modifier_conflict(
     for set_a, set_b in active_groups:
         prompt_has_a = any(m in norm_prompt for m in set_a)
         prompt_has_b = any(m in norm_prompt for m in set_b)
+        if prompt_has_a and prompt_has_b:
+            continue
 
         cand_has_a = any(m in cand_text for m in set_a)
         cand_has_b = any(m in cand_text for m in set_b)
@@ -248,7 +474,7 @@ class CurriculumService:
         try:
             from app.services.embedding import get_embedding_service
             emb_svc = get_embedding_service()
-            qv = np.array(emb_svc.embed_query_dense(f"query: {clean_prompt}"), dtype=np.float32)
+            qv = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
             q_norm = np.linalg.norm(qv)
             if q_norm > 0:
                 qv /= q_norm
@@ -274,13 +500,13 @@ class CurriculumService:
             from app.services.embedding import get_embedding_service
             emb_svc = get_embedding_service()
             if self._nav_prototypes and self._nav_vectors is None:
-                vecs = [emb_svc.embed_query_dense(f"query: {p}") for p in self._nav_prototypes]
+                vecs = [emb_svc.embed_query_dense(p) for p in self._nav_prototypes]
                 arr = np.array(vecs, dtype=np.float32)
                 norms = np.linalg.norm(arr, axis=1, keepdims=True)
                 norms[norms == 0] = 1.0
                 self._nav_vectors = arr / norms
             if self._overview_prototypes and self._overview_vectors is None:
-                vecs_o = [emb_svc.embed_query_dense(f"query: {p}") for p in self._overview_prototypes]
+                vecs_o = [emb_svc.embed_query_dense(p) for p in self._overview_prototypes]
                 arr_o = np.array(vecs_o, dtype=np.float32)
                 norms_o = np.linalg.norm(arr_o, axis=1, keepdims=True)
                 norms_o[norms_o == 0] = 1.0
@@ -308,14 +534,31 @@ class CurriculumService:
                 return bool(les.get("is_revision", False) and les.get("updates_lesson_seq") == base_seq)
         return False
 
-    def get_lesson_by_seq(self, seq: int) -> Optional[Dict[str, Any]]:
+    def get_lesson_by_seq(self, seq: int, course_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """
-        Lấy thông tin bài học theo số thứ tự seq từ manifest (Data/Code Separation).
+        Lấy thông tin bài học theo số thứ tự seq (và course_id nếu có) từ manifest (Data/Code Separation).
         """
+        if course_id:
+            for les in self._all_lessons:
+                if les.get("seq") == seq and les.get("course_id") == course_id:
+                    return les
         for les in self._all_lessons:
             if les.get("seq") == seq:
                 return les
         return None
+
+    def get_lesson_chapters(self, seq: int, course_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        """
+        Trả về danh sách phân đoạn video (video_chapters) của bài học nạp từ lessons_manifest.json.
+        Mỗi phần tử có dạng {"sec": int, "label": str, "summary": str}.
+        """
+        lesson = self.get_lesson_by_seq(seq, course_id=course_id)
+        if not lesson:
+            return []
+        chapters = lesson.get("video_chapters", [])
+        if not isinstance(chapters, list):
+            return []
+        return [dict(ch) for ch in chapters if isinstance(ch, dict)]
 
     def is_introductory_overview_chunk(self, chunk: Dict[str, Any]) -> bool:
         """
@@ -337,7 +580,201 @@ class CurriculumService:
         norm_text = _normalize_text(text)
         return any(sig in norm_text for sig in self._exercise_statement_signatures)
 
-    def is_navigation_query(self, prompt: str) -> bool:
+    def extract_video_time_reference(self, prompt: str) -> Optional[Dict[str, Any]]:
+        """
+        Phân tích tham chiếu thời gian trong video bài giảng bằng duyệt chuỗi/token thuần túy (Zero Regex).
+        Nhận diện:
+        - Mốc thời gian tường minh (`phút X`, `phút thứ năm`, `hai mươi lăm phút`, `X phút Y giây`, `mm:ss`, `hh:mm:ss`, `giây X`) -> `explicit_sec`
+        - Phân đoạn đầu/giữa/cuối video (`đoạn đầu`, `đoạn giữa`, `đoạn cuối`, ...) -> `relative_start` / `relative_middle` / `relative_end`
+        - Chỉ thị vị trí đang phát (`đoạn này`, `chỗ này`, `khúc này`, `đoạn vừa rồi`, `giây hiện tại`) -> `deictic_current`
+        Trả về `{"kind": str, "target_sec": Optional[int]}` hoặc `None` nếu không phải truy vấn theo thời gian video.
+        """
+        clean = _normalize_text(prompt)
+        if not clean:
+            return None
+
+        raw_tokens = clean.split()
+        tokens = [_strip_token_punct(t) for t in raw_tokens]
+        n = len(tokens)
+
+        # 1. Mốc thời gian tường minh (ưu tiên cao nhất, ví dụ: "đoạn đầu khoảng phút 4 thầy giảng gì" -> 240s)
+        for tok in tokens:
+            if not tok:
+                continue
+            clock_sec = _parse_clock_timestamp(tok)
+            if clock_sec is not None:
+                return {"kind": "explicit_sec", "target_sec": clock_sec}
+            compact_sec = _parse_compact_minute_sec(tok)
+            if compact_sec is not None:
+                return {"kind": "explicit_sec", "target_sec": compact_sec}
+
+        runtime_prev_verbs = ("mất", "hết", "tốn", "chạy", "sau", "đợi", "chờ", "nấu", "luộc", "hấp", "đợi")
+        runtime_exec_verbs = ("mất", "hết", "tốn", "chạy", "đợi", "chờ", "nấu", "luộc", "hấp")
+        runtime_bridge_words = ("khoảng", "tầm", "trong", "gần", "hơn", "độ")
+        video_pos_next = ("đầu", "cuối", "này", "vừa", "trước", "sau")
+
+        def _is_runtime_duration(num_start_idx: int, unit_idx: int) -> bool:
+            has_runtime_verb = (
+                num_start_idx >= 1 and tokens[num_start_idx - 1] in runtime_prev_verbs
+            ) or (
+                num_start_idx >= 2
+                and tokens[num_start_idx - 2] in runtime_exec_verbs
+                and tokens[num_start_idx - 1] in runtime_bridge_words
+            )
+            return has_runtime_verb and not (unit_idx + 1 < n and tokens[unit_idx + 1] in video_pos_next)
+
+        for i, tok in enumerate(tokens):
+            if tok == "phút":
+                # Dạng "<X> phút [Y [giây] | giây [thứ] Y | rưỡi]" (loại trừ "mất 5 phút", "nấu mất 5 phút")
+                prev_num = _find_vn_number_before(tokens, i, max_val=300)
+                if prev_num is not None:
+                    mins, num_start = prev_num
+                    if not _is_runtime_duration(num_start, i):
+                        secs = _parse_seconds_after_minutes(tokens, i + 1)
+                        return {"kind": "explicit_sec", "target_sec": mins * 60 + secs}
+
+                # Dạng "phút [thứ] <X> [giây [thứ] Y | Y giây | Y | rưỡi]"
+                has_thu = i + 1 < n and tokens[i + 1] == "thứ"
+                idx = i + 2 if has_thu else i + 1
+                next_num = _find_vn_number_after(tokens, idx, max_val=300, allow_ordinal_nhat=has_thu)
+                if next_num is not None:
+                    mins, min_end = next_num
+                    secs = _parse_seconds_after_minutes(tokens, min_end)
+                    return {"kind": "explicit_sec", "target_sec": mins * 60 + secs}
+
+            elif tok == "giây":
+                # Dạng "giây [thứ] <X>"
+                has_thu = i + 1 < n and tokens[i + 1] == "thứ"
+                idx = i + 2 if has_thu else i + 1
+                next_num = _find_vn_number_after(tokens, idx, max_val=36000, allow_ordinal_nhat=has_thu)
+                if next_num is not None:
+                    secs, _ = next_num
+                    return {"kind": "explicit_sec", "target_sec": secs}
+
+                # Dạng "<X> giây" (loại trừ thời gian chạy code như "chạy mất 5 giây" / "chạy mất năm giây")
+                prev_num = _find_vn_number_before(tokens, i, max_val=36000)
+                if prev_num is not None:
+                    secs, num_start = prev_num
+                    if not _is_runtime_duration(num_start, i):
+                        return {"kind": "explicit_sec", "target_sec": secs}
+
+        # 2. Phân đoạn đầu / giữa / cuối video
+        padded = f" {_clean_alpha_space(clean)} "
+        relative_start_markers = (
+            "đoạn đầu", "phần đầu", "đầu video", "mở đầu",
+            "lúc đầu", "khúc đầu", "phút đầu", "bắt đầu video", "đầu bài giảng",
+        )
+        if any(f" {m} " in padded for m in relative_start_markers):
+            return {"kind": "relative_start", "target_sec": 0}
+
+        relative_middle_markers = (
+            "đoạn giữa", "phần giữa", "giữa video", "giữa bài",
+            "giữa bài giảng", "nửa video", "phần thân bài",
+        )
+        if any(f" {m} " in padded for m in relative_middle_markers):
+            return {"kind": "relative_middle", "target_sec": None}
+
+        relative_end_markers = (
+            "đoạn cuối", "phần cuối", "cuối video", "kết thúc video",
+            "lúc cuối", "khúc cuối", "cuối bài giảng",
+        )
+        if any(f" {m} " in padded for m in relative_end_markers):
+            return {"kind": "relative_end", "target_sec": None}
+
+        # 3. Tham chiếu vị trí phát video hiện tại (Deictic player reference)
+        strict_player_markers = ("giây hiện tại", "phút hiện tại", "đoạn đang xem", "phần đang xem", "khúc đang xem")
+        if any(f" {m} " in padded for m in strict_player_markers):
+            return {"kind": "deictic_current", "target_sec": None}
+
+        if "```" not in prompt:
+            deictic_markers = (
+                "đoạn này", "chỗ này", "khúc này",
+                "đoạn vừa rồi", "khúc vừa rồi", "chỗ vừa rồi", "tại giây này",
+            )
+            if any(f" {m} " in padded for m in deictic_markers):
+                return {"kind": "deictic_current", "target_sec": None}
+
+        return None
+
+    def _names_other_lesson_topic(
+        self,
+        prompt: str,
+        current_lesson_seq: Optional[int] = None,
+        preferred_course_id: Optional[str] = None,
+    ) -> bool:
+        """
+        Kiểm tra xem câu hỏi có nhắc rõ ràng từ khóa chủ đề của bài học khác/tương lai
+        nằm ngoài phạm vi bài học hiện tại hay không (Zero Regex, dùng metadata manifest).
+        """
+        clean = _normalize_text(prompt)
+        if not clean:
+            return False
+        padded = f" {_clean_alpha_space(clean)} "
+
+        whole_course_nav_markers = (
+            "bài nào", "bài học nào", "chọn bài nào", "học bài nào",
+            "bài mấy", "bài số mấy", "trong playlist", "nằm ở bài nào", "thuộc bài nào",
+        )
+        if any(f" {m} " in padded for m in whole_course_nav_markers):
+            return True
+
+        if current_lesson_seq is None:
+            # Khi không biết bài hiện tại, chỉ xem là nhắc bài khác nếu có dạng "bài <từ khóa>" rõ ràng
+            if " bài " not in padded:
+                return False
+            for les in self._all_lessons:
+                for kw in les.get("keywords", []):
+                    norm_kw = _clean_alpha_space(_normalize_text(kw))
+                    if len(norm_kw) >= 4 and norm_kw not in self._stop_words:
+                        if f" bài {norm_kw} " in padded or f" bài về {norm_kw} " in padded:
+                            return True
+            return False
+
+        cur_les = self.get_lesson_by_seq(current_lesson_seq, course_id=preferred_course_id)
+        if cur_les:
+            if _has_topical_overlap(
+                cur_les,
+                prompt,
+                self._stop_words,
+                conflict_groups=self._modifier_conflict_groups,
+                domain_tokens=self._domain_specific_tokens,
+            ):
+                return False
+            for kw in cur_les.get("keywords", []):
+                norm_kw = _clean_alpha_space(_normalize_text(kw))
+                if len(norm_kw) >= 3 and norm_kw not in self._stop_words and f" {norm_kw} " in padded:
+                    return False
+
+        for les in self._all_lessons:
+            les_seq = les.get("seq", 0)
+            les_course = les.get("course_id")
+            is_other = (
+                (preferred_course_id and les_course != preferred_course_id)
+                or (les_seq > current_lesson_seq)
+            )
+            if not is_other:
+                continue
+            for kw in les.get("keywords", []):
+                norm_kw = _clean_alpha_space(_normalize_text(kw))
+                if len(norm_kw) >= 4 and norm_kw not in self._stop_words and f" {norm_kw} " in padded:
+                    return True
+            if _has_topical_overlap(
+                les,
+                prompt,
+                self._stop_words,
+                conflict_groups=self._modifier_conflict_groups,
+                domain_tokens=self._domain_specific_tokens,
+            ):
+                return True
+
+        return False
+
+    def is_navigation_query(
+        self,
+        prompt: str,
+        current_lesson_seq: Optional[int] = None,
+        preferred_course_id: Optional[str] = None,
+    ) -> bool:
         """
         Nhận diện xem học viên có đang đặt câu hỏi điều hướng lộ trình / playlist
         hoặc hỏi về tổng quan nội dung của bài học hay không bằng 100% Machine Learning (Dense Vector Cosine).
@@ -347,9 +784,20 @@ class CurriculumService:
         if not norm_prompt:
             return False
 
+        explicit_seq = self._extract_lesson_seq(norm_prompt)
+
         # 1. Trực tiếp có số thứ tự bài học (ví dụ "bài 4", "lesson 4")
-        if self._extract_lesson_seq(norm_prompt) is not None:
+        if explicit_seq is not None:
             return True
+
+        # 1b. Truy vấn theo mốc thời gian / phân đoạn video bài hiện tại -> KHÔNG phải điều hướng toàn khóa
+        if self.extract_video_time_reference(clean_prompt) is not None:
+            if not self._names_other_lesson_topic(
+                clean_prompt,
+                current_lesson_seq=current_lesson_seq,
+                preferred_course_id=preferred_course_id,
+            ):
+                return False
 
         # 2. Khớp vector ngữ nghĩa Cosine Similarity với prototype matrix (ngưỡng chuẩn hóa E5 >= 0.87)
         self._ensure_nav_embeddings()
@@ -357,7 +805,7 @@ class CurriculumService:
             try:
                 from app.services.embedding import get_embedding_service
                 emb_svc = get_embedding_service()
-                qv = np.array(emb_svc.embed_query_dense(f"query: {clean_prompt}"), dtype=np.float32)
+                qv = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
                 q_norm = np.linalg.norm(qv)
                 if q_norm > 0:
                     qv /= q_norm
@@ -383,7 +831,7 @@ class CurriculumService:
             try:
                 from app.services.embedding import get_embedding_service
                 emb_svc = get_embedding_service()
-                qv = np.array(emb_svc.embed_query_dense(f"query: {clean_prompt}"), dtype=np.float32)
+                qv = np.array(emb_svc.embed_query_dense(clean_prompt), dtype=np.float32)
                 q_norm = np.linalg.norm(qv)
                 if q_norm > 0:
                     qv /= q_norm
@@ -449,6 +897,33 @@ class CurriculumService:
         """Trả về danh sách định danh các khóa học nạp từ manifest (Data/Code Separation)."""
         return list(self._courses.keys())
 
+    def has_current_lesson_reference(
+        self,
+        prompt: str,
+        current_lesson_seq: Optional[int] = None,
+        preferred_course_id: Optional[str] = None,
+    ) -> bool:
+        """
+        Kiểm tra câu hỏi có tham chiếu bài học hiện tại (từ manifest hoặc tham chiếu thời gian video
+        không gắn số bài cụ thể và không nêu chủ đề bài khác) hay không.
+        """
+        norm_prompt = _normalize_text(prompt)
+        if not norm_prompt:
+            return False
+        if any(ref in norm_prompt for ref in self._current_lesson_refs):
+            return True
+        if (
+            self._extract_lesson_seq(norm_prompt) is None
+            and self.extract_video_time_reference(prompt) is not None
+            and not self._names_other_lesson_topic(
+                prompt,
+                current_lesson_seq=current_lesson_seq,
+                preferred_course_id=preferred_course_id,
+            )
+        ):
+            return True
+        return False
+
     def get_lesson_timestamps(self, seq: int) -> List[Dict[str, Any]]:
         """Lấy danh sách các mốc thời gian video chuẩn xác của bài học."""
         prefix = f"lesson-{seq:02d}:"
@@ -460,6 +935,7 @@ class CurriculumService:
                 secs = sec % 60
                 lbl = f"{mins:02d}:{secs:02d}"
                 ts_list.append({"sec": sec, "label": lbl, "title": part.title()})
+        ts_list.sort(key=lambda x: (1 if x["title"].lower() == "preamble" else 0, x["sec"]))
         return ts_list
 
     def find_lesson_for_query(
@@ -491,12 +967,17 @@ class CurriculumService:
                 if lesson.get("seq") == seq_num:
                     return lesson, lesson.get("title", f"Bài {seq_num}")
 
-        # 2. Khớp theo ngữ cảnh bài học hiện tại nạp từ manifest
-        if any(ref in norm_prompt for ref in self._current_lesson_refs):
+        # 2. Khớp theo ngữ cảnh bài học hiện tại nạp từ manifest hoặc tham chiếu thời gian video
+        is_current_ref = self.has_current_lesson_reference(
+            prompt,
+            current_lesson_seq=current_lesson_seq,
+            preferred_course_id=preferred_course_id,
+        )
+        if is_current_ref:
             if current_lesson_seq is not None:
-                for lesson in self._all_lessons:
-                    if lesson.get("seq") == current_lesson_seq:
-                        return lesson, lesson.get("title", f"Bài {current_lesson_seq}")
+                cur_les = self.get_lesson_by_seq(current_lesson_seq, course_id=preferred_course_id)
+                if cur_les:
+                    return cur_les, cur_les.get("title", f"Bài {current_lesson_seq}")
 
         # 3. Tìm kiếm bằng Chỉ mục Ngữ nghĩa Giáo trình (Syllabus Vector Index - Zero Regex Anchor)
         # Áp dụng Prerequisite Order Pareto Selection (ICLR 2025):
@@ -505,14 +986,34 @@ class CurriculumService:
             top_score, top_lesson = semantic_results[0]
             target_course = top_lesson.get("course_id")
 
-            # Nếu kết quả cao nhất thuộc khóa khác, kiểm tra xem khóa hiện tại có ứng viên tương đương không
+            # Helper kiểm tra khớp từ khóa chính xác (không tính chỉ trùng 1 phần cụm từ ghép)
+            def _has_exact_keyword_match(lesson_obj: Dict[str, Any]) -> bool:
+                return any(
+                    (_normalize_text(kw) in norm_prompt)
+                    for kw in lesson_obj.get("keywords", [])
+                    if _normalize_text(kw)
+                )
+
+            # Nếu kết quả cao nhất thuộc khóa khác, chỉ ưu tiên về khóa hiện tại khi có ứng viên sát điểm
+            # VÀ không để ứng viên khóa hiện tại trùng từ ghép lấn át bài khớp từ khóa chính xác ở khóa đích
             if preferred_course_id and target_course != preferred_course_id:
                 curr_cands = [c for c in semantic_results if c[1].get("course_id") == preferred_course_id]
+                target_course_cands = [c for c in semantic_results if c[1].get("course_id") == target_course]
                 if curr_cands:
                     best_curr_score, best_curr_lesson = curr_cands[0]
-                    # Điểm rất sát (chênh <= 0.03) và có topical overlap thực sự với câu hỏi
-                    if (top_score - best_curr_score) <= 0.03:
-                        if _has_topical_overlap(best_curr_lesson, prompt, self._stop_words):
+                    target_has_exact_non_rev = any(
+                        (not c[1].get("is_revision", False)) and _has_exact_keyword_match(c[1])
+                        for c in target_course_cands
+                    )
+                    curr_has_exact = _has_exact_keyword_match(best_curr_lesson)
+                    if (top_score - best_curr_score) <= 0.03 and (curr_has_exact or not target_has_exact_non_rev):
+                        if _has_topical_overlap(
+                            best_curr_lesson,
+                            prompt,
+                            self._stop_words,
+                            conflict_groups=self._modifier_conflict_groups,
+                            domain_tokens=self._domain_specific_tokens,
+                        ):
                             target_course = preferred_course_id
 
             # Trong target_course, chọn bài học phù hợp nhất dựa trên Semantic Dominance & Prerequisite Order
@@ -520,14 +1021,35 @@ class CurriculumService:
             best_course_score, best_course_lesson = course_cands[0]
 
             is_intro_query = any(m in norm_prompt for m in self._intro_navigation_markers)
+            any_has_topic = any(
+                _has_topical_overlap(
+                    c[1],
+                    prompt,
+                    self._stop_words,
+                    conflict_groups=self._modifier_conflict_groups,
+                    domain_tokens=self._domain_specific_tokens,
+                )
+                for c in course_cands
+            )
 
             # DAG Prerequisite Root Selection (Mục 3.1 - Nhịp 1B / Nhịp 2):
-            # Lọc các nút nền tảng (is_foundational và KHÔNG phải is_revision) trong target_course không có xung đột định ngữ
+            # Lọc các nút nền tảng (is_foundational và KHÔNG phải is_revision) trong target_course không có xung đột định ngữ.
+            # Bắt buộc phải có topical overlap nếu câu hỏi đã khớp chủ đề cụ thể (tránh bài nền tảng khác chủ đề cướp chỗ).
             foundational_cands = [
                 c for c in course_cands
                 if c[1].get("is_foundational", False)
                 and not c[1].get("is_revision", False)
                 and not _has_modifier_conflict(prompt, c[1], top_lesson=best_course_lesson, conflict_groups=self._modifier_conflict_groups)
+                and (
+                    not any_has_topic
+                    or _has_topical_overlap(
+                        c[1],
+                        prompt,
+                        self._stop_words,
+                        conflict_groups=self._modifier_conflict_groups,
+                        domain_tokens=self._domain_specific_tokens,
+                    )
+                )
             ]
 
             if foundational_cands:
@@ -553,12 +1075,15 @@ class CurriculumService:
                 if _has_modifier_conflict(prompt, cand_lesson, top_lesson=best_course_lesson, conflict_groups=self._modifier_conflict_groups):
                     continue
 
-                # Revision Non-Dominance: Bài ôn tập / cập nhật không cướp quyền bài gốc
-                if cand_lesson.get("is_revision", False) and cand_lesson.get("updates_lesson_seq") == chosen_lesson.get("seq"):
-                    continue
-
                 cand_seq = cand_lesson.get("seq", 999)
                 chosen_seq = chosen_lesson.get("seq", 999)
+
+                # Revision Non-Dominance: Bài ôn tập / cập nhật không cướp quyền bài gốc hoặc bài nền tảng
+                if cand_lesson.get("is_revision", False) and (
+                    cand_lesson.get("updates_lesson_seq") == chosen_lesson.get("seq")
+                    or (cand_seq < chosen_seq and chosen_lesson.get("is_foundational", False))
+                ):
+                    continue
 
                 # Prerequisite Dominance Rule: Nút đến sau chỉ được thay thế nút gốc nếu chênh lệch áp đảo (> 0.15) và không phải câu hỏi mở đầu lộ trình
                 if cand_seq > chosen_seq:
@@ -607,6 +1132,235 @@ class CurriculumService:
             return best_match, best_kw
 
         return None
+
+    def _split_disjunction_branches(self, norm_prompt: str) -> List[str]:
+        """Tách câu hỏi lựa chọn đa chủ đề theo từ nối 'hay' / 'hoặc' bằng tách chuỗi thuần túy (Zero Regex)."""
+        if not norm_prompt:
+            return []
+        padded = f" {_clean_alpha_space(norm_prompt)} "
+        connectors = (" hoặc là ", " hay là ", " hoặc ", " hay ")
+        used = False
+        work = padded
+        marker = " ||| "
+        for conn in connectors:
+            if conn in work:
+                work = work.replace(conn, marker)
+                used = True
+        if not used:
+            return []
+        parts = [p.strip() for p in work.split("|||")]
+        return [p for p in parts if p]
+
+    def find_ambiguous_candidates(
+        self,
+        prompt: str,
+        current_lesson_seq: Optional[int] = None,
+        preferred_course_id: Optional[str] = None,
+        max_candidates: int = 4,
+    ) -> Dict[str, Any]:
+        """
+        Phát hiện truy vấn mơ hồ theo 2 dạng chuẩn (Zero Regex, Zero Hardcode):
+        1. Đa chủ đề rẽ nhánh (multi_topic_disjunction): ví dụ 'con trỏ hay vòng lặp', 'stack hoặc queue'.
+        2. Đơn chủ đề có nhiều bài học cạnh tranh sát điểm (competing_lessons): ví dụ 'mảng 1 chiều', 'con trỏ'.
+        Trả về:
+        {
+            "is_ambiguous": bool,
+            "reason": str,
+            "branches": List[str],
+            "candidates": [{"course_id": str, "seq": int, "title": str, "score": float, "branch_query": str}],
+        }
+        """
+        empty_res: Dict[str, Any] = {
+            "is_ambiguous": False,
+            "reason": "",
+            "branches": [],
+            "candidates": [],
+        }
+        clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
+        norm_prompt = _normalize_text(clean_prompt)
+        if not norm_prompt or max_candidates <= 0:
+            return empty_res
+
+        # Nếu đã chỉ định số bài tường minh hoặc đang hỏi mốc video bài hiện tại -> không mơ hồ
+        if self._extract_lesson_seq(norm_prompt) is not None:
+            return empty_res
+        if self.has_current_lesson_reference(
+            clean_prompt,
+            current_lesson_seq=current_lesson_seq,
+            preferred_course_id=preferred_course_id,
+        ):
+            return empty_res
+
+        padded_full = f" {_clean_alpha_space(norm_prompt)} "
+
+        def _has_exact_kw(lesson_obj: Dict[str, Any], target_padded: str) -> bool:
+            for kw in lesson_obj.get("keywords", []):
+                nkw = _clean_alpha_space(_normalize_text(kw))
+                if len(nkw) >= 3 and nkw not in self._stop_words and f" {nkw} " in target_padded:
+                    return True
+            return False
+
+        # --- DẠNG 1: Đa chủ đề rẽ nhánh ("a hay b", "a hoặc b") ---
+        raw_branches = self._split_disjunction_branches(norm_prompt)
+        if len(raw_branches) >= 2:
+            yes_no_tails = {"không", "chưa", "không ạ", "chưa ạ", "gì", "sao", "đâu", "nhỉ", "nhé"}
+            branch_matches: List[Tuple[str, Dict[str, Any], float]] = []
+            seen_keys = set()
+
+            for branch in raw_branches:
+                if branch in yes_no_tails:
+                    continue
+                b_tokens = [t for t in branch.split() if t not in self._stop_words]
+                if not b_tokens:
+                    continue
+                b_padded = f" {branch} "
+                b_seq = self._extract_lesson_seq(branch)
+                matched_les: Optional[Dict[str, Any]] = None
+                matched_score = 0.0
+
+                if b_seq is not None:
+                    matched_les = self.get_lesson_by_seq(b_seq, course_id=preferred_course_id)
+                    matched_score = 1.0
+                else:
+                    sem_b = self.semantic_search_lessons(branch, top_k=5, min_similarity=0.78)
+                    # Ưu tiên bài gốc khớp từ khóa chính xác trong nhánh (ví dụ 'con trỏ' -> Bài 57 thay vì Bài 48)
+                    exact_non_rev = [
+                        (sc, sl) for sc, sl in sem_b
+                        if not sl.get("is_revision", False) and _has_exact_kw(sl, b_padded)
+                    ]
+                    if exact_non_rev:
+                        cand_score, cand_les = exact_non_rev[0]
+                        matched_les = cand_les
+                        matched_score = float(cand_score)
+                    else:
+                        fl_res = self.find_lesson_for_query(
+                            branch,
+                            current_lesson_seq=current_lesson_seq,
+                            preferred_course_id=preferred_course_id,
+                        )
+                        if fl_res and sem_b:
+                            cand_les = fl_res[0]
+                            cand_score = 0.0
+                            for sc, sl in sem_b:
+                                if sl.get("seq") == cand_les.get("seq") and sl.get("course_id") == cand_les.get("course_id"):
+                                    cand_score = sc
+                                    break
+                            if cand_score == 0.0:
+                                cand_score = sem_b[0][0]
+                            has_topic = (
+                                _has_exact_kw(cand_les, b_padded)
+                                or _has_topical_overlap(
+                                    cand_les,
+                                    branch,
+                                    self._stop_words,
+                                    conflict_groups=self._modifier_conflict_groups,
+                                    domain_tokens=self._domain_specific_tokens,
+                                )
+                            )
+                            if cand_score >= 0.80 and (has_topic or cand_score >= 0.835):
+                                matched_les = cand_les
+                                matched_score = float(cand_score)
+
+                if matched_les is not None:
+                    key = (matched_les.get("course_id", ""), matched_les.get("seq"))
+                    if key not in seen_keys:
+                        seen_keys.add(key)
+                        branch_matches.append((branch, matched_les, matched_score))
+
+            if len(branch_matches) >= 2:
+                return {
+                    "is_ambiguous": True,
+                    "reason": "multi_topic_disjunction",
+                    "branches": [bm[0] for bm in branch_matches],
+                    "candidates": [
+                        {
+                            "course_id": bm[1].get("course_id", ""),
+                            "seq": int(bm[1].get("seq", 0)),
+                            "title": bm[1].get("title", ""),
+                            "score": round(float(bm[2]), 4),
+                            "branch_query": bm[0],
+                        }
+                        for bm in branch_matches[:max_candidates]
+                    ],
+                }
+
+        # --- DẠNG 2: Đơn chủ đề có nhiều bài học cạnh tranh sát điểm ---
+        semantic_results = self.semantic_search_lessons(clean_prompt, top_k=8, min_similarity=0.79)
+        if not semantic_results:
+            return empty_res
+
+        top_score, top_lesson = semantic_results[0]
+        filtered: List[Tuple[float, Dict[str, Any]]] = []
+        seen_keys = set()
+
+        for cand_score, cand_lesson in semantic_results:
+            if (top_score - cand_score) > 0.025 or cand_score < 0.805:
+                continue
+            if _has_modifier_conflict(
+                clean_prompt,
+                cand_lesson,
+                top_lesson=top_lesson,
+                conflict_groups=self._modifier_conflict_groups,
+            ):
+                continue
+
+            has_rel = (
+                _has_exact_kw(cand_lesson, padded_full)
+                or _has_topical_overlap(
+                    cand_lesson,
+                    clean_prompt,
+                    self._stop_words,
+                    conflict_groups=self._modifier_conflict_groups,
+                    domain_tokens=self._domain_specific_tokens,
+                )
+                or (top_score - cand_score) <= 0.015
+            )
+            if not has_rel:
+                continue
+
+            key = (cand_lesson.get("course_id", ""), cand_lesson.get("seq"))
+            if key not in seen_keys:
+                seen_keys.add(key)
+                filtered.append((cand_score, cand_lesson))
+
+        if len(filtered) < 2:
+            return empty_res
+
+        is_intro_query = any(m in norm_prompt for m in self._intro_navigation_markers)
+        distinct_courses = {c[1].get("course_id") for c in filtered}
+        non_revision_count = sum(1 for c in filtered if not c[1].get("is_revision", False))
+        tight_top_gap = (filtered[0][0] - filtered[1][0]) <= 0.020
+
+        if is_intro_query and len(distinct_courses) < 2 and non_revision_count < 2:
+            return empty_res
+
+        if len(distinct_courses) >= 2 or non_revision_count >= 2 or tight_top_gap:
+            # Ưu tiên bài gốc (non-revision) lên trước nếu điểm sát nhau, sau đó theo score giảm dần
+            ordered = sorted(
+                filtered,
+                key=lambda item: (
+                    1 if item[1].get("is_revision", False) else 0,
+                    -item[0],
+                    item[1].get("seq", 999),
+                ),
+            )[:max_candidates]
+            return {
+                "is_ambiguous": True,
+                "reason": "competing_lessons",
+                "branches": [],
+                "candidates": [
+                    {
+                        "course_id": les.get("course_id", ""),
+                        "seq": int(les.get("seq", 0)),
+                        "title": les.get("title", ""),
+                        "score": round(float(sc), 4),
+                        "branch_query": clean_prompt,
+                    }
+                    for sc, les in ordered
+                ],
+            }
+
+        return empty_res
 
     def _build_lesson_overview_response(
         self,

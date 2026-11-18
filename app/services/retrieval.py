@@ -1,4 +1,5 @@
 import asyncio
+import inspect
 import logging
 import math
 import json
@@ -374,7 +375,8 @@ class RetrievalService:
         sparse_values: List[float],
         course_id: str,
         current_lesson_seq: int,
-        allow_cross_course: bool = False
+        allow_cross_course: bool = False,
+        target_lesson_seq: Optional[int] = None
     ) -> List[Any]:
         """
         [CHẶNG 6 SÁNG KIẾN 2: SCATTER-GATHER CONCURRENCY]
@@ -391,17 +393,22 @@ class RetrievalService:
             if (allow_cross_course and course_id in cpp_track_courses)
             else models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id))
         )
+        lesson_seq_condition = (
+            models.FieldCondition(key="lesson_seq", match=models.MatchValue(value=int(target_lesson_seq)))
+            if (target_lesson_seq is not None and int(target_lesson_seq) > current_lesson_seq)
+            else models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq))
+        )
         future_code_filter = models.Filter(
             must=[
                 course_condition,
-                models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq)),
+                lesson_seq_condition,
                 models.FieldCondition(key="content_type", match=models.MatchValue(value="code_ast"))
             ]
         )
         future_video_filter = models.Filter(
             must=[
                 course_condition,
-                models.FieldCondition(key="lesson_seq", range=models.Range(gt=current_lesson_seq)),
+                lesson_seq_condition,
                 models.FieldCondition(key="content_type", match=models.MatchValue(value="video_transcript"))
             ]
         )
@@ -448,6 +455,96 @@ class RetrievalService:
         except Exception as probe_err:
             logger.warning(f"[RetrievalService] Lỗi khi tải trước future points ({probe_err}).")
             return []
+
+    @staticmethod
+    def _build_lightweight_future_chunk(
+        future_points: List[Any],
+        target_seq: int,
+        c_svc: Any,
+        matched_lesson: Optional[Dict[str, Any]] = None,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Tạo nhẹ metadata `best_future_chunk` cho câu hỏi điều hướng lộ trình
+        từ `future_points` hoặc `CurriculumService.get_lesson_timestamps` mà không chạy CPU Cross-Encoder.
+        """
+        lesson_obj = (
+            matched_lesson
+            or (c_svc.get_lesson_by_seq(target_seq) if c_svc and hasattr(c_svc, "get_lesson_by_seq") else None)
+            or {}
+        )
+        lesson_title = lesson_obj.get("title", f"Bài giảng Bài {target_seq}")
+
+        matching_hits = []
+        for hit in future_points:
+            p = hit.payload or {}
+            h_seq = p.get("lesson_seq")
+            if h_seq is not None and int(h_seq) == int(target_seq):
+                matching_hits.append(hit)
+
+        matched_hit = None
+        if matching_hits:
+            matched_hit = next(
+                (h for h in matching_hits if (h.payload or {}).get("content_type") == "video_transcript"),
+                None,
+            )
+            if matched_hit is None:
+                matched_hit = next(
+                    (h for h in matching_hits if (h.payload or {}).get("code_scope") != "header_preamble"),
+                    matching_hits[0],
+                )
+
+        if matched_hit is not None:
+            best_p = matched_hit.payload or {}
+            c_type = best_p.get("content_type", "video_transcript")
+            start_s = best_p.get("start_sec")
+            if start_s is None and best_p.get("approx_video_sec") is not None:
+                start_s = int(best_p.get("approx_video_sec"))
+            return {
+                "lesson_seq": target_seq,
+                "start_sec": start_s,
+                "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
+                "video_title": best_p.get("video_title") or lesson_title,
+                "content_type": c_type,
+                "score": 0.42,
+                "raw_text": sanitize_text(best_p.get("raw_text", "")),
+                "context_code": best_p.get("context_code", ""),
+                "code_scope": best_p.get("code_scope", ""),
+                "timestamp_tag": best_p.get("timestamp_tag", ""),
+                "approx_video_sec": best_p.get("approx_video_sec"),
+            }
+
+        ts_list = c_svc.get_lesson_timestamps(target_seq) if c_svc else []
+        if ts_list:
+            ts0 = ts_list[0]
+            sec = ts0.get("sec")
+            label = ts0.get("label")
+            return {
+                "lesson_seq": target_seq,
+                "start_sec": sec,
+                "start_label": label,
+                "video_title": lesson_title,
+                "content_type": "video_transcript",
+                "score": 0.42,
+                "raw_text": lesson_title,
+                "context_code": "",
+                "code_scope": "",
+                "timestamp_tag": f'<timestamp sec="{sec}">{label}</timestamp>',
+                "approx_video_sec": sec,
+            }
+
+        return {
+            "lesson_seq": target_seq,
+            "start_sec": 0,
+            "start_label": "00:00",
+            "video_title": lesson_title,
+            "content_type": "video_transcript",
+            "score": 0.42,
+            "raw_text": lesson_title,
+            "context_code": "",
+            "code_scope": "",
+            "timestamp_tag": '<timestamp sec="0">00:00</timestamp>',
+            "approx_video_sec": 0,
+        }
 
     async def _score_future_points(
         self,
@@ -610,6 +707,543 @@ class RetrievalService:
         res = await self._score_future_points(points, query_text)
         return res[0], res[1], res[2]
 
+    async def _fetch_temporal_points(
+        self,
+        temporal_filter: models.Filter,
+        query_text: str,
+        limit: int = 64,
+    ) -> List[Any]:
+        """
+        Tải các chunk video_transcript trong phạm vi thời gian mục tiêu từ Qdrant.
+        Ưu tiên `client.scroll` (không cần vector embedding), tự động fallback sang
+        `client.query_points` nếu client/mock không hỗ trợ scroll bất đồng bộ.
+        """
+        scroll_fn = getattr(self.client, "scroll", None)
+        if callable(scroll_fn):
+            try:
+                maybe_coro = scroll_fn(
+                    collection_name=settings.QDRANT_COLLECTION_NAME,
+                    scroll_filter=temporal_filter,
+                    limit=limit,
+                    with_payload=True,
+                    with_vectors=False,
+                )
+                if inspect.isawaitable(maybe_coro):
+                    scroll_res = await maybe_coro
+                    if isinstance(scroll_res, (tuple, list)) and len(scroll_res) >= 1:
+                        pts = scroll_res[0]
+                        if isinstance(pts, list):
+                            return pts
+                    elif isinstance(scroll_res, list):
+                        return scroll_res
+                    elif hasattr(scroll_res, "points") and isinstance(scroll_res.points, list):
+                        return scroll_res.points
+            except Exception as scroll_err:
+                logger.debug(f"[RetrievalService:Temporal] Scroll fallback sang query_points ({scroll_err}).")
+
+        try:
+            query_dense = self.embedding_service.embed_query_dense(query_text)
+            sparse_indices, sparse_values = self.embedding_service.embed_query_sparse(query_text)
+            resp = await self.client.query_points(
+                collection_name=settings.QDRANT_COLLECTION_NAME,
+                prefetch=[
+                    models.Prefetch(
+                        query=query_dense,
+                        using="dense",
+                        filter=temporal_filter,
+                        limit=limit,
+                    ),
+                    models.Prefetch(
+                        query=models.SparseVector(
+                            indices=sparse_indices,
+                            values=sparse_values,
+                        ),
+                        using="sparse",
+                        filter=temporal_filter,
+                        limit=limit,
+                    ),
+                ],
+                query=models.FusionQuery(fusion=models.Fusion.RRF),
+                limit=limit,
+            )
+            return resp.points if resp and hasattr(resp, "points") and isinstance(resp.points, list) else []
+        except Exception as qp_err:
+            logger.warning(f"[RetrievalService:Temporal] Lỗi truy xuất temporal qua query_points ({qp_err}).")
+            return []
+
+    @staticmethod
+    def _filter_temporal_hits(
+        raw_hits: List[Any],
+        course_id: str,
+        current_lesson_seq: int,
+        win_min: Optional[int] = None,
+        win_max: Optional[int] = None,
+    ) -> List[Any]:
+        """Lọc an toàn các điểm video_transcript đúng khóa/bài hiện tại và cửa sổ thời gian."""
+        filtered: List[Any] = []
+        for hit in raw_hits or []:
+            p = getattr(hit, "payload", None) or {}
+            if not isinstance(p, dict):
+                continue
+            p_course = p.get("course_id")
+            if p_course is not None and p_course != course_id:
+                continue
+            p_seq = p.get("lesson_seq")
+            if p_seq is None or int(p_seq) != int(current_lesson_seq):
+                continue
+            if p.get("content_type", "video_transcript") != "video_transcript":
+                continue
+            if not sanitize_text(p.get("raw_text", "")):
+                continue
+            start_sec = int(p.get("start_sec", 0) or 0)
+            end_sec = int(p.get("end_sec", start_sec) or start_sec)
+            if end_sec < start_sec:
+                end_sec = start_sec
+            if win_min is not None and win_max is not None:
+                in_start_range = (win_min <= start_sec <= win_max)
+                overlaps_window = (start_sec <= win_max and end_sec >= win_min)
+                if not (in_start_range or overlaps_window):
+                    continue
+            filtered.append(hit)
+        return filtered
+
+    @staticmethod
+    def _build_temporal_filter(
+        course_id: str,
+        current_lesson_seq: int,
+        win_min: Optional[int] = None,
+        win_max: Optional[int] = None,
+        content_type: str = "video_transcript",
+    ) -> models.Filter:
+        """Tạo Qdrant Filter khóa chặt (course_id, lesson_seq, content_type) và tùy chọn start_sec."""
+        must_conds = [
+            models.FieldCondition(key="course_id", match=models.MatchValue(value=course_id)),
+            models.FieldCondition(key="lesson_seq", match=models.MatchValue(value=int(current_lesson_seq))),
+            models.FieldCondition(key="content_type", match=models.MatchValue(value=content_type)),
+        ]
+        if win_min is not None and win_max is not None:
+            must_conds.append(
+                models.FieldCondition(
+                    key="start_sec",
+                    range=models.Range(gte=int(max(0, win_min)), lte=int(max(0, win_max))),
+                )
+            )
+        return models.Filter(must=must_conds)
+
+    async def _select_temporal_code_ast(
+        self,
+        query_text: str,
+        course_id: str,
+        current_lesson_seq: int,
+        target_sec: int,
+        window_sec: int = 120,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Truy xuất đồng bộ tối đa 1 đoạn Code AST của bài học hiện tại có mốc video
+        (`approx_video_sec`, fallback `start_sec`) nằm trong phạm vi ±120s quanh `target_sec`.
+        Xử lý an toàn khi thiếu `code_ast` hoặc khi mock/stub không hỗ trợ filter chi tiết.
+        """
+        code_filter = self._build_temporal_filter(
+            course_id=course_id,
+            current_lesson_seq=current_lesson_seq,
+            content_type="code_ast",
+        )
+        try:
+            raw_code_hits = await self._fetch_temporal_points(
+                code_filter,
+                query_text=query_text,
+                limit=64,
+            )
+        except Exception as err:
+            logger.debug(f"[RetrievalService:TemporalCodeAST] Bỏ qua lỗi fetch code_ast ({err}).")
+            return None
+
+        if not isinstance(raw_code_hits, list) or not raw_code_hits:
+            return None
+
+        candidates: List[Tuple[float, Any, int, Dict[str, Any]]] = []
+        for hit in raw_code_hits:
+            p = getattr(hit, "payload", None) or {}
+            if not isinstance(p, dict):
+                continue
+            p_course = p.get("course_id")
+            if p_course is not None and p_course != course_id:
+                continue
+            p_seq = p.get("lesson_seq")
+            try:
+                if p_seq is None or int(p_seq) != int(current_lesson_seq):
+                    continue
+            except (TypeError, ValueError):
+                continue
+            if p.get("content_type") != "code_ast":
+                continue
+
+            ctx_code = p.get("context_code") or p.get("raw_text", "")
+            if not sanitize_text(ctx_code):
+                continue
+
+            raw_sec = p.get("approx_video_sec")
+            if raw_sec is None:
+                raw_sec = p.get("start_sec")
+            if raw_sec is None and self._code_video_bindings:
+                lookup_key = f"{p.get('lesson_id', '')}:{p.get('code_scope', '')}"
+                raw_sec = self._code_video_bindings.get(lookup_key)
+            if raw_sec is None:
+                continue
+
+            try:
+                parsed_vid_sec = int(raw_sec)
+            except (TypeError, ValueError):
+                continue
+            if parsed_vid_sec < 0:
+                continue
+
+            dist_sec = abs(float(parsed_vid_sec) - float(target_sec))
+            if dist_sec <= float(window_sec):
+                candidates.append((dist_sec, hit, parsed_vid_sec, p))
+
+        if not candidates:
+            return None
+
+        candidates.sort(
+            key=lambda entry: (
+                entry[0],
+                1 if (entry[3].get("code_scope") or "") == "header_preamble" else 0,
+            )
+        )
+        pool = candidates[:8]
+        rerank_probs: List[float] = [0.5] * len(pool)
+        if len(pool) > 1:
+            rerank_fn = getattr(self.embedding_service, "rerank_documents_async", None)
+            if callable(rerank_fn):
+                try:
+                    docs = []
+                    for _, _, _, hp in pool:
+                        c_lang = hp.get("code_language") or hp.get("language", "cpp")
+                        c_scope = hp.get("code_scope", "")
+                        c_body = hp.get("context_code") or hp.get("raw_text", "")
+                        docs.append(truncate_rerank_text(f"[Mã nguồn {c_lang.upper()} - {c_scope}]\n{c_body}"))
+                    maybe_logits = rerank_fn(query=query_text, documents=docs)
+                    if inspect.isawaitable(maybe_logits):
+                        raw_logits = await maybe_logits
+                        if isinstance(raw_logits, list) and len(raw_logits) == len(pool):
+                            rerank_probs = [
+                                compute_length_compensated_sigmoid(float(z), query_text)
+                                for z in raw_logits
+                            ]
+                except Exception as rr_err:
+                    logger.debug(f"[RetrievalService:TemporalCodeAST] Bỏ qua tiebreak rerank ({rr_err}).")
+
+        best_score = -1.0
+        best_entry: Optional[Tuple[float, Any, int, Dict[str, Any]]] = None
+        for idx, entry in enumerate(pool):
+            dist_sec, _, _, hp = entry
+            base_prox = 0.50 + 0.45 / (1.0 + (dist_sec / 60.0))
+            tiebreak_bonus = 0.02 * rerank_probs[idx]
+            scope_penalty = 0.02 if (hp.get("code_scope") or "") == "header_preamble" else 0.0
+            prob = min(0.95, max(0.35, base_prox + tiebreak_bonus - scope_penalty))
+            if prob > best_score:
+                best_score = prob
+                best_entry = entry
+
+        if best_entry is None:
+            return None
+
+        dist_sec, hit, parsed_vid_sec, p = best_entry
+        ctx_code = p.get("context_code") or p.get("raw_text", "")
+        code_lang = p.get("code_language") or p.get("language", "cpp")
+        code_scope = p.get("code_scope", "")
+        lbl = p.get("start_label") or f"{parsed_vid_sec // 60:02d}:{parsed_vid_sec % 60:02d}"
+        raw_rrf = float(getattr(hit, "score", best_score) or best_score)
+
+        return {
+            "id": str(getattr(hit, "id", f"temporal-code-{parsed_vid_sec}")),
+            "rrf_score": round(raw_rrf, 4),
+            "content_type": "code_ast",
+            "lesson_id": p.get("lesson_id", ""),
+            "lesson_seq": int(p.get("lesson_seq") or current_lesson_seq),
+            "course_id": p.get("course_id", course_id),
+            "raw_text": sanitize_text(p.get("raw_text") or ctx_code),
+            "file_path": p.get("file_path", ""),
+            "language": code_lang,
+            "code_scope": code_scope,
+            "start_line": p.get("start_line", 0),
+            "end_line": p.get("end_line", 0),
+            "context_code": ctx_code,
+            "approx_video_sec": parsed_vid_sec,
+            "start_sec": parsed_vid_sec,
+            "start_label": lbl,
+            "timestamp_tag": f'<timestamp sec="{parsed_vid_sec}">{lbl}</timestamp>',
+            "raw_semantic_score": round(best_score, 4),
+            "confidence_score": round(best_score, 4),
+            "confidence_pct": round(best_score * 100, 2),
+            "temporal_distance_sec": round(dist_sec, 2),
+            "is_approximate": False,
+        }
+
+    async def _temporal_proximity_search(
+        self,
+        query_text: str,
+        course_id: str,
+        current_lesson_seq: int,
+        time_ref: Dict[str, Any],
+        current_video_sec: Optional[int],
+        c_svc: Any,
+        final_top_k: int = settings.DEFAULT_FINAL_TOP_K,
+    ) -> RetrievalResult:
+        """
+        Truy xuất định vị theo trục thời gian video trong phạm vi bài học hiện tại.
+        Khóa chặt (course_id == current_course_id AND lesson_seq == current_lesson_seq),
+        không bao giờ kích hoạt NavBypass hay thăm dò bài tương lai.
+        """
+        kind = time_ref.get("kind")
+        widened = False
+        candidate_hits: List[Any] = []
+        target_sec: Optional[int] = None
+
+        if kind in ("relative_end", "relative_middle"):
+            full_filter = self._build_temporal_filter(course_id, current_lesson_seq)
+            all_raw = await self._fetch_temporal_points(full_filter, query_text=query_text, limit=200)
+            all_lesson_hits = self._filter_temporal_hits(all_raw, course_id, current_lesson_seq)
+            if not all_lesson_hits:
+                return RetrievalResult(chunks=[], status="coverage_gap")
+
+            max_lesson_sec = max(
+                int((getattr(h, "payload", None) or {}).get("end_sec") or (getattr(h, "payload", None) or {}).get("start_sec") or 0)
+                for h in all_lesson_hits
+            )
+            try:
+                if c_svc and hasattr(c_svc, "get_lesson_chapters"):
+                    chapters = c_svc.get_lesson_chapters(current_lesson_seq, course_id=course_id)
+                    chap_secs = [int(ch["sec"]) for ch in chapters if isinstance(ch, dict) and ch.get("sec") is not None]
+                    if chap_secs:
+                        max_lesson_sec = max(max_lesson_sec, max(chap_secs))
+            except Exception:
+                pass
+
+            if kind == "relative_middle":
+                target_sec = max(0, max_lesson_sec // 2)
+                primary_win_min = max(0, target_sec - 120)
+                primary_win_max = target_sec + 120
+            else:
+                target_sec = max(0, max_lesson_sec)
+                primary_win_min = max(0, target_sec - 180)
+                primary_win_max = target_sec + 60
+
+            candidate_hits = self._filter_temporal_hits(
+                all_lesson_hits,
+                course_id,
+                current_lesson_seq,
+                win_min=primary_win_min,
+                win_max=primary_win_max,
+            )
+            if not candidate_hits:
+                widened = True
+                candidate_hits = self._filter_temporal_hits(
+                    all_lesson_hits,
+                    course_id,
+                    current_lesson_seq,
+                    win_min=max(0, target_sec - 240),
+                    win_max=target_sec + 240,
+                )
+            if not candidate_hits:
+                widened = True
+                candidate_hits = all_lesson_hits
+        else:
+            if kind == "explicit_sec":
+                target_sec = int(time_ref["target_sec"])
+                windows = [
+                    (max(0, target_sec - 90), target_sec + 90, False),
+                    (max(0, target_sec - 240), target_sec + 240, True),
+                    (None, None, True),
+                ]
+            elif kind == "relative_start":
+                target_sec = 0
+                windows = [
+                    (0, 180, False),
+                    (0, 240, True),
+                    (None, None, True),
+                ]
+            else:
+                # deictic_current với current_video_sec đã được cung cấp
+                target_sec = max(0, int(current_video_sec or 0))
+                windows = [
+                    (max(0, target_sec - 90), target_sec + 90, False),
+                    (max(0, target_sec - 240), target_sec + 240, True),
+                    (None, None, True),
+                ]
+
+            for win_min, win_max, is_wide in windows:
+                t_filter = self._build_temporal_filter(
+                    course_id=course_id,
+                    current_lesson_seq=current_lesson_seq,
+                    win_min=win_min,
+                    win_max=win_max,
+                )
+                raw_hits = await self._fetch_temporal_points(
+                    t_filter,
+                    query_text=query_text,
+                    limit=64 if win_min is not None else 200,
+                )
+                filtered = self._filter_temporal_hits(
+                    raw_hits,
+                    course_id=course_id,
+                    current_lesson_seq=current_lesson_seq,
+                    win_min=win_min,
+                    win_max=win_max,
+                )
+                if filtered:
+                    candidate_hits = filtered
+                    widened = is_wide
+                    break
+
+        if not candidate_hits or target_sec is None:
+            return RetrievalResult(chunks=[], status="coverage_gap")
+
+        def _hit_metrics(hit: Any) -> Tuple[int, float, int, int]:
+            p = getattr(hit, "payload", None) or {}
+            s_sec = int(p.get("start_sec", 0) or 0)
+            e_sec = int(p.get("end_sec", s_sec) or s_sec)
+            if e_sec < s_sec:
+                e_sec = s_sec
+            mid_sec = (s_sec + e_sec) / 2.0
+            dist = abs(mid_sec - float(target_sec))
+            contains = 0 if (s_sec <= target_sec <= e_sec) else 1
+            return (contains, dist, s_sec, e_sec)
+
+        pre_sorted_hits = sorted(candidate_hits, key=_hit_metrics)
+        pool_hits = pre_sorted_hits[:max(8, final_top_k * 3)]
+
+        # Tiebreak ngữ nghĩa nhẹ khi có nhiều chunk chồng lấn quanh cùng mốc thời gian
+        rerank_probs: List[float] = [0.5] * len(pool_hits)
+        if len(pool_hits) > 1:
+            rerank_fn = getattr(self.embedding_service, "rerank_documents_async", None)
+            if callable(rerank_fn):
+                try:
+                    docs = []
+                    for h in pool_hits:
+                        hp = getattr(h, "payload", None) or {}
+                        s_sec = int(hp.get("start_sec", 0) or 0)
+                        s_lbl = hp.get("start_label") or f"{s_sec // 60:02d}:{s_sec % 60:02d}"
+                        v_title = hp.get("video_title", "video_lecture.mp4")
+                        docs.append(truncate_rerank_text(f"[Bài giảng Video {v_title} mốc {s_lbl}]\n{sanitize_text(hp.get('raw_text', ''))}"))
+                    maybe_logits = rerank_fn(query=query_text, documents=docs)
+                    if inspect.isawaitable(maybe_logits):
+                        raw_logits = await maybe_logits
+                        if isinstance(raw_logits, list) and len(raw_logits) == len(pool_hits):
+                            rerank_probs = [
+                                compute_length_compensated_sigmoid(float(z), query_text)
+                                for z in raw_logits
+                            ]
+                except Exception as rr_err:
+                    logger.debug(f"[RetrievalService:Temporal] Bỏ qua tiebreak rerank ({rr_err}).")
+
+        scored_pairs: List[Tuple[float, Any]] = []
+        for idx, hit in enumerate(pool_hits):
+            contains_flag, dist_sec, _, _ = _hit_metrics(hit)
+            base_prox = 0.50 + 0.45 / (1.0 + (dist_sec / 60.0))
+            span_bonus = 0.03 if contains_flag == 0 else 0.0
+            tiebreak_bonus = 0.02 * rerank_probs[idx]
+            prob = min(0.99, max(0.35, base_prox + span_bonus + tiebreak_bonus))
+            scored_pairs.append((prob, hit))
+
+        scored_pairs.sort(key=lambda pair: pair[0], reverse=True)
+        score_by_obj = {id(hit): prob for prob, hit in scored_pairs}
+        deduped_hits = deduplicate_temporal_candidates(
+            [hit for _, hit in scored_pairs],
+            min_overlap_ratio=0.65,
+            proximity_sec=15,
+        )[:final_top_k]
+
+        temporal_items: List[Dict[str, Any]] = []
+        for hit in deduped_hits:
+            p = getattr(hit, "payload", None) or {}
+            start_sec = int(p.get("start_sec", 0) or 0)
+            end_sec = int(p.get("end_sec", start_sec) or start_sec)
+            if end_sec < start_sec:
+                end_sec = start_sec
+            start_lbl = p.get("start_label") or f"{start_sec // 60:02d}:{start_sec % 60:02d}"
+            end_lbl = p.get("end_label") or f"{end_sec // 60:02d}:{end_sec % 60:02d}"
+            vid_title = p.get("video_title", "video_lecture.mp4")
+            prob = score_by_obj.get(id(hit), 0.75)
+            raw_rrf = float(getattr(hit, "score", prob) or prob)
+            mid_sec = (start_sec + end_sec) / 2.0
+            dist_sec = abs(mid_sec - float(target_sec))
+
+            temporal_items.append({
+                "id": str(getattr(hit, "id", f"temporal-{start_sec}")),
+                "rrf_score": round(raw_rrf, 4),
+                "content_type": "video_transcript",
+                "lesson_id": p.get("lesson_id", ""),
+                "lesson_seq": int(p.get("lesson_seq") or current_lesson_seq),
+                "course_id": p.get("course_id", course_id),
+                "raw_text": sanitize_text(p.get("raw_text", "")),
+                "video_title": vid_title,
+                "start_sec": start_sec,
+                "end_sec": end_sec,
+                "start_label": start_lbl,
+                "end_label": end_lbl,
+                "timestamp_tag": f'<timestamp sec="{start_sec}">{start_lbl}</timestamp>',
+                "raw_semantic_score": round(prob, 4),
+                "confidence_score": round(prob, 4),
+                "confidence_pct": round(prob * 100, 2),
+                "temporal_distance_sec": round(dist_sec, 2),
+                "is_approximate": bool(widened),
+            })
+
+        supporting_code_item = await self._select_temporal_code_ast(
+            query_text=query_text,
+            course_id=course_id,
+            current_lesson_seq=current_lesson_seq,
+            target_sec=target_sec,
+            window_sec=120,
+        )
+        if supporting_code_item is not None:
+            temporal_items.append(supporting_code_item)
+
+        final_assembled = reorder_lost_in_the_middle(temporal_items)
+        logger.info(
+            f"[RetrievalService:Temporal] Khóa GROUNDED tại Bài {current_lesson_seq} ({course_id}) "
+            f"| kind={kind} | target_sec={target_sec}s | widened={widened} | chunks={len(final_assembled)}"
+        )
+        return RetrievalResult(
+            chunks=final_assembled,
+            status="grounded",
+            is_approximate=bool(widened),
+            is_low_confidence=False,
+        )
+
+    async def hybrid_search(
+        self,
+        query_text: str,
+        course_id: str = "cpp-core",
+        current_lesson_seq: int = 2,
+        top_candidates: int = settings.DEFAULT_TOP_CANDIDATES,
+        final_top_k: int = settings.DEFAULT_FINAL_TOP_K,
+        min_score_threshold: Optional[float] = None,
+        code_score_threshold: Optional[float] = None,
+        video_score_threshold: Optional[float] = None,
+        is_curriculum_navigation: bool = False,
+        is_continuation_turn: bool = False,
+        current_video_sec: Optional[int] = None,
+    ) -> RetrievalResult:
+        """
+        Alias tương thích cho `search(...)` hỗ trợ đầy đủ `current_video_sec`.
+        """
+        return await self.search(
+            query_text=query_text,
+            course_id=course_id,
+            current_lesson_seq=current_lesson_seq,
+            top_candidates=top_candidates,
+            final_top_k=final_top_k,
+            min_score_threshold=min_score_threshold,
+            code_score_threshold=code_score_threshold,
+            video_score_threshold=video_score_threshold,
+            is_curriculum_navigation=is_curriculum_navigation,
+            is_continuation_turn=is_continuation_turn,
+            current_video_sec=current_video_sec,
+        )
+
     async def search(
         self,
         query_text: str,
@@ -622,6 +1256,7 @@ class RetrievalService:
         video_score_threshold: Optional[float] = None,
         is_curriculum_navigation: bool = False,
         is_continuation_turn: bool = False,
+        current_video_sec: Optional[int] = None,
     ) -> RetrievalResult:
         """
         Thực hiện tìm kiếm ngữ cảnh bài học bất đồng bộ (non-blocking).
@@ -634,7 +1269,7 @@ class RetrievalService:
             f"[RetrievalService] Query: '{query_text}' | Course: {course_id} | Window: lesson_seq <= {current_lesson_seq}"
         )
 
-        if not is_curriculum_navigation and not is_continuation_turn:
+        if not is_curriculum_navigation:
             try:
                 from app.agent.router import get_intent_router
                 is_nav, _ = get_intent_router().is_curriculum_navigation(query_text)
@@ -643,6 +1278,89 @@ class RetrievalService:
             except Exception:
                 pass
 
+        # Tra cứu sớm ánh xạ bài học từ CurriculumService (dùng cho Lesson Focus, Navigation Bypass & Intro Guard)
+        from app.services.curriculum import get_curriculum_service
+        c_svc = get_curriculum_service()
+        curriculum_matched_lesson: Optional[Dict[str, Any]] = None
+        curriculum_matched_seq: Optional[int] = None
+        curriculum_matched_course: Optional[str] = None
+        try:
+            c_match = c_svc.find_lesson_for_query(
+                query_text,
+                current_lesson_seq=current_lesson_seq,
+                preferred_course_id=course_id,
+            )
+            if c_match:
+                matched_lesson = c_match[0] if isinstance(c_match, (tuple, list)) else c_match
+                if isinstance(matched_lesson, dict):
+                    curriculum_matched_lesson = matched_lesson
+                    c_seq = matched_lesson.get("seq") or matched_lesson.get("lesson_seq")
+                    if c_seq is not None:
+                        curriculum_matched_seq = int(c_seq)
+                    curriculum_matched_course = matched_lesson.get("course_id", course_id)
+        except Exception as c_err:
+            logger.debug(f"[RetrievalService] Lỗi tra cứu sớm curriculum_matched_seq: {c_err}")
+
+        explicit_seq = c_svc._extract_lesson_seq(query_text)
+        time_ref: Optional[Dict[str, Any]] = None
+        try:
+            if hasattr(c_svc, "extract_video_time_reference"):
+                time_ref = c_svc.extract_video_time_reference(query_text)
+        except Exception as tref_err:
+            logger.debug(f"[RetrievalService] Lỗi trích xuất tham chiếu thời gian video: {tref_err}")
+
+        is_temporal_current_lesson = bool(time_ref is not None and explicit_seq is None)
+        if is_temporal_current_lesson:
+            # Scoped NavBypass Guard: khóa chặt về bài học hiện tại, cấm NavBypass hoặc thăm dò bài tương lai
+            is_curriculum_navigation = False
+            t_kind = time_ref.get("kind")
+            t_sec = time_ref.get("target_sec")
+            safe_video_sec = (
+                int(current_video_sec)
+                if current_video_sec is not None and int(current_video_sec) >= 0
+                else None
+            )
+            has_resolvable_temporal_target = (
+                t_kind in ("relative_end", "relative_middle")
+                or (t_kind == "explicit_sec" and t_sec is not None)
+                or t_kind == "relative_start"
+                or (t_kind == "deictic_current" and safe_video_sec is not None)
+            )
+            if has_resolvable_temporal_target:
+                return await self._temporal_proximity_search(
+                    query_text=query_text,
+                    course_id=course_id,
+                    current_lesson_seq=current_lesson_seq,
+                    time_ref=time_ref,
+                    current_video_sec=safe_video_sec,
+                    c_svc=c_svc,
+                    final_top_k=final_top_k,
+                )
+
+        has_curr_ref = c_svc.has_current_lesson_reference(query_text)
+        is_overview = c_svc.is_overview_query(query_text)
+        is_future_curriculum_target = (
+            False
+            if is_temporal_current_lesson
+            else (
+                (curriculum_matched_course is not None and curriculum_matched_course != course_id)
+                or (curriculum_matched_seq is not None and curriculum_matched_seq > current_lesson_seq)
+            )
+        )
+        focused_lesson_seq: Optional[int] = None
+        if is_temporal_current_lesson:
+            focused_lesson_seq = int(current_lesson_seq)
+        elif explicit_seq is not None and explicit_seq <= current_lesson_seq:
+            focused_lesson_seq = int(explicit_seq)
+        elif (has_curr_ref or is_overview) and not is_future_curriculum_target:
+            focused_lesson_seq = int(current_lesson_seq)
+        elif (
+            is_curriculum_navigation
+            and curriculum_matched_seq is not None
+            and curriculum_matched_course == course_id
+            and curriculum_matched_seq <= current_lesson_seq
+        ):
+            focused_lesson_seq = int(curriculum_matched_seq)
 
         # 1. Sinh Dual Vectors bất đồng bộ / fast ONNX (Áp dụng Compiler Error Semantic Bridge nếu có)
         dense_query_text, has_bridge = self.bridge_compiler_error_semantics(query_text)
@@ -653,16 +1371,24 @@ class RetrievalService:
         sparse_indices, sparse_values = self.embedding_service.embed_query_sparse(query_text)
 
         # 2. Xây dựng In-HNSW Pre-filter động (Ngăn ngừa triệt để hiện tượng lộ bài học tương lai)
+        current_lesson_condition = (
+            models.FieldCondition(
+                key="lesson_seq",
+                match=models.MatchValue(value=focused_lesson_seq)
+            )
+            if focused_lesson_seq is not None
+            else models.FieldCondition(
+                key="lesson_seq",
+                range=models.Range(lte=current_lesson_seq)
+            )
+        )
         current_code_filter = models.Filter(
             must=[
                 models.FieldCondition(
                     key="course_id",
                     match=models.MatchValue(value=course_id)
                 ),
-                models.FieldCondition(
-                    key="lesson_seq",
-                    range=models.Range(lte=current_lesson_seq)
-                ),
+                current_lesson_condition,
                 models.FieldCondition(
                     key="content_type",
                     match=models.MatchValue(value="code_ast")
@@ -675,10 +1401,7 @@ class RetrievalService:
                     key="course_id",
                     match=models.MatchValue(value=course_id)
                 ),
-                models.FieldCondition(
-                    key="lesson_seq",
-                    range=models.Range(lte=current_lesson_seq)
-                ),
+                current_lesson_condition,
                 models.FieldCondition(
                     key="content_type",
                     match=models.MatchValue(value="video_transcript")
@@ -728,26 +1451,61 @@ class RetrievalService:
             limit=top_candidates + 4
         )
 
-        future_fetch_coro = self._fetch_future_points(
-            query_dense=query_dense,
-            sparse_indices=sparse_indices,
-            sparse_values=sparse_values,
-            course_id=course_id,
-            current_lesson_seq=current_lesson_seq,
-            allow_cross_course=is_curriculum_navigation
-        )
+        if is_temporal_current_lesson:
+            try:
+                current_resp = await current_query_coro
+            except Exception:
+                current_resp = None
+            future_points = []
+        else:
+            future_fetch_coro = self._fetch_future_points(
+                query_dense=query_dense,
+                sparse_indices=sparse_indices,
+                sparse_values=sparse_values,
+                course_id=course_id,
+                current_lesson_seq=current_lesson_seq,
+                allow_cross_course=is_curriculum_navigation,
+                target_lesson_seq=(
+                    curriculum_matched_seq
+                    if (is_curriculum_navigation and curriculum_matched_seq is not None and curriculum_matched_seq > current_lesson_seq)
+                    else None
+                ),
+            )
 
-        # Chạy đồng thời 2 luồng mạng I/O qua asyncio.gather, tiết kiệm 1 Network RTT (~250-350ms)
-        gather_results = await asyncio.gather(current_query_coro, future_fetch_coro, return_exceptions=True)
+            # Chạy đồng thời 2 luồng mạng I/O qua asyncio.gather, tiết kiệm 1 Network RTT (~250-350ms)
+            gather_results = await asyncio.gather(current_query_coro, future_fetch_coro, return_exceptions=True)
 
-        current_resp = gather_results[0] if not isinstance(gather_results[0], Exception) else None
-        future_points = gather_results[1] if not isinstance(gather_results[1], Exception) else []
+            current_resp = gather_results[0] if not isinstance(gather_results[0], Exception) else None
+            future_points = gather_results[1] if not isinstance(gather_results[1], Exception) else []
 
         raw_candidates = current_resp.points if current_resp and hasattr(current_resp, "points") else []
         logger.info(
             f"[RetrievalService:Scatter-Gather] Đã tải đồng thời: {len(raw_candidates)} chunks bài hiện tại, "
             f"{len(future_points)} chunks bài tương lai."
         )
+
+        # Bypass CPU Cross-Encoder hoàn toàn khi điều hướng lộ trình sang bài tương lai / khóa khác
+        if (
+            is_curriculum_navigation
+            and curriculum_matched_seq is not None
+            and (curriculum_matched_course != course_id or curriculum_matched_seq > current_lesson_seq)
+        ):
+            best_future_chunk = self._build_lightweight_future_chunk(
+                future_points=future_points,
+                target_seq=curriculum_matched_seq,
+                c_svc=c_svc,
+                matched_lesson=curriculum_matched_lesson,
+            )
+            logger.info(
+                f"[RetrievalService:NavBypass] Bỏ qua CPU Cross-Encoder cho câu điều hướng tới "
+                f"Khóa {curriculum_matched_course} - Bài {curriculum_matched_seq}."
+            )
+            return RetrievalResult(
+                chunks=[],
+                status="out_of_lesson",
+                target_lesson_seq=curriculum_matched_seq,
+                future_best_chunk=best_future_chunk,
+            )
 
         # Nếu hoàn toàn không có candidate nào trong phạm vi bài hiện tại
         if not raw_candidates:
@@ -771,6 +1529,7 @@ class RetrievalService:
             logger.info(
                 f"[RetrievalService:M-06] Khử trùng lặp Pre-rerank: Giảm từ {len(raw_candidates)} xuống {len(deduped_candidates)} candidates."
             )
+        deduped_candidates = deduped_candidates[:top_candidates]
 
         candidate_items: List[Dict[str, Any]] = []
         texts_to_rerank: List[str] = []
@@ -836,15 +1595,37 @@ class RetrievalService:
 
             candidate_items.append(item)
 
-        # Chấm điểm Cross-Encoder vi mô
+        if focused_lesson_seq is not None and any(int(it.get("lesson_seq") or 0) == focused_lesson_seq for it in candidate_items):
+            filtered_pairs = [
+                (it, txt)
+                for it, txt in zip(candidate_items, texts_to_rerank)
+                if int(it.get("lesson_seq") or 0) == focused_lesson_seq
+            ]
+            candidate_items = [pair[0] for pair in filtered_pairs]
+            texts_to_rerank = [pair[1] for pair in filtered_pairs]
+
+        # Chấm điểm Cross-Encoder vi mô (bỏ qua nếu điều hướng lộ trình khớp bài trong cửa sổ hiện tại)
+        rerank_query = dense_query_text if has_bridge else query_text
+        skip_nav_rerank = (
+            is_curriculum_navigation
+            and curriculum_matched_seq is not None
+            and curriculum_matched_course == course_id
+            and curriculum_matched_seq <= current_lesson_seq
+        )
         is_fallback_rrf = False
-        try:
-            rerank_query = dense_query_text if has_bridge else query_text
-            raw_logits = await self.embedding_service.rerank_documents_async(query=rerank_query, documents=texts_to_rerank)
-        except Exception as rerank_err:
-            logger.error(f"[RetrievalService] Lỗi Cross-Encoder ({rerank_err}), fallback sang RRF score.")
+        if skip_nav_rerank:
             raw_logits = [item["rrf_score"] for item in candidate_items]
             is_fallback_rrf = True
+            logger.info(
+                f"[RetrievalService:NavBypass] Dùng RRF score thay Cross-Encoder cho câu điều hướng trong tiến độ (Bài {curriculum_matched_seq})."
+            )
+        else:
+            try:
+                raw_logits = await self.embedding_service.rerank_documents_async(query=rerank_query, documents=texts_to_rerank)
+            except Exception as rerank_err:
+                logger.error(f"[RetrievalService] Lỗi Cross-Encoder ({rerank_err}), fallback sang RRF score.")
+                raw_logits = [item["rrf_score"] for item in candidate_items]
+                is_fallback_rrf = True
 
         # Xác định ngưỡng phân tầng đa phương thức
         effective_code_threshold = code_score_threshold if code_score_threshold is not None else (
@@ -883,6 +1664,19 @@ class RetrievalService:
             semantic_gate = min(1.0, (raw_prob / gate_pivot) ** 2)
             w_eff = w_max * semantic_gate
             prob = min(1.0, max(0.0, (1.0 - w_eff) * raw_prob + w_eff * rrf_norm))
+
+            if (
+                focused_lesson_seq is not None
+                and int(item.get("lesson_seq") or 0) == focused_lesson_seq
+                and (has_curr_ref or is_overview or skip_nav_rerank)
+            ):
+                target_floor = (
+                    max(effective_code_threshold, settings.MODALITY_GATE_AST_THRESHOLD)
+                    if c_type == "code_ast"
+                    else max(effective_video_threshold, settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE)
+                )
+                prob = max(prob, min(1.0, target_floor + 0.10 * rrf_norm))
+                raw_prob = max(raw_prob, 0.22)
 
             item["raw_semantic_score"] = round(raw_prob, 4)
             item["confidence_score"] = round(prob, 4)
@@ -949,6 +1743,16 @@ class RetrievalService:
         if only_boilerplate_code and not valid_video_items:
             valid_ast_items = []
 
+        intro_seqs = set(getattr(c_svc, "_introductory_lesson_seqs", [1, 2]))
+        has_intro_overview_only = (
+            bool(valid_video_items)
+            and all(
+                c_svc.is_introductory_overview_chunk(it)
+                or (it.get("lesson_seq") in intro_seqs and is_future_curriculum_target)
+                for it in valid_video_items
+            )
+        )
+
         # -------------------------------------------------------------------------
         # TẦNG 1: GROUNDED ANCHOR & MODALITY-AWARE EARLY EXIT (An toàn tuyệt đối)
         # -------------------------------------------------------------------------
@@ -959,7 +1763,7 @@ class RetrievalService:
                 or (max_specific_code_score >= 0.40 and max_video_score >= settings.VIDEO_SCORE_THRESHOLD)
             )
         )
-        if not is_curriculum_navigation and has_strong_ast_grounding:
+        if not is_curriculum_navigation and not (has_intro_overview_only and is_future_curriculum_target) and has_strong_ast_grounding:
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,
                 code_items=valid_ast_items,
@@ -987,7 +1791,7 @@ class RetrievalService:
                 )
             )
         )
-        if not is_curriculum_navigation and has_high_confidence_video_grounding:
+        if not is_curriculum_navigation and not has_intro_overview_only and not (is_future_curriculum_target and not specific_ast_items) and has_high_confidence_video_grounding:
             eligible_code_items = [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
@@ -1013,21 +1817,23 @@ class RetrievalService:
         # -------------------------------------------------------------------------
         # TẦNG 2: FUTURE LESSON PROBING & BẤT ĐẲNG THỨC PARETO 3 PHÂN TẦNG
         # -------------------------------------------------------------------------
-        target_seq, future_score, future_chunk_type, best_future_chunk = await self._score_future_points(
-            future_points=future_points,
-            query_text=dense_query_text if has_bridge else query_text
-        )
+        if skip_nav_rerank:
+            target_seq, future_score, future_chunk_type, best_future_chunk = None, 0.0, "video_transcript", None
+        else:
+            target_seq, future_score, future_chunk_type, best_future_chunk = await self._score_future_points(
+                future_points=future_points,
+                query_text=dense_query_text if has_bridge else query_text
+            )
 
-        if is_curriculum_navigation:
-            # Loại trừ các chunk video giới thiệu tổng quan Bài 1/2 khỏi việc tính max_current_score
-            from app.services.curriculum import get_curriculum_service
-            c_svc = get_curriculum_service()
+        if is_curriculum_navigation or has_intro_overview_only or (current_lesson_seq in intro_seqs and is_future_curriculum_target and not specific_ast_items):
+            # Loại trừ các chunk video giới thiệu tổng quan đầu khóa khỏi việc tính max_current_score
             current_lesson_items = [
                 it for it in candidate_items
                 if not c_svc.is_introductory_overview_chunk(it)
+                and not (it.get("lesson_seq") in intro_seqs and is_future_curriculum_target)
             ]
             if only_boilerplate_code:
-                max_current_score = max_video_score
+                max_current_score = max([it.get("confidence_score", 0.0) for it in current_lesson_items if it.get("content_type") == "video_transcript"], default=0.0)
             else:
                 max_current_score = max([it.get("confidence_score", 0.0) for it in current_lesson_items], default=0.0)
         else:
@@ -1037,6 +1843,31 @@ class RetrievalService:
                 max_current_score = max([it.get("confidence_score", 0.0) for it in candidate_items], default=0.0)
 
         margin = future_score - max_current_score
+
+        is_exercise_stmt = c_svc.is_exercise_statement(query_text)
+
+        target_has_topical_match = False
+        if target_seq is not None:
+            try:
+                target_lesson = c_svc.get_lesson_by_seq(target_seq)
+                if target_lesson:
+                    norm_q = query_text.lower()
+                    t_kws = [k.lower() for k in target_lesson.get("keywords", []) if len(k) > 1]
+                    target_has_topical_match = any(k in norm_q for k in t_kws)
+            except Exception as t_err:
+                logger.debug(f"[RetrievalService:Pareto] Lỗi kiểm tra target_has_topical_match: {t_err}")
+
+        has_future_topic_signal = bool(
+            is_future_curriculum_target
+            or (target_seq is not None and target_seq > current_lesson_seq and target_has_topical_match)
+        )
+        active_continuation_shield = (
+            not has_future_topic_signal
+            and (
+                (is_exercise_stmt and max_any_video_score >= settings.VIDEO_FALLBACK_MIN_THRESHOLD)
+                or (is_continuation_turn and max_current_score >= settings.PARETO_LOCAL_GROUNDING_THRESHOLD)
+            )
+        )
 
         # Phân nhánh Pareto Dominance (ICLR 2025):
         if is_curriculum_navigation:
@@ -1048,70 +1879,20 @@ class RetrievalService:
                 f"floor={min_future_floor}, margin_req={margin_req}"
             )
             if target_seq is None or future_score < 0.25 or is_curriculum_navigation:
-                try:
-                    from app.services.curriculum import get_curriculum_service
-                    c_svc = get_curriculum_service()
-                    c_match = c_svc.find_lesson_for_query(
-                        query_text,
-                        current_lesson_seq=current_lesson_seq,
-                        preferred_course_id=course_id,
-                    )
-                    if c_match:
-                        matched_lesson = c_match[0] if isinstance(c_match, (tuple, list)) else c_match
-                        if isinstance(matched_lesson, dict):
-                            c_seq = matched_lesson.get("seq") or matched_lesson.get("lesson_seq")
-                            c_course = matched_lesson.get("course_id", course_id)
-                            if c_seq is not None:
-                                if c_course != course_id or int(c_seq) > current_lesson_seq:
-                                    target_seq = int(c_seq)
-                                    future_score = max(future_score, 0.42)
-                                    margin = future_score - max_current_score
-                                    logger.info(f"[RetrievalService:Pareto 3A] Giải cứu target_seq qua CurriculumService: Khóa {c_course} - Bài {target_seq}")
-                                else:
-                                    target_seq = None
-                                    future_score = 0.0
-                                    margin = -max_current_score
-                                    logger.info(f"[RetrievalService:Pareto 3A] Bài học khớp CurriculumService (Seq {c_seq}) đã nằm trong cửa sổ tiến độ (<= {current_lesson_seq}), xóa dominance tương lai.")
-                except Exception as c_err:
-                    logger.warning(f"[RetrievalService:Pareto 3A] Lỗi giải cứu qua CurriculumService ({c_err})")
+                if curriculum_matched_seq is not None:
+                    if curriculum_matched_course != course_id or int(curriculum_matched_seq) > current_lesson_seq:
+                        target_seq = int(curriculum_matched_seq)
+                        future_score = max(future_score, 0.42)
+                        margin = future_score - max_current_score
+                        logger.info(f"[RetrievalService:Pareto 3A] Giải cứu target_seq qua CurriculumService: Khóa {curriculum_matched_course} - Bài {target_seq}")
+                    else:
+                        target_seq = None
+                        future_score = 0.0
+                        margin = -max_current_score
+                        logger.info(f"[RetrievalService:Pareto 3A] Bài học khớp CurriculumService (Seq {curriculum_matched_seq}) đã nằm trong cửa sổ tiến độ (<= {current_lesson_seq}), xóa dominance tương lai.")
         else:
-            # Kiểm tra exercise_statement_signatures & Curriculum Mapping từ CurriculumService (Data/Code Separation)
-            from app.services.curriculum import get_curriculum_service
-            c_svc = get_curriculum_service()
-            is_exercise_stmt = c_svc.is_exercise_statement(query_text)
-            curriculum_matched_seq: Optional[int] = None
-            try:
-                c_match = c_svc.find_lesson_for_query(
-                    query_text,
-                    current_lesson_seq=current_lesson_seq,
-                    preferred_course_id=course_id,
-                )
-                if c_match:
-                    matched_lesson = c_match[0] if isinstance(c_match, (tuple, list)) else c_match
-                    if isinstance(matched_lesson, dict):
-                        c_seq = matched_lesson.get("seq") or matched_lesson.get("lesson_seq")
-                        if c_seq is not None:
-                            curriculum_matched_seq = int(c_seq)
-            except Exception as c_err:
-                logger.warning(f"[RetrievalService:Pareto] Lỗi tra cứu curriculum_matched_seq ({c_err})")
-
-            target_has_topical_match = False
-            if target_seq is not None:
-                try:
-                    target_lesson = c_svc.get_lesson_by_seq(target_seq)
-                    if target_lesson:
-                        norm_q = query_text.lower()
-                        t_kws = [k.lower() for k in target_lesson.get("keywords", []) if len(k) > 1]
-                        target_has_topical_match = any(k in norm_q for k in t_kws)
-                except Exception as t_err:
-                    logger.debug(f"[RetrievalService:Pareto] Lỗi kiểm tra target_has_topical_match: {t_err}")
-
             # Phân nhánh 3B: Continuation & Exercise Shield + 4-Tier Pareto Sufficiency (ICLR 2025)
-            if (
-                (is_continuation_turn or is_exercise_stmt)
-                and max_any_video_score >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
-                and future_chunk_type != "code_ast"
-            ):
+            if active_continuation_shield and future_chunk_type != "code_ast":
                 min_future_floor = 0.52
                 margin_req = 0.28
                 logger.info(
@@ -1120,12 +1901,20 @@ class RetrievalService:
                 )
             elif max_current_score < settings.PARETO_LOCAL_GROUNDING_THRESHOLD:
                 # Phân tầng (a): Bài hiện tại chưa có cơ sở giảng dạy cục bộ (< 0.22)
-                min_future_floor = (
-                    settings.MODALITY_GATE_AST_THRESHOLD
-                    if future_chunk_type == "code_ast"
-                    else settings.PARETO_FALLBACK_VIDEO_MIN
-                )
-                margin_req = settings.PARETO_FALLBACK_MARGIN
+                if has_future_topic_signal:
+                    min_future_floor = (
+                        settings.MODALITY_GATE_AST_THRESHOLD
+                        if future_chunk_type == "code_ast"
+                        else settings.FUTURE_PROBE_MIN_CONFIDENCE
+                    )
+                    margin_req = settings.PARETO_CURRICULUM_ALIGNED_MARGIN
+                else:
+                    min_future_floor = (
+                        settings.MODALITY_GATE_AST_THRESHOLD
+                        if future_chunk_type == "code_ast"
+                        else settings.PARETO_FALLBACK_VIDEO_MIN
+                    )
+                    margin_req = settings.PARETO_FALLBACK_MARGIN
             elif max_current_score < settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE:
                 # Phân tầng (b): Bài hiện tại ở dải văn nói lơ lửng (0.22 <= S < 0.30)
                 min_future_floor = (
@@ -1180,8 +1969,23 @@ class RetrievalService:
             and margin >= margin_req
         )
 
-        if not is_curriculum_navigation and (is_continuation_turn or is_exercise_stmt) and future_chunk_type != "code_ast":
+        if not is_curriculum_navigation and active_continuation_shield and future_chunk_type != "code_ast":
             future_dominates = False
+
+        if (
+            not future_dominates
+            and is_future_curriculum_target
+            and curriculum_matched_seq is not None
+            and curriculum_matched_seq > current_lesson_seq
+            and max_current_score < settings.PARETO_LOCAL_GROUNDING_THRESHOLD
+        ):
+            target_seq = int(curriculum_matched_seq)
+            best_future_chunk = (
+                best_future_chunk
+                if (best_future_chunk and best_future_chunk.get("lesson_seq") == target_seq)
+                else self._build_lightweight_future_chunk(future_points, target_seq, c_svc, curriculum_matched_lesson)
+            )
+            future_dominates = True
 
         # Foundational Prerequisite Priority Rule v2.3 & Revision Non-Dominance Shield (Zero Hardcoded Seq)
         if not is_curriculum_navigation and target_seq is not None:
@@ -1205,7 +2009,7 @@ class RetrievalService:
                 is_future_curriculum_topic = (
                     not is_target_revision
                     and not specific_ast_items
-                    and max_video_score < settings.PARETO_VIDEO_STRONG_GROUNDING
+                    and max_current_score < settings.PARETO_VIDEO_STRONG_GROUNDING
                     and (
                         (curriculum_matched_seq is not None and int(curriculum_matched_seq) > current_lesson_seq)
                         or target_has_topical_match
@@ -1284,7 +2088,7 @@ class RetrievalService:
             low_confidence_items = []
 
             # Điều kiện 1: Hội thoại nối tiếp hoặc bài hiện tại có neo ngữ cảnh mạnh (max_current_score >= 0.25)
-            if is_continuation_turn or max_current_score >= 0.25:
+            if (not has_future_topic_signal) and (is_continuation_turn or max_current_score >= 0.25):
                 low_confidence_items = [
                     it for it in candidate_items
                     if it.get("confidence_score", 0.0) >= settings.VIDEO_FALLBACK_MIN_THRESHOLD
@@ -1293,7 +2097,7 @@ class RetrievalService:
                 ]
 
             # Điều kiện 2: Câu hỏi lý thuyết thuộc bài học nền tảng có video rơi vào dải Ambiguous (>= 0.18)
-            if not low_confidence_items and is_curr_foundational and max_any_video_score >= settings.PARETO_THEORY_GROUNDING_FLOOR and max_raw_prob >= 0.16:
+            if not low_confidence_items and (not has_future_topic_signal) and is_curr_foundational and max_any_video_score >= settings.PARETO_THEORY_GROUNDING_FLOOR and max_raw_prob >= 0.16:
                 low_confidence_items = [
                     it for it in candidate_items
                     if it.get("confidence_score", 0.0) >= settings.PARETO_THEORY_GROUNDING_FLOOR

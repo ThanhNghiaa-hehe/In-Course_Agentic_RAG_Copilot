@@ -1588,12 +1588,23 @@
 
     function seekVideo(seconds, targetLessonSeq) {
       const secNum = Number(seconds);
-      // Cross-Lesson Playlist Alignment: Nếu mốc video thuộc bài học khác, tự chuyển video trong playlist trước
+      // Cross-Lesson & Cross-Course Playlist Alignment:
+      // Nếu mốc video thuộc bài học khác (kể cả thuộc khóa còn lại cpp-core <-> cpp-oop), tự chuyển khóa + bài trước
       if (targetLessonSeq && currentLesson && parseInt(targetLessonSeq) !== currentLesson.seq) {
+        const seqInt = parseInt(targetLessonSeq);
         const currentList = activeCourse === 'cpp-oop' ? CPP_OOP_LESSONS : CPP_CORE_LESSONS;
-        const target = currentList.find(l => l.seq === parseInt(targetLessonSeq));
+        let target = currentList.find(l => l.seq === seqInt);
         if (target) {
           selectLesson(target);
+        } else {
+          const otherCourse = activeCourse === 'cpp-oop' ? 'cpp-core' : 'cpp-oop';
+          const otherList = otherCourse === 'cpp-oop' ? CPP_OOP_LESSONS : CPP_CORE_LESSONS;
+          target = otherList.find(l => l.seq === seqInt);
+          if (target) {
+            switchCourse(otherCourse, target);
+          }
+        }
+        if (target) {
           showToast(`🎬 Đã chuyển sang ${target.title} @ ${Math.floor(secNum/60)}:${String(secNum%60).padStart(2,'0')}`);
           setTimeout(() => {
             if (ytPlayer && ytPlayer.seekTo) {
@@ -1652,7 +1663,7 @@
       }
     }
 
-    function switchCourse(courseId) {
+    function switchCourse(courseId, initialLesson = null) {
       activeCourse = courseId;
       document.getElementById('pill-oop').classList.toggle('active', courseId === 'cpp-oop');
       document.getElementById('pill-core').classList.toggle('active', courseId === 'cpp-core');
@@ -1660,7 +1671,7 @@
       
       const list = courseId === 'cpp-oop' ? CPP_OOP_LESSONS : CPP_CORE_LESSONS;
       renderLessonList(list);
-      selectLesson(list[0]);
+      selectLesson(initialLesson || list[0]);
     }
 
     function renderLessonList(list) {
@@ -1747,6 +1758,20 @@
     // --- SESSION TELEMETRY LOG (MLOps & Debug Observability) ---
     const sessionTelemetryLog = [];
 
+    function getSafeCurrentVideoSec() {
+      try {
+        if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+          const sec = ytPlayer.getCurrentTime();
+          if (typeof sec === 'number' && Number.isFinite(sec) && sec >= 0) {
+            return Math.floor(sec);
+          }
+        }
+      } catch (e) {
+        // Player not initialized yet or iframe unavailable
+      }
+      return null;
+    }
+
     async function sendChatMsg(text) {
       if (!text || isStreaming) return;
       isStreaming = true;
@@ -1764,6 +1789,7 @@
       const currentSid = getOrCreateSessionId();
       const reqCourse = activeCourse;
       const reqLessonSeq = currentLesson.seq;
+      const reqVideoSec = getSafeCurrentVideoSec();
       const startTime = performance.now();
       let firstTokenTime = null;
       let actionLatencyMs = null;
@@ -1778,7 +1804,8 @@
             prompt: text,
             course_id: reqCourse,
             lesson_seq: reqLessonSeq,
-            session_id: currentSid
+            session_id: currentSid,
+            current_video_sec: reqVideoSec
           })
         });
 

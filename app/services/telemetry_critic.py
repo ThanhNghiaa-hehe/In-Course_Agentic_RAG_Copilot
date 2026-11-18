@@ -23,7 +23,9 @@ from tree_sitter import Parser, Language
 import tree_sitter_cpp as tscpp
 
 from app.config import settings
+from app.agent.guardrails import normalize_user_input
 from app.agent.router import get_intent_router
+from app.services.curriculum import get_curriculum_service
 
 CPP_LANGUAGE = Language(tscpp.language())
 _CPP_PARSER = Parser(CPP_LANGUAGE)
@@ -57,6 +59,127 @@ class TimestampTagExtractor(HTMLParser):
             self._active_text = []
 
 
+def _strip_timestamp_tags_plain(text: str) -> str:
+    """Loại bỏ hoàn toàn các phần tử <timestamp ...>...</timestamp> bằng quét chuỗi thuần túy (Zero Regex)."""
+    if not text or "<timestamp" not in text.lower():
+        return text
+    work = text
+    while True:
+        low = work.lower()
+        start_idx = low.find("<timestamp")
+        if start_idx == -1:
+            break
+        close_idx = low.find("</timestamp>", start_idx)
+        if close_idx != -1:
+            work = work[:start_idx] + work[close_idx + len("</timestamp>"):]
+        else:
+            gt_idx = work.find(">", start_idx)
+            if gt_idx != -1:
+                work = work[:start_idx] + work[gt_idx + 1:]
+            else:
+                work = work[:start_idx]
+                break
+    return work
+
+
+def _strip_code_fences(text: str) -> str:
+    """Tách bỏ các khối mã nguồn fenced (``` ... ```) bằng duyệt dòng thuần túy (Zero Regex)."""
+    if not text:
+        return ""
+    out_lines: List[str] = []
+    in_fence = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            if stripped.count("```") == 1:
+                in_fence = not in_fence
+            continue
+        if not in_fence:
+            out_lines.append(line)
+    return "\n".join(out_lines)
+
+
+def _extract_timestamp_tags(response_text: str) -> List[Tuple[str, str]]:
+    """
+    Bóc tách danh sách (sec_str, label) của mọi thẻ <timestamp> ngoài khối code fence.
+    Quét từng cụm <timestamp ...>...</timestamp> vào HTMLParser để toán tử '<' của C++ ở dòng trước
+    không làm nhiễu trạng thái parser (Zero Regex).
+    """
+    non_fenced = _strip_code_fences(response_text)
+    if not non_fenced or "<timestamp" not in non_fenced.lower():
+        return []
+
+    tags: List[Tuple[str, str]] = []
+    cursor = 0
+    low = non_fenced.lower()
+    close_tok = "</timestamp>"
+    while True:
+        start_idx = low.find("<timestamp", cursor)
+        if start_idx == -1:
+            break
+        close_idx = low.find(close_tok, start_idx)
+        if close_idx == -1:
+            break
+        end_pos = close_idx + len(close_tok)
+        snippet = non_fenced[start_idx:end_pos]
+        parser = TimestampTagExtractor()
+        parser.feed(snippet)
+        tags.extend(parser.tags)
+        cursor = end_pos
+    return tags
+
+
+def _extract_prose_before_timestamp_footer(response_text: str) -> str:
+    """
+    Trích xuất văn bản ngôn ngữ tự nhiên của trợ giảng TRƯỚC dòng footer '📍 **Mốc video bài giảng:**',
+    loại bỏ hoàn toàn:
+    1. Khối mã nguồn fenced / indented code_block.
+    2. Biểu thức inline code `...` (chặn toán tử 3 ngôi `a ? b : c` giả mạo câu hỏi Socratic).
+    3. Thẻ HTML <timestamp> và dòng footer '📍 Mốc video bài giảng:'.
+    """
+    if not response_text:
+        return ""
+    without_ts = _strip_timestamp_tags_plain(response_text)
+    non_fenced = _strip_code_fences(without_ts)
+
+    cleaned_lines: List[str] = []
+    for line in non_fenced.splitlines():
+        stripped = line.strip()
+        header_probe = stripped.lstrip("*-•># \t")
+        if header_probe.startswith("📍") or header_probe.lower().startswith("mốc video bài giảng"):
+            continue
+
+        work_line = line
+        if "📍" in work_line:
+            work_line = work_line[:work_line.find("📍")].rstrip()
+        if "mốc video bài giảng" in work_line.lower():
+            m_idx = work_line.lower().find("mốc video bài giảng")
+            cut_idx = m_idx
+            while cut_idx > 0 and work_line[cut_idx - 1] in ("*", " ", "\t", "-"):
+                cut_idx -= 1
+            work_line = work_line[:cut_idx].rstrip()
+
+        if work_line.strip():
+            cleaned_lines.append(work_line)
+
+    if not cleaned_lines:
+        return ""
+
+    pre_footer_md = "\n".join(cleaned_lines)
+    md_tokens = _MD_PARSER.parse(pre_footer_md)
+    prose_segments: List[str] = []
+    for tok in md_tokens:
+        if tok.type in ("fence", "code_block", "html_block"):
+            continue
+        if tok.type == "inline" and tok.children:
+            for child in tok.children:
+                if child.type in ("code_inline", "html_inline"):
+                    continue
+                if child.content:
+                    prose_segments.append(child.content)
+    return " ".join(prose_segments).strip()
+
+
 def _inspect_cpp_code_ast(code: str) -> Tuple[bool, bool]:
     """
     Phân tích cú pháp AST mã nguồn C++ qua Tree-sitter:
@@ -68,16 +191,23 @@ def _inspect_cpp_code_ast(code: str) -> Tuple[bool, bool]:
         has_include = False
         has_main = False
 
+        def _has_main_declarator(decl_node) -> bool:
+            if decl_node.type == "function_declarator":
+                for sub in decl_node.children:
+                    if sub.type == "identifier" and sub.text.decode("utf8") == "main":
+                        return True
+            for sub in decl_node.children:
+                if sub.type != "compound_statement" and _has_main_declarator(sub):
+                    return True
+            return False
+
         def traverse(node):
             nonlocal has_include, has_main
             if node.type == "preproc_include":
                 has_include = True
             elif node.type == "function_definition":
-                for child in node.children:
-                    if child.type == "function_declarator":
-                        for sub in child.children:
-                            if sub.type == "identifier" and sub.text.decode("utf8") == "main":
-                                has_main = True
+                if _has_main_declarator(node):
+                    has_main = True
             for child in node.children:
                 traverse(child)
 
@@ -107,11 +237,13 @@ class TelemetryCriticService:
         self,
         entry: Dict[str, Any],
         prev_entry: Optional[Dict[str, Any]] = None,
-        had_prior_course_query: bool = False
+        had_prior_course_query: bool = False,
+        anchor_query: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Kiểm toán chi tiết 1 turn đối thoại (Zero Self-Flattery, Multi-Turn Intent Fidelity & Zero Magic Numbers)."""
         turn_num = entry.get("turn", 1)
         prompt = entry.get("prompt", "")
+        clean_prompt = normalize_user_input(prompt)
         response_text = entry.get("response_text", "")
         latency = entry.get("latency", {})
         ttft_ms = latency.get("ttft_ms", 0)
@@ -148,7 +280,7 @@ class TelemetryCriticService:
             total_code_lines += num_lines
 
             inc, main_fn = _inspect_cpp_code_ast(block)
-            if inc and num_lines > 5:
+            if inc:
                 has_include_in_code = True
             if main_fn:
                 has_main_in_code = True
@@ -168,13 +300,10 @@ class TelemetryCriticService:
         elif total_code_lines > 0 and not has_main_in_code and not has_include_in_code:
             merits.append("Minh họa cú pháp ngắn gọn, tuân thủ nguyên tắc không giải bài hộ.")
 
-        # Kiểm tra câu hỏi gợi mở Socratic trên phần văn bản ngoài code blocks
-        text_outside_code = response_text
-        for block in code_blocks:
-            text_outside_code = text_outside_code.replace(block, "")
-        text_outside_code = text_outside_code.replace("```cpp", "").replace("```", "").strip()
-
-        has_question = "?" in text_outside_code
+        # Kiểm tra câu hỏi gợi mở Socratic trên phần văn bản tự nhiên TRƯỚC footer '📍 Mốc video bài giảng:'
+        # (Loại trừ cả fenced code lẫn inline code `a ? b : c`)
+        prose_before_footer = _extract_prose_before_timestamp_footer(response_text)
+        has_question = "?" in prose_before_footer
         if has_question:
             merits.append("Có đặt câu hỏi gợi mở định hướng tư duy (Socratic Questioning).")
         elif intent == "course_query":
@@ -182,16 +311,20 @@ class TelemetryCriticService:
             score -= settings.CRITIC_MISSING_QUESTION_PENALTY
 
         # 2. Kiểm toán thẻ Timestamp Video qua HTMLParser AST (Zero Regex)
-        ts_parser = TimestampTagExtractor()
-        ts_parser.feed(response_text)
-        ts_tags = ts_parser.tags
-        whitelist_secs = {t.get("sec") for t in suggested_ts if "sec" in t}
+        ts_tags = _extract_timestamp_tags(response_text)
+        whitelist_secs = set()
+        for t in suggested_ts:
+            if isinstance(t, dict) and t.get("sec") is not None and not isinstance(t.get("sec"), bool):
+                try:
+                    whitelist_secs.add(int(t["sec"]))
+                except (ValueError, TypeError):
+                    pass
 
         unverified_ts = []
         for sec_str, label in ts_tags:
             try:
                 sec_val = int(sec_str)
-                if whitelist_secs and sec_val not in whitelist_secs:
+                if sec_val not in whitelist_secs:
                     unverified_ts.append(f"{label} ({sec_val}s)")
             except ValueError:
                 unverified_ts.append(f"{label} ({sec_str}s)")
@@ -207,9 +340,10 @@ class TelemetryCriticService:
             warnings.append(f"Độ trễ TTFT cao ({ttft_ms}ms > {settings.CRITIC_LATENCY_THRESHOLD_MS}ms).")
             score -= settings.CRITIC_HIGH_LATENCY_PENALTY
 
-        # 3. Đánh giá Router & Multi-Turn Intent Fidelity (Zero Self-Flattery)
+        # 3. Đánh giá Router & Multi-Turn Intent Fidelity (Zero Self-Flattery, đồng bộ toán học với router_node)
         router_svc = get_intent_router()
-        is_pure_soc, soc_sim = router_svc.is_pure_social(prompt)
+        curr_svc = get_curriculum_service()
+        is_pure_soc, _ = router_svc.is_pure_social(clean_prompt)
 
         is_intent_hijacked = False
         is_topic_intruded = False
@@ -218,23 +352,99 @@ class TelemetryCriticService:
         if intent == "chit_chat":
             prev_intent = prev_entry.get("router", {}).get("intent") if prev_entry else None
             is_continuing_course = (had_prior_course_query or prev_intent == "course_query")
-            is_ack, _ = router_svc.is_social_acknowledgment(prompt)
+            is_ack, _ = router_svc.is_social_acknowledgment(clean_prompt)
+            lower_clean = clean_prompt.lower()
+            has_solicitation = any(w in lower_clean for w in getattr(router_svc, "_solicitation_words", ()))
+            sim_sys = router_svc.get_system_identity_similarity(clean_prompt)
+            is_sys_identity = (sim_sys >= 0.88) and (not has_solicitation)
 
-            # Chuyển trạng thái Markov bất hợp lệ (đang học tập bị ép về chit_chat nhưng không phải pure social hay acknowledgment)
-            if is_continuing_course and not is_pure_soc and not is_ack:
+            # Chuyển trạng thái Markov bất hợp lệ (đang học tập bị ép về chit_chat nhưng không thuộc nhóm xã giao/tiếp thu/danh tính)
+            if is_continuing_course and not is_pure_soc and not is_ack and not is_sys_identity:
                 is_intent_hijacked = True
         elif intent == "course_query":
             # Trường hợp 3: Topic Intrusion Hijacking (Reverse Intent Hijacking)
             # Câu hỏi ngoài lề hoặc xã giao bị ép phân loại thành course_query và kích hoạt RAG
-            standalone_clf = router_svc.classify(prompt)
-            is_nav_res = router_svc.is_curriculum_navigation(prompt)
-            is_nav = is_nav_res[0] if isinstance(is_nav_res, tuple) else bool(is_nav_res)
-            if (
-                standalone_clf.intent in ("chit_chat", "out_of_scope")
-                and not router_svc.is_context_dependent(prompt)
-                and not is_nav
-            ):
-                is_topic_intruded = True
+            standalone_clf = router_svc.classify(clean_prompt)
+            if standalone_clf.intent in ("chit_chat", "out_of_scope"):
+                is_nav_res = router_svc.is_curriculum_navigation(clean_prompt)
+                is_nav = is_nav_res[0] if isinstance(is_nav_res, tuple) else bool(is_nav_res)
+
+                slm_probs = router_svc._get_slm_probs(clean_prompt)
+                p_oos = float(slm_probs[2]) if slm_probs is not None else 0.0
+
+                entry_course_id = entry.get("course_id") if isinstance(entry.get("course_id"), str) else None
+                raw_les_seq = entry.get("lesson_seq")
+                entry_lesson_seq = (
+                    raw_les_seq if isinstance(raw_les_seq, int) and not isinstance(raw_les_seq, bool) else None
+                )
+
+                norm_lower = normalize_user_input(clean_prompt, lowercase=True, preserve_newlines=False)
+                explicit_seq = curr_svc._extract_lesson_seq(norm_lower)
+                has_manifest_curr_ref = any(
+                    ref in norm_lower for ref in getattr(curr_svc, "_current_lesson_refs", ())
+                )
+                is_explicit_lesson_ref = (
+                    (explicit_seq is not None or has_manifest_curr_ref)
+                    and (p_oos < 0.75)
+                    and (not is_pure_soc)
+                )
+                is_overview = (
+                    (p_oos < 0.75)
+                    and (not is_pure_soc)
+                    and curr_svc.is_overview_query(clean_prompt)
+                )
+
+                # Đồng bộ toán học với router_node Bước 3b (In-Video Temporal NLI & SLM Gate)
+                time_ref = curr_svc.extract_video_time_reference(clean_prompt)
+                is_in_video_time_ref = (time_ref is not None and explicit_seq is None)
+                is_valid_in_video_temporal = False
+                nli_temporal_rejected = False
+                if is_in_video_time_ref:
+                    if p_oos < 0.75 and not is_pure_soc:
+                        is_in_vid, _ = router_svc._nli_arbiter.verify_in_video_temporal_query(clean_prompt)
+                        if is_in_vid:
+                            is_valid_in_video_temporal = True
+                        else:
+                            nli_temporal_rejected = True
+                    else:
+                        nli_temporal_rejected = True
+
+                # Kiểm tra truy vấn phân vân đa chủ đề / cạnh tranh bài học trong giáo trình
+                is_ambiguous_curriculum = False
+                if p_oos < 0.75 and not is_pure_soc and not nli_temporal_rejected:
+                    try:
+                        amb_res = curr_svc.find_ambiguous_candidates(
+                            clean_prompt,
+                            current_lesson_seq=entry_lesson_seq,
+                            preferred_course_id=entry_course_id,
+                        )
+                        is_ambiguous_curriculum = bool(amb_res.get("is_ambiguous", False))
+                    except Exception:
+                        is_ambiguous_curriculum = False
+
+                # Kiểm tra câu hỏi nối tiếp phụ thuộc ngữ cảnh (Context-Dependent Follow-up)
+                effective_anchor = normalize_user_input(anchor_query) if anchor_query else None
+                if not effective_anchor and prev_entry and prev_entry.get("router", {}).get("intent") == "course_query":
+                    effective_anchor = normalize_user_input(prev_entry.get("prompt", "")) or None
+
+                is_dep = router_svc.is_context_dependent(clean_prompt, anchor_query=effective_anchor)
+                is_valid_context_dep = False
+                if is_dep and not is_pure_soc and not nli_temporal_rejected:
+                    if p_oos < 0.75:
+                        is_valid_context_dep = True
+                    elif effective_anchor:
+                        ctx_clf, _ = router_svc.classify_contextual(clean_prompt, effective_anchor)
+                        is_valid_context_dep = bool(ctx_clf.is_course_query)
+
+                if not (
+                    is_nav
+                    or is_overview
+                    or is_explicit_lesson_ref
+                    or is_valid_in_video_temporal
+                    or is_ambiguous_curriculum
+                    or is_valid_context_dep
+                ):
+                    is_topic_intruded = True
 
         if is_intent_hijacked:
             multi_turn_intent_fidelity = 0.0
@@ -307,15 +517,55 @@ class TelemetryCriticService:
         hijacked_turns = []
         had_prior_course_query = False
         prev_entry = None
+        last_course_query: Optional[str] = None
+        active_course_id: Optional[str] = course_id
+        active_lesson_seq: Optional[int] = lesson_seq
 
         for turn in turns:
-            tc = self.analyze_turn(turn, prev_entry=prev_entry, had_prior_course_query=had_prior_course_query)
+            turn_course_id = turn.get("course_id") or active_course_id
+            raw_turn_seq = turn.get("lesson_seq")
+            turn_lesson_seq = (
+                raw_turn_seq
+                if isinstance(raw_turn_seq, int) and not isinstance(raw_turn_seq, bool)
+                else active_lesson_seq
+            )
+
+            # Reset mỏ neo ngữ cảnh khi học viên chuyển bài học hoặc khóa học mới
+            if (
+                (active_lesson_seq is not None and turn_lesson_seq != active_lesson_seq)
+                or (active_course_id and turn_course_id != active_course_id)
+            ):
+                last_course_query = None
+
+            turn_payload = dict(turn)
+            if "course_id" not in turn_payload and turn_course_id:
+                turn_payload["course_id"] = turn_course_id
+            if "lesson_seq" not in turn_payload and turn_lesson_seq is not None:
+                turn_payload["lesson_seq"] = turn_lesson_seq
+
+            tc = self.analyze_turn(
+                turn_payload,
+                prev_entry=prev_entry,
+                had_prior_course_query=had_prior_course_query,
+                anchor_query=last_course_query,
+            )
             turn_critiques.append(tc)
             if tc.get("is_intent_hijacked") or tc.get("is_topic_intruded"):
                 hijacked_turns.append(tc["turn"])
-            if turn.get("router", {}).get("intent") == "course_query" or tc.get("intent") == "course_query":
+            if (
+                turn.get("router", {}).get("intent") == "course_query"
+                or tc.get("intent") == "course_query"
+            ) and not tc.get("is_topic_intruded"):
                 had_prior_course_query = True
-            prev_entry = turn
+                clean_q = normalize_user_input(turn.get("prompt", ""))
+                if clean_q:
+                    last_course_query = clean_q
+            elif tc.get("intent") == "confirm_navigation":
+                last_course_query = None
+
+            active_course_id = turn_course_id
+            active_lesson_seq = turn_lesson_seq
+            prev_entry = turn_payload
 
         total_turns = len(turn_critiques)
 
@@ -407,7 +657,12 @@ class TelemetryCriticService:
             t_score = tc["turn_score"]
             lat = tc["latency"]
             s_check = "✅ Đạt chuẩn" if tc["socratic_compliance"] else "❌ Vi phạm"
-            h_flag = " | 🚨 **Đứt gãy ý định (Hijacked)**" if tc.get("is_intent_hijacked") else ""
+            if tc.get("is_intent_hijacked"):
+                h_flag = " | 🚨 **Đứt gãy ý định (Hijacked)**"
+            elif tc.get("is_topic_intruded"):
+                h_flag = " | 🚨 **Xâm nhập chủ đề ngoài lề (Topic Intrusion)**"
+            else:
+                h_flag = ""
 
             md_lines.append(f"### Lượt #{t_num}: \"{p}\"")
             md_lines.append(f"- **Điểm lượt:** `{t_score}/100` | **Tuân thủ Socratic:** {s_check}{h_flag}")

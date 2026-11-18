@@ -3,152 +3,4169 @@
     "cpp-core": {
       "course_name": "Lập trình C++ Cơ Bản (52 Bài)",
       "lessons": [
-        { "seq": 1, "title": "Bài 1: Giới thiệu & Cách tự học lập trình C++", "is_foundational": true, "keywords": ["giới thiệu", "tự học", "cài đặt", "ide", "compiler", "môi trường"] },
-        { "seq": 2, "title": "Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến", "is_foundational": true, "keywords": ["vào ra", "cin", "cout", "kiểu dữ liệu", "biến", "hằng số", "const", "int", "float", "double", "char"] },
-        { "seq": 3, "title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++", "is_foundational": true, "keywords": ["toán tử", "cộng", "trừ", "nhân", "chia", "chia dư", "tăng giảm", "increment", "decrement", "toán tử gán", "toán tử logic", "&&", "||", "chia nguyên"] },
-        { "seq": 4, "title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case", "is_foundational": true, "keywords": ["rẽ nhánh", "if", "else", "if else", "switch", "switch case", "điều kiện"], "description": "Nội dung bài học gồm: Các hàm toán học thông dụng trong <cmath> (abs, pow, sqrt, round), cấu trúc điều khiển rẽ nhánh if - else, cấu trúc đa điều kiện if - else if lồng nhau, và cấu trúc rẽ nhiều nhánh switch - case với break/default." },
-        { "seq": 5, "title": "Bài 5: Giải bài tập If Else & Kiểm tra Năm Nhuận", "keywords": ["bài tập if else", "năm nhuận", "kiểm tra năm nhuận"] },
-        { "seq": 6, "title": "Bài 6: Vòng lặp For, While và Do-While", "is_foundational": true, "keywords": ["vòng lặp", "for", "while", "do while", "do-while", "lặp", "loop"] },
-        { "seq": 7, "title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị", "is_foundational": true, "keywords": ["hàm", "function", "tham chiếu", "tham trị", "reference", "giá trị", "truyền tham số", "nguyên mẫu hàm", "function prototype", "prototype", "khai báo hàm"] },
-        { "seq": 8, "title": "Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm", "is_foundational": true, "keywords": ["swap", "hoán vị", "nạp chồng hàm", "overload function", "hàm swap", "hoán đổi"] },
-        { "seq": 9, "title": "Bài 9: Từ khóa Typedef và Define trong C++", "keywords": ["typedef", "define", "định nghĩa kiểu", "macro"] },
-        { "seq": 10, "title": "Bài 10: Phân tích độ phức tạp của thuật toán", "keywords": ["độ phức tạp", "big o", "o(n)", "thuật toán", "thời gian", "không gian"] },
-        { "seq": 11, "title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp", "is_foundational": true, "keywords": ["mảng 1 chiều", "mảng một chiều", "array", "khai báo mảng"] },
-        { "seq": 12, "title": "Bài 12: Hướng dẫn giải bài tập Mảng 1 chiều (Phần 1)", "is_revision": true, "updates_lesson_seq": 11, "keywords": ["bài tập mảng 1 chiều", "bài tập mảng", "luyện tập mảng"] },
-        { "seq": 13, "title": "Bài 13: Hướng dẫn giải bài tập Mảng 1 chiều (Phần 2)", "is_revision": true, "updates_lesson_seq": 11, "keywords": ["bài tập mảng 1 chiều phần 2", "chữa bài tập mảng"] },
-        { "seq": 14, "title": "Bài 14: Lý thuyết về Mảng 2 chiều trong C++", "is_foundational": true, "keywords": ["mảng 2 chiều", "ma trận", "mảng hai chiều", "2d array", "matrix"] },
-        { "seq": 15, "title": "Bài 15: Mảng cộng dồn 1 chiều & 2 chiều - Prefix Sum", "keywords": ["mảng cộng dồn", "prefix sum", "cộng dồn"] },
-        { "seq": 16, "title": "Bài 16: Bài tập Mảng 2 chiều có lời giải (Phần 1)", "is_revision": true, "updates_lesson_seq": 14, "keywords": ["bài tập mảng 2 chiều", "bài tập ma trận"] },
-        { "seq": 17, "title": "Bài 17: Bài tập Mảng 2 chiều có lời giải (Phần 2)", "is_revision": true, "updates_lesson_seq": 14, "keywords": ["chữa bài tập mảng 2 chiều"] },
-        { "seq": 18, "title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String", "is_foundational": true, "keywords": ["xâu ký tự", "chuỗi", "string", "xâu"] },
-        { "seq": 19, "title": "Bài 19: Bài tập Mảng 2 chiều có lời giải (Phần 3)", "is_revision": true, "updates_lesson_seq": 14, "keywords": ["bài tập ma trận nâng cao"] },
-        { "seq": 20, "title": "Bài 20: Hướng dẫn sử dụng Vector trong C++ & Iterator", "is_foundational": true, "keywords": ["vector", "iterator", "mảng động"] },
-        { "seq": 21, "title": "Bài 21: Hướng dẫn sử dụng Pair trong C++", "keywords": ["pair", "cặp phần tử", "std::pair"] },
-        { "seq": 22, "title": "Bài 22: Cấu trúc dữ liệu Set trong C++ - Multiset", "is_foundational": true, "keywords": ["set", "multiset", "tập hợp", "unordered_set"] },
-        { "seq": 23, "title": "Bài 23: Cấu trúc dữ liệu Map trong C++ - Multimap", "is_foundational": true, "keywords": ["map", "multimap", "ánh xạ", "unordered_map", "key value"] },
-        { "seq": 24, "title": "Bài 24: Bài tập áp dụng Set và Map trong C++", "keywords": ["bài tập set", "bài tập map", "áp dụng set map"] },
-        { "seq": 25, "title": "Bài 25: Tìm kiếm nhị phân & Lower_bound, Upper_bound", "is_foundational": true, "keywords": ["tìm kiếm nhị phân", "binary search", "lower_bound", "upper_bound"] },
-        { "seq": 26, "title": "Bài 26: Cách sử dụng hàm Sort trong C++ & Comparator", "is_foundational": true, "keywords": ["sort", "sắp xếp", "comparator", "hàm so sánh", "std::sort"] },
-        { "seq": 27, "title": "Bài 27: Thuật toán sắp xếp chèn, nổi bọt, chọn, đếm", "keywords": ["bubble sort", "insertion sort", "selection sort", "counting sort", "sắp xếp nổi bọt", "sắp xếp chèn", "sắp xếp chọn"] },
-        { "seq": 28, "title": "Bài 28: Thuật toán sắp xếp trộn (Merge Sort)", "keywords": ["merge sort", "sắp xếp trộn"] },
-        { "seq": 29, "title": "Bài 29: Thuật toán sắp xếp vun đống (Heap Sort)", "keywords": ["heap sort", "sắp xếp vun đống", "vun đống"] },
-        { "seq": 30, "title": "Bài 30: Sắp xếp nhanh QuickSort - Lomuto & Hoare", "keywords": ["quicksort", "sắp xếp nhanh", "lomuto", "hoare", "phân hoạch"] },
-        { "seq": 31, "title": "Bài 31: Các hàm thuật toán trong thư viện Algorithm", "keywords": ["algorithm", "thư viện thuật toán", "min", "max", "reverse", "fill"] },
-        { "seq": 32, "title": "Bài 32: Hướng dẫn giải bài tập Sắp xếp và Tìm kiếm (P1)", "keywords": ["bài tập sắp xếp", "bài tập tìm kiếm"] },
-        { "seq": 33, "title": "Bài 33: Hướng dẫn giải bài tập Sắp xếp và Tìm kiếm (P2)", "keywords": ["chữa bài tập sắp xếp và tìm kiếm"] },
-        { "seq": 34, "title": "Bài 34: Kiến thức toán & Lý thuyết số (Phần 1)", "keywords": ["lý thuyết số", "số nguyên tố", "sàng nguyên tố", "ucln", "bcnn", "gcd"] },
-        { "seq": 35, "title": "Bài 35: Kiến thức toán & Lý thuyết số (Phần 2)", "keywords": ["lý thuyết số phần 2", "phân tích thừa số nguyên tố"] },
-        { "seq": 36, "title": "Bài 36: Kiến thức toán & Lý thuyết số (Phần 3)", "keywords": ["lý thuyết số phần 3", "chữ số tận cùng", "lũy thặng"] },
-        { "seq": 37, "title": "Bài 37: Kỹ thuật đệ quy trong C++ & Cách hàm hoạt động", "is_foundational": true, "keywords": ["đệ quy", "recursion", "cây đệ quy", "bài toán đệ quy"] },
-        { "seq": 38, "title": "Bài 38: Giải bài tập Xâu kí tự trong C++ (Phần 1)", "keywords": ["bài tập xâu", "bài tập chuỗi", "xử lý xâu"] },
-        { "seq": 39, "title": "Bài 39: Giải bài tập Xâu kí tự trong C++ (Phần 2)", "keywords": ["chữa bài tập xâu ký tự"] },
-        { "seq": 40, "title": "Bài 40: Giải bài tập Xâu kí tự trong C++ (Phần 3)", "keywords": ["bài tập xâu nâng cao"] },
-        { "seq": 41, "title": "Bài 41: Thuật toán sinh kế tiếp - Nhị phân, Hoán vị", "keywords": ["thuật toán sinh", "sinh kế tiếp", "sinh nhị phân", "sinh hoán vị", "sinh tổ hợp"] },
-        { "seq": 42, "title": "Bài 42: Hướng dẫn giải bài tập Thuật toán sinh kế tiếp", "keywords": ["bài tập thuật toán sinh"] },
-        { "seq": 43, "title": "Bài 43: Cấu trúc dữ liệu Ngăn xếp (Stack) trong C++", "is_foundational": true, "keywords": ["stack", "ngăn xếp", "lifo", "pop", "push"] },
-        { "seq": 44, "title": "Bài 44: Cấu trúc dữ liệu Hàng đợi (Queue) trong C++", "is_foundational": true, "keywords": ["queue", "hàng đợi", "fifo"] },
-        { "seq": 45, "title": "Bài 45: Hàng đợi hai đầu (Deque in C++)", "keywords": ["deque", "hàng đợi hai đầu"] },
-        { "seq": 46, "title": "Bài 46: Hàng đợi ưu tiên (Priority_queue in C++)", "keywords": ["priority_queue", "hàng đợi ưu tiên", "heap"] },
-        { "seq": 47, "title": "Bài 47: Kỹ thuật cửa sổ trượt (Sliding Window)", "keywords": ["cửa sổ trượt", "sliding window"] },
-        { "seq": 48, "title": "Bài 48: Kỹ thuật hai con trỏ (Two Pointers)", "keywords": ["hai con trỏ", "two pointers"] },
-        { "seq": 49, "title": "Bài 49: Toán tử bit trong C++ (Bitwise Operators)", "keywords": ["toán tử bit", "bitwise", "and bit", "or bit", "xor bit", "shift bit"] },
-        { "seq": 50, "title": "Bài 50: Kiểu cấu trúc trong C++ (Struct in C++)", "is_foundational": true, "keywords": ["struct", "kiểu cấu trúc", "cấu trúc", "bản ghi"] },
-        { "seq": 51, "title": "Bài 51: Hướng dẫn giải bài tập Struct (Phần 1)", "is_revision": true, "updates_lesson_seq": 50, "keywords": ["bài tập struct"] },
-        { "seq": 52, "title": "Bài 52: Hướng dẫn giải bài tập Struct (Phần 2) - QLSV", "is_revision": true, "updates_lesson_seq": 50, "keywords": ["bài tập struct qlsv", "quản lý sinh viên struct"] }
+        {
+          "seq": 1,
+          "title": "Bài 1: Giới thiệu & Cách tự học lập trình C++",
+          "is_foundational": true,
+          "keywords": [
+            "giới thiệu",
+            "tự học",
+            "cài đặt",
+            "ide",
+            "compiler",
+            "môi trường"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Còn đồ thị thì vẫn còn tương đối là nhiều, C thì hiện thời mình chưa có lý thuyết, bài tập thôi, ok"
+            },
+            {
+              "sec": 131,
+              "label": "02:11",
+              "summary": "Đấy, thì các bạn có thể vào học từ bài đầu đến bài cuối Nhìn thì nó tương đối là nhiều đấy Ok, ví dụ nguyên"
+            },
+            {
+              "sec": 355,
+              "label": "05:55",
+              "summary": "Khi mà bạn học về sâu kí tự thì bạn nên làm cái phi bài tập mà mình đã để ở bên dưới này này Bên dưới này"
+            },
+            {
+              "sec": 477,
+              "label": "07:57",
+              "summary": "Nên là nếu mà bạn biết thuật toán rồi, bạn biết cách xử lý rồi thì các bạn việc chuyển đổi giữa string với"
+            },
+            {
+              "sec": 688,
+              "label": "11:28",
+              "summary": "Thì mình nghĩ là nó còn đầy đủ hơn nhiều cái danh sách pháp mà các bạn mọi người cùng làm nhưng mà mình làm"
+            },
+            {
+              "sec": 812,
+              "label": "13:32",
+              "summary": "Để mà mình có để luyện tập, bởi vì là khi mà các bạn có một cái nguồn bài tập rồi ra một chút, mình nghĩ là"
+            }
+          ]
+        },
+        {
+          "seq": 2,
+          "title": "Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến",
+          "is_foundational": true,
+          "keywords": [
+            "vào ra",
+            "cin",
+            "cout",
+            "kiểu dữ liệu",
+            "biến",
+            "hằng số",
+            "const",
+            "int",
+            "float",
+            "double",
+            "char"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Thì khi mà các bạn học xí ụng cộng thì có bạn đã từng học 1 nữ là chỉ chi trước rồi, chỉ khiêm bạn học 1 nữ"
+            },
+            {
+              "sec": 321,
+              "label": "05:21",
+              "summary": "Cout an đó std là cái namespace và còn cái dấu 2"
+            },
+            {
+              "sec": 454,
+              "label": "07:34",
+              "summary": "Rồi, bây giờ mình sẽ nói đến 1 phần ở trong lũ lực sinh nảm có, chính là kiểu dự liệu Thì ở trong lũ lực sinh"
+            },
+            {
+              "sec": 888,
+              "label": "14:48",
+              "summary": "C++, hạt thứ 2 là double, double này cũng là 4b, double này cũng là 8b Thì cái float và double, quan hệ của"
+            },
+            {
+              "sec": 1216,
+              "label": "20:16",
+              "summary": "Nhưng trong những lúc chính xịm cộng, các bạn đặt tên biến không thể đặt một cách thủy tiệm được sẽ có những"
+            },
+            {
+              "sec": 1716,
+              "label": "28:36",
+              "summary": "Thế còn khi mà các bạn muốn nhập giá trị từ bàn phí miết thì mình sẽ sử dụng cin"
+            },
+            {
+              "sec": 2137,
+              "label": "35:37",
+              "summary": "Thằng Interger A nó không thể lưu được cái giá trị chính xác như thế này ở đâu mà nó sẽ ra một cái giá trị bị"
+            }
+          ]
+        },
+        {
+          "seq": 3,
+          "title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
+          "is_foundational": true,
+          "keywords": [
+            "toán tử",
+            "cộng",
+            "trừ",
+            "nhân",
+            "chia",
+            "chia dư",
+            "tăng giảm",
+            "increment",
+            "decrement",
+            "toán tử gán",
+            "toán tử logic",
+            "&&",
+            "||",
+            "chia nguyên"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong video đòi bài 1 về nguồn nữ đợi kỷ dưỡng cộng thì mình đã hướng dẫn các bạn về những kiến thức của bạn"
+            },
+            {
+              "sec": 247,
+              "label": "04:07",
+              "summary": "Nhưng mà trong ngôn ngữ chỉ xịn cộng ấy, thì cái dấu bằng này nó được gọi là toàn tử gán ở size của operator"
+            },
+            {
+              "sec": 358,
+              "label": "05:58",
+              "summary": "A sẽ có 100 Đó, xuống câu lệnh dưới này này, mình có câu lệnh là b bằng a, đúng không"
+            },
+            {
+              "sec": 450,
+              "label": "07:30",
+              "summary": "Cài đặt và chạy thử nghiệm trong hàm main() — Gán giá trị cho quán hạng bên phải dấu bằng, cho quán hạng bên trái"
+            },
+            {
+              "sec": 493,
+              "label": "08:13",
+              "summary": "Nó chính là cộng, chư, nhưng mà nhân, nhân trong ướp trình nó là dấu sao nhé Và kia thì nó là dấu sổ số như"
+            },
+            {
+              "sec": 1168,
+              "label": "19:28",
+              "summary": "Cài đặt hàm / phương thức `increment` — Bây giờ, diễn e sẽ là 100 nè 1 Nó là increment, increase, increase"
+            },
+            {
+              "sec": 1820,
+              "label": "30:20",
+              "summary": "Nhưng mà là anb kết n này là kết và đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 4,
+          "title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case",
+          "is_foundational": true,
+          "keywords": [
+            "rẽ nhánh",
+            "if",
+            "else",
+            "if else",
+            "switch",
+            "switch case",
+            "điều kiện"
+          ],
+          "description": "Nội dung bài học gồm: Các hàm toán học thông dụng trong <cmath> (abs, pow, sqrt, round), cấu trúc điều khiển rẽ nhánh if - else, cấu trúc đa điều kiện if - else if lồng nhau, và cấu trúc rẽ nhiều nhánh switch - case với break/default.",
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Thông thường thì mình chỉ hướng dẫn các cái hàm phổ biến thôi nhé, còn nếu mà các bạn muốn sử dụng thêm các"
+            },
+            {
+              "sec": 394,
+              "label": "06:34",
+              "summary": "Còn nếu cái condition này, cái điều kiện này mà bị sai thì nó sẽ không thực hiện các khối lệnh ở trong cái"
+            },
+            {
+              "sec": 751,
+              "label": "12:31",
+              "summary": "Cài đặt và chạy thử nghiệm trong hàm main() — Sau đó kiểm tra xem số đấy là số chẳng thì in là chẳng Còn nếu mà nó"
+            },
+            {
+              "sec": 993,
+              "label": "16:33",
+              "summary": "Hình ra là người ta nghĩ ra cái cách đấy chính là ở trong cái câu trúc íp và íp và L íp của bạn có thể kiểm"
+            },
+            {
+              "sec": 1413,
+              "label": "23:33",
+              "summary": "Nó là 3 câu chúc 2 dùng nhất Nó còn 1 câu chúc nữa đây, chúng là câu chúc switch switch Đây, thì đây chỉ là"
+            },
+            {
+              "sec": 1655,
+              "label": "27:35",
+              "summary": "Đấy chính là trong cái câu chút switch cây này này, sau mỗi cái code, sau mỗi cái cối lệnh, cối lệnh ở các"
+            }
+          ]
+        },
+        {
+          "seq": 5,
+          "title": "Bài 5: Giải bài tập If Else & Kiểm tra Năm Nhuận",
+          "keywords": [
+            "bài tập if else",
+            "năm nhuận",
+            "kiểm tra năm nhuận"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Thêm video này thì mình sẽ hướng dẫn các bạn các bài cập về phần cầu chúc dễ nhánh lưới lại là kiểu dữ liệu"
+            },
+            {
+              "sec": 512,
+              "label": "08:32",
+              "summary": "Mình có nhiều bạn lại trưởng là tôi cứ áp dụng công thức UV và diễn tích rồi đó tôi nhập error thì UV với"
+            },
+            {
+              "sec": 741,
+              "label": "12:21",
+              "summary": "Đây là chỗ này, không có rất nhiều nhân chia tống nguyên l arrival, mà là xe là integral, và xe là 2 ông, có"
+            },
+            {
+              "sec": 1303,
+              "label": "21:43",
+              "summary": "Ok, phải đây chỉ là cái kết quả của mình ok, mình sẽ nhập từ nò từ bàn kín này và tất nhiên là cái Fn này là"
+            },
+            {
+              "sec": 2422,
+              "label": "40:22",
+              "summary": "Cài đặt hàm / phương thức `namNhuan` — Nếu mà mình dập vào một cái xuống liên âm hoặc là xuống không thì"
+            },
+            {
+              "sec": 3034,
+              "label": "50:34",
+              "summary": "Và để kiểm tra 1 cái kí tự có phải là kí tự yên thường hay không ít"
+            },
+            {
+              "sec": 4027,
+              "label": "67:07",
+              "summary": "Ok, tương tự như vậy, với map, nếu mà B nó có lớn hơn thằng map ấy, thì map thì bây giờ nó phải là B"
+            },
+            {
+              "sec": 4614,
+              "label": "76:54",
+              "summary": "Hoặc là 1 cái số nó gần 2 năm trở nên 365 365 mà nhân biên 2 thì là 5 người đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 6,
+          "title": "Bài 6: Vòng lặp For, While và Do-While",
+          "is_foundational": true,
+          "keywords": [
+            "vòng lặp",
+            "for",
+            "while",
+            "do while",
+            "do-while",
+            "lặp",
+            "loop"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Đầu tiên mình sẽ hướng dẫn về tầng vòng lập xo trước nhé Khi mà bạn muốn thực hiện một cái công việc nào đó"
+            },
+            {
+              "sec": 350,
+              "label": "05:50",
+              "summary": "Cài đặt và chạy thử nghiệm trong hàm main() — Nếu mà đúng thì nó lại tiếp tục nó nhảy xuống đây, nó sẽ kiện hello"
+            },
+            {
+              "sec": 831,
+              "label": "13:51",
+              "summary": "Khi mà bạn gặp 1 điều kiện gì đó, thì mình sẽ sử dụng 1 câu lệnh là câu lệnh break khi mà vòng foi mà nó gặp"
+            },
+            {
+              "sec": 1600,
+              "label": "26:40",
+              "summary": "Cài đặt hàm / phương thức `while` — Thì cái cách mà vòng lặp while nó thực hiện thì tương tự như vòng lập"
+            },
+            {
+              "sec": 2007,
+              "label": "33:27",
+              "summary": "Thì 1 nó là số, nó được coi là đúng đúng thế ra cái điều kiện lập là nó sẽ lập được diễn sau này nó sẽ lập"
+            },
+            {
+              "sec": 2712,
+              "label": "45:12",
+              "summary": "Vòng lập tiếp theo trong nơi sách mình bao vòng lập của mình đây chính là vòng lặp do-while Còn này thì"
+            },
+            {
+              "sec": 3046,
+              "label": "50:46",
+              "summary": "Cài đặt hàm / phương thức `do_while` — Nó quên tay thôi, ok, thì nó không khó đâu Sau đó thì các bạn có thể"
+            }
+          ]
+        },
+        {
+          "seq": 7,
+          "title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị",
+          "is_foundational": true,
+          "keywords": [
+            "hàm",
+            "function",
+            "tham chiếu",
+            "tham trị",
+            "reference",
+            "giá trị",
+            "truyền tham số",
+            "nguyên mẫu hàm",
+            "function prototype",
+            "prototype",
+            "khai báo hàm"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Với lại là các cái dạng bài tập về vòng lập"
+            },
+            {
+              "sec": 796,
+              "label": "13:16",
+              "summary": "Vậy là mình đã xây dựng xong 1 hàm rồi Mình sẽ giải thích từng phần 1 của cái hàm này Cái hàm này của các bạn"
+            },
+            {
+              "sec": 1599,
+              "label": "26:39",
+              "summary": "Tức là, khi mà các bạn gọi ham, mà các bạn chuyển các cái tham số, các cái đôi số này này vào cái hàm thì nó"
+            },
+            {
+              "sec": 2401,
+              "label": "40:01",
+              "summary": "Tuy các bạn muốn cái hàm đấy, nó trả về cái giá trị ở kiểu dữ liệu nào ví dụ như bây giờ mình muốn viết một"
+            },
+            {
+              "sec": 3227,
+              "label": "53:47",
+              "summary": "Chứ không nhất thiết là hàm này nó có tham số là long long làm mình phải trả về long long mà các bạn phải xem"
+            },
+            {
+              "sec": 3980,
+              "label": "66:20",
+              "summary": "Không có hiển thị được, tổng A, B là 300, nhé các bạn làm cho mình cái bài số 4 đi giá trị trả về của hàm bài"
+            },
+            {
+              "sec": 4594,
+              "label": "76:34",
+              "summary": "Hay nói cái khác là cái tổng chữ số của nó khi đó không có tận cùng nó tám nó, bạn lấy vào submit là được"
+            },
+            {
+              "sec": 5750,
+              "label": "95:50",
+              "summary": "Cài đặt hàm / phương thức `thamChieu` — Truyền giá trị gọi là pass by value đấy tức là khi mà các bạn gọi"
+            }
+          ]
+        },
+        {
+          "seq": 8,
+          "title": "Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm",
+          "is_foundational": true,
+          "keywords": [
+            "swap",
+            "hoán vị",
+            "nạp chồng hàm",
+            "overload function",
+            "hàm swap",
+            "hoán đổi"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Tiếp theo về phần kiểu cộng, hướng dẫn các bạn một kiến thức mới, đó chính là kiến thức về hèn"
+            },
+            {
+              "sec": 271,
+              "label": "04:31",
+              "summary": "OK Giống như mình có một cái tham số là A và như thế này và thay vì mình yên ra là cin chào thì mình sẽ yên"
+            },
+            {
+              "sec": 457,
+              "label": "07:37",
+              "summary": "Với cái kiểu giữ liệu của đối số mà khi mà bạn gọi hàm ấy Nếu mà bạn thay báo là giữ liệu là inner-t, nhưng"
+            },
+            {
+              "sec": 1045,
+              "label": "17:25",
+              "summary": "Thì ra là chỗ này các bạn lưu kết quả cũng phải là float Các bạn hãy sign thế thôi, rồi chỗ này thì mình sẽ"
+            },
+            {
+              "sec": 1336,
+              "label": "22:16",
+              "summary": "Ví dụ như mình muốn kiểm tra các cái số nguyên tố từ 1 tới 100 rồi nè Thì thay vì mình gọi, nếu mà các bạn"
+            },
+            {
+              "sec": 1641,
+              "label": "27:21",
+              "summary": "Cài đặt hàm / phương thức `min` — Khai báo nguyên mẫu hàm sau đây là boon, nguyên tố, int, check, boon"
+            },
+            {
+              "sec": 1998,
+              "label": "33:18",
+              "summary": "3 Thì đấy chính là cái khái niệm về function overloadding, là khi mà các cái hạm của các bạn nó có cùng tên"
+            }
+          ]
+        },
+        {
+          "seq": 9,
+          "title": "Bài 9: Từ khóa Typedef và Define trong C++",
+          "keywords": [
+            "typedef",
+            "define",
+            "định nghĩa kiểu",
+            "macro"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Tidep này thì nó viết tắt của từ type definition là định nghĩa kiểu thì tác dụng của nó là gì"
+            },
+            {
+              "sec": 44,
+              "label": "00:44",
+              "summary": "Ví dụ bây giờ mình có thể tai đép long long là là là đấy, thì khi đó, muốn sử dụng long long, các bạn có thể"
+            },
+            {
+              "sec": 86,
+              "label": "01:26",
+              "summary": "Tidep này thì nó viết tắt của từ type definition là định nghĩa kiểu thì tác dụng của nó là gì"
+            },
+            {
+              "sec": 141,
+              "label": "02:21",
+              "summary": "Có một điều đặc biệt là cái kết thúc DeFi thì nó không có dâu chấm phẩy, tương tự như Include này này Nhưng"
+            },
+            {
+              "sec": 316,
+              "label": "05:16",
+              "summary": "Bởi vì cứ đọc đến cái phần nào thì người ta phải check xem là bạn defy nó như thế nào Thế thì từ khóa thứ 2"
+            }
+          ]
+        },
+        {
+          "seq": 10,
+          "title": "Bài 10: Phân tích độ phức tạp của thuật toán",
+          "keywords": [
+            "độ phức tạp",
+            "big o",
+            "o(n)",
+            "thuật toán",
+            "thời gian",
+            "không gian"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Khi mình cốt thì mình cũng phải biết là độ phức tạp của thuật toán của mình đã cốt là bao nhiêu"
+            },
+            {
+              "sec": 274,
+              "label": "04:34",
+              "summary": "Giờ xíu như là trong cái hàm bản thịt từ 1 tới nờ này này, mà trong này bạn lại có 1 cái hàm là gọi cái hàm"
+            },
+            {
+              "sec": 426,
+              "label": "07:06",
+              "summary": "Rồi cái vòng for và ngoài này cũng thế nhé mà ngoài này thì nó cũng việt từ 1 cho tới nờ thì cái đồ phức tạp"
+            },
+            {
+              "sec": 640,
+              "label": "10:40",
+              "summary": "Số vòng lập của 3 cái vòng for này nhân với nhau vòng for là nò vòng lập, vòng for thứ 2 là mò vòng lập vòng"
+            },
+            {
+              "sec": 856,
+              "label": "14:16",
+              "summary": "Khi đó các độ phức tạp của nó sẽ rất là lớn và với tùy vào input nờ nhé, bạn có thể lựa sọn các cái cách, các"
+            },
+            {
+              "sec": 1036,
+              "label": "17:16",
+              "summary": "Rồi, cái ham sót ở trong thư viện của các bạn có độ phức tạp là O, nò, lớp, nò, nhé Cái ham sót mà mình hay"
+            }
+          ]
+        },
+        {
+          "seq": 11,
+          "title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp",
+          "is_foundational": true,
+          "keywords": [
+            "mảng 1 chiều",
+            "mảng một chiều",
+            "array",
+            "khai báo mảng"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Vì này thì mình sẽ hướng cho các bạn kiến thức tiếp theo, đây chính là kiến thức giới mạng"
+            },
+            {
+              "sec": 178,
+              "label": "02:58",
+              "summary": "Đấy chính là cách mà bạn khai báo một cái nả hủy hoặc là một cái rực tính nhá Thông thường, đối với các bàn"
+            },
+            {
+              "sec": 226,
+              "label": "03:46",
+              "summary": "Thì để truy cập đến các phần tửa trong cái mạng thì mình sẽ thông qua chỉ số nhé Đối với cái mảng A có n là"
+            },
+            {
+              "sec": 520,
+              "label": "08:40",
+              "summary": "Cài đặt và chạy thử nghiệm trong hàm main() — Bằng cách là mình sẽ sử dụng 1 cái vòng for nhé, mình sẽ chạy từ cái"
+            },
+            {
+              "sec": 912,
+              "label": "15:12",
+              "summary": "Mình sẽ skia ra ý Đấy, nếu chứ là các bạn biết nhập duyệt rồi thì mình có thể làm được nhiều bài tập rồi Ní"
+            },
+            {
+              "sec": 1103,
+              "label": "18:23",
+              "summary": "Thông thường khi mà mình vượt vòng for các phần tử tâm mẻ thì mình dùng thế này, tất nhiên là như thế này"
+            }
+          ]
+        },
+        {
+          "seq": 12,
+          "title": "Bài 12: Hướng dẫn giải bài tập Mảng 1 chiều (Phần 1)",
+          "is_revision": true,
+          "updates_lesson_seq": 11,
+          "keywords": [
+            "bài tập mảng 1 chiều",
+            "bài tập mảng",
+            "luyện tập mảng"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Chơi này thì mình sẽ dẫn các bạn bài tập về phần mà một chiều nhé"
+            },
+            {
+              "sec": 317,
+              "label": "05:17",
+              "summary": "Đấy chính là các bạn chỉ cần, trong trường hợp này thì các bạn chỉ cần nhập vào cái mạng của mình sau đó là"
+            },
+            {
+              "sec": 497,
+              "label": "08:17",
+              "summary": "Ok, thằng ra chỗ này bạn chỉ cần check, bởi vì mình không cần quan tâm với số ấm ra là mình phải check là nếu"
+            },
+            {
+              "sec": 1102,
+              "label": "18:22",
+              "summary": "Mà này cũng dễ rồi Các bạn dùng map cũng được nhé, thay vì màng cao thì các bạn dùng map Nếu mà các phần tử"
+            },
+            {
+              "sec": 1495,
+              "label": "24:55",
+              "summary": "Thế sau đó, ở mỗi bước thì bạn sẽ, ở mỗi bước thì mình sẽ tính cái biến, mình tạm gọi cái biến res là cái giá"
+            },
+            {
+              "sec": 1862,
+              "label": "31:02",
+              "summary": "Rồi rồi, sau đó thì ở trong hàm main các bạn nhập vào cho mình một cái miếng nò Xin cho nò tags có nò phần"
+            },
+            {
+              "sec": 2211,
+              "label": "36:51",
+              "summary": "Hay nó cái khác đấy, chính là nó bắt mình tìm cái cửa số có độ dài ca và có tổng có phần tử lớn nhất và nó"
+            }
+          ]
+        },
+        {
+          "seq": 13,
+          "title": "Bài 13: Hướng dẫn giải bài tập Mảng 1 chiều (Phần 2)",
+          "is_revision": true,
+          "updates_lesson_seq": 11,
+          "keywords": [
+            "bài tập mảng 1 chiều phần 2",
+            "chữa bài tập mảng"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Dòng đầu tiên là số lượng phần tử của mạng và dòng tiếp theo là các phần tử trong mạng"
+            },
+            {
+              "sec": 500,
+              "label": "08:20",
+              "summary": "Thằng ích đấy, chắc chắn nó sẽ thuộc vào đoạn tử, nó khác mồ đúng không"
+            },
+            {
+              "sec": 623,
+              "label": "10:23",
+              "summary": "Bây giờ thì cái đáp án của mình ấy, nó chính là cái ước của thằng REST kia mà khác 1"
+            },
+            {
+              "sec": 1017,
+              "label": "16:57",
+              "summary": "Nhưng mà mình đã chưa đi một phần tử ở cái chỉ số i rồi thì khi đó cái biến xam 2 còn lại chính là tổng các"
+            },
+            {
+              "sec": 1881,
+              "label": "31:21",
+              "summary": "Rồi, vậy thì ở đây, mình sẽ nhập vào nờ, sau đó nhập vào cái mèo này nhá"
+            },
+            {
+              "sec": 2668,
+              "label": "44:28",
+              "summary": "Ok, đây chính là cách làm của bà này nha"
+            },
+            {
+              "sec": 3221,
+              "label": "53:41",
+              "summary": "51 cộng với 19 thì là bằng 70 đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 14,
+          "title": "Bài 14: Lý thuyết về Mảng 2 chiều trong C++",
+          "is_foundational": true,
+          "keywords": [
+            "mảng 2 chiều",
+            "ma trận",
+            "mảng hai chiều",
+            "2d array",
+            "matrix"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Nhưng mà những các bài tập ở trên là 2k thì kiến thức đối là khó"
+            },
+            {
+              "sec": 272,
+              "label": "04:32",
+              "summary": "Nếu bạn xay báo chỉ là 50-100, sẽ có những truyền hợp không thể đủ để lưu được input lớn nhất của đầu bà Mỗi"
+            },
+            {
+              "sec": 438,
+              "label": "07:18",
+              "summary": "Đấy chính là cái tháp đầu tiên các bạn cần phải biết cái chính là cái cách mà nhập và bắt một cái nai chặn là"
+            },
+            {
+              "sec": 793,
+              "label": "13:13",
+              "summary": "Cmf street,-Var hanging, LouisV, Nó không cần phải là các cái hàng đều có số động phần tuyến nhau Thì nếu mà"
+            },
+            {
+              "sec": 1037,
+              "label": "17:17",
+              "summary": "Đó chính là các phần xus a , đối với mảng intergeur thì mình sẽ lưu có phần là các phần mới jetzt các dòng số"
+            },
+            {
+              "sec": 1204,
+              "label": "20:04",
+              "summary": "Thì ra là mình sẽ dùng một cái chỉ số i sẽ chỉ cột không cho tới cột mờ"
+            }
+          ]
+        },
+        {
+          "seq": 15,
+          "title": "Bài 15: Mảng cộng dồn 1 chiều & 2 chiều - Prefix Sum",
+          "keywords": [
+            "mảng cộng dồn",
+            "prefix sum",
+            "cộng dồn"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Vậy thì nếu mà các bạn làm thông thường thì là gì nhỉ"
+            },
+            {
+              "sec": 266,
+              "label": "04:26",
+              "summary": "Nhưng mà khi lưu prefix sum thì các bạn nên lưu từ chi số 1 cho tới chi số n là tiện hơn Ok, cho cái việc đấy"
+            },
+            {
+              "sec": 392,
+              "label": "06:32",
+              "summary": "D Thì chỗ này bạn chỉ cần cho prefix sum của i, tổng tất cả phần tử từ chí số 1 cho chí số i Tổng tất cả phần"
+            },
+            {
+              "sec": 881,
+              "label": "14:41",
+              "summary": "Bạn sẽ tình toán cái prefix sum đó, ok, ở đây mình sẽ lấy luôn cái mạng này nhé Thì các bạn thấy họ tính này"
+            },
+            {
+              "sec": 1331,
+              "label": "22:11",
+              "summary": "Bởi vì khi mà bạn cộng cái phần này này thì nó được tính 1 lần và cộng phần này nó được tính 1 phần nữa, cái"
+            },
+            {
+              "sec": 1776,
+              "label": "29:36",
+              "summary": "Thành ra là các bạn có cái công cức như thế này, mà sẽ là prefix xam của AB, tức là cái phần lớn này, cái"
+            }
+          ]
+        },
+        {
+          "seq": 16,
+          "title": "Bài 16: Bài tập Mảng 2 chiều có lời giải (Phần 1)",
+          "is_revision": true,
+          "updates_lesson_seq": 14,
+          "keywords": [
+            "bài tập mảng 2 chiều",
+            "bài tập ma trận"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Kthzt, Su, contentlahn, Adobe, cool, remembering to, Cát trả bài ở kết dạng, ở đây mình sẽ nói nó kết dạng"
+            },
+            {
+              "sec": 541,
+              "label": "09:01",
+              "summary": "Vì cái việc nhập khất thì không có gì khác nữa, mình để lại cái tần nhập khất Bây giờ các bạn chỉ cần khai"
+            },
+            {
+              "sec": 965,
+              "label": "16:05",
+              "summary": "Clear Rất là xóa tất cả các cái hàng trước hóa lý do trong vector của mình nhé, vector kết quả hồng nhé Và"
+            },
+            {
+              "sec": 1669,
+              "label": "27:49",
+              "summary": "Là tổng các phần tử, là số phai monocity ở cái hàng lớn nhất vừa rối Nó nhỏ hơn cái tổng của các số phần tử"
+            },
+            {
+              "sec": 2516,
+              "label": "41:56",
+              "summary": "Belling of event times C++, và bạn chỉ cần lấy id, bạn cộng với 2 các sự thay đổi của 2 cái làng này này ít"
+            },
+            {
+              "sec": 2925,
+              "label": "48:45",
+              "summary": "Mình lưu lại được các cái trái trị ban đầu của cái máy trận này là tính toán chứ, ok"
+            },
+            {
+              "sec": 3493,
+              "label": "58:13",
+              "summary": "If cout 1 còn cout 2 bạn sẽ phát hợp"
+            }
+          ]
+        },
+        {
+          "seq": 17,
+          "title": "Bài 17: Bài tập Mảng 2 chiều có lời giải (Phần 2)",
+          "is_revision": true,
+          "updates_lesson_seq": 14,
+          "keywords": [
+            "chữa bài tập mảng 2 chiều"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Sau đó thì bạn sẽ phải tìm đường dẫn mà, cái đường dẫn đến nó bắt đầu từ cái hàng đầu tiên và nó sẽ kết thúc"
+            },
+            {
+              "sec": 405,
+              "label": "06:45",
+              "summary": "Ok, sau đó thì các bạn có thể xây dựng trực tiết trên cái map trận A kia cũng được nhé xây dựng luôn trên map"
+            },
+            {
+              "sec": 583,
+              "label": "09:43",
+              "summary": "Is thì nó sẽ có cái ông đứng trên này thì là is 1 d, ok"
+            },
+            {
+              "sec": 1027,
+              "label": "17:07",
+              "summary": "Cuối cùng góc bên phải này mỗi bước các bạn làm như thế nhé mình sẽ lựa chọn đường đi ngắn hơn trong 2 đường"
+            },
+            {
+              "sec": 1545,
+              "label": "25:45",
+              "summary": "Thì nữa thì mình sẽ tính toán cho nó nhanh, nó tương tự như cái bài prefix sum, 2D trên bà 2 chiều mình đơn"
+            },
+            {
+              "sec": 2270,
+              "label": "37:50",
+              "summary": "Thì mình sẽ xét cái OEG này này, liệu rằng từ cái OEG này nó sẽ xây dựng được bao nhiêu cái ma chặn Ok, đó"
+            },
+            {
+              "sec": 2933,
+              "label": "48:53",
+              "summary": "Thì nó sẽ ảnh hưởng đến kết quả đấy nhé, ok"
+            }
+          ]
+        },
+        {
+          "seq": 18,
+          "title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String",
+          "is_foundational": true,
+          "keywords": [
+            "xâu ký tự",
+            "chuỗi",
+            "string",
+            "xâu"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong xin cộng nó cung cấp rồi mình một kiểu giữ liệu này chính là string Thì string cho khép mình lưu giữ"
+            },
+            {
+              "sec": 258,
+              "label": "04:18",
+              "summary": "Hoặc là trước đó bạn dùng C in thì khi đó cái phín N4 trong bộ điện bản thí nó sẽ làm cho câu lệnh ghét live"
+            },
+            {
+              "sec": 385,
+              "label": "06:25",
+              "summary": "Dựng mình có một cái show string là Python chả hả"
+            },
+            {
+              "sec": 647,
+              "label": "10:47",
+              "summary": "Chúng ta cũng có thể dùng void, dự địa của từng phần tử trong string của mình sẽ là tra hôm trước mình dùng"
+            },
+            {
+              "sec": 1146,
+              "label": "19:06",
+              "summary": "Ok, khi bạn muốn xoánh hai tới string theo thứ tự điện thì mình sẽ sử dụng dấu lớn hơn, dấu nhỏ hơn, hoặc là"
+            },
+            {
+              "sec": 1495,
+              "label": "24:55",
+              "summary": "Đấy chính là hai cái ham để lấy ra số lượng ký tự của sâu Đấy chính là lan hoặc là sai cách nhập vào một xâu"
+            }
+          ]
+        },
+        {
+          "seq": 19,
+          "title": "Bài 19: Bài tập Mảng 2 chiều có lời giải (Phần 3)",
+          "is_revision": true,
+          "updates_lesson_seq": 14,
+          "keywords": [
+            "bài tập ma trận nâng cao"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "M built 89 Các bạn làm tương tự như là mình xây dựng cái mai chặn xóa nóc ấy Thì để xoay cái thằng này thì"
+            },
+            {
+              "sec": 485,
+              "label": "08:05",
+              "summary": "Nhưng mà như thế chứ chắc là đúng, bởi vì là có thể có một cái phần từ nào đó mà nó xuất hiện ở trên một cái"
+            },
+            {
+              "sec": 531,
+              "label": "08:51",
+              "summary": "Thì như thế nhiều khi mình lại đếm ra cái số tần xuất hiện của một cái số nào đó Một cái dòng đó không xuất"
+            },
+            {
+              "sec": 1353,
+              "label": "22:33",
+              "summary": "Ok, bây giờ mình thử lấy cái ma-chận này này, they some Lấy cái ma-chận này sau đó là mình chạy cho các bạn"
+            },
+            {
+              "sec": 2250,
+              "label": "37:30",
+              "summary": "Các bạn có thể xem vào phần stack ở trên này mình đang đề xuất đây Vậy thì cái này làm như thế nào"
+            },
+            {
+              "sec": 2735,
+              "label": "45:35",
+              "summary": "Cỡ vết của nào với mở nó sẽ từng đối là nhỏ, nó sẽ nằm trong khoảng từ 1 cho tới 200 Vậy nếu mà các bạn duyệt"
+            },
+            {
+              "sec": 3415,
+              "label": "56:55",
+              "summary": "Đây nó sẽ là 8, tương tự như vậy mình sẽ set các cái hình trữ nhật bắt đầu ở cột 2 và kết thúc ở cột 3 đúng"
+            },
+            {
+              "sec": 4082,
+              "label": "68:02",
+              "summary": "Mình sẽ bắt đầu từ cái cột rai, bắt đầu từ chỉ số lép cho tới chỉ số nhỏ hân mờ Thì khi đó bạn thấy là mỗi"
+            }
+          ]
+        },
+        {
+          "seq": 20,
+          "title": "Bài 20: Hướng dẫn sử dụng Vector trong C++ & Iterator",
+          "is_foundational": true,
+          "keywords": [
+            "vector",
+            "iterator",
+            "mảng động"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Thằng vector cho C++ thì nó như là một cái mảng động, ok, nó có thể thay đổi được kết thúc"
+            },
+            {
+              "sec": 187,
+              "label": "03:07",
+              "summary": "Vậy là hai cái hàng đầu tiên, hàng thứ nhất đã đẩy một phần thử qua trong vector và hàng thứ hai chỉ là mình"
+            },
+            {
+              "sec": 446,
+              "label": "07:26",
+              "summary": "En Thú ý nhớ, en không phải là phần tử cuối cùng đâu mà là en là phần tử sau phần tử cuối cùng của bạn Thì"
+            },
+            {
+              "sec": 697,
+              "label": "11:37",
+              "summary": "Bởi vì là sẽ có những cái hạm có sẵn ở trong thư điện sp lỡ Mà làm việc với vector, hoặc là sau này khó hơn"
+            },
+            {
+              "sec": 855,
+              "label": "14:15",
+              "summary": "Ok, đây chỉ là 1 cái cách nữa nếu mà bạn muốn dùng iterator để chia cập những cái phần thị nào đó Rồi, lúc"
+            },
+            {
+              "sec": 1037,
+              "label": "17:17",
+              "summary": "Hoặc là string chả nạ, dưới dụ string chả nạ dưới dụ mình có 1 cái vector string nhé con ê, cho đó mình v"
+            }
+          ]
+        },
+        {
+          "seq": 21,
+          "title": "Bài 21: Hướng dẫn sử dụng Pair trong C++",
+          "keywords": [
+            "pair",
+            "cặp phần tử",
+            "std::pair"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Hoặc là lưu các cái từ đơn giản thì mình sẽ sử dụng một cái mạng string hoặc là các vector string đúng không"
+            },
+            {
+              "sec": 129,
+              "label": "02:09",
+              "summary": "Cắt ngoài 1 puff, có một harm string biphane và một h có một flick fails có m GPU unscreen medutt then Cr"
+            },
+            {
+              "sec": 216,
+              "label": "03:36",
+              "summary": "Cắt ngoài 1 puff, có một harm string biphane và một h có một flick fails có m GPU unscreen medutt then Cr"
+            },
+            {
+              "sec": 357,
+              "label": "05:57",
+              "summary": "Đấy là PA, INT, INT, INT như thế nào"
+            },
+            {
+              "sec": 432,
+              "label": "07:12",
+              "summary": "Đấy là PA, INT, INT, INT như thế nào"
+            }
+          ]
+        },
+        {
+          "seq": 22,
+          "title": "Bài 22: Cấu trúc dữ liệu Set trong C++ - Multiset",
+          "is_foundational": true,
+          "keywords": [
+            "set",
+            "multiset",
+            "tập hợp",
+            "unordered_set"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mình hay sử dụng cái thế biện là nó bao gồm tất cả Thằng xét này có một vài hàm chính mà các bạn cần phải nắm"
+            },
+            {
+              "sec": 262,
+              "label": "04:22",
+              "summary": "Nhưng mà trong đối với set thì khi mà bạn tìm kiếm một phần tửa trong set thì cái độ phức tạp nó chỉ là"
+            },
+            {
+              "sec": 570,
+              "label": "09:30",
+              "summary": "Trong sáng set của mình đang có số từ không cho tới chí nữa, mà mình có một câu lệnh đấy chính là f"
+            },
+            {
+              "sec": 964,
+              "label": "16:04",
+              "summary": "Ví dụ có một cái bài tỏ án như sau đây chính là nhập một cái mạng, sau đó là đếm số lượng phần tử khác nhau"
+            },
+            {
+              "sec": 1201,
+              "label": "20:01",
+              "summary": "Xét ý, thì nó sẽ có thư thụt nhá, ok, nó sẽ có thư thụt Và thư thụt đối với số thì nó sẽ lưu từ bé đến lớn"
+            },
+            {
+              "sec": 1603,
+              "label": "26:43",
+              "summary": "Rbg này Ở đây, cái phần tử cuối cùng ở trong mantiset hiện tại đang có ấy Sau đó thì bạn sẽ xóa đi phần tử"
+            }
+          ]
+        },
+        {
+          "seq": 23,
+          "title": "Bài 23: Cấu trúc dữ liệu Map trong C++ - Multimap",
+          "is_foundational": true,
+          "keywords": [
+            "map",
+            "multimap",
+            "ánh xạ",
+            "unordered_map",
+            "key value"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Nhưng mà thằng map này thì nó sẽ lưu các cái cặp key value, ok"
+            },
+            {
+              "sec": 302,
+              "label": "05:02",
+              "summary": "Là phải diêng biệt với nhau mà Thành ra là khi đó cái số lượng phần tử trong map của bạn chỉ là 4 thôi Tương"
+            },
+            {
+              "sec": 610,
+              "label": "10:10",
+              "summary": "Hoặc là bạn có thể sử dụng hàm phai HM5 này thì nó tương tự như set, đấy chính là nếu mà bạn tìm thấy 1 cái"
+            },
+            {
+              "sec": 902,
+              "label": "15:02",
+              "summary": "V22, lialset, 2, 1, icon, in, animations, Một cái kỳ nào đó mà nó chưa tồn tại không xét, là cái lỗ trong map"
+            },
+            {
+              "sec": 1284,
+              "label": "21:24",
+              "summary": "Các bạn tùy ý nhé, các game, nếu bạn lưu string thì nó cũng sẽ có thứ tự và các thứ tự ở đây, các phần tử"
+            },
+            {
+              "sec": 1642,
+              "label": "27:22",
+              "summary": "Tức là mình không thể cho cái map vào trong đóng hồ quân Để mình ráng 1 cái cặp key value nữa, bởi vì là cái"
+            }
+          ]
+        },
+        {
+          "seq": 24,
+          "title": "Bài 24: Bài tập áp dụng Set và Map trong C++",
+          "keywords": [
+            "bài tập set",
+            "bài tập map",
+            "áp dụng set map"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Ok hoặc là bạn sắp xếp, sau đó thì mình so sánh các cái thường mà đứng cạnh nhau và giống nhau thì khác nhau"
+            },
+            {
+              "sec": 268,
+              "label": "04:28",
+              "summary": "Yyy bán ngay, coomane, cout, paus Cái thứ nhất nha, đây là sử dụng sub-save sau đó tìm kiếm ích văn nhạc văn"
+            },
+            {
+              "sec": 501,
+              "label": "08:21",
+              "summary": "Đúng không phải là giá trị đúng không"
+            },
+            {
+              "sec": 943,
+              "label": "15:43",
+              "summary": "C++, 1, abcd, 1, kd4, 1, abcd Thì nó sẽ in ra là thằng Giết ok Mạc thì các bạn làm tương tự như vậy Mạc thì"
+            },
+            {
+              "sec": 1209,
+              "label": "20:09",
+              "summary": "Ok, hoặc là bạn thử dụng cái mặt lành dấu và 26 hân tự"
+            },
+            {
+              "sec": 1449,
+              "label": "24:09",
+              "summary": "Cơm là ném tử, không có là chuối rồi mà"
+            }
+          ]
+        },
+        {
+          "seq": 25,
+          "title": "Bài 25: Tìm kiếm nhị phân & Lower_bound, Upper_bound",
+          "is_foundational": true,
+          "keywords": [
+            "tìm kiếm nhị phân",
+            "binary search",
+            "lower_bound",
+            "upper_bound"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Rồi, nếu mà muốn sử dụng các cái thật toán này thì bạn include cái thư viện là Angleism này nhé"
+            },
+            {
+              "sec": 354,
+              "label": "05:54",
+              "summary": "Thứ là khi đó mít đồ chỉ số của mình nó sẽ bằng 2 trong trường hợp này thì nó tìm kiếm thằng ích, là ba đúng"
+            },
+            {
+              "sec": 406,
+              "label": "06:46",
+              "summary": "Thì nó sẽ return true luôn và bạn đã tìm thấy được cái thằng ích ở trong này Vậy thì thật toàn tìm kiếm tiền"
+            },
+            {
+              "sec": 896,
+              "label": "14:56",
+              "summary": "Thì bạn sẽ return về binary search của a này, cái trị số mới nếu mà emnit là nhỏ hơn x, mình tìm kiếm ở bên"
+            },
+            {
+              "sec": 1326,
+              "label": "22:06",
+              "summary": "Thì cái hàm có sẵn của nó đây chính là nó cung tê là binary search như thế này này Ê, bạn sẽ kiểm tra là if"
+            },
+            {
+              "sec": 1939,
+              "label": "32:19",
+              "summary": "Mà lab mình nít cộng 1, còn else thì mình sẽ phìm bên trái y vào nít vô 1 Ở dưới này bạn chỉ cần do the rest"
+            },
+            {
+              "sec": 2663,
+              "label": "44:23",
+              "summary": "Thì khi đó nó sẽ trả về cái thằng là cái thằng Iter2 Xem sự hợp này nó chính là A, cộng nò Ok, à, thì đấy có"
+            }
+          ]
+        },
+        {
+          "seq": 26,
+          "title": "Bài 26: Cách sử dụng hàm Sort trong C++ & Comparator",
+          "is_foundational": true,
+          "keywords": [
+            "sort",
+            "sắp xếp",
+            "comparator",
+            "hàm so sánh",
+            "std::sort"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Bạn muốn sắp xếp mạng A này, các bạn có thể sử dụng các cốt của mình tự cốt, nhưng nếu bạn muốn sử dụng hàm"
+            },
+            {
+              "sec": 214,
+              "label": "03:34",
+              "summary": "Và trên cả tuần đất cơ nhé, thì còn nếu mà bạn muốn xót xếp trên đoạn thì nó là cái xót A, xót A, xót xếp"
+            },
+            {
+              "sec": 300,
+              "label": "05:00",
+              "summary": "Thế khi đó nó cũng sẽ phóc xếp các phần tựa trong thế giác tơ của mình từ chỉ số AX và IT1 Nhớ ra nó sẽ không"
+            },
+            {
+              "sec": 701,
+              "label": "11:41",
+              "summary": "Ồm bỏ thì để thật tản xét trên thế thật tản mật sót Bạn sẽ sử dụng hạm stable sort B Legion Stable sort này"
+            },
+            {
+              "sec": 1101,
+              "label": "18:21",
+              "summary": "Sau khi mà xác xếp bạn mong muốn thằng A nói như thế nào với thằng B, thì mình sẽ return với cái giới chức"
+            },
+            {
+              "sec": 1303,
+              "label": "21:43",
+              "summary": "Hay là thằng 50, thằng 9 năm nó cũng sẽ được bảo toàn Ok, thằng xót thì nó không đảm bảo được điều gì đâu nhé"
+            }
+          ]
+        },
+        {
+          "seq": 27,
+          "title": "Bài 27: Thuật toán sắp xếp chèn, nổi bọt, chọn, đếm",
+          "keywords": [
+            "bubble sort",
+            "insertion sort",
+            "selection sort",
+            "counting sort",
+            "sắp xếp nổi bọt",
+            "sắp xếp chèn",
+            "sắp xếp chọn"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Tức tưởng của thuật toán sắp xếp chọn ấy, thì của nó là mỗi bước ấy"
+            },
+            {
+              "sec": 535,
+              "label": "08:55",
+              "summary": "Chú ý nhé, tất cả các phần tử đứng trước chỉ số E là các phần tử mà đã được sắp xếp rồi đúng không đấy, mình"
+            },
+            {
+              "sec": 865,
+              "label": "14:25",
+              "summary": "Bước tiếp theo thì nó cứ cố gắng nó nổi cái thằng lớn nhất về cuối dãy và ở mỗi bước thì nó lại tăng thêm 1"
+            },
+            {
+              "sec": 1220,
+              "label": "20:20",
+              "summary": "Thì nó sẽ sub-shape cái mạng của bạn thành tăng rời 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 Ok, thằng này thì nó không"
+            },
+            {
+              "sec": 1648,
+              "label": "27:28",
+              "summary": "Ok, 3 xò xảynh với 1, thấy 3 lớn hơn 1 thì khi đó 3 sẽ nhảy vào vị trí mà 4 vừa được dịch sang bên phải đấy"
+            },
+            {
+              "sec": 2226,
+              "label": "37:06",
+              "summary": "Thế là bạn không được chén vào cái vị trí POS mà bạn phải chén vào cái vị trí đứng sau vị trí POS và chính là"
+            },
+            {
+              "sec": 2597,
+              "label": "43:17",
+              "summary": "Mình còn một thuật toán sắp xếp nữa, và mình cũng sẽ nói luôn, bởi vì thằng này cũng dễ Mình sẽ nói luôn vào"
+            }
+          ]
+        },
+        {
+          "seq": 28,
+          "title": "Bài 28: Thuật toán sắp xếp trộn (Merge Sort)",
+          "keywords": [
+            "merge sort",
+            "sắp xếp trộn"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Cái mạng mà có một phần tử thì nó đã được sắp xếp đúng không"
+            },
+            {
+              "sec": 311,
+              "label": "05:11",
+              "summary": "Nó hơi khó mua tạm chút với cái cách hoạt động của thằng này"
+            },
+            {
+              "sec": 585,
+              "label": "09:45",
+              "summary": "Ok, nhớ là cái đầu bút đằng sau nó không lấy đúng không"
+            },
+            {
+              "sec": 1289,
+              "label": "21:29",
+              "summary": "Lời gọi hàm mật xọc A00 nó sẽ bị return nó sẽ được đẩy ra khỏi stack đúng không"
+            },
+            {
+              "sec": 1574,
+              "label": "26:14",
+              "summary": "Cái hàm mật xọt A01 của các bạn lúc nãy á, đúng chứ à"
+            },
+            {
+              "sec": 1956,
+              "label": "32:36",
+              "summary": "9, 7, 9, 3 rồi 7 và 3 vân vân nếu mà bạn dùng 2 và 4 thì cốt cái này quá dễ đúng không"
+            },
+            {
+              "sec": 2368,
+              "label": "39:28",
+              "summary": "Size, trjorie, amen Ở dưới này bạn return cho mình về biên cao đấy Mỗi khi mà bạn trộn 2 cái bánh bên trái và"
+            }
+          ]
+        },
+        {
+          "seq": 29,
+          "title": "Bài 29: Thuật toán sắp xếp vun đống (Heap Sort)",
+          "keywords": [
+            "heap sort",
+            "sắp xếp vun đống",
+            "vun đống"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Thật toán sắp xếp vôn đóng này thì nó dựa trên một cái câu chúc dữ liệu, tương đối đang đặc biệt"
+            },
+            {
+              "sec": 424,
+              "label": "07:04",
+              "summary": "Rồi, thì đấy là cái định nghĩa về cái cây và ví dụ về cái cây nhị phân hoàn chỉnh mà các bạn cần biết trước"
+            },
+            {
+              "sec": 467,
+              "label": "07:47",
+              "summary": "Thì cái phần tử là cái node con bên trái của nó, khi mà mình xây dựng cái cây nhị phân hoàn chỉnh nó sẽ có"
+            },
+            {
+              "sec": 1002,
+              "label": "16:42",
+              "summary": "Tất nhiên là cái thứ tự của con bên trái và con bên phải không quan trọng tức là nhiều bạn lại tưởng là thằng"
+            },
+            {
+              "sec": 1709,
+              "label": "28:29",
+              "summary": "Cái thằng node qua bên cháu này nè nó lớn hơn cái thằng node ở gốc, node tre thì nó sẽ tiến hành swap 2 thằng"
+            },
+            {
+              "sec": 2576,
+              "label": "42:56",
+              "summary": "Bây giờ phần tử lớn nhất sau khi mà phần hiepify cái nốt gốc này này cái thằng lớn nhất lại là thằng 10 Đúng"
+            },
+            {
+              "sec": 3267,
+              "label": "54:27",
+              "summary": "Thì khi đó mình sẽ được có một cái thằng cuối được đưa về rồi, đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 30,
+          "title": "Bài 30: Sắp xếp nhanh QuickSort - Lomuto & Hoare",
+          "keywords": [
+            "quicksort",
+            "sắp xếp nhanh",
+            "lomuto",
+            "hoare",
+            "phân hoạch"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong video này mình sẽ hướng dẫn các bạn một thuật toán sắp xếp tiếp theo để thật toán sắp xếp nhanh quích"
+            },
+            {
+              "sec": 402,
+              "label": "06:42",
+              "summary": "Các bạn có thể nhìn qua cái mẽ giả của phần hoạch Lomuto đấy chính là"
+            },
+            {
+              "sec": 886,
+              "label": "14:46",
+              "summary": "Nó chia thành 3 phần Đây, người ta cũng ví dụ phân hoạch Lomuto cho các bạn này, đúng không nhỉ"
+            },
+            {
+              "sec": 1345,
+              "label": "22:25",
+              "summary": "Thì nó sẽ tiến hành tăng i lên 1 để nó nhảy ra thằng 8 là thằng lớn non chốt này rồi nó sẽ hoán bị 48, ok rồi"
+            },
+            {
+              "sec": 1761,
+              "label": "29:21",
+              "summary": "Nhưng mà cái phân hoạch Lomuto này có một cái nhiệm một điểm yếu đấy, chính là trong truyền hợp mà cái dãy"
+            },
+            {
+              "sec": 2087,
+              "label": "34:47",
+              "summary": "2 nửa bên trái và nửa bên phải tự tự như là ở toàn quick sort, nhưng mà cái phân hoạch của nó tự tưởng nó"
+            },
+            {
+              "sec": 2590,
+              "label": "43:10",
+              "summary": "Thì tiếp tục nó sẽ gọi phân hoạch đến cái đoạn ở bên trái và đoạn bên phái thì nó sẽ bắt đầu từ chỉ số y cộng"
+            }
+          ]
+        },
+        {
+          "seq": 31,
+          "title": "Bài 31: Các hàm thuật toán trong thư viện Algorithm",
+          "keywords": [
+            "algorithm",
+            "thư viện thuật toán",
+            "min",
+            "max",
+            "reverse",
+            "fill"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Thường thì các cái hàm này sẽ nằm ở trong cái thư viện algorithm, ok"
+            },
+            {
+              "sec": 353,
+              "label": "05:53",
+              "summary": "Các bạn không có thể xeo ra cái mini là mình có nó bằng b, b, n, b, n Đối với mạng thì các bạn dùng a và a"
+            },
+            {
+              "sec": 726,
+              "label": "12:06",
+              "summary": "Ở đây mình sẽ dùng thêm cái comparator ở đây nha, chữ này nha ok, đây thì các bạn thấy là gì nha, cái thằng"
+            },
+            {
+              "sec": 1039,
+              "label": "17:19",
+              "summary": "Mình đề xuất này nè Nên chính là phần về thuật toán binary search vào lau vào bao vào up vào bao Mình nói rõ"
+            },
+            {
+              "sec": 1487,
+              "label": "24:47",
+              "summary": "000 ở đằng sau này đúng không Nhưng mà đôi khi trong cái quá trình mà mình đang làm mình muốn reset cái giá"
+            },
+            {
+              "sec": 1766,
+              "label": "29:26",
+              "summary": "Beg, mình cho bắt đầu từ vector rest, cho là các bạn for int tx hay vector rest Thoạn là mình sẽ dễ, thì mình"
+            }
+          ]
+        },
+        {
+          "seq": 32,
+          "title": "Bài 32: Hướng dẫn giải bài tập Sắp xếp và Tìm kiếm (P1)",
+          "keywords": [
+            "bài tập sắp xếp",
+            "bài tập tìm kiếm"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mình sẽ bắt đầu với bài đầu tiên để chính là thật toàn đồ chủ trực tiếp và họ yêu cầu mình yên ra các bước"
+            },
+            {
+              "sec": 605,
+              "label": "10:05",
+              "summary": "Và mình sẽ dùng một cái chuyên viện, POS, nó bằng Y chứa 1, nó là mình lập qua POS, thằng lớn bằng không nhé"
+            },
+            {
+              "sec": 1123,
+              "label": "18:43",
+              "summary": "Và đây mình sẽ viết cái vị trí đầu tiên đúng không"
+            },
+            {
+              "sec": 1824,
+              "label": "30:24",
+              "summary": "Mvp Will I Indeed to từ Pet to cout, spang, i, swap, ai, ai, rai, swap, ai, pi, void ok bây giờ kiện vụ của"
+            },
+            {
+              "sec": 2442,
+              "label": "40:42",
+              "summary": "Rồi, có cái input ở đây Vên trường hợp này thì nó chỉ có 1 cặp thôi này Rồi, còn sẽ kết thay thứ 2 thì nó sẽ"
+            },
+            {
+              "sec": 2848,
+              "label": "47:28",
+              "summary": "Bằng cách là kiểm tra cái độ cứng này này"
+            },
+            {
+              "sec": 3655,
+              "label": "60:55",
+              "summary": "Khi đó cái số lượng nhóm của bạn nói sắp là ăn lên và bạn sẽ ít ra là case, mấy cây, mấy xăm, xí là cái số"
+            }
+          ]
+        },
+        {
+          "seq": 33,
+          "title": "Bài 33: Hướng dẫn giải bài tập Sắp xếp và Tìm kiếm (P2)",
+          "keywords": [
+            "chữa bài tập sắp xếp và tìm kiếm"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Thì mình sẽ tiếp tục thải pháp bài học về phần cấp xếp này nhé, chiều bài 21 trở đi"
+            },
+            {
+              "sec": 841,
+              "label": "14:01",
+              "summary": "Bây giờ bạn đang xét thằng ai, đúng không"
+            },
+            {
+              "sec": 1835,
+              "label": "30:35",
+              "summary": "Vậy thì khi đó cái đáp án của bạn sẽ được cộng thêm là gì"
+            },
+            {
+              "sec": 2580,
+              "label": "43:00",
+              "summary": "Inert, rồi ok, bây giờ mình sẽ nhập vào nr phần tử nhé, sau đó mình dùng cái mạng nữa, ấn là moon hoặc là"
+            },
+            {
+              "sec": 3441,
+              "label": "57:21",
+              "summary": "Vậy là mình đã có các phần tử ở trong mạng hợp và lãng cao nó chính là các phần tử mình cần rồi"
+            },
+            {
+              "sec": 4301,
+              "label": "71:41",
+              "summary": "Trong đó, mỗi cái te nó sẽ lưu 2 phần, ở đây mình sẽ dẫn các 2 cách luôn nhá, cách thứ nhất là sử dụng map"
+            },
+            {
+              "sec": 5161,
+              "label": "86:01",
+              "summary": "Mình chỉ cần kiểm tra if and if, mà lớn hơn x đúng không, thì mình sẽ cập nhật graph bằng myth, sau đó mình"
+            },
+            {
+              "sec": 6021,
+              "label": "100:21",
+              "summary": "Red c++ ra x ok à, thì đây chính nó hơi khác một tí đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 34,
+          "title": "Bài 34: Kiến thức toán & Lý thuyết số (Phần 1)",
+          "keywords": [
+            "lý thuyết số",
+            "số nguyên tố",
+            "sàng nguyên tố",
+            "ucln",
+            "bcnn",
+            "gcd"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Các bạn hãy cốt hềm xuống tối sau đây mình sẽ thêm 2 cái thư viện là map"
+            },
+            {
+              "sec": 716,
+              "label": "11:56",
+              "summary": "Int prime, hồi lắng nguyên tố đi cho dễ sau đó là bạn dùi từ 2, cho từ các mức 2 của nò ok, rồi bạn kiểm tra"
+            },
+            {
+              "sec": 1163,
+              "label": "19:23",
+              "summary": "Tiếp theo nó duyệt cái số tiếp theo là số ba, thì nó sấy thằng ba này cũng là số nguyên tố này"
+            },
+            {
+              "sec": 1757,
+              "label": "29:17",
+              "summary": "Khi mà phân tích thường số nguyên tố mà bạn gặp một cái thường số nguyên tố nào đó Thì bắt buộc là bạn sẽ"
+            },
+            {
+              "sec": 2247,
+              "label": "37:27",
+              "summary": "Bạn duyệt từ 2 cho tất cả mức 2 của nó Và bạn kiểm tra là, if nè phần 100 i bằng không Thì đây chính là thời"
+            },
+            {
+              "sec": 2787,
+              "label": "46:27",
+              "summary": "Bây giờ là mình sẽ duyệt từ 2 cho tư cân bậc 2 của error đấy, đi khọng khọng bây giờ thì bạn chỉ cần duyệt"
+            },
+            {
+              "sec": 3293,
+              "label": "54:53",
+              "summary": "Sau đó mình chỉ cần gọi cái hàn là sàn kia thôi I nó t lep, ra Sau đó bạn sẽ gọi hàn sàn và chuyển lep và ra"
+            }
+          ]
+        },
+        {
+          "seq": 35,
+          "title": "Bài 35: Kiến thức toán & Lý thuyết số (Phần 2)",
+          "keywords": [
+            "lý thuyết số phần 2",
+            "phân tích thừa số nguyên tố"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Đây mình sẽ là long long, cd, long long a và long long b đúng không"
+            },
+            {
+              "sec": 337,
+              "label": "05:37",
+              "summary": "Thì nó chính là cái giá trị của Hà Hà phi Hà Mơ Lea, ok"
+            },
+            {
+              "sec": 428,
+              "label": "07:08",
+              "summary": "Bạn phân tích thường số nguyên tố ra và mỗi thường số nguyên tố bạn phân tích được thì bạn sẽ app dụng nó vào"
+            },
+            {
+              "sec": 801,
+              "label": "13:21",
+              "summary": "Mình đặt là Long Long, C++, Long Long A, Long Long B, các bạn hãy làm như thế nào dạ"
+            },
+            {
+              "sec": 1202,
+              "label": "20:02",
+              "summary": "Có thể gcd các ai ra đối với tài trường tài trường"
+            },
+            {
+              "sec": 1603,
+              "label": "26:43",
+              "summary": "Long long, pow, 1, int a và int b đúng không"
+            },
+            {
+              "sec": 2192,
+              "label": "36:32",
+              "summary": "Này, số Fibonacci 93 đây, 94 chắc là nó sẽ bị tràn cái long long rồi, nó sẽ là số ấm hoặc là 1 cái số bị sai"
+            }
+          ]
+        },
+        {
+          "seq": 36,
+          "title": "Bài 36: Kiến thức toán & Lý thuyết số (Phần 3)",
+          "keywords": [
+            "lý thuyết số phần 3",
+            "chữ số tận cùng",
+            "lũy thặng"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Giờ này thì mình sẽ dẫn các bạn xuất kiến thức để xuất bán mô luôn nhé"
+            },
+            {
+              "sec": 501,
+              "label": "08:21",
+              "summary": "Nó không phải là cái số mà 22, nhưng 1901 là này OK dụ như mình lấy số là số"
+            },
+            {
+              "sec": 638,
+              "label": "10:38",
+              "summary": "Thật hoán ước lít thì nó sẽ giúp mình kính được rước súng lớn nhất của hai số, đúng không"
+            },
+            {
+              "sec": 1304,
+              "label": "21:44",
+              "summary": "Thôi gọi là thời giải thuật ơ clip mà rộng nhé Nó hơi khó hiểu một tí nếu mà bạn nào hơi yếu về phần đệ quý"
+            },
+            {
+              "sec": 2030,
+              "label": "33:50",
+              "summary": "Thế thứ nhất đấy, đấy là cách sử dụng thịt đảm modul"
+            },
+            {
+              "sec": 2761,
+              "label": "46:01",
+              "summary": "Nó chính là nò giai thường, chứa nó chứa cây giai thường, cái gì đó là nô giai thường nế, ở đây, cái điến 1"
+            },
+            {
+              "sec": 3803,
+              "label": "63:23",
+              "summary": "18 ở dưới các bạn có thể chứa cốt và pháp list Em có đúng không nhỉ"
+            }
+          ]
+        },
+        {
+          "seq": 37,
+          "title": "Bài 37: Kỹ thuật đệ quy trong C++ & Cách hàm hoạt động",
+          "is_foundational": true,
+          "keywords": [
+            "đệ quy",
+            "recursion",
+            "cây đệ quy",
+            "bài toán đệ quy"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Dụng mình có một cái hàm như thế này là void, cin, char, trong cái hàm xin chào này mình có thể có một số câu"
+            },
+            {
+              "sec": 267,
+              "label": "04:27",
+              "summary": "Đấy chính là cái trường hợp mà cái bài toán của bạn ấy, nó đã có câu trả lời rồi"
+            },
+            {
+              "sec": 403,
+              "label": "06:43",
+              "summary": "Và bạn thấy là cái hàm tổng này này nó lại gọi một cái hàm tổng khác có nhiều là hai thằng này thì cùng tên"
+            },
+            {
+              "sec": 486,
+              "label": "08:06",
+              "summary": "Phớt phớt một chút thôi thì nó không rõ đi sâu được hẳn bên dưới đâu mỗi khi mà bạn gọi một cái hàm tổng nhé"
+            },
+            {
+              "sec": 1027,
+              "label": "17:07",
+              "summary": "Khi nó gọi tổng 4, tổng 3, tổng 2, tổng 1, tổng chứ 1, chứ 2, chứ 3, chứ 4 và đây, nó gọi đến tận chứ 43,162"
+            },
+            {
+              "sec": 1319,
+              "label": "21:59",
+              "summary": "Cho einzige nhat nhat nhat nhat Ph dealing nuestro có 1 công thức chi hồi, FN, FN1, FN2 thì bạn cũng có thể"
+            },
+            {
+              "sec": 1767,
+              "label": "29:27",
+              "summary": "Thì bạn có thể tính bị thường bị phân bằng đệ quy cũng được, mình đặt là binary power, mình có 2 cân số là a"
+            }
+          ]
+        },
+        {
+          "seq": 38,
+          "title": "Bài 38: Giải bài tập Xâu kí tự trong C++ (Phần 1)",
+          "keywords": [
+            "bài tập xâu",
+            "bài tập chuỗi",
+            "xử lý xâu"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Mình đã từng làm các cvc bài tập về phần chuỗi của bạn đấy"
+            },
+            {
+              "sec": 641,
+              "label": "10:41",
+              "summary": "Các CR bởi uppo, tổng mixture ofunch, sweep, mand ives"
+            },
+            {
+              "sec": 755,
+              "label": "12:35",
+              "summary": "Nhưng mà mình chỉ lấy chị cái đầu tiên thôi, ok"
+            },
+            {
+              "sec": 1266,
+              "label": "21:06",
+              "summary": "Vậy thì như thế này thì sẽ viết 1 cái hàm để mà viết hoa chị cái đầu của 1 từ nhá 1 ham đến viết hoa, tất cả"
+            },
+            {
+              "sec": 2459,
+              "label": "40:59",
+              "summary": "Đây, mình dùng map nó dễ nhé, mình sẽ dùng map char, int, mình đã làm p sau mình tuyệt qua tình trí tự của"
+            },
+            {
+              "sec": 3636,
+              "label": "60:36",
+              "summary": "String, in là tê, cái map này có nhiệm vụ là gì nhỉ"
+            },
+            {
+              "sec": 4265,
+              "label": "71:05",
+              "summary": "Dụ như bạn hoàn vị bốn với đây này hay là mình bốn với đây thì nó sẽ lớn hơn rõ ràng là mình hoàn vị với cái"
+            },
+            {
+              "sec": 4922,
+              "label": "82:02",
+              "summary": "Chotspy, cout, base, chili, cout, cout, cout, cout, cout, b solutions, trừ đi một ơn vị, thì nếu mà nó nhỏ"
+            }
+          ]
+        },
+        {
+          "seq": 39,
+          "title": "Bài 39: Giải bài tập Xâu kí tự trong C++ (Phần 2)",
+          "keywords": [
+            "chữa bài tập xâu ký tự"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Hôm nay mình sẽ dẫn tiếp các bạn chạp về số kí tự nhé"
+            },
+            {
+              "sec": 867,
+              "label": "14:27",
+              "summary": "Vậy thì từ từ mình sẽ viết những cái hềm để mà check, thường thì mình sẽ viết cái hềm để tách luôn đấy nhé"
+            },
+            {
+              "sec": 1659,
+              "label": "27:39",
+              "summary": "C++ Twitter titum là TOC,ground cell typector tinted on this card This will be new, new, new, new, new, new"
+            },
+            {
+              "sec": 2669,
+              "label": "44:29",
+              "summary": "Ở đây mình phải lưu lại cái chiều dài của sâu đấy, nhưng mà mình phải lưu lại được là cái chỉ số bắt đầu ấy"
+            },
+            {
+              "sec": 3692,
+              "label": "61:32",
+              "summary": "Kí tự này nó là một cái con structure của string nhá Khi nào bạn muốn khởi tạo một cái string ấy mà nó có bao"
+            },
+            {
+              "sec": 4525,
+              "label": "75:25",
+              "summary": "Khi Do Bill walks in, Với đến cuối dẫy mà chỗ nào nó cũng là function, thì đó có nghĩa là cái sâu của bạn"
+            },
+            {
+              "sec": 5446,
+              "label": "90:46",
+              "summary": "Đó là suffix C++, 1c++, Apply some script 1c++ and just build ingle merging Identifying C++ i just started"
+            },
+            {
+              "sec": 6616,
+              "label": "110:16",
+              "summary": "Thực ra thì string stream mà các bạn không sử dụng, muốn text các tử bạn không sử dụng string stream được bạn"
+            }
+          ]
+        },
+        {
+          "seq": 40,
+          "title": "Bài 40: Giải bài tập Xâu kí tự trong C++ (Phần 3)",
+          "keywords": [
+            "bài tập xâu nâng cao"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Nó liên quan những cái bài thán mà cái số người tách to thường là một cái số nguyên mà được nhập vào như là"
+            },
+            {
+              "sec": 433,
+              "label": "07:13",
+              "summary": "Fill in cout and ipad, wave, disk, scale, braid, bài đồ hợp số 2"
+            },
+            {
+              "sec": 654,
+              "label": "10:54",
+              "summary": "Sau đó bạn sẽ có một cái biếng là biếng r thì nó sẽ bằng không hoặc là 1 lũ í, mình sẽ cho là x của xn lang"
+            },
+            {
+              "sec": 933,
+              "label": "15:33",
+              "summary": "Mình có phương thức như thế này, đúng không"
+            },
+            {
+              "sec": 1650,
+              "label": "27:30",
+              "summary": "A nhập trước và B nhập sau, trong đó A là 1 số long long và B thì là 1 cái sâu, sẽ lại sinh cho A và B"
+            },
+            {
+              "sec": 2816,
+              "label": "46:56",
+              "summary": "7521, R1-name, include, 1, c Nämevc, include and 1, 5, include, iostream 21, ạ Vmdidl em nhưng 2 thì"
+            },
+            {
+              "sec": 4020,
+              "label": "67:00",
+              "summary": "Mình không thể an dụng kiến thức là sử dụng số long long này là một số"
+            }
+          ]
+        },
+        {
+          "seq": 41,
+          "title": "Bài 41: Thuật toán sinh kế tiếp - Nhị phân, Hoán vị",
+          "keywords": [
+            "thuật toán sinh",
+            "sinh kế tiếp",
+            "sinh nhị phân",
+            "sinh hoán vị",
+            "sinh tổ hợp"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trên bên này thì mình sẽ dẫn các bạn kiên thức C++, là kiên thức phương pháp sinh nhất"
+            },
+            {
+              "sec": 527,
+              "label": "08:47",
+              "summary": "Mình gặp bit nào là 1 đấy, mình sẽ chuyển nó thành bit không mà mình dịch sang cái trái này, ok"
+            },
+            {
+              "sec": 568,
+              "label": "09:28",
+              "summary": "Nó sẽ giảm là 5, 4, 3, 2, 1 và nó sẽ giảm về không tức là khi mà nó xé xong cái bít này thì nó sẽ giảm i nữa"
+            },
+            {
+              "sec": 1186,
+              "label": "19:46",
+              "summary": "Nó sẽ bắt đầu từ chiều K, cộng mùa, nhỉ"
+            },
+            {
+              "sec": 1843,
+              "label": "30:43",
+              "summary": "Hồi tạc hìnhsole While Sau khi mình nhìn ra cấu hình hiện tại, mình sẽ gọi ham sinh để có một kế kèo vưu thế"
+            },
+            {
+              "sec": 2478,
+              "label": "41:18",
+              "summary": "Cái cách đấy tìm rất là dễ, ví dụ nhé"
+            },
+            {
+              "sec": 3236,
+              "label": "53:56",
+              "summary": "Ok, thì đây chính là cái cách mà mình sinh đầu hoán vị nhé, tự cốt hoặc là sử dụng 2 hàm khó sẵn là hàm đẹp"
+            }
+          ]
+        },
+        {
+          "seq": 42,
+          "title": "Bài 42: Hướng dẫn giải bài tập Thuật toán sinh kế tiếp",
+          "keywords": [
+            "bài tập thuật toán sinh"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Nhưng trước mình đã dẫn các bạn cái test xinh xấu nhị phân lồn, nhưng mà mình làm trên mạng, ok"
+            },
+            {
+              "sec": 504,
+              "label": "08:24",
+              "summary": "Mà lớn hơn az, sau đó thì mình sẽ swap 2 thằng a và az Sau khi mà swap a và az thì mình sẽ lập lực cái loạn"
+            },
+            {
+              "sec": 592,
+              "label": "09:52",
+              "summary": "Cái cấu hình mà họ cho mình ấy nó sẽ có 1 cái cấu hình rồi sao"
+            },
+            {
+              "sec": 838,
+              "label": "13:58",
+              "summary": "Triển khai ví dụ và phân tích bài tập thuật toán sinh"
+            },
+            {
+              "sec": 1280,
+              "label": "21:20",
+              "summary": "Bây giờ mình sẽ viết kìa 1 cái hàm check nữa để xem là cái cấu hình hiện tại nó có chính xác là có 1 bit 1"
+            },
+            {
+              "sec": 2208,
+              "label": "36:48",
+              "summary": "Bạn này nếu mà các bạn sử dụng chuỗi và làm trên sâu nhị phần thì có lý vẻ dễ hơn Rồi cũng như thế này thôi"
+            },
+            {
+              "sec": 3450,
+              "label": "57:30",
+              "summary": "Các bạn sử dụng cho mình một cái vết tơ, các cái vết tơ Rồi, bây giờ mình sẽ sinh ra tất cả các khấu hình"
+            },
+            {
+              "sec": 4523,
+              "label": "75:23",
+              "summary": "Rồi OK bây giờ cất quan trọng nhất để chỉ là viết ngay hàng check này đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 43,
+          "title": "Bài 43: Cấu trúc dữ liệu Ngăn xếp (Stack) trong C++",
+          "is_foundational": true,
+          "keywords": [
+            "stack",
+            "ngăn xếp",
+            "lifo",
+            "pop",
+            "push"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong khi nào dẫn ngăn xếp trước nhé ok thì khi mà các bạn nắm được ngăn xếp thì người có thể hiểu có nhiều"
+            },
+            {
+              "sec": 330,
+              "label": "05:30",
+              "summary": "Ok, thì đây chính là các tế hành hay dùng nhé Và bạn có thể check xem là stack có dẫn không một hạ mt Trong"
+            },
+            {
+              "sec": 428,
+              "label": "07:08",
+              "summary": "Ví dụ như thế này mình đã khai báo được một cái stack được dùng để lưu các cái số nguyên rồi mà, mình tửa cho"
+            },
+            {
+              "sec": 961,
+              "label": "16:01",
+              "summary": "Bạn thấy là cứ gặp một cái thằng nào mà ngoài ngoài thì mình sẽ đầy vào trong stack sau đó nếu mà gặp một cái"
+            },
+            {
+              "sec": 1357,
+              "label": "22:37",
+              "summary": "Y, xử lỗi gì cũng y có 1 7 phần tử này 3, 4, 2, 5, 1, 6, 1 Injala pan, H4, 5, 5, 6, 6, 1, 1, ok Thì các bạn"
+            },
+            {
+              "sec": 1715,
+              "label": "28:35",
+              "summary": "TOP và nó sẽ bị ổng răng than nữa nhé Sau khi mà cái vòng lặp while này có nghĩa là bạn đã duyên tất cả các"
+            },
+            {
+              "sec": 2296,
+              "label": "38:16",
+              "summary": "Bởi vì bạn thấy là khi mà stack ấy, bạn chỉ đẩy các cái thần tử mà nó tăng dần vào trong stack"
+            }
+          ]
+        },
+        {
+          "seq": 44,
+          "title": "Bài 44: Cấu trúc dữ liệu Hàng đợi (Queue) trong C++",
+          "is_foundational": true,
+          "keywords": [
+            "queue",
+            "hàng đợi",
+            "fifo"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Mình một cấu trúc dữ liệu nữa sau stack thì nó là hàng đợi, ok"
+            },
+            {
+              "sec": 498,
+              "label": "08:18",
+              "summary": "Số 12 thì là Xin lỗi, đây là 8, cũng là 11, đúng rồi, đây là số 12 đúng không"
+            },
+            {
+              "sec": 586,
+              "label": "09:46",
+              "summary": "Nó sẽ có cái thằng đầu và cuối hàng đợi, như là cái hàng đợi trong cái cửa hàng hoặc là Khi mà đi xem phim"
+            },
+            {
+              "sec": 1380,
+              "label": "23:00",
+              "summary": "Và đây thì nó chỉ lên đến 100 thôi thì chắc là cái số mà 9,0 rồi là không 9 này này tầm có 10 trị số tầm 10"
+            },
+            {
+              "sec": 2233,
+              "label": "37:13",
+              "summary": "Để mình tìm cái cách thức mà từ số x này chuyển thành số t này sau cho số thao tác của mình nó là nhỏ nhất"
+            },
+            {
+              "sec": 3043,
+              "label": "50:43",
+              "summary": "Sau này các bạn có thể giải bài này một cách rất đơn giản, nếu mà các bạn học thuật toán tình tiếng trên đồ"
+            },
+            {
+              "sec": 3613,
+              "label": "60:13",
+              "summary": "Ok, sau đó thì các bạn tạo sau khi mà tạo hàng đợi thì các bạn lập cho mình cái điều kiện lập đây là y, hàng"
+            }
+          ]
+        },
+        {
+          "seq": 45,
+          "title": "Bài 45: Hàng đợi hai đầu (Deque in C++)",
+          "keywords": [
+            "deque",
+            "hàng đợi hai đầu"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Giúp cho bạn là có hàng đợi như thế này, nó sẽ có 2 đầu, là đầu trước, nó là front, và thằng thứ 2 là thầm"
+            },
+            {
+              "sec": 399,
+              "label": "06:39",
+              "summary": "Và cái ví dụ mà sử dụng thằng Dequeal này mà người ta hay hướng dẫn đây chính là cái bài toán gọi là sliding"
+            },
+            {
+              "sec": 622,
+              "label": "10:22",
+              "summary": "Thì mình sẽ dùng một biến tạm bằng là một số nhỏ đi, int min, ok sau đó mình sẽ duyệt từ for, int, ghi vòng"
+            },
+            {
+              "sec": 903,
+              "label": "15:03",
+              "summary": "Thì nó chỉ xóa, nó tìm đến cái vị trí đầu tiên đúng không"
+            },
+            {
+              "sec": 1250,
+              "label": "20:50",
+              "summary": "Ít nhất nó phải lợi số lớn nhất là 2 đúng không"
+            },
+            {
+              "sec": 1569,
+              "label": "26:09",
+              "summary": "Chứ mình không đẩy cái giá trị thực sự đâu"
+            },
+            {
+              "sec": 1906,
+              "label": "31:46",
+              "summary": "Mà 3 cái thằng đang tìm tàng là cái đáp án của mình ạ, là cái thằng 2, thằng 3, thằng 4 để xem là thằng nào"
+            }
+          ]
+        },
+        {
+          "seq": 46,
+          "title": "Bài 46: Hàng đợi ưu tiên (Priority_queue in C++)",
+          "keywords": [
+            "priority_queue",
+            "hàng đợi ưu tiên",
+            "heap"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Hàng đợi ưu tiên, bạn đã học hàng đợi rồi đúng không"
+            },
+            {
+              "sec": 253,
+              "label": "04:13",
+              "summary": "Còn nếu bạn pop, pop thì nó sẽ xóa đi phần tửa top, pop thì nó sẽ xóa phần tửa Ở đầu, ok, ở đầu đỉnh của"
+            },
+            {
+              "sec": 541,
+              "label": "09:01",
+              "summary": "Nó sẽ chậm hơn so với priority queue Ok Sao đó thì Ok, mình sẽ sử dụng thằng ai để làm 1 cái bài toán nhé Đây"
+            },
+            {
+              "sec": 815,
+              "label": "13:35",
+              "summary": "Mỗi tiết cây thì mình sẽ nhập vào một cái mạng đã trước đấy nhé Sao bạn khai bá trong cái priority queue mà"
+            },
+            {
+              "sec": 1087,
+              "label": "18:07",
+              "summary": "Thì các bạn khai báo cho mình một cái map queue đúng không"
+            },
+            {
+              "sec": 1361,
+              "label": "22:41",
+              "summary": "Mt Bạn sẽ cho ns cộng bằng 1 long long nhân với 1 long long nhé, cẩn thận đấy, bởi vì cái chiều dài này có"
+            }
+          ]
+        },
+        {
+          "seq": 47,
+          "title": "Bài 47: Kỹ thuật cửa sổ trượt (Sliding Window)",
+          "keywords": [
+            "cửa sổ trượt",
+            "sliding window"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong việc này thì mình xử dẫn các bạn một kiến thức, nhưng đây chính là một kỹ kỹ thuật"
+            },
+            {
+              "sec": 321,
+              "label": "05:21",
+              "summary": "Nói chính là cái cửa số hiện tạ, cái cửa số đầu tiên, có bắt đầu chỉ số tự không, ok"
+            },
+            {
+              "sec": 364,
+              "label": "06:04",
+              "summary": "Thế thôi, và khi mà cái chỉ số i của bạn là cái thằng này nè thì nó sẽ là đến cái cửa số cuối cùng đúng không"
+            },
+            {
+              "sec": 727,
+              "label": "12:07",
+              "summary": "2 cái số này sẽ thành 1, 2 Thì bạn thấy là 3 phép đổi chỗ đúng không"
+            },
+            {
+              "sec": 1116,
+              "label": "18:36",
+              "summary": "In Dawn, in xa cái này các bạn có thể viết vào một ổng phỏ nha và mình kiểm tra là ip ai nhỏ màng ca thì mình"
+            },
+            {
+              "sec": 1464,
+              "label": "24:24",
+              "summary": "Và K là số lượng đen liên tiếp cần phải hoạt động"
+            },
+            {
+              "sec": 1966,
+              "label": "32:46",
+              "summary": "Thực ra thì nó cũng dễ thôi Thì ở đây mình sẽ làm như sau này, mình sẽ nhập vào một cái biến là bí nở, int"
+            }
+          ]
+        },
+        {
+          "seq": 48,
+          "title": "Bài 48: Kỹ thuật hai con trỏ (Two Pointers)",
+          "keywords": [
+            "hai con trỏ",
+            "two pointers"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Nó sẽ là nờ cộng mờ, lớp của nờ cộng mờ đúng không, ok"
+            },
+            {
+              "sec": 578,
+              "label": "09:38",
+              "summary": "Nếu mà trong truyền hợp mà dầu bằng thì mình cũng sẽ tăng cái"
+            },
+            {
+              "sec": 904,
+              "label": "15:04",
+              "summary": "Ok, sau đó thì cứ đếm được cái số lượng phần tử giống nhau trong màng thứ nhất rồi và màng thứ hai thì bạn sẽ"
+            },
+            {
+              "sec": 1722,
+              "label": "28:42",
+              "summary": "Mình sẽ tìm đối với mỗi chì số y nhé, với mỗi chì số y thì mình sẽ xem là cái xét mình kết thúc ở chì số y"
+            },
+            {
+              "sec": 2554,
+              "label": "42:34",
+              "summary": "Nè, mình sẽ dùng 1 biến ns trong từ hợp này, mình sẽ phải khởi tạo rồi nè long long nhé rồi, sau đó thì ở chỗ"
+            },
+            {
+              "sec": 3049,
+              "label": "50:49",
+              "summary": "Thì chắc chắn nó là một xét mừng tốt rồi đúng không"
+            },
+            {
+              "sec": 3848,
+              "label": "64:08",
+              "summary": "Và yêu cầu bạn là đến số lượng, phần tựa, số lượng set mình tốt input thì vẫn như thế nó cao rồi là các phần"
+            },
+            {
+              "sec": 4340,
+              "label": "72:20",
+              "summary": "Mà nó có, ví dụ như là, 2, 3, 6, 4, 6 trên hạn và kè bằng 4 nhé, ok, giả sử như thế thì khi đó bạn thấy mình"
+            }
+          ]
+        },
+        {
+          "seq": 49,
+          "title": "Bài 49: Toán tử bit trong C++ (Bitwise Operators)",
+          "keywords": [
+            "toán tử bit",
+            "bitwise",
+            "and bit",
+            "or bit",
+            "xor bit",
+            "shift bit"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Đầu tiên thì các bạn phải biết được cái cách biểu diễn của một số thập phân ở dạng nhị phân đã, ok"
+            },
+            {
+              "sec": 270,
+              "label": "04:30",
+              "summary": "Thì khi mà bạn n 2 cái bit đấy phải với nhau ý, thì khi nó sẽ tạo ra số 15 đúng không"
+            },
+            {
+              "sec": 356,
+              "label": "05:56",
+              "summary": "1 với 0 là 1, 1 Cleanister, 1 và 1 là sẽ không Sinenet account-sorius-curator dấu mũ như thế này"
+            },
+            {
+              "sec": 730,
+              "label": "12:10",
+              "summary": "Cout cout, Ainté, igave, den, code, trở tới, cout, KT Tree, Doctoko, shake, hold create, text Defous puesto"
+            },
+            {
+              "sec": 1195,
+              "label": "19:55",
+              "summary": "Ví dụ ở đây mình sẽ cl ra binary power của, ở chỗ này mình dùng thêm 1 thăm mở nữa"
+            },
+            {
+              "sec": 1791,
+              "label": "29:51",
+              "summary": "Ừ tương tự như vậy giả sử như bạn có cái câu hình là 1111 thì có nghĩa là bạn chọn cả 4 phần tử này và trong"
+            },
+            {
+              "sec": 2196,
+              "label": "36:36",
+              "summary": "Ví nhỏ là số lượng phần từ của mạng này này"
+            }
+          ]
+        },
+        {
+          "seq": 50,
+          "title": "Bài 50: Kiểu cấu trúc trong C++ (Struct in C++)",
+          "is_foundational": true,
+          "keywords": [
+            "struct",
+            "kiểu cấu trúc",
+            "cấu trúc",
+            "bản ghi"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Hôm nay thì mình sẽ giới thiệu các bạn một kiếm thức mới, chính là kiếm thức về struct"
+            },
+            {
+              "sec": 348,
+              "label": "05:48",
+              "summary": "Địa chỉ thì mình sẽ để là 2 dưa Thì lần lượt nhé, thì lần lượt nó sẽ gán các cái giá trị đằng sau cái đóng"
+            },
+            {
+              "sec": 726,
+              "label": "12:06",
+              "summary": "Mà trong constructor đấy mình đã gán các cái giá trị mặc định như thế này rồi thằng ra là 2 cái ông xe mà"
+            },
+            {
+              "sec": 1093,
+              "label": "18:13",
+              "summary": "Sau đó khi bạn muốn yên thông tin thì chỉ cần gọi đến các hang int và hang int này thôi rồi ở trong thằng"
+            },
+            {
+              "sec": 1342,
+              "label": "22:22",
+              "summary": "Thì còn nếu bạn muốn nạp trầm 1 struct mà nó có 2 tham số như thế này thì bạn sẽ phải khai báo cái ham này là"
+            },
+            {
+              "sec": 1808,
+              "label": "30:08",
+              "summary": "Ê, rất là hay đúng không, dấu xoánh nhỏ hơn này rất là hay nhé, ví dụ Bạn có 1 cái struct là struct, ví dụ"
+            }
+          ]
+        },
+        {
+          "seq": 51,
+          "title": "Bài 51: Hướng dẫn giải bài tập Struct (Phần 1)",
+          "is_revision": true,
+          "updates_lesson_seq": 50,
+          "keywords": [
+            "bài tập struct"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Nó sẽ có một số bài tập để liện tập với phần struct"
+            },
+            {
+              "sec": 278,
+              "label": "04:38",
+              "summary": "Thế còn, sau đó thì mình cho a, tử, cộng bằng b, tử, tức là ở đây mình sẽ cho cái phân số tỏng, nó chính là"
+            },
+            {
+              "sec": 321,
+              "label": "05:21",
+              "summary": "Sau đó thì mình gọi cái hàm rút gọn của A và return về trước khi mà mình return thì mình sẽ rút gọn và trong"
+            },
+            {
+              "sec": 858,
+              "label": "14:18",
+              "summary": "Alimentos d Narrative, if ạ ddoc sổ thì nó cũng chưa chuẩn thì có nghĩa bạn sẽ thêm insert chaotic-in-sir"
+            },
+            {
+              "sec": 1324,
+              "label": "22:04",
+              "summary": "Và bạn cũng có thể xử lý như sau, đấy là bạn chỉ cần cho ép bằng string gì nhỏ 5 chứ đi ép chấm sai, ngồi ký"
+            },
+            {
+              "sec": 1808,
+              "label": "30:08",
+              "summary": "Thì bạn cũng có thể xây dựng cái constructor này cho, cho map cho xép cũng được nhá Thế là mình sẽ yêu cầu"
+            },
+            {
+              "sec": 2151,
+              "label": "35:51",
+              "summary": "Cái sai của cái số đấy để mình so sánh còn không thì mình sẽ dựa vào cái thứ tự tự điển Thế là khi mà 2 cái"
+            }
+          ]
+        },
+        {
+          "seq": 52,
+          "title": "Bài 52: Hướng dẫn giải bài tập Struct (Phần 2) - QLSV",
+          "is_revision": true,
+          "updates_lesson_seq": 50,
+          "keywords": [
+            "bài tập struct qlsv",
+            "quản lý sinh viên struct"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Nhưng mà sang cái bài là một cấu trúc nhân viên mà người ta đổi những cái yêu cầu đi một kí mà mình không làm"
+            },
+            {
+              "sec": 409,
+              "label": "06:49",
+              "summary": "Đây là cách mà bạn sử dụng hàm void thì nhất kia nhé còn nếu trong trường hợp mà bạn sử dụng cái hàm nhập thứ"
+            },
+            {
+              "sec": 725,
+              "label": "12:05",
+              "summary": "Fi cái mã mà người dùng người ta nhập vào ấy nó khác cái giá trị đấy chính là string 2"
+            },
+            {
+              "sec": 1302,
+              "label": "21:42",
+              "summary": "Ok, còn cái bạn nguyễn văn anh này thì cái chuỗi mà đem ra xóa xánh theo thứ tư tư điển, nó sẽ là anh nguyễn"
+            },
+            {
+              "sec": 1659,
+              "label": "27:39",
+              "summary": "Không có rồi, mình xe lại liệt kê gpe chết rồi, 2 kê ham này đây mình sẽ đặt cái thằng này là 2 nhé ok, rồi"
+            },
+            {
+              "sec": 2081,
+              "label": "34:41",
+              "summary": "Ở chỗ comparator 2 này nè, tự tự, mình xem nè các này bạn return cho mình cái vector đi ok, và chỗ này bạn"
+            },
+            {
+              "sec": 2546,
+              "label": "42:26",
+              "summary": "Còn nếu bạn 2 bạn này cùng lớp, thì mình sẽ return về điểm GRPA giám dần đúng không"
+            }
+          ]
+        }
       ]
     },
     "cpp-oop": {
       "course_name": "Lập trình Hướng Đối Tượng C++ (OOP) (31 Bài)",
       "lessons": [
-        { "seq": 53, "title": "Bài 53: OOP Phần 1 - Class, Object & Constructor", "is_foundational": true, "keywords": ["class", "object", "lớp", "đối tượng", "constructor", "destructor", "private", "public", "hàm tạo", "hàm hủy", "hướng đối tượng", "oop", "lập trình hướng đối tượng", "hướng đối tượng oop", "lập trình oop", "bắt đầu học oop", "sinhvien", "sinh viên", "con trỏ this"] },
-        { "seq": 54, "title": "Bài 54: Giải bài tập OOP Phần 1 & Static Member", "is_foundational": true, "keywords": ["static", "static member", "biến tĩnh", "hàm tĩnh", "bài tập oop 1", "stringstream", "tách từ", "chuẩn hóa tên", "chuẩn hóa họ tên", "chuanhoathongtin"] },
-        { "seq": 55, "title": "Bài 55: Giải bài tập OOP Phần 2 & Class NhanVien", "is_revision": true, "updates_lesson_seq": 53, "keywords": ["class nhanvien", "bài tập oop 2", "quản lý nhân viên"] },
-        { "seq": 56, "title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<", "is_foundational": true, "keywords": ["kế thừa", "inheritance", "nạp chồng toán tử", "operator overloading", "operator >>", "operator <<", "phanso", "phân số", "rút gọn", "tối giản", "mẫu số", "tử số", "ucln", "gcd"] },
-        { "seq": 57, "title": "Bài 57: Lý thuyết về con trỏ trong C++ - Mảng & Con trỏ", "is_foundational": true, "keywords": ["con trỏ", "pointer", "địa chỉ ô nhớ", "toán tử &", "toán tử *", "mảng và con trỏ"] },
-        { "seq": 58, "title": "Bài 58: Danh sách liên kết đơn trong C++ - QLSV", "is_foundational": true, "keywords": ["danh sách liên kết", "linked list", "singly linked list", "danh sách liên kết đơn", "node"] },
-        { "seq": 59, "title": "Bài 59: Thuật toán quay lui - Bài toán N quân hậu", "keywords": ["quay lui", "backtracking", "n quân hậu", "n-queens"] },
-        { "seq": 60, "title": "Bài 60: Chữa đề thi thử lập trình C++ PTIT Test 1", "keywords": ["đề thi ptit test 1", "chữa đề thi c++ ptit 1"] },
-        { "seq": 61, "title": "Bài 61: Chữa đề thi thử lập trình C++ PTIT Test 2", "keywords": ["đề thi ptit test 2", "chữa đề thi c++ ptit 2"] },
-        { "seq": 62, "title": "Bài 62: Chữa đề thi thử lập trình C++ PTIT Test 3", "keywords": ["đề thi ptit test 3", "chữa đề thi c++ ptit 3"] },
-        { "seq": 63, "title": "Bài 63: Chữa đề thi thử lập trình C++ PTIT Test 4", "keywords": ["đề thi ptit test 4", "chữa đề thi c++ ptit 4"] },
-        { "seq": 64, "title": "Bài 64: Mảng 1 chiều, Lý thuyết con trỏ, Vector & Iterator", "is_revision": true, "updates_lesson_seq": 11, "keywords": ["tổng hợp mảng", "con trỏ vector", "iterator"] },
-        { "seq": 65, "title": "Bài 65: Hướng dẫn C++ Final Test 1 - Giải đề cuối kỳ", "keywords": ["đề cuối kỳ 1", "final test 1"] },
-        { "seq": 66, "title": "Bài 66: Hướng dẫn C++ Final Test 2 - Giải đề cuối kỳ", "keywords": ["đề cuối kỳ 2", "final test 2"] },
-        { "seq": 67, "title": "Bài 67: Mảng 1 chiều & Vòng lặp Range Based For Loop", "is_revision": true, "updates_lesson_seq": 11, "keywords": ["range based for", "for each", "vòng lặp phạm vi"] },
-        { "seq": 68, "title": "Bài 68: Tìm kiếm nhị phân & Kỹ thuật đệ quy (2024)", "is_revision": true, "updates_lesson_seq": 7, "keywords": ["tìm kiếm nhị phân đệ quy", "binary search recursion"] },
-        { "seq": 69, "title": "Bài 69: OOP C++ - Class, Constructor, Destructor, Operator", "is_revision": true, "updates_lesson_seq": 53, "keywords": ["oop nâng cao", "operator nâng cao"] },
-        { "seq": 70, "title": "Bài 70: Thuật toán tìm kiếm nhị phân - Lower_bound, Upper_bound", "is_revision": true, "updates_lesson_seq": 25, "keywords": ["lower_bound nâng cao", "upper_bound nâng cao"] },
-        { "seq": 71, "title": "Bài 71: Xâu ký tự trong C++ & Kỹ năng xử lý bài tập xâu", "is_revision": true, "updates_lesson_seq": 18, "keywords": ["kỹ năng xử lý xâu", "string nâng cao"] },
-        { "seq": 72, "title": "Bài 72: Xâu ký tự (String) & Các dạng bài tập xâu quan trọng", "is_revision": true, "updates_lesson_seq": 18, "keywords": ["dạng bài tập xâu quan trọng"] },
-        { "seq": 73, "title": "Bài 73: Hướng dẫn đề thi thử lập trình C++ PTIT 2024 (Test 1)", "keywords": ["đề ptit 2024 test 1"] },
-        { "seq": 74, "title": "Bài 74: Hướng dẫn đề thi thử lập trình C++ PTIT 2024 (Test 2)", "keywords": ["đề ptit 2024 test 2"] },
-        { "seq": 75, "title": "Bài 75: Lập trình Hướng Đối Tượng OOP Phần 1 (Update 2025)", "is_revision": true, "updates_lesson_seq": 53, "keywords": ["oop update 2025"] },
-        { "seq": 76, "title": "Bài 76: Thuật toán quay lui và bài tập áp dụng (Update 2025)", "is_revision": true, "updates_lesson_seq": 59, "keywords": ["quay lui update 2025"] },
-        { "seq": 77, "title": "Bài 77: Set & Map trong C++ (2025)", "is_revision": true, "updates_lesson_seq": 22, "keywords": ["set map update 2025"] },
-        { "seq": 78, "title": "Bài 78: Cấu trúc rẽ nhánh If Else và Switch Case (2025)", "is_revision": true, "updates_lesson_seq": 4, "keywords": ["if else update 2025"] },
-        { "seq": 79, "title": "Bài 79: Lý thuyết con trỏ trong C++ (2025) - Con trỏ & Mảng", "is_revision": true, "updates_lesson_seq": 57, "keywords": ["con trỏ mảng update 2025"] },
-        { "seq": 80, "title": "Bài 80: Vector và Iterator trong C++ (2025)", "is_revision": true, "updates_lesson_seq": 20, "keywords": ["vector iterator update 2025"] },
-        { "seq": 81, "title": "Bài 81: Danh sách liên kết đơn (Update 2026)", "is_revision": true, "updates_lesson_seq": 58, "keywords": ["danh sách liên kết update 2026"] },
-        { "seq": 82, "title": "Bài 82: Kỹ thuật đệ quy - Cây đệ quy (2026)", "is_revision": true, "updates_lesson_seq": 37, "keywords": ["đệ quy update 2026"] },
-        { "seq": 83, "title": "Bài 83: Lập trình Hướng đối tượng OOP (2026)", "is_revision": true, "updates_lesson_seq": 53, "keywords": ["oop tổng kết 2026"] }
+        {
+          "seq": 53,
+          "title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
+          "is_foundational": true,
+          "keywords": [
+            "class",
+            "object",
+            "lớp",
+            "đối tượng",
+            "constructor",
+            "destructor",
+            "private",
+            "public",
+            "hàm tạo",
+            "hàm hủy",
+            "hướng đối tượng",
+            "oop",
+            "lập trình hướng đối tượng",
+            "hướng đối tượng oop",
+            "lập trình oop",
+            "bắt đầu học oop",
+            "sinhvien",
+            "sinh viên",
+            "con trỏ this"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Và hướng thủ tục ấy Nhưng mà lập trình hướng đối tượng ấy, OOP ấy, nó viết tắt của tui object-oriented"
+            },
+            {
+              "sec": 549,
+              "label": "09:09",
+              "summary": "Để đảm bảo cái tính chất lại encapsulation của OOP Còn nếu mà bạn không chỉ định cái ACM modifier cho cái các"
+            },
+            {
+              "sec": 720,
+              "label": "12:00",
+              "summary": "Cài đặt hàm / phương thức `TinhGPA` — Không được bởi vì cái thằng id này nó là private tức là da bên ngoài"
+            },
+            {
+              "sec": 1170,
+              "label": "19:30",
+              "summary": "Cài đặt hàm / phương thức `Destructor` — Ví dụ về constructor, chú ý là constructor luôn được tạo khi mà hai"
+            },
+            {
+              "sec": 1817,
+              "label": "30:17",
+              "summary": "Nhưng có 1 điều đặc biệt là 2 cái ông sinh viên A và sinh viên B này, mình muốn truy cập vào gpa của nó mình"
+            },
+            {
+              "sec": 2445,
+              "label": "40:45",
+              "summary": "Và chủ ý là các cái thuộc tính của lớp sẽ được khai bảo là private nhé, SF modifier này có 3 thằng là"
+            },
+            {
+              "sec": 2955,
+              "label": "49:15",
+              "summary": "Thì khi đó bạn sẽ khai báo ở trong này ấy Cái hàm in thông tin này nó là hàm bạn của lớp sinh viên này bằng"
+            },
+            {
+              "sec": 3881,
+              "label": "64:41",
+              "summary": "Ok, ví dụ nhé, bây giờ mình muốn nạp chồng cái toán tử để so sánh hai sinh viên này xem ông nào là nhỏ hơn"
+            }
+          ]
+        },
+        {
+          "seq": 54,
+          "title": "Bài 54: Giải bài tập OOP Phần 1 & Static Member",
+          "is_foundational": true,
+          "keywords": [
+            "static",
+            "static member",
+            "biến tĩnh",
+            "hàm tĩnh",
+            "bài tập oop 1",
+            "stringstream",
+            "tách từ",
+            "chuẩn hóa tên",
+            "chuẩn hóa họ tên",
+            "chuanhoathongtin"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Phần bài tập này thì các bạn chỉ cần làm nó cẩn thận một chút là được"
+            },
+            {
+              "sec": 415,
+              "label": "06:55",
+              "summary": "Cài đặt hàm / phương thức `input` — Mình sẽ có tổng trấm tử nó sẽ bằng gì nhỉ"
+            },
+            {
+              "sec": 501,
+              "label": "08:21",
+              "summary": "Mình sẽ dùng 1 biến là r, nó sẽ bằng r, cd của tầm, tử và tầm, mẫu ok, sau đó thì mình rút gọn cái tử và mẫu"
+            },
+            {
+              "sec": 726,
+              "label": "12:06",
+              "summary": "Rồi, vậy thì tư tư Bây giờ cái phần mà nhập ấy, bạn cứ xây dựng cho mình thêm một cái constructor mà nó có"
+            },
+            {
+              "sec": 1308,
+              "label": "21:48",
+              "summary": "Thay vì mình dùng 2 cái hầm bạn nhập vào int thì mình sẽ dùng"
+            },
+            {
+              "sec": 2360,
+              "label": "39:20",
+              "summary": "Map của S thôi Bởi vì map của S trong trường hợp này nè Nó là một cái vết tơ các sinh viên mà có lớp là S"
+            },
+            {
+              "sec": 3048,
+              "label": "50:48",
+              "summary": "Cài đặt hàm / phương thức `chuanHoaThongTin` — Cái map, cái map, cái vector mà mình đã map các sinh viên về thuộc"
+            }
+          ]
+        },
+        {
+          "seq": 55,
+          "title": "Bài 55: Giải bài tập OOP Phần 2 & Class NhanVien",
+          "is_revision": true,
+          "updates_lesson_seq": 53,
+          "keywords": [
+            "class nhanvien",
+            "bài tập oop 2",
+            "quản lý nhân viên"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Rất là dễ rồi vậy thì bài này, các bạn cốt như sau mình sẽ xây dựng một cái class là class nhân viên nhé, nó"
+            },
+            {
+              "sec": 280,
+              "label": "04:40",
+              "summary": "Cài đặt và chạy thử nghiệm trong hàm main() — OK, rồi, dạy nhé Ở đây mình sẽ đặt là nguyễn văn hóa này Vì vậy, nhân"
+            },
+            {
+              "sec": 316,
+              "label": "05:16",
+              "summary": "Mình nhập chồng toán tử thì quá đơn giản rồi đây mình sẽ nhập thông tin là Nguyễn Văn Hói ở đây Hà Nam đúng"
+            },
+            {
+              "sec": 764,
+              "label": "12:44",
+              "summary": "Mình dạo đây mình cũng sẽ xây dựng 1 class sinh viên, có mã, tên, lớp, ngay, sinh và gpa khác với bài trước"
+            },
+            {
+              "sec": 1097,
+              "label": "18:17",
+              "summary": "Thì các bạn viết thêm một cái hàm chuẩn hóa ngài sinh nữa ok, ở đây thì nó cũng yêu cầu mình sử dụng một cái"
+            },
+            {
+              "sec": 1522,
+              "label": "25:22",
+              "summary": "Trong trường hợp này thì họ nhập nhân viên theo kiểu là nhập theo danh sách như thế này thì cứ mỗi lần mà bạn"
+            },
+            {
+              "sec": 1977,
+              "label": "32:57",
+              "summary": "Mà cái map này thì mỗi cái bộ môn nó sẽ lưu một cái vector các nhân viên à xin lỗi các cái giảng viên trong"
+            }
+          ]
+        },
+        {
+          "seq": 56,
+          "title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<",
+          "is_foundational": true,
+          "keywords": [
+            "kế thừa",
+            "inheritance",
+            "nạp chồng toán tử",
+            "operator overloading",
+            "operator >>",
+            "operator <<",
+            "phanso",
+            "phân số",
+            "rút gọn",
+            "tối giản",
+            "mẫu số",
+            "tử số",
+            "ucln",
+            "gcd"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Thì đầu tiên mình sẽ hướng dẫn các bạn kiến thức về kế thừa trước, ok"
+            },
+            {
+              "sec": 415,
+              "label": "06:55",
+              "summary": "Cài đặt hàm / phương thức `gcd` — Public, percent Thì bên trong cái class, std này này, nó sẽ có thêm"
+            },
+            {
+              "sec": 904,
+              "label": "15:04",
+              "summary": "Hay là, electoral, rồi thì nó cũng là person, employee thì nó cũng là person thì khi đó, cái quan hệ iser này"
+            },
+            {
+              "sec": 1273,
+              "label": "21:13",
+              "summary": "Rồi, và nhớ cái cách mà gọi cái hàm của lớp cha của nó nhé, để chỉ là mình chỉ cần sử dụng cái tên lớp này"
+            },
+            {
+              "sec": 1912,
+              "label": "31:52",
+              "summary": "Mặc dù cái asset mode nó là private, nhưng mà cái thằng hai cái hàm là hàm get gpe và cái hàm constructor này"
+            },
+            {
+              "sec": 2310,
+              "label": "38:30",
+              "summary": "Thì người ta gọi là monthly level ok, kế thừa nhiều mức thì cái thằng này cũng thế này ví dụ như ở đây nhé, ở"
+            },
+            {
+              "sec": 2712,
+              "label": "45:12",
+              "summary": "Class, con trỏ sẽ kế thừa từ hai thằng luôn là public memo và public winged animal khi đó class bat sẽ có tất"
+            }
+          ]
+        },
+        {
+          "seq": 57,
+          "title": "Bài 57: Lý thuyết về con trỏ trong C++ - Mảng & Con trỏ",
+          "is_foundational": true,
+          "keywords": [
+            "con trỏ",
+            "pointer",
+            "địa chỉ ô nhớ",
+            "toán tử &",
+            "toán tử *",
+            "mảng và con trỏ"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong video này thì mình xứng dẫn các bạn khái niệm về con trỏ, trong C++ thì có một khái niệm để chính là"
+            },
+            {
+              "sec": 269,
+              "label": "04:29",
+              "summary": "Là con trỏ-interger và là con trỏ new, khác nhập con trỏ new, đfficient nhưng là cái con trỏ mà không quản lý"
+            },
+            {
+              "sec": 335,
+              "label": "05:35",
+              "summary": "Và khi mà khai báo 1 con trỏ trong 1 ước chính xì với C++ như nhau nhé OK, cái này bạn dùng cho xì hay xì"
+            },
+            {
+              "sec": 781,
+              "label": "13:01",
+              "summary": "Thay đổi tại cái ô nhớ này này Thành ra là, mọi thay đổi trên con trỏ PTR2 hoặc biển A thì nó làm đều thay"
+            },
+            {
+              "sec": 1237,
+              "label": "20:37",
+              "summary": "Nhưng mà trong trường hợp cái biến struct đấy mà nó là con trỏ ấy, thì các bạn truy cập vào cái từng thành"
+            },
+            {
+              "sec": 1650,
+              "label": "27:30",
+              "summary": "Thành ra là khi đó bạn có mà cái thằng con trỏ này nó có thể sử dụng cái toàn tử dấu cậu nữa tăng lên một đơn"
+            },
+            {
+              "sec": 1973,
+              "label": "32:53",
+              "summary": "Nói chung là cái này thì nó sẽ dài dòng hơn, nhưng mà ít nhất là mình cũng biết một chút ngối quan hệ giữa"
+            }
+          ]
+        },
+        {
+          "seq": 58,
+          "title": "Bài 58: Danh sách liên kết đơn trong C++ - QLSV",
+          "is_foundational": true,
+          "keywords": [
+            "danh sách liên kết",
+            "linked list",
+            "singly linked list",
+            "danh sách liên kết đơn",
+            "node"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Để mà học được cái phần này thì các bạn cần một chút kiến thức về câu chúc và kiến thức về con chỏ"
+            },
+            {
+              "sec": 692,
+              "label": "11:32",
+              "summary": "Bây giờ mình sẽ viết 1 cái ham để chỉnh là kiểm tra xem cái node này có rộng hay không"
+            },
+            {
+              "sec": 1491,
+              "label": "24:51",
+              "summary": "Tai đép ở chỗ này là node sao thành node rồi, thì ở chỗ này bạn chỉ cần node và a là được, ok thì còn nếu mà"
+            },
+            {
+              "sec": 2132,
+              "label": "35:32",
+              "summary": "Thì các bạn làm công việc như lúc nãy mình hướng dẫn thôi Đây chính là các bạn chỉ cần khai báo 1 cái node"
+            },
+            {
+              "sec": 3016,
+              "label": "50:16",
+              "summary": "Để tạo 1 cái node mới hay là kiểm tra dỗng hay là lấy về cái số lượng phản thử trong danh sách liên kết Bây"
+            },
+            {
+              "sec": 3890,
+              "label": "64:50",
+              "summary": "GPA cho ông std app rồi, tức là mình đã có đầy đủ thông tin của 1 std lưu trong biên app rồi Thì bạn sẽ xin"
+            },
+            {
+              "sec": 4473,
+              "label": "74:33",
+              "summary": "Fv tem bằng make node Make node ở chỗ này không có biển ích nữa Tất cả các thông tin của mình sẽ nhập cái bàn"
+            },
+            {
+              "sec": 5105,
+              "label": "85:05",
+              "summary": "Coi pop, mình sẽ đặt là node và tốt rồi thì mình kiểm tra là nếu mà tốt vào bằng nôn nhá thì mình sẽ return"
+            }
+          ]
+        },
+        {
+          "seq": 59,
+          "title": "Bài 59: Thuật toán quay lui - Bài toán N quân hậu",
+          "keywords": [
+            "quay lui",
+            "backtracking",
+            "n quân hậu",
+            "n-queens"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong video này, mình sẽ hướng dẫn các bạn một cái thuật toàn, chính là thuật toàn quay lùi nhé"
+            },
+            {
+              "sec": 648,
+              "label": "10:48",
+              "summary": "Và bây giờ cái hàm mà đang chạy nhé, cái hàm mà đang chạy, nó chính là cái hàm try2 này, đúng không"
+            },
+            {
+              "sec": 1213,
+              "label": "20:13",
+              "summary": "Vòng for của nó, vòng for thứ 1, vòng for thứ 2, thì hàm tròi 2 này khi đó mới kết thúc, mà khi mà tròi 2 đã"
+            },
+            {
+              "sec": 1785,
+              "label": "29:45",
+              "summary": "Ví dụ bạn dùng một cái biến tổng và bạn tính, ví dụ như là nó có bài tòan đính là set tổ hợp chấp ca của N"
+            },
+            {
+              "sec": 2519,
+              "label": "41:59",
+              "summary": "Thì nó lại nhảy sang ghi cộng cộng để nó nhảy sang cái vòng for thứ 2 của cái lời gọi hamtribe, đúng không"
+            },
+            {
+              "sec": 3242,
+              "label": "54:02",
+              "summary": "Quân hậu thì nó có thể ăn theo chiều ngang, chiều dọc, hoặc là đường chéo nó rất là mạnh và nhiệm vụ của bạn"
+            },
+            {
+              "sec": 3691,
+              "label": "61:31",
+              "summary": "Thì mỗi khi bạn chuẩn bị mà bạn set cho cái phần tử hàng ía, cái phần tử íc ía Thì bạn phải set được các cái"
+            }
+          ]
+        },
+        {
+          "seq": 60,
+          "title": "Bài 60: Chữa đề thi thử lập trình C++ PTIT Test 1",
+          "keywords": [
+            "đề thi ptit test 1",
+            "chữa đề thi c++ ptit 1"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Mình đánh giá ra cái đề nó cũng tương đối là khó"
+            },
+            {
+              "sec": 300,
+              "label": "05:00",
+              "summary": "Rồi, dưới này các bạn sẽ nhập số tiết cây nhá"
+            },
+            {
+              "sec": 749,
+              "label": "12:29",
+              "summary": "Sau mình đẩy vào danh sách, các vùng diện tích mà có chứa số 1 của mình nhưng ở đây, các số ở trên này nó lại"
+            },
+            {
+              "sec": 1072,
+              "label": "17:52",
+              "summary": "Thì các bạn chỉ cần truy cập vào map tem Thì map tem của các bạn chính là một cái vector mà chứa các cái vùng"
+            },
+            {
+              "sec": 1451,
+              "label": "24:11",
+              "summary": "Thì còn tên họ của cái ông đấy thì nó sẽ tính từ v1 vào d, trở đi Các bạn có thể làm từ từ đấy là string, các"
+            },
+            {
+              "sec": 1929,
+              "label": "32:09",
+              "summary": "Ok, hoặc là cái ông nổi cơm điện Sanyo này cũng sẽ là nổi cơm điện đầu tiên nrcd-001 rồi cái máy xe tóc này"
+            },
+            {
+              "sec": 2212,
+              "label": "36:52",
+              "summary": "Ví dụ như nồi cơm điện là các bạn tăng tần xuất của nó lên mà cách là các bạn cho map của mã cộng cộng Thì"
+            }
+          ]
+        },
+        {
+          "seq": 61,
+          "title": "Bài 61: Chữa đề thi thử lập trình C++ PTIT Test 2",
+          "keywords": [
+            "đề thi ptit test 2",
+            "chữa đề thi c++ ptit 2"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Thế thì mình thấy cái kết quả của cái tiết này thì nó tốt hơn cái kết quả của tiết trước"
+            },
+            {
+              "sec": 312,
+              "label": "05:12",
+              "summary": "Thì khi đó cái việc mà các bạn sử dụng một cái mạng đánh dấu không đủ thì nó sẽ bị xe mình tên sền fow Đấy là"
+            },
+            {
+              "sec": 528,
+              "label": "08:48",
+              "summary": "Mà con dòng này có nó cái điểm thưởng lên 10 mũ 4 các bạn cứ cộng dồn, cộng dồn, cộng dồn vào khả năng là nó"
+            },
+            {
+              "sec": 1110,
+              "label": "18:30",
+              "summary": "Thế là mình sẽ gán cái cột đầu tiên của màng A cho cái cột đầu tiên của màng F ấy mà Đây là cái việc mà mình"
+            },
+            {
+              "sec": 1465,
+              "label": "24:25",
+              "summary": "Xong bắt, xin lỗi tên với lại ngày sinh bắt các bạn cấp email vào mật khẩu Ví dụ như các bạn Nguyễn Văn Long"
+            },
+            {
+              "sec": 1784,
+              "label": "29:44",
+              "summary": "04 Nhưng mà ở đây nó lại chỉ lấy số 4 thôi Nên là các bạn phải ép nó sang cái số int t để cái số 0"
+            },
+            {
+              "sec": 2136,
+              "label": "35:36",
+              "summary": "Double, gpe Rồi, ở đây mình sẽ viết 1 cái constructor, hoặc là các bạn có thể viết 1 cái hàm nhập cũng được"
+            }
+          ]
+        },
+        {
+          "seq": 62,
+          "title": "Bài 62: Chữa đề thi thử lập trình C++ PTIT Test 3",
+          "keywords": [
+            "đề thi ptit test 3",
+            "chữa đề thi c++ ptit 3"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Hôm nay thì cái tết này của mình nó sẽ có 5 byte, tết này của mình có 5 byte và thấy mọi người làm cũng tương"
+            },
+            {
+              "sec": 257,
+              "label": "04:17",
+              "summary": "Thì vừa thỏa mãn điều kiện là i là số nghiên tố đúng không"
+            },
+            {
+              "sec": 669,
+              "label": "11:09",
+              "summary": "Và cái thằng là thằng BE các bạn kiểm tra nếu mà Red của mình nó bằng chư 1 ấy"
+            },
+            {
+              "sec": 1055,
+              "label": "17:35",
+              "summary": "Mỗi cái dòng này nó như là một cái mảng một chiều"
+            },
+            {
+              "sec": 1377,
+              "label": "22:57",
+              "summary": "Ok, ở đây mình sẽ có điểm với lại hệ số thôi, ok, hiệu số đấy, hiệu số bàn thằng bại đấy Bây giờ mình sẽ cùng"
+            },
+            {
+              "sec": 1734,
+              "label": "28:54",
+              "summary": "Hệ số các bạn cộng bằng x chứ đi i, còn map của team 2 chấm hệ số, các bạn cho i chứ đi x, thế thôi, và cứ để"
+            },
+            {
+              "sec": 2141,
+              "label": "35:41",
+              "summary": "Không được, không có vấn đề gì Nhưng mà mình thích xử lý cái phần này ở trong cái class này hơn Bạn này dùng"
+            }
+          ]
+        },
+        {
+          "seq": 63,
+          "title": "Bài 63: Chữa đề thi thử lập trình C++ PTIT Test 4",
+          "keywords": [
+            "đề thi ptit test 4",
+            "chữa đề thi c++ ptit 4"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Thì mình sẽ vào bài đầu tiên nhé, là bài primer 2"
+            },
+            {
+              "sec": 319,
+              "label": "05:19",
+              "summary": "Không để ý được rằng là với một triệu mà các bạn dùng hai phó thì nó sẽ bị tham limit Đây, bạn này bị tấm"
+            },
+            {
+              "sec": 574,
+              "label": "09:34",
+              "summary": "Thế khi đó, thật quán của mình chỉ còn nờ lốc nờ Thế thì ở đây các bạn sẽ, các bạn sử dụng hèm có sẵn được"
+            },
+            {
+              "sec": 823,
+              "label": "13:43",
+              "summary": "Mình sang bài số 4 nhé, tập tử riêng của 2 sâu Cho 2 sâu F và T, hãy liệt kê các cái từ xuất hiện trong sâu F"
+            },
+            {
+              "sec": 1049,
+              "label": "17:29",
+              "summary": "Đến chơi game được ghi lại trên 4 dòng lần luật là username, password và tên người chơi giờ vào, giờ ra, giờ"
+            },
+            {
+              "sec": 1451,
+              "label": "24:11",
+              "summary": "Các bạn chỉ cần CL, ra đây là HAPZR OK, và MAFOOT OK, đó, xong nhá Nhưng mà tí nữa khi mình sắp xếp vậy, mình"
+            }
+          ]
+        },
+        {
+          "seq": 64,
+          "title": "Bài 64: Mảng 1 chiều, Lý thuyết con trỏ, Vector & Iterator",
+          "is_revision": true,
+          "updates_lesson_seq": 11,
+          "keywords": [
+            "tổng hợp mảng",
+            "con trỏ vector",
+            "iterator"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Ok, hôm trước thì các bạn đã học các dạng bài tập liên quan đến mạng 1 chiều cơ bản rồi đúng không"
+            },
+            {
+              "sec": 672,
+              "label": "11:12",
+              "summary": "Nhưng mà cái vấn đề mà các bạn dịch sang phải ở đây thì các bạn phải làm sao"
+            },
+            {
+              "sec": 850,
+              "label": "14:10",
+              "summary": "Cái mình sẽ làm như thế nào"
+            },
+            {
+              "sec": 1625,
+              "label": "27:05",
+              "summary": "Trước mắt thì các bạn sẽ học vector, con trỏ này các bạn sẽ học con trỏ vector, iterator, hợp đệ quy, hợp"
+            },
+            {
+              "sec": 2595,
+              "label": "43:15",
+              "summary": "Nếu các bạn muốn lưu lại địa chỉ 0x6ffm18, thì các bạn không thể dùng con trỏ được không thể dùng con trỏ"
+            },
+            {
+              "sec": 3605,
+              "label": "60:05",
+              "summary": "Thế thôi nhé, để đấy là cái mối quan hệ giữa mạng 1 chiều và con trỏ là các bạn cần hối lưu ý cho mình kìa đó"
+            },
+            {
+              "sec": 4961,
+              "label": "82:41",
+              "summary": "Mà các bạn khai báo là auto nó hiểu thằng Peterer này là Ctrl luôn Thế nên là cái kiểu dữ liệu auto này mình"
+            },
+            {
+              "sec": 6064,
+              "label": "101:04",
+              "summary": "Nếu mà cái vector của em mà nó rỗng thì hàm empty nó trả về true mở ngược lại thì nó sẽ trả về phone chẳng lẽ"
+            }
+          ]
+        },
+        {
+          "seq": 65,
+          "title": "Bài 65: Hướng dẫn C++ Final Test 1 - Giải đề cuối kỳ",
+          "keywords": [
+            "đề cuối kỳ 1",
+            "final test 1"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Ví đô này mình sẽ chữ cái đề thi C++ cuối kỷ hôm trước mà mình làm vào ngày 1982-2023"
+            },
+            {
+              "sec": 238,
+              "label": "03:58",
+              "summary": "Các bạn cần phải test thử với một số nguyên tố chẳng hạn REST về"
+            },
+            {
+              "sec": 618,
+              "label": "10:18",
+              "summary": "Cái thằng AI này lên, thì có thể cái thằng AI này nó có thể nhảy sang long long rồi Thế nên ở trong trường"
+            },
+            {
+              "sec": 879,
+              "label": "14:39",
+              "summary": "Ví dụ như các bạn tính cái diện tích của cái vùng này này"
+            },
+            {
+              "sec": 1436,
+              "label": "23:56",
+              "summary": "Thì các bạn có thể lưu lại cái này, các bạn có thể lưu lại các cái cánh nguyên tử khối này vào trong một cái"
+            },
+            {
+              "sec": 1675,
+              "label": "27:55",
+              "summary": "Và một cái biên int x thì nó sẽ tương đương với nguyên tố hóa học và nguyên tử khối Mình sẽ xin cho x và x và"
+            },
+            {
+              "sec": 2010,
+              "label": "33:30",
+              "summary": "Con ấm nguyễn văn quan hại này là 002 ở đây nó yêu cầu các bạn chuẩn hóa tên và chuẩn hóa ngay sinh thế thì ở"
+            }
+          ]
+        },
+        {
+          "seq": 66,
+          "title": "Bài 66: Hướng dẫn C++ Final Test 2 - Giải đề cuối kỳ",
+          "keywords": [
+            "đề cuối kỳ 2",
+            "final test 2"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Thì mình sẽ vào các bài đầu tiên nhé, là bài dạy số 23"
+            },
+            {
+              "sec": 314,
+              "label": "05:14",
+              "summary": "Ok để mình lưu vào 1 cái biến nờ Các bạn nhập nờ này, làm cái vòng for chạy từ không trở đến nờ, và sin cho"
+            },
+            {
+              "sec": 670,
+              "label": "11:10",
+              "summary": "Ok mình sẽ đếm xem là mỗi thằng xuất hiện bao nhiêu lần và đây các bạn sẽ cho đếm của ai chia dư cho 28 cộng"
+            },
+            {
+              "sec": 985,
+              "label": "16:25",
+              "summary": "Sau đó lại cần phải in dai theo cái thứ tự là bậc tăng dần nè thế thì dùng map là khá là tiện đấy các bạn"
+            },
+            {
+              "sec": 1252,
+              "label": "20:52",
+              "summary": "Giờ xửa mình lấy thử 1 test này mình xem có đúng không đấy không có hệ số là 1 đúng không"
+            },
+            {
+              "sec": 1736,
+              "label": "28:56",
+              "summary": "Thứ 3 là quantity sau đó bắt iostream tol information sau đó bây giờ các bạn phải duyệt danh sách các tác giả"
+            },
+            {
+              "sec": 1994,
+              "label": "33:14",
+              "summary": "Ở đây các bạn sẽ tạo ra một cái lối tượng thuộc lớp book mình đặt là b, từ những cái thông tin bao gồm có tên"
+            }
+          ]
+        },
+        {
+          "seq": 67,
+          "title": "Bài 67: Mảng 1 chiều & Vòng lặp Range Based For Loop",
+          "is_revision": true,
+          "updates_lesson_seq": 11,
+          "keywords": [
+            "range based for",
+            "for each",
+            "vòng lặp phạm vi"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Cái số lượng người học được kiểu vậy thì nó rất là ít"
+            },
+            {
+              "sec": 678,
+              "label": "11:18",
+              "summary": "E5 tháng chú, phôn, phôn, chú, phôn, nấy, thì mình đã duyệt từ i bằng không cho tới i nhỏ hơn năm, được chứ à"
+            },
+            {
+              "sec": 945,
+              "label": "15:45",
+              "summary": "Ví dụ như sau khi mà mình đã nhập và lưu được cái mảng rồi mình muốn chạy từ đầu, mình muốn in ra cái mảng từ"
+            },
+            {
+              "sec": 1625,
+              "label": "27:05",
+              "summary": "Nhanh nó có 10 byte, các bạn cứ ngầm là còn hơi bị lâu đây trong mục sở line này thì anh có up cho các bạn"
+            },
+            {
+              "sec": 2296,
+              "label": "38:16",
+              "summary": "Mình đã in ra chẳng với lẻ trong cái vòng for đấy rồi, thì có nghĩa là cứ gặp một số, đúng không"
+            },
+            {
+              "sec": 3581,
+              "label": "59:41",
+              "summary": "Đấy, mà cái chương trình của mình nó bị phá vỡ một cách đột ngột và cái chương trình này của bạn, bây giờ cái"
+            },
+            {
+              "sec": 4705,
+              "label": "78:25",
+              "summary": "9x2 nó ra 18 2x1 nó ra 2 1x5 thì nó ra 5 Đấy Mảng có 5 số thì nó, 6 số thì nó sẽ có 4, 5 cặp đứng cạnh nhau"
+            },
+            {
+              "sec": 5685,
+              "label": "94:45",
+              "summary": "Nhưng mà ví dụ như bây giờ em gặp được một cái thằng mà nó lớn hơn là bằng thằng AI rồi Thôi chạy em gì nữa à"
+            }
+          ]
+        },
+        {
+          "seq": 68,
+          "title": "Bài 68: Tìm kiếm nhị phân & Kỹ thuật đệ quy (2024)",
+          "is_revision": true,
+          "updates_lesson_seq": 7,
+          "keywords": [
+            "tìm kiếm nhị phân đệ quy",
+            "binary search recursion"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Muốn học được cái lớp thuật toán đấy thì các bạn cần xuyện cộng với lại tiền thức về vector, set, map"
+            },
+            {
+              "sec": 681,
+              "label": "11:21",
+              "summary": "Ok bây giờ mình sẽ đi cài đặt thật toán tình kiếm nhị phân này nhé các bạn ở đây anh sẽ viết là boon, binary"
+            },
+            {
+              "sec": 996,
+              "label": "16:36",
+              "summary": "Thì khi mà lép bằng không và ròi bằng bê thì cái vòng quai này nó vẫn đúng đâu, đúng không"
+            },
+            {
+              "sec": 1742,
+              "label": "29:02",
+              "summary": "Bây giờ nó cho mình một cái dãi số mà nó hỏi thằng nhỏ nhất với thằng lớn nhất ở trong giải số đấy là thằng"
+            },
+            {
+              "sec": 2533,
+              "label": "42:13",
+              "summary": "Các bạn có thể học rốt, nhưng mà các bạn vẫn lên lớp bình thường, và các bạn học đủ 12 năm luôn Nhưng mà khi"
+            },
+            {
+              "sec": 3467,
+              "label": "57:47",
+              "summary": "Sau khi mà mình gọi cái hàm lao bao rồi thì mình phải biết được cái cách truy ra cái giá trị của cái hàm lao"
+            },
+            {
+              "sec": 4481,
+              "label": "74:41",
+              "summary": "Tức là từ chữ số này đến chữ số M, chữ 1 thì công thức tính như thế này, đúng không"
+            },
+            {
+              "sec": 6128,
+              "label": "102:08",
+              "summary": "Các bạn CLDFF4, nó không biết bằng bao nhiêu thì nó vào, hạm F này nó có nở bằng 4 này, nó kiểm tra là 4 bằng"
+            }
+          ]
+        },
+        {
+          "seq": 69,
+          "title": "Bài 69: OOP C++ - Class, Constructor, Destructor, Operator",
+          "is_revision": true,
+          "updates_lesson_seq": 53,
+          "keywords": [
+            "oop nâng cao",
+            "operator nâng cao"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Nên học luôn nhá thế thì ạ, cái lập trình hướng đối tượng này á, nó giống như cái phần cấu trúc mà các bạn đã"
+            },
+            {
+              "sec": 623,
+              "label": "10:23",
+              "summary": "Tại vì mình không có hạn chế gì cả nên là khi đó người ta sẽ tránh cái việc là truy cập trực tiếp vào các cái"
+            },
+            {
+              "sec": 750,
+              "label": "12:30",
+              "summary": "Cài đặt và chạy thử nghiệm trong hàm main() — Set tên, và các bạn truyền một cái tên là ví dụ như là hoàng quan"
+            },
+            {
+              "sec": 1372,
+              "label": "22:52",
+              "summary": "Các bạn làm cho mình cái bài số 1, student class trong này các bạn nhìn vào đây có cái hình vẽ như thế này"
+            },
+            {
+              "sec": 2222,
+              "label": "37:02",
+              "summary": "Hàm tạo này Hàm tạo con trỏ git, nữa mình sẽ hướng dẫn hàm hủy Này là các bạn phải xong 10 cái bài này đấy 10"
+            },
+            {
+              "sec": 3076,
+              "label": "51:16",
+              "summary": "Và double GPE sau đó các bạn sẽ nhập, getLine, cin, máe này GetLine, cin và tên GetLine, cin và ngay sinh"
+            },
+            {
+              "sec": 4130,
+              "label": "68:50",
+              "summary": "Còn nếu 2 y1 và y2 bằng nhau mình sẽ set đến tháng là 1, 1 và nó khác mở 2 thì các bạn cũng return về mở 1"
+            },
+            {
+              "sec": 5239,
+              "label": "87:19",
+              "summary": "Hàm bạn không phải là một cái hàm của lớp nhưng nó có thể truy cập đến các cái thuộc tính cũng như là các cái"
+            }
+          ]
+        },
+        {
+          "seq": 70,
+          "title": "Bài 70: Thuật toán tìm kiếm nhị phân - Lower_bound, Upper_bound",
+          "is_revision": true,
+          "updates_lesson_seq": 25,
+          "keywords": [
+            "lower_bound nâng cao",
+            "upper_bound nâng cao"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Hôm nay thì anh sẽ hướng dẫn sang thuật toán tìm kiếm, và nó cũng là cái phần khó cuối cùng mà các bạn cần"
+            },
+            {
+              "sec": 677,
+              "label": "11:17",
+              "summary": "Nếu mà các bạn muốn hiểu dõi, hiểu dõi thuật toán tìm kiếm nhị phân nó chạy như thế nào thì mình sẽ phải viết"
+            },
+            {
+              "sec": 1007,
+              "label": "16:47",
+              "summary": "Cái hàm binary search này nó có sẵn nha nó cũng lốc nờ mà em nó cũng lốc nờ nó có hàm có sẵn, các bạn có thể"
+            },
+            {
+              "sec": 1650,
+              "label": "27:30",
+              "summary": "Còn lưu miễn thành bình này chắc là lại đưa cái hàm sort vào trong truy vấn đúng không"
+            },
+            {
+              "sec": 2394,
+              "label": "39:54",
+              "summary": "Em chạy for rồi binary search từ a cộng 1 cho từ a cộng nở cộng 1, a cộng k là sai nó không có sai nhưng mà"
+            },
+            {
+              "sec": 3691,
+              "label": "61:31",
+              "summary": "Còn bài số 15 thì nó ngược lại, đúng không"
+            },
+            {
+              "sec": 4769,
+              "label": "79:29",
+              "summary": "Các bạn làm từ từ thôi nhé ở đây, các bạn nhập mảng A, sau đó mình sẽ sort B và B cộng mờ để mình sắp xếp cái"
+            },
+            {
+              "sec": 5841,
+              "label": "97:21",
+              "summary": "Bài tập về mạng 1 triều cơ bản mà các bạn bị chàn bộ như ngăn xếp nhớ không"
+            }
+          ]
+        },
+        {
+          "seq": 71,
+          "title": "Bài 71: Xâu ký tự trong C++ & Kỹ năng xử lý bài tập xâu",
+          "is_revision": true,
+          "updates_lesson_seq": 18,
+          "keywords": [
+            "kỹ năng xử lý xâu",
+            "string nâng cao"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Trăm xì ổng cộng này của mình, string nó là một thằng dùng để mình lưu chuỗi"
+            },
+            {
+              "sec": 831,
+              "label": "13:51",
+              "summary": "Thế thì ngày xưa các bạn làm cái bài này rất là khổ"
+            },
+            {
+              "sec": 936,
+              "label": "15:36",
+              "summary": "Các bạn làm cho mình cái bài số 1 luôn đây có nghĩa vần chiến hương lê rồi các bạn dùng sin cũng được, tại vì"
+            },
+            {
+              "sec": 1637,
+              "label": "27:17",
+              "summary": "Chết rỡ rất nhiều bạn cứ dùng hàm is the digit, is the lower, is the upper, is the unfair the two lower, two"
+            },
+            {
+              "sec": 3558,
+              "label": "59:18",
+              "summary": "Trả cái gì khó bạn nào cẩn thận ấy thì các bạn để cái SE này này với cái SE-1 này các bạn phải chuyển nó"
+            },
+            {
+              "sec": 4844,
+              "label": "80:44",
+              "summary": "Có phải là các bạn không sắc xéo không"
+            },
+            {
+              "sec": 6020,
+              "label": "100:20",
+              "summary": "Các bạn mà khai báo string ết, sau đó các bạn get live sin vào ết này, mà các bạn đem cái sâu ết mà các bạn"
+            },
+            {
+              "sec": 6870,
+              "label": "114:30",
+              "summary": "Bây giờ mình sẽ hướng dẫn cho các bạn cách sử dụng, hướng dẫn cho các bạn cách sử dụng map với lại bảng đánh"
+            }
+          ]
+        },
+        {
+          "seq": 72,
+          "title": "Bài 72: Xâu ký tự (String) & Các dạng bài tập xâu quan trọng",
+          "is_revision": true,
+          "updates_lesson_seq": 18,
+          "keywords": [
+            "dạng bài tập xâu quan trọng"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trong siệm cộng, nếu các bạn muốn lưu chuỗi ký tự thì các bạn sẽ dùng string đúng không"
+            },
+            {
+              "sec": 522,
+              "label": "08:42",
+              "summary": "Mình sang các cái hàm thông dụng của set ở của string đi các bạn"
+            },
+            {
+              "sec": 566,
+              "label": "09:26",
+              "summary": "Mình sang các cái hàm thông dụng của set ở của string đi các bạn Các bạn nào hỏi gì về cách mà các bạn duyệt"
+            },
+            {
+              "sec": 1249,
+              "label": "20:49",
+              "summary": "Con, nó không giống như phi ở trong set và map là trả về iterator nên mình không được so sánh với string"
+            },
+            {
+              "sec": 2116,
+              "label": "35:16",
+              "summary": "Iterator và set, buổi số 2 thì các bạn học với map, chuỗi kí tự, string đúng không"
+            },
+            {
+              "sec": 3107,
+              "label": "51:47",
+              "summary": "Thì các bạn học map để đếm số lần xuất hiện của số của ký tự rồi đúng không"
+            },
+            {
+              "sec": 3882,
+              "label": "64:42",
+              "summary": "À, chuẩn hóa tên đi nhá chuẩn hóa tên cái này cũng"
+            }
+          ]
+        },
+        {
+          "seq": 73,
+          "title": "Bài 73: Hướng dẫn đề thi thử lập trình C++ PTIT 2024 (Test 1)",
+          "keywords": [
+            "đề ptit 2024 test 1"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mình có tổ chức cho mấy bạn học học viện công nghệ viên trình viện thông để thử cuối kỷ môn lập trình siộn"
+            },
+            {
+              "sec": 296,
+              "label": "04:56",
+              "summary": "Bàn đầu các bạn cứ gán ước nguyên tố nhỏ nhất của các số từ 1 đến 1 triệu là bằng chính nó Rồi sau đó các bạn"
+            },
+            {
+              "sec": 437,
+              "label": "07:17",
+              "summary": "Tại vì khi đó trong sót 30 nó vẫn số 2 thì mình lại lấy sót 30 mình chia cho 2 Thì nó còn 15, cho mình lại"
+            },
+            {
+              "sec": 792,
+              "label": "13:12",
+              "summary": "Và các bạn phải đẩy cái 1 phần tử mới có giã trị bằng tổng của 2 thằng đấy ngược lại vào trong mạng Thế thì"
+            },
+            {
+              "sec": 1080,
+              "label": "18:00",
+              "summary": "Ở đây, các bạn dùng long long ns bằng 0 để các bạn tính cái chi phí, gục"
+            },
+            {
+              "sec": 1391,
+              "label": "23:11",
+              "summary": "1nolambijan2-1nolambi and add funneh look at this area bây giờ các bạn nhập cái mạng 2 chiều sau ở đây mình"
+            },
+            {
+              "sec": 1978,
+              "label": "32:58",
+              "summary": "Nó mình sẽ xây dựng ra một cái class sinh viên đúng không"
+            }
+          ]
+        },
+        {
+          "seq": 74,
+          "title": "Bài 74: Hướng dẫn đề thi thử lập trình C++ PTIT 2024 (Test 2)",
+          "keywords": [
+            "đề ptit 2024 test 2"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Còn các cái tét mới thì mình sẽ làm ở trên cái website trấm bài của mình"
+            },
+            {
+              "sec": 258,
+              "label": "04:18",
+              "summary": "Thì các bạn chỉ cần phân tích thử xuống yên tố là các bạn làm được Ok, thế thì các bạn sẽ cốt thế sao Mình sẽ"
+            },
+            {
+              "sec": 539,
+              "label": "08:59",
+              "summary": "Thì khi đó, mình chỉ cần xét độ trên lệch giữa 1 và 5 thôi Thế còn những cái thẳng ở giữa do mình sắp xếp"
+            },
+            {
+              "sec": 799,
+              "label": "13:19",
+              "summary": "Bài toán đếm miền số 1 rồi, và set ồ liền kề rồi"
+            },
+            {
+              "sec": 1125,
+              "label": "18:45",
+              "summary": "Thất nhiên là các bạn phải biết cái cách chuyển số nhị phân sang số thập phân rồi stringner, stringet các bạn"
+            },
+            {
+              "sec": 1459,
+              "label": "24:19",
+              "summary": "Thì nữa khi mà nó sắp xếp ấy, thì nó sẽ cần phải lôi lớp ra và lôi tên ra để sắp xếp nên mình sẽ viết thêm 1"
+            }
+          ]
+        },
+        {
+          "seq": 75,
+          "title": "Bài 75: Lập trình Hướng Đối Tượng OOP Phần 1 (Update 2025)",
+          "is_revision": true,
+          "updates_lesson_seq": 53,
+          "keywords": [
+            "oop update 2025"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Tất nhiên là mình phải biết xây dựng lớp đúng không"
+            },
+            {
+              "sec": 758,
+              "label": "12:38",
+              "summary": "Thì khi đó, khi mà để mà đảm bảo cái tính chất bao đóng của lập trình hướng đối tượng, thì thuộc tính ở trong"
+            },
+            {
+              "sec": 1535,
+              "label": "25:35",
+              "summary": "Já thì là thuộc tính giá của cái lớp sản phẩm này thì khi đó mình nhìn vào đây phát là mình đang biết ngay là"
+            },
+            {
+              "sec": 2173,
+              "label": "36:13",
+              "summary": "Đây, các bạn làm cái bài này xem nào Đấy thì các bạn chỉ cần bỏ ra 1 tiếng, 2 tiếng nên là các bạn biết lập"
+            },
+            {
+              "sec": 3071,
+              "label": "51:11",
+              "summary": "Ignor, đây cái này có phương giải thích rồi đúng không"
+            },
+            {
+              "sec": 3622,
+              "label": "60:22",
+              "summary": "Mình đã bảo rồi mà, nếu mà các bạn học các phần về sub-shape tìm kiếm set-map-string, nấy, rồi vector, các"
+            },
+            {
+              "sec": 4474,
+              "label": "74:34",
+              "summary": "Thế thôi, vậy là mình đã học được xong cái phần thứ nhất rồi, lập trình đối tượng rồi À, được các bạn Java"
+            }
+          ]
+        },
+        {
+          "seq": 76,
+          "title": "Bài 76: Thuật toán quay lui và bài tập áp dụng (Update 2025)",
+          "is_revision": true,
+          "updates_lesson_seq": 59,
+          "keywords": [
+            "quay lui update 2025"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Này mình khả năng là chưa hẹn, chưa nói được đến phần nhánh cận đâu"
+            },
+            {
+              "sec": 951,
+              "label": "15:51",
+              "summary": "Sao đó tròi ban nó chạy xăm Tròi ban nó chạy xăm thì các bạn thấy ở trong cái hàm tròi 2 của mình ạ Đó có 3"
+            },
+            {
+              "sec": 1647,
+              "label": "27:27",
+              "summary": "Trential, dith, c ninguna Xong bắt đầu các bạn mới tăng ghi lên để các bạn sang cái vòng for này, là ghi vòng"
+            },
+            {
+              "sec": 2470,
+              "label": "41:10",
+              "summary": "Đấy thì quay lùi lại đi hướng khác thì mình phải xóa cái chữ D đấy đi chữ ghi, mà mình đã ghi nhận đấy đi Thế"
+            },
+            {
+              "sec": 3450,
+              "label": "57:30",
+              "summary": "Em đi từ đây xuống đây là dow này, đúng không"
+            },
+            {
+              "sec": 4284,
+              "label": "71:24",
+              "summary": "Nó bằng bao nhiêu, nếu mà nó ra được thẳng ích thì các bạn sẽ tiến hành, ghi nhận lại cấu hình đó bài này các"
+            },
+            {
+              "sec": 4909,
+              "label": "81:49",
+              "summary": "Đấy, còn chỗ này thì, nhưng mà nếu mà lưu vào trong vector là các bạn phải xóa đấy các bạn phải xóa cái phần"
+            },
+            {
+              "sec": 5777,
+              "label": "96:17",
+              "summary": "Ở đây các bạn sẽ duyệt từ cột 1 cho tới cột nờ"
+            }
+          ]
+        },
+        {
+          "seq": 77,
+          "title": "Bài 77: Set & Map trong C++ (2025)",
+          "is_revision": true,
+          "updates_lesson_seq": 22,
+          "keywords": [
+            "set map update 2025"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Trước khi mình bắt đầu mới mới này thì các bạn học lớp si ộng cộng của mình đã nắm được phần set map này rồi"
+            },
+            {
+              "sec": 777,
+              "label": "12:57",
+              "summary": "Sau đó bạn nhập tất cả các cái string từ bàn phím các bạn insert vào cái xét này nó cũng sẽ cho các bạn số"
+            },
+            {
+              "sec": 1737,
+              "label": "28:57",
+              "summary": "Tại vì trong set không có chỉ số, nên em không in thông qua vị trí bất kỳ, thông qua chỉ số như là vector"
+            },
+            {
+              "sec": 2574,
+              "label": "42:54",
+              "summary": "Hai cái iterator nó khác nhau nha nhưng mà nó có thể tham chiếu đến cùng một giá trị đấy nhé bạn phải lưu í"
+            },
+            {
+              "sec": 3353,
+              "label": "55:53",
+              "summary": "Unorder, tức là không có thứ tự set mà manti set của bạn em là bạn em có thể cho thứ tự của nó tăng dần hoặc"
+            },
+            {
+              "sec": 4132,
+              "label": "68:52",
+              "summary": "Các bạn click vào tổ chức DX đây này xong bạn vào danh xách bài thì nó sẽ hiển thị đủ các bạn lọc ra các phần"
+            },
+            {
+              "sec": 5123,
+              "label": "85:23",
+              "summary": "Đấy, mình lưu ý thằng map một chút nha Thằng map này thì nó cũng có thể xử lý được hầu hết các cái bài tập"
+            },
+            {
+              "sec": 5739,
+              "label": "95:39",
+              "summary": "Thì đó cái câu lệnh map của ích cộng cộng tương ứng với map của ấm 1 cộng cộng"
+            }
+          ]
+        },
+        {
+          "seq": 78,
+          "title": "Bài 78: Cấu trúc rẽ nhánh If Else và Switch Case (2025)",
+          "is_revision": true,
+          "updates_lesson_seq": 4,
+          "keywords": [
+            "if else update 2025"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Và để mà học được kiến thức ngày hôm nay, các bạn sẽ cần phải rất là vững về kiến thức thứ nhất là toán tử so"
+            },
+            {
+              "sec": 766,
+              "label": "12:46",
+              "summary": "Và nó nhỏ hơn 10 mũ 4 đây là số nhỏ nhất có 4 chữ số còn đây là số có 5 chữ số rồi, nhưng mà chỗ này nó phải"
+            },
+            {
+              "sec": 1081,
+              "label": "18:01",
+              "summary": "Đây chính là kiểm tra, kiểm tra có chữ số tận cùng, kiểm tra con chữ số hàng đơn vị đi, lớn hơn chữ số hàng"
+            },
+            {
+              "sec": 1817,
+              "label": "30:17",
+              "summary": "Tức là như mình nói là khi mà các bạn nghĩ như thế nào, các bạn sẽ triển khai cốt như thế Viết mình nghĩ"
+            },
+            {
+              "sec": 2835,
+              "label": "47:15",
+              "summary": "Vì vậy nó không int đâu đâu nên là bị thiếu đấy Thế còn int đâu đâu của hiển nè, của quang hiển nè Còn L int"
+            },
+            {
+              "sec": 4064,
+              "label": "67:44",
+              "summary": "Thực tế thì 3 câu lệnh đấy, vì em đặt ngoài cái thằng if và thằng l là xong"
+            },
+            {
+              "sec": 5263,
+              "label": "87:43",
+              "summary": "5 thì nó sẽ rơi với cái eo íp này rồi"
+            },
+            {
+              "sec": 6697,
+              "label": "111:37",
+              "summary": "Đã có giải thích cho các bạn hết cả rồi thì thằng switch cây này á nó là 1 cái cấu trúc diễn ánh tương tự như"
+            }
+          ]
+        },
+        {
+          "seq": 79,
+          "title": "Bài 79: Lý thuyết con trỏ trong C++ (2025) - Con trỏ & Mảng",
+          "is_revision": true,
+          "updates_lesson_seq": 57,
+          "keywords": [
+            "con trỏ mảng update 2025"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Rồi, thế thì bình thường các bạn đã code rất nhiều bài tập và học tương đối là nhiều kiến thức rồi, đúng không"
+            },
+            {
+              "sec": 426,
+              "label": "07:06",
+              "summary": "Bạn này hỏi là nhiều con trỏ có thể cùng trỏ đến một biến không anh"
+            },
+            {
+              "sec": 548,
+              "label": "09:08",
+              "summary": "Nếu mà các bạn muốn lưu địa chỉ của biến long long, hoặc là biến tra, thì bạn em cũng phải dùng địa chỉ của"
+            },
+            {
+              "sec": 1184,
+              "label": "19:44",
+              "summary": "Mà Peter là 1 của mình, khi đó 2 thằng nó đều trò đến biến B cả mấu trốt câu lệnh này là xâm Cơ bản về con"
+            },
+            {
+              "sec": 1708,
+              "label": "28:28",
+              "summary": "Rồi, ok, thì đấy là về lý thiết con trỏ tạm thời thì như thế đã ngoài ra thì nó sẽ có cả cái phần gọi là, đây"
+            },
+            {
+              "sec": 2415,
+              "label": "40:15",
+              "summary": "Tại vì mấy nữa bạn học các thuật toán, như là short, binary search này, hoặc là các hàm lầu bèo, upper bèo"
+            },
+            {
+              "sec": 3359,
+              "label": "55:59",
+              "summary": "Thật thật nào xác định được thì xác định chưa các bạn nào có đáp án à nếu mà các bạn em hiểu rõ được cái mối"
+            }
+          ]
+        },
+        {
+          "seq": 80,
+          "title": "Bài 80: Vector và Iterator trong C++ (2025)",
+          "is_revision": true,
+          "updates_lesson_seq": 20,
+          "keywords": [
+            "vector iterator update 2025"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Đấy, để làm bài tập này, thì bạn em lọc ra vector và iterator để làm thôi"
+            },
+            {
+              "sec": 355,
+              "label": "05:55",
+              "summary": "Nấy, ban đầu cái vector của mình nó dỗng nha Anh ơi, lúc nào làm sao để biết lúc nào vector dùng mạng 1 triều"
+            },
+            {
+              "sec": 747,
+              "label": "12:27",
+              "summary": "Nếu mà có từ 1 phần tử trở lên thì ok ông pop back được Vector không có phần tử nào mà ông lại pop back gây"
+            },
+            {
+              "sec": 1105,
+              "label": "18:25",
+              "summary": "Nhưng phải là mình cứ duyệt vào in đâu Vector này cốt nó dễ không đấy mà Các bạn chỉ cần học được các cái cứu"
+            },
+            {
+              "sec": 1515,
+              "label": "25:15",
+              "summary": "Nó khác gì cái a cộng y là con trỏ trỏ tới ai đâu nhưng mà đây là vector thấy giống không"
+            },
+            {
+              "sec": 1854,
+              "label": "30:54",
+              "summary": "Tại vì nó là iterator ngược còn cái iterator lúc nãy của bạn là thuận thuận là nó giống như kiểu cái chiều từ"
+            },
+            {
+              "sec": 2237,
+              "label": "37:17",
+              "summary": "Hàm tiếp theo là hàm insert để các bạn có thể chèn cái 1 phần tử vào trong vector tại 1 cái chỉ số bất kì"
+            }
+          ]
+        },
+        {
+          "seq": 81,
+          "title": "Bài 81: Danh sách liên kết đơn (Update 2026)",
+          "is_revision": true,
+          "updates_lesson_seq": 58,
+          "keywords": [
+            "danh sách liên kết update 2026"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Bọn em học màng 1 triều, học màng 2 triều, học vector, học set, học map rồi, nữa"
+            },
+            {
+              "sec": 496,
+              "label": "08:16",
+              "summary": "Nó là kiểu node sao kìa, í, tức là con trỏ kiểu node, chứ nó không phải là một cái node thông thường tại vì"
+            },
+            {
+              "sec": 727,
+              "label": "12:07",
+              "summary": "Cái còn thực tế đằng sau nó có gì đâu"
+            },
+            {
+              "sec": 1225,
+              "label": "20:25",
+              "summary": "Bên trong này bạn em sẽ cấp phát động node sao, new node, bằng 1 cái node mới này, đây là cấp phát động đúng"
+            },
+            {
+              "sec": 1800,
+              "label": "30:00",
+              "summary": "Vùng nhớ heap đấy của các bạn thì nó sẽ lớn hơn và nó sẽ phụ thuộc vào bộ nhớ RAM nên là thường các bạn sẽ"
+            },
+            {
+              "sec": 2681,
+              "label": "44:41",
+              "summary": "Rồi, bây giờ các bạn phải đi đến được cái node cuối nhưng mà đừng dùng thằng hết này Tại vì nếu em dùng thằng"
+            },
+            {
+              "sec": 3645,
+              "label": "60:45",
+              "summary": "Thao tác thêm dữ ạ nha 2 câu lệnh 6, 2 và 6, 3 các bạn phải làm đúng thứ tự Các bạn mà làm ngược là nó sẽ bị"
+            },
+            {
+              "sec": 4166,
+              "label": "69:26",
+              "summary": "Thì nó sẽ bị lỗi bộ nhớ Thế nên cái hàm xóa cuối này, các bạn phải xử lý cái trường hợp danh xét liên kết nó"
+            }
+          ]
+        },
+        {
+          "seq": 82,
+          "title": "Bài 82: Kỹ thuật đệ quy - Cây đệ quy (2026)",
+          "is_revision": true,
+          "updates_lesson_seq": 37,
+          "keywords": [
+            "đệ quy update 2026"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Bây giờ mình sẽ học lại một cái hàm mà nó lại gọi lại chính nó cơ"
+            },
+            {
+              "sec": 516,
+              "label": "08:36",
+              "summary": "Tại vì là ở bên trong cái hàm A này các bạn chỉ gọi đến 1 hàm tí nữa mình sẽ hướng dẫn cho các bạn khi mà ở"
+            },
+            {
+              "sec": 1040,
+              "label": "17:20",
+              "summary": "Đấy, bây giờ các bạn sẽ xuống thế này, các bạn cell down to 110 là 4 sau đó các bạn in the ok và mình kết"
+            },
+            {
+              "sec": 1504,
+              "label": "25:04",
+              "summary": "Thì các bạn thấy cái cây đệ quy này của mình nó sẽ chỉ dừng lại khi mà các bạn gọi đến các cái nốt mà nó là"
+            },
+            {
+              "sec": 2146,
+              "label": "35:46",
+              "summary": "Và cái giá trị của node chair đây sẽ bằng tổng của 3 node con cộng lại"
+            },
+            {
+              "sec": 2581,
+              "label": "43:01",
+              "summary": "Sau từ số 3 mà em biến đổi thành số 2 thì mình cộng thêm 1 thao tác Nên cho nên mình cộng 1 vào thôi mà Chứ"
+            },
+            {
+              "sec": 3055,
+              "label": "50:55",
+              "summary": "Nên là mình hay bị lỗi là tràn bộ những ngăn xếp Stack Overflow Nhưng khi mà các bạn làm bài tập trên web thì"
+            }
+          ]
+        },
+        {
+          "seq": 83,
+          "title": "Bài 83: Lập trình Hướng đối tượng OOP (2026)",
+          "is_revision": true,
+          "updates_lesson_seq": 53,
+          "keywords": [
+            "oop tổng kết 2026"
+          ],
+          "video_chapters": [
+            {
+              "sec": 0,
+              "label": "00:00",
+              "summary": "Mở đầu bài học: Kết thị đến phần này thì mình sẽ học một kiến thức tế là lập trình hướng đối tượng"
+            },
+            {
+              "sec": 563,
+              "label": "09:23",
+              "summary": "Cái sản phẩm đấy nó sẽ có giá là ấm 500"
+            },
+            {
+              "sec": 656,
+              "label": "10:56",
+              "summary": "Mà mình phải thông qua hẹm, bây giờ cái thuộc tính này các bạn vẫn để private, đúng không"
+            },
+            {
+              "sec": 1316,
+              "label": "21:56",
+              "summary": "Nó có đầy đủ các cái hàn số đấy, ok Ngoài ra nó có cái hàn normalize, name và normalize, date, birth để các"
+            },
+            {
+              "sec": 2381,
+              "label": "39:41",
+              "summary": "Tất cả những cái này đã dễ hết rồi, tiến thức về comparator sub-set theo một yêu cầu, hai yêu cầu hay nhiều"
+            },
+            {
+              "sec": 3306,
+              "label": "55:06",
+              "summary": "Nếu các bạn học kiểu học các mô như lập chính xy và lập chính xy ổ cậu cuối kỳ nó hay có phần kiến thức về"
+            },
+            {
+              "sec": 4456,
+              "label": "74:16",
+              "summary": "Về pointer cuối lần các bạn sẽ nhập thông tin của một sản phẩm cho anh đây ở đây các bạn sẽ nhập mãi tên đúng"
+            },
+            {
+              "sec": 5334,
+              "label": "88:54",
+              "summary": "Thế là khi các bạn phai báo là friend class giáo viên trong lớp sinh viên này, ông giáo viên này là bạn của"
+            }
+          ]
+        }
       ]
     }
   },
   "navigation_metadata": {
     "navigation_prototypes": [
-      "bài nào", "bài học nào", "chọn bài nào", "học bài nào", "bài mấy", "bài bao nhiêu",
-      "trong playlist", "trong lộ trình", "lộ trình học", "ở bài nào",
-      "xem bài nào", "học ở đâu", "bài số mấy", "tìm bài", "playlist này",
-      "học bài gì", "hôm nay học gì", "hôm nay học bài gì", "bài này học gì",
-      "hôm nay chúng ta học", "chúng ta học bài gì", "giảng dạy", "dạy ở đâu",
-      "chỗ nào học", "khóa học có dạy", "nằm ở bài nào", "thuộc bài nào", "dạy phần nào"
+      "bài nào",
+      "bài học nào",
+      "chọn bài nào",
+      "học bài nào",
+      "bài mấy",
+      "bài bao nhiêu",
+      "trong playlist",
+      "trong lộ trình",
+      "lộ trình học",
+      "ở bài nào",
+      "xem bài nào",
+      "học ở đâu",
+      "bài số mấy",
+      "tìm bài",
+      "playlist này",
+      "học bài gì",
+      "hôm nay học gì",
+      "hôm nay học bài gì",
+      "bài này học gì",
+      "hôm nay chúng ta học",
+      "chúng ta học bài gì",
+      "giảng dạy",
+      "dạy ở đâu",
+      "chỗ nào học",
+      "khóa học có dạy",
+      "nằm ở bài nào",
+      "thuộc bài nào",
+      "dạy phần nào"
     ],
     "overview_prototypes": [
-      "học gì", "sẽ học gì", "hôm nay học", "hôm nay chúng ta học",
-      "nội dung của bài", "nội dung bài", "nói về gì", "nói về cái gì",
-      "dạy gì", "dạy về gì", "tổng quan bài", "mục tiêu bài",
-      "tìm hiểu gì", "tìm hiểu về gì", "chủ đề bài", "có những gì"
+      "học gì",
+      "sẽ học gì",
+      "hôm nay học",
+      "hôm nay chúng ta học",
+      "nội dung của bài",
+      "nội dung bài",
+      "nói về gì",
+      "nói về cái gì",
+      "dạy gì",
+      "dạy về gì",
+      "tổng quan bài",
+      "mục tiêu bài",
+      "tìm hiểu gì",
+      "tìm hiểu về gì",
+      "chủ đề bài",
+      "có những gì"
     ],
     "current_lesson_refs": [
-      "bài này", "bài hiện tại", "hôm nay", "video này", "tiết này"
+      "bài này",
+      "bài hiện tại",
+      "hôm nay",
+      "video này",
+      "tiết này"
     ],
     "stop_words": [
-      "học", "bài", "nào", "ở", "đâu", "cho", "tôi", "em", "muốn", "thì", "chọn",
-      "trong", "playlist", "này", "khóa", "có", "phần", "dạy", "không", "gì", "là",
-      "về", "các", "những", "của", "được", "sẽ", "đến", "mới", "lập", "trình", "dữ", "liệu"
+      "học",
+      "bài",
+      "nào",
+      "ở",
+      "đâu",
+      "cho",
+      "tôi",
+      "em",
+      "muốn",
+      "thì",
+      "chọn",
+      "trong",
+      "playlist",
+      "này",
+      "khóa",
+      "có",
+      "phần",
+      "dạy",
+      "không",
+      "gì",
+      "là",
+      "về",
+      "các",
+      "những",
+      "của",
+      "được",
+      "sẽ",
+      "đến",
+      "mới",
+      "lập",
+      "trình",
+      "dữ",
+      "liệu"
     ]
   },
   "metadata_rules": {
     "modifier_conflict_groups": [
       [
-        ["1 chiều", "một chiều", "1d", "1-d", "mảng một chiều", "mảng 1 chiều"],
-        ["2 chiều", "hai chiều", "2d", "2-d", "ma trận", "nhiều chiều", "đa chiều", "mảng hai chiều", "mảng 2 chiều"]
+        [
+          "1 chiều",
+          "một chiều",
+          "1d",
+          "1-d",
+          "mảng một chiều",
+          "mảng 1 chiều"
+        ],
+        [
+          "2 chiều",
+          "hai chiều",
+          "2d",
+          "2-d",
+          "ma trận",
+          "nhiều chiều",
+          "đa chiều",
+          "mảng hai chiều",
+          "mảng 2 chiều"
+        ]
       ],
       [
-        ["đơn", "liên kết đơn"],
-        ["đôi", "kép", "vòng", "liên kết đôi", "liên kết kép", "liên kết vòng"]
+        [
+          "đơn",
+          "liên kết đơn"
+        ],
+        [
+          "đôi",
+          "kép",
+          "vòng",
+          "liên kết đôi",
+          "liên kết kép",
+          "liên kết vòng"
+        ]
       ],
       [
-        ["tĩnh"],
-        ["động"]
+        [
+          "tĩnh"
+        ],
+        [
+          "động"
+        ]
       ]
     ],
     "domain_specific_tokens": [
-      "vector", "pointer", "struct", "class", "oop", "sort", "search", "stack", "queue", "tree"
+      "vector",
+      "pointer",
+      "struct",
+      "class",
+      "oop",
+      "sort",
+      "search",
+      "stack",
+      "queue",
+      "tree"
     ],
     "action_verbs": [
-      "chuyển", "mở", "tới", "sang", "qua", "tua", "xem bài",
-      "chuyển sang", "chuyển đến", "chuyển giùm", "chuyển hộ", "chuyển giúp"
+      "chuyển",
+      "mở",
+      "tới",
+      "sang",
+      "qua",
+      "tua",
+      "xem bài",
+      "chuyển sang",
+      "chuyển đến",
+      "chuyển giùm",
+      "chuyển hộ",
+      "chuyển giúp"
     ],
     "question_starters": [
-      "tại sao", "vì sao", "sao", "làm sao", "thế nào", "như thế nào", "có phải", "là gì", "được không", "hả", "chưa", "không", "nhỉ", "về cái gì", "về gì", "từ đâu", "ở đâu"
+      "tại sao",
+      "vì sao",
+      "sao",
+      "làm sao",
+      "thế nào",
+      "như thế nào",
+      "có phải",
+      "là gì",
+      "được không",
+      "hả",
+      "chưa",
+      "không",
+      "nhỉ",
+      "về cái gì",
+      "về gì",
+      "từ đâu",
+      "ở đâu"
     ],
     "intro_navigation_markers": [
-      "bắt đầu", "bắt đầu từ đâu", "bắt đầu học", "học bài nào đầu tiên", "lộ trình học", "học bài nào trước", "nên học bài nào", "mới bắt đầu", "bắt đầu với", "học từ đâu"
+      "bắt đầu",
+      "bắt đầu từ đâu",
+      "bắt đầu học",
+      "học bài nào đầu tiên",
+      "lộ trình học",
+      "học bài nào trước",
+      "nên học bài nào",
+      "mới bắt đầu",
+      "bắt đầu với",
+      "học từ đâu"
     ],
-    "introductory_lesson_seqs": [1, 2],
+    "introductory_lesson_seqs": [
+      1,
+      2
+    ],
     "introductory_text_markers": [
-      "giới thiệu", "cài đặt", "tự học", "làm quen c++", "vào ra & kiểu dữ liệu"
+      "giới thiệu",
+      "cài đặt",
+      "tự học",
+      "làm quen c++",
+      "vào ra & kiểu dữ liệu"
     ],
     "exercise_statement_signatures": [
       "em đang làm bài tập",

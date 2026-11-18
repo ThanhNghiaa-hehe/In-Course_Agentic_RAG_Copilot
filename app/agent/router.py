@@ -172,6 +172,37 @@ class NLIArbiter:
             logger.error(f"[NLIArbiter] Lỗi suy luận NLI ({e}), giữ nguyên phán quyết Stage 1.")
             return "out_of_scope", 0.0
 
+    def verify_in_video_temporal_query(self, prompt: str) -> tuple[bool, float]:
+        """
+        Kiểm định NLI nhị phân cho câu hỏi chứa tham chiếu thời gian/vị trí video
+        ("phút thứ 6 nói về gì", "đoạn này là sao") nhằm phân tách khỏi ngữ cảnh đời sống
+        ("phút thứ 6 trận bóng đá", "chỗ này quán ăn nào ngon").
+        Trả về `(is_in_video_query, off_topic_score)`.
+        """
+        pipe = self._get_pipeline()
+        if pipe is None:
+            return True, 0.0
+        try:
+            labels = [
+                "nội dung đang được giảng hoặc giải thích trong video bài học lập trình",
+                "thể thao, bóng đá, quán ăn, nấu ăn, thời tiết hoặc đời sống ngoài lề",
+            ]
+            res = pipe(
+                prompt,
+                candidate_labels=labels,
+                hypothesis_template="Câu này hỏi về {}.",
+                multi_label=False,
+            )
+            off_topic_score = 0.0
+            for lbl, sc in zip(res.get("labels", []), res.get("scores", [])):
+                if lbl == labels[1]:
+                    off_topic_score = float(sc)
+                    break
+            return (off_topic_score < 0.60), off_topic_score
+        except Exception as e:
+            logger.debug(f"[NLIArbiter] Lỗi verify_in_video_temporal_query ({e}), cho phép giữ an toàn.")
+            return True, 0.0
+
     def is_confirmation(self, prompt: str) -> tuple[bool, float]:
         """
         Phán xử ý định xác nhận hành động đàm thoại qua Vector E5 Prototype Alignment & Dual Margin.
@@ -186,7 +217,7 @@ class NLIArbiter:
             if not self._confirm_vecs or not self._reject_vecs:
                 return False, 0.0
 
-            q_vec = emb_svc.embed_query_dense(f"query: {prompt}")
+            q_vec = emb_svc.embed_query_dense(prompt)
             sim_c = max([float(np.dot(q_vec, cv) / (np.linalg.norm(q_vec) * np.linalg.norm(cv))) for cv in self._confirm_vecs])
             sim_r = max([float(np.dot(q_vec, rv) / (np.linalg.norm(q_vec) * np.linalg.norm(rv))) for rv in self._reject_vecs])
 
@@ -472,17 +503,23 @@ class IntentRouter:
     def is_curriculum_navigation(self, prompt: str) -> tuple[bool, float]:
         """
         Curriculum Navigation Recognition Gate (Nhận diện câu hỏi lộ trình giáo trình):
-        BẮT BUỘC có curriculum_navigation_signatures từ manifest VÀ đo Cosine với curriculum_navigation_prototypes >= 0.78.
+        Kết hợp đối chiếu ma trận prototype E5 (curriculum_navigation_prototypes & CurriculumService)
+        và cổng cách ly tương phản Social/Identity, loại bỏ hoàn toàn chốt chặn từ khóa cứng.
         """
         clean_p = self._normalize_text(prompt)
         if not clean_p:
             return (False, 0.0)
 
         lower_p = clean_p.lower()
+        # Loại trừ câu mô tả đề bài/bài tập hoặc yêu cầu giải hộ code
+        ex_sigs = self._manifest_data.get("exercise_statement_signatures", [])
+        if any(sig in lower_p for sig in ex_sigs):
+            return (False, 0.0)
+        if any(w in lower_p for w in self._solicitation_words):
+            return (False, 0.0)
+
         nav_sigs = self._manifest_data.get("curriculum_navigation_signatures", [])
         has_nav_sig = any(sig in lower_p for sig in nav_sigs)
-        if not has_nav_sig:
-            return (False, 0.0)
 
         self._ensure_chitchat_prototypes()
         if self._curriculum_nav_proto_matrix is None or len(self._curriculum_nav_proto_matrix) == 0:
@@ -496,7 +533,28 @@ class IntentRouter:
                 qv /= norm_q
             sims = np.dot(self._curriculum_nav_proto_matrix, qv)
             max_sim = float(np.max(sims))
-            return (max_sim >= 0.78, max_sim)
+
+            # Cổng cách ly tương phản: Không nhận diện nhầm câu chào hỏi xã giao hoặc hỏi danh tính/sư phạm
+            sim_soc = self.get_pure_social_similarity(clean_p)
+            sim_sys = self.get_system_identity_similarity(clean_p, query_vec=qv)
+            if sim_soc >= settings.ROUTER_PURE_SOCIAL_THRESHOLD or sim_sys >= 0.88:
+                return (False, max_sim)
+            if not has_nav_sig and max_sim <= max(sim_soc, sim_sys) + 0.02:
+                return (False, max_sim)
+
+            if has_nav_sig:
+                return (max_sim >= 0.78, max_sim)
+
+            # Khi không có chữ ký từ vựng tường minh (câu hỏi diễn đạt tự nhiên):
+            # Yêu cầu độ tương đồng vector E5 cao (>= 0.875) hoặc đồng thuận với CurriculumService.is_navigation_query (>= 0.865)
+            if max_sim >= 0.875:
+                return (True, max_sim)
+            if max_sim >= 0.865:
+                from app.services.curriculum import get_curriculum_service
+                if get_curriculum_service().is_navigation_query(clean_p):
+                    return (True, max_sim)
+
+            return (False, max_sim)
         except Exception as e:
             logger.warning(f"[IntentRouter] Lỗi tính curriculum navigation similarity: {e}")
             return (False, 0.0)
