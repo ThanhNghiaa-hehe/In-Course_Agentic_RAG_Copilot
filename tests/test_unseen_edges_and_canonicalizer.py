@@ -723,3 +723,259 @@ def test_curriculum_time_parser_excludes_cooking_minutes_duration():
         "kind": "explicit_sec",
         "target_sec": 360,
     }
+
+
+def test_lesson_11_ast_lexicon_extracts_array_declarator_and_forbidden_mang():
+    lex = canon.extract_lesson_lexicon("cpp-core", 11)
+    assert lex["has_ast"] is True
+    hints_low = [h.lower() for h in lex["ast_symbols"]["concept_hints"]]
+    assert "mảng" in hints_low
+    assert "mảng một chiều" in hints_low
+    assert "Array = Mảng" in lex["lexicon_prompt"]
+    assert "mạng" in lex["lexicon_prompt"]
+
+
+@pytest.mark.asyncio
+async def test_spec5_temporal_shift_excludes_chapter_toc_glossary_and_stale_summary():
+    """
+    [spec-5] M1-T07 regression:
+    - crag_grader_node keeps [MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI] in user_message_content.
+    - _extract_glossary_lookup_text excludes [MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI] so Mốc 09:09
+      ('encapsulation') does not trigger the Encapsulation glossary entry on a 17:22 Constructor turn.
+    - context_assembly_node suppresses stale conversation_summary on temporal shift.
+    """
+    from app.services.chat_graph import (
+        _extract_glossary_lookup_text,
+        context_assembly_node,
+        crag_grader_node,
+    )
+
+    prompt = "phút 17:22 có hàm constructor 4 tham số, viết giùm em full code class SinhVien luôn đi"
+    state = {
+        "prompt": prompt,
+        "search_query": prompt,
+        "course_id": "cpp-oop",
+        "lesson_seq": 53,
+        "prev_lesson_seq": 53,
+        "prev_video_sec": 373,
+        "last_video_sec": 373,
+        "last_lesson_seq": 53,
+        "retrieval_status": "grounded",
+        "is_low_confidence": False,
+        "is_curriculum_navigation": False,
+        "target_lesson_seq": None,
+        "retrieved_chunks": [
+            {
+                "id": "hit-53-1042",
+                "content_type": "video_transcript",
+                "lesson_id": "lesson-53",
+                "lesson_seq": 53,
+                "course_id": "cpp-oop",
+                "raw_text": "Ở phút 17:22 thầy viết hàm khởi tạo SinhVien có 4 tham số ma, ten, ns, gpa.",
+                "video_title": "lesson-53_oop.mp4",
+                "start_sec": 1042,
+                "end_sec": 1090,
+                "start_label": "17:22",
+                "end_label": "18:10",
+                "timestamp_tag": '<timestamp sec="1042">17:22</timestamp>',
+                "confidence_score": 0.91,
+                "is_approximate": False,
+            }
+        ],
+        "messages": [
+            {"role": "user", "content": "phút thứ 6 nói về gì"},
+            {"role": "assistant", "content": "Ở phút 06:13 thầy giảng về tính đóng gói (Encapsulation)."},
+        ],
+        "conversation_summary": "Học viên đang theo học Bài 53. Tiến trình thảo luận trước đó: encapsulation và private.",
+    }
+
+    grader_out = await crag_grader_node(state)
+    assert "[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]" not in grader_out["user_message_content"]
+
+    sample_with_toc = (
+        grader_out["user_message_content"]
+        + "\n\n[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]\n- Mốc 09:09: Tính đóng gói (encapsulation)"
+    )
+    lookup_txt = _extract_glossary_lookup_text(sample_with_toc, prompt)
+    assert "[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]" not in lookup_txt
+    assert "encapsulation" not in lookup_txt.lower()
+
+    merged_state = {**state, **grader_out}
+    ctx_out = await context_assembly_node(merged_state)
+    final_user_msg = ctx_out["user_message_content"]
+
+    assert "Constructor ->" in final_user_msg
+    assert 'Encapsulation -> "Tính đóng gói"' not in final_user_msg
+    assert "[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]" not in final_user_msg
+
+
+@pytest.mark.asyncio
+async def test_spec5_multi_topic_disjunction_formats_numbered_branches_and_skips_nav_glossary():
+    """
+    [spec-5] M2-T05 regression:
+    - Multi-topic disjunction ('tôi muốn học con trỏ hay vòng lặp thì xem bài nào') formats
+      numbered branch-paired options for both Bài 57 and Bài 6 with explicit list-all cardinality.
+    - context_assembly_node skips academic glossary injection and stale conversation_summary on
+      out_of_lesson curriculum navigation turns.
+    """
+    from app.services.chat_graph import context_assembly_node, crag_grader_node
+
+    prompt = "tôi muốn học con trỏ hay vòng lặp thì xem bài nào"
+    state = {
+        "prompt": prompt,
+        "search_query": prompt,
+        "course_id": "cpp-core",
+        "lesson_seq": 11,
+        "prev_lesson_seq": 11,
+        "retrieval_status": "out_of_lesson",
+        "is_low_confidence": False,
+        "is_curriculum_navigation": True,
+        "target_lesson_seq": 57,
+        "future_best_chunk": {"lesson_seq": 57, "course_id": "cpp-core", "start_sec": 0},
+        "retrieved_chunks": [],
+        "messages": [
+            {"role": "user", "content": "bài này học về cái gì"},
+            {"role": "assistant", "content": "Bài 11 giới thiệu mảng một chiều. Bạn muốn xem phần nào trước?"},
+        ],
+        "conversation_summary": "Học viên đang theo học Bài 11 về mảng một chiều.",
+    }
+
+    grader_out = await crag_grader_node(state)
+    user_content = grader_out["user_message_content"]
+    assert "[CÁC LỰA CHỌN BÀI HỌC PHÙ HỢP TRONG GIÁO TRÌNH]" in user_content
+    assert "1. Chủ đề" in user_content
+    assert "2. Chủ đề" in user_content
+    assert "Bài 57" in user_content
+    assert "Bài 6" in user_content
+    assert "BẮT BUỘC phải liệt kê ĐẦY ĐỦ CẢ 2 bài học" in user_content
+
+    merged_state = {**state, **grader_out}
+    ctx_out = await context_assembly_node(merged_state)
+    final_user_msg = ctx_out["user_message_content"]
+    assert "[TỪ ĐIỂN THUẬT NGỮ CHUẨN ĐẠI HỌC" not in final_user_msg
+    assert "[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]" not in final_user_msg
+
+
+@pytest.mark.asyncio
+async def test_spec6_specific_timestamp_with_grounded_chunks_suppresses_toc_while_relative_filters_by_focus_sec():
+    """
+    [spec-6] #1:
+    - Focused timestamp/player queries with grounded chunks (M1-T05 at 680s, M1-T07 at 1042s)
+      suppress [MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI] completely.
+    - Relative segment queries ('còn đoạn giữa thì sao' at 2409s) keep [MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]
+      filtered to chapters within ±600s of focus_sec=2409s (excluding Mốc 09:09 encapsulation).
+    """
+    from app.services.chat_graph import crag_grader_node
+
+    # 1. M1-T05: deictic with grounded chunk at 638s -> no TOC injected
+    state_t05 = {
+        "prompt": "chỗ này đang dạy gì",
+        "search_query": "chỗ này đang dạy gì",
+        "course_id": "cpp-oop",
+        "lesson_seq": 53,
+        "current_video_sec": 680,
+        "retrieval_status": "grounded",
+        "is_low_confidence": False,
+        "is_curriculum_navigation": False,
+        "target_lesson_seq": None,
+        "retrieved_chunks": [
+            {
+                "id": "hit-53-638",
+                "content_type": "video_transcript",
+                "lesson_id": "lesson-53",
+                "lesson_seq": 53,
+                "course_id": "cpp-oop",
+                "raw_text": "Ở đoạn này thầy hướng dẫn khai báo thuộc tính và phương thức.",
+                "video_title": "lesson-53_oop.mp4",
+                "start_sec": 638,
+                "end_sec": 685,
+                "start_label": "10:38",
+                "end_label": "11:25",
+                "timestamp_tag": '<timestamp sec="638">10:38</timestamp>',
+                "confidence_score": 0.90,
+                "is_approximate": False,
+            }
+        ],
+    }
+    out_t05 = await crag_grader_node(state_t05)
+    assert "[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]" not in out_t05["user_message_content"]
+    assert "encapsulation" not in out_t05["user_message_content"].lower()
+
+    # 2. M1-T06: relative segment query ("còn đoạn giữa thì sao") at 2409s -> TOC present but 09:09 excluded
+    state_t06 = {
+        "prompt": "còn đoạn giữa thì sao",
+        "search_query": "còn đoạn giữa thì sao",
+        "course_id": "cpp-oop",
+        "lesson_seq": 53,
+        "current_video_sec": None,
+        "retrieval_status": "grounded",
+        "is_low_confidence": False,
+        "is_curriculum_navigation": False,
+        "target_lesson_seq": None,
+        "retrieved_chunks": [
+            {
+                "id": "hit-53-2409",
+                "content_type": "video_transcript",
+                "lesson_id": "lesson-53",
+                "lesson_seq": 53,
+                "course_id": "cpp-oop",
+                "raw_text": "Ở đoạn giữa video thầy minh họa bài tập sắp xếp danh sách sinh viên.",
+                "video_title": "lesson-53_oop.mp4",
+                "start_sec": 2409,
+                "end_sec": 2460,
+                "start_label": "40:09",
+                "end_label": "41:00",
+                "timestamp_tag": '<timestamp sec="2409">40:09</timestamp>',
+                "confidence_score": 0.89,
+                "is_approximate": False,
+            }
+        ],
+    }
+    out_t06 = await crag_grader_node(state_t06)
+    assert "[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]" in out_t06["user_message_content"]
+    assert "09:09" not in out_t06["user_message_content"]
+    assert "encapsulation" not in out_t06["user_message_content"].lower()
+
+
+@pytest.mark.asyncio
+async def test_spec6_anchored_deictic_current_with_player_sec_omits_prior_turn_context_linking():
+    """
+    [spec-6] #2:
+    When a deictic_current query ('chỗ này đang dạy gì') has an active player current_video_sec (e.g. 680s),
+    router_node and crag_grader_node must NOT link it back to the prior turn's last_course_query ('phút thứ 6 nói gì').
+    """
+    from app.services.chat_graph import crag_grader_node, router_node
+
+    r_out = await router_node(
+        {
+            "prompt": "chỗ này đang dạy gì",
+            "course_id": "cpp-oop",
+            "lesson_seq": 53,
+            "current_video_sec": 680,
+            "messages": [
+                {"role": "user", "content": "phút thứ 6 nói gì"},
+                {"role": "assistant", "content": "Phút thứ 6 nói về tính đóng gói."},
+            ],
+            "last_course_query": "phút thứ 6 nói gì",
+            "pending_navigation": None,
+        }
+    )
+    assert r_out["intent"] == "course_query"
+    assert r_out["search_query"] == "chỗ này đang dạy gì"
+    assert "phút thứ 6" not in (r_out["search_query"] or "")
+
+    g_out = await crag_grader_node(
+        {
+            "prompt": "chỗ này đang dạy gì",
+            "search_query": "phút thứ 6 nói gì — chỗ này đang dạy gì",
+            "course_id": "cpp-oop",
+            "lesson_seq": 53,
+            "current_video_sec": 680,
+            "retrieval_status": "grounded",
+            "is_low_confidence": False,
+            "is_curriculum_navigation": False,
+            "target_lesson_seq": None,
+            "retrieved_chunks": [],
+        }
+    )
+    assert "[NGỮ CẢNH HỘI THOẠI LIÊN KẾT]" not in g_out["user_message_content"]

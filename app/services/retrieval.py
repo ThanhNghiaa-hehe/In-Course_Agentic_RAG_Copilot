@@ -1893,7 +1893,7 @@ class RetrievalService:
         else:
             # Phân nhánh 3B: Continuation & Exercise Shield + 4-Tier Pareto Sufficiency (ICLR 2025)
             if active_continuation_shield and future_chunk_type != "code_ast":
-                min_future_floor = 0.52
+                min_future_floor = settings.PARETO_DOMINANCE_CODE_FUTURE_MIN
                 margin_req = 0.28
                 logger.info(
                     f"[RetrievalService:Pareto 3B] Kích hoạt Continuation/Exercise Shield (cont={is_continuation_turn}, ex={is_exercise_stmt}): "

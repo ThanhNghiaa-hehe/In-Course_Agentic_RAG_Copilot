@@ -8,6 +8,7 @@ Kiến trúc phòng vệ 2 tầng sâu (Defense-in-Depth - Zero LinearSVC):
 - Tầng 2: Stage 2 Cross-Encoder NLI Arbiter (mDeBERTa-v3) giải cứu câu hỏi phân vân.
 """
 
+import os
 import json
 import logging
 import unicodedata
@@ -18,7 +19,11 @@ import numpy as np
 from app.config import settings
 from app.schemas.chat import RouterClassification
 from app.services.embedding import get_embedding_service
-from app.agent.guardrails import get_security_input_guardrail, SECURITY_REFUSAL_RESPONSE
+from app.agent.guardrails import (
+    get_security_input_guardrail,
+    SECURITY_REFUSAL_RESPONSE,
+    _detect_student_cpp_ast,
+)
 
 logger = logging.getLogger("uvicorn.error")
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -138,6 +143,8 @@ class NLIArbiter:
                 import torch
                 from transformers import pipeline
                 device_id = 0 if torch.cuda.is_available() else -1
+                if device_id == -1 and torch.get_num_threads() != 1:
+                    torch.set_num_threads(1)
                 dev_name = "CUDA (GPU 0)" if device_id >= 0 else "CPU"
                 logger.info(f"[NLIArbiter] Đang nạp mô hình mDeBERTa-v3-base-xnli trên {dev_name}...")
                 self._pipeline = pipeline(
@@ -294,7 +301,8 @@ class IntentRouter:
             try:
                 import onnxruntime as ort
                 opts = ort.SessionOptions()
-                opts.intra_op_num_threads = 2
+                opts.intra_op_num_threads = 1 if os.environ.get("OMP_NUM_THREADS") == "1" else 2
+                opts.inter_op_num_threads = 1
                 opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
                 self._slm_session = ort.InferenceSession(str(slm_path), opts, providers=["CPUExecutionProvider"])
                 logger.info(f"[IntentRouter] 🚀 Nạp thành công Fast-Path SLM ONNX INT8 Router từ {slm_path}.")
@@ -304,8 +312,12 @@ class IntentRouter:
             logger.warning(f"[IntentRouter] Chưa tìm thấy {slm_path}. Cần chạy script huấn luyện SLM.")
 
     def warmup(self) -> None:
-        """Khởi động nóng mô hình NLI Arbiter để triệt tiêu Cold-Start."""
+        """Khởi động nóng mô hình NLI Arbiter và các ma trận prototype để triệt tiêu Cold-Start."""
         self._nli_arbiter.warmup()
+        self._ensure_chitchat_prototypes()
+        self._security_guardrail._ensure_embeddings()
+        from app.services.curriculum import get_curriculum_service
+        get_curriculum_service()._ensure_nav_embeddings()
 
     def _normalize_text(self, text: str) -> str:
         """Chuẩn hóa văn bản Unicode NFC và loại bỏ khoảng trắng thừa."""
@@ -313,6 +325,13 @@ class IntentRouter:
             return ""
         normalized = unicodedata.normalize("NFC", text.strip())
         return " ".join(normalized.split())
+
+    def is_code_solicitation(self, prompt: str) -> bool:
+        """Nhận diện yêu cầu xin code hoàn chỉnh / giải bài tập hộ nạp từ router_intent_manifest.json (0% Hardcode)."""
+        clean_p = self._normalize_text(prompt).lower()
+        if not clean_p:
+            return False
+        return any(w in clean_p for w in self._solicitation_words)
 
     def _ensure_chitchat_prototypes(self) -> None:
         """Khởi tạo ma trận prototype E5 1024-dim cho chitchat, pure social, acknowledgment và curriculum nav từ manifest JSON."""
@@ -332,30 +351,25 @@ class IntentRouter:
             pure_keys = set(self._manifest_data.get("pure_social_subintents", ["greeting", "gratitude", "goodbye"]))
             sys_keys = {"identity_architecture", "socratic_pedagogy"}
             try:
-                all_vecs: List[np.ndarray] = []
+                proto_texts: List[str] = []
+                proto_keys: List[str] = []
                 all_resps: List[str] = []
-                pure_vecs: List[np.ndarray] = []
-                sys_vecs: List[np.ndarray] = []
                 for sub_key, sub_cfg in subintents.items():
                     resp_txt = sub_cfg.get("response_text", GREETING_RESPONSES)
                     for proto_str in sub_cfg.get("prototypes", []):
-                        v = np.array(emb_svc.embed_query_dense(proto_str), dtype=np.float32)
-                        norm_v = np.linalg.norm(v)
-                        if norm_v > 0:
-                            v /= norm_v
-                        all_vecs.append(v)
+                        proto_texts.append(proto_str)
+                        proto_keys.append(sub_key)
                         all_resps.append(resp_txt)
-                        if sub_key in pure_keys:
-                            pure_vecs.append(v)
-                        if sub_key in sys_keys:
-                            sys_vecs.append(v)
-                if all_vecs:
-                    self._chitchat_proto_matrix = np.vstack(all_vecs)
+                if proto_texts:
+                    batch_mat = emb_svc.embed_queries_dense_batch(proto_texts)
+                    self._chitchat_proto_matrix = batch_mat
                     self._chitchat_proto_responses = all_resps
-                if pure_vecs:
-                    self._pure_social_proto_matrix = np.vstack(pure_vecs)
-                if sys_vecs:
-                    self._sys_proto_matrix = np.vstack(sys_vecs)
+                    pure_indices = [i for i, k in enumerate(proto_keys) if k in pure_keys]
+                    sys_indices = [i for i, k in enumerate(proto_keys) if k in sys_keys]
+                    if pure_indices:
+                        self._pure_social_proto_matrix = batch_mat[pure_indices]
+                    if sys_indices:
+                        self._sys_proto_matrix = batch_mat[sys_indices]
             except Exception as e:
                 logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận chitchat prototypes ({e}).")
 
@@ -363,15 +377,7 @@ class IntentRouter:
         ack_protos = self._manifest_data.get("acknowledgment_prototypes", [])
         if ack_protos and self._ack_proto_matrix is None:
             try:
-                ack_vecs: List[np.ndarray] = []
-                for p in ack_protos:
-                    v = np.array(emb_svc.embed_query_dense(p), dtype=np.float32)
-                    norm_v = np.linalg.norm(v)
-                    if norm_v > 0:
-                        v /= norm_v
-                    ack_vecs.append(v)
-                if ack_vecs:
-                    self._ack_proto_matrix = np.vstack(ack_vecs)
+                self._ack_proto_matrix = emb_svc.embed_queries_dense_batch(ack_protos)
             except Exception as e:
                 logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận acknowledgment prototypes ({e}).")
 
@@ -379,15 +385,7 @@ class IntentRouter:
         nav_protos = self._manifest_data.get("curriculum_navigation_prototypes", [])
         if nav_protos and self._curriculum_nav_proto_matrix is None:
             try:
-                nav_vecs: List[np.ndarray] = []
-                for p in nav_protos:
-                    v = np.array(emb_svc.embed_query_dense(p), dtype=np.float32)
-                    norm_v = np.linalg.norm(v)
-                    if norm_v > 0:
-                        v /= norm_v
-                    nav_vecs.append(v)
-                if nav_vecs:
-                    self._curriculum_nav_proto_matrix = np.vstack(nav_vecs)
+                self._curriculum_nav_proto_matrix = emb_svc.embed_queries_dense_batch(nav_protos)
             except Exception as e:
                 logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận curriculum navigation prototypes ({e}).")
 
@@ -419,7 +417,20 @@ class IntentRouter:
         Kiểm định độ thuần khiết xã giao (Pure Social Prototype Gate):
         Trả về (True, sim) nếu sim >= settings.ROUTER_PURE_SOCIAL_THRESHOLD.
         """
-        sim = self.get_pure_social_similarity(prompt)
+        clean_p = self._normalize_text(prompt)
+        if not clean_p:
+            return (True, 1.0)
+        lower_p = clean_p.lower()
+        if self.is_code_solicitation(clean_p):
+            return (False, 0.0)
+        ex_sigs = self._manifest_data.get("exercise_statement_signatures", [])
+        if any(sig in lower_p for sig in ex_sigs):
+            return (False, 0.0)
+        if self.has_domain_entity(clean_p) or _detect_student_cpp_ast(clean_p):
+            return (False, 0.0)
+        if self.is_context_dependent(clean_p):
+            return (False, 0.0)
+        sim = self.get_pure_social_similarity(clean_p)
         return (sim >= settings.ROUTER_PURE_SOCIAL_THRESHOLD, sim)
 
     def get_system_identity_similarity(self, prompt: str, query_vec: Optional[np.ndarray] = None) -> float:
@@ -794,7 +805,8 @@ class IntentRouter:
             return RouterClassification(
                 intent="out_of_scope",
                 direct_response=refusal_reason or OFFTOPIC_CASUAL_RESPONSES,
-                is_course_query=False
+                is_course_query=False,
+                is_security_refusal=True,
             )
 
         # ----------------------------------------------------

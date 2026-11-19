@@ -19,11 +19,13 @@ from __future__ import annotations
 import argparse
 import asyncio
 import inspect
+import itertools
 import json
 import os
 import re
 import socket
 import sys
+import time
 import unicodedata
 import uuid
 from pathlib import Path
@@ -72,6 +74,7 @@ AST_CONCEPT_HOTWORDS: Dict[str, List[str]] = {
     "virtual_specifier": ["virtual", "Polymorphism", "override"],
     "pointer_declarator": ["pointer"],
     "reference_declarator": ["reference"],
+    "array_declarator": ["array", "mảng", "mảng một chiều", "chỉ số mảng"],
     "template_declaration": ["template"],
 }
 
@@ -312,6 +315,8 @@ def extract_cpp_ast_symbols(source_text: str) -> Dict[str, List[str]]:
             concept_hints.extend(AST_CONCEPT_HOTWORDS["pointer_declarator"])
         elif ntype == "reference_declarator":
             concept_hints.extend(AST_CONCEPT_HOTWORDS["reference_declarator"])
+        elif ntype == "array_declarator":
+            concept_hints.extend(AST_CONCEPT_HOTWORDS["array_declarator"])
 
         if ntype == "field_declaration":
             # Có thể là khai báo thuộc tính hoặc prototype phương thức trong class/struct
@@ -731,7 +736,7 @@ def build_correction_prompt(
         "1. CHỈ sửa các lỗi nghe nhầm âm thanh (phonetic/ASR typos) của từ khóa C++, tên lớp/hàm/phương thức, hoặc thuật ngữ lập trình "
         "(ví dụ: 'Assets Modifier' -> 'Access Modifier', 'si cộng cộng' -> 'C++', 'xì in' -> 'cin', 'xì out' -> 'cout', 'class selector' -> 'class vector').\n"
         "2. TUYỆT ĐỐI KHÔNG tóm tắt, KHÔNG viết lại câu, KHÔNG dịch lời giảng tiếng Việt sang tiếng Anh, KHÔNG thêm hoặc xóa ý.\n"
-        "3. Giữ nguyên văn phong nói, độ dài và cấu trúc câu gốc (độ dài thay đổi <= 15%).\n"
+        "3. Thay thế từ lỗi đúng 1-đối-1 theo âm tiết gốc (ví dụ: 'mạng' -> 'mảng', KHÔNG tự ý mở rộng 'mạng' thành 'mảng một chiều' nếu câu gốc chỉ nói 'mạng'). Giữ nguyên văn phong nói, độ dài và cấu trúc câu gốc (độ dài thay đổi <= 15%).\n"
         "4. Trả về DUY NHẤT JSON object dạng {\"<chunk_id>\": \"<văn bản đã hiệu đính>\", ...}, không kèm giải thích ngoài JSON."
     )
 
@@ -754,17 +759,112 @@ def build_correction_prompt(
     return system_prompt, user_prompt
 
 
-def _get_llm_client_kwargs() -> Dict[str, Any]:
-    api_key = (
-        getattr(settings, "LLM_API_KEY", None)
-        or getattr(settings, "OPENAI_API_KEY", None)
-        or os.getenv("LLM_API_KEY")
-        or os.getenv("OPENAI_API_KEY")
-        or "ollama"
-    )
-    base_url = getattr(settings, "LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-    model_name = getattr(settings, "LLM_MODEL_NAME", "qwen2.5")
-    return {"base_url": base_url, "api_key": api_key, "model": model_name}
+GEMINI_OPENAI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+GEMINI_DEFAULT_MODEL = "gemini-3.5-flash-lite"
+_KEY_ROTATION_COUNTER = itertools.count()
+
+
+def _read_env_key(key_name: str) -> Optional[str]:
+    val = os.getenv(key_name) or getattr(settings, key_name, None)
+    if val:
+        return str(val).strip()
+    env_path = PROJECT_ROOT / ".env"
+    if env_path.exists():
+        try:
+            from dotenv import dotenv_values
+            d_vals = dotenv_values(env_path)
+            if d_vals.get(key_name):
+                return str(d_vals[key_name]).strip()
+        except Exception:
+            pass
+        try:
+            for raw_line in env_path.read_text(encoding="utf-8").splitlines():
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                if k.strip() == key_name:
+                    clean_v = v.strip().strip("\"'")
+                    if clean_v:
+                        return clean_v
+        except Exception:
+            pass
+    return None
+
+
+def _parse_key_pool(*raw_sources: Optional[str]) -> List[str]:
+    """Tách danh sách khóa API (phân tách bởi dấu phẩy hoặc khoảng trắng), khử trùng lặp và giữ nguyên thứ tự."""
+    pool: List[str] = []
+    seen = set()
+    for src in raw_sources:
+        if not src:
+            continue
+        for part in str(src).replace(";", ",").split(","):
+            for token in part.strip().strip("\"'").split():
+                clean_k = token.strip().strip("\"'")
+                if clean_k and clean_k not in seen:
+                    seen.add(clean_k)
+                    pool.append(clean_k)
+    return pool
+
+
+def _get_llm_client_kwargs(
+    *,
+    use_gemini: bool = False,
+    base_url: Optional[str] = None,
+    api_key: Optional[str] = None,
+    model: Optional[str] = None,
+    timeout: float = 60.0,
+) -> Dict[str, Any]:
+    if use_gemini:
+        resolved_base_url = base_url or GEMINI_OPENAI_BASE_URL
+        resolved_model = model or GEMINI_DEFAULT_MODEL
+        if api_key:
+            resolved_keys = _parse_key_pool(api_key)
+        else:
+            resolved_keys = _parse_key_pool(
+                _read_env_key("GEMINI_API_KEYS"),
+                _read_env_key("GEMINI_API_KEY"),
+                _read_env_key("GOOGLE_API_KEY"),
+            )
+        if not resolved_keys:
+            raise ValueError(
+                "Thiếu GEMINI_API_KEYS / GEMINI_API_KEY cho cờ --gemini (truyền qua --llm-api-key hoặc cấu hình trong .env)."
+            )
+        resolved_api_key = resolved_keys[0]
+    else:
+        resolved_base_url = base_url or getattr(settings, "LLM_BASE_URL", "http://127.0.0.1:11434/v1")
+        resolved_model = model or getattr(settings, "LLM_MODEL_NAME", "qwen2.5")
+        if api_key:
+            resolved_keys = _parse_key_pool(api_key)
+            resolved_api_key = resolved_keys[0] if resolved_keys else api_key
+        else:
+            resolved_api_key = (
+                getattr(settings, "LLM_API_KEY", None)
+                or getattr(settings, "OPENAI_API_KEY", None)
+                or _read_env_key("LLM_API_KEY")
+                or _read_env_key("OPENAI_API_KEY")
+                or "ollama"
+            )
+            resolved_keys = [resolved_api_key]
+    return {
+        "base_url": resolved_base_url,
+        "api_key": resolved_api_key,
+        "api_keys": resolved_keys,
+        "model": resolved_model,
+        "timeout": float(timeout),
+    }
+
+
+def _is_retryable_llm_error(exc: Exception) -> bool:
+    status_code = getattr(exc, "status_code", None)
+    if status_code in (429, 500, 502, 503, 504):
+        return True
+    cls_name = exc.__class__.__name__.lower()
+    if any(k in cls_name for k in ("ratelimit", "timeout", "connection", "internalserver")):
+        return True
+    msg = str(exc).lower()
+    return any(k in msg for k in ("429", "rate limit", "resource_exhausted", "quota", "timed out", "timeout"))
 
 
 def default_openai_llm_fn(
@@ -772,21 +872,48 @@ def default_openai_llm_fn(
     user_prompt: str,
     *,
     timeout: float = 60.0,
+    llm_cfg: Optional[Dict[str, Any]] = None,
+    base_url: Optional[str] = None,
+    api_key: Optional[str] = None,
+    model: Optional[str] = None,
 ) -> str:
-    """Sync OpenAI-compatible LLM caller cấu hình từ `app.config.settings`."""
+    """Sync OpenAI-compatible LLM caller hỗ trợ xoay vòng đa khóa (Multi-Key Round-Robin & Retry)."""
     from openai import OpenAI
 
-    cfg = _get_llm_client_kwargs()
-    client = OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"], timeout=timeout)
-    resp = client.chat.completions.create(
-        model=cfg["model"],
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-        temperature=0.1,
+    cfg = dict(llm_cfg) if llm_cfg else _get_llm_client_kwargs(
+        base_url=base_url,
+        api_key=api_key,
+        model=model,
+        timeout=timeout,
     )
-    return (resp.choices[0].message.content or "").strip()
+    eff_timeout = float(cfg.get("timeout", timeout))
+    keys: List[str] = list(cfg.get("api_keys") or ([cfg["api_key"]] if cfg.get("api_key") else ["ollama"]))
+    start_idx = next(_KEY_ROTATION_COUNTER) % len(keys)
+    max_attempts = max(3, len(keys) * 2)
+
+    last_err: Optional[Exception] = None
+    for attempt in range(max_attempts):
+        active_key = keys[(start_idx + attempt) % len(keys)]
+        try:
+            client = OpenAI(base_url=cfg["base_url"], api_key=active_key, timeout=eff_timeout, max_retries=0)
+            resp = client.chat.completions.create(
+                model=cfg["model"],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.1,
+            )
+            return (resp.choices[0].message.content or "").strip()
+        except Exception as exc:
+            last_err = exc
+            if attempt + 1 < max_attempts and _is_retryable_llm_error(exc):
+                time.sleep(min(6.0, 0.75 * (attempt + 1)))
+                continue
+            raise
+    if last_err is not None:
+        raise last_err
+    return ""
 
 
 async def async_openai_llm_fn(
@@ -794,21 +921,48 @@ async def async_openai_llm_fn(
     user_prompt: str,
     *,
     timeout: float = 60.0,
+    llm_cfg: Optional[Dict[str, Any]] = None,
+    base_url: Optional[str] = None,
+    api_key: Optional[str] = None,
+    model: Optional[str] = None,
 ) -> str:
-    """Async OpenAI-compatible LLM caller cấu hình từ `app.config.settings`."""
+    """Async OpenAI-compatible LLM caller hỗ trợ xoay vòng đa khóa (Multi-Key Round-Robin & Retry)."""
     from openai import AsyncOpenAI
 
-    cfg = _get_llm_client_kwargs()
-    client = AsyncOpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"], timeout=timeout)
-    resp = await client.chat.completions.create(
-        model=cfg["model"],
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-        temperature=0.1,
+    cfg = dict(llm_cfg) if llm_cfg else _get_llm_client_kwargs(
+        base_url=base_url,
+        api_key=api_key,
+        model=model,
+        timeout=timeout,
     )
-    return (resp.choices[0].message.content or "").strip()
+    eff_timeout = float(cfg.get("timeout", timeout))
+    keys: List[str] = list(cfg.get("api_keys") or ([cfg["api_key"]] if cfg.get("api_key") else ["ollama"]))
+    start_idx = next(_KEY_ROTATION_COUNTER) % len(keys)
+    max_attempts = max(3, len(keys) * 2)
+
+    last_err: Optional[Exception] = None
+    for attempt in range(max_attempts):
+        active_key = keys[(start_idx + attempt) % len(keys)]
+        try:
+            client = AsyncOpenAI(base_url=cfg["base_url"], api_key=active_key, timeout=eff_timeout, max_retries=0)
+            resp = await client.chat.completions.create(
+                model=cfg["model"],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.1,
+            )
+            return (resp.choices[0].message.content or "").strip()
+        except Exception as exc:
+            last_err = exc
+            if attempt + 1 < max_attempts and _is_retryable_llm_error(exc):
+                await asyncio.sleep(min(6.0, 0.75 * (attempt + 1)))
+                continue
+            raise
+    if last_err is not None:
+        raise last_err
+    return ""
 
 
 def _strip_markdown_fences(raw: str) -> str:
@@ -1086,10 +1240,10 @@ def find_transcript_targets(
     return targets
 
 
-def _is_llm_endpoint_reachable(timeout: float = 1.2) -> bool:
-    """Kiểm tra nhanh kết nối TCP tới LLM_BASE_URL để `--dry-run` không bị treo khi offline."""
-    base_url = getattr(settings, "LLM_BASE_URL", "")
-    parsed = urlparse(base_url)
+def _is_llm_endpoint_reachable(timeout: float = 1.2, base_url: Optional[str] = None) -> bool:
+    """Kiểm tra nhanh kết nối TCP tới LLM_BASE_URL (hoặc base_url override) để `--dry-run` không bị treo khi offline."""
+    target_url = base_url or getattr(settings, "LLM_BASE_URL", "")
+    parsed = urlparse(target_url)
     host = parsed.hostname
     if not host:
         return False
@@ -1261,16 +1415,33 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
         return 0
 
     dry_run = not args.apply
-    llm_reachable = _is_llm_endpoint_reachable() if dry_run else True
+    llm_cfg = _get_llm_client_kwargs(
+        use_gemini=bool(getattr(args, "gemini", False)),
+        base_url=getattr(args, "llm_base_url", None),
+        api_key=getattr(args, "llm_api_key", None),
+        model=getattr(args, "llm_model", None),
+        timeout=float(getattr(args, "timeout", 60.0)),
+    )
+    max_concurrency = max(1, int(getattr(args, "max_concurrency", 3)))
+    llm_reachable = _is_llm_endpoint_reachable(base_url=llm_cfg["base_url"]) if dry_run else True
+
+    def _cli_sync_llm(sys_p: str, usr_p: str) -> str:
+        return default_openai_llm_fn(sys_p, usr_p, timeout=llm_cfg["timeout"], llm_cfg=llm_cfg)
+
+    async def _cli_async_llm(sys_p: str, usr_p: str) -> str:
+        return await async_openai_llm_fn(sys_p, usr_p, timeout=llm_cfg["timeout"], llm_cfg=llm_cfg)
 
     mode_label = "DRY-RUN" if dry_run else "APPLY"
     print("=" * 76)
-    print(f" AST CANONICALIZER [{mode_label}] | Targets: {len(targets)} lessons | Batch size: {args.batch_size}")
+    print(
+        f" AST CANONICALIZER [{mode_label}] | Targets: {len(targets)} lessons | "
+        f"Batch size: {args.batch_size} | Model: {llm_cfg['model']}"
+    )
     print("=" * 76)
 
     if dry_run and not llm_reachable:
         print(
-            f"[DRY-RUN OFFLINE PLAN] LLM endpoint ({settings.LLM_BASE_URL}) is unreachable. "
+            f"[DRY-RUN OFFLINE PLAN] LLM endpoint ({llm_cfg['base_url']}) is unreachable. "
             "Generating deterministic dry-run plan without external calls or mutations."
         )
 
@@ -1313,14 +1484,17 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
                 canonicalize_lesson_chunks_async(
                     chunks,
                     lexicon,
+                    llm_fn=_cli_async_llm,
                     batch_size=args.batch_size,
                     limit=lesson_limit,
+                    max_concurrency=max_concurrency,
                 )
             )
         else:
             new_chunks, stats = canonicalize_lesson_chunks(
                 chunks,
                 lexicon,
+                llm_fn=_cli_sync_llm,
                 batch_size=args.batch_size,
                 limit=lesson_limit,
             )
@@ -1405,6 +1579,17 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--limit", type=int, default=None, help="Maximum total chunks to process.")
     parser.add_argument("--batch-size", type=int, default=5, help="Chunks per LLM batch request (default: 5).")
     parser.add_argument("--async-mode", action="store_true", default=False, help="Use AsyncOpenAI batched caller.")
+    parser.add_argument(
+        "--gemini",
+        action="store_true",
+        default=False,
+        help="Use Google Gemini OpenAI-compatible API (gemini-3.5-flash-lite) with GEMINI_API_KEYS/GEMINI_API_KEY rotation without altering .env LLM_BASE_URL.",
+    )
+    parser.add_argument("--llm-base-url", type=str, default=None, help="Override OpenAI-compatible base_url for this offline run.")
+    parser.add_argument("--llm-api-key", type=str, default=None, help="Override API key for this offline run (never logged).")
+    parser.add_argument("--llm-model", type=str, default=None, help="Override model name for this offline run.")
+    parser.add_argument("--max-concurrency", type=int, default=3, help="Max concurrent async batch requests (default: 3).")
+    parser.add_argument("--timeout", type=float, default=60.0, help="Per-batch LLM request timeout in seconds (default: 60.0).")
     return parser
 
 

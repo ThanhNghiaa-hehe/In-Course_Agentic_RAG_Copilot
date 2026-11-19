@@ -69,6 +69,7 @@ class AgentState(TypedDict):
     search_query: Optional[str]
     last_course_query: Optional[str]
     is_curriculum_navigation: bool
+    is_overview_query: bool
 
     # 4. Kết quả truy xuất & Thẩm định CRAG
     retrieval_status: str
@@ -303,11 +304,35 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                     break
 
     # -------------------------------------------------------------------------
+    # BƯỚC 0: TERMINAL SECURITY INPUT GUARDRAIL VERDICT (OWASP LLM01)
+    # -------------------------------------------------------------------------
+    if getattr(raw_clf, "is_security_refusal", False):
+        logger.warning(
+            f"[LangGraph:router_node] SecurityInputGuardrail từ chối đầu vào: '{raw_prompt[:40]}...' -> out_of_scope"
+        )
+        return {
+            "prompt": raw_prompt,
+            "intent": "out_of_scope",
+            "direct_response": raw_clf.direct_response,
+            "is_course_query": False,
+            "search_query": None,
+            "last_course_query": anchor_query,
+            "is_curriculum_navigation": False,
+            "pending_navigation": None,
+            "action": None,
+        }
+
+    # -------------------------------------------------------------------------
     # BƯỚC 1: SOCIAL ACKNOWLEDGMENT & PURE SOCIAL CLOSURE GATE
     # -------------------------------------------------------------------------
     time_ref = curr_svc.extract_video_time_reference(raw_prompt)
     explicit_seq = curr_svc._extract_lesson_seq(raw_prompt.lower())
     is_in_video_time_ref = time_ref is not None and explicit_seq is None
+    is_anchored_deictic_current = (
+        is_in_video_time_ref
+        and time_ref.get("kind") == "deictic_current"
+        and state.get("current_video_sec") is not None
+    )
 
     is_soc_ack, ack_sim = router.is_social_acknowledgment(raw_prompt)
     is_pure_soc, soc_sim = router.is_pure_social(raw_prompt)
@@ -378,7 +403,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         is_dep = router.is_context_dependent(raw_prompt, anchor_query=anchor_query) if anchor_query else False
         is_shift, drift_sim = router.is_topic_shift(raw_prompt, anchor_query) if anchor_query else (False, 1.0)
 
-        if anchor_query and is_dep and not is_shift:
+        if anchor_query and is_dep and not is_shift and not is_anchored_deictic_current:
             search_query = f"{anchor_query} — {raw_prompt}"
             new_last_course_query = f"{anchor_query} | {raw_prompt}" if len(anchor_query) < 220 else raw_prompt
             logger.info(f"[LangGraph:router_node] Bước 3 Context Fusion (Dependent & Coherent): '{search_query[:55]}...'")
@@ -404,7 +429,11 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     else:
         # raw_clf.is_course_query == False
         # CHỈ gọi router.classify_contextual(raw_prompt, anchor_query) khi anchor_query tồn tại VÀ router.is_context_dependent(raw_prompt) là True!
-        if anchor_query and router.is_context_dependent(raw_prompt, anchor_query=anchor_query):
+        if (
+            anchor_query
+            and not is_anchored_deictic_current
+            and router.is_context_dependent(raw_prompt, anchor_query=anchor_query)
+        ):
             classification, formulated_q = router.classify_contextual(raw_prompt, anchor_query)
             if classification.is_course_query:
                 search_query = formulated_q
@@ -596,43 +625,106 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
     }
 
 
+_GLOSSARY_EXCLUDED_SECTION_HEADERS = (
+    "[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]",
+    "[DANH MỤC BÀI HỌC THẬT LIÊN QUAN TRONG GIÁO TRÌNH]",
+    "[DANH MỤC LỘ TRÌNH BÀI HỌC BẢO CHỨNG TỪ GIÁO TRÌNH]",
+    "[CÁC LỰA CHỌN BÀI HỌC PHÙ HỢP TRONG GIÁO TRÌNH]",
+)
+
+
+def _extract_glossary_lookup_text(user_message_content: str, raw_prompt: str) -> str:
+    """
+    Trích xuất văn bản phục vụ tra cứu từ điển học thuật (Academic Glossary):
+    - Giữ nguyên câu hỏi của học viên (`raw_prompt`) và ngữ cảnh bài giảng thực tế
+      (`[NGỮ CẢNH BÀI GIẢNG...]`, `[HỌC LIỆU BÀI GIẢNG...]`, `[MÃ NGUỒN BÀI GIẢNG...]`).
+    - Loại trừ các khối mục lục phụ trợ / danh mục lộ trình (`[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]`,
+      `[DANH MỤC BÀI HỌC...]`, `[CÁC LỰA CHỌN BÀI HỌC...]`) để tránh tiêm nhầm thuật ngữ của các mốc
+      phân đoạn khác hoặc bài học khác vào prompt của mô hình 7B.
+    """
+    if not user_message_content:
+        return raw_prompt or ""
+    kept_lines: List[str] = []
+    skipping_section = False
+    for line in user_message_content.splitlines():
+        stripped = line.strip()
+        if any(stripped.startswith(hdr) for hdr in _GLOSSARY_EXCLUDED_SECTION_HEADERS):
+            skipping_section = True
+            continue
+        if skipping_section:
+            if stripped.startswith("[") and stripped.endswith(("]", "]:")):
+                skipping_section = False
+            else:
+                continue
+        kept_lines.append(line)
+    cleaned_body = "\n".join(kept_lines).strip()
+    if raw_prompt:
+        return f"{cleaned_body} {raw_prompt}".strip()
+    return cleaned_body
+
+
 def _build_ambiguous_candidates_block(ambiguous_res: Dict[str, Any]) -> str:
     """Định dạng danh sách lựa chọn bài học thật từ giáo trình khi phát hiện truy vấn mơ hồ/đa chủ đề."""
     reason = ambiguous_res.get("reason", "")
+    cands = [c for c in ambiguous_res.get("candidates", []) if c.get("seq") is not None]
     reason_note = (
-        "Học viên đang hỏi lựa chọn giữa nhiều chủ đề khác nhau."
+        f"Học viên đang hỏi lựa chọn giữa {len(cands)} chủ đề khác nhau (BẮT BUỘC phải giới thiệu đầy đủ cả {len(cands)} bài học tương ứng bên dưới, tuyệt đối KHÔNG chỉ nêu 1 bài)."
         if reason == "multi_topic_disjunction"
         else "Chủ đề này xuất hiện ở nhiều bài học khác nhau trong giáo trình."
     )
-    cand_lines = [
-        f"- Bài {c.get('seq')} (khóa {c.get('course_id')}): {c.get('title')}"
-        for c in ambiguous_res.get("candidates", [])
-        if c.get("seq") is not None
-    ]
+    cand_lines: List[str] = []
+    for idx, c in enumerate(cands, start=1):
+        branch_q = str(c.get("branch_query", "") or "").strip()
+        if reason == "multi_topic_disjunction" and branch_q:
+            cand_lines.append(
+                f'{idx}. Chủ đề "{branch_q}" -> Bài {c.get("seq")} (khóa {c.get("course_id")}): {c.get("title")}'
+            )
+        else:
+            cand_lines.append(
+                f"{idx}. Bài {c.get('seq')} (khóa {c.get('course_id')}): {c.get('title')}"
+            )
     return (
         "\n[CÁC LỰA CHỌN BÀI HỌC PHÙ HỢP TRONG GIÁO TRÌNH]\n"
         f"- Ghi chú phân giải: {reason_note}\n"
         + "\n".join(cand_lines)
-        + "\n- CHỈ THỊ ĐỐI THOẠI: Hãy trình bày trực diện, rõ ràng các lựa chọn bài học thật ở trên "
-          "(đúng số Bài, khóa học và tiêu đề; KHÔNG mở đầu bằng \"Chào bạn!\" hay \"Theo đoạn video...\") "
+        + f"\n- CHỈ THỊ ĐỐI THOẠI: BẮT BUỘC phải liệt kê ĐẦY ĐỦ CẢ {len(cands)} bài học ở trên "
+          "(đúng số Bài, khóa học và tiêu đề cho từng chủ đề; tuyệt đối KHÔNG chọn 1 bỏ 1, KHÔNG mở đầu bằng \"Chào bạn!\" hay \"Theo đoạn video...\") "
           "và kết thúc câu trả lời bằng đúng 1 câu hỏi định hướng có dấu `?` để học viên chọn muốn tập trung "
           "vào bài học hoặc chủ đề nào trước (KHÔNG viết nhãn `**Câu hỏi gợi mở:**` hay câu kết `nhé!`). "
           "KHÔNG tự đoán chọn một bài duy nhất và KHÔNG tự bịa thêm số bài học ngoài danh sách.\n"
     )
 
 
+_RELATIVE_SEGMENT_CUES = (
+    "đoạn đầu", "đoạn giữa", "đoạn cuối",
+    "phần đầu", "phần giữa", "phần cuối",
+    "khúc đầu", "khúc giữa", "khúc cuối",
+)
+
+
 def _build_lesson_chapters_block(
     c_svc: Any,
     lesson_seq: int,
     course_id: str,
+    *,
+    focus_sec: Optional[int] = None,
 ) -> str:
     """Nạp mục lục phân đoạn video bài học hiện tại từ CurriculumService."""
     chapters = c_svc.get_lesson_chapters(lesson_seq, course_id)
     if not chapters:
         return ""
+    active_chapters = chapters
+    if focus_sec is not None and not isinstance(focus_sec, bool):
+        f_sec = int(focus_sec)
+        nearby = [
+            ch for ch in chapters
+            if ch.get("sec") is not None and abs(int(ch["sec"]) - f_sec) <= 600
+        ]
+        if nearby:
+            active_chapters = nearby
     chapter_lines = [
         f"- Mốc {ch.get('label', '00:00')}: {ch.get('summary', '')}"
-        for ch in chapters
+        for ch in active_chapters
         if ch.get("summary")
     ]
     if not chapter_lines:
@@ -660,12 +752,24 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     raw_prompt = normalize_user_input(state.get("prompt", ""))
     search_query = normalize_user_input(state["search_query"]) if state.get("search_query") else None
 
+    c_svc = get_curriculum_service()
+    time_ref_for_link = c_svc.extract_video_time_reference(raw_prompt)
+    is_anchored_deictic_current = (
+        time_ref_for_link is not None
+        and time_ref_for_link.get("kind") == "deictic_current"
+        and state.get("current_video_sec") is not None
+    )
+
     # Xác định dòng liên kết ngữ cảnh hội thoại cho Anaphora Resolution
-    solicitation_markers = ("viết hộ", "viết giúp", "viết cho", "code hộ", "code giúp", "giải giúp", "giải hộ", "cho em xin code", "viết full", "code luôn", "viết code hoàn chỉnh", "chỉ em cách viết code hoàn chỉnh")
-    is_code_solicitation = any(w in raw_prompt.lower() for w in solicitation_markers)
+    is_code_solicitation = get_intent_router().is_code_solicitation(raw_prompt)
 
     context_linked_line = ""
-    if search_query and search_query != raw_prompt and not is_code_solicitation:
+    if (
+        search_query
+        and search_query != raw_prompt
+        and not is_code_solicitation
+        and not is_anchored_deictic_current
+    ):
         context_linked_line = f"\n[NGỮ CẢNH HỘI THOẠI LIÊN KẾT]: {search_query}"
 
     suggested_timestamps: List[Dict[str, Any]] = []
@@ -673,9 +777,8 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     has_approximate = bool(state.get("is_approximate", False))
     new_pending_nav: Optional[Dict[str, Any]] = None
 
-    c_svc = get_curriculum_service()
     is_curriculum_nav = bool(state.get("is_curriculum_navigation", False))
-    is_overview_q = c_svc.is_overview_query(raw_prompt)
+    is_overview_q = (time_ref_for_link is None) and c_svc.is_overview_query(raw_prompt)
     norm_for_split = normalize_user_input(raw_prompt, lowercase=True, preserve_newlines=False)
     has_disjunction = len(c_svc._split_disjunction_branches(norm_for_split)) >= 2
 
@@ -809,23 +912,38 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
                 "tóm tắt bài", "tóm tắt video", "nội dung video", "cấu trúc bài",
                 "timeline", "chapter",
             )
+            has_section_marker = any(m in lower_prompt for m in section_markers)
+            has_relative_segment_cue = any(cue in lower_prompt for cue in _RELATIVE_SEGMENT_CUES)
             time_ref = c_svc.extract_video_time_reference(raw_prompt)
             is_curr_lesson_chunks = (
                 not chunks
                 or all(ch.get("lesson_seq") == state.get("lesson_seq") for ch in chunks)
             )
             if (
-                time_ref is not None
-                or is_overview_q
+                is_overview_q
                 or (is_curriculum_nav and is_curr_lesson_chunks)
-                or any(m in lower_prompt for m in section_markers)
+                or has_section_marker
+                or has_relative_segment_cue
+                or (time_ref is not None and not chunks)
             ):
                 cur_seq = state.get("lesson_seq")
+                focus_sec_val: Optional[int] = None
+                if (
+                    not is_overview_q
+                    and not missing_deictic_sec
+                    and not has_section_marker
+                    and not (is_curriculum_nav and is_curr_lesson_chunks)
+                ):
+                    if chunks and chunks[0].get("start_sec") is not None:
+                        focus_sec_val = int(chunks[0]["start_sec"])
+                    elif time_ref and time_ref.get("target_sec") is not None:
+                        focus_sec_val = int(time_ref["target_sec"])
                 chapters_block = (
                     _build_lesson_chapters_block(
                         c_svc,
                         cur_seq,
                         state.get("course_id"),
+                        focus_sec=focus_sec_val,
                     )
                     if cur_seq is not None
                     else ""
@@ -871,7 +989,10 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
 
         if is_ambiguous:
             active_system_prompt = CURRICULUM_OVERVIEW_PROMPT if is_curriculum_nav else OUT_OF_LESSON_PROMPT
-            target_desc = "Nhiều bài học phù hợp cần học viên lựa chọn (xem danh sách bên dưới)"
+            cands_list = [c for c in ambiguous_res.get("candidates", []) if c.get("seq") is not None]
+            target_desc = (
+                f"Gồm đủ {len(cands_list)} lựa chọn bài học bên dưới (BẮT BUỘC phải nêu đầy đủ tất cả {len(cands_list)} bài học, không bỏ sót bài nào)"
+            )
             future_learning_text = _build_ambiguous_candidates_block(ambiguous_res)
 
         elif is_curriculum_nav:
@@ -1085,6 +1206,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
 
     return {
         "prompt": raw_prompt,
+        "is_overview_query": is_overview_q,
         "is_approximate": has_approximate,
         "suggested_timestamps": suggested_timestamps,
         "sources": sources,
@@ -1713,13 +1835,16 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     # 3. Bảo toàn System Prompt tĩnh 100% cho vLLM KV Prefix Caching; đẩy phần động vào user_message_content
     full_system_prompt = system_prompt
     dynamic_user_extensions: List[str] = []
-    if conv_summary and not is_lesson_switch:
+    if conv_summary and not is_lesson_switch and not is_temporal_shift and not is_out_of_lesson_or_nav:
         dynamic_user_extensions.append(
             f"[BỐI CẢNH TIẾN TRÌNH THẢO LUẬN TRƯỚC ĐÓ CỦA HỌC VIÊN]:\n{conv_summary}"
         )
 
     # Dynamic Academic Glossary Injection (Mục 4.2): Khóa không gian sinh từ của LLM theo chuẩn đại học
-    glossary_ext = get_academic_glossary_prompt_extension(f"{user_message_content} {raw_prompt}")
+    # Loại trừ các khối mục lục phụ trợ / danh mục lộ trình để không tiêm nhầm thuật ngữ của mốc/bài khác
+    is_nav_only_turn = bool(state.get("is_curriculum_navigation", False)) and state.get("retrieval_status") == "out_of_lesson"
+    glossary_lookup_text = "" if is_nav_only_turn else _extract_glossary_lookup_text(user_message_content, raw_prompt)
+    glossary_ext = get_academic_glossary_prompt_extension(glossary_lookup_text) if glossary_lookup_text else ""
     if glossary_ext:
         dynamic_user_extensions.append(glossary_ext.strip())
 
@@ -1938,6 +2063,7 @@ def reset_session_state(session_id: str) -> None:
         "prev_lesson_seq": None,
         "inherited_video_sec": None,
         "missing_deictic_sec": False,
+        "is_overview_query": False,
     })
     # Đồng bộ đặt lại lịch sử tần suất trong Rate Limiter
     get_session_rate_limiter().reset_session(session_id)

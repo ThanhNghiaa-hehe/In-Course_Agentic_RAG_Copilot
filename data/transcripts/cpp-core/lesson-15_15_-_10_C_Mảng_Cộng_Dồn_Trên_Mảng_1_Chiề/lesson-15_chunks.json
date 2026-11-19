@@ -5,7 +5,7 @@
     "end_sec": 63,
     "start_label": "00:02",
     "end_label": "01:03",
-    "raw_text": "Thêm video này thì mình dường dẫn các bạn kiến thức về Previxam nhé, ok? Giờ xử như bạn gặp một cái bài toàn đây chính là người ta sẽ cho mình 1 cái mạng 1 chiều, sau đó thì sẽ có quy truy bấn, ok? Bộ truy bấn thì họ yêu cầu mình tính tỏng các phần tử từ 1 cái chỉ số left cho tới chỉ số right rồi đó, ok? Giờ xử như thế này, mình có 1 cái mạng là 2, 3, 8, 6, 4 chả nạn, ok? 1 Cái mạng này có 6 phần tử đúng không? Sau đó thì người ta sẽ có quy truy vấn nhé Mỗi truy vấn là người ta sẽ yêu cầu mình tính tỏng các phần tử từ chỉ số left từ chỉ số right Ví dụ như là từ chỉ số 1 cho từ chỉ số 3 cho nãy Ok? Thì bạn phải đưa ra được cái kết quả của mình là 11x Ok? Vậy thì nếu mà các bạn làm thông thường thì là gì nhỉ? Mình sau khi mà mình biết cái chỉ số left và cái chỉ số right của mình sẽ diệt các cái chỉ số từ left cho từ right Sau đó cộng rồn vào với nhau đúng không? Ok? Mình ra là mỗi truy vấn khi đó nó sẽ mất lâu nở ORI to lab đúng không?"
+    "raw_text": "Thêm video này thì mình dường dẫn các bạn kiến thức về prefix sum nhé, ok? Giả sử như bạn gặp một cái bài toán đây chính là người ta sẽ cho mình một cái mảng một chiều, sau đó thì sẽ có quy truy vấn, ok? Một truy vấn thì họ yêu cầu mình tính tổng các phần tử từ một cái chỉ số left cho tới chỉ số right rồi đó, ok? Giả sử như thế này, mình có một cái mảng là 2, 3, 8, 6, 4 chả hạn, ok? Một cái mảng này có 6 phần tử đúng không? Sau đó thì người ta sẽ có quy truy vấn nhé Mỗi truy vấn là người ta sẽ yêu cầu mình tính tổng các phần tử từ chỉ số left từ chỉ số right Ví dụ như là từ chỉ số 1 cho từ chỉ số 3 cho nãy Ok? Thì bạn phải đưa ra được cái kết quả của mình là 11x Ok? Vậy thì nếu mà các bạn làm thông thường thì là gì nhỉ? Mình sau khi mà mình biết cái chỉ số left và cái chỉ số right của mình sẽ duyệt các cái chỉ số từ left cho từ right Sau đó cộng dồn vào với nhau đúng không? Ok? Mình ra là mỗi truy vấn khi đó nó sẽ mất lâu nở O(N) đúng không?"
   },
   {
     "chunk_id": "chunk_47_141",
@@ -29,7 +29,7 @@
     "end_sec": 205,
     "start_label": "02:25",
     "end_label": "03:25",
-    "raw_text": "thế thì nó sẽ 17 hoặc là từ chỉ số 0 cho tới chỉ số 3 chẳng ạ hoặc là từ chỉ số 0 cho tới chỉ số cuối cùng ở đây là 0 và 5 chẳng ạ rồi là 3 à 5, ok, 1 à 5 thì mỗi truy vấn như thế mình sẽ mất 1 cái vòng lạc đúng không thế ra mình sẽ tính prefix xan, ok của nó để mỗi lần mà truy vấn thì bạn chỉ cần mất o1 là bạn có thể tính được là tổng các số từ cho có đoạn từ left cho to the right của mình là bao nhiêu? Ok, các bạn là 386238641 28641, thì bạn sẽ duy trì một cái prefix xâm nhá, trong đó đây prefix chỉ số k nó sẽ bằng tất cả các phần từ từ chỉ số y bằng 1 cho tới y bằng k ở đây thì họ giới thiệu cái bắt đầu từ 1 nhé bắt đầu từ 1 nhé ok"
+    "raw_text": "thế thì nó sẽ 17 hoặc là từ chỉ số 0 cho tới chỉ số 3 chẳng hạn hoặc là từ chỉ số 0 cho tới chỉ số cuối cùng ở đây là 0 và 5 chẳng hạn rồi là 3 à 5, ok, 1 à 5 thì mỗi truy vấn như thế mình sẽ mất 1 cái vòng lặp đúng không thế ra mình sẽ tính prefix sum, ok của nó để mỗi lần mà truy vấn thì bạn chỉ cần mất O(1) là bạn có thể tính được là tổng các số từ cho có đoạn từ left cho tới right của mình là bao nhiêu? Ok, các bạn là 3, 8, 6, 4, 3, 8, 6, 4, 1 2, 8, 6, 4, 1, thì bạn sẽ duy trì một cái prefix sum nhá, trong đó đây prefix chỉ số k nó sẽ bằng tất cả các phần tử từ chỉ số i bằng 1 cho tới i bằng k ở đây thì họ giới thiệu cái bắt đầu từ 1 nhé bắt đầu từ 1 nhé ok"
   },
   {
     "chunk_id": "chunk_181_242",
@@ -37,7 +37,7 @@
     "end_sec": 242,
     "start_label": "03:01",
     "end_label": "04:02",
-    "raw_text": "28641, thì bạn sẽ duy trì một cái prefix xâm nhá, trong đó đây prefix chỉ số k nó sẽ bằng tất cả các phần từ từ chỉ số y bằng 1 cho tới y bằng k ở đây thì họ giới thiệu cái bắt đầu từ 1 nhé bắt đầu từ 1 nhé ok thì khi đó prefix sum ở vị trí k nó sẽ bằng bấp tổng tất cả các phần tử từ trí số 1 cho tới trí số k và như thế thì khi đó tổng điện tố của các phần tử từ vị trí 1 cho tới vị trí k nó sẽ bằng tổng tất cả các phần tử từ vị trí 1 cho tới vị trí k trí 1 cộng với phần tử ở vị trí k đúng không? Vì chủ 1 này thì bạn sẽ có dạ sướng, nhưng mình lưu các phần tử này từ chủ 1 cho tới chủ nờ nhé Thì nó tổng tiền tố, vị chủ 1 này nó sẽ là chính nó Vì chủ này nó sẽ bằng nó cộng với tổng tiền tố của các phần tử đứng trước, nó là 3,25 Đây sẽ là 8, cộng 15 là 13"
+    "raw_text": "2, 8, 6, 4, 1, thì bạn sẽ duy trì một cái prefix sum nhá, trong đó đây prefix chỉ số k nó sẽ bằng tất cả các phần tử từ chỉ số i bằng 1 cho tới i bằng k ở đây thì họ giới thiệu cái bắt đầu từ 1 nhé bắt đầu từ 1 nhé ok thì khi đó prefix sum ở vị trí k nó sẽ bằng tổng tất cả các phần tử từ chỉ số 1 cho tới chỉ số k và như thế thì khi đó tổng tiền tố của các phần tử từ vị trí 1 cho tới vị trí k nó sẽ bằng tổng tất cả các phần tử từ vị trí 1 cho tới vị trí k trừ 1 cộng với phần tử ở vị trí k đúng không? Ví dụ 1 này thì bạn sẽ có giả sử, như mình lưu các phần tử này từ chỉ số 1 cho tới chỉ số n nhé Thì nó tổng tiền tố, vị trí 1 này nó sẽ là chính nó Vị trí này nó sẽ bằng nó cộng với tổng tiền tố của các phần tử đứng trước, nó là 3, 25 Đây sẽ là 8, cộng 15 là 13"
   },
   {
     "chunk_id": "chunk_223_284",
@@ -45,7 +45,7 @@
     "end_sec": 284,
     "start_label": "03:43",
     "end_label": "04:44",
-    "raw_text": "Vì chủ 1 này thì bạn sẽ có dạ sướng, nhưng mình lưu các phần tử này từ chủ 1 cho tới chủ nờ nhé Thì nó tổng tiền tố, vị chủ 1 này nó sẽ là chính nó Vì chủ này nó sẽ bằng nó cộng với tổng tiền tố của các phần tử đứng trước, nó là 3,25 Đây sẽ là 8, cộng 15 là 13 13, cộng 16 là 19, 19, cộng 4 là 23, 23, cộng 1 là 24 Bây giờ để mà trả lời một cái truy vấn từ chủ lép cho từ chủ right Thì bạn chỉ cần lấy tổng tất cả các phần tử từ chí số 1 cho tới chí số rai này, nó sẽ là prefix xam của rai Chứ đi tổng tất cả các phần tử từ chí số 1 cho tới chí số lép chí 1, đúng không? Thì nó sẽ ra được tổng tất cả các phần tử từ chí số lép cho tới chí số rai, đúng không? Ví dụ như bạn muốn tính tổng các phần tử từ chí số 1 cho tới chí số 2, cho tới chí số 4 này này bạn chỉ cần lấy prefix sum của 4 là 19 Mình chưa đi prefix sum của 1 là 2"
+    "raw_text": "Vì chủ 1 này thì bạn sẽ có dạ sướng, nhưng mình lưu các phần tử này từ chủ 1 cho tới chủ nờ nhé Thì nó tổng tiền tố, vị chủ 1 này nó sẽ là chính nó Vì chủ này nó sẽ bằng nó cộng với tổng tiền tố của các phần tử đứng trước, nó là 3,25 Đây sẽ là 8, cộng 15 là 13 13, cộng 16 là 19, 19, cộng 4 là 23, 23, cộng 1 là 24 Bây giờ để mà trả lời một cái truy vấn từ chủ lép cho từ chủ right Thì bạn chỉ cần lấy tổng tất cả các phần tử từ chí số 1 cho tới chí số rai này, nó sẽ là prefix sum của rai Chứ đi tổng tất cả các phần tử từ chí số 1 cho tới chí số lép chí 1, đúng không? Thì nó sẽ ra được tổng tất cả các phần tử từ chí số lép cho tới chí số rai, đúng không? Ví dụ như bạn muốn tính tổng các phần tử từ chí số 1 cho tới chí số 2, cho tới chí số 4 này này bạn chỉ cần lấy prefix sum của 4 là 19 Mình chưa đi prefix sum của 1 là 2"
   },
   {
     "chunk_id": "chunk_266_334",
@@ -53,7 +53,7 @@
     "end_sec": 334,
     "start_label": "04:26",
     "end_label": "05:34",
-    "raw_text": "Thì nó sẽ ra được tổng tất cả các phần tử từ chí số lép cho tới chí số rai, đúng không? Ví dụ như bạn muốn tính tổng các phần tử từ chí số 1 cho tới chí số 2, cho tới chí số 4 này này bạn chỉ cần lấy prefix sum của 4 là 19 Mình chưa đi prefix sum của 1 là 2 Thì nó dạ dạ 17 Và mỗi lần mà truy vấn quy như thế thì bạn chỉ cần mất ô mồ thôi đúng không? Để trả lời cho câu hỏi là tổng cấp là từ chi số left cho tới chi số right của mình là bao nhiêu Thông thường thì cái chi số của mạng hay mình lưu từ chi số không cho tới chi số n là 1 đúng không? Nhưng mà khi lưu prefix sum thì các bạn nên lưu từ chi số 1 cho tới chi số n là tiện hơn Ok, cho cái việc đấy là, khi mà người ta yêu cầu mình tính các cái phần từ từ chỉ số 1 cho tới chỉ số 1, từ vị trí 1 cho tới vị trí nào đó, thì cái việc mà bạn chưa gặp vào cái prefix sum của let chứ 1 đấy Ok, thì đó nó sẽ là prefix sum của 1 chứ 1 là không ấy thì nó tiện Có thì, nếu mà bạn lưu prefix sum chung với cái chỉ số của màng cũng được, nhưng mà mình sẽ phải xử lý một cái trường hợp riêng, đấy chính là cái trường hợp let nó màng 1 đấy"
+    "raw_text": "Thì nó sẽ ra được tổng tất cả các phần tử từ chí số lép cho tới chí số rai, đúng không? Ví dụ như bạn muốn tính tổng các phần tử từ chí số 1 cho tới chí số 2, cho tới chí số 4 này này bạn chỉ cần lấy prefix sum của 4 là 19 Mình chưa đi prefix sum của 1 là 2 Thì nó dạ dạ 17 Và mỗi lần mà truy vấn quy như thế thì bạn chỉ cần mất ô mồ thôi đúng không? Để trả lời cho câu hỏi là tổng cấp là từ chi số left cho tới chi số right của mình là bao nhiêu Thông thường thì cái chi số của mảng hay mình lưu từ chi số không cho tới chi số n là 1 đúng không? Nhưng mà khi lưu prefix sum thì các bạn nên lưu từ chi số 1 cho tới chi số n là tiện hơn Ok, cho cái việc đấy là, khi mà người ta yêu cầu mình tính các cái phần từ từ chỉ số 1 cho tới chỉ số 1, từ vị trí 1 cho tới vị trí nào đó, thì cái việc mà bạn chưa gặp vào cái prefix sum của let chứ 1 đấy Ok, thì đó nó sẽ là prefix sum của 1 chứ 1 là không ấy thì nó tiện Có thì, nếu mà bạn lưu prefix sum chung với cái chỉ số của mảng cũng được, nhưng mà mình sẽ phải xử lý một cái trường hợp riêng, đấy chính là cái trường hợp let nó màng 1 đấy"
   },
   {
     "chunk_id": "chunk_306_367",
@@ -61,7 +61,7 @@
     "end_sec": 367,
     "start_label": "05:06",
     "end_label": "06:07",
-    "raw_text": "Ok, cho cái việc đấy là, khi mà người ta yêu cầu mình tính các cái phần từ từ chỉ số 1 cho tới chỉ số 1, từ vị trí 1 cho tới vị trí nào đó, thì cái việc mà bạn chưa gặp vào cái prefix sum của let chứ 1 đấy Ok, thì đó nó sẽ là prefix sum của 1 chứ 1 là không ấy thì nó tiện Có thì, nếu mà bạn lưu prefix sum chung với cái chỉ số của màng cũng được, nhưng mà mình sẽ phải xử lý một cái trường hợp riêng, đấy chính là cái trường hợp let nó màng 1 đấy Thế là cái đoạn là mình muốn tính tỏng nó bắt đầu từ đầu mạng thì đứng trước nó không có cần tử nào thì mình không có lép chiều một được ấy Thì nó hơi bất tiện. Thành ra là khi mà tính tỏng tiền tố thì mình biết cái mạng này bắt đầu từ chỉ số 0 cho tới chỉ số n là chiều một Nhưng mà khi mà lưu và prefix xam thì mình sẽ lưu từ chỉ số 1 cho tới chỉ số n là ok Vậy thì các bạn có thể làm như sao? Mình sẽ sử dụng một cái mạng là mạng prefix N là cộng 1 phần tử, và phải tạo ban đầu tất cả mà không sau đó thì mình sẽ dựa từ trị số là trị số 1 cho tới trị số N"
+    "raw_text": "Ok, cho cái việc đấy là, khi mà người ta yêu cầu mình tính các cái phần từ từ chỉ số 1 cho tới chỉ số 1, từ vị trí 1 cho tới vị trí nào đó, thì cái việc mà bạn chưa gặp vào cái prefix sum của let chứ 1 đấy Ok, thì đó nó sẽ là prefix sum của 1 chứ 1 là không ấy thì nó tiện Có thì, nếu mà bạn lưu prefix sum chung với cái chỉ số của mảng cũng được, nhưng mà mình sẽ phải xử lý một cái trường hợp riêng, đấy chính là cái trường hợp let nó màng 1 đấy Thế là cái đoạn là mình muốn tính tỏng nó bắt đầu từ đầu mảng thì đứng trước nó không có cần tử nào thì mình không có lép chiều một được ấy Thì nó hơi bất tiện. Thành ra là khi mà tính tỏng tiền tố thì mình biết cái mảng này bắt đầu từ chỉ số 0 cho tới chỉ số n là chiều một Nhưng mà khi mà lưu và prefix sum thì mình sẽ lưu từ chỉ số 1 cho tới chỉ số n là ok Vậy thì các bạn có thể làm như sao? Mình sẽ sử dụng một cái mảng là mảng prefix N là cộng 1 phần tử, và phải tạo ban đầu tất cả mà không sau đó thì mình sẽ dựa từ trị số là trị số 1 cho tới trị số N"
   },
   {
     "chunk_id": "chunk_349_413",
@@ -69,7 +69,7 @@
     "end_sec": 413,
     "start_label": "05:49",
     "end_label": "06:53",
-    "raw_text": "Nhưng mà khi mà lưu và prefix xam thì mình sẽ lưu từ chỉ số 1 cho tới chỉ số n là ok Vậy thì các bạn có thể làm như sao? Mình sẽ sử dụng một cái mạng là mạng prefix N là cộng 1 phần tử, và phải tạo ban đầu tất cả mà không sau đó thì mình sẽ dựa từ trị số là trị số 1 cho tới trị số N và bạn sẽ có prefix của y, ok nó sẽ bán prefix của y chứ 1 sau đó chỗ này là cộng với ai y chứ 1 đúng không? ok thì như vậy khi mà cái phần tử chỉ số 0 thì mình sẽ lưu nó vào prefix 1 ở vị trí đấy thì mình sẽ lưu prefix 1 ấy ok D Thì chỗ này bạn chỉ cần cho prefix sum của i, tổng tất cả phần tử từ chí số 1 cho chí số i"
+    "raw_text": "Nhưng mà khi mà lưu và prefix sum thì mình sẽ lưu từ chỉ số 1 cho tới chỉ số n là ok Vậy thì các bạn có thể làm như sao? Mình sẽ sử dụng một cái mảng là mảng prefix N là cộng 1 phần tử, và phải tạo ban đầu tất cả mà không sau đó thì mình sẽ dựa từ trị số là trị số 1 cho tới trị số N và bạn sẽ có prefix của y, ok nó sẽ bán prefix của y chứ 1 sau đó chỗ này là cộng với ai y chứ 1 đúng không? ok thì như vậy khi mà cái phần tử chỉ số 0 thì mình sẽ lưu nó vào prefix 1 ở vị trí đấy thì mình sẽ lưu prefix 1 ấy ok D Thì chỗ này bạn chỉ cần cho prefix sum của i, tổng tất cả phần tử từ chí số 1 cho chí số i"
   },
   {
     "chunk_id": "chunk_392_458",
@@ -77,7 +77,7 @@
     "end_sec": 458,
     "start_label": "06:32",
     "end_label": "07:38",
-    "raw_text": "D Thì chỗ này bạn chỉ cần cho prefix sum của i, tổng tất cả phần tử từ chí số 1 cho chí số i Tổng tất cả phần tử từ chí số 1 cho chí số i chí 1, cộng với phần tử hiện tại là ai Sau đó mũ chi vấn chí số left và right, ở đây left và right mình sẽ lấy là vị trí nhé, bắt đầu từ 1 chứ không bắt đầu được không Thì khi đó để mà in ra kết quả thì bạn chỉ cần cl ra ra, prefix sum của right, chứ đi, prefix sum của left chí 1 ok, thế này chính là cái cách mà mình, truy vấn, tầm các phần từ từ trị số, vị trí lab cho tới vị trí rai, đây, ví dụ như cái mạng 6 đúng á, 2, 3, 8, 6, 4, 1 thì nếu mà bạn muốn truy cập từ trị số 1 cho tới trị số 4, mình cho 3 truy vấn"
+    "raw_text": "D Thì chỗ này bạn chỉ cần cho prefix sum của i, tổng tất cả phần tử từ chí số 1 cho chí số i Tổng tất cả phần tử từ chí số 1 cho chí số i chí 1, cộng với phần tử hiện tại là ai Sau đó mũ chi vấn chí số left và right, ở đây left và right mình sẽ lấy là vị trí nhé, bắt đầu từ 1 chứ không bắt đầu được không Thì khi đó để mà in ra kết quả thì bạn chỉ cần cout ra ra, prefix sum của right, chứ đi, prefix sum của left chí 1 ok, thế này chính là cái cách mà mình, truy vấn, tầm các phần từ từ trị số, vị trí lab cho tới vị trí rai, đây, ví dụ như cái mảng 6 đúng á, 2, 3, 8, 6, 4, 1 thì nếu mà bạn muốn truy cập từ trị số 1 cho tới trị số 4, mình cho 3 truy vấn"
   },
   {
     "chunk_id": "chunk_435_498",
@@ -125,7 +125,7 @@
     "end_sec": 724,
     "start_label": "11:02",
     "end_label": "12:04",
-    "raw_text": "Chia nhập H1H4, 1, 2, 3, 4, 5, 6, 7, 8, 2, 2, 1, 3 đúng không? 4, 2, 6, 8, 1, chi vấn Mình sẽ muốn tính tổng các phần tử tử hàng 1 cho tới hàng 1 cho tới hàng 3 nhé và từ cột 1 cho tới cột 4 nhé Đấy thì nó tính được tổng các phần tử là 4, 4 sao nhớ nhỉ? hằng 1 cho tới hằng 3, đây là hằng 2 chứ nhỉ cái mà mình tính từ hằng 1 cho tới hằng 3 thì nó là cả cái hình này rồi nhỉ đây là cái hình này rồi đó là 44 đúng không? 4, 3 là 7, 7, 2 là 9, 9 cộng với 14 đúng không? là 23, 23, 7 là 30"
+    "raw_text": "Chia nhập H1H4, 1, 2, 3, 4, 5, 6, 7, 8, 2, 2, 1, 3 đúng không? 4, 2, 6, 8, 1, truy vấn Mình sẽ muốn tính tổng các phần tử tử hàng 1 cho tới hàng 1 cho tới hàng 3 nhé và từ cột 1 cho tới cột 4 nhé Đấy thì nó tính được tổng các phần tử là 4, 4 sao nhớ nhỉ? hằng 1 cho tới hằng 3, đây là hằng 2 chứ nhỉ cái mà mình tính từ hằng 1 cho tới hằng 3 thì nó là cả cái hình này rồi nhỉ đây là cái hình này rồi đó là 44 đúng không? 4, 3 là 7, 7, 2 là 9, 9 cộng với 14 đúng không? là 23, 23, 7 là 30"
   },
   {
     "chunk_id": "chunk_708_769",
@@ -141,7 +141,7 @@
     "end_sec": 813,
     "start_label": "12:28",
     "end_label": "13:33",
-    "raw_text": "1, 2, 3, 4, 5, 6, 7, 8 thì là 8 x 9, 5, 6, chia cho 2 là 28 rồi, đúng không? 2 xe lỗi, 9, 8, 7, 2, chia cho 2 là 36 rồi, đúng không? 36, cộng 14 là 40, 40, 40, cộng 4 là 44 rồi, ok? là sự như mình tính cái phần 5, 6, 7, 2, 1, 3 này nhé, copy con này Một trí vấn thôi, mình sẽ muốn tính tổng các phần tử từ hàng 2 vào hàng 3 này, cột 1 và cột 3, tức là 2, 3 và 3 Thì nó tính được tổng các phần tử ở trong cái khu vực mà mình khoảnh lúc nữa ấy, nó là 16 à Hàng 2, đây nó là 16 đây, 6, cộng với 7 là 13, 13, cộng với 3 là 16 Chúng là người ta sẽ cho mình 2 cái chỉ số hàng 1 và hàng 2 và yêu cầu mình tính tỏng các phần tử tại 1 cái hình trữ nhật có hàng 1 và hàng 2 và cột 1 và cột 2 để nó giới hạn cái hình trữ nhật đấy"
+    "raw_text": "1, 2, 3, 4, 5, 6, 7, 8 thì là 8 x 9, 5, 6, chia cho 2 là 28 rồi, đúng không? 2 xe lỗi, 9, 8, 7, 2, chia cho 2 là 36 rồi, đúng không? 36, cộng 14 là 40, 40, 40, cộng 4 là 44 rồi, ok? là sự như mình tính cái phần 5, 6, 7, 2, 1, 3 này nhé, copy con này Một truy vấn thôi, mình sẽ muốn tính tổng các phần tử từ hàng 2 vào hàng 3 này, cột 1 và cột 3, tức là 2, 3 và 3 Thì nó tính được tổng các phần tử ở trong cái khu vực mà mình khoảnh lúc nữa ấy, nó là 16 à Hàng 2, đây nó là 16 đây, 6, cộng với 7 là 13, 13, cộng với 3 là 16 Chúng là người ta sẽ cho mình 2 cái chỉ số hàng 1 và hàng 2 và yêu cầu mình tính tỏng các phần tử tại 1 cái hình trữ nhật có hàng 1 và hàng 2 và cột 1 và cột 2 để nó giới hạn cái hình trữ nhật đấy"
   },
   {
     "chunk_id": "chunk_792_856",
@@ -157,7 +157,7 @@
     "end_sec": 903,
     "start_label": "13:59",
     "end_label": "15:03",
-    "raw_text": "Thì dành sự hỏi cho một cái hình trữ nhật như thế này nha, thì khi đó cái hàng không và cái cột không của cái hình, có cái match ạ, bạn sẽ lưu các phần tử là không nhá, ở đây mình sẽ lưu các phần tử từ chi số 1 cho tới chi số nèo, thế là từ hàng 1 cho tới hàng nèo và tất cả các phần tử từ cột 1 cho tới cột mà, ok? sau đó mình sẽ tính hành tính prefix xam của cái mạng này trong đó nha, prefix, easy, prefix, easy thế là các phần tử hàng i và cột z của mang prefix nó sẽ lưu cái gì? nó sẽ lưu tổng tất cả các phần tử, ok, tổng tất cả phần tử tổng tất cả các phần tử từ hàng 1 của hình trữ nhật tích bắt đầu từ hàng 1 nhé, kết thúc ở hàng i và bắt đầu từ cột 1 và kết thúc ở cụt gì? Bạn sẽ tình toán cái prefix sum đó, ok, ở đây mình sẽ lấy luôn cái mạng này nhé"
+    "raw_text": "Thì dành sự hỏi cho một cái hình trữ nhật như thế này nha, thì khi đó cái hàng không và cái cột không của cái hình, có cái match ạ, bạn sẽ lưu các phần tử là không nhá, ở đây mình sẽ lưu các phần tử từ chi số 1 cho tới chi số nèo, thế là từ hàng 1 cho tới hàng nèo và tất cả các phần tử từ cột 1 cho tới cột mà, ok? sau đó mình sẽ tính hành tính prefix sum của cái mảng này trong đó nha, prefix, easy, prefix, easy thế là các phần tử hàng i và cột z của mảng prefix nó sẽ lưu cái gì? nó sẽ lưu tổng tất cả các phần tử, ok, tổng tất cả phần tử tổng tất cả các phần tử từ hàng 1 của hình trữ nhật tích bắt đầu từ hàng 1 nhé, kết thúc ở hàng i và bắt đầu từ cột 1 và kết thúc ở cụt gì? Bạn sẽ tính toán cái prefix sum đó, ok, ở đây mình sẽ lấy luôn cái mảng này nhé"
   },
   {
     "chunk_id": "chunk_881_973",
@@ -205,7 +205,7 @@
     "end_sec": 1222,
     "start_label": "19:18",
     "end_label": "20:22",
-    "raw_text": "Ok, bạn cộng với tất cả các phần tử ở chỗ này này, của cái cột này này trời, sau đó bạn trừ đi cái phần ở giữa này nè bởi vì nó bị tính 2 lần nè, sau đó bạn cộng thêm cái phần tử này là xăm ok, thành ra là tổng khi đó nó sẽ là 1 đón vị trí đấy nhé, vị trí xăm thằng 2 này cũng thế nè, bạn sẽ làm sao nhỉ bạn sẽ lấy tổng có phần tử từ vị trí đây nè đây là cái phần này nè ok, bạn cộng với cái diện tích à, cái tổng có phần tử ở cái hàng này nè phần này, ok, sau đó mình sẽ trừ đi đúng không ta, mình sẽ trừ đi cái thằng này nè bởi vì nó bị tính 2 lần, và mình cộng thêm thẳng A2, thành ra nó 2 nói chung là các phần tửa hàng 1 và cột 1 thì nó đều như nhau cả, nó sẽ là 1, 2, 3, 4, 5, 2, 4, ok, nó chưa có gì khó khăn cả bây giờ đến các phần vệ vị trí này thì mình tính nó dễ nè bây giờ bạn muốn tính, mình tạm thời bỏ qua các số 0 này nhé thì bạn thấy là khi mà bạn muốn tính tổng các phần tử của cái hình vuông này này đúng không? thì nó làm sao nhỉ, nó sẽ cần lấy tổng các phần tử ở cái phần ở trên này đúng không?"
+    "raw_text": "Ok, bạn cộng với tất cả các phần tử ở chỗ này này, của cái cột này này trời, sau đó bạn trừ đi cái phần ở giữa này nè bởi vì nó bị tính 2 lần nè, sau đó bạn cộng thêm cái phần tử này là sum ok, thành ra là tổng khi đó nó sẽ là 1 đón vị trí đấy nhé, vị trí sum thằng 2 này cũng thế nè, bạn sẽ làm sao nhỉ bạn sẽ lấy tổng có phần tử từ vị trí đây nè đây là cái phần này nè ok, bạn cộng với cái diện tích à, cái tổng có phần tử ở cái hàng này nè phần này, ok, sau đó mình sẽ trừ đi đúng không ta, mình sẽ trừ đi cái thằng này nè bởi vì nó bị tính 2 lần, và mình cộng thêm thẳng A2, thành ra nó 2 nói chung là các phần tửa hàng 1 và cột 1 thì nó đều như nhau cả, nó sẽ là 1, 2, 3, 4, 5, 2, 4, ok, nó chưa có gì khó khăn cả bây giờ đến các phần vệ vị trí này thì mình tính nó dễ nè bây giờ bạn muốn tính, mình tạm thời bỏ qua các số 0 này nhé thì bạn thấy là khi mà bạn muốn tính tổng các phần tử của cái hình vuông này này đúng không? thì nó làm sao nhỉ, nó sẽ cần lấy tổng các phần tử ở cái phần ở trên này đúng không?"
   },
   {
     "chunk_id": "chunk_1206_1266",
@@ -221,7 +221,7 @@
     "end_sec": 1313,
     "start_label": "20:53",
     "end_label": "21:53",
-    "raw_text": "Năm cộng với 2 là 7, 7 chứ đi 1, 7 chứ đi 1 là 6, 6 cộng với 16 là 12, tức là chỗ này nó là 12, đúng không? Ok, mình đính ra chỗ nào, 1, 2, 5, ạ, không, chỗ này nó không thể là 5 được, nó phải là quên mất. Refix Sam chỗ này còn là 3, chỗ này nó phải là 6 chứ, đúng không? 6, 9, 1 là 8, 8, 16 là 14, 3, 2 là 6, 6, 4 là 10, 1, 6, 6, 8 là 8, 8, 4 là 12 Mấu trốt là như thế, khi mà bạn tính một cái hình trữ nhật tổng các phần tử ở một cái hình trữ nhật nào đó, đúng không? đây chỗ này là o, giả sửa là oezy"
+    "raw_text": "Năm cộng với 2 là 7, 7 chứ đi 1, 7 chứ đi 1 là 6, 6 cộng với 16 là 12, tức là chỗ này nó là 12, đúng không? Ok, mình đính ra chỗ nào, 1, 2, 5, ạ, không, chỗ này nó không thể là 5 được, nó phải là quên mất. Prefix sum chỗ này còn là 3, chỗ này nó phải là 6 chứ, đúng không? 6, 9, 1 là 8, 8, 16 là 14, 3, 2 là 6, 6, 4 là 10, 1, 6, 6, 8 là 8, 8, 4 là 12 Mấu trốt là như thế, khi mà bạn tính một cái hình chữ nhật tổng các phần tử ở một cái hình chữ nhật nào đó, đúng không? đây chỗ này là o, giả sửa là oezy"
   },
   {
     "chunk_id": "chunk_1287_1347",
@@ -229,7 +229,7 @@
     "end_sec": 1347,
     "start_label": "21:27",
     "end_label": "22:27",
-    "raw_text": "6, 9, 1 là 8, 8, 16 là 14, 3, 2 là 6, 6, 4 là 10, 1, 6, 6, 8 là 8, 8, 4 là 12 Mấu trốt là như thế, khi mà bạn tính một cái hình trữ nhật tổng các phần tử ở một cái hình trữ nhật nào đó, đúng không? đây chỗ này là o, giả sửa là oezy thì mình sẽ tính tỏng các phần tử vào cái phần hình trữ nhật đằng trên này nó chính là prefix xam của i, chữ 1 và z, ok mình cộng với cái phần hình trữ nhật ở đây cái này này, đây chính là prefix xam của i, z, chữ 1, đúng không? sau đó là bạn trừ đi cái phần mà nó bị giữa, nó bị chung lập 2 lần này này bởi vì khi mà bạn cộng cái phần này này thì nó được tính 1 lần và cộng phần này nó được tính 1 phần nữa, cái hình trữ vuông này này Thì bạn sẽ trừ đi nó, nói chính là, prefix sum của y chứ 1 và y chứ 1, ok? Sau đó bạn cộng thêm cái phần thử ai y hiện tại, thì nó sẽ ra được prefix sum của y y"
+    "raw_text": "6, 9, 1 là 8, 8, 16 là 14, 3, 2 là 6, 6, 4 là 10, 1, 6, 6, 8 là 8, 8, 4 là 12 Mấu trốt là như thế, khi mà bạn tính một cái hình chữ nhật tổng các phần tử ở một cái hình chữ nhật nào đó, đúng không? đây chỗ này là o, giả sửa là oezy thì mình sẽ tính tỏng các phần tử vào cái phần hình chữ nhật đằng trên này nó chính là prefix sum của i, chữ 1 và z, ok mình cộng với cái phần hình chữ nhật ở đây cái này này, đây chính là prefix sum của i, z, chữ 1, đúng không? sau đó là bạn trừ đi cái phần mà nó bị giữa, nó bị chung lập 2 lần này này bởi vì khi mà bạn cộng cái phần này này thì nó được tính 1 lần và cộng phần này nó được tính 1 phần nữa, cái hình chữ vuông này này Thì bạn sẽ trừ đi nó, nói chính là, prefix sum của y chứ 1 và y chứ 1, ok? Sau đó bạn cộng thêm cái phần thử ai y hiện tại, thì nó sẽ ra được prefix sum của y y"
   },
   {
     "chunk_id": "chunk_1331_1398",
@@ -237,7 +237,7 @@
     "end_sec": 1398,
     "start_label": "22:11",
     "end_label": "23:18",
-    "raw_text": "bởi vì khi mà bạn cộng cái phần này này thì nó được tính 1 lần và cộng phần này nó được tính 1 phần nữa, cái hình trữ vuông này này Thì bạn sẽ trừ đi nó, nói chính là, prefix sum của y chứ 1 và y chứ 1, ok? Sau đó bạn cộng thêm cái phần thử ai y hiện tại, thì nó sẽ ra được prefix sum của y y Vậy thì khi đó mình sẽ có là gì nhỉ? prefix sum của y y ạ Ok, tức là tổng tất cả các phần tử từ hàng 1 cho tới hàng y và của cột 1 cho tới cột y của cái ma trận nàn đầu thì nó sẽ bằng... nó sẽ bằng prefix của y chứ 1, y đúng không? tổng tất cả các phần tử từ hàng một cho tới hàng i chiều một và cột từ của một cho tới cột di, mình cộng với phim xam của i và di chiều một nha sau đó mình chứa đi phần mà nó bị chùng khi mà nó cộng vào hai phần này là tính hai lần mình chứa đi phim xam của i chiều một và di chiều một và mình cộng thêm phần tử vị trí hiện tại để chính là IEZ"
+    "raw_text": "bởi vì khi mà bạn cộng cái phần này này thì nó được tính 1 lần và cộng phần này nó được tính 1 phần nữa, cái hình chữ vuông này này Thì bạn sẽ trừ đi nó, nói chính là, prefix sum của y chứ 1 và y chứ 1, ok? Sau đó bạn cộng thêm cái phần thử ai y hiện tại, thì nó sẽ ra được prefix sum của y y Vậy thì khi đó mình sẽ có là gì nhỉ? prefix sum của y y ạ Ok, tức là tổng tất cả các phần tử từ hàng 1 cho tới hàng y và của cột 1 cho tới cột y của cái ma trận nàn đầu thì nó sẽ bằng... nó sẽ bằng prefix của y chứ 1, y đúng không? tổng tất cả các phần tử từ hàng một cho tới hàng i chiều một và cột từ của một cho tới cột di, mình cộng với prefix sum của i và di chiều một nha sau đó mình chứa đi phần mà nó bị chùng khi mà nó cộng vào hai phần này là tính hai lần mình chứa đi prefix sum của i chiều một và di chiều một và mình cộng thêm phần tử vị trí hiện tại để chính là IEZ"
   },
   {
     "chunk_id": "chunk_1381_1446",
@@ -285,7 +285,7 @@
     "end_sec": 1664,
     "start_label": "26:41",
     "end_label": "27:44",
-    "raw_text": "rồi sao nó lại 0156118? thì như đây là cái mạng ban đầu chứ không phải là cái mạng prefix sum đâu ok? đây là cái mạng ban đầu nhá 56618 rồi sau đó thì là 017194 tiếp theo đây là 046132 và cuối cùng thì là 0, 7, 5, 4, 2, 3 rồi ok, bây giờ họ yêu cầu mình tính cái phần diễn tích ở cái hình này đúng không? đây result, đây là cái hình trữ nhật 71, 9, 6, 1, 3, 7, 1, 9, đây, cái phần này đấy, thì đó tổng tất cả các phần tử của cái hình trữ nhật này, ok nó sẽ bằng cái phần này nhé, nó sẽ bằng cái diễn tích, nó tổng các phần tử của cái hình trữ nhật lớn này này đấy, ok, làm sao? bạn chưa đi tổng các phần tử của cái hình trữ nhật này này"
+    "raw_text": "rồi sao nó lại 0156118? thì như đây là cái mảng ban đầu chứ không phải là cái mảng prefix sum đâu ok? đây là cái mảng ban đầu nhá 56618 rồi sau đó thì là 017194 tiếp theo đây là 046132 và cuối cùng thì là 0, 7, 5, 4, 2, 3 rồi ok, bây giờ họ yêu cầu mình tính cái phần diễn tích ở cái hình này đúng không? đây result, đây là cái hình trữ nhật 71, 9, 6, 1, 3, 7, 1, 9, đây, cái phần này đấy, thì đó tổng tất cả các phần tử của cái hình trữ nhật này, ok nó sẽ bằng cái phần này nhé, nó sẽ bằng cái diễn tích, nó tổng các phần tử của cái hình trữ nhật lớn này này đấy, ok, làm sao? bạn chưa đi tổng các phần tử của cái hình trữ nhật này này"
   },
   {
     "chunk_id": "chunk_1649_1710",
@@ -293,7 +293,7 @@
     "end_sec": 1710,
     "start_label": "27:29",
     "end_label": "28:30",
-    "raw_text": "đấy, thì đó tổng tất cả các phần tử của cái hình trữ nhật này, ok nó sẽ bằng cái phần này nhé, nó sẽ bằng cái diễn tích, nó tổng các phần tử của cái hình trữ nhật lớn này này đấy, ok, làm sao? bạn chưa đi tổng các phần tử của cái hình trữ nhật này này Đây, cái phần này nè OK chưa? Đấy nhá, đấy là trừ đi nhá Xóa ra làm sao? Mình cũng trừ đi cái phần, các bạn tưởng tượng như cái bánh ấy đúng không? Đấy, muốn tính phần cái bánh này thì mình sẽ trừ đi cái phần ở trên này, sau đó mình sẽ trừ đi cái phần ở bên trái này nè Đây nè Đấy, OK Thì nó còn lại cái phần ở giữa này đúng không? Nhưng mà cái phần này nè, nó bị trừ 2 lần đấy Đúng không? Nó bị trừ 2 lần, 1 lần trừ cái phần hình trữ nhật ở trên này và 1 phần trừ đi ở cái hình trữ nhật thẳng đứng này Thành ra là cái phần tổng các phần tử ở cái O này này Nó sẽ bị chú đi 2 lần Thì khi đó bạn sẽ phải cộng lại, bù lại nhé, không có gì nó sẽ bị thiếu Thì khi đó nó sẽ tính được cái tổng các phần tử của cái hình trữ nhật còn lại này Các bạn tưởng tượng nó cũng dễ hiểu đúng không? Vậy thì ở đây mình sẽ cốt như sau nhé"
+    "raw_text": "đấy, thì đó tổng tất cả các phần tử của cái hình trữ nhật này, ok nó sẽ bằng cái phần này nhé, nó sẽ bằng cái diễn tích, nó tổng các phần tử của cái hình trữ nhật lớn này này đấy, ok, làm sao? bạn chưa đi tổng các phần tử của cái hình trữ nhật này này Đây, cái phần này nè OK chưa? Đấy nhá, đấy là trừ đi nhá Xóa ra làm sao? Mình cũng trừ đi cái phần, các bạn tưởng tượng như cái bánh ấy đúng không? Đấy, muốn tính phần cái bánh này thì mình sẽ trừ đi cái phần ở trên này, sau đó mình sẽ trừ đi cái phần ở bên trái này nè Đây nè Đấy, OK Thì nó còn lại cái phần ở giữa này đúng không? Nhưng mà cái phần này nè, nó bị trừ 2 lần đấy Đúng không? Nó bị trừ 2 lần, 1 lần trừ cái phần hình trữ nhật ở trên này và 1 phần trừ đi ở cái hình trữ nhật thẳng đứng này Thành ra là cái phần tổng các phần tử ở cái O này này Nó sẽ bị chú đi 2 lần Thì khi đó bạn sẽ phải cộng lại, bù lại nhé, không có gì nó sẽ bị thiếu Thì khi đó nó sẽ tính được cái tổng các phần tử của cái hình trữ nhật còn lại này Các bạn tưởng tượng nó cũng dễ hiểu đúng không? Vậy thì ở đây mình sẽ code như sau nhé"
   },
   {
     "chunk_id": "chunk_1694_1754",
@@ -301,7 +301,7 @@
     "end_sec": 1754,
     "start_label": "28:14",
     "end_label": "29:14",
-    "raw_text": "Thành ra là cái phần tổng các phần tử ở cái O này này Nó sẽ bị chú đi 2 lần Thì khi đó bạn sẽ phải cộng lại, bù lại nhé, không có gì nó sẽ bị thiếu Thì khi đó nó sẽ tính được cái tổng các phần tử của cái hình trữ nhật còn lại này Các bạn tưởng tượng nó cũng dễ hiểu đúng không? Vậy thì ở đây mình sẽ cốt như sau nhé Đấy là cái phần mà cái hình trữ nhật ở đằng trên này này Nó chính là tổng các phần tử của cái gì nhỉ? Giả sử như ở đây nhé, mình sẽ bắt đầu từ hàng 1 OK, cái diện tích của mình nó sẽ bắt đầu từ hàng 1 kết thúc ở hàng 2 và bắt đầu từ cột 1 và kết thúc ở cột 2 thì khi đó tầm các phần tử của hình trữ nhật ở đằng trên và mình bừa đắm khung lên này nó chính là prefix sum của gì nhỉ? prefix sum của cái thằng này là cái hình trữ nhật nó bắt đầu từ hàng 1, đúng không? cho tới hàng hát 1 chiều 1 đấy, ok và cột thì nó bắt đầu từ cột 1 cho tới cột là cột 1 chiều 1 à xin lỗi, cột 2 chứ, ok v khi đó mình cũng có thể suy ra được prefix sum đấy ngay ok, tương tự như vậy, cái cột ở bên trái này thì nó bắt đầu từ hàng 1 đúng không?"
+    "raw_text": "Thành ra là cái phần tổng các phần tử ở cái O này này Nó sẽ bị chú đi 2 lần Thì khi đó bạn sẽ phải cộng lại, bù lại nhé, không có gì nó sẽ bị thiếu Thì khi đó nó sẽ tính được cái tổng các phần tử của cái hình trữ nhật còn lại này Các bạn tưởng tượng nó cũng dễ hiểu đúng không? Vậy thì ở đây mình sẽ code như sau nhé Đấy là cái phần mà cái hình trữ nhật ở đằng trên này này Nó chính là tổng các phần tử của cái gì nhỉ? Giả sử như ở đây nhé, mình sẽ bắt đầu từ hàng 1 OK, cái diện tích của mình nó sẽ bắt đầu từ hàng 1 kết thúc ở hàng 2 và bắt đầu từ cột 1 và kết thúc ở cột 2 thì khi đó tầm các phần tử của hình trữ nhật ở đằng trên và mình bừa đắm khung lên này nó chính là prefix sum của gì nhỉ? prefix sum của cái thằng này là cái hình trữ nhật nó bắt đầu từ hàng 1, đúng không? cho tới hàng hát 1 chiều 1 đấy, ok và cột thì nó bắt đầu từ cột 1 cho tới cột là cột 1 chiều 1 à xin lỗi, cột 2 chứ, ok v khi đó mình cũng có thể suy ra được prefix sum đấy ngay ok, tương tự như vậy, cái cột ở bên trái này thì nó bắt đầu từ hàng 1 đúng không?"
   },
   {
     "chunk_id": "chunk_1738_1803",
@@ -309,7 +309,7 @@
     "end_sec": 1803,
     "start_label": "28:58",
     "end_label": "30:03",
-    "raw_text": "đấy, ok và cột thì nó bắt đầu từ cột 1 cho tới cột là cột 1 chiều 1 à xin lỗi, cột 2 chứ, ok v khi đó mình cũng có thể suy ra được prefix sum đấy ngay ok, tương tự như vậy, cái cột ở bên trái này thì nó bắt đầu từ hàng 1 đúng không? và kết thúc ở hàng 1, bắt đầu từ hàng 1 đúng không? và kết thúc ở hàng H2 cột thì nó sẽ chạy là từ cột 1 cho tới cột 1 cột, xin lỗi, cột thì nó chạy từ cột đầu tiên cho tới cột 1 chứa đi mộng thế còn cái phần ở này thì nó sẽ chính là gì nhỉ? nó sẽ chính là prefix xam của h1 ch1 và cột 1 ch1 đấy, ok Thành ra là các bạn có cái công cức như thế này, mà sẽ là prefix xam của AB, tức là cái phần lớn này, cái phần lớn này này, chứa đi prefix xam của A chứa 1B, nó chính là prefix xam của cái hình này này, của cái hình nhỏ nóng trên này này Xóa ra chứa đi prefix xam của AB chứa 1 nó chính là cái hình chữ nhật ở bên trái này này OK, và cộng thêm cái phần mà bị chữ 2 lần này, nó chính là prefix xam của A chứa 1B chứa 1 nó chính là cái phần này này"
+    "raw_text": "đấy, ok và cột thì nó bắt đầu từ cột 1 cho tới cột là cột 1 chiều 1 à xin lỗi, cột 2 chứ, ok v khi đó mình cũng có thể suy ra được prefix sum đấy ngay ok, tương tự như vậy, cái cột ở bên trái này thì nó bắt đầu từ hàng 1 đúng không? và kết thúc ở hàng 1, bắt đầu từ hàng 1 đúng không? và kết thúc ở hàng H2 cột thì nó sẽ chạy là từ cột 1 cho tới cột 1 cột, xin lỗi, cột thì nó chạy từ cột đầu tiên cho tới cột 1 chứa đi mộng thế còn cái phần ở này thì nó sẽ chính là gì nhỉ? nó sẽ chính là prefix sum của h1 ch1 và cột 1 ch1 đấy, ok Thành ra là các bạn có cái công cức như thế này, mà sẽ là prefix sum của AB, tức là cái phần lớn này, cái phần lớn này này, chứa đi prefix sum của A chứa 1B, nó chính là prefix sum của cái hình này này, của cái hình nhỏ nóng trên này này Xóa ra chứa đi prefix sum của AB chứa 1 nó chính là cái hình chữ nhật ở bên trái này này OK, và cộng thêm cái phần mà bị chữ 2 lần này, nó chính là prefix sum của A chứa 1B chứa 1 nó chính là cái phần này này"
   },
   {
     "chunk_id": "chunk_1776_1865",
@@ -317,7 +317,7 @@
     "end_sec": 1865,
     "start_label": "29:36",
     "end_label": "31:05",
-    "raw_text": "Thành ra là các bạn có cái công cức như thế này, mà sẽ là prefix xam của AB, tức là cái phần lớn này, cái phần lớn này này, chứa đi prefix xam của A chứa 1B, nó chính là prefix xam của cái hình này này, của cái hình nhỏ nóng trên này này Xóa ra chứa đi prefix xam của AB chứa 1 nó chính là cái hình chữ nhật ở bên trái này này OK, và cộng thêm cái phần mà bị chữ 2 lần này, nó chính là prefix xam của A chứa 1B chứa 1 nó chính là cái phần này này Mỗi truy vấn như thế, bạn chỉ vấn bắt o1 là bạn có thể tính được tóc có phần tử của một hình trữ nhật nào đó bắt đầu từ hàng 1, kết thúc vào hàng 2 và bắt đầu từ cuộc 1, kết thúc vào 2 Giờ là các bạn làm như sau này, sau khi mà nhập vào cái map chặn đấy nhé, thì mình sẽ tiến hành tính prefix xong của nó, mình sẽ dùng là prefix, node cộng 1 Cout1 intro mình sẽ có prefix sum của isi đúng không? prefix sum của isi nó sẽ bằng gì nhỉ?"
+    "raw_text": "Thành ra là các bạn có cái công cức như thế này, mà sẽ là prefix sum của AB, tức là cái phần lớn này, cái phần lớn này này, chứa đi prefix sum của A chứa 1B, nó chính là prefix sum của cái hình này này, của cái hình nhỏ nóng trên này này Xóa ra chứa đi prefix sum của AB chứa 1 nó chính là cái hình chữ nhật ở bên trái này này OK, và cộng thêm cái phần mà bị chữ 2 lần này, nó chính là prefix sum của A chứa 1B chứa 1 nó chính là cái phần này này Mỗi truy vấn như thế, bạn chỉ vấn bắt o1 là bạn có thể tính được tóc có phần tử của một hình trữ nhật nào đó bắt đầu từ hàng 1, kết thúc vào hàng 2 và bắt đầu từ cuộc 1, kết thúc vào 2 Giờ là các bạn làm như sau này, sau khi mà nhập vào cái map chặn đấy nhé, thì mình sẽ tiến hành tính prefix sum của nó, mình sẽ dùng là prefix, node cộng 1 Cout1 intro mình sẽ có prefix sum của isi đúng không? prefix sum của isi nó sẽ bằng gì nhỉ?"
   },
   {
     "chunk_id": "chunk_1860_1929",
@@ -325,7 +325,7 @@
     "end_sec": 1929,
     "start_label": "31:00",
     "end_label": "32:09",
-    "raw_text": "mình sẽ có prefix sum của isi đúng không? prefix sum của isi nó sẽ bằng gì nhỉ? nó sẽ bằng prefix sum của isi 1 isi đúng không? tức là cái phần hình chữ nhật ở phần trên ấy, cậu vừa cái hình chữ nhật ở bên trái đúng không? tức là thẳng đứng ít, tức là prefix sum của isi và isi chữ 1 đúng không? sau đó chữ đi cái phần mà nó bị tính 2 lần đúng không? đây là prefix sum của isi chữ 1 và isi chữ 1 và mình cậu với phần tử hiện tại là isi, ok? Dasom, prefixed, melt, wifi, OS flash, 먹을mGraves gibt also Thì bạn sẽ tiến thành kính tổng các phần từ hàng 1 cho tới hàng 2 và từ rút 1 vào c الله dropped ok, sau đó thì mình sẽ, sẽ là prefix xam của h2, h2, cột 2 đúng không?"
+    "raw_text": "mình sẽ có prefix sum của i, j đúng không? prefix sum của i, j nó sẽ bằng gì nhỉ? nó sẽ bằng prefix sum của i - 1, j đúng không? tức là cái phần hình chữ nhật ở phần trên ấy, cộng với cái hình chữ nhật ở bên trái đúng không? tức là thẳng đứng ít, tức là prefix sum của i và j - 1 đúng không? sau đó trừ đi cái phần mà nó bị tính 2 lần đúng không? đây là prefix sum của i - 1 và j - 1 và mình cộng với phần tử hiện tại là i, j, ok? Thì bạn sẽ tiến hành tính tổng các phần tử từ hàng 1 cho tới hàng 2 và từ cột 1 vào cột 2, ok, sau đó thì mình sẽ, sẽ là prefix sum của h2, cột 2 đúng không?"
   },
   {
     "chunk_id": "chunk_1924_1985",
@@ -333,7 +333,7 @@
     "end_sec": 1985,
     "start_label": "32:04",
     "end_label": "33:05",
-    "raw_text": "ok, sau đó thì mình sẽ, sẽ là prefix xam của h2, h2, cột 2 đúng không? Ơ, gì nhỉ? đây, mình xem này, trừ đi prefix xam của chỗ này là bao nhiêu nhỉ? cái hình này nó sẽ là gì nhỉ? nó sẽ là hát 1, trừ 1 và cột 2 đúng không? hát 1, trừ 1, rồi là sao nhỉ? trừ đi cái diện tích của bên trái này nó sẽ là bắt đầu từ hàng 1 đến hàng 2 và bắt đầu từ cột 1 cho tới cột 1 chứa 1 đúng không? thì nó sẽ là gì nhỉ? chứa đi prefix sum của h2 đúng không? và cột 1 chứa 1 ok, sau đó bạn cộng thêm cái phần tử mà nó bị chứa cái phần này nó bị chứa thừa một lần mà sẽ là gì nhỉ? prefix sum của h1 chứa 1 đúng không? và cột 1 chứa 1 ok, rồi bạn cl ra cái thang này nào được đúng nhờ để mình xem lại"
+    "raw_text": "ok, sau đó thì mình sẽ, sẽ là prefix sum của h2, cột 2 đúng không? Ơ, gì nhỉ? đây, mình xem này, trừ đi prefix sum của chỗ này là bao nhiêu nhỉ? cái hình này nó sẽ là gì nhỉ? nó sẽ là h1 - 1 và cột 2 đúng không? h1 - 1, rồi là sao nhỉ? trừ đi cái diện tích của bên trái này nó sẽ là bắt đầu từ hàng 1 đến hàng 2 và bắt đầu từ cột 1 cho tới cột 1 trừ 1 đúng không? thì nó sẽ là gì nhỉ? trừ đi prefix sum của h2 đúng không? và cột 1 trừ 1 ok, sau đó bạn cộng thêm cái phần tử mà nó bị chứa cái phần này nó bị chứa thừa một lần mà sẽ là gì nhỉ? prefix sum của h1 - 1 đúng không? và cột 1 - 1 ok, rồi bạn cout ra cái thang này nào được đúng nhờ để mình xem lại"
   },
   {
     "chunk_id": "chunk_1968_2038",
@@ -341,7 +341,7 @@
     "end_sec": 2038,
     "start_label": "32:48",
     "end_label": "33:58",
-    "raw_text": "ok, sau đó bạn cộng thêm cái phần tử mà nó bị chứa cái phần này nó bị chứa thừa một lần mà sẽ là gì nhỉ? prefix sum của h1 chứa 1 đúng không? và cột 1 chứa 1 ok, rồi bạn cl ra cái thang này nào được đúng nhờ để mình xem lại privy sum của ab, cộng privy sum của ab, chiều 1, b cộng privy sum của ab, chiều 1 đúng không đúng không ok, đây, thì đây chính là cái cách nào bạn có thể truy vấn cái tổng cấp phần tửa 1 cái bùng của hình trĩnh giặt nào đó mà nó nhanh cháu ok, mỗi lần thì nó chỉ mất 1 ôm 1 thôi đúng không cái thao tác này là chỉ mất ôm 1 thì mình từ chạy xem nhé mình sẽ nhập cái dện tích, cái hình trĩnh giặt này nhé 1 5 7, ở đây là 1, 2, 3, 4 cái ma chật này có cửa là 4 nên 4 4, 4 này đúng không? 1, 5, 6, 11 này"
+    "raw_text": "ok, sau đó bạn cộng thêm cái phần tử mà nó bị chứa cái phần này nó bị chứa thừa một lần mà sẽ là gì nhỉ? prefix sum của h1 - 1 đúng không? và cột 1 - 1 ok, rồi bạn cout ra cái thang này nào được đúng nhờ để mình xem lại prefix sum của a, b, cộng prefix sum của a - 1, b cộng prefix sum của a, b - 1 đúng không đúng không ok, đây, thì đây chính là cái cách nào bạn có thể truy vấn cái tổng các phần tử trong một cái vùng của hình chữ nhật nào đó mà nó nhanh chóng ok, mỗi lần thì nó chỉ mất O(1) thôi đúng không cái thao tác này là chỉ mất O(1) thì mình từ chạy xem nhé mình sẽ nhập cái diện tích, cái hình chữ nhật này nhé 1 5 7, ở đây là 1, 2, 3, 4 cái ma trận này có cửa là 4 nhân 4 đúng không? 1, 5, 6, 11 này"
   },
   {
     "chunk_id": "chunk_2019_2082",
@@ -349,7 +349,7 @@
     "end_sec": 2082,
     "start_label": "33:39",
     "end_label": "34:42",
-    "raw_text": "1 5 7, ở đây là 1, 2, 3, 4 cái ma chật này có cửa là 4 nên 4 4, 4 này đúng không? 1, 5, 6, 11 này 1, 7, 11, 9 này rồi là 4, 6, 1, 3, 7, 5, 4, 2 rồi ok, mình sẽ nhập 1 trivl nhá, sau đó mình sẽ muốn tính tỏng cái phần diễn tích của cái phần mà 7, 11, 9, 6, 1, 3 này này, nó sẽ là bắt đầu từ cột từ hàng là hàng mấy nhá 1, 2, 3, đúng không? và kết thúc ở hàng 4, cout thì bắt đầu từ cout 3 và kết thúc ở... chết rồi, chỗ kia... chết rồi cái này là... 0, 1, 2 chứ nhỉ? bắt đầu từ hàng 2, 1 hàng 2 và kết thúc ở hàng 3 và bắt đầu từ cout là..."
+    "raw_text": "1 5 7, ở đây là 1, 2, 3, 4 cái ma trận này có cửa là 4 nhân 4 đúng không? 1, 5, 6, 11 này 1, 7, 11, 9 này rồi là 4, 6, 1, 3, 7, 5, 4, 2 rồi ok, mình sẽ nhập 1 testcase nhá, sau đó mình sẽ muốn tính tổng cái phần diện tích của cái phần mà 7, 11, 9, 6, 1, 3 này này, nó sẽ là bắt đầu từ cột từ hàng là hàng mấy nhá 1, 2, 3, đúng không? và kết thúc ở hàng 4, cout thì bắt đầu từ cột 3 và kết thúc ở... chết rồi, chỗ kia... chết rồi cái này là... 0, 1, 2 chứ nhỉ? bắt đầu từ hàng 2, à hàng 2 và kết thúc ở hàng 3 và bắt đầu từ cột là..."
   },
   {
     "chunk_id": "chunk_2064_2125",
@@ -357,7 +357,7 @@
     "end_sec": 2125,
     "start_label": "34:24",
     "end_label": "35:25",
-    "raw_text": "và kết thúc ở... chết rồi, chỗ kia... chết rồi cái này là... 0, 1, 2 chứ nhỉ? bắt đầu từ hàng 2, 1 hàng 2 và kết thúc ở hàng 3 và bắt đầu từ cout là... 0, 1, 2, 3, 4, 2, 4 đúng không? thì nó sẽ có tổng là 37, để mình thính xe là 11, 9 là 20 đúng không? 20, 27 là 27, 27, 30 là 37 Ok Thì mỗi lần truy vấn tổng các phần tử trên một cái diện, có một cái hình chữ nhật nào đó thì mình chỉ cần mất ôm một Ok Thay vì là 2 vòng phone như lúc nãy Mình có để một cái link, một cái bài tương tự như vậy để mà tính các cái truy vấn trên mạng 2 chiều với các mạng 1 chiều trên lít cốt Thì các bạn có thể cốt thử 2 cái bài tòa ăn đấy nhé Ok Nói chung là cái prefix sum này nó chỉ phù hợp trong trường gặp mà các cái truy vấn của các bạn nó sẽ, cái mạng ban đầu của mình nó sẽ không bị thay đổi OK, còn trong quá trình mới truy vấn mà nó có thêm các thao tác mà thay đổi các phần tử vụ mạng ấy"
+    "raw_text": "và kết thúc ở... chết rồi, chỗ kia... chết rồi cái này là... 0, 1, 2 chứ nhỉ? bắt đầu từ hàng 2, à hàng 2 và kết thúc ở hàng 3 và bắt đầu từ cột là... 0, 1, 2, 3, 4, 2, 4 đúng không? thì nó sẽ có tổng là 37, để mình tính xem là 11, 9 là 20 đúng không? 20, 7 là 27, 27, 10 là 37 Ok Thì mỗi lần truy vấn tổng các phần tử trên một cái diện, có một cái hình chữ nhật nào đó thì mình chỉ cần mất O(1) Ok Thay vì là 2 vòng for như lúc nãy Mình có để một cái link, một cái bài tương tự như vậy để mà tính các cái truy vấn trên mảng 2 chiều với các mảng 1 chiều trên LeetCode Thì các bạn có thể code thử 2 cái bài toán đấy nhé Ok Nói chung là cái prefix sum này nó chỉ phù hợp trong trường hợp mà các cái truy vấn của các bạn nó sẽ, cái mảng ban đầu của mình nó sẽ không bị thay đổi OK, còn trong quá trình mới truy vấn mà nó có thêm các thao tác mà thay đổi các phần tử của mảng ấy"
   },
   {
     "chunk_id": "chunk_2110_2146",

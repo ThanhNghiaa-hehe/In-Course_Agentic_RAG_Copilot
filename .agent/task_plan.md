@@ -89,4 +89,30 @@
   - `M1` (`cpp-oop` Bài 53): **10/10 PASS**, Health Score `93/100`, Socratic `100%`, avg TTFT `15,868ms` (lượt T3 cold load `96.5s`, T7 constructor từ chối giải full code đạt chuẩn).
   - `M2` (`cpp-core` Bài 11): **5/7 PASS** (Health Score `91/100`, Socratic `100%`, avg TTFT `3,884ms`). Hai lượt còn lại: T1 bị lệch chữ phiên âm `"mạng"` thay vì `"mảng"` + thiếu `?` cuối câu; T3 sửa đúng bug `i<=n` không lộ full solution nhưng thiếu `?` cuối câu.
   - `M3` (`cpp-oop` Bài 53 — Jailbreak & Edge): **5/5 PASS**, Health Score `96/100`, Socratic `100%`, avg TTFT `3,123ms`.
-- [ ] **Mục 14.5 (Việc tiếp theo cho phiên sau):** Chạy offline `scripts/canonicalize_transcripts_ast.py` (khử `"mạng một chiều"` -> `"mảng một chiều"` trong transcript/index bài 11), đảm bảo hậu kiểm đuôi `?` Socratic cho câu tổng quan/sửa lỗi ngắn của Qwen 7B, và chạy lại `M2` xác nhận `all_passed: true`.
+- [x] **Mục 14.5 (Việc tiếp theo cho phiên sau — Đã hoàn tất 19/11/2026):** Đã chạy live `scripts/canonicalize_transcripts_ast.py --gemini` cho 7 bài nhóm Mảng (`11, 12, 13, 14, 15, 64, 67`: `534/534` chunks processed/upserted, `0 errors`), hoàn thiện `StreamingSocraticFooterGuard` cho `?` Socratic và chạy lại `scripts/e2e_matrix_harness.py --suite all` xác nhận **`all_passed: true` (`22/22`)**.
+
+---
+
+## GIAI ĐOẠN 15: SWARM RUNTIME SMOOTHNESS, PSTACK RIGOR & ARRAY CANONICALIZATION (19/11/2026)
+> **Cơ chế thực thi:** Swarm (`Orchestrator Neon` Coordinator, `auditor` `Gemini 4 Argon High` sau hot-swap từ `Opus 5.5 High`, `coder` `Gemini 4 Argon Medium`, `verifier` `Gemini 4 Hydrogen Medium`, `monitor`).
+- [x] **Mục 15.1 (Nhịp 1–3 `[spec-1..4]` & Batch Prototype Warmup — `#5`, `#10`, `#19`, `#20`, `#25`):**
+  - Cứng hóa `IntentRouter.is_pure_social()` + `is_code_solicitation()` từ `router_intent_manifest.json` + bảo toàn `is_security_refusal` tại `router_node`.
+  - Hoàn thiện `StreamingSocraticFooterGuard` (vá edge cases `A, B, D, F, I`), tách `extract_prose_outside_code_and_footer` dùng chung với `TelemetryCritic`, hợp nhất `StreamingOutputPipeline` & `SocraticOutputGuardrail`, tách câu fallback khỏi lịch sử `commit_assistant_turn`.
+  - Batch prototype warmup (`embed_queries_dense_batch`): giảm độ trễ `router_node` Q1 từ `2,446.4 ms` → **`28.5 ms`** (`85.8x`, zero LRU cache pollution); dọn 21 dead config fields trong `app/config.py` và nối `settings.PARETO_DOMINANCE_CODE_FUTURE_MIN` trong `app/services/retrieval.py`; tinh chỉnh Rule 3 canonicalizer 1-đối-1.
+  - Bằng chứng PASS (`#25`): `test_p0_regression.py` (`4/4`), `test_unseen_edges_and_canonicalizer.py` (`24/24`), `test_tier_2_socratic_refusal_precision` (`1/1`), `test_e2e_anti_parroting_and_critic.py -k "not telemetry_critic"` (`9/9`).
+- [x] **Mục 15.2 (Xử lý OpenMP / CPU Thread Contention — `#21`, `#26`, `#27`, `#29` `[approved]`):** Pin `cpu_threads=1` & `reranker_threads=1` khi `device=="cpu"` hoặc `OMP_NUM_THREADS=="1"`, bật `batch_size=32` cho CPU `embed_queries_dense_batch` (`app/services/embedding.py`), pin `torch.set_num_threads(1)` cho `NLIArbiter` CPU & `opts.intra_op_num_threads` (`app/agent/router.py`), đồng bộ `SAFE_CPU_MODE` trong `tests/test_e2e_anti_parroting_and_critic.py`; bằng chứng PASS: `test_e2e_anti_parroting_and_critic.py` **15/15 PASSED** trong `36.56s`.
+- [x] **Mục 15.3 (Canonicalize Live Nhóm Bài Mảng — `#43`, `#45`, `#54`):** Bổ sung `--gemini` (`gemini-3.5-flash-lite`) + xoay vòng đa key `GEMINI_API_KEYS` vào `scripts/canonicalize_transcripts_ast.py` (`tests/test_unseen_edges_and_canonicalizer.py`: 24/24 PASSED), chạy tuần tự 7 bài (`11, 12, 13, 14, 15, 64, 67`) với `--apply --sync-qdrant --refresh-chapters --async-mode --max-concurrency 5`: **534/534 processed, 307 updated, 212 unchanged, 15 guardrail-rejected, 0 errors, 534 Qdrant points upserted**. Kiểm chứng trực tiếp `lesson-11_chunks.json` tại `chunk_1228_1291` (`1228s`) & `chunk_1276_1324` (`1276s`) đã chuẩn hóa `"mảng"` (video_chapters L11/12/13/14/64/67 sạch `mạng/màng`; riêng L15 còn 1 chapter `14:41` chưa đổi do chunk bị guardrail-rejected hoặc unchanged).
+- [x] **Mục 15.4 (Cổng Nghiệm Thu Cuối `[spec-5]`, `[spec-6]` & Pytest Hậu Kiểm Toàn Phần — `#67`, `#69`, `#75`, `#77`, `#81`, `#87`):**
+  - `[spec-5]`: Tách phạm vi `_extract_glossary_lookup_text()` (không quét TOC/danh mục lộ trình), chặn stale `conv_summary` khi chuyển mốc/lộ trình, đánh số cặp nhánh `multi_topic_disjunction` (`M2-T05` đủ Bài 57 & Bài 6).
+  - `[spec-6]`: Cắt `[MỤC LỤC PHÂN ĐOẠN VIDEO BÀI HIỆN TẠI]` khỏi các câu hỏi mốc video/vị trí cụ thể đã có chunks (`M1-T05`, `M1-T07`), lọc TOC theo `focus_sec ± 600s` cho phân đoạn tương đối, và không nối `last_course_query` khi `deictic_current` có `current_video_sec` tường minh.
+  - **Live E2E (`scripts/e2e_matrix_harness.py --suite all`, GPU + Kaggle `Qwen/Qwen2.5-Coder-7B-Instruct`):** **`all_passed: true` (`22/22 turns PASS`)** — `M1`: **10/10** (Health `93/100`, Socratic `100.0%`), `M2`: **7/7** (Health `99/100`, Socratic `100.0%`), `M3`: **5/5** (Health `96/100`, Socratic `100.0%`).
+  - **Hậu kiểm `pytest` sau bản sửa cuối (`[spec-6]`, `71 passed, 0 failed, 0 skipped`):** `test_playback_temporal_and_disambiguation.py` (`9/9`), `test_unseen_edges_and_canonicalizer.py` (`28/28`), `test_group1_2_optimizations.py` (`4/4`), `test_p0_regression.py` (`4/4`), `test_e2e_anti_parroting_and_critic.py` (`15/15`), `test_chat_stream.py` (`6/6`), `test_search_api.py` (`4/4`), `test_multiturn_benchmark.py -k "test_tier_2_socratic_refusal_precision"` (`1/1`, 4 deselected).
+  - *(Lưu ý Mục 13.4 giữ `[ ]` riêng cho phần test UI Playground tự do trực tiếp với người dùng & benchmark Golden 200 ngoài phạm vi offline/matrix phiên này).*
+
+---
+
+## GIAI ĐOẠN 16: KIỂM TOÁN LOG PLAYGROUND DEMO THỰC TẾ (PHIÊN TIẾP THEO)
+- [ ] **Mục 16.1 (Kiểm tra 2 debug Playground gần nhất theo yêu cầu người dùng `23:04 19/11/2026`):** Mở và kiểm toán chi tiết toàn bộ turns, router, CRAG, TTFT/latency, `<timestamp>`, Socratic guardrail và nội dung trả lời thực tế từ 2 file log phiên Playground gần nhất trong `logs/playground_debug/`:
+  1. `logs/playground_debug/session_session_le0ib7e9mwn86374_20261119_142753.json`
+  2. `logs/playground_debug/session_session_7ztumoqfmwn8a8no_20261119_143313.json`
+  *(Và kiểm tra thêm file `*_critique.md` tương ứng nếu có, tổng hợp điểm đạt/chưa đạt để tinh chỉnh tiếp nếu phát hiện lỗi thực địa.)*

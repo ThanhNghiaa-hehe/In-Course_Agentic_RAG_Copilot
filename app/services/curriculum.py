@@ -500,17 +500,9 @@ class CurriculumService:
             from app.services.embedding import get_embedding_service
             emb_svc = get_embedding_service()
             if self._nav_prototypes and self._nav_vectors is None:
-                vecs = [emb_svc.embed_query_dense(p) for p in self._nav_prototypes]
-                arr = np.array(vecs, dtype=np.float32)
-                norms = np.linalg.norm(arr, axis=1, keepdims=True)
-                norms[norms == 0] = 1.0
-                self._nav_vectors = arr / norms
+                self._nav_vectors = emb_svc.embed_queries_dense_batch(self._nav_prototypes)
             if self._overview_prototypes and self._overview_vectors is None:
-                vecs_o = [emb_svc.embed_query_dense(p) for p in self._overview_prototypes]
-                arr_o = np.array(vecs_o, dtype=np.float32)
-                norms_o = np.linalg.norm(arr_o, axis=1, keepdims=True)
-                norms_o[norms_o == 0] = 1.0
-                self._overview_vectors = arr_o / norms_o
+                self._overview_vectors = emb_svc.embed_queries_dense_batch(self._overview_prototypes)
         except Exception as e:
             logger.debug(f"[CurriculumService] Khởi tạo nav embeddings: {e}")
 

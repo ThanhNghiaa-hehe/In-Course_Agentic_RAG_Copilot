@@ -23,7 +23,10 @@ from tree_sitter import Parser, Language
 import tree_sitter_cpp as tscpp
 
 from app.config import settings
-from app.agent.guardrails import normalize_user_input
+from app.agent.guardrails import (
+    extract_prose_outside_code_and_footer,
+    normalize_user_input,
+)
 from app.agent.router import get_intent_router
 from app.services.curriculum import get_curriculum_service
 
@@ -135,49 +138,9 @@ def _extract_prose_before_timestamp_footer(response_text: str) -> str:
     loại bỏ hoàn toàn:
     1. Khối mã nguồn fenced / indented code_block.
     2. Biểu thức inline code `...` (chặn toán tử 3 ngôi `a ? b : c` giả mạo câu hỏi Socratic).
-    3. Thẻ HTML <timestamp> và dòng footer '📍 Mốc video bài giảng:'.
+    3. URL query parameters ('?'), thẻ HTML <timestamp> và dòng footer '📍 Mốc video bài giảng:'.
     """
-    if not response_text:
-        return ""
-    without_ts = _strip_timestamp_tags_plain(response_text)
-    non_fenced = _strip_code_fences(without_ts)
-
-    cleaned_lines: List[str] = []
-    for line in non_fenced.splitlines():
-        stripped = line.strip()
-        header_probe = stripped.lstrip("*-•># \t")
-        if header_probe.startswith("📍") or header_probe.lower().startswith("mốc video bài giảng"):
-            continue
-
-        work_line = line
-        if "📍" in work_line:
-            work_line = work_line[:work_line.find("📍")].rstrip()
-        if "mốc video bài giảng" in work_line.lower():
-            m_idx = work_line.lower().find("mốc video bài giảng")
-            cut_idx = m_idx
-            while cut_idx > 0 and work_line[cut_idx - 1] in ("*", " ", "\t", "-"):
-                cut_idx -= 1
-            work_line = work_line[:cut_idx].rstrip()
-
-        if work_line.strip():
-            cleaned_lines.append(work_line)
-
-    if not cleaned_lines:
-        return ""
-
-    pre_footer_md = "\n".join(cleaned_lines)
-    md_tokens = _MD_PARSER.parse(pre_footer_md)
-    prose_segments: List[str] = []
-    for tok in md_tokens:
-        if tok.type in ("fence", "code_block", "html_block"):
-            continue
-        if tok.type == "inline" and tok.children:
-            for child in tok.children:
-                if child.type in ("code_inline", "html_inline"):
-                    continue
-                if child.content:
-                    prose_segments.append(child.content)
-    return " ".join(prose_segments).strip()
+    return extract_prose_outside_code_and_footer(response_text)
 
 
 def _inspect_cpp_code_ast(code: str) -> Tuple[bool, bool]:

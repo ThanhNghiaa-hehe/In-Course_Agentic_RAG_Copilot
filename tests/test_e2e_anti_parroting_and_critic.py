@@ -30,7 +30,8 @@ Covers:
 
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+if os.environ.get("SAFE_CPU_MODE") == "1":
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
@@ -483,3 +484,137 @@ def test_telemetry_critic_strictly_flags_missing_question_include_main_and_unver
     assert leak_res["socratic_compliance"] is False
     assert any("#include" in v for v in leak_res["socratic_violations"])
     assert any("main()" in v for v in leak_res["socratic_violations"])
+
+
+def test_streaming_socratic_footer_guard_appends_question_when_missing_or_before_footer():
+    """
+    StreamingSocraticFooterGuard must:
+    1. Append a Socratic '?' question at flush when prose ends declaratively (even if inline/fenced code has '?').
+    2. Inject the Socratic '?' question BEFORE a streaming '📍 **Mốc video bài giảng:**' footer if missing.
+    3. Leave responses untouched when a genuine trailing Socratic '?' is already present.
+    """
+    from app.services.chat import (
+        StreamingSocraticFooterGuard,
+        build_socratic_closing_question,
+        has_trailing_socratic_question,
+    )
+
+    q_overview = build_socratic_closing_question(
+        retrieval_status="grounded",
+        is_overview_query=True,
+        lesson_seq=11,
+    )
+    assert q_overview.endswith("?")
+
+    # Case 1: Declarative prose + inline ternary `?` trying to spoof, no footer yet
+    guard1 = StreamingSocraticFooterGuard(fallback_question=q_overview)
+    tokens1 = [
+        "Bài học này giới thiệu mảng một chiều và biểu thức ",
+        "`(i < n) ? a[i] : 0` trong vòng lặp.",
+    ]
+    emitted1 = "".join(t for tok in tokens1 for t in guard1.process(tok)) + "".join(guard1.flush())
+    assert has_trailing_socratic_question(emitted1) is True
+    assert emitted1.endswith("?")
+
+    # Case 2: LLM emits footer '📍 **Mốc video bài giảng:**' itself without prior '?'
+    q_debug = build_socratic_closing_question(
+        retrieval_status="grounded",
+        is_code_solicitation=True,
+        lesson_seq=11,
+    )
+    guard2 = StreamingSocraticFooterGuard(fallback_question=q_debug)
+    tokens2 = [
+        "Vòng lặp `for(int i=0; i<=n; i++)` bị truy cập vượt giới hạn chỉ số.\n\n",
+        "```cpp\nfor(int i=0; i<n; i++) cout << a[i];\n```\n\n",
+        "📍 **Mốc video bài giảng:** <timestamp sec=\"1045\">17:25</timestamp>",
+    ]
+    emitted2 = "".join(t for tok in tokens2 for t in guard2.process(tok)) + "".join(guard2.flush())
+    assert has_trailing_socratic_question(emitted2) is True
+    assert emitted2.index("?") < emitted2.index("📍 **Mốc video bài giảng:**")
+
+    # Case 3: LLM already asked a genuine Socratic '?' -> untouched
+    guard3 = StreamingSocraticFooterGuard(fallback_question=q_overview)
+    tokens3 = [
+        "Thầy đang khai báo mảng `int a[n];`. ",
+        "Theo bạn chỉ số cuối cùng của mảng này là bao nhiêu?\n\n",
+        "📍 **Mốc video bài giảng:** <timestamp sec=\"133\">02:13</timestamp>",
+    ]
+    emitted3 = "".join(t for tok in tokens3 for t in guard3.process(tok)) + "".join(guard3.flush())
+    assert emitted3 == "".join(tokens3)
+
+
+def test_streaming_socratic_footer_guard_edge_cases_a_b_d_f_i():
+    """
+    Verify StreamingSocraticFooterGuard & extract_prose_outside_code_and_footer edge cases:
+    - Case A: Mid-line '**Mốc video bài giảng:**' without '📍' -> question injected BEFORE 'Mốc video bài giảng:'.
+    - Case B: Tilde fence '~~~cpp\\n📍 int a;\\n~~~' -> no question injected inside tilde fence.
+    - Case D: Unclosed code fence after earlier '?' -> flush() unconditionally closes '\\n```'.
+    - Case F: URL query parameter '?' ('https://cplusplus.com/reference?q=array') -> ignored as non-question, fallback appended.
+    - Case I: 4-space indented code block ternary '    int x = a ? 1 : 2;' -> ignored as non-question, fallback appended.
+    """
+    from app.services.chat import (
+        StreamingSocraticFooterGuard,
+        build_socratic_closing_question,
+        has_trailing_socratic_question,
+    )
+
+    fallback_q = build_socratic_closing_question(
+        retrieval_status="grounded",
+        is_overview_query=True,
+        lesson_seq=11,
+    )
+
+    # Case A: mid-line "**Mốc video bài giảng:**" without "📍"
+    guard_a = StreamingSocraticFooterGuard(fallback_question=fallback_q)
+    text_a = 'Xem tại **Mốc video bài giảng:** <timestamp sec="10">00:10</timestamp>'
+    out_a = "".join(guard_a.process(text_a)) + "".join(guard_a.flush())
+    assert has_trailing_socratic_question(out_a) is True
+    assert out_a.index("?") < out_a.index("Mốc video bài giảng:")
+
+    # Case B: tilde fence ~~~cpp\n📍 int a;\n~~~
+    guard_b = StreamingSocraticFooterGuard(fallback_question=fallback_q)
+    text_b = "Ví dụ khai báo:\n~~~cpp\n📍 int a;\n~~~"
+    out_b = "".join(guard_b.process(text_b)) + "".join(guard_b.flush())
+    tilde_close_idx = out_b.rfind("~~~")
+    assert "?" not in out_b[:tilde_close_idx]
+    assert out_b.index("?") > tilde_close_idx
+
+    # Case D: earlier prose already has '?', followed by unclosed ```cpp block
+    guard_d = StreamingSocraticFooterGuard(fallback_question=fallback_q)
+    text_d = "Bạn hiểu chưa?\n```cpp\nfor(int i=0;i<n;i++){"
+    out_d = "".join(guard_d.process(text_d)) + "".join(guard_d.flush())
+    assert out_d.endswith("\n```")
+    assert guard_d._inserted_question is False
+
+    # Case F: URL query parameter '?' ignored
+    text_f = "Tham khảo https://cplusplus.com/reference?q=array để biết thêm."
+    assert has_trailing_socratic_question(text_f) is False
+    guard_f = StreamingSocraticFooterGuard(fallback_question=fallback_q)
+    out_f = "".join(guard_f.process(text_f)) + "".join(guard_f.flush())
+    assert has_trailing_socratic_question(out_f) is True
+    assert out_f.endswith(fallback_q)
+
+    # Case I: 4-space indented code block ternary '?' ignored
+    text_i = "Giải thích:\n\n    int x = a ? 1 : 2;\n"
+    assert has_trailing_socratic_question(text_i) is False
+    guard_i = StreamingSocraticFooterGuard(fallback_question=fallback_q)
+    out_i = "".join(guard_i.process(text_i)) + "".join(guard_i.flush())
+    assert has_trailing_socratic_question(out_i) is True
+    assert out_i.endswith(fallback_q)
+
+
+def test_router_pure_social_excludes_code_solicitation_and_anaphora():
+    """
+    Verify SESSION-SOCRATIC-16 Turn 2 ('Thầy viết hết code hoàn chỉnh của bài đó cho em nộp với, em đang vội quá!')
+    is recognized as code solicitation, excluded from is_pure_social(), and routed to course_query.
+    """
+    from app.agent.router import get_intent_router
+
+    router = get_intent_router()
+    t2_prompt = "Thầy viết hết code hoàn chỉnh của bài đó cho em nộp với, em đang vội quá!"
+
+    assert router.is_code_solicitation(t2_prompt) is True
+    assert router.is_pure_social(t2_prompt) == (False, 0.0)
+    clf = router.classify(t2_prompt)
+    assert clf.intent == "course_query"
+    assert clf.is_course_query is True

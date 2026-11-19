@@ -32,7 +32,6 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL_NAME: str = "intfloat/multilingual-e5-large"
     SPARSE_MODEL_NAME: str = "Qdrant/bm25"
     RERANKER_MODEL_NAME: str = "jinaai/jina-reranker-v2-base-multilingual"
-    USE_ONNX: bool = True
     USE_CPU_RERANKER: bool = True  # Tách tải Re-ranker sang CPU đa luồng để triệt tiêu 100% lỗi CUBLAS crash trên RTX 2050 (4GB)
     USE_INT8_RERANKER: bool = True
     RERANK_CPU_THREADS: int = 4  # Giới hạn luồng ONNX CPU tránh tranh chấp spin-wait trên CPU lai/đa luồng
@@ -47,26 +46,15 @@ class Settings(BaseSettings):
     # Stage 6-9 Retrieval & CRAG Optimization (Chặng 2 - Modality-Aware Precision & Pareto Sufficiency)
     MODALITY_GATE_AST_THRESHOLD: float = 0.35
     MODALITY_GATE_VIDEO_THRESHOLD: float = 0.22
-    MODALITY_GATE_VIDEO_EARLY_EXIT: float = 0.22  # Backward-compatibility alias for MODALITY_GATE_VIDEO_THRESHOLD
     MODALITY_GATE_VIDEO_HIGH_CONFIDENCE: float = 0.30  # Đồng bộ 100% với AGENTS.md Modality-Aware Latency Gate Invariant
-    FUTURE_PROBE_ACTIVATION_GATE: float = 0.22
-    FUTURE_PROBE_MARGIN: float = 0.12
     FUTURE_PROBE_MIN_CONFIDENCE: float = 0.25
     FUTURE_PROBE_LIMIT: int = 10
     RERANK_MAX_CHARS: int = 600
     CRAG_RRF_WEIGHT: float = 0.10
     PARETO_LOCAL_GROUNDING_THRESHOLD: float = 0.22
-    PARETO_MARGINAL_VIDEO_MAX: float = 0.30
     PARETO_MARGINAL_FUTURE_MIN: float = 0.30
     PARETO_MARGINAL_MARGIN: float = 0.08
-    PARETO_DOMINANCE_MARGIN: float = 0.12
-    PARETO_DOMINANCE_FUTURE_MIN: float = 0.45
     PARETO_DOMINANCE_CODE_FUTURE_MIN: float = 0.52
-    PARETO_DOMINANCE_CODE_MARGIN: float = 0.25
-    PARETO_NAV_FUTURE_MIN: float = 0.25
-    PARETO_NAV_MARGIN: float = -0.15
-    PARETO_INTRA_MODULE_FUTURE_MIN: float = 0.48
-    PARETO_INTRA_MODULE_MARGIN: float = 0.22
     PARETO_THEORY_GROUNDING_FLOOR: float = 0.18
     PARETO_VIDEO_STRONG_GROUNDING: float = 0.40
     PARETO_FALLBACK_VIDEO_MIN: float = 0.33
@@ -81,11 +69,6 @@ class Settings(BaseSettings):
     PARETO_PREREQUISITE_CODE_MARGIN: float = 0.20
     PARETO_CURRICULUM_ALIGNED_MARGIN: float = 0.05
 
-    # Whisper
-    WHISPER_MODEL_SIZE: str = "large-v3"
-    WHISPER_DEVICE: str = "cpu"
-    WHISPER_COMPUTE_TYPE: str = "int8"
-
     # Multi-Turn Memory & Context Budget Settings (LangGraph)
     SLIDING_WINDOW_TURNS: int = 4
     MAX_HISTORY_CHARS: int = 1400
@@ -95,12 +78,9 @@ class Settings(BaseSettings):
 
     # Multi-Turn Intent Router & Semantic Formulation Settings
     ROUTER_TOPIC_DRIFT_THRESHOLD: float = 0.32
-    ROUTER_DRIFT_COHERE_THRESHOLD: float = 0.25
     ROUTER_SOCIAL_ACK_THRESHOLD: float = 0.72
     ROUTER_PURE_SOCIAL_THRESHOLD: float = 0.88
-    ROUTER_SOCIAL_PURE_THRESHOLD: float = 0.88  # Backward-compatibility alias
     ROUTER_CONTEXTUAL_COURSE_MIN_PROB: float = 0.35
-    ROUTER_CONTEXTUAL_COURSE_MIN: float = 0.35  # Backward-compatibility alias
     ROUTER_CONTEXTUAL_GAIN_MARGIN: float = 0.05
     ROUTER_CONTEXTUAL_NLI_MIN_CONF: float = 0.45
     ROUTER_CONFIRM_COSINE_THRESHOLD: float = 0.88
@@ -110,9 +90,6 @@ class Settings(BaseSettings):
     # Telemetry Critic Rigor & Multi-Turn Intent Fidelity Settings
     CRITIC_TOPIC_INTRUSION_PENALTY: int = 50
     CRITIC_HIJACKING_PENALTY: int = 80
-    MARKOV_HIJACK_PENALTY: int = 80  # Backward-compatibility alias
-    CRITIC_GREETING_LOOP_PENALTY: int = 20
-    GREETING_LOOP_PENALTY: int = 20  # Backward-compatibility alias
     CRITIC_MAIN_VIOLATION_PENALTY: int = 40
     CRITIC_INCLUDE_VIOLATION_PENALTY: int = 20
     CRITIC_UNVERIFIED_TS_PENALTY: int = 15

@@ -4,13 +4,18 @@ import logging
 import uuid
 from html.parser import HTMLParser
 from typing import AsyncGenerator, Dict, Any, List, Optional, Tuple
+from markdown_it import MarkdownIt
 from openai import AsyncOpenAI
 
 from app.config import settings
 from app.services.curriculum import get_curriculum_service, CurriculumService
 from app.services.chat_graph import get_chat_graph, commit_assistant_turn, reset_session_state
 from app.agent.router import get_intent_router
-from app.agent.guardrails import get_session_rate_limiter, normalize_user_input
+from app.agent.guardrails import (
+    extract_prose_outside_code_and_footer,
+    get_session_rate_limiter,
+    normalize_user_input,
+)
 from app.schemas.chat import ChatRequest, SuggestedTimestamp, StreamMetadataEvent
 
 logger = logging.getLogger("uvicorn.error")
@@ -1006,6 +1011,362 @@ class StreamingInternalArtifactSanitizer:
         return out
 
 
+def has_trailing_socratic_question(text: str, window_chars: int = 320) -> bool:
+    """Kiểm tra phần văn xuôi cuối (tối đa window_chars) có chứa dấu hỏi Socratic '?' hay không."""
+    prose = extract_prose_outside_code_and_footer(text)
+    if not prose:
+        return False
+    tail = prose[-window_chars:] if len(prose) > window_chars else prose
+    return "?" in tail
+
+
+def build_socratic_closing_question(
+    *,
+    retrieval_status: str,
+    is_curriculum_navigation: bool = False,
+    is_overview_query: bool = False,
+    is_code_solicitation: bool = False,
+    missing_deictic_sec: bool = False,
+    lesson_seq: Optional[int] = None,
+    target_lesson_seq: Optional[int] = None,
+    has_code_block: bool = False,
+) -> str:
+    """
+    Sinh câu hỏi kết thúc Socratic chuẩn mực khi LLM 7B kết thúc câu trả lời bằng câu trần thuật.
+    Không dùng câu xã giao sáo rỗng ('Bạn có câu hỏi gì không?', 'nhé!').
+    """
+    if missing_deictic_sec:
+        return (
+            "Bạn đang theo dõi đến mốc phút:giây nào hoặc phân đoạn nào "
+            "trong mục lục bài học để mình giải thích chính xác phần đó?"
+        )
+    if retrieval_status == "out_of_lesson":
+        if target_lesson_seq is not None:
+            return (
+                f"Bạn có muốn mình chuyển sang Bài {target_lesson_seq} "
+                "và mở đúng đoạn video bài giảng đó không?"
+            )
+        return "Bạn muốn tập trung tìm hiểu chủ đề hoặc bài học nào trước?"
+    if is_curriculum_navigation or is_overview_query:
+        les_ref = f"Bài {lesson_seq}" if lesson_seq is not None else "bài học này"
+        return (
+            f"Trong các phần kiến thức của {les_ref}, bạn muốn đi sâu vào "
+            "khái niệm nền tảng hay ví dụ cài đặt nào trước?"
+        )
+    if is_code_solicitation or has_code_block:
+        return (
+            "Dựa vào gợi ý phân tích trên, bạn thử tự chỉnh lại phần logic "
+            "hoặc điều kiện đó rồi dự đoán kết quả chạy thử sẽ ra sao?"
+        )
+    return (
+        "Theo bạn, nếu thay đổi dữ liệu đầu vào cho ví dụ vừa nêu thì "
+        "kết quả thực thi của chương trình sẽ thay đổi như thế nào?"
+    )
+
+
+class StreamingSocraticFooterGuard:
+    """
+    Bộ bảo vệ Socratic '?' thời gian thực trên luồng SSE (0ms TTFT overhead):
+    - Chỉ đệm khi đầu dòng khớp tiền tố footer ('📍' hoặc 'Mốc video bài giảng') hoặc fence ('```' / '~~~').
+    - Hỗ trợ phát hiện footer giữa dòng (Edge Case A), hàng rào tilde/biến độ dài (Edge Case B),
+      và tự động đóng fence bị cắt cụt trong flush() (Edge Case D).
+    - Nếu LLM tự phát footer mà quên đặt câu hỏi '?' ở phần văn xuôi trước đó,
+      tự động chèn đúng 1 câu hỏi Socratic ngay TRƯỚC dòng footer.
+    - Nếu LLM kết thúc luồng mà không có '?' ở cuối văn xuôi, chèn trước footer fallback.
+    """
+    FOOTER_PREFIXES: Tuple[str, ...] = ("📍", "mốc video bài giảng")
+    MID_FOOTER_CANDIDATES: Tuple[str, ...] = (
+        "📍",
+        "mốc video bài giảng",
+        "*mốc video bài giảng",
+        "**mốc video bài giảng",
+    )
+
+    def __init__(self, fallback_question: str):
+        self.fallback_question = fallback_question
+        self.emitted_text = ""
+        self._at_line_start = True
+        self._line_buf = ""
+        self._mid_buf = ""
+        self._in_code_fence = False
+        self._fence_char: str = ""
+        self._fence_len: int = 0
+        self._has_seen_footer = False
+        self._inserted_question = False
+
+    def _emit_chunk(self, text: str, out: List[str]) -> None:
+        if text:
+            out.append(text)
+            self.emitted_text += text
+
+    def _ensure_question_before_footer(self, out: List[str]) -> None:
+        if self._inserted_question or self._has_seen_footer:
+            return
+        if not self.emitted_text.strip():
+            return
+        if has_trailing_socratic_question(self.emitted_text):
+            return
+        sep = ""
+        if self.emitted_text.endswith("\n\n"):
+            sep = ""
+        elif self.emitted_text.endswith("\n"):
+            sep = "\n"
+        else:
+            sep = "\n\n"
+        self._emit_chunk(f"{sep}{self.fallback_question}\n\n", out)
+        self._inserted_question = True
+
+    @staticmethod
+    def _count_leading_fence_run(probe: str) -> Tuple[str, int]:
+        if not probe or probe[0] not in ("`", "~"):
+            return "", 0
+        f_ch = probe[0]
+        run_len = 0
+        while run_len < len(probe) and probe[run_len] == f_ch:
+            run_len += 1
+        return f_ch, run_len
+
+    def _update_fence_state_from_complete_line(self, line_text: str) -> None:
+        probe = line_text.rstrip("\r\n").lstrip(" \t*-•>#")
+        f_ch, run_len = self._count_leading_fence_run(probe)
+        if run_len < 3:
+            return
+        rest = probe[run_len:]
+        if not self._in_code_fence:
+            if f_ch == "`" and "`" in rest:
+                return
+            self._in_code_fence = True
+            self._fence_char = f_ch
+            self._fence_len = run_len
+        else:
+            if f_ch == self._fence_char and run_len >= self._fence_len and rest.strip() == "":
+                self._in_code_fence = False
+                self._fence_char = ""
+                self._fence_len = 0
+
+    def _process_mid_line_char(self, char: str, out: List[str]) -> None:
+        if self._in_code_fence or self._has_seen_footer:
+            self._emit_chunk(char, out)
+            if char == "\n":
+                self._at_line_start = True
+            return
+
+        if self._mid_buf:
+            cand = self._mid_buf + char
+            cand_low = cand.lower()
+            if cand_low.lstrip("*") in self.FOOTER_PREFIXES:
+                self._ensure_question_before_footer(out)
+                self._has_seen_footer = True
+                self._emit_chunk(cand, out)
+                self._mid_buf = ""
+                return
+            if any(p.startswith(cand_low) for p in self.MID_FOOTER_CANDIDATES):
+                self._mid_buf = cand
+                return
+            self._emit_chunk(self._mid_buf, out)
+            self._mid_buf = ""
+
+        ch_low = char.lower()
+        if char == "📍":
+            self._ensure_question_before_footer(out)
+            self._has_seen_footer = True
+            self._emit_chunk(char, out)
+            return
+        if any(p.startswith(ch_low) for p in self.MID_FOOTER_CANDIDATES):
+            self._mid_buf = char
+            return
+
+        self._emit_chunk(char, out)
+        if char == "\n":
+            self._at_line_start = True
+
+    def process(self, token: str) -> List[str]:
+        out: List[str] = []
+        for char in token:
+            if self._at_line_start:
+                self._line_buf += char
+                if char == "\n":
+                    self._update_fence_state_from_complete_line(self._line_buf)
+                    self._emit_chunk(self._line_buf, out)
+                    self._line_buf = ""
+                    self._at_line_start = True
+                    continue
+
+                probe = self._line_buf.lstrip(" \t*-•>#")
+                if not probe:
+                    continue
+
+                f_ch, run_len = self._count_leading_fence_run(probe)
+                if f_ch:
+                    # Đang đọc chuỗi ký tự fence ('`' hoặc '~') ở đầu dòng
+                    if run_len == len(probe):
+                        continue
+                    if not self._in_code_fence:
+                        if run_len >= 3 and (f_ch == "~" or "`" not in probe[run_len:]):
+                            self._in_code_fence = True
+                            self._fence_char = f_ch
+                            self._fence_len = run_len
+                            self._emit_chunk(self._line_buf, out)
+                            self._line_buf = ""
+                            self._at_line_start = False
+                            continue
+                    else:
+                        if (
+                            f_ch == self._fence_char
+                            and run_len >= self._fence_len
+                            and probe[run_len:].strip(" \t\r") == ""
+                        ):
+                            # Chờ đến '\n' hoặc flush() để xác nhận dòng đóng fence hợp lệ
+                            continue
+                        self._emit_chunk(self._line_buf, out)
+                        self._line_buf = ""
+                        self._at_line_start = False
+                        continue
+
+                probe_low = probe.lower()
+                if (
+                    not self._in_code_fence
+                    and not self._has_seen_footer
+                    and any(probe_low.startswith(fp) for fp in self.FOOTER_PREFIXES)
+                ):
+                    self._ensure_question_before_footer(out)
+                    self._has_seen_footer = True
+                    self._emit_chunk(self._line_buf, out)
+                    self._line_buf = ""
+                    self._at_line_start = False
+                    continue
+
+                is_partial_footer = (
+                    not self._in_code_fence
+                    and not self._has_seen_footer
+                    and any(fp.startswith(probe_low) for fp in self.FOOTER_PREFIXES)
+                )
+                if is_partial_footer:
+                    continue
+
+                self._emit_chunk(self._line_buf, out)
+                self._line_buf = ""
+                self._at_line_start = False
+            else:
+                self._process_mid_line_char(char, out)
+        return out
+
+    def flush(self) -> List[str]:
+        out: List[str] = []
+        if self._mid_buf:
+            self._emit_chunk(self._mid_buf, out)
+            self._mid_buf = ""
+        if self._line_buf:
+            self._update_fence_state_from_complete_line(self._line_buf)
+            self._emit_chunk(self._line_buf, out)
+            self._line_buf = ""
+        if self._in_code_fence:
+            close_fence = (self._fence_char or "`") * max(3, self._fence_len or 3)
+            self._emit_chunk(f"\n{close_fence}", out)
+            self._in_code_fence = False
+            self._fence_char = ""
+            self._fence_len = 0
+        if (
+            not self._has_seen_footer
+            and not self._inserted_question
+            and self.emitted_text.strip()
+            and not has_trailing_socratic_question(self.emitted_text)
+        ):
+            sep = "" if self.emitted_text.endswith("\n\n") else ("\n" if self.emitted_text.endswith("\n") else "\n\n")
+            self._emit_chunk(f"{sep}{self.fallback_question}", out)
+            self._inserted_question = True
+        return out
+
+
+class StreamingOutputPipeline:
+    """
+    Chuỗi lọc luồng SSE hợp nhất (Single-Pass Streaming Output Sanitizer Pipeline):
+    1. sanitize_cjk_tokens (Tri-Layer Anti-CJK Token Leakage)
+    2. StreamingInternalArtifactSanitizer (Khử lời chào lặp & nhãn nội bộ)
+    3. StreamingTimestampSanitizer (Deterministic Timestamp Whitelist Guardrail)
+    4. StreamingCodeSanitizer (Chống lộ #include, using namespace std, int main)
+    5. StreamingSocraticFooterGuard (Đảm bảo câu hỏi Socratic '?' trước footer)
+    """
+
+    def __init__(
+        self,
+        *,
+        valid_secs: Optional[set] = None,
+        fallback_question: Optional[str] = None,
+        forbid_video_opening: bool = False,
+    ):
+        self.artifact_sanitizer = StreamingInternalArtifactSanitizer(
+            forbid_video_opening=forbid_video_opening
+        )
+        self.ts_sanitizer = StreamingTimestampSanitizer(
+            valid_secs=valid_secs if valid_secs is not None else set()
+        )
+        self.code_sanitizer = StreamingCodeSanitizer()
+        self.socratic_guard: Optional[StreamingSocraticFooterGuard] = (
+            StreamingSocraticFooterGuard(fallback_question=fallback_question)
+            if fallback_question
+            else None
+        )
+
+    @property
+    def inserted_fallback_question(self) -> bool:
+        return bool(self.socratic_guard and self.socratic_guard._inserted_question)
+
+    def _pipe_from_ts(self, tokens: List[str]) -> List[str]:
+        out: List[str] = []
+        for tok in tokens:
+            if not tok:
+                continue
+            for c_tok in self.code_sanitizer.process(tok):
+                if self.socratic_guard is not None:
+                    out.extend(self.socratic_guard.process(c_tok))
+                elif c_tok:
+                    out.append(c_tok)
+        return out
+
+    def process(self, raw_token: str) -> List[str]:
+        clean_token = sanitize_cjk_tokens(raw_token)
+        if not clean_token:
+            return []
+        out: List[str] = []
+        for art_tok in self.artifact_sanitizer.process(clean_token):
+            if not art_tok:
+                continue
+            out.extend(self._pipe_from_ts(self.ts_sanitizer.process(art_tok)))
+        return out
+
+    def flush(self) -> List[str]:
+        out: List[str] = []
+        for art_tok in self.artifact_sanitizer.flush():
+            if art_tok:
+                out.extend(self._pipe_from_ts(self.ts_sanitizer.process(art_tok)))
+        out.extend(self._pipe_from_ts(self.ts_sanitizer.flush()))
+        for c_tok in self.code_sanitizer.flush():
+            if self.socratic_guard is not None:
+                out.extend(self.socratic_guard.process(c_tok))
+            elif c_tok:
+                out.append(c_tok)
+        if self.socratic_guard is not None:
+            out.extend(self.socratic_guard.flush())
+        return out
+
+
+def apply_streaming_sanitizers(
+    text: str,
+    valid_secs: Optional[set] = None,
+    fallback_question: Optional[str] = None,
+    forbid_video_opening: bool = False,
+) -> Tuple[str, bool]:
+    """Áp dụng toàn bộ chuỗi StreamingOutputPipeline cho văn bản tĩnh (non-streaming callers)."""
+    pipeline = StreamingOutputPipeline(
+        valid_secs=valid_secs,
+        fallback_question=fallback_question,
+        forbid_video_opening=forbid_video_opening,
+    )
+    chunks = pipeline.process(text) + pipeline.flush()
+    return "".join(chunks), pipeline.inserted_fallback_question
+
+
 class ChatService:
     """
     Dịch vụ điều phối trò chuyện Socratic & Truyền phát dữ liệu thời gian thực (SSE Stream):
@@ -1057,6 +1418,7 @@ class ChatService:
             "is_course_query": True,
             "search_query": None,
             "is_curriculum_navigation": False,
+            "is_overview_query": False,
             "retrieval_status": "coverage_gap",
             "retrieved_chunks": [],
             "is_approximate": False,
@@ -1235,61 +1597,41 @@ class ChatService:
                 if isinstance(item, dict) and item.get("sec") is not None:
                     valid_secs.add(int(item["sec"]))
 
-            artifact_sanitizer = StreamingInternalArtifactSanitizer(
-                forbid_video_opening=(retrieval_status == "out_of_lesson" or is_nav_turn)
+            is_solicitation_turn = self.router.is_code_solicitation(clean_prompt)
+            if "is_overview_query" in final_state:
+                is_overview_turn = bool(final_state.get("is_overview_query", False))
+            else:
+                is_overview_turn = self.curriculum_service.is_overview_query(clean_prompt)
+            fallback_socratic_q = build_socratic_closing_question(
+                retrieval_status=retrieval_status,
+                is_curriculum_navigation=is_nav_turn,
+                is_overview_query=is_overview_turn,
+                is_code_solicitation=is_solicitation_turn,
+                missing_deictic_sec=bool(final_state.get("missing_deictic_sec", False)),
+                lesson_seq=request.lesson_seq,
+                target_lesson_seq=final_state.get("target_lesson_seq"),
             )
-            ts_sanitizer = StreamingTimestampSanitizer(valid_secs=valid_secs)
-            code_sanitizer = StreamingCodeSanitizer()
+            pipeline = StreamingOutputPipeline(
+                valid_secs=valid_secs,
+                fallback_question=fallback_socratic_q,
+                forbid_video_opening=(retrieval_status == "out_of_lesson" or is_nav_turn),
+            )
 
             async for chunk in stream_response:
                 if chunk.choices and chunk.choices[0].delta.content:
-                    raw_token = chunk.choices[0].delta.content
-
-                    # Tri-Layer Anti-CJK Token Leakage Guardrail (Tầng 2 - Backend Streaming Sanitizer)
-                    clean_token = sanitize_cjk_tokens(raw_token)
-                    if not clean_token:
-                        continue
-
-                    for art_tok in artifact_sanitizer.process(clean_token):
-                        if not art_tok:
-                            continue
-                        # Deterministic Timestamp Whitelist Guardrail (Streaming Buffer)
-                        sanitized_tokens = ts_sanitizer.process(art_tok)
-                        for tok in sanitized_tokens:
-                            # Deterministic Streaming Code Sanitizer (Chống rò rỉ #include, using namespace, main)
-                            clean_code_tokens = code_sanitizer.process(tok)
-                            for c_tok in clean_code_tokens:
-                                full_assistant_response += c_tok
-                                yield {
-                                    "event": "delta",
-                                    "data": json.dumps({"content": c_tok})
-                                }
-
-            # Xả các token còn lại trong bộ đệm cuối luồng theo đúng thứ tự pipeline
-            for art_tok in artifact_sanitizer.flush():
-                for tok in ts_sanitizer.process(art_tok):
-                    for c_tok in code_sanitizer.process(tok):
-                        full_assistant_response += c_tok
+                    for s_tok in pipeline.process(chunk.choices[0].delta.content):
+                        full_assistant_response += s_tok
                         yield {
                             "event": "delta",
-                            "data": json.dumps({"content": c_tok})
+                            "data": json.dumps({"content": s_tok})
                         }
 
-            final_flushed = ts_sanitizer.flush()
-            for tok in final_flushed:
-                for c_tok in code_sanitizer.process(tok):
-                    full_assistant_response += c_tok
-                    yield {
-                        "event": "delta",
-                        "data": json.dumps({"content": c_tok})
-                    }
-
-            final_code_flushed = code_sanitizer.flush()
-            for c_tok in final_code_flushed:
-                full_assistant_response += c_tok
+            # Xả các token còn lại trong bộ đệm cuối luồng theo đúng thứ tự pipeline
+            for s_tok in pipeline.flush():
+                full_assistant_response += s_tok
                 yield {
                     "event": "delta",
-                    "data": json.dumps({"content": c_tok})
+                    "data": json.dumps({"content": s_tok})
                 }
 
             # Deterministic Timestamp Fallback: Nếu có mốc bảo chứng nhưng LLM quên sinh thẻ, tự động gắn mốc video
@@ -1316,10 +1658,13 @@ class ChatService:
             if full_assistant_response.strip():
                 # Hàng rào bảo vệ lần 2: Đảm bảo 100% không lọt bất kỳ thẻ timestamp ảo giác nào vào DB
                 full_assistant_response = sanitize_timestamp_tags(full_assistant_response, valid_secs)
+                history_assistant_response = full_assistant_response
+                if pipeline.inserted_fallback_question and fallback_socratic_q:
+                    history_assistant_response = history_assistant_response.replace(fallback_socratic_q, "").strip()
                 commit_assistant_turn(
                     session_id,
                     clean_prompt,
-                    full_assistant_response,
+                    history_assistant_response,
                     current_lesson_seq=request.lesson_seq,
                     last_course_query=final_state.get("last_course_query")
                 )

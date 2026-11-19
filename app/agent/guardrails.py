@@ -150,6 +150,101 @@ def normalize_user_input(
     return "\n".join(compacted_lines)
 
 
+def extract_prose_outside_code_and_footer(text: str) -> str:
+    """
+    Trích xuất văn bản ngôn ngữ tự nhiên ngoài fenced code (``` / ~~~), indented code_block,
+    inline code `...`, URL query parameters, thẻ <timestamp> và dòng footer
+    '📍 Mốc video bài giảng:' (Zero Regex).
+    """
+    if not text:
+        return ""
+    work = text
+    while "<timestamp" in work.lower():
+        low = work.lower()
+        st = low.find("<timestamp")
+        ed = low.find("</timestamp>", st)
+        if ed != -1:
+            work = work[:st] + work[ed + len("</timestamp>") :]
+        else:
+            gt = work.find(">", st)
+            if gt != -1:
+                work = work[:st] + work[gt + 1 :]
+            else:
+                work = work[:st]
+                break
+
+    kept_lines: List[str] = []
+    in_fence = False
+    fence_char = ""
+    fence_len = 0
+    for line in work.splitlines():
+        stripped = line.strip()
+        probe = stripped.lstrip("*-•># \t")
+        if not in_fence:
+            if probe.startswith("```") or probe.startswith("~~~"):
+                f_ch = probe[0]
+                run_len = 0
+                while run_len < len(probe) and probe[run_len] == f_ch:
+                    run_len += 1
+                if run_len >= 3 and f_ch not in probe[run_len:]:
+                    in_fence = True
+                    fence_char = f_ch
+                    fence_len = run_len
+                continue
+        else:
+            if probe.startswith(fence_char * fence_len):
+                run_len = 0
+                while run_len < len(probe) and probe[run_len] == fence_char:
+                    run_len += 1
+                if probe[run_len:].strip() == "":
+                    in_fence = False
+                    fence_char = ""
+                    fence_len = 0
+            continue
+
+        # Bảo toàn dòng trống nguyên bản để MarkdownIt nhận diện đúng 4-space indented code_block (Edge Case I)
+        if not stripped:
+            kept_lines.append("")
+            continue
+
+        header_probe = stripped.lstrip("*-•># \t")
+        if header_probe.startswith("📍") or header_probe.lower().startswith("mốc video bài giảng"):
+            continue
+        if "📍" in line:
+            line = line[: line.find("📍")].rstrip()
+        low_l = line.lower()
+        if "mốc video bài giảng" in low_l:
+            m_idx = low_l.find("mốc video bài giảng")
+            cut_idx = m_idx
+            while cut_idx > 0 and line[cut_idx - 1] in ("*", " ", "\t", "-"):
+                cut_idx -= 1
+            line = line[:cut_idx].rstrip()
+        if line.strip():
+            kept_lines.append(line)
+
+    if not any(ln.strip() for ln in kept_lines):
+        return ""
+
+    md_tokens = _MD_PARSER.parse("\n".join(kept_lines))
+    prose_segments: List[str] = []
+    for tok in md_tokens:
+        if tok.type in ("fence", "code_block", "html_block"):
+            continue
+        if tok.type == "inline" and tok.children:
+            for child in tok.children:
+                if child.type in ("code_inline", "html_inline"):
+                    continue
+                if child.content:
+                    cleaned_words = " ".join(
+                        w
+                        for w in child.content.split()
+                        if not w.lstrip("(<[\"'").lower().startswith(("http://", "https://"))
+                    )
+                    if cleaned_words:
+                        prose_segments.append(cleaned_words)
+    return " ".join(prose_segments).strip()
+
+
 def _detect_student_cpp_ast(prompt: str) -> bool:
     """
     Phát hiện mã nguồn C++ của học viên bằng bộ phân tích cú pháp MarkdownIt AST & Tree-sitter C++ AST thực thụ.
@@ -241,20 +336,8 @@ class SecurityInputGuardrail:
             try:
                 from app.services.embedding import get_embedding_service
                 self._embedding_service = get_embedding_service()
-
-                proto_vecs = []
-                for p in self._attack_prototypes:
-                    v = self._embedding_service.embed_query_dense(p)
-                    norm_v = np.array(v) / (np.linalg.norm(v) + 1e-9)
-                    proto_vecs.append(norm_v)
-                self._proto_matrix = np.array(proto_vecs)
-
-                benign_vecs = []
-                for p in self._benign_prototypes:
-                    v = self._embedding_service.embed_query_dense(p)
-                    norm_v = np.array(v) / (np.linalg.norm(v) + 1e-9)
-                    benign_vecs.append(norm_v)
-                self._benign_matrix = np.array(benign_vecs)
+                self._proto_matrix = self._embedding_service.embed_queries_dense_batch(self._attack_prototypes)
+                self._benign_matrix = self._embedding_service.embed_queries_dense_batch(self._benign_prototypes)
             except Exception as e:
                 logger.warning(f"[SecurityInputGuardrail] Không thể nạp embedding guardrail ({e}).")
 
@@ -374,7 +457,7 @@ class SocraticOutputGuardrail:
         - Cắt tỉa các hàm giải hoàn chỉnh (Cyclomatic Complexity M >= 3) thành khung gợi mở Socratic Scaffolding.
         - Trả về (was_modified, safe_text).
         """
-        if not text or "```" not in text:
+        if not text or ("```" not in text and "~~~" not in text):
             return False, text
 
         md_tokens = _MD_PARSER.parse(text)
@@ -384,10 +467,12 @@ class SocraticOutputGuardrail:
 
         modified = False
         new_text = text
+        search_pos = 0
 
         for code_snippet in fence_blocks:
             original_code = code_snippet
             current_code = code_snippet
+            block_idx = new_text.find(original_code, search_pos)
 
             # 1. Xử lý qua Tree-sitter C++ AST (nếu có parser)
             if self._parser is not None:
@@ -465,9 +550,19 @@ class SocraticOutputGuardrail:
                     current_code = "\n".join(sanitized_lines)
 
             if current_code != original_code:
-                new_text = new_text.replace(original_code, current_code, 1)
+                if block_idx != -1:
+                    new_text = (
+                        new_text[:block_idx]
+                        + current_code
+                        + new_text[block_idx + len(original_code) :]
+                    )
+                    search_pos = block_idx + len(current_code)
+                else:
+                    new_text = new_text.replace(original_code, current_code, 1)
                 modified = True
                 logger.info("[SocraticOutputGuardrail] Đã can thiệp cắt tỉa code giải hộ thành Socratic Scaffolding.")
+            elif block_idx != -1:
+                search_pos = block_idx + len(original_code)
 
         return modified, new_text
 

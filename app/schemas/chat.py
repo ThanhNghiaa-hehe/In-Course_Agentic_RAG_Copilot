@@ -30,6 +30,10 @@ class RouterClassification(BaseModel):
         default=True,
         description="True nếu cần đi tiếp vào pipeline RAG"
     )
+    is_security_refusal: bool = Field(
+        default=False,
+        description="True nếu yêu cầu bị từ chối bởi SecurityInputGuardrail (OWASP LLM01)"
+    )
 
 
 class StreamMetadataEvent(BaseModel):

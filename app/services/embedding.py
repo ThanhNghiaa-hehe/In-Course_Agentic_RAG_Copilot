@@ -63,16 +63,31 @@ class EmbeddingService:
         except Exception as e:
             logger.warning(f"[EmbeddingService] Lỗi nhận diện CUDA ({e}), sử dụng CPUExecutionProvider.")
 
+        pin_single_cpu_thread = self.device == "cpu" or os.environ.get("OMP_NUM_THREADS") == "1"
+        cpu_threads = 1 if pin_single_cpu_thread else None
+
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Dense: {settings.EMBEDDING_MODEL_NAME}...")
-        self.dense_model = TextEmbedding(settings.EMBEDDING_MODEL_NAME, providers=self.providers)
+        self.dense_model = TextEmbedding(
+            settings.EMBEDDING_MODEL_NAME,
+            providers=self.providers,
+            threads=cpu_threads,
+        )
 
         logger.info(f"[EmbeddingService] Khởi tạo mô hình Sparse: {settings.SPARSE_MODEL_NAME}...")
-        self.sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME, providers=self.providers)
+        self.sparse_model = SparseTextEmbedding(
+            settings.SPARSE_MODEL_NAME,
+            providers=self.providers,
+            threads=cpu_threads,
+        )
 
         use_cpu_reranker = getattr(settings, "USE_CPU_RERANKER", True)
         reranker_providers = ["CPUExecutionProvider"] if use_cpu_reranker else self.providers
         reranker_device = "CPU" if use_cpu_reranker else self.device.upper()
-        reranker_threads = getattr(settings, "RERANK_CPU_THREADS", 4) if use_cpu_reranker else None
+        reranker_threads = (
+            (1 if pin_single_cpu_thread else getattr(settings, "RERANK_CPU_THREADS", 4))
+            if use_cpu_reranker
+            else None
+        )
 
         int8_model_dir = Path(__file__).resolve().parent.parent.parent / "data" / "models" / "jina-reranker-v2-int8"
         int8_onnx_file = int8_model_dir / "onnx" / "model.onnx"
@@ -122,6 +137,17 @@ class EmbeddingService:
 
     embed_query_dense.cache_info = _embed_query_dense_cached.cache_info
     embed_query_dense.cache_clear = _embed_query_dense_cached.cache_clear
+
+    def embed_queries_dense_batch(self, query_texts: List[str]) -> np.ndarray:
+        """Sinh ma trận Dense Vector 1024-dim L2-normalized theo batch cho các tập prototype (không làm bẩn LRU cache 512)."""
+        if not query_texts:
+            return np.zeros((0, 1024), dtype=np.float32)
+        formatted = [f"query: {self._normalize_query_key(q)}" for q in query_texts]
+        raw_vecs = list(self.dense_model.embed(formatted, batch_size=32))
+        arr = np.array([v.tolist() if hasattr(v, "tolist") else v for v in raw_vecs], dtype=np.float32)
+        norms = np.linalg.norm(arr, axis=1, keepdims=True)
+        norms[norms == 0] = 1.0
+        return arr / norms
 
     def embed_query_sparse(self, query_text: str) -> Tuple[List[int], List[float]]:
         """
