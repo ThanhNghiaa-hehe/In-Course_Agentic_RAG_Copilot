@@ -2,7 +2,9 @@ import asyncio
 import json
 import logging
 import uuid
+from functools import lru_cache
 from html.parser import HTMLParser
+from pathlib import Path
 from typing import AsyncGenerator, Dict, Any, List, Optional, Tuple
 from markdown_it import MarkdownIt
 from openai import AsyncOpenAI
@@ -1011,12 +1013,211 @@ class StreamingInternalArtifactSanitizer:
         return out
 
 
-def has_trailing_socratic_question(text: str, window_chars: int = 320) -> bool:
-    """Kiểm tra phần văn xuôi cuối (tối đa window_chars) có chứa dấu hỏi Socratic '?' hay không."""
+_ROUTER_MANIFEST_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "data"
+    / "metadata"
+    / "router_intent_manifest.json"
+)
+
+
+@lru_cache(maxsize=1)
+def _load_forbidden_closing_prefixes() -> Tuple[str, ...]:
+    """Đọc danh sách tiền tố câu kết sáo rỗng từ manifest (Data/Code Separation)."""
+    try:
+        if _ROUTER_MANIFEST_PATH.exists():
+            data = json.loads(_ROUTER_MANIFEST_PATH.read_text(encoding="utf-8"))
+            raw = data.get("forbidden_closing_prefixes") or []
+            cleaned = [
+                str(item).strip().lower()
+                for item in raw
+                if isinstance(item, str) and str(item).strip()
+            ]
+            cleaned.sort(key=len, reverse=True)
+            return tuple(cleaned)
+    except Exception as exc:
+        logger.warning(f"[ChatService] Không đọc được forbidden_closing_prefixes: {exc}")
+    return ()
+
+
+def _tokenize_words_simple(text: str) -> List[str]:
+    """Tách từ chỉ giữ ký tự chữ/số (Zero Regex)."""
+    if not text:
+        return []
+    buf: List[str] = []
+    tokens: List[str] = []
+    for ch in text.lower():
+        if ch.isalnum():
+            buf.append(ch)
+        elif buf:
+            tokens.append("".join(buf))
+            buf.clear()
+    if buf:
+        tokens.append("".join(buf))
+    return tokens
+
+
+def _split_prose_sentences(prose: str) -> List[str]:
+    """Tách văn xuôi thành các câu không rỗng dựa trên dấu kết câu / xuống dòng (Zero Regex)."""
+    if not prose:
+        return []
+    sentences: List[str] = []
+    buf: List[str] = []
+    for ch in prose:
+        buf.append(ch)
+        if ch in ".!?\n":
+            chunk = "".join(buf).strip()
+            buf.clear()
+            if any(c.isalnum() for c in chunk):
+                sentences.append(chunk)
+    tail = "".join(buf).strip()
+    if any(c.isalnum() for c in tail):
+        sentences.append(tail)
+    return sentences
+
+
+def _is_forbidden_closing_sentence(
+    sentence: str,
+    prefixes: Optional[Tuple[str, ...]] = None,
+) -> bool:
+    """Kiểm tra câu có bắt đầu bằng tiền tố đóng câu sáo rỗng từ manifest hay không."""
+    active_prefixes = prefixes if prefixes is not None else _load_forbidden_closing_prefixes()
+    if not active_prefixes or not sentence:
+        return False
+    if "`" in sentence:
+        return False
+    norm = sentence.strip(" \t\r\n*-•>\"'“”()[]{}:;,.!?").lower()
+    if not norm:
+        return False
+    for p in active_prefixes:
+        if norm.startswith(p) and (len(norm) == len(p) or norm[len(p)] in " \t,.:;!?-–—\"'"):
+            if p in ("bạn đã hiểu", "bạn hiểu được"):
+                words = norm.split()
+                if len(words) > 8 or any(
+                    w in words for w in ("nhầm", "sai", "lệch", "ngược", "thiếu")
+                ):
+                    return False
+            return True
+    return False
+
+
+def _strip_forbidden_closing_sentences(prose: str) -> str:
+    """Loại bỏ các câu kết sáo rỗng (ví dụ 'Bạn đã hiểu đúng không?') khỏi văn xuôi."""
+    if not prose:
+        return ""
+    prefixes = _load_forbidden_closing_prefixes()
+    if not prefixes:
+        return prose
+    kept: List[str] = []
+    buf: List[str] = []
+    for ch in prose:
+        buf.append(ch)
+        if ch in ".!?\n":
+            seg = "".join(buf)
+            buf.clear()
+            if _is_forbidden_closing_sentence(seg, prefixes):
+                continue
+            kept.append(seg)
+    rem = "".join(buf)
+    if rem and not _is_forbidden_closing_sentence(rem, prefixes):
+        kept.append(rem)
+    return "".join(kept).strip()
+
+
+def is_echo_only_prose(prose: str, user_prompt: Optional[str]) -> bool:
+    """
+    Phát hiện phản hồi chỉ nhại lại câu hỏi của học viên (ngắn < 220 ký tự, <= 1 câu và trùng từ >= 0.60).
+    """
+    if not prose or not user_prompt:
+        return False
+    cleaned = _strip_forbidden_closing_sentences(prose)
+    if len(cleaned) >= 220:
+        return False
+    sentences = _split_prose_sentences(cleaned)
+    if len(sentences) != 1:
+        return False
+    p_tokens = set(_tokenize_words_simple(cleaned))
+    u_tokens = set(_tokenize_words_simple(normalize_user_input(user_prompt)))
+    if not p_tokens or not u_tokens:
+        return False
+    overlap = len(p_tokens & u_tokens) / max(1, len(p_tokens))
+    return overlap >= 0.60
+
+
+def _is_bare_timestamp_line(line_text: str) -> bool:
+    """Kiểm tra một dòng chỉ gồm các thẻ <timestamp ...>...</timestamp> và ký tự phân tách '|'/khoảng trắng."""
+    if not line_text or "<timestamp" not in line_text.lower():
+        return False
+    # Kiểm tra chỉ có thẻ <timestamp ...>...</timestamp> và không có văn bản ngoài thẻ (trừ khoảng trắng và '|')
+    idx = 0
+    low = line_text.lower()
+    outside_parts: List[str] = []
+    has_tag = False
+    while idx < len(line_text):
+        start = low.find("<timestamp", idx)
+        if start == -1:
+            outside_parts.append(line_text[idx:])
+            break
+        outside_parts.append(line_text[idx:start])
+        gt_idx = line_text.find(">", start)
+        end = low.find("</timestamp>", start)
+        if gt_idx == -1 or end == -1 or gt_idx >= end:
+            return False
+        if "sec=" not in low[start:gt_idx]:
+            return False
+        has_tag = True
+        idx = end + len("</timestamp>")
+    if not has_tag:
+        return False
+    outside_clean = "".join(outside_parts).replace("|", "").strip()
+    return outside_clean == ""
+
+
+def _is_bare_timestamp_prefix(line_text: str) -> bool:
+    """Kiểm tra đoạn đầu dòng vẫn có thể là một dòng bare timestamp hợp lệ đang stream dở."""
+    stripped = line_text.lstrip(" \t")
+    if not stripped:
+        return True
+    low = stripped.lower()
+    if len(low) < len("<timestamp"):
+        return "<timestamp".startswith(low)
+    if not low.startswith("<timestamp"):
+        return False
+    # Quét các cặp <timestamp ...>...</timestamp> hoàn chỉnh rồi kiểm phần dư
+    pos = 0
+    while pos < len(low):
+        while pos < len(low) and low[pos] in " \t|":
+            pos += 1
+        if pos >= len(low):
+            return True
+        rem = low[pos:]
+        if len(rem) < len("<timestamp"):
+            return "<timestamp".startswith(rem)
+        if not rem.startswith("<timestamp"):
+            return False
+        close_idx = low.find("</timestamp>", pos)
+        if close_idx == -1:
+            # Đang đọc dở nội dung bên trong thẻ <timestamp ...>...</timestamp>
+            return True
+        pos = close_idx + len("</timestamp>")
+    return True
+
+
+def has_trailing_socratic_question(
+    text: str,
+    window_chars: int = 320,
+    user_prompt: Optional[str] = None,
+) -> bool:
+    """Kiểm tra phần văn xuôi cuối (sau khi loại bỏ câu sáo rỗng & câu nhại) có dấu hỏi Socratic '?' hay không."""
     prose = extract_prose_outside_code_and_footer(text)
     if not prose:
         return False
-    tail = prose[-window_chars:] if len(prose) > window_chars else prose
+    cleaned_prose = _strip_forbidden_closing_sentences(prose)
+    if not cleaned_prose:
+        return False
+    if user_prompt and is_echo_only_prose(cleaned_prose, user_prompt):
+        return False
+    tail = cleaned_prose[-window_chars:] if len(cleaned_prose) > window_chars else cleaned_prose
     return "?" in tail
 
 
@@ -1067,12 +1268,12 @@ def build_socratic_closing_question(
 class StreamingSocraticFooterGuard:
     """
     Bộ bảo vệ Socratic '?' thời gian thực trên luồng SSE (0ms TTFT overhead):
-    - Chỉ đệm khi đầu dòng khớp tiền tố footer ('📍' hoặc 'Mốc video bài giảng') hoặc fence ('```' / '~~~').
+    - Chỉ đệm khi đầu dòng khớp tiền tố footer ('📍', 'Mốc video bài giảng', hoặc dòng bare <timestamp>) hoặc fence ('```' / '~~~').
     - Hỗ trợ phát hiện footer giữa dòng (Edge Case A), hàng rào tilde/biến độ dài (Edge Case B),
       và tự động đóng fence bị cắt cụt trong flush() (Edge Case D).
-    - Nếu LLM tự phát footer mà quên đặt câu hỏi '?' ở phần văn xuôi trước đó,
-      tự động chèn đúng 1 câu hỏi Socratic ngay TRƯỚC dòng footer.
-    - Nếu LLM kết thúc luồng mà không có '?' ở cuối văn xuôi, chèn trước footer fallback.
+    - Tự động loại bỏ các câu kết sáo rỗng trong forbidden_closing_prefixes (manifest) trước khi chèn '?'.
+    - Hỗ trợ hold_footer_until_flush để giữ footer '📍' cho tới khi xác nhận có <timestamp> hợp lệ (chống dangling '📍')
+      và cho phép chạy corrective continuation trên cùng pipeline khi phát hiện câu trả lời chỉ nhại câu hỏi.
     """
     FOOTER_PREFIXES: Tuple[str, ...] = ("📍", "mốc video bài giảng")
     MID_FOOTER_CANDIDATES: Tuple[str, ...] = (
@@ -1082,8 +1283,19 @@ class StreamingSocraticFooterGuard:
         "**mốc video bài giảng",
     )
 
-    def __init__(self, fallback_question: str):
+    def __init__(
+        self,
+        fallback_question: str,
+        *,
+        user_prompt: Optional[str] = None,
+        valid_secs: Optional[set] = None,
+        hold_footer_until_flush: bool = False,
+    ):
         self.fallback_question = fallback_question
+        self.user_prompt = user_prompt
+        self.valid_secs = valid_secs
+        self.hold_footer_until_flush = hold_footer_until_flush
+
         self.emitted_text = ""
         self._at_line_start = True
         self._line_buf = ""
@@ -1094,17 +1306,128 @@ class StreamingSocraticFooterGuard:
         self._has_seen_footer = False
         self._inserted_question = False
 
-    def _emit_chunk(self, text: str, out: List[str]) -> None:
-        if text:
+        self._held_footer_buf: str = ""
+        self._saved_held_footer_buf: str = ""
+        self._suppress_fallback: bool = False
+
+        # Bộ đệm lọc câu kết sáo rỗng (chỉ giữ tiền tố/câu ngắn đang khớp manifest)
+        self._closing_prefixes: Tuple[str, ...] = _load_forbidden_closing_prefixes()
+        self._closing_buf: str = ""
+        self._closing_matched_prefix: bool = False
+        self._at_sentence_start: bool = True
+        self._pending_sentence_start: bool = False
+
+    def _raw_emit(self, text: str, out: List[str]) -> None:
+        if not text:
+            return
+        if self.hold_footer_until_flush and self._has_seen_footer:
+            self._held_footer_buf += text
+        else:
             out.append(text)
             self.emitted_text += text
+
+    def _emit_chunk(self, text: str, out: List[str]) -> None:
+        """Phát văn bản qua bộ lọc câu kết sáo rỗng nếu đang ở phần prose trước footer."""
+        if not text:
+            return
+        if self._in_code_fence or self._has_seen_footer:
+            self._raw_emit(text, out)
+            return
+        self._emit_prose_text(text, out)
+
+    def _flush_closing_buf(self, out: List[str], *, force_keep: bool = False) -> None:
+        if self._closing_buf:
+            buf = self._closing_buf
+            self._closing_buf = ""
+            self._closing_matched_prefix = False
+            if force_keep or not _is_forbidden_closing_sentence(buf, self._closing_prefixes):
+                self._raw_emit(buf, out)
+                last_ch = buf[-1]
+                self._pending_sentence_start = last_ch in ".!?"
+                self._at_sentence_start = last_ch == "\n"
+            else:
+                self._at_sentence_start = True
+                self._pending_sentence_start = False
+
+    def _emit_prose_text(self, text: str, out: List[str]) -> None:
+        for ch in text:
+            if self._closing_buf:
+                self._closing_buf += ch
+                if ch in (".", "!", "?", "\n") or len(self._closing_buf) > 120:
+                    buf = self._closing_buf
+                    self._closing_buf = ""
+                    self._closing_matched_prefix = False
+                    if ch in (".", "!", "?", "\n") and _is_forbidden_closing_sentence(buf, self._closing_prefixes):
+                        self._at_sentence_start = True
+                        self._pending_sentence_start = False
+                        if ch == "\n" and self.emitted_text and not self.emitted_text.endswith("\n\n"):
+                            self._raw_emit("\n", out)
+                    else:
+                        self._raw_emit(buf, out)
+                        self._pending_sentence_start = ch in ".!?"
+                        self._at_sentence_start = ch == "\n"
+                    continue
+
+                if self._closing_matched_prefix:
+                    continue
+
+                cand = self._closing_buf.lower()
+                if any(
+                    cand.startswith(p) and (len(cand) == len(p) or cand[len(p)] in " \t,.:;!?-–—\"'")
+                    for p in self._closing_prefixes
+                ):
+                    self._closing_matched_prefix = True
+                    continue
+
+                if any(p.startswith(cand) for p in self._closing_prefixes):
+                    continue
+
+                buf = self._closing_buf
+                self._closing_buf = ""
+                self._raw_emit(buf, out)
+                self._pending_sentence_start = ch in ".!?"
+                self._at_sentence_start = ch == "\n"
+                continue
+
+            if self._at_sentence_start:
+                if ch in (" ", "\t", "\n"):
+                    self._raw_emit(ch, out)
+                    continue
+                if (
+                    ch.isalpha()
+                    and self._closing_prefixes
+                    and any(p.startswith(ch.lower()) for p in self._closing_prefixes)
+                ):
+                    self._closing_buf = ch
+                    self._closing_matched_prefix = False
+                    self._at_sentence_start = False
+                    self._pending_sentence_start = False
+                    continue
+                self._at_sentence_start = False
+                self._pending_sentence_start = ch in ".!?"
+                self._raw_emit(ch, out)
+                continue
+
+            if self._pending_sentence_start:
+                if ch in (" ", "\t", "\n"):
+                    self._raw_emit(ch, out)
+                    self._pending_sentence_start = False
+                    self._at_sentence_start = True
+                    continue
+                self._pending_sentence_start = False
+
+            if ch in ".!?":
+                self._pending_sentence_start = True
+            elif ch == "\n":
+                self._at_sentence_start = True
+            self._raw_emit(ch, out)
 
     def _ensure_question_before_footer(self, out: List[str]) -> None:
         if self._inserted_question or self._has_seen_footer:
             return
         if not self.emitted_text.strip():
             return
-        if has_trailing_socratic_question(self.emitted_text):
+        if has_trailing_socratic_question(self.emitted_text, user_prompt=self.user_prompt):
             return
         sep = ""
         if self.emitted_text.endswith("\n\n"):
@@ -1113,8 +1436,16 @@ class StreamingSocraticFooterGuard:
             sep = "\n"
         else:
             sep = "\n\n"
-        self._emit_chunk(f"{sep}{self.fallback_question}\n\n", out)
+        self._raw_emit(f"{sep}{self.fallback_question}\n\n", out)
         self._inserted_question = True
+
+    def _enter_footer(self, out: List[str], *, prefix: str = "") -> None:
+        self._flush_closing_buf(out)
+        if not self.hold_footer_until_flush:
+            self._ensure_question_before_footer(out)
+        self._has_seen_footer = True
+        if prefix:
+            self._raw_emit(prefix, out)
 
     @staticmethod
     def _count_leading_fence_run(probe: str) -> Tuple[str, int]:
@@ -1146,7 +1477,7 @@ class StreamingSocraticFooterGuard:
 
     def _process_mid_line_char(self, char: str, out: List[str]) -> None:
         if self._in_code_fence or self._has_seen_footer:
-            self._emit_chunk(char, out)
+            self._raw_emit(char, out)
             if char == "\n":
                 self._at_line_start = True
             return
@@ -1155,28 +1486,26 @@ class StreamingSocraticFooterGuard:
             cand = self._mid_buf + char
             cand_low = cand.lower()
             if cand_low.lstrip("*") in self.FOOTER_PREFIXES:
-                self._ensure_question_before_footer(out)
-                self._has_seen_footer = True
-                self._emit_chunk(cand, out)
+                self._enter_footer(out)
+                self._raw_emit(cand, out)
                 self._mid_buf = ""
                 return
             if any(p.startswith(cand_low) for p in self.MID_FOOTER_CANDIDATES):
                 self._mid_buf = cand
                 return
-            self._emit_chunk(self._mid_buf, out)
+            self._emit_prose_text(self._mid_buf, out)
             self._mid_buf = ""
 
         ch_low = char.lower()
         if char == "📍":
-            self._ensure_question_before_footer(out)
-            self._has_seen_footer = True
-            self._emit_chunk(char, out)
+            self._enter_footer(out)
+            self._raw_emit(char, out)
             return
         if any(p.startswith(ch_low) for p in self.MID_FOOTER_CANDIDATES):
             self._mid_buf = char
             return
 
-        self._emit_chunk(char, out)
+        self._emit_prose_text(char, out)
         if char == "\n":
             self._at_line_start = True
 
@@ -1186,6 +1515,19 @@ class StreamingSocraticFooterGuard:
             if self._at_line_start:
                 self._line_buf += char
                 if char == "\n":
+                    probe_nl = self._line_buf.rstrip("\r\n").lstrip(" \t")
+                    if (
+                        not self._in_code_fence
+                        and not self._has_seen_footer
+                        and self.valid_secs
+                        and _is_bare_timestamp_line(probe_nl)
+                    ):
+                        self._enter_footer(out, prefix="📍 **Mốc video bài giảng:** ")
+                        self._raw_emit(self._line_buf, out)
+                        self._line_buf = ""
+                        self._at_line_start = True
+                        continue
+
                     self._update_fence_state_from_complete_line(self._line_buf)
                     self._emit_chunk(self._line_buf, out)
                     self._line_buf = ""
@@ -1203,10 +1545,11 @@ class StreamingSocraticFooterGuard:
                         continue
                     if not self._in_code_fence:
                         if run_len >= 3 and (f_ch == "~" or "`" not in probe[run_len:]):
+                            self._flush_closing_buf(out)
                             self._in_code_fence = True
                             self._fence_char = f_ch
                             self._fence_len = run_len
-                            self._emit_chunk(self._line_buf, out)
+                            self._raw_emit(self._line_buf, out)
                             self._line_buf = ""
                             self._at_line_start = False
                             continue
@@ -1218,7 +1561,7 @@ class StreamingSocraticFooterGuard:
                         ):
                             # Chờ đến '\n' hoặc flush() để xác nhận dòng đóng fence hợp lệ
                             continue
-                        self._emit_chunk(self._line_buf, out)
+                        self._raw_emit(self._line_buf, out)
                         self._line_buf = ""
                         self._at_line_start = False
                         continue
@@ -1229,9 +1572,8 @@ class StreamingSocraticFooterGuard:
                     and not self._has_seen_footer
                     and any(probe_low.startswith(fp) for fp in self.FOOTER_PREFIXES)
                 ):
-                    self._ensure_question_before_footer(out)
-                    self._has_seen_footer = True
-                    self._emit_chunk(self._line_buf, out)
+                    self._enter_footer(out)
+                    self._raw_emit(self._line_buf, out)
                     self._line_buf = ""
                     self._at_line_start = False
                     continue
@@ -1244,6 +1586,18 @@ class StreamingSocraticFooterGuard:
                 if is_partial_footer:
                     continue
 
+                # Phát hiện dòng chỉ chứa bare <timestamp ...>...</timestamp> (không có '📍')
+                probe_ts = self._line_buf.lstrip(" \t")
+                if (
+                    not self._in_code_fence
+                    and not self._has_seen_footer
+                    and self.valid_secs
+                    and probe_ts.startswith("<")
+                    and len(self._line_buf) <= 450
+                    and _is_bare_timestamp_prefix(probe_ts)
+                ):
+                    continue
+
                 self._emit_chunk(self._line_buf, out)
                 self._line_buf = ""
                 self._at_line_start = False
@@ -1251,30 +1605,108 @@ class StreamingSocraticFooterGuard:
                 self._process_mid_line_char(char, out)
         return out
 
-    def flush(self) -> List[str]:
+    def flush_before_footer(self) -> List[str]:
+        """Xả hết phần prose/code đang đệm trước footer (chưa xả footer giữ tạm nếu hold_footer_until_flush=True)."""
         out: List[str] = []
         if self._mid_buf:
             self._emit_chunk(self._mid_buf, out)
             self._mid_buf = ""
         if self._line_buf:
-            self._update_fence_state_from_complete_line(self._line_buf)
-            self._emit_chunk(self._line_buf, out)
-            self._line_buf = ""
+            probe_eof = self._line_buf.rstrip("\r\n").lstrip(" \t")
+            if (
+                not self._in_code_fence
+                and not self._has_seen_footer
+                and self.valid_secs
+                and _is_bare_timestamp_line(probe_eof)
+            ):
+                self._enter_footer(out, prefix="📍 **Mốc video bài giảng:** ")
+                self._raw_emit(self._line_buf, out)
+                self._line_buf = ""
+            else:
+                self._update_fence_state_from_complete_line(self._line_buf)
+                self._emit_chunk(self._line_buf, out)
+                self._line_buf = ""
+        if not self._in_code_fence and not self._has_seen_footer:
+            self._flush_closing_buf(out)
         if self._in_code_fence:
             close_fence = (self._fence_char or "`") * max(3, self._fence_len or 3)
-            self._emit_chunk(f"\n{close_fence}", out)
+            self._raw_emit(f"\n{close_fence}", out)
             self._in_code_fence = False
             self._fence_char = ""
             self._fence_len = 0
-        if (
-            not self._has_seen_footer
-            and not self._inserted_question
-            and self.emitted_text.strip()
-            and not has_trailing_socratic_question(self.emitted_text)
-        ):
-            sep = "" if self.emitted_text.endswith("\n\n") else ("\n" if self.emitted_text.endswith("\n") else "\n\n")
-            self._emit_chunk(f"{sep}{self.fallback_question}", out)
-            self._inserted_question = True
+        return out
+
+    def prepare_for_continuation(self) -> List[str]:
+        """Bảo lưu footer giữ tạm từ lượt 1 (nếu có) và mở khóa để tiếp nhận token corrective continuation."""
+        out: List[str] = []
+        if "<timestamp" in self._held_footer_buf:
+            self._saved_held_footer_buf = self._held_footer_buf
+        self._held_footer_buf = ""
+        self._has_seen_footer = False
+        self._inserted_question = False
+        self._at_line_start = True
+        self._at_sentence_start = True
+        self._pending_sentence_start = False
+        self._closing_buf = ""
+        self._closing_matched_prefix = False
+        if self.emitted_text and not self.emitted_text.endswith("\n\n"):
+            sep = "\n" if self.emitted_text.endswith("\n") else "\n\n"
+            self._raw_emit(sep, out)
+        return out
+
+    def suppress_fallback_question(self) -> None:
+        """Tắt chèn câu hỏi fallback đóng hộp (Zero Fake Fallback khi echo continuation lỗi/timeout)."""
+        self._suppress_fallback = True
+
+    def flush_held_footer(self) -> List[str]:
+        """Chèn câu hỏi Socratic (nếu còn thiếu và không bị suppress) và xả footer hợp lệ duy nhất (nếu có <timestamp)."""
+        out: List[str] = []
+        if self.hold_footer_until_flush:
+            active_footer = ""
+            if "<timestamp" in self._held_footer_buf:
+                active_footer = self._held_footer_buf
+            elif "<timestamp" in self._saved_held_footer_buf:
+                active_footer = self._saved_held_footer_buf
+            self._held_footer_buf = ""
+            self._saved_held_footer_buf = ""
+
+            if (
+                not self._suppress_fallback
+                and not self._inserted_question
+                and self.emitted_text.strip()
+                and not has_trailing_socratic_question(self.emitted_text, user_prompt=self.user_prompt)
+            ):
+                sep = "" if self.emitted_text.endswith("\n\n") else ("\n" if self.emitted_text.endswith("\n") else "\n\n")
+                self._raw_emit_direct(f"{sep}{self.fallback_question}", out)
+                self._inserted_question = True
+
+            if active_footer:
+                cleaned_footer = active_footer.lstrip("\r\n")
+                sep = "" if (not self.emitted_text or self.emitted_text.endswith("\n\n")) else (
+                    "\n" if self.emitted_text.endswith("\n") else "\n\n"
+                )
+                self._raw_emit_direct(f"{sep}{cleaned_footer}", out)
+        else:
+            if (
+                not self._suppress_fallback
+                and not self._has_seen_footer
+                and not self._inserted_question
+                and self.emitted_text.strip()
+                and not has_trailing_socratic_question(self.emitted_text, user_prompt=self.user_prompt)
+            ):
+                sep = "" if self.emitted_text.endswith("\n\n") else ("\n" if self.emitted_text.endswith("\n") else "\n\n")
+                self._raw_emit_direct(f"{sep}{self.fallback_question}", out)
+                self._inserted_question = True
+        return out
+
+    def _raw_emit_direct(self, text: str, out: List[str]) -> None:
+        if text:
+            out.append(text)
+            self.emitted_text += text
+
+    def flush(self) -> List[str]:
+        out = self.flush_before_footer()
+        out.extend(self.flush_held_footer())
         return out
 
 
@@ -1285,7 +1717,7 @@ class StreamingOutputPipeline:
     2. StreamingInternalArtifactSanitizer (Khử lời chào lặp & nhãn nội bộ)
     3. StreamingTimestampSanitizer (Deterministic Timestamp Whitelist Guardrail)
     4. StreamingCodeSanitizer (Chống lộ #include, using namespace std, int main)
-    5. StreamingSocraticFooterGuard (Đảm bảo câu hỏi Socratic '?' trước footer)
+    5. StreamingSocraticFooterGuard (Đảm bảo câu hỏi Socratic '?' trước footer + lọc closer + giữ footer)
     """
 
     def __init__(
@@ -1294,7 +1726,10 @@ class StreamingOutputPipeline:
         valid_secs: Optional[set] = None,
         fallback_question: Optional[str] = None,
         forbid_video_opening: bool = False,
+        user_prompt: Optional[str] = None,
+        hold_footer_until_flush: bool = False,
     ):
+        self.user_prompt = user_prompt
         self.artifact_sanitizer = StreamingInternalArtifactSanitizer(
             forbid_video_opening=forbid_video_opening
         )
@@ -1303,7 +1738,12 @@ class StreamingOutputPipeline:
         )
         self.code_sanitizer = StreamingCodeSanitizer()
         self.socratic_guard: Optional[StreamingSocraticFooterGuard] = (
-            StreamingSocraticFooterGuard(fallback_question=fallback_question)
+            StreamingSocraticFooterGuard(
+                fallback_question=fallback_question,
+                user_prompt=user_prompt,
+                valid_secs=valid_secs,
+                hold_footer_until_flush=hold_footer_until_flush,
+            )
             if fallback_question
             else None
         )
@@ -1311,6 +1751,12 @@ class StreamingOutputPipeline:
     @property
     def inserted_fallback_question(self) -> bool:
         return bool(self.socratic_guard and self.socratic_guard._inserted_question)
+
+    def is_echo_only_prose(self, user_prompt: Optional[str] = None) -> bool:
+        prompt_to_check = user_prompt if user_prompt is not None else self.user_prompt
+        if not self.socratic_guard or not prompt_to_check:
+            return False
+        return is_echo_only_prose(self.socratic_guard.emitted_text, prompt_to_check)
 
     def _pipe_from_ts(self, tokens: List[str]) -> List[str]:
         out: List[str] = []
@@ -1335,7 +1781,7 @@ class StreamingOutputPipeline:
             out.extend(self._pipe_from_ts(self.ts_sanitizer.process(art_tok)))
         return out
 
-    def flush(self) -> List[str]:
+    def flush_before_footer(self) -> List[str]:
         out: List[str] = []
         for art_tok in self.artifact_sanitizer.flush():
             if art_tok:
@@ -1347,7 +1793,26 @@ class StreamingOutputPipeline:
             elif c_tok:
                 out.append(c_tok)
         if self.socratic_guard is not None:
-            out.extend(self.socratic_guard.flush())
+            out.extend(self.socratic_guard.flush_before_footer())
+        return out
+
+    def prepare_for_continuation(self) -> List[str]:
+        if self.socratic_guard is not None:
+            return self.socratic_guard.prepare_for_continuation()
+        return []
+
+    def suppress_fallback_question(self) -> None:
+        if self.socratic_guard is not None:
+            self.socratic_guard.suppress_fallback_question()
+
+    def flush_held_footer(self) -> List[str]:
+        if self.socratic_guard is not None:
+            return self.socratic_guard.flush_held_footer()
+        return []
+
+    def flush(self) -> List[str]:
+        out = self.flush_before_footer()
+        out.extend(self.flush_held_footer())
         return out
 
 
@@ -1356,12 +1821,14 @@ def apply_streaming_sanitizers(
     valid_secs: Optional[set] = None,
     fallback_question: Optional[str] = None,
     forbid_video_opening: bool = False,
+    user_prompt: Optional[str] = None,
 ) -> Tuple[str, bool]:
     """Áp dụng toàn bộ chuỗi StreamingOutputPipeline cho văn bản tĩnh (non-streaming callers)."""
     pipeline = StreamingOutputPipeline(
         valid_secs=valid_secs,
         fallback_question=fallback_question,
         forbid_video_opening=forbid_video_opening,
+        user_prompt=user_prompt,
     )
     chunks = pipeline.process(text) + pipeline.flush()
     return "".join(chunks), pipeline.inserted_fallback_question
@@ -1615,6 +2082,8 @@ class ChatService:
                 valid_secs=valid_secs,
                 fallback_question=fallback_socratic_q,
                 forbid_video_opening=(retrieval_status == "out_of_lesson" or is_nav_turn),
+                user_prompt=clean_prompt,
+                hold_footer_until_flush=True,
             )
 
             async for chunk in stream_response:
@@ -1626,8 +2095,72 @@ class ChatService:
                             "data": json.dumps({"content": s_tok})
                         }
 
-            # Xả các token còn lại trong bộ đệm cuối luồng theo đúng thứ tự pipeline
-            for s_tok in pipeline.flush():
+            # Xả các token prose/code trước footer
+            for s_tok in pipeline.flush_before_footer():
+                full_assistant_response += s_tok
+                yield {
+                    "event": "delta",
+                    "data": json.dumps({"content": s_tok})
+                }
+
+            # PC-04 Echo-Only Corrective Continuation (chạy tối đa 1 lượt nối tiếp qua CÙNG pipeline)
+            echo_continuation_failed = False
+            if (
+                retrieval_status == "grounded"
+                and final_state.get("retrieved_chunks")
+                and pipeline.is_echo_only_prose(clean_prompt)
+            ):
+                try:
+                    cont_messages = messages + [
+                        {"role": "assistant", "content": full_assistant_response.strip()},
+                        {
+                            "role": "user",
+                            "content": (
+                                "[CHỈ THỊ SỬA LỖI]: Câu trên mới chỉ lặp lại câu hỏi của học viên. "
+                                "Hãy đánh giá rõ đúng hay chưa đúng, giải thích bản chất kỹ thuật C++ "
+                                "trong 2–3 câu dựa trên ngữ cảnh bài giảng, và kết thúc bằng 1 câu hỏi "
+                                "Socratic MỚI có dấu ?. CẤM chào hỏi, CẤM tự sinh thẻ timestamp."
+                            ),
+                        },
+                    ]
+                    cont_stream = await self.client.chat.completions.create(
+                        model=settings.LLM_MODEL_NAME,
+                        messages=cont_messages,
+                        temperature=settings.LLM_TEMPERATURE,
+                        max_tokens=settings.LLM_MAX_TOKENS,
+                        presence_penalty=0.5,
+                        frequency_penalty=0.5,
+                        stop=["\n\n\n", "Học viên:", "Sinh viên:", "<|im_end|>"],
+                        stream=True,
+                        timeout=15.0,
+                    )
+                    for sep_tok in pipeline.prepare_for_continuation():
+                        full_assistant_response += sep_tok
+                        yield {
+                            "event": "delta",
+                            "data": json.dumps({"content": sep_tok})
+                        }
+                    async for c_chunk in cont_stream:
+                        if c_chunk.choices and c_chunk.choices[0].delta.content:
+                            for s_tok in pipeline.process(c_chunk.choices[0].delta.content):
+                                full_assistant_response += s_tok
+                                yield {
+                                    "event": "delta",
+                                    "data": json.dumps({"content": s_tok})
+                                }
+                    for s_tok in pipeline.flush_before_footer():
+                        full_assistant_response += s_tok
+                        yield {
+                            "event": "delta",
+                            "data": json.dumps({"content": s_tok})
+                        }
+                except Exception as cont_exc:
+                    echo_continuation_failed = True
+                    pipeline.suppress_fallback_question()
+                    logger.warning(f"[ChatService] Echo corrective continuation skipped/failed: {cont_exc}")
+
+            # Chèn câu hỏi Socratic (nếu còn thiếu) và xả footer '📍' hợp lệ duy nhất (nếu có <timestamp>)
+            for s_tok in pipeline.flush_held_footer():
                 full_assistant_response += s_tok
                 yield {
                     "event": "delta",
@@ -1655,7 +2188,8 @@ class ChatService:
                 }
 
             # Lưu vết câu trả lời hoàn chỉnh của Trợ giảng vào LangGraph Checkpointer
-            if full_assistant_response.strip():
+            # (Không ghi vào Checkpointer nếu phản hồi chỉ là echo-only thất bại continuation để tránh làm bẩn lịch sử)
+            if full_assistant_response.strip() and not echo_continuation_failed:
                 # Hàng rào bảo vệ lần 2: Đảm bảo 100% không lọt bất kỳ thẻ timestamp ảo giác nào vào DB
                 full_assistant_response = sanitize_timestamp_tags(full_assistant_response, valid_secs)
                 history_assistant_response = full_assistant_response

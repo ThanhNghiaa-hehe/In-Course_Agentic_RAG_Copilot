@@ -29,6 +29,13 @@ from app.agent.guardrails import (
 )
 from app.agent.router import get_intent_router
 from app.services.curriculum import get_curriculum_service
+from app.services.chat import (
+    _is_forbidden_closing_sentence,
+    _load_forbidden_closing_prefixes,
+    _split_prose_sentences,
+    has_trailing_socratic_question,
+    is_echo_only_prose,
+)
 
 CPP_LANGUAGE = Language(tscpp.language())
 _CPP_PARSER = Parser(CPP_LANGUAGE)
@@ -264,9 +271,25 @@ class TelemetryCriticService:
             merits.append("Minh họa cú pháp ngắn gọn, tuân thủ nguyên tắc không giải bài hộ.")
 
         # Kiểm tra câu hỏi gợi mở Socratic trên phần văn bản tự nhiên TRƯỚC footer '📍 Mốc video bài giảng:'
-        # (Loại trừ cả fenced code lẫn inline code `a ? b : c`)
+        # (Loại trừ cả fenced code, inline code `a ? b : c`, câu kết sáo rỗng & câu chỉ nhại lại đề)
         prose_before_footer = _extract_prose_before_timestamp_footer(response_text)
-        has_question = "?" in prose_before_footer
+        closing_prefixes = _load_forbidden_closing_prefixes()
+        has_forbidden_closer = any(
+            _is_forbidden_closing_sentence(sent, closing_prefixes)
+            for sent in _split_prose_sentences(prose_before_footer)
+        )
+        is_echo_only = (
+            intent == "course_query"
+            and is_echo_only_prose(prose_before_footer, clean_prompt)
+        )
+        if has_forbidden_closer:
+            warnings.append("Phát hiện câu kết sáo rỗng (forbidden_closing_prefixes) trong phản hồi.")
+            score -= 10
+        if is_echo_only:
+            warnings.append("Phản hồi chỉ nhại lại câu hỏi của học viên mà thiếu giải thích bản chất.")
+            score -= 20
+
+        has_question = has_trailing_socratic_question(response_text, user_prompt=clean_prompt)
         if has_question:
             merits.append("Có đặt câu hỏi gợi mở định hướng tư duy (Socratic Questioning).")
         elif intent == "course_query":
@@ -450,6 +473,7 @@ class TelemetryCriticService:
             "used_fast_path": used_fast_path,
             "is_intent_hijacked": is_intent_hijacked,
             "is_topic_intruded": is_topic_intruded,
+            "is_echo_only": is_echo_only,
             "multi_turn_intent_fidelity": multi_turn_intent_fidelity,
             "latency": {
                 "ttft_ms": ttft_ms,

@@ -1302,6 +1302,11 @@ class RetrievalService:
             logger.debug(f"[RetrievalService] Lỗi tra cứu sớm curriculum_matched_seq: {c_err}")
 
         explicit_seq = c_svc._extract_lesson_seq(query_text)
+        excluded_seqs = c_svc.extract_excluded_lesson_seqs(query_text) if hasattr(c_svc, "extract_excluded_lesson_seqs") else set()
+        if excluded_seqs and curriculum_matched_seq is not None and int(curriculum_matched_seq) in excluded_seqs:
+            curriculum_matched_seq = None
+            curriculum_matched_lesson = None
+            curriculum_matched_course = None
         time_ref: Optional[Dict[str, Any]] = None
         try:
             if hasattr(c_svc, "extract_video_time_reference"):
@@ -1792,10 +1797,17 @@ class RetrievalService:
             )
         )
         if not is_curriculum_navigation and not has_intro_overview_only and not (is_future_curriculum_target and not specific_ast_items) and has_high_confidence_video_grounding:
+            min_ast_gate = max(effective_code_threshold, settings.MODALITY_GATE_AST_THRESHOLD)
             eligible_code_items = [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
-                and it.get("confidence_score", 0.0) >= 0.15
+                and (
+                    it.get("confidence_score", 0.0) >= min_ast_gate
+                    or (
+                        it.get("confidence_score", 0.0) >= 0.15
+                        and int(it.get("lesson_seq") or 0) == int(current_lesson_seq)
+                    )
+                )
             ]
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,
@@ -2044,10 +2056,17 @@ class RetrievalService:
 
         is_raw_valid = (max_raw_prob >= 0.19) or (max_raw_prob >= settings.VIDEO_FALLBACK_MIN_THRESHOLD and max_video_score >= 0.25)
         if (valid_video_items or valid_ast_items) and is_raw_valid:
+            min_ast_gate = max(effective_code_threshold, settings.MODALITY_GATE_AST_THRESHOLD)
             eligible_code_items = valid_ast_items if valid_ast_items else [
                 it for it in candidate_items
                 if it.get("content_type") == "code_ast"
-                and it.get("confidence_score", 0.0) >= 0.15
+                and (
+                    it.get("confidence_score", 0.0) >= min_ast_gate
+                    or (
+                        it.get("confidence_score", 0.0) >= 0.15
+                        and int(it.get("lesson_seq") or 0) == int(current_lesson_seq)
+                    )
+                )
             ]
             anchor_candidates = assemble_balanced_modality(
                 video_items=valid_video_items,

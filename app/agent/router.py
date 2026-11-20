@@ -294,6 +294,7 @@ class IntentRouter:
         self._sys_proto_matrix: Optional[np.ndarray] = None
         self._ack_proto_matrix: Optional[np.ndarray] = None
         self._curriculum_nav_proto_matrix: Optional[np.ndarray] = None
+        self._curriculum_nav_folded_proto_matrix: Optional[np.ndarray] = None
 
         # 1. Nạp Fast-Path SLM ONNX INT8 Router (Temperature-Scaled T*)
         slm_path = PROJECT_ROOT / "app" / "agent" / "models" / "slm_router_int8.onnx"
@@ -325,6 +326,15 @@ class IntentRouter:
             return ""
         normalized = unicodedata.normalize("NFC", text.strip())
         return " ".join(normalized.split())
+
+    @staticmethod
+    def _fold_vietnamese_accents(text: str) -> str:
+        """Loại bỏ dấu thanh tiếng Việt (Zero Regex) phục vụ đối chiếu điều hướng khi người dùng gõ thiếu dấu."""
+        if not text:
+            return ""
+        decomposed = unicodedata.normalize("NFD", text.lower())
+        stripped = "".join(ch for ch in decomposed if unicodedata.category(ch) != "Mn")
+        return stripped.replace("đ", "d")
 
     def is_code_solicitation(self, prompt: str) -> bool:
         """Nhận diện yêu cầu xin code hoàn chỉnh / giải bài tập hộ nạp từ router_intent_manifest.json (0% Hardcode)."""
@@ -381,11 +391,13 @@ class IntentRouter:
             except Exception as e:
                 logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận acknowledgment prototypes ({e}).")
 
-        # 3. Curriculum Navigation Prototypes
+        # 3. Curriculum Navigation Prototypes (gồm cả bản không dấu cho câu hỏi mất dấu)
         nav_protos = self._manifest_data.get("curriculum_navigation_prototypes", [])
         if nav_protos and self._curriculum_nav_proto_matrix is None:
             try:
                 self._curriculum_nav_proto_matrix = emb_svc.embed_queries_dense_batch(nav_protos)
+                folded_nav_protos = [self._fold_vietnamese_accents(p) for p in nav_protos]
+                self._curriculum_nav_folded_proto_matrix = emb_svc.embed_queries_dense_batch(folded_nav_protos)
             except Exception as e:
                 logger.warning(f"[IntentRouter] Không thể khởi tạo ma trận curriculum navigation prototypes ({e}).")
 
@@ -531,6 +543,24 @@ class IntentRouter:
 
         nav_sigs = self._manifest_data.get("curriculum_navigation_signatures", [])
         has_nav_sig = any(sig in lower_p for sig in nav_sigs)
+        folded_p = " ".join(
+            "".join(c if c.isalnum() else " " for c in self._fold_vietnamese_accents(lower_p)).split()
+        )
+        has_folded_sig = any(
+            f" {self._fold_vietnamese_accents(sig)} " in f" {folded_p} "
+            for sig in nav_sigs
+        )
+
+        # Câu hỏi tìm đoạn trong video bài học hiện tại (PC-01: "khoảng phút bao nhiêu...", "đoạn nào trong bài...")
+        # hoặc câu hỏi so sánh hai bài học ("bài này khác bài 11 chỗ nào")
+        # KHÔNG phải điều hướng chuyển bài học trừ khi có chữ ký hỏi bài nào/bài mấy tường minh.
+        if not has_nav_sig and not has_folded_sig:
+            from app.services.curriculum import get_curriculum_service
+            curr_svc = get_curriculum_service()
+            if curr_svc.is_video_section_seeking_query(clean_p):
+                return (False, 0.0)
+            if curr_svc.is_lesson_comparison_query(clean_p) and curr_svc.extract_requested_nav_seq_raw(clean_p) is None:
+                return (False, 0.0)
 
         self._ensure_chitchat_prototypes()
         if self._curriculum_nav_proto_matrix is None or len(self._curriculum_nav_proto_matrix) == 0:
@@ -548,13 +578,44 @@ class IntentRouter:
             # Cổng cách ly tương phản: Không nhận diện nhầm câu chào hỏi xã giao hoặc hỏi danh tính/sư phạm
             sim_soc = self.get_pure_social_similarity(clean_p)
             sim_sys = self.get_system_identity_similarity(clean_p, query_vec=qv)
-            if sim_soc >= settings.ROUTER_PURE_SOCIAL_THRESHOLD or sim_sys >= 0.88:
+            if sim_sys >= 0.88:
                 return (False, max_sim)
+
+            has_domain = self.has_domain_entity(clean_p)
+            has_curriculum_topic_cached: Optional[bool] = True if has_domain else None
+
+            def _has_curriculum_topic() -> bool:
+                nonlocal has_curriculum_topic_cached
+                if has_curriculum_topic_cached is None:
+                    from app.services.curriculum import get_curriculum_service
+                    has_curriculum_topic_cached = bool(
+                        get_curriculum_service().semantic_search_lessons(clean_p, top_k=1, min_similarity=0.80)
+                    )
+                return has_curriculum_topic_cached
+
+            if sim_soc >= settings.ROUTER_PURE_SOCIAL_THRESHOLD and not has_domain:
+                if not (has_folded_sig and _has_curriculum_topic()):
+                    return (False, max_sim)
+
             if not has_nav_sig and max_sim <= max(sim_soc, sim_sys) + 0.02:
+                # Cho phép cứu xét tiếp nếu khớp chữ ký điều hướng bỏ dấu + có chủ đề giáo trình
+                folded_sim = max_sim
+                if has_folded_sig and self._curriculum_nav_folded_proto_matrix is not None:
+                    folded_sim = max(max_sim, float(np.max(np.dot(self._curriculum_nav_folded_proto_matrix, qv))))
+                if has_folded_sig and folded_sim >= 0.82 and _has_curriculum_topic():
+                    return (True, folded_sim)
                 return (False, max_sim)
 
             if has_nav_sig:
                 return (max_sim >= 0.78, max_sim)
+
+            # Kiểm tra nhánh gõ thiếu dấu thanh tiếng Việt (vd: "có bai học nào về con trỏ không")
+            if has_folded_sig:
+                folded_sim = max_sim
+                if self._curriculum_nav_folded_proto_matrix is not None:
+                    folded_sim = max(max_sim, float(np.max(np.dot(self._curriculum_nav_folded_proto_matrix, qv))))
+                if folded_sim >= 0.82 and _has_curriculum_topic():
+                    return (True, folded_sim)
 
             # Khi không có chữ ký từ vựng tường minh (câu hỏi diễn đạt tự nhiên):
             # Yêu cầu độ tương đồng vector E5 cao (>= 0.875) hoặc đồng thuận với CurriculumService.is_navigation_query (>= 0.865)
@@ -574,17 +635,29 @@ class IntentRouter:
         """
         Kiểm tra xem văn bản có chứa thực thể kỹ thuật C++ từ bilingual_entity_mappings hay không.
         Zero Regex, Data-Driven hoàn toàn từ router_intent_manifest.json (Mục 5.2 - Nhịp 1B).
+        Hỗ trợ nhận diện cụm từ kỹ thuật đa từ khi gõ thiếu dấu tiếng Việt (vd: 'con tro', 'vong lap').
         """
         clean_text = self._normalize_text(prompt).lower()
         if not clean_text:
             return False
+
+        folded_text = " ".join(
+            "".join(c if c.isalnum() else " " for c in self._fold_vietnamese_accents(clean_text)).split()
+        )
+        padded_folded = f" {folded_text} "
 
         entity_maps = self._manifest_data.get("bilingual_entity_mappings", {})
         for entity_key, synonyms in entity_maps.items():
             if entity_key in clean_text:
                 return True
             for syn in synonyms:
-                if syn.lower() in clean_text:
+                syn_low = syn.lower()
+                if syn_low in clean_text:
+                    return True
+                folded_syn = " ".join(
+                    "".join(c if c.isalnum() else " " for c in self._fold_vietnamese_accents(syn_low)).split()
+                )
+                if len(folded_syn.split()) >= 2 and f" {folded_syn} " in padded_folded:
                     return True
         return False
 
@@ -637,6 +710,33 @@ class IntentRouter:
         words = clean_p.split()
         if len(words) <= 7 and clean_p.endswith("?") and not self.has_domain_entity(clean_p):
             return True
+
+        # 3. Discourse Elaboration / Clarification Follow-ups (Data-Driven Manifest, Zero Substring Leakage)
+        # Chỉ kích hoạt khi toàn bộ từ còn lại ngoài chữ ký đào sâu là hư từ lịch sự hoặc anaphora (chặn "nấu mì chi tiết hơn")
+        elab_sigs = self._manifest_data.get("follow_up_elaboration_signatures", [])
+        if elab_sigs and len(words) <= 8:
+            alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in clean_p.lower()).split())
+            padded_alpha = f" {alpha_clean} "
+            matched_elab = None
+            for sig in elab_sigs:
+                sig_norm = " ".join("".join(c if c.isalnum() else " " for c in sig.lower()).split())
+                if sig_norm and f" {sig_norm} " in padded_alpha:
+                    matched_elab = sig_norm
+                    break
+            if matched_elab:
+                residual_str = padded_alpha.replace(f" {matched_elab} ", " ").strip()
+                polite_particles = {
+                    "ạ", "nhé", "đi", "giúp", "giùm", "cho", "mình", "em", "tôi",
+                    "được", "không", "thầy", "bạn", "về", "nữa", "thêm", "cái",
+                    "phần", "đoạn", "chỗ", "lại", "nha", "nhỉ", "với", "hơn", "à",
+                }
+                anaphora_words = set()
+                for a_sig in anaphora_sigs:
+                    for tok in a_sig.lower().split():
+                        anaphora_words.add(tok)
+                residual_tokens = [t for t in residual_str.split() if t]
+                if all((t in polite_particles or t in anaphora_words) for t in residual_tokens):
+                    return True
 
         return False
 

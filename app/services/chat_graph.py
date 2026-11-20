@@ -68,6 +68,7 @@ class AgentState(TypedDict):
     is_course_query: bool
     search_query: Optional[str]
     last_course_query: Optional[str]
+    last_turn_intent: Optional[str]
     is_curriculum_navigation: bool
     is_overview_query: bool
 
@@ -83,6 +84,7 @@ class AgentState(TypedDict):
 
     # 4b. Điều hướng đàm thoại đa lượt (Conversational Navigation Agent)
     pending_navigation: Optional[Dict[str, Any]]
+    last_offered_lessons: Optional[List[Dict[str, Any]]]
     action: Optional[Dict[str, Any]]
 
     # 4c. Neo thời gian video đa lượt (Stateful Temporal Anchor Tracking)
@@ -213,14 +215,32 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     pending_nav = state.get("pending_navigation")
 
     # 0. Nhận diện Mệnh Lệnh Chuyển Bài Trực Tiếp (Conversational UI Action Dispatcher - Mục 3.2 & 4.1)
-    direct_nav_target = curr_svc.extract_direct_navigation_command(raw_prompt)
-    if direct_nav_target is not None:
+    requested_nav_seq = curr_svc.extract_requested_nav_seq_raw(raw_prompt)
+    if requested_nav_seq is not None:
+        if curr_svc.get_lesson_by_seq(requested_nav_seq) is None:
+            min_seq, max_seq = curr_svc.get_lesson_seq_bounds()
+            logger.info(
+                f"[LangGraph:router_node] Số bài {requested_nav_seq} nằm ngoài phạm vi manifest ({min_seq}..{max_seq})."
+            )
+            return {
+                "prompt": raw_prompt,
+                "intent": "out_of_scope",
+                "direct_response": (
+                    f"Giáo trình hiện tại chỉ gồm các bài học từ **Bài {min_seq}** đến **Bài {max_seq}**, "
+                    f"không có **Bài {requested_nav_seq}**. Bạn muốn chuyển đến số bài nào trong phạm vi từ Bài {min_seq} đến Bài {max_seq}?"
+                ),
+                "is_course_query": False,
+                "target_lesson_seq": None,
+                "last_turn_intent": "out_of_scope",
+                "action": None,
+                "pending_navigation": None,
+            }
         logger.info(
             f"[LangGraph:router_node] Nhận diện Mệnh Lệnh Chuyển Bài Trực Tiếp: "
-            f"'{raw_prompt}' -> target_lesson_seq={direct_nav_target}"
+            f"'{raw_prompt}' -> target_lesson_seq={requested_nav_seq}"
         )
         direct_resp = (
-            f"Đã rõ! Mình đang chuyển bạn sang **Bài {direct_nav_target}** "
+            f"Đã rõ! Mình đang chuyển bạn sang **Bài {requested_nav_seq}** "
             f"để bạn theo dõi video bài giảng ngay nhé! 🎬"
         )
         return {
@@ -228,26 +248,29 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             "intent": "confirm_navigation",
             "direct_response": direct_resp,
             "is_course_query": False,
-            "target_lesson_seq": direct_nav_target,
+            "target_lesson_seq": requested_nav_seq,
+            "last_turn_intent": "confirm_navigation",
+            "last_offered_lessons": [],
             "action": {
                 "type": "navigate_and_seek",
                 "action": "navigate_lesson",
-                "target_lesson_seq": direct_nav_target,
+                "target_lesson_seq": requested_nav_seq,
                 "sec": 0,
                 "label": "00:00"
             },
             "pending_navigation": None
         }
 
-    # Kiểm tra xác nhận đàm thoại đa lượt (Conversational Navigation Confirmation - Zero Regex NLI)
+    # Kiểm tra xác nhận đàm thoại hoặc mệnh lệnh hồi chỉ ('chuyển cho tôi đến bài đó') từ trạng thái có cấu trúc
+    is_anaphoric_nav = curr_svc.extract_anaphoric_navigation_command(raw_prompt)
     if pending_nav:
         is_confirmed, conf_score = router.check_confirmation(raw_prompt)
-        if is_confirmed:
+        if is_confirmed or is_anaphoric_nav:
             target_seq = pending_nav.get("lesson_seq")
             target_sec = pending_nav.get("sec", 0)
             target_lbl = pending_nav.get("label", "00:00")
             logger.info(
-                f"[LangGraph:router_node] Xác nhận chuyển bài thành công qua NLI ({conf_score*100:.1f}%): "
+                f"[LangGraph:router_node] Xác nhận chuyển bài thành công (NLI={conf_score*100:.1f}%, ana={is_anaphoric_nav}): "
                 f"Bài {target_seq} @ {target_lbl} ({target_sec}s)"
             )
             direct_resp = (
@@ -260,6 +283,8 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                 "direct_response": direct_resp,
                 "is_course_query": False,
                 "target_lesson_seq": target_seq,
+                "last_turn_intent": "confirm_navigation",
+                "last_offered_lessons": [],
                 "action": {
                     "type": "navigate_and_seek",
                     "action": "navigate_lesson",
@@ -271,6 +296,73 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             }
         else:
             logger.info("[LangGraph:router_node] Học viên đặt câu hỏi khác, tự động xóa pending_navigation.")
+    elif is_anaphoric_nav:
+        offered_lessons = state.get("last_offered_lessons") or []
+        if len(offered_lessons) == 1:
+            only_les = offered_lessons[0]
+            if isinstance(only_les, dict):
+                target_seq = only_les.get("seq")
+                target_sec = int(only_les.get("sec", 0) or 0)
+                target_lbl = only_les.get("label") or f"{target_sec // 60:02d}:{target_sec % 60:02d}"
+            else:
+                target_seq = int(only_les) if str(only_les).isdigit() else None
+                target_sec = 0
+                target_lbl = "00:00"
+            if target_seq is not None and curr_svc.get_lesson_by_seq(int(target_seq)) is not None:
+                logger.info(
+                    f"[LangGraph:router_node] Giải tham chiếu điều hướng hồi chỉ qua last_offered_lessons: Bài {target_seq}"
+                )
+                return {
+                    "prompt": raw_prompt,
+                    "intent": "confirm_navigation",
+                    "direct_response": (
+                        f"Đã rõ! Mình đang chuyển bạn sang **Bài {target_seq}** tại mốc **{target_lbl}** "
+                        f"để bạn theo dõi video bài giảng ngay nhé! 🎬"
+                    ),
+                    "is_course_query": False,
+                    "target_lesson_seq": int(target_seq),
+                    "last_turn_intent": "confirm_navigation",
+                    "last_offered_lessons": [],
+                    "action": {
+                        "type": "navigate_and_seek",
+                        "action": "navigate_lesson",
+                        "target_lesson_seq": int(target_seq),
+                        "sec": target_sec,
+                        "label": target_lbl,
+                    },
+                    "pending_navigation": None,
+                }
+        elif len(offered_lessons) > 1:
+            choices_lines = []
+            for item in offered_lessons:
+                if isinstance(item, dict):
+                    c_seq = item.get("seq")
+                    c_course_hint = item.get("course_id")
+                    c_title_hint = item.get("title")
+                else:
+                    c_seq = int(item) if str(item).isdigit() else None
+                    c_course_hint = None
+                    c_title_hint = None
+                les_obj = curr_svc.get_lesson_by_seq(int(c_seq), course_id=c_course_hint) if c_seq is not None else None
+                c_title = (les_obj or {}).get("title") or c_title_hint or f"Bài {c_seq}"
+                c_course = (les_obj or {}).get("course_id") or c_course_hint or ""
+                choices_lines.append(f"- **Bài {c_seq}** (khóa `{c_course}`): {c_title}")
+            clarify_resp = (
+                "Ở lượt trước có nhiều bài học liên quan được gợi ý trong giáo trình:\n\n"
+                + "\n".join(choices_lines)
+                + "\n\nBạn muốn mình chuyển thẳng đến số bài nào (ví dụ: *chuyển sang bài 57*)?"
+            )
+            return {
+                "prompt": raw_prompt,
+                "intent": "confirm_navigation",
+                "direct_response": clarify_resp,
+                "is_course_query": False,
+                "target_lesson_seq": None,
+                "last_turn_intent": "confirm_navigation",
+                "last_offered_lessons": offered_lessons,
+                "action": None,
+                "pending_navigation": None,
+            }
 
     # 1. Phân loại ý định thô qua Router Machine Learning
     raw_clf = router.classify(raw_prompt)
@@ -286,13 +378,28 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         and int(prev_saved_lesson) != int(curr_lesson)
     )
 
-    anchor_query = None if lesson_switched else state.get("last_course_query")
+    # Recency Gate: Chỉ giữ anchor_query khi lượt liền trước thực sự là course_query (tránh T1 -> T2 OOS -> T3 cứu nhầm)
+    prev_turn_intent = state.get("last_turn_intent")
+    recency_allows_anchor = True
+    if prev_turn_intent is not None:
+        recency_allows_anchor = (prev_turn_intent == "course_query")
+    elif history:
+        for m in reversed(history):
+            if m.get("role") == "user":
+                last_u = normalize_user_input(m.get("content", ""))
+                is_soc_last, _ = router.is_pure_social(last_u)
+                is_ack_last, _ = router.is_social_acknowledgment(last_u)
+                if is_soc_last or is_ack_last or not router.classify(last_u).is_course_query:
+                    recency_allows_anchor = False
+                break
+
+    anchor_query = None if (lesson_switched or not recency_allows_anchor) else state.get("last_course_query")
     if lesson_switched and state.get("last_course_query"):
         logger.info(
             f"[LangGraph:router_node] Phát hiện đổi bài học ({prev_saved_lesson} -> {curr_lesson}): "
             "đặt lại mỏ neo last_course_query cũ để chống rò rỉ chủ đề."
         )
-    if not anchor_query and history and not lesson_switched:
+    if not anchor_query and history and not lesson_switched and recency_allows_anchor:
         # Tìm câu hỏi user gần nhất trong history mà không phải là pure social greeting hay acknowledgment
         for m in reversed(history):
             if m.get("role") == "user":
@@ -317,6 +424,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             "is_course_query": False,
             "search_query": None,
             "last_course_query": anchor_query,
+            "last_turn_intent": "out_of_scope",
             "is_curriculum_navigation": False,
             "pending_navigation": None,
             "action": None,
@@ -349,6 +457,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             "is_course_query": False,
             "search_query": None,
             "last_course_query": anchor_query,  # Bảo toàn anchor cho các lượt học tập tiếp theo!
+            "last_turn_intent": "chit_chat",
             "is_curriculum_navigation": False,
             "pending_navigation": None,
             "action": None
@@ -389,6 +498,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             "is_course_query": True,
             "search_query": raw_prompt,
             "last_course_query": anchor_query,
+            "last_turn_intent": "course_query",
             "is_curriculum_navigation": True,
             "pending_navigation": None,
             "action": None
@@ -422,15 +532,17 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             "is_course_query": True,
             "search_query": search_query,
             "last_course_query": new_last_course_query,
+            "last_turn_intent": "course_query",
             "is_curriculum_navigation": False,
             "pending_navigation": None,
             "action": None
         }
     else:
         # raw_clf.is_course_query == False
-        # CHỈ gọi router.classify_contextual(raw_prompt, anchor_query) khi anchor_query tồn tại VÀ router.is_context_dependent(raw_prompt) là True!
+        # CHỈ gọi router.classify_contextual(raw_prompt, anchor_query) khi anchor_query tồn tại (đã qua Recency Gate) VÀ is_context_dependent là True!
         if (
             anchor_query
+            and recency_allows_anchor
             and not is_anchored_deictic_current
             and router.is_context_dependent(raw_prompt, anchor_query=anchor_query)
         ):
@@ -446,6 +558,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                     "is_course_query": True,
                     "search_query": search_query,
                     "last_course_query": new_last_course_query,
+                    "last_turn_intent": "course_query",
                     "is_curriculum_navigation": False,
                     "pending_navigation": None,
                     "action": None
@@ -455,18 +568,31 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         else:
             non_course_clf = raw_clf
 
-        # Bước 3b: In-Video Temporal NLI & SLM Gate — cứu câu hỏi mốc/đoạn video thiếu từ khóa C++
-        # ("phút thứ 6 nói về vấn đề gì", "còn phút thứ 6 thì sao", "đoạn này là sao")
-        # đồng thời vẫn chặn các câu đời sống chứa số phút/vị trí ("phút 6 trận bóng đá", "chỗ này quán ăn nào ngon").
-        if is_in_video_time_ref:
+        # Bước 3b: In-Video Temporal & 2-Slot Section-Seeking NLI Gate
+        # Cứu câu hỏi mốc/đoạn video thiếu từ khóa C++ ("phút thứ 6...", "khoảng phút bao nhiêu thì nói về lý thuyết")
+        # đồng thời chặn câu thể thao/đời sống và bảo vệ danh tính/xã giao (sim_sys < 0.88, not is_soc_ack, not is_pure_soc).
+        sim_sys = router.get_system_identity_similarity(raw_prompt)
+        is_section_seeking = (
+            curr_svc.is_video_section_seeking_query(raw_prompt)
+            and not is_curriculum_nav
+            and not is_soc_ack
+            and not is_pure_soc
+            and sim_sys < 0.88
+            and not curr_svc._names_other_lesson_topic(
+                raw_prompt,
+                current_lesson_seq=state.get("lesson_seq"),
+                preferred_course_id=state.get("course_id"),
+            )
+        )
+        if (is_in_video_time_ref or is_section_seeking) and not is_pure_soc and not is_soc_ack and sim_sys < 0.88:
             slm_probs = router._get_slm_probs(raw_prompt)
             p_oos = float(slm_probs[2]) if slm_probs is not None else 0.0
             if p_oos < 0.75:
                 is_in_video, offtopic_score = router._nli_arbiter.verify_in_video_temporal_query(raw_prompt)
                 if is_in_video:
                     logger.info(
-                        f"[LangGraph:router_node] Bước 3b In-Video Temporal NLI Rescue: "
-                        f"'{raw_prompt[:40]}...' (P_oos={p_oos:.3f}, NLI_offtopic={offtopic_score:.3f}) -> course_query"
+                        f"[LangGraph:router_node] Bước 3b In-Video Temporal/Section NLI Rescue: "
+                        f"'{raw_prompt[:40]}...' (time_ref={is_in_video_time_ref}, section={is_section_seeking}, P_oos={p_oos:.3f}, NLI_offtopic={offtopic_score:.3f}) -> course_query"
                     )
                     return {
                         "prompt": raw_prompt,
@@ -475,6 +601,7 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                         "is_course_query": True,
                         "search_query": raw_prompt,
                         "last_course_query": raw_prompt,
+                        "last_turn_intent": "course_query",
                         "is_curriculum_navigation": False,
                         "pending_navigation": None,
                         "action": None
@@ -487,7 +614,8 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
             "direct_response": non_course_clf.direct_response,
             "is_course_query": False,
             "search_query": None,
-            "last_course_query": anchor_query,  # Bảo toàn anchor cho tương lai
+            "last_course_query": anchor_query,  # Bảo toàn anchor nếu lượt sau cần kiểm tra
+            "last_turn_intent": non_course_clf.intent,
             "is_curriculum_navigation": False,
             "pending_navigation": None,
             "action": None
@@ -574,30 +702,31 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
             logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG khi tìm lộ trình: {e}")
             retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
     else:
-        # Bước 1: Truy xuất với raw_prompt trước để bảo toàn phân phối Cross-Encoder
-        try:
-            retrieval_res: RetrievalResult = await retrieval_service.hybrid_search(
-                query_text=raw_prompt,
-                course_id=state["course_id"],
-                current_lesson_seq=state["lesson_seq"],
-                top_candidates=settings.DEFAULT_TOP_CANDIDATES,
-                final_top_k=settings.DEFAULT_FINAL_TOP_K,
-                is_curriculum_navigation=False,
-                is_continuation_turn=is_cont_turn,
-                current_video_sec=effective_video_sec,
-            )
-        except Exception as e:
-            logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với raw_prompt: {e}")
-            retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
-
-        # Bước 2: Contextual Fallback nếu raw_prompt bị coverage_gap hoặc is_low_confidence và search_query != raw_prompt
-        if (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence) and search_query != raw_prompt:
-            logger.info(
-                f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}), "
-                f"kích hoạt Fallback với search_query: '{search_query[:45]}...'"
-            )
+        router = get_intent_router()
+        is_pure_followup = (
+            bool(search_query and search_query != raw_prompt)
+            and router.is_context_dependent(raw_prompt, anchor_query=anchor_query)
+            and (not router.has_domain_entity(raw_prompt))
+            and (time_ref is None)
+        )
+        if is_pure_followup:
+            if effective_video_sec is None:
+                s_time_ref = c_svc.extract_video_time_reference(search_query)
+                if (
+                    s_time_ref is not None
+                    and s_time_ref.get("kind") == "deictic_current"
+                    and state.get("last_video_sec") is not None
+                    and not isinstance(state.get("last_video_sec"), bool)
+                    and state.get("last_lesson_seq") == state.get("lesson_seq")
+                ):
+                    effective_video_sec = int(state["last_video_sec"])
+                    inherited_video_sec = effective_video_sec
+                    logger.info(
+                        f"[LangGraph:retrieval_node] Follow-up kế thừa neo thời gian: "
+                        f"inherited_video_sec={inherited_video_sec}s (Bài {state.get('lesson_seq')})"
+                    )
             try:
-                fallback_res: RetrievalResult = await retrieval_service.hybrid_search(
+                retrieval_res: RetrievalResult = await retrieval_service.hybrid_search(
                     query_text=search_query,
                     course_id=state["course_id"],
                     current_lesson_seq=state["lesson_seq"],
@@ -607,10 +736,47 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
                     is_continuation_turn=is_cont_turn,
                     current_video_sec=effective_video_sec,
                 )
-                if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
-                    retrieval_res = fallback_res
-            except Exception as fb_err:
-                logger.warning(f"[LangGraph:retrieval_node] Lỗi truy xuất Fallback Contextual: {fb_err}")
+            except Exception as e:
+                logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với pure follow-up: {e}")
+                retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
+        else:
+            # Bước 1: Truy xuất với raw_prompt trước để bảo toàn phân phối Cross-Encoder
+            try:
+                retrieval_res: RetrievalResult = await retrieval_service.hybrid_search(
+                    query_text=raw_prompt,
+                    course_id=state["course_id"],
+                    current_lesson_seq=state["lesson_seq"],
+                    top_candidates=settings.DEFAULT_TOP_CANDIDATES,
+                    final_top_k=settings.DEFAULT_FINAL_TOP_K,
+                    is_curriculum_navigation=False,
+                    is_continuation_turn=is_cont_turn,
+                    current_video_sec=effective_video_sec,
+                )
+            except Exception as e:
+                logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với raw_prompt: {e}")
+                retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
+
+            # Bước 2: Contextual Fallback nếu raw_prompt bị coverage_gap hoặc is_low_confidence và search_query != raw_prompt
+            if (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence) and search_query != raw_prompt:
+                logger.info(
+                    f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}), "
+                    f"kích hoạt Fallback với search_query: '{search_query[:45]}...'"
+                )
+                try:
+                    fallback_res: RetrievalResult = await retrieval_service.hybrid_search(
+                        query_text=search_query,
+                        course_id=state["course_id"],
+                        current_lesson_seq=state["lesson_seq"],
+                        top_candidates=settings.DEFAULT_TOP_CANDIDATES,
+                        final_top_k=settings.DEFAULT_FINAL_TOP_K,
+                        is_curriculum_navigation=False,
+                        is_continuation_turn=is_cont_turn,
+                        current_video_sec=effective_video_sec,
+                    )
+                    if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
+                        retrieval_res = fallback_res
+                except Exception as fb_err:
+                    logger.warning(f"[LangGraph:retrieval_node] Lỗi truy xuất Fallback Contextual: {fb_err}")
 
     return {
         "retrieved_chunks": retrieval_res.chunks,
@@ -906,13 +1072,14 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
 
             # Video Chapters Injection (khi grounded & hỏi vị trí/phân đoạn/tổng quan video bài hiện tại)
             lower_prompt = raw_prompt.lower()
-            section_markers = (
+            section_markers = tuple(getattr(c_svc, "_crag_section_markers", None) or (
                 "mục lục", "phân đoạn", "các phần", "mấy phần", "chia thành",
-                "phút mấy", "giây mấy", "đoạn nào", "phần nào", "khúc nào",
+                "phút bao nhiêu", "phút mấy", "giây bao nhiêu", "giây mấy",
+                "đoạn nào", "phần nào", "khúc nào",
                 "tóm tắt bài", "tóm tắt video", "nội dung video", "cấu trúc bài",
                 "timeline", "chapter",
-            )
-            has_section_marker = any(m in lower_prompt for m in section_markers)
+            ))
+            has_section_marker = any(m in lower_prompt for m in section_markers) or c_svc.is_video_section_seeking_query(raw_prompt)
             has_relative_segment_cue = any(cue in lower_prompt for cue in _RELATIVE_SEGMENT_CUES)
             time_ref = c_svc.extract_video_time_reference(raw_prompt)
             is_curr_lesson_chunks = (
@@ -1115,29 +1282,61 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
                     + "\n"
                 )
 
-        if not is_ambiguous and f_chunk and f_chunk.get("start_sec") is not None:
-            f_sec = int(f_chunk["start_sec"])
-            f_lbl = f_chunk.get("start_label", f"{f_sec//60:02d}:{f_sec%60:02d}")
-            suggested_timestamps.append({
-                "sec": f_sec,
-                "label": f_lbl,
-                "title": f_chunk.get("video_title", f"Bài {target_lesson_seq}"),
-                "lesson_seq": target_lesson_seq
-            })
+        new_offered_lessons: List[Dict[str, Any]] = []
+        if is_ambiguous and ambiguous_res.get("candidates"):
+            for cand in ambiguous_res.get("candidates", []):
+                c_seq = cand.get("seq")
+                if c_seq is None:
+                    continue
+                c_ts = c_svc.get_lesson_timestamps(int(c_seq))
+                c_sec = int(c_ts[0]["sec"]) if c_ts else 0
+                c_lbl = c_ts[0]["label"] if c_ts else "00:00"
+                new_offered_lessons.append({
+                    "course_id": cand.get("course_id", target_course),
+                    "seq": int(c_seq),
+                    "title": cand.get("title", f"Bài {c_seq}"),
+                    "sec": c_sec,
+                    "label": c_lbl,
+                })
+        elif not is_ambiguous and target_lesson_seq is not None:
+            if f_chunk and f_chunk.get("start_sec") is not None:
+                f_sec = int(f_chunk["start_sec"])
+                f_lbl = f_chunk.get("start_label", f"{f_sec//60:02d}:{f_sec%60:02d}")
+            else:
+                ts_fallback = c_svc.get_lesson_timestamps(int(target_lesson_seq))
+                f_sec = int(ts_fallback[0]["sec"]) if ts_fallback else 0
+                f_lbl = ts_fallback[0]["label"] if ts_fallback else "00:00"
+            t_les_obj = c_svc.get_lesson_by_seq(int(target_lesson_seq))
+            t_title_nav = (t_les_obj or {}).get("title") or (f_chunk or {}).get("video_title", f"Bài {target_lesson_seq}")
+            t_course_nav = (t_les_obj or {}).get("course_id") or target_course
+            if f_chunk and f_chunk.get("start_sec") is not None:
+                suggested_timestamps.append({
+                    "sec": f_sec,
+                    "label": f_lbl,
+                    "title": f_chunk.get("video_title", f"Bài {target_lesson_seq}"),
+                    "lesson_seq": target_lesson_seq
+                })
+                future_ts_info = (
+                    f"\n\n[MỐC VIDEO BÀI GIẢNG TƯƠNG LAI]\n"
+                    f"- Bài học giảng dạy: Bài {target_lesson_seq} (khóa {t_course_nav})\n"
+                    f"- Mốc thời gian: {f_lbl} (giây {f_sec})\n"
+                    f"- Thẻ click-to-seek bắt buộc chèn: <timestamp sec=\"{f_sec}\" lesson=\"{target_lesson_seq}\">{f_lbl}</timestamp>\n"
+                    f"- CHỈ THỊ ĐÀM THOẠI: Kết thúc câu trả lời bằng câu hỏi gợi mở: "
+                    f"\"Bạn có muốn mình chuyển sang Bài {target_lesson_seq} và mở ngay đoạn video này cho bạn không?\""
+                )
             new_pending_nav = {
-                "lesson_seq": target_lesson_seq,
+                "lesson_seq": int(target_lesson_seq),
                 "sec": f_sec,
                 "label": f_lbl,
-                "title": f_chunk.get("video_title", f"Bài {target_lesson_seq}")
+                "title": t_title_nav,
             }
-            future_ts_info = (
-                f"\n\n[MỐC VIDEO BÀI GIẢNG TƯƠNG LAI]\n"
-                f"- Bài học giảng dạy: Bài {target_lesson_seq} (khóa {target_course})\n"
-                f"- Mốc thời gian: {f_lbl} (giây {f_sec})\n"
-                f"- Thẻ click-to-seek bắt buộc chèn: <timestamp sec=\"{f_sec}\" lesson=\"{target_lesson_seq}\">{f_lbl}</timestamp>\n"
-                f"- CHỈ THỊ ĐÀM THOẠI: Kết thúc câu trả lời bằng câu hỏi gợi mở: "
-                f"\"Bạn có muốn mình chuyển sang Bài {target_lesson_seq} và mở ngay đoạn video này cho bạn không?\""
-            )
+            new_offered_lessons = [{
+                "course_id": t_course_nav,
+                "seq": int(target_lesson_seq),
+                "title": t_title_nav,
+                "sec": f_sec,
+                "label": f_lbl,
+            }]
 
         user_message_content = f"""[CÂU HỎI CỦA HỌC VIÊN]
 {raw_prompt}{context_linked_line}
@@ -1213,6 +1412,21 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
         "system_prompt": active_system_prompt,
         "user_message_content": user_message_content,
         "pending_navigation": new_pending_nav,
+        "last_offered_lessons": new_offered_lessons if retrieval_status == "out_of_lesson" else (
+            [
+                {
+                    "course_id": cand.get("course_id", state.get("course_id")),
+                    "seq": int(cand.get("seq")),
+                    "title": cand.get("title", ""),
+                    "sec": 0,
+                    "label": "00:00",
+                }
+                for cand in ambiguous_res.get("candidates", [])
+                if cand.get("seq") is not None
+            ]
+            if (is_ambiguous and ambiguous_res.get("candidates"))
+            else []
+        ),
         "last_video_sec": new_last_video_sec,
         "last_lesson_seq": new_last_lesson_seq,
         "prev_video_sec": prev_last_video_sec,
@@ -1328,7 +1542,7 @@ _OPENING_VIDEO_BOILERPLATE_PREFIXES = (
     "dựa vào đoạn video",
 )
 
-_CLOSING_FILLER_PREFIXES = (
+_DEFAULT_CLOSING_FILLER_PREFIXES = (
     "hy vọng thông tin",
     "hy vọng giải thích",
     "hy vọng câu trả lời",
@@ -1354,6 +1568,8 @@ _CLOSING_FILLER_PREFIXES = (
     "bạn có thêm câu hỏi",
     "bạn còn câu hỏi",
     "bạn còn thắc mắc gì",
+    "bạn đã hiểu",
+    "bạn hiểu được",
     "chúc bạn học tốt",
     "chúc em học tốt",
     "chúc bạn thực hành tốt",
@@ -1365,6 +1581,50 @@ _CLOSING_FILLER_PREFIXES = (
     "hãy cho tôi biết nhé",
     "hãy gửi cho tôi nhé",
 )
+
+
+def _get_closing_filler_prefixes() -> tuple:
+    try:
+        manifest_closers = get_intent_router()._manifest_data.get("forbidden_closing_prefixes")
+        if isinstance(manifest_closers, list) and manifest_closers:
+            return tuple(str(x).strip().lower() for x in manifest_closers if str(x).strip())
+    except Exception:
+        pass
+    return _DEFAULT_CLOSING_FILLER_PREFIXES
+
+
+_CLOSING_FILLER_PREFIXES = _get_closing_filler_prefixes()
+
+
+def _is_analogy_verification_query(prompt: str) -> bool:
+    """
+    Kiểm định 2 khe (Comparison Marker + Verification Tail) trên ranh giới token (Zero Regex)
+    để nhận diện câu hỏi học viên mượn ẩn dụ đời sống / xác nhận đúng-sai.
+    """
+    if not prompt:
+        return False
+    try:
+        slot_cfg = get_intent_router()._manifest_data.get("analogy_verification_2slot", {})
+    except Exception:
+        slot_cfg = {}
+    comp_markers = slot_cfg.get("comparison_markers") or ("giống như", "như là", "tức là", "hiểu là", "ví von")
+    tail_markers = slot_cfg.get("verification_tail_markers") or ("có đúng không", "có đúng k", "đúng không", "đúng k", "phải không", "phải k")
+    alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in prompt.lower()).split())
+    padded = f" {alpha_clean} "
+    has_comp = any(
+        f" {m_clean} " in padded
+        for m in comp_markers
+        for m_clean in [" ".join("".join(c if c.isalnum() else " " for c in str(m).lower()).split())]
+        if m_clean
+    )
+    if not has_comp:
+        return False
+    return any(
+        f" {t_clean} " in padded
+        for t in tail_markers
+        for t_clean in [" ".join("".join(c if c.isalnum() else " " for c in str(t).lower()).split())]
+        if t_clean
+    )
 
 _CPP_LOWER_START_KEYWORDS = (
     "int ", "void ", "double ", "float ", "char ", "bool ", "long ", "short ",
@@ -1868,13 +2128,22 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
             "và BẮT BUỘC kết thúc phần giải thích (ngay trước thẻ `<timestamp>`) bằng đúng 1 câu hỏi Socratic kiểm tra tư duy có dấu `?`."
         )
 
+    # Pedagogical Analogy / Verification Directive (tiêm vào user_message_content, giữ messages[0] tĩnh 100%)
+    if not is_out_of_lesson_or_nav and _is_analogy_verification_query(raw_prompt):
+        dynamic_user_extensions.append(
+            "[CHỈ THỊ ĐÁNH GIÁ MỆNH ĐỀ / ẨN DỤ]: Học viên đang kiểm chứng một ví dụ ẩn dụ hoặc nhận định đúng/sai. "
+            "Bắt buộc thực hiện đủ 3 bước: (1) Đánh giá rõ ví dụ/nhận định đó đúng hay chưa chính xác ở điểm nào, "
+            "(2) Giải thích bản chất kỹ thuật C++ tương ứng trong 2–3 câu ngắn gọn bám sát [NGỮ CẢNH BÀI GIẢNG], "
+            "(3) Kết thúc bằng ĐÚNG 1 câu hỏi Socratic MỚI có dấu `?` (TUYỆT ĐỐI CẤM chỉ lặp lại câu hỏi của học viên)."
+        )
+
     # Pedagogical Soft Nudge: Khích lệ tự suy luận ngắn gọn khi phiên kéo dài liên tục (CẤM tự sinh code mẫu dài & giữ bắt buộc dấu '?')
     if turn_count > settings.SOFT_NUDGE_TURN_TRIGGER:
         dynamic_user_extensions.append(
             "[HƯỚNG DẪN SƯ PHẠM ĐA LƯỢT]: Phiên học đã qua nhiều lượt trao đổi. "
-            "Hãy giữ câu trả lời thật cô đọng, TUYỆT ĐỐI KHÔNG tự viết thêm khối code C++ mẫu dài "
-            "hay chương trình chạy thử; hãy lồng ghép sự khích lệ thực hành trực tiếp vào "
-            "ĐÚNG 1 câu hỏi Socratic kiểm tra tư duy kết thúc bằng dấu `?` ở cuối câu trả lời (ngay trước thẻ `<timestamp>`), "
+            "Hãy trả lời trực diện bằng 2–4 câu giải thích bản chất (TUYỆT ĐỐI KHÔNG chỉ lặp lại câu hỏi của học viên, "
+            "TUYỆT ĐỐI KHÔNG tự viết thêm khối code C++ mẫu dài hay chương trình chạy thử); sau đó kết thúc bằng "
+            "ĐÚNG 1 câu hỏi Socratic MỚI kiểm tra tư duy kết thúc bằng dấu `?` (ngay trước thẻ `<timestamp>`), "
             "KHÔNG kết thúc bằng câu xã giao cảm thán (`nhé!`)."
         )
     elif (
@@ -1892,7 +2161,8 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
     ):
         dynamic_user_extensions.append(
             "[QUY TẮC ĐỊNH DẠNG ĐẦU RA BẮT BUỘC]: Đi thẳng vào nội dung chuyên môn (KHÔNG mở đầu bằng \"Chào bạn!\"), "
-            "và câu văn cuối cùng trước thẻ `<timestamp>` BẮT BUỘC là đúng 1 câu hỏi Socratic cụ thể kết thúc bằng dấu `?` "
+            "giải thích/đánh giá trực diện câu hỏi trong 2–4 câu (TUYỆT ĐỐI CẤM chỉ lặp lại câu hỏi của học viên), "
+            "và câu văn cuối cùng trước thẻ `<timestamp>` BẮT BUỘC là đúng 1 câu hỏi Socratic MỚI cụ thể kết thúc bằng dấu `?` "
             "(KHÔNG kết thúc bằng câu xã giao `nhé!`)."
         )
 
@@ -2055,6 +2325,8 @@ def reset_session_state(session_id: str) -> None:
         "last_course_query": None,
         "assembled_messages": [],
         "pending_navigation": None,
+        "last_offered_lessons": [],
+        "last_turn_intent": None,
         "action": None,
         "current_lesson_seq": None,
         "last_video_sec": None,

@@ -3,7 +3,7 @@
 
 **Tác giả:** Sinh viên Trần Thành Nghĩa (MSSV: `23DH112252`) — Khoa CNTT, HUFLIT  
 **Tập dữ liệu:** `multiturn_benchmark_dataset.json` (50 sessions, 222 turns)  
-**Thời gian thực thi:** 2026-11-14T01:12:58 ➔ 2026-11-14T01:40:51 (1672.51s)  
+**Thời gian thực thi:** 2026-11-20T18:09:55 ➔ 2026-11-20T18:17:22 (446.49s)  
 **Mã tài liệu:** `HUFLIT-RAG-MULTITURN-RESULTS-2026-V1`  
 
 ---
@@ -13,14 +13,14 @@
 | Chỉ Số Đo Lường Khoa Học | Kết Quả Thực Đo | Tiêu Chuẩn Mục Tiêu (Target) | Trạng Thái Thẩm Định |
 | :--- | :---: | :---: | :---: |
 | **1. Intent Classification Accuracy** | **98.65%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
-| **2. Retrieval Status Precision** | **98.2%** | $\ge 85.0\%$ | **ĐẠT (PASSED)** |
-| **3. Anaphora Resolution Rate (ARR)** | **98.94%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
+| **2. Retrieval Status Precision** | **91.44%** | $\ge 85.0\%$ | **ĐẠT (PASSED)** |
+| **3. Anaphora Resolution Rate (ARR)** | **97.87%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
 | **4. Socratic Refusal Precision (SRP)** | **100.0%** | **$100.0\%$** (Zero Code Leak) | **ĐẠT (PASSED)** |
-| **5a. Whitelist Timestamp Hit Rate (Strict WHR ±30s)** | **53.6%** | **$100.0\%$** (Single-Label WHR) | **CHƯA ĐẠT (FAILED)** |
-| **5b. Multi-Grounding Timestamp Safety Rate** | **99.1%** | $\ge 90.0\%$ (Tier 2 Multi-Grounding) | **ĐẠT (PASSED)** |
+| **5a. Whitelist Timestamp Hit Rate (Strict WHR ±30s)** | **52.7%** | **$100.0\%$** (Single-Label WHR) | **CHƯA ĐẠT (FAILED)** |
+| **5b. Multi-Grounding Timestamp Safety Rate** | **86.94%** | $\ge 90.0\%$ (Tier 2 Multi-Grounding) | **CHƯA ĐẠT (FAILED)** |
 | **6. Context Budget Compliance** | **100.0%** | **$100.0\%$** ($\le 2{,}400$ chars) | **ĐẠT (PASSED)** |
 
-> **Kỷ lục ngân sách ngữ cảnh:** Độ dài lịch sử lớn nhất quan sát được là **895 ký tự**, nằm hoàn toàn bên trong trần an toàn **2,400 ký tự** (ngăn chặn triệt để suy thoái KV Cache Attention Prefill).
+> **Kỷ lục ngân sách ngữ cảnh:** Độ dài lịch sử lớn nhất quan sát được là **894 ký tự**, nằm hoàn toàn bên trong trần an toàn **2,400 ký tự** (ngăn chặn triệt để suy thoái KV Cache Attention Prefill).
 
 ---
 
@@ -28,11 +28,11 @@
 
 | Thước Đo Độ Trễ | Thời Gian Thực Đo (ms) | Đánh Giá Hiệu Năng Thời Gian Thực |
 | :--- | :---: | :--- |
-| **Mean Latency (Trung bình)** | **7531.85 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
-| **P50 Latency (Median)** | **5794.86 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
-| **P95 Latency (Phân vị 95)** | **15022.88 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
-| **P99 Latency (Phân vị 99)** | **59136.04 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
-| **Max Latency (Cực đại)** | **138720.28 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
+| **Mean Latency (Trung bình)** | **2010.0 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
+| **P50 Latency (Median)** | **1938.64 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
+| **P95 Latency (Phân vị 95)** | **3952.02 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
+| **P99 Latency (Phân vị 99)** | **5324.28 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
+| **Max Latency (Cực đại)** | **5793.84 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
 
 ---
 
@@ -40,10 +40,10 @@
 
 | Phân Lớp (Tier) | Sessions | Turns | Intent Acc | Status Acc | Strict WHR (±30s) | Multi-Grounding TS | Budget Comp | ARR / SRP | P50 Latency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 100.0% | 100.0% | 55.0% | 100.0% | 100.0% | **ARR 100.0%** | 5332.7 ms |
-| **Tier 2: Socratic Refusal** | 15 | 60 | 100.0% | 100.0% | 53.33% | 100.0% | 100.0% | **SRP 100.0%** | 6771.82 ms |
-| **Tier 3: Topic Switching** | 10 | 42 | 92.86% | 92.86% | 54.76% | 95.24% | 100.0% | **--** | 5734.34 ms |
-| **Tier 4: Context Budget** | 10 | 60 | 100.0% | 98.33% | 51.67% | 100.0% | 100.0% | **--** | 6007.5 ms |
+| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 100.0% | 98.33% | 56.67% | 96.67% | 100.0% | **ARR 100.0%** | 1817.78 ms |
+| **Tier 2: Socratic Refusal** | 15 | 60 | 100.0% | 88.33% | 55.0% | 88.33% | 100.0% | **SRP 100.0%** | 2033.89 ms |
+| **Tier 3: Topic Switching** | 10 | 42 | 92.86% | 95.24% | 54.76% | 76.19% | 100.0% | **--** | 279.37 ms |
+| **Tier 4: Context Budget** | 10 | 60 | 100.0% | 85.0% | 45.0% | 83.33% | 100.0% | **--** | 3196.62 ms |
 
 ---
 

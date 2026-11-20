@@ -25,6 +25,7 @@ logger = logging.getLogger("uvicorn.error")
 MANIFEST_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "curriculum" / "lessons_manifest.json"
 BINDING_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "metadata" / "lesson_code_video_binding.json"
 EMBEDDINGS_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "curriculum" / "syllabus_embeddings.npz"
+ROUTER_MANIFEST_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "metadata" / "router_intent_manifest.json"
 
 
 def _normalize_text(text: str) -> str:
@@ -369,9 +370,42 @@ class CurriculumService:
         self._introductory_lesson_seqs: List[int] = []
         self._introductory_text_markers: List[str] = []
         self._exercise_statement_signatures: List[str] = []
+        self._exclusion_markers: List[str] = ["ngoài bài", "trừ bài", "không tính bài", "bên cạnh bài"]
+        self._comparison_cues: Tuple[str, ...] = ()
+        self._video_pos_wh_phrases: List[str] = []
+        self._video_lecture_verbs: List[str] = []
+        self._crag_section_markers: List[str] = []
+        self._anaphora_nav_tokens: Tuple[str, ...] = ("đó", "này", "đấy", "kia", "vừa rồi", "vừa nói", "vừa nêu", "trên", "mới nói")
         self._load_manifest()
+        self._load_router_rules()
         self._load_bindings()
         self._load_syllabus_embeddings()
+
+    def _load_router_rules(self) -> None:
+        """Nạp các luật/signatures tách rời dữ liệu từ router_intent_manifest.json."""
+        try:
+            if ROUTER_MANIFEST_PATH.exists():
+                with open(ROUTER_MANIFEST_PATH, "r", encoding="utf-8") as rf:
+                    rdata = json.load(rf)
+                excl = rdata.get("curriculum_exclusion_markers")
+                if isinstance(excl, list) and excl:
+                    self._exclusion_markers = [_normalize_text(x) for x in excl if _normalize_text(x)]
+                v2 = rdata.get("video_section_seeking_2slot", {})
+                if isinstance(v2, dict):
+                    self._video_pos_wh_phrases = [
+                        _normalize_text(x) for x in v2.get("position_wh_phrases", []) if _normalize_text(x)
+                    ]
+                    self._video_lecture_verbs = [
+                        _normalize_text(x) for x in v2.get("lecture_action_verbs", []) if _normalize_text(x)
+                    ]
+                csec = rdata.get("crag_section_markers")
+                if isinstance(csec, list) and csec:
+                    self._crag_section_markers = [_normalize_text(x) for x in csec if _normalize_text(x)]
+                ccues = rdata.get("lesson_comparison_cues")
+                if isinstance(ccues, list) and ccues:
+                    self._comparison_cues = tuple(_normalize_text(x) for x in ccues if _normalize_text(x))
+        except Exception as e:
+            logger.warning(f"[CurriculumService] Không thể nạp router_intent_manifest.json: {e}")
 
     def _load_manifest(self) -> None:
         """Nạp dữ liệu từ file JSON vào RAM."""
@@ -761,6 +795,13 @@ class CurriculumService:
 
         return False
 
+    def is_lesson_comparison_query(self, prompt: str) -> bool:
+        """Kiểm tra câu hỏi đang so sánh hai bài học thay vì yêu cầu chuyển bài (Data-Driven từ manifest)."""
+        norm_prompt = _normalize_text(normalize_user_input(prompt, preserve_newlines=False))
+        if not norm_prompt or not self._comparison_cues:
+            return False
+        return any(cue in norm_prompt for cue in self._comparison_cues)
+
     def is_navigation_query(
         self,
         prompt: str,
@@ -777,6 +818,10 @@ class CurriculumService:
             return False
 
         explicit_seq = self._extract_lesson_seq(norm_prompt)
+
+        # 0. Câu hỏi so sánh bài học ("bài này khác bài 11 chỗ nào", "so với bài 5") -> không phải lệnh chuyển bài
+        if self.is_lesson_comparison_query(clean_prompt) and self.extract_requested_nav_seq_raw(clean_prompt) is None:
+            return False
 
         # 1. Trực tiếp có số thứ tự bài học (ví dụ "bài 4", "lesson 4")
         if explicit_seq is not None:
@@ -835,29 +880,128 @@ class CurriculumService:
 
         return False
 
-    @staticmethod
-    def _extract_lesson_seq(prompt: str) -> Optional[int]:
-        """Trích xuất số thứ tự bài học từ câu hỏi bằng duyệt token thuần túy (Zero Regex)."""
-        words = [w.strip(".,;:?!'\"-") for w in prompt.lower().split()]
+    @classmethod
+    def _extract_lesson_refs(cls, prompt: str) -> Tuple[List[int], set]:
+        """
+        Phân tách số thứ tự bài học thành `(included_seqs, excluded_seqs)` bằng duyệt token thuần túy (Zero Regex).
+        Nhận diện cụm loại trừ từ manifest ('ngoài bài X', 'trừ bài X', 'không tính bài X', 'bên cạnh bài X')
+        để không bao giờ khóa nhầm bài bị loại trừ làm bài mục tiêu.
+        """
+        if not prompt:
+            return [], set()
+        try:
+            excl_markers = get_curriculum_service()._exclusion_markers
+        except Exception:
+            excl_markers = ["ngoài bài", "trừ bài", "không tính bài", "bên cạnh bài"]
+
+        words = [w.strip(".,;:?!'\"-") for w in _normalize_text(prompt).lower().split()]
+        included: List[int] = []
+        excluded: set = set()
+        n = len(words)
+
         for i, w in enumerate(words):
-            if w in ("bài", "lesson") and i + 1 < len(words):
+            if w in ("bài", "lesson") and i + 1 < n:
+                seq_val: Optional[int] = None
                 nxt = words[i + 1]
-                if nxt == "số" and i + 2 < len(words):
-                    cand = words[i + 2]
-                    if cand.isdigit():
-                        return int(cand)
+                if nxt == "số" and i + 2 < n and words[i + 2].isdigit():
+                    seq_val = int(words[i + 2])
                 elif nxt.isdigit():
-                    return int(nxt)
-        return None
+                    seq_val = int(nxt)
+                if seq_val is None:
+                    continue
+
+                prev1 = words[i - 1] if i >= 1 else ""
+                prev2 = f"{words[i - 2]} {words[i - 1]}" if i >= 2 else ""
+                ctx_before_1 = f"{prev1} bài" if prev1 else ""
+                ctx_before_2 = f"{prev2} bài" if prev2 else ""
+                is_excluded = any(
+                    em == ctx_before_1 or em == ctx_before_2
+                    for em in excl_markers
+                )
+                if is_excluded:
+                    excluded.add(seq_val)
+                else:
+                    included.append(seq_val)
+
+        return included, excluded
 
     @classmethod
-    def extract_direct_navigation_command(cls, prompt: str) -> Optional[int]:
+    def extract_excluded_lesson_seqs(cls, prompt: str) -> set:
+        """Trả về tập số thứ tự bài học nằm trong mệnh đề loại trừ ('ngoài bài X', 'trừ bài X', ...)."""
+        _, excluded = cls._extract_lesson_refs(prompt)
+        return excluded
+
+    @classmethod
+    def _strip_exclusion_clauses(cls, prompt: str) -> str:
+        """Loại bỏ cụm tham chiếu loại trừ ('ngoài bài 57 [ra]', 'trừ bài 11', ...) trước khi tách nhánh đa chủ đề (Zero Regex)."""
+        if not prompt:
+            return ""
+        try:
+            excl_markers = get_curriculum_service()._exclusion_markers
+        except Exception:
+            excl_markers = ["ngoài bài", "trừ bài", "không tính bài", "bên cạnh bài"]
+
+        words = _normalize_text(prompt).split()
+        cleaned_words = [w.strip(".,;:?!'\"-") for w in words]
+        n = len(words)
+        skip_indices = set()
+
+        for i, w in enumerate(cleaned_words):
+            if w in ("bài", "lesson") and i + 1 < n:
+                end_idx: Optional[int] = None
+                if cleaned_words[i + 1] == "số" and i + 2 < n and cleaned_words[i + 2].isdigit():
+                    end_idx = i + 2
+                elif cleaned_words[i + 1].isdigit():
+                    end_idx = i + 1
+                if end_idx is None:
+                    continue
+
+                prev1 = cleaned_words[i - 1] if i >= 1 else ""
+                prev2 = f"{cleaned_words[i - 2]} {cleaned_words[i - 1]}" if i >= 2 else ""
+                start_idx: Optional[int] = None
+                if f"{prev2} bài" in excl_markers and i >= 2:
+                    start_idx = i - 2
+                elif f"{prev1} bài" in excl_markers and i >= 1:
+                    start_idx = i - 1
+
+                if start_idx is not None:
+                    if end_idx + 1 < n and cleaned_words[end_idx + 1] == "ra":
+                        end_idx += 1
+                    for k in range(start_idx, end_idx + 1):
+                        skip_indices.add(k)
+
+        return " ".join(w for idx, w in enumerate(words) if idx not in skip_indices)
+
+    @classmethod
+    def _extract_lesson_seq(cls, prompt: str) -> Optional[int]:
+        """Trích xuất số thứ tự bài học mục tiêu (bỏ qua bài bị loại trừ) bằng duyệt token thuần túy (Zero Regex)."""
+        included, _ = cls._extract_lesson_refs(prompt)
+        return included[0] if included else None
+
+    def get_lesson_seq_bounds(self) -> Tuple[int, int]:
+        """Trả về khoảng (min_seq, max_seq) động từ manifest giáo trình hiện hành."""
+        seqs = [int(les.get("seq")) for les in self._all_lessons if les.get("seq") is not None]
+        if not seqs:
+            return (1, 1)
+        return (min(seqs), max(seqs))
+
+    def is_video_section_seeking_query(self, prompt: str) -> bool:
         """
-        Nhận diện mệnh lệnh điều khiển UI chuyển bài trực tiếp từ học viên (Zero Hardcoded Patterns).
-        Ví dụ: 'hãy chuyển giùm tôi đến bài 12', 'chuyển sang bài 5 giúp em', 'mở bài 10', 'tới bài 7', 'tua sang bài 12'.
-        Trả về target_lesson_seq hoặc None.
-        Nếu câu hỏi mang tính nghi vấn (chứa '?' hoặc từ để hỏi), trả về None để nhường quyền cho IntentRouter và RetrievalService.
+        Kiểm định 2 khe (Position WH Phrase + Lecture Action Verb) nhận diện câu hỏi
+        tìm mốc/phân đoạn nội dung trong video ('khoảng phút bao nhiêu thì nói về lý thuyết').
         """
+        if not prompt or not self._video_pos_wh_phrases or not self._video_lecture_verbs:
+            return False
+        padded = f" {_clean_alpha_space(_normalize_text(prompt))} "
+        has_pos_wh = any(f" {_clean_alpha_space(p)} " in padded for p in self._video_pos_wh_phrases)
+        if not has_pos_wh:
+            return False
+        has_lec_verb = any(f" {_clean_alpha_space(v)} " in padded for v in self._video_lecture_verbs)
+        return has_lec_verb
+
+    @classmethod
+    def extract_requested_nav_seq_raw(cls, prompt: str) -> Optional[int]:
+        """Trích xuất số bài được yêu cầu trong mệnh lệnh chuyển bài trực tiếp (kể cả ngoài biên để tầng trên từ chối)."""
         clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
         if not clean_prompt or "?" in clean_prompt:
             return None
@@ -875,15 +1019,55 @@ class CurriculumService:
 
         has_nav_action = any(v in norm for v in action_verbs)
         if has_nav_action:
-            words = [w.strip(".,;:?!'\"-") for w in norm.split()]
-            for i, w in enumerate(words):
-                if w in ("bài", "lesson") and i + 1 < len(words):
-                    nxt = words[i + 1]
-                    if nxt == "số" and i + 2 < len(words) and words[i + 2].isdigit():
-                        return int(words[i + 2])
-                    elif nxt.isdigit():
-                        return int(nxt)
+            included, _ = cls._extract_lesson_refs(norm)
+            if included:
+                return included[0]
         return None
+
+    @classmethod
+    def extract_direct_navigation_command(cls, prompt: str) -> Optional[int]:
+        """
+        Nhận diện mệnh lệnh điều khiển UI chuyển bài trực tiếp từ học viên (Zero Hardcoded Patterns).
+        Chỉ trả về target_lesson_seq khi số bài thực sự tồn tại trong lessons_manifest.json.
+        """
+        seq = cls.extract_requested_nav_seq_raw(prompt)
+        if seq is None:
+            return None
+        try:
+            curriculum_svc = get_curriculum_service()
+            if curriculum_svc.get_lesson_by_seq(seq) is None:
+                return None
+        except Exception:
+            pass
+        return seq
+
+    @classmethod
+    def extract_anaphoric_navigation_command(cls, prompt: str) -> bool:
+        """
+        Nhận diện mệnh lệnh chuyển bài hồi chỉ không chứa chữ số ('chuyển cho tôi đến bài đó', 'mở bài vừa nói').
+        """
+        clean_prompt = normalize_user_input(prompt, preserve_newlines=False)
+        if not clean_prompt or "?" in clean_prompt:
+            return False
+        norm = _normalize_text(clean_prompt)
+        try:
+            curriculum_svc = get_curriculum_service()
+            action_verbs = curriculum_svc._action_verbs
+            question_starters = curriculum_svc._question_starters
+            ana_tokens = curriculum_svc._anaphora_nav_tokens
+        except Exception:
+            action_verbs = ()
+            question_starters = ()
+            ana_tokens = ("đó", "này", "đấy", "kia", "vừa rồi", "vừa nói", "trên")
+
+        if any(qs in norm for qs in question_starters):
+            return False
+        if not any(v in norm for v in action_verbs):
+            return False
+        if cls._extract_lesson_seq(norm) is not None:
+            return False
+        padded = f" {_clean_alpha_space(norm)} "
+        return any(f" bài {tok} " in padded or f" bài học {tok} " in padded for tok in ana_tokens)
 
     def get_course_ids(self) -> List[str]:
         """Trả về danh sách định danh các khóa học nạp từ manifest (Data/Code Separation)."""
@@ -947,8 +1131,9 @@ class CurriculumService:
         if not norm_prompt:
             return None
 
-        # 1. Khớp theo số thứ tự bài học tường minh (Zero Regex)
-        seq_num = self._extract_lesson_seq(norm_prompt)
+        # 1. Khớp theo số thứ tự bài học tường minh (Zero Regex, bỏ qua số bài bị loại trừ)
+        included_seqs, excluded_seqs = self._extract_lesson_refs(norm_prompt)
+        seq_num = included_seqs[0] if included_seqs else None
         if seq_num is not None:
             for lesson in self._all_lessons:
                 if lesson.get("seq") == seq_num:
@@ -965,7 +1150,7 @@ class CurriculumService:
             current_lesson_seq=current_lesson_seq,
             preferred_course_id=preferred_course_id,
         )
-        if is_current_ref:
+        if is_current_ref and not excluded_seqs:
             if current_lesson_seq is not None:
                 cur_les = self.get_lesson_by_seq(current_lesson_seq, course_id=preferred_course_id)
                 if cur_les:
@@ -973,7 +1158,14 @@ class CurriculumService:
 
         # 3. Tìm kiếm bằng Chỉ mục Ngữ nghĩa Giáo trình (Syllabus Vector Index - Zero Regex Anchor)
         # Áp dụng Prerequisite Order Pareto Selection (ICLR 2025):
-        semantic_results = self.semantic_search_lessons(prompt, top_k=6, min_similarity=0.78)
+        query_for_sem = self._strip_exclusion_clauses(prompt) if excluded_seqs else prompt
+        query_for_sem = query_for_sem or prompt
+        semantic_results = self.semantic_search_lessons(query_for_sem, top_k=8 if excluded_seqs else 6, min_similarity=0.78)
+        if excluded_seqs:
+            semantic_results = [
+                (sc, les) for sc, les in semantic_results
+                if int(les.get("seq") or 0) not in excluded_seqs
+            ]
         if semantic_results:
             top_score, top_lesson = semantic_results[0]
             target_course = top_lesson.get("course_id")
@@ -1111,6 +1303,8 @@ class CurriculumService:
         max_kw_len = 0
 
         for lesson in candidate_lessons:
+            if excluded_seqs and int(lesson.get("seq") or 0) in excluded_seqs:
+                continue
             keywords = lesson.get("keywords", [])
             for kw in keywords:
                 norm_kw = _normalize_text(kw)
@@ -1174,16 +1368,20 @@ class CurriculumService:
             return empty_res
 
         # Nếu đã chỉ định số bài tường minh hoặc đang hỏi mốc video bài hiện tại -> không mơ hồ
-        if self._extract_lesson_seq(norm_prompt) is not None:
+        included_seqs, excluded_seqs = self._extract_lesson_refs(norm_prompt)
+        if included_seqs:
             return empty_res
-        if self.has_current_lesson_reference(
+        if not excluded_seqs and self.has_current_lesson_reference(
             clean_prompt,
             current_lesson_seq=current_lesson_seq,
             preferred_course_id=preferred_course_id,
         ):
             return empty_res
 
-        padded_full = f" {_clean_alpha_space(norm_prompt)} "
+        search_prompt = self._strip_exclusion_clauses(clean_prompt) if excluded_seqs else clean_prompt
+        search_prompt = search_prompt or clean_prompt
+        norm_search_prompt = _normalize_text(search_prompt)
+        padded_full = f" {_clean_alpha_space(norm_search_prompt)} "
 
         def _has_exact_kw(lesson_obj: Dict[str, Any], target_padded: str) -> bool:
             for kw in lesson_obj.get("keywords", []):
@@ -1193,7 +1391,7 @@ class CurriculumService:
             return False
 
         # --- DẠNG 1: Đa chủ đề rẽ nhánh ("a hay b", "a hoặc b") ---
-        raw_branches = self._split_disjunction_branches(norm_prompt)
+        raw_branches = self._split_disjunction_branches(norm_search_prompt)
         if len(raw_branches) >= 2:
             yes_no_tails = {"không", "chưa", "không ạ", "chưa ạ", "gì", "sao", "đâu", "nhỉ", "nhé"}
             branch_matches: List[Tuple[str, Dict[str, Any], float]] = []
@@ -1210,11 +1408,14 @@ class CurriculumService:
                 matched_les: Optional[Dict[str, Any]] = None
                 matched_score = 0.0
 
-                if b_seq is not None:
+                if b_seq is not None and b_seq not in excluded_seqs:
                     matched_les = self.get_lesson_by_seq(b_seq, course_id=preferred_course_id)
                     matched_score = 1.0
                 else:
-                    sem_b = self.semantic_search_lessons(branch, top_k=5, min_similarity=0.78)
+                    sem_b = [
+                        (sc, sl) for sc, sl in self.semantic_search_lessons(branch, top_k=6, min_similarity=0.78)
+                        if int(sl.get("seq") or 0) not in excluded_seqs
+                    ]
                     # Ưu tiên bài gốc khớp từ khóa chính xác trong nhánh (ví dụ 'con trỏ' -> Bài 57 thay vì Bài 48)
                     exact_non_rev = [
                         (sc, sl) for sc, sl in sem_b
@@ -1230,7 +1431,7 @@ class CurriculumService:
                             current_lesson_seq=current_lesson_seq,
                             preferred_course_id=preferred_course_id,
                         )
-                        if fl_res and sem_b:
+                        if fl_res and sem_b and int(fl_res[0].get("seq") or 0) not in excluded_seqs:
                             cand_les = fl_res[0]
                             cand_score = 0.0
                             for sc, sl in sem_b:
@@ -1253,7 +1454,7 @@ class CurriculumService:
                                 matched_les = cand_les
                                 matched_score = float(cand_score)
 
-                if matched_les is not None:
+                if matched_les is not None and int(matched_les.get("seq") or 0) not in excluded_seqs:
                     key = (matched_les.get("course_id", ""), matched_les.get("seq"))
                     if key not in seen_keys:
                         seen_keys.add(key)
@@ -1276,8 +1477,16 @@ class CurriculumService:
                     ],
                 }
 
+        # Nếu có mệnh đề loại trừ ("ngoài bài 64 ra còn những bài nào...") nhưng KHÔNG phải đa chủ đề (Dạng 1),
+        # trả về empty_res để CRAG giữ danh mục bài học liên quan thay vì chuyển nhầm sang Dạng 2 competing_lessons.
+        if excluded_seqs:
+            return empty_res
+
         # --- DẠNG 2: Đơn chủ đề có nhiều bài học cạnh tranh sát điểm ---
-        semantic_results = self.semantic_search_lessons(clean_prompt, top_k=8, min_similarity=0.79)
+        semantic_results = [
+            (sc, les) for sc, les in self.semantic_search_lessons(search_prompt, top_k=8, min_similarity=0.79)
+            if int(les.get("seq") or 0) not in excluded_seqs
+        ]
         if not semantic_results:
             return empty_res
 

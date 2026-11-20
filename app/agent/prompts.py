@@ -49,16 +49,29 @@ def get_academic_glossary_prompt_extension(text: str) -> str:
         return ""
 
     norm = text.lower()
+    alpha_norm = " " + " ".join("".join(c if c.isalnum() else " " for c in norm).split()) + " "
     matched_rules = []
 
     # Quét từng nhóm thuật ngữ
     for category, items in glossary.items():
+        if not isinstance(items, list):
+            continue
         for item in items:
+            if not isinstance(item, dict):
+                continue
             en = item.get("en", "").lower()
             vi = item.get("vi", "").lower()
+            forbid = item.get("forbidden_translations", [])
+            has_forbid_hit = any(
+                (
+                    f" {ft_clean} " in alpha_norm
+                )
+                for ft in forbid
+                for ft_clean in [" ".join("".join(c if c.isalnum() else " " for c in str(ft).lower()).split())]
+                if ft_clean and (len(ft_clean) >= 3 or " " in ft_clean)
+            )
             # Kiểm tra xem có xuất hiện trong prompt hoặc context không
-            if (en and en in norm) or (vi and vi in norm):
-                forbid = item.get("forbidden_translations", [])
+            if (en and en in norm) or (vi and vi in norm) or has_forbid_hit:
                 forbid_str = f" (TUYỆT ĐỐI CẤM dịch thành: {', '.join(forbid)})" if forbid else ""
                 essence = item.get("essence", "")
                 rule_line = f"- {item.get('en')} -> \"{item.get('vi')}\"{forbid_str}. Bản chất: {essence}"
@@ -102,7 +115,7 @@ SOCRATIC_GROUNDED_PROMPT = """Bạn là "In-Course AI Copilot" - Trợ giảng l
    - TRẢ LỜI ĐÚNG TRỌNG TÂM HIỆN TẠI (ZERO SPOILER): CHỈ giải thích đúng phần học viên vừa hỏi ở lượt này. KHÔNG tiết lộ trước giải pháp hay bước giải quyết tiếp theo trước khi học viên tự suy nghĩ.
    - BẮT BUỘC KẾT THÚC BẰNG ĐÚNG 1 CÂU HỎI SOCRATIC CÓ DẤU `?`: Câu văn cuối cùng của phần giải thích (đặt ngay trước dòng `📍` hoặc thẻ `<timestamp>`) PHẢI là **đúng 1 câu hỏi kiểm tra khái niệm, so sánh hoặc dự đoán kết quả cụ thể kết thúc bằng dấu `?`** xoay quanh đúng nội dung vừa giải thích.
    - CẤM TUYỆT ĐỐI kết thúc bằng câu cảm thán hoặc câu hỏi xã giao chung chung: CẤM `"Bạn có câu hỏi gì không?"`, `"Bạn có thêm câu hỏi nào không?"`, `"Bạn đã hiểu rõ... chưa?"`, `"Nếu còn thắc mắc gì nữa hãy hỏi nhé!"`, `"Hy vọng thông tin này hữu ích cho bạn!"`, `"Hãy thử áp dụng... nhé!"`, `"Chúc bạn học tốt!"`.
-   - Khi học viên hỏi bằng ẩn dụ đời sống, giải thích trực quan ngắn gọn rồi quy về bản chất kỹ thuật C++.
+   - CẤM lặp lại nguyên văn câu hỏi của học viên làm câu trả lời; khi học viên hỏi bằng ẩn dụ đời sống hoặc xác nhận đúng/sai, phải đánh giá rõ đúng hay chưa đúng ở điểm nào, giải thích bản chất kỹ thuật C++ trong 2–3 câu ngắn gọn rồi mới đặt đúng 1 câu hỏi Socratic MỚI có dấu `?`.
 
 4. VIDEO TIMESTAMP BẮT BUỘC:
    - Khi trích dẫn mốc thời gian từ [NGỮ CẢNH BÀI GIẢNG], BẮT BUỘC đặt trong thẻ: <timestamp sec="tổng_giây">mm:ss</timestamp>.
