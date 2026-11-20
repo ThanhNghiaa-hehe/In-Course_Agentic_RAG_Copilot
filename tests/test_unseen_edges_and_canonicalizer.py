@@ -672,6 +672,226 @@ async def test_canonicalizer_async_guardrail_fallback_preserves_original_on_reje
     assert out_chunks[0]["end_sec"] == 140
 
 
+def test_spec002_glossary_triggers_arrays_and_isolates_runtime_prompts():
+    from app.agent.prompts import get_academic_glossary_prompt_extension
+
+    lex_11 = canon.extract_lesson_lexicon("cpp-core", 11)
+    assert any(g.get("en") == "Array" for g in lex_11["glossary_terms"])
+    assert len(lex_11["asr_phonetic_entries"]) >= 4
+    assert any(bad == "mạng một chiều" for bad, _ in lex_11["forbidden_noise_map"])
+
+    # Runtime chat prompt must NOT inject offline asr_phonetic_glossary items on normal phrases like "viết code C++"
+    ext = get_academic_glossary_prompt_extension("Thầy ơi viết code C++ trong bài hôm nay như thế nào?")
+    assert "Dev-C++" not in ext
+    assert "kính uv" not in ext.lower()
+
+
+@pytest.mark.asyncio
+async def test_spec002_two_pass_retries_phonetic_contraction_and_blocks_hallucination():
+    lex_53 = canon.extract_lesson_lexicon("cpp-oop", 53)
+    # 21 words -> Pass 1 shrinks to 15 words (wc_ratio = 15/21 = 0.714 < 0.80 -> Pass 1 rejects, Pass 2 targeted >= 0.68 passes!)
+    orig_c1 = "Trong bài lập trình si cộng cộng hôm nay thầy giáo hướng dẫn chi tiết ác xẹt mo đi phai ơ private cho lớp."
+    clean_c1 = "Trong bài lập trình C++ hôm nay thầy giáo hướng dẫn chi tiết Access Modifier private cho lớp."
+    orig_c2 = "Các bạn giữ nguyên class SinhVien trong ví dụ này nhé."
+    chunks = [
+        {
+            "chunk_id": "p2_c1",
+            "start_sec": 10,
+            "end_sec": 30,
+            "start_label": "00:10",
+            "end_label": "00:30",
+            "raw_text": orig_c1,
+        },
+        {
+            "chunk_id": "p2_c2",
+            "start_sec": 30,
+            "end_sec": 50,
+            "start_label": "00:30",
+            "end_label": "00:50",
+            "raw_text": orig_c2,
+        },
+    ]
+
+    call_log = []
+
+    async def _mock_writer(sys_p: str, usr_p: str) -> str:
+        call_log.append(usr_p)
+        if "p2_c2" in usr_p and "p2_c1" in usr_p:
+            # Pass 1 batch returns clean_c1 (rejected by strict Pass 1 wc_ratio=0.692) + untouched c2
+            return json.dumps({"p2_c1": clean_c1, "p2_c2": orig_c2}, ensure_ascii=False)
+        # Pass 2 targeted call tries only p2_c1 (and let's test another chunk separately for summary rejection)
+        return json.dumps({"p2_c1": clean_c1}, ensure_ascii=False)
+
+    async def _mock_sup(sys_p: str, usr_p: str) -> str:
+        return json.dumps({}, ensure_ascii=False)
+
+    out_chunks, stats = await canon.canonicalize_lesson_two_pass_async(
+        chunks,
+        lex_53,
+        llm_fn=_mock_writer,
+        supervisor_llm_fn=_mock_sup,
+        batch_size=8,
+        enable_supervisor=True,
+    )
+
+    assert len(call_log) == 2  # Pass 1 batch + Pass 2 single-chunk retry
+    assert out_chunks[0]["raw_text"] == clean_c1
+    assert out_chunks[0]["start_sec"] == 10 and out_chunks[0]["end_sec"] == 30
+    assert stats["pass2_attempted"] == 1
+    assert stats["pass2_fixed"] == 1
+
+    # Also verify Pass 2 STILL rejects severe hallucinated summaries / CJK even with targeted=True
+    ok_sum, reason_sum = canon.validate_canonical_chunk(orig_c1, "Tóm tắt: OOP.", targeted=True)
+    ok_cjk, reason_cjk = canon.validate_canonical_chunk(orig_c1, clean_c1.replace("private", "私有"), targeted=True)
+    assert ok_sum is False
+    assert ok_cjk is False and reason_cjk == "cjk_or_hangul_hallucination"
+
+
+def test_spec002_supervisor_layer_a_detects_ast_loss_metadata_and_forbidden_terms():
+    lex_53 = canon.extract_lesson_lexicon("cpp-oop", 53)
+    orig_chunks = [
+        {"chunk_id": "la_1", "start_sec": 10, "end_sec": 30, "start_label": "00:10", "end_label": "00:30",
+         "raw_text": "Ở đây ta khai báo class SinhVien với vùng private."},
+        {"chunk_id": "la_2", "start_sec": 30, "end_sec": 50, "start_label": "00:30", "end_label": "00:50",
+         "raw_text": "Trong bài hôm nay chúng ta tìm hiểu mạng một chiều trước nhé."},
+        {"chunk_id": "la_3", "start_sec": 50, "end_sec": 70, "start_label": "00:50", "end_label": "01:10",
+         "raw_text": "Bây giờ ta nhập chiều dài để làm bài tập."},
+    ]
+    cand_chunks = [
+        {"chunk_id": "la_1", "start_sec": 10, "end_sec": 30, "start_label": "00:10", "end_label": "00:30",
+         "raw_text": "Ở đây ta khai báo class HọcSinh với vùng private."},  # Dropped AST symbol SinhVien!
+        {"chunk_id": "la_2", "start_sec": 30, "end_sec": 50, "start_label": "00:30", "end_label": "00:50",
+         "raw_text": "Trong bài hôm nay chúng ta tìm hiểu mạng một chiều trước nhé."},  # Unchanged forbidden hit!
+        {"chunk_id": "la_3", "start_sec": 999, "end_sec": 70, "start_label": "00:50", "end_label": "01:10",
+         "raw_text": "Bây giờ ta nhập chiều dài đã sửa."},  # Corrupted start_sec -> must hard-revert!
+    ]
+
+    la_res = canon.run_supervisor_layer_a(orig_chunks, cand_chunks, lex_53)
+    assert la_res["metadata_reverts"] == 1
+    assert la_res["chunks"][2]["start_sec"] == 50
+    assert la_res["chunks"][2]["raw_text"] == orig_chunks[2]["raw_text"]
+    assert any("SinhVien" in f["missing_symbols"] for f in la_res["ast_loss_flags"])
+    assert 1 in la_res["suspicious_unchanged_indices"]
+
+
+@pytest.mark.asyncio
+async def test_spec002_supervisor_layer_b_reverts_semantic_drift_and_flags_recheck():
+    lex_5 = canon.extract_lesson_lexicon("cpp-core", 5)
+    chunks = [
+        {"chunk_id": "lb_1", "start_sec": 10, "end_sec": 30, "start_label": "00:10", "end_label": "00:30",
+         "raw_text": "Các bạn lên mạng tìm tài liệu tham khảo thêm phần này nhé."},  # True Vietnamese word 'mạng' (internet)!
+        {"chunk_id": "lb_2", "start_sec": 30, "end_sec": 50, "start_label": "00:30", "end_label": "00:50",
+         "raw_text": "Đề bài yêu cầu tính kính UV và diện tích của hình tròn."},  # Missed ASR typo 'kính UV'!
+        {"chunk_id": "lb_3", "start_sec": 50, "end_sec": 70, "start_label": "00:50", "end_label": "01:10",
+         "raw_text": "Sau đó mình lấy phát bại trị trả về của hàm kiểm tra."},
+    ]
+
+    def _writer_sync_or_async(is_async=False):
+        pass
+
+    async def _mock_writer(sys_p: str, usr_p: str) -> str:
+        # Pass 1 wrongly edits lb_1 ('mạng'->'mảng'), misses lb_2, fixes lb_3
+        if "lb_1" in usr_p and "lb_3" in usr_p:
+            return json.dumps(
+                {
+                    "lb_1": "Các bạn lên mảng tìm tài liệu tham khảo thêm phần này nhé.",
+                    "lb_2": "Đề bài yêu cầu tính kính UV và diện tích của hình tròn.",
+                    "lb_3": "Sau đó mình lấy giá trị trả về của hàm kiểm tra.",
+                },
+                ensure_ascii=False,
+            )
+        # Pass 2 only sees lb_2 with Supervisor B hint
+        assert "lb_2" in usr_p
+        return json.dumps(
+            {"lb_2": "Đề bài yêu cầu tính chu vi và diện tích của hình tròn."},
+            ensure_ascii=False,
+        )
+
+    async def _mock_supervisor(sys_p: str, usr_p: str) -> str:
+        return json.dumps(
+            {
+                "lb_1": {"verdict": "REVERT", "hint": "Lên mạng nghĩa là internet, sửa thành mảng là sai ngữ cảnh"},
+                "lb_2": {"verdict": "RECHECK", "hint": "Sửa 'kính UV' thành 'chu vi'"},
+                "lb_3": {"verdict": "APPROVED", "hint": ""},
+            },
+            ensure_ascii=False,
+        )
+
+    out_chunks, stats = await canon.canonicalize_lesson_two_pass_async(
+        chunks,
+        lex_5,
+        llm_fn=_mock_writer,
+        supervisor_llm_fn=_mock_supervisor,
+        batch_size=8,
+        enable_supervisor=True,
+    )
+
+    assert out_chunks[0]["raw_text"] == chunks[0]["raw_text"]  # REVERT preserved original "lên mạng"!
+    assert "chu vi" in out_chunks[1]["raw_text"] and "kính UV" not in out_chunks[1]["raw_text"]  # RECHECK fixed in Pass 2!
+    assert "giá trị" in out_chunks[2]["raw_text"]  # APPROVED kept!
+    assert stats["supervisor_reverted"] == 1
+    assert stats["pass2_fixed"] == 1
+    assert stats["supervisor_errors"] == 0
+
+
+def test_spec002_qdrant_sync_resources_singleton_and_checkpoint_resume(tmp_path):
+    mock_dense = MagicMock()
+    mock_dense.embed.side_effect = lambda texts: [[0.1, 0.2] for _ in texts]
+    mock_sparse = MagicMock()
+    mock_sparse.embed.side_effect = lambda texts: [SimpleNamespace(indices=[1], values=[0.5]) for _ in texts]
+    mock_qdrant = MagicMock()
+
+    res = canon.QdrantSyncResources(dense_model=mock_dense, sparse_model=mock_sparse, qdrant=mock_qdrant)
+    sample = [{"start_sec": 10, "end_sec": 20, "start_label": "00:10", "end_label": "00:20", "raw_text": "hello"}]
+    n1 = canon.upsert_lesson_chunks_to_qdrant(sample, "cpp-core", "lesson-02", 2, "l2", resources=res)
+    n2 = canon.upsert_lesson_chunks_to_qdrant(sample, "cpp-core", "lesson-03", 3, "l3", resources=res)
+    assert n1 == 1 and n2 == 1
+    assert mock_qdrant.upsert.call_count == 2
+
+    ckpt_file = tmp_path / "reclean_ckpt.json"
+    canon.save_reclean_checkpoint(ckpt_file, {"lessons": {"cpp-core:lesson-02": {"status": "DONE", "updated": 1}}})
+    loaded = canon.load_reclean_checkpoint(ckpt_file)
+    assert loaded["lessons"]["cpp-core:lesson-02"]["status"] == "DONE"
+
+
+def test_spec002_blocks_json_wrapper_latex_and_localized_hallucination():
+    batch = [{"chunk_id": "chunk_1191_1252", "raw_text": "Thì nó sẽ thực hiện nhánh else if."}]
+
+    # 1. Single-object schema {"chunk_id", "text"} must parse cleanly
+    parsed_single = canon._parse_llm_batch_response(
+        '{"chunk_id": "chunk_1191_1252", "text": "Thì nó sẽ thực hiện nhánh else if."}',
+        batch,
+    )
+    assert parsed_single["chunk_1191_1252"] == "Thì nó sẽ thực hiện nhánh else if."
+
+    # 2. Malformed JSON with braces must NEVER leak raw JSON syntax into transcript text
+    malformed = '{\n  "chunk_id": "chunk_1191_1252": "Thì nó sẽ thực hiện nhánh else if."\n}'
+    assert canon._parse_llm_batch_response(malformed, batch) == {}
+
+    ok_json, reason_json = canon.validate_canonical_chunk(batch[0]["raw_text"], malformed, targeted=True)
+    assert ok_json is False and reason_json == "json_wrapper_leakage"
+
+    # 3. LaTeX $...$ injection blocked
+    ok_latex, reason_latex = canon.validate_canonical_chunk(
+        "8 bits thì biểu diễn được 2 mũ 8 là 256 số đúng không?",
+        "8 bits thì biểu diễn được $2^8$ là 256 số đúng không?",
+        targeted=True,
+    )
+    assert ok_latex is False and reason_latex == "latex_syntax_injection"
+
+    # 4. Localized half-window hallucination blocked even if second half overlaps cleanly (overall Jaccard >= 0.55)
+    orig_local = (
+        "trở emp energia inco tạm lieber Frozen video mình Franklin "
+        "sau đó bạn dùng hàm nhập thông tin đầy đủ cho từng sinh viên trong danh sách lớp học lập trình hướng đối tượng hôm nay của chúng ta nhé"
+    )
+    halluc_local = (
+        "Ok chỗ này bạn cout ra là nhập tên nhé dùng getline với cin ignore "
+        "sau đó bạn dùng hàm nhập thông tin đầy đủ cho từng sinh viên trong danh sách lớp học lập trình hướng đối tượng hôm nay của chúng ta nhé"
+    )
+    ok_loc, reason_loc = canon.validate_canonical_chunk(orig_local, halluc_local, targeted=True)
+    assert ok_loc is False and reason_loc.startswith("localized_hallucination_or_rewrite")
+
+
 @pytest.mark.asyncio
 async def test_real_router_node_rescues_in_video_temporal_and_deictic_queries():
     """
