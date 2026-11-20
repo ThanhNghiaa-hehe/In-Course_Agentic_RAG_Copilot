@@ -1,6 +1,6 @@
 ---
 name: whisper-canonicalizer-tester
-description: Fast validation and tuning of audio speech-to-text (faster-whisper, Silero VAD), domain hotwords lexicon biasing, and Stage 2 Tech Canonicalizer phonetic regex repair without re-running heavy GPU/CPU transcription.
+description: AST-guided and phonetic Whisper transcript canonicalization (`scripts/canonicalize_transcripts_ast.py --gemini` with multi-key rotation, Qdrant upsert, chapter refresh) plus faster-whisper / Silero VAD hotword tuning without re-running ASR.
 ---
 
 # Whisper & Tech Canonicalizer Tester Runbook
@@ -52,6 +52,28 @@ Khi cần xử lý một video bài giảng `.mp4` hoàn toàn mới:
    ```powershell
    .venv\Scripts\python scripts\ingest_video.py "path/to/video.mp4" --course cpp-core --lesson lesson-03 --seq 3
    ```
+
+---
+
+### Vòng lặp C: AST + Gemini 3.5 Flash Lite Multi-Key Canonicalizer (Khuyến nghị cho Reclean hàng loạt 83 bài)
+Khi cần chuẩn hóa đồng âm ASR diện rộng (ví dụ `"mạng"` -> `"mảng"`, `"câu chúc"` -> `"cấu trúc"`, `"kính UV"` -> `"chu vi"`, `"petero"` -> `"pointer"`) mà không sửa `.env LLM_BASE_URL` phục vụ runtime:
+1. **Kiểm tra từ điển & Hotwords AST (0 external calls):**
+   ```powershell
+   .\.venv\Scripts\python.exe scripts\canonicalize_transcripts_ast.py --audit-hotwords
+   .\.venv\Scripts\python.exe scripts\canonicalize_transcripts_ast.py --lesson 1 --dry-run --gemini
+   ```
+2. **Cấu hình xoay vòng đa Key offline (trong `.env`, nằm trong `.gitignore`, KHÔNG bao giờ in log key):**
+   - Đặt `GEMINI_API_KEYS=key1,key2,key3` (ưu tiên model mặc định `gemini-3.5-flash-lite`: 15 RPM / 500 RPD mỗi key; script tự xoay vòng round-robin và đổi key ngay khi gặp `429`/timeout).
+   - Luôn giữ `LLM_BASE_URL` / `LLM_MODEL_NAME` trong `.env` trỏ tới Kaggle `Qwen/Qwen2.5-Coder-7B-Instruct` cho `ChatService` và E2E.
+3. **Chạy tuần tự từng bài (tránh đụng `fastembed` / GPU / ONNX với tiến trình khác):**
+   ```powershell
+   $env:HF_HUB_OFFLINE="1"; $env:TRANSFORMERS_OFFLINE="1"
+   foreach ($seq in 1..83) {
+     .\.venv\Scripts\python.exe scripts\canonicalize_transcripts_ast.py --gemini --lesson $seq --apply --sync-qdrant --refresh-chapters --async-mode --max-concurrency 5 --timeout 60
+   }
+   ```
+4. **Cổng Xác thực Dữ liệu Thực tế (Data-Inspected Verification):**
+   - BẮT BUỘC kiểm tra trực tiếp tệp `*_chunks.json`, `video_chapters` trong `data/curriculum/lessons_manifest.json`, và truy vấn kiểm mẫu `QdrantClient.scroll` theo `lesson_seq` (chỉ xác nhận sạch khi `0` lỗi tồn đọng ở các cụm vừa sửa, tách biệt với từ hợp lệ như `"mạng xã hội"`).
 
 ---
 
