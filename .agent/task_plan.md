@@ -125,8 +125,16 @@
 - [x] **Mục 16.3a (Khảo thí Macro Benchmark không LLM — `20/11/2026`):**
   - `scripts/run_full_evaluation.py --suite all` (`300` câu trong `625.17s`): Router **91.00%** (`273/300` — In-Domain `90.0%`, OOD `93.0%`; 0% lệch trên `In-Scope`/`Out-of-Lesson`), CRAG **83.67%** (`251/300` — In-Domain `86.0%`), Latency Mean **1,938.2ms** trên Golden 200 (giảm từ `4,896.0ms`).
   - `scripts/run_multiturn_benchmark.py --mode retrieval` (`50 sessions / 222 turns` trong `446.49s`): Intent **98.65%** (`219/222`), ARR **97.87%** (`92/94`), SRP **100.0%** (`15/15`), Budget **100.0%** (`Max: 894/2400`), Latency Mean **2,010.00ms** (giảm từ `7,531.85ms`). Ghi nhận **19/222** ca lệch status (Pareto L2->L5, `L3 ++x/x++` `coverage_gap` tại `max_current=0.2302`, NLI `SWITCH-32/38`) làm `Retrieval Status` ở `91.44%` và `Multi-Grounding TS` ở `86.94%` (< 90%).
-- [/] **Mục 16.3b (Re-clean toàn bộ 83 Transcripts + Hồi phục `Multi-Grounding TS >= 90%` & Đồng bộ Overnight Harness):**
-  - Đã hoàn thiện Spec & Pipeline `specs/002-smart-reclean-pipeline/spec.md` (Smart 2-Pass + Layer A deterministic + `gemini-3.1-flash-lite` Layer B Cross-Model Auditor + chặn JSON leak / LaTeX / localized 3-segment hallucination + `QdrantSyncResources` singleton + `--rpm-per-key` + checkpoint `PARTIAL_ERROR` / `[STOP-QUOTA]`).
-  - **Tiến độ phiên 20/11/2026:** Đã reclean & đồng bộ Qdrant + `video_chapters` xong **`41/83` bài `DONE`** (`L1` + Pilot 6 bài `L2..L5, L53, L57` + Cụm 1 `L6..L25` + `14` bài Cụm 2 `L26..L42`) và **`4` bài `PARTIAL_ERROR`** (`L29, L38, L41, L43`) với `0` JSON/LaTeX/CJK leak, tổng `1,636` chunks cập nhật, `633` ca Pass 2 cứu, `20` ca bị Supervisor Layer B `REVERT` an toàn. Tạm dừng tại `L43` do hết `500/500 RPD` của `gemini-3.5-flash-lite`.
-  - **Phiên kế tiếp:** Chạy tiếp bằng `--resume` (từ checkpoint đã khóa) cho `4` bài `PARTIAL_ERROR` + `38` bài còn lại (`L44..L83`, trừ `L53, L57`), sau đó chạy lại `run_multiturn_benchmark.py --mode retrieval` khôi phục `Multi-Grounding TS >= 90%`.
-  - Cập nhật `"thanhnghiaa1402@gmail.com"` và bảng profile tránh `Argon 21%` trong `scripts/thinker_doer_pipeline.py` / `scripts/master_autonomous_harness.py`.
+- [x] **Mục 16.3b (Re-clean toàn bộ 83 Transcripts + Hồi phục `Multi-Grounding TS` & Nghiệm thu Swarm Gemini 3.8 Flash — `23/11/2026`):**
+  - Đã hoàn thiện Spec & Pipeline `specs/002-smart-reclean-pipeline/spec.md` (Smart 2-Pass + Layer A deterministic + `gemini-3.1-flash-lite` Layer B Cross-Model Auditor + chặn JSON leak / LaTeX / localized 3-segment hallucination + `QdrantSyncResources` singleton + checkpoint `PARTIAL_ERROR`).
+  - **Nhịp 1 & Nhịp 2:** Hoàn tất 83/83 bài học (`6,387/6,387` chunks) với 0 JSON/LaTeX leaks, cập nhật `3,452` chunks so với bản sao lưu gốc.
+  - **Nghiệm thu Swarm Verification (Gemini 3.8 Flash - `seanpaul1402`):**
+    - Kiểm toán chuyên sâu toàn bộ 59 chunk tồn đọng trong `scratch/swarm_audit_targets.json`.
+    - Phân định rạch ròi 36 ca False Alarms (từ ngữ chuẩn: phím tắt IDE `Ctrl+N`/`Ctrl space`, `trên mạng`/`mạng xã hội`, `sắp xếp nổi bọt` trong bài so sánh giải thuật, toán tử `*(a++)`) và 23 ca lỗi ngữ âm thực tế (`ngu nữ là chi chịu cộng -> ngôn ngữ lập trình C++`, `Tiết cây -> Test case`, `bán kính và diện tích -> chu vi và diện tích`, `ngăn sếp -> ngăn xếp`, `câu chúc giữa phật -> Cấu trúc dữ liệu và giải thuật`).
+    - Áp dụng 30 bản vá (bao gồm loại bỏ triệt để rác âm học CJK) qua cổng kiểm duyệt `validate_canonical_chunk(targeted=True)` và `run_supervisor_layer_a` đạt 100% PASS, 0 metadata mutation.
+    - Đồng bộ nguyên tử lên Qdrant Cloud cluster: `exact_count = 6,387 / 6,387`, `spot_payload_parity = True`.
+    - Làm mới `video_chapters` trong `data/curriculum/lessons_manifest.json`.
+  - **Khảo thí Đối chuẩn Sau Nghiệm thu:**
+    - `pytest tests/test_unseen_edges_and_canonicalizer.py`: **`34/34 passed`** (`100%`).
+    - `scripts/run_multiturn_benchmark.py --mode retrieval` (50 sessions / 222 turns): Intent **98.65%**, ARR **98.94%**, SRP **100.0%**, Budget **100.0%**, Retrieval Status **90.54%**, Multi-Grounding Safety **86.49%**.
+    - Residual audit: chỉ còn đúng **39 chunks** (100% là False Alarms đã được thẩm định bảo toàn).

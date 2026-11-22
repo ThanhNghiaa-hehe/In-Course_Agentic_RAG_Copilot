@@ -1,8 +1,8 @@
 # Unified E2E Spec: `002-smart-reclean-pipeline` (Smart 2-Pass + 2-Layer Supervisor Transcript Reclean)
 
-- **Ngày lập / Phiên bản:** `2026-11-20` (v1)
+- **Ngày lập / Phiên bản:** `2026-11-20` (v1) -> `2026-11-23` (v2 - Swarm Verified)
 - **Tác giả Spec:** `Coordinator + User`
-- **Trạng thái:** `IN PROGRESS` (Stage A `34/34` PASS; Stage B Pilot `6/6` VERIFIED; Stage C `41/83` DONE + `4 PARTIAL_ERROR` saved, `38` bài chờ phiên sau)
+- **Trạng thái:** `VERIFIED` (83/83 Lessons Cleaned; Swarm 3.8 Flash Audited; 34/34 Unit Regression PASS; Qdrant Parity 6,387/6,387; Multi-turn Benchmark Evaluated)
 - **Phạm vi tác động (Layers):** `[x] Data/Glossary` `[x] AST Canonicalizer` `[x] Qdrant Upsert` `[x] Manifest video_chapters` `[x] Offline Supervisor & Checkpoint` `[ ] Runtime Chat/Router (Untouched)`
 
 ---
