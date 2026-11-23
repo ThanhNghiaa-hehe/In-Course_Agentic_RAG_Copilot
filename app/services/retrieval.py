@@ -462,6 +462,7 @@ class RetrievalService:
         target_seq: int,
         c_svc: Any,
         matched_lesson: Optional[Dict[str, Any]] = None,
+        query_text: str = "",
     ) -> Optional[Dict[str, Any]]:
         """
         Tạo nhẹ metadata `best_future_chunk` cho câu hỏi điều hướng lộ trình
@@ -473,6 +474,7 @@ class RetrievalService:
             or {}
         )
         lesson_title = lesson_obj.get("title", f"Bài giảng Bài {target_seq}")
+        lesson_course_id = lesson_obj.get("course_id") or "cpp-core"
 
         matching_hits = []
         for hit in future_points:
@@ -483,10 +485,43 @@ class RetrievalService:
 
         matched_hit = None
         if matching_hits:
-            matched_hit = next(
-                (h for h in matching_hits if (h.payload or {}).get("content_type") == "video_transcript"),
-                None,
-            )
+            video_hits = [
+                h for h in matching_hits
+                if (h.payload or {}).get("content_type") == "video_transcript"
+            ]
+            if video_hits:
+                if query_text:
+                    q_low = query_text.lower()
+                    stop_words = set(getattr(c_svc, "_stop_words", set()) or set())
+                    q_terms = []
+                    for tok in q_low.split():
+                        tok_clean = tok.strip(".,;:?!'\"()[]{}")
+                        if len(tok_clean) >= 2 and tok_clean not in stop_words:
+                            q_terms.append(tok_clean)
+                    if "++" in q_low:
+                        q_terms.extend(["++", "increment", "tăng trước", "tăng sau"])
+                    if "--" in q_low:
+                        q_terms.extend(["--", "decrement"])
+                    for kw in lesson_obj.get("keywords", []):
+                        kw_low = str(kw).strip().lower()
+                        if kw_low and kw_low in q_low:
+                            q_terms.append(kw_low)
+                    q_terms = list(dict.fromkeys(q_terms))
+
+                    best_vid_hit = None
+                    best_match_score = -1
+                    for h in video_hits:
+                        hp = h.payload or {}
+                        haystack = (
+                            f"{hp.get('raw_text', '')} {hp.get('code_scope', '')}"
+                        ).lower()
+                        m_score = sum(1 for term in q_terms if term in haystack)
+                        if m_score > best_match_score:
+                            best_match_score = m_score
+                            best_vid_hit = h
+                    matched_hit = best_vid_hit if best_match_score > 0 else video_hits[0]
+                else:
+                    matched_hit = video_hits[0]
             if matched_hit is None:
                 matched_hit = next(
                     (h for h in matching_hits if (h.payload or {}).get("code_scope") != "header_preamble"),
@@ -499,17 +534,30 @@ class RetrievalService:
             start_s = best_p.get("start_sec")
             if start_s is None and best_p.get("approx_video_sec") is not None:
                 start_s = int(best_p.get("approx_video_sec"))
+            start_lbl = best_p.get("start_label") or (
+                f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None
+            )
+            score_val = 0.42
             return {
+                "id": str(getattr(matched_hit, "id", "") or f"future_l{target_seq}_{start_s or 0}"),
+                "lesson_id": best_p.get("lesson_id") or f"lesson-{int(target_seq):02d}",
+                "course_id": best_p.get("course_id") or lesson_course_id,
                 "lesson_seq": target_seq,
-                "start_sec": start_s,
-                "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
-                "video_title": best_p.get("video_title") or lesson_title,
                 "content_type": c_type,
-                "score": 0.42,
+                "score": score_val,
+                "confidence_score": round(score_val, 4),
+                "confidence_pct": round(score_val * 100, 2),
+                "is_approximate": bool(best_p.get("is_approximate", False)),
+                "start_sec": start_s,
+                "start_label": start_lbl,
+                "video_title": best_p.get("video_title") or lesson_title,
+                "timestamp_tag": best_p.get("timestamp_tag") or (
+                    f'<timestamp sec="{start_s}">{start_lbl}</timestamp>' if start_s is not None and start_lbl else ""
+                ),
                 "raw_text": sanitize_text(best_p.get("raw_text", "")),
-                "context_code": best_p.get("context_code", ""),
+                "file_path": best_p.get("file_path", ""),
                 "code_scope": best_p.get("code_scope", ""),
-                "timestamp_tag": best_p.get("timestamp_tag", ""),
+                "context_code": best_p.get("context_code", ""),
                 "approx_video_sec": best_p.get("approx_video_sec"),
             }
 
@@ -518,39 +566,57 @@ class RetrievalService:
             ts0 = ts_list[0]
             sec = ts0.get("sec")
             label = ts0.get("label")
+            score_val = 0.42
             return {
+                "id": f"future_l{target_seq}_{sec or 0}",
+                "lesson_id": f"lesson-{int(target_seq):02d}",
+                "course_id": lesson_course_id,
                 "lesson_seq": target_seq,
+                "content_type": "video_transcript",
+                "score": score_val,
+                "confidence_score": round(score_val, 4),
+                "confidence_pct": round(score_val * 100, 2),
+                "is_approximate": False,
                 "start_sec": sec,
                 "start_label": label,
                 "video_title": lesson_title,
-                "content_type": "video_transcript",
-                "score": 0.42,
-                "raw_text": lesson_title,
-                "context_code": "",
-                "code_scope": "",
                 "timestamp_tag": f'<timestamp sec="{sec}">{label}</timestamp>',
+                "raw_text": lesson_title,
+                "file_path": "",
+                "code_scope": "",
+                "context_code": "",
                 "approx_video_sec": sec,
             }
 
+        score_val = 0.42
         return {
+            "id": f"future_l{target_seq}_0",
+            "lesson_id": f"lesson-{int(target_seq):02d}",
+            "course_id": lesson_course_id,
             "lesson_seq": target_seq,
+            "content_type": "video_transcript",
+            "score": score_val,
+            "confidence_score": round(score_val, 4),
+            "confidence_pct": round(score_val * 100, 2),
+            "is_approximate": False,
             "start_sec": 0,
             "start_label": "00:00",
             "video_title": lesson_title,
-            "content_type": "video_transcript",
-            "score": 0.42,
-            "raw_text": lesson_title,
-            "context_code": "",
-            "code_scope": "",
             "timestamp_tag": '<timestamp sec="0">00:00</timestamp>',
+            "raw_text": lesson_title,
+            "file_path": "",
+            "code_scope": "",
+            "context_code": "",
             "approx_video_sec": 0,
         }
 
     async def _score_future_points(
         self,
         future_points: List[Any],
-        query_text: str
-    ) -> Tuple[Optional[int], float, str]:
+        query_text: str,
+        course_id: str = "cpp-core",
+        curriculum_matched_seq: Optional[int] = None,
+    ) -> Tuple[Optional[int], float, str, Optional[Dict[str, Any]]]:
         """
         Đánh giá điểm tin cậy và xếp hạng các điểm ứng viên của bài học tương lai.
         Được gọi khi bài hiện tại không kích hoạt Early Exit (Tầng 1).
@@ -563,12 +629,42 @@ class RetrievalService:
         future_points = deduplicate_temporal_candidates(future_points)
         future_points = future_points[:settings.FUTURE_PROBE_LIMIT]
 
+        from app.services.curriculum import (
+            get_curriculum_service,
+            _has_symbol_keyword_match,
+            _has_topical_overlap,
+        )
+        c_svc = get_curriculum_service()
+
         future_texts: List[str] = []
         future_seqs: List[int] = []
+        is_rev: List[bool] = []
+        has_top: List[bool] = []
 
         for hit in future_points:
             p = hit.payload or {}
-            future_seqs.append(int(p.get("lesson_seq", 0)))
+            seq_i = int(p.get("lesson_seq", 0))
+            future_seqs.append(seq_i)
+            c_id_i = p.get("course_id") or course_id
+            les_i = c_svc.get_lesson_by_seq(seq_i, course_id=c_id_i) if (c_svc and seq_i > 0) else None
+            r_i = bool(les_i and les_i.get("is_revision", False))
+            t_i = bool(
+                les_i
+                and (
+                    _has_topical_overlap(
+                        les_i,
+                        query_text,
+                        c_svc._stop_words,
+                        conflict_groups=c_svc._modifier_conflict_groups,
+                        domain_tokens=c_svc._domain_specific_tokens,
+                    )
+                    or _has_symbol_keyword_match(les_i, query_text)
+                    or (curriculum_matched_seq is not None and seq_i == curriculum_matched_seq)
+                )
+            )
+            is_rev.append(r_i)
+            has_top.append(t_i)
+
             c_type = p.get("content_type", "video_transcript")
             if c_type == "code_ast":
                 ctx_code = p.get("context_code") or p.get("raw_text", "")
@@ -595,7 +691,10 @@ class RetrievalService:
                 rrf_norm = (rrf_raw - min_rrf) / (max_rrf - min_rrf + 1e-6)
                 rrf_norm = min(1.0, max(0.0, rrf_norm))
                 semantic_gate = min(1.0, (raw_prob / 0.28) ** 2)
-                w_eff = w_max * semantic_gate
+                if idx < len(is_rev) and is_rev[idx] and not has_top[idx]:
+                    w_eff = 0.0
+                else:
+                    w_eff = w_max * semantic_gate
                 fused_score = min(1.0, max(0.0, (1.0 - w_eff) * raw_prob + w_eff * rrf_norm))
                 scores.append(fused_score)
         except Exception as re_err:
@@ -611,10 +710,14 @@ class RetrievalService:
                 # Calibrated Min-Max Scaling (Mục 1.3): S_fallback = 0.20 + 0.25 * r_norm
                 scores.append(0.20 + 0.25 * r_norm)
 
-        # 1. Tìm ứng viên có điểm tuyệt đối cao nhất
-        best_idx = 0
+        # 1. Tìm ứng viên hợp lệ có điểm tuyệt đối cao nhất (loại trừ bài ôn tập lệch chủ đề R ∧ ¬T)
+        eligible_indices = [
+            i for i in range(len(scores)) if not (is_rev[i] and not has_top[i])
+        ] or list(range(len(scores)))
+        best_idx = eligible_indices[0] if eligible_indices else 0
         max_score = 0.0
-        for idx, sc in enumerate(scores):
+        for idx in eligible_indices:
+            sc = scores[idx]
             if sc > max_score:
                 max_score = sc
                 best_idx = idx
@@ -633,8 +736,12 @@ class RetrievalService:
         ]
 
         if confident_candidates:
+            non_drift_rev = [
+                c for c in confident_candidates if not (is_rev[c[0]] and not has_top[c[0]])
+            ]
+            c_prereq = non_drift_rev if non_drift_rev else confident_candidates
             # Sắp xếp theo lesson_seq tăng dần (ưu tiên bài học tiên quyết gần tiến độ học viên nhất)
-            sorted_by_seq = sorted(confident_candidates, key=lambda x: (x[1], -x[2]))
+            sorted_by_seq = sorted(c_prereq, key=lambda x: (x[1], -x[2]))
             earliest_idx, earliest_seq, earliest_score = sorted_by_seq[0]
 
             if (max_score - earliest_score) > DOMINATE_MARGIN:
@@ -663,24 +770,37 @@ class RetrievalService:
         )
         best_future_chunk = None
         if future_points and chosen_idx < len(future_points):
-            best_p = future_points[chosen_idx].payload or {}
+            best_hit = future_points[chosen_idx]
+            best_p = best_hit.payload or {}
             chosen_chunk_type = best_p.get("content_type", "video_transcript")
             start_s = best_p.get("start_sec")
             if start_s is None and best_p.get("approx_video_sec") is not None:
                 start_s = int(best_p.get("approx_video_sec"))
+            start_lbl = best_p.get("start_label") or (
+                f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None
+            )
 
             best_future_chunk = {
+                "id": str(getattr(best_hit, "id", "") or f"future_l{target_seq}_{start_s or 0}"),
+                "lesson_id": best_p.get("lesson_id") or (f"lesson-{int(target_seq):02d}" if target_seq is not None else ""),
+                "course_id": best_p.get("course_id") or course_id,
                 "lesson_seq": target_seq,
-                "start_sec": start_s,
-                "start_label": best_p.get("start_label") or (f"{int(start_s)//60:02d}:{int(start_s)%60:02d}" if start_s is not None else None),
-                "video_title": best_p.get("video_title", f"Bài giảng Bài {target_seq}"),
                 "content_type": chosen_chunk_type,
                 "score": chosen_score,
+                "confidence_score": round(float(chosen_score), 4),
+                "confidence_pct": round(float(chosen_score) * 100, 2),
+                "is_approximate": bool(best_p.get("is_approximate", False)),
+                "start_sec": start_s,
+                "start_label": start_lbl,
+                "video_title": best_p.get("video_title", f"Bài giảng Bài {target_seq}"),
+                "timestamp_tag": best_p.get("timestamp_tag") or (
+                    f'<timestamp sec="{start_s}">{start_lbl}</timestamp>' if start_s is not None and start_lbl else ""
+                ),
                 "raw_text": sanitize_text(best_p.get("raw_text", "")),
-                "context_code": best_p.get("context_code", ""),
+                "file_path": best_p.get("file_path", ""),
                 "code_scope": best_p.get("code_scope", ""),
-                "timestamp_tag": best_p.get("timestamp_tag", ""),
-                "approx_video_sec": best_p.get("approx_video_sec")
+                "context_code": best_p.get("context_code", ""),
+                "approx_video_sec": best_p.get("approx_video_sec"),
             }
         return target_seq, chosen_score, chosen_chunk_type, best_future_chunk
 
@@ -704,7 +824,7 @@ class RetrievalService:
             course_id=course_id,
             current_lesson_seq=current_lesson_seq
         )
-        res = await self._score_future_points(points, query_text)
+        res = await self._score_future_points(points, query_text, course_id=course_id)
         return res[0], res[1], res[2]
 
     async def _fetch_temporal_points(
@@ -1500,6 +1620,7 @@ class RetrievalService:
                 target_seq=curriculum_matched_seq,
                 c_svc=c_svc,
                 matched_lesson=curriculum_matched_lesson,
+                query_text=query_text,
             )
             logger.info(
                 f"[RetrievalService:NavBypass] Bỏ qua CPU Cross-Encoder cho câu điều hướng tới "
@@ -1516,7 +1637,9 @@ class RetrievalService:
         if not raw_candidates:
             target_seq, future_score, _, best_future_chunk = await self._score_future_points(
                 future_points=future_points,
-                query_text=dense_query_text if has_bridge else query_text
+                query_text=dense_query_text if has_bridge else query_text,
+                course_id=course_id,
+                curriculum_matched_seq=curriculum_matched_seq,
             )
             if target_seq and future_score >= settings.MIN_SCORE_THRESHOLD:
                 logger.info(f"[RetrievalService] Phát hiện chủ đề thuộc bài tương lai (Seq {target_seq}) với điểm {future_score:.4f} >= {settings.MIN_SCORE_THRESHOLD}.")
@@ -1834,7 +1957,9 @@ class RetrievalService:
         else:
             target_seq, future_score, future_chunk_type, best_future_chunk = await self._score_future_points(
                 future_points=future_points,
-                query_text=dense_query_text if has_bridge else query_text
+                query_text=dense_query_text if has_bridge else query_text,
+                course_id=course_id,
+                curriculum_matched_seq=curriculum_matched_seq,
             )
 
         if is_curriculum_navigation or has_intro_overview_only or (current_lesson_seq in intro_seqs and is_future_curriculum_target and not specific_ast_items):
@@ -1995,7 +2120,13 @@ class RetrievalService:
             best_future_chunk = (
                 best_future_chunk
                 if (best_future_chunk and best_future_chunk.get("lesson_seq") == target_seq)
-                else self._build_lightweight_future_chunk(future_points, target_seq, c_svc, curriculum_matched_lesson)
+                else self._build_lightweight_future_chunk(
+                    future_points,
+                    target_seq,
+                    c_svc,
+                    curriculum_matched_lesson,
+                    query_text=query_text,
+                )
             )
             future_dominates = True
 

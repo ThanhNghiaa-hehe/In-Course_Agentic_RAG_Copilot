@@ -944,6 +944,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
     new_pending_nav: Optional[Dict[str, Any]] = None
 
     is_curriculum_nav = bool(state.get("is_curriculum_navigation", False))
+    is_compound_concept_nav = c_svc.is_compound_concept_navigation_query(raw_prompt)
     is_overview_q = (time_ref_for_link is None) and c_svc.is_overview_query(raw_prompt)
     norm_for_split = normalize_user_input(raw_prompt, lowercase=True, preserve_newlines=False)
     has_disjunction = len(c_svc._split_disjunction_branches(norm_for_split)) >= 2
@@ -1162,7 +1163,7 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             )
             future_learning_text = _build_ambiguous_candidates_block(ambiguous_res)
 
-        elif is_curriculum_nav:
+        elif is_curriculum_nav and not is_compound_concept_nav:
             # Hạng mục A & B (Mục 2.2 - Nhịp 1B): Chặn bơm raw future chunk khi điều hướng lộ trình
             active_system_prompt = CURRICULUM_OVERVIEW_PROMPT
             target_desc = f"Bài {target_lesson_seq} (khóa {target_course})" if target_lesson_seq else "các bài học sau"
@@ -1315,6 +1316,23 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
                     "label": f_lbl,
                     "title": f_chunk.get("video_title", f"Bài {target_lesson_seq}"),
                     "lesson_seq": target_lesson_seq
+                })
+                f_conf = round(float(f_chunk.get("confidence_score", f_chunk.get("score", 0.42))), 4)
+                sources.append({
+                    "id": f_chunk.get("id") or f"future_l{target_lesson_seq}_{f_sec}",
+                    "content_type": f_chunk.get("content_type", "video_transcript"),
+                    "confidence_pct": f_chunk.get("confidence_pct", round(f_conf * 100, 2)),
+                    "confidence_score": f_conf,
+                    "is_approximate": bool(f_chunk.get("is_approximate", False)),
+                    "lesson_id": f_chunk.get("lesson_id") or f"lesson-{int(target_lesson_seq):02d}",
+                    "lesson_seq": int(target_lesson_seq),
+                    "start_sec": f_sec,
+                    "start_label": f_lbl,
+                    "timestamp_tag": f_chunk.get("timestamp_tag") or f'<timestamp sec="{f_sec}" lesson="{target_lesson_seq}">{f_lbl}</timestamp>',
+                    "file_path": f_chunk.get("file_path"),
+                    "code_scope": f_chunk.get("code_scope"),
+                    "context_code": f_chunk.get("context_code"),
+                    "approx_video_sec": f_chunk.get("approx_video_sec"),
                 })
                 future_ts_info = (
                     f"\n\n[MỐC VIDEO BÀI GIẢNG TƯƠNG LAI]\n"
@@ -1585,12 +1603,29 @@ _DEFAULT_CLOSING_FILLER_PREFIXES = (
 
 def _get_closing_filler_prefixes() -> tuple:
     try:
+        from app.services.chat import _load_forbidden_closing_prefixes
+        closers = _load_forbidden_closing_prefixes()
+        if closers:
+            return closers
+    except Exception:
+        pass
+    try:
         manifest_closers = get_intent_router()._manifest_data.get("forbidden_closing_prefixes")
         if isinstance(manifest_closers, list) and manifest_closers:
             return tuple(str(x).strip().lower() for x in manifest_closers if str(x).strip())
     except Exception:
         pass
     return _DEFAULT_CLOSING_FILLER_PREFIXES
+
+
+def _get_forbidden_attribution_prefixes() -> tuple:
+    try:
+        manifest_attrs = get_intent_router()._manifest_data.get("forbidden_attribution_prefixes")
+        if isinstance(manifest_attrs, list) and manifest_attrs:
+            return tuple(str(x).strip().lower() for x in manifest_attrs if str(x).strip())
+    except Exception:
+        pass
+    return ()
 
 
 _CLOSING_FILLER_PREFIXES = _get_closing_filler_prefixes()
@@ -1780,6 +1815,35 @@ def _strip_closing_filler(text: str) -> str:
     return "\n".join(lines).strip()
 
 
+def _strip_false_attribution_opening(text: str) -> str:
+    """
+    Loại bỏ câu gán ghép sai lời học viên ở đầu lịch sử Assistant ('Đúng vậy, bạn đã mô tả...')
+    từ đầu cho tới dấu kết thúc câu đầu tiên ('.', '!', '?', '\\n') (tuyệt đối không dừng ở dấu phẩy ',').
+    """
+    if not text:
+        return text
+    prefixes = _get_forbidden_attribution_prefixes()
+    if not prefixes:
+        return text
+    work = text.lstrip()
+    low = work.lower()
+    for pref in prefixes:
+        if low.startswith(pref):
+            after = len(pref)
+            if after == len(work) or work[after] in (" ", "\t", ",", ".", ":", ";", "!", "?"):
+                # Tìm dấu kết thúc câu hoàn chỉnh đầu tiên (., !, ?, \n) sau prefix
+                end_idx = -1
+                for i in range(after, len(work)):
+                    if work[i] in (".", "!", "?", "\n"):
+                        end_idx = i + 1
+                        break
+                if end_idx == -1:
+                    return ""
+                rem = work[end_idx:].lstrip(" \t\r\n")
+                return _capitalize_cleaned_sentence_start(rem)
+    return text
+
+
 def _clean_assistant_history_text(text: str) -> str:
     """
     Làm sạch lịch sử phản hồi của Assistant trước khi đưa vào sliding_history (kể cả lượt t-1):
@@ -1840,6 +1904,7 @@ def _clean_assistant_history_text(text: str) -> str:
         res = res.replace("\n\n\n", "\n\n")
     res = res.strip()
     res = _strip_opening_greetings_and_boilerplate(res)
+    res = _strip_false_attribution_opening(res)
     res = _strip_closing_filler(res)
     while "\n\n\n" in res:
         res = res.replace("\n\n\n", "\n\n")
@@ -2136,6 +2201,25 @@ async def context_assembly_node(state: AgentState) -> Dict[str, Any]:
             "(2) Giải thích bản chất kỹ thuật C++ tương ứng trong 2–3 câu ngắn gọn bám sát [NGỮ CẢNH BÀI GIẢNG], "
             "(3) Kết thúc bằng ĐÚNG 1 câu hỏi Socratic MỚI có dấu `?` (TUYỆT ĐỐI CẤM chỉ lặp lại câu hỏi của học viên)."
         )
+
+    # Socratic Code Solicitation vs Pseudocode Guidance Directive (tiêm vào user_message_content, giữ messages[0] tĩnh 100%)
+    router_for_ctx = get_intent_router()
+    if not is_out_of_lesson_or_nav:
+        if router_for_ctx.is_pseudocode_request(raw_prompt):
+            dynamic_user_extensions.append(
+                "[CHỈ THỊ HƯỚNG DẪN MÃ GIẢ (SOCRATIC PSEUDOCODE GUIDANCE)]: Học viên đang xin trình bày Mã giả (Pseudocode). "
+                "Hãy trình bày Mã giả từng bước bằng ngôn ngữ tự nhiên có cấu trúc (`BƯỚC 1..BƯỚC k`) cho bài toán đang thảo luận; "
+                "giải thích rõ rằng trong mã giả KHÔNG dùng cú pháp `#include` hay `int main()` của C++ (ngay cả khi học viên có nhắc tới `main()`); "
+                "TUYỆT ĐỐI CẤM mở đầu bằng \"Đúng vậy, bạn đã mô tả...\" hay gán ghép nội dung tài liệu cho học viên; "
+                "và kết thúc bằng ĐÚNG 1 câu hỏi Socratic có dấu `?`."
+            )
+        elif router_for_ctx.is_code_solicitation(raw_prompt):
+            dynamic_user_extensions.append(
+                "[CHỈ THỊ TỪ CHỐI GIẢI BÀI HỘ & ĐỊNH HƯỚNG SOCRATIC (SOFT REFUSAL)]: Học viên đang xin viết sẵn toàn bộ chương trình C++ hoàn chỉnh. "
+                "Hãy từ chối lịch sự việc viết sẵn file C++ đầy đủ có `#include` và `int main()`, "
+                "chỉ gợi mở biểu thức/cú pháp trọng tâm (tối đa 2–3 dòng biểu thức) bám sát ngữ cảnh bài giảng, "
+                "trích dẫn thẻ `<timestamp>` hợp lệ và kết thúc bằng ĐÚNG 1 câu hỏi Socratic có dấu `?`."
+            )
 
     # Pedagogical Soft Nudge: Khích lệ tự suy luận ngắn gọn khi phiên kéo dài liên tục (CẤM tự sinh code mẫu dài & giữ bắt buộc dấu '?')
     if turn_count > settings.SOFT_NUDGE_TURN_TRIGGER:

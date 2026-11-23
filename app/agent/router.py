@@ -343,6 +343,14 @@ class IntentRouter:
             return False
         return any(w in clean_p for w in self._solicitation_words)
 
+    def is_pseudocode_request(self, prompt: str) -> bool:
+        """Nhận diện yêu cầu trình bày mã giả / khung thuật toán nạp từ router_intent_manifest.json (0% Hardcode)."""
+        clean_p = self._normalize_text(prompt).lower()
+        if not clean_p:
+            return False
+        sigs = self._manifest_data.get("pseudocode_request_signatures", [])
+        return any(str(sig).strip().lower() in clean_p for sig in sigs if str(sig).strip())
+
     def _ensure_chitchat_prototypes(self) -> None:
         """Khởi tạo ma trận prototype E5 1024-dim cho chitchat, pure social, acknowledgment và curriculum nav từ manifest JSON."""
         if (
@@ -712,24 +720,37 @@ class IntentRouter:
             return True
 
         # 3. Discourse Elaboration / Clarification Follow-ups (Data-Driven Manifest, Zero Substring Leakage)
-        # Chỉ kích hoạt khi toàn bộ từ còn lại ngoài chữ ký đào sâu là hư từ lịch sự hoặc anaphora (chặn "nấu mì chi tiết hơn")
+        # Chỉ kích hoạt khi câu không chứa thực thể độc lập và toàn bộ từ còn lại ngoài chữ ký đào sâu là hư từ lịch sự hoặc anaphora (chặn "nấu mì chi tiết hơn")
         elab_sigs = self._manifest_data.get("follow_up_elaboration_signatures", [])
-        if elab_sigs and len(words) <= 8:
+        if elab_sigs and len(words) <= 8 and not self.has_domain_entity(clean_p):
+            sorted_elab_sigs = sorted(
+                (str(s) for s in elab_sigs if str(s).strip()),
+                key=len,
+                reverse=True,
+            )
             alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in clean_p.lower()).split())
             padded_alpha = f" {alpha_clean} "
             matched_elab = None
-            for sig in elab_sigs:
+            for sig in sorted_elab_sigs:
                 sig_norm = " ".join("".join(c if c.isalnum() else " " for c in sig.lower()).split())
                 if sig_norm and f" {sig_norm} " in padded_alpha:
                     matched_elab = sig_norm
                     break
             if matched_elab:
                 residual_str = padded_alpha.replace(f" {matched_elab} ", " ").strip()
-                polite_particles = {
-                    "ạ", "nhé", "đi", "giúp", "giùm", "cho", "mình", "em", "tôi",
-                    "được", "không", "thầy", "bạn", "về", "nữa", "thêm", "cái",
-                    "phần", "đoạn", "chỗ", "lại", "nha", "nhỉ", "với", "hơn", "à",
-                }
+                raw_particles = self._manifest_data.get("follow_up_polite_particles")
+                if isinstance(raw_particles, list) and raw_particles:
+                    polite_particles = {str(x).strip().lower() for x in raw_particles if str(x).strip()}
+                else:
+                    logger.warning(
+                        "Missing or empty 'follow_up_polite_particles' in router_intent_manifest.json; using fallback default particles."
+                    )
+                    polite_particles = {
+                        "ạ", "nhé", "đi", "giúp", "giùm", "cho", "mình", "em", "tôi",
+                        "được", "không", "thầy", "bạn", "về", "nữa", "thêm", "cái",
+                        "phần", "đoạn", "chỗ", "lại", "nha", "nhỉ", "với", "hơn", "à",
+                        "vậy", "thế", "đưa", "ra", "thôi", "cũng", "chỉ", "cần", "xin", "lấy",
+                    }
                 anaphora_words = set()
                 for a_sig in anaphora_sigs:
                     for tok in a_sig.lower().split():

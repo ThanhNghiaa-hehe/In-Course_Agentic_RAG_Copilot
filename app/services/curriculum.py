@@ -343,6 +343,43 @@ def _has_topical_overlap(
     return False
 
 
+_OPERATOR_SYMBOL_CHARS = ("+", "-", "&", "|", "<", ">")
+
+
+def _has_symbol_keyword_match(lesson_obj: Dict[str, Any], raw_prompt: str) -> bool:
+    """
+    Kiểm tra khớp từ khóa chứa ký hiệu toán tử C++ (ví dụ ++x, x++, ++a, a++, &&, ||)
+    trên chuỗi đã chuẩn hóa nhưng bảo toàn ký tự toán tử với biên trái/phải không phải chữ-số.
+    """
+    if not lesson_obj or not raw_prompt:
+        return False
+    raw_norm_prompt = _normalize_text(raw_prompt)
+    if not raw_norm_prompt:
+        return False
+    n_len = len(raw_norm_prompt)
+
+    for kw in lesson_obj.get("keywords", []):
+        kw_str = str(kw)
+        if not any(op in kw_str for op in _OPERATOR_SYMBOL_CHARS):
+            continue
+        norm_kw = _normalize_text(kw_str)
+        if not norm_kw:
+            continue
+        k_len = len(norm_kw)
+        start_pos = 0
+        while True:
+            idx = raw_norm_prompt.find(norm_kw, start_pos)
+            if idx == -1:
+                break
+            end_idx = idx + k_len
+            left_ok = idx == 0 or not raw_norm_prompt[idx - 1].isalnum()
+            right_ok = end_idx == n_len or not raw_norm_prompt[end_idx].isalnum()
+            if left_ok and right_ok:
+                return True
+            start_pos = idx + 1
+    return False
+
+
 class CurriculumService:
     """
     Dịch vụ quản trị giáo trình và phân giải điều hướng bài học in-RAM (< 1ms).
@@ -375,6 +412,8 @@ class CurriculumService:
         self._video_pos_wh_phrases: List[str] = []
         self._video_lecture_verbs: List[str] = []
         self._crag_section_markers: List[str] = []
+        self._compound_comparison_phrases: List[str] = []
+        self._compound_nav_clauses: List[str] = []
         self._anaphora_nav_tokens: Tuple[str, ...] = ("đó", "này", "đấy", "kia", "vừa rồi", "vừa nói", "vừa nêu", "trên", "mới nói")
         self._load_manifest()
         self._load_router_rules()
@@ -404,6 +443,14 @@ class CurriculumService:
                 ccues = rdata.get("lesson_comparison_cues")
                 if isinstance(ccues, list) and ccues:
                     self._comparison_cues = tuple(_normalize_text(x) for x in ccues if _normalize_text(x))
+                cc2 = rdata.get("compound_concept_2slot", {})
+                if isinstance(cc2, dict):
+                    self._compound_comparison_phrases = [
+                        _normalize_text(x) for x in cc2.get("concept_comparison_phrases", []) if _normalize_text(x)
+                    ]
+                    self._compound_nav_clauses = [
+                        _normalize_text(x) for x in cc2.get("navigation_conjunction_clauses", []) if _normalize_text(x)
+                    ]
         except Exception as e:
             logger.warning(f"[CurriculumService] Không thể nạp router_intent_manifest.json: {e}")
 
@@ -999,6 +1046,24 @@ class CurriculumService:
         has_lec_verb = any(f" {_clean_alpha_space(v)} " in padded for v in self._video_lecture_verbs)
         return has_lec_verb
 
+    def is_compound_concept_navigation_query(self, prompt: str) -> bool:
+        """
+        Kiểm định 2 khe (Concept Comparison / Symbol Question + Navigation Conjunction Clause)
+        để nhận diện câu hỏi kép vừa hỏi bản chất khái niệm vừa hỏi bài nào giảng chi tiết.
+        """
+        if not prompt or not self._compound_nav_clauses:
+            return False
+        norm_p = _normalize_text(prompt)
+        if not norm_p:
+            return False
+        has_nav_clause = any(c in norm_p for c in self._compound_nav_clauses)
+        if not has_nav_clause:
+            return False
+        has_comparison = any(p in norm_p for p in self._compound_comparison_phrases)
+        if not has_comparison and ("như thế nào" in norm_p or "thế nào" in norm_p):
+            has_comparison = any(_has_symbol_keyword_match(les, norm_p) for les in self._all_lessons)
+        return bool(has_comparison and has_nav_clause)
+
     @classmethod
     def extract_requested_nav_seq_raw(cls, prompt: str) -> Optional[int]:
         """Trích xuất số bài được yêu cầu trong mệnh lệnh chuyển bài trực tiếp (kể cả ngoài biên để tầng trên từ chối)."""
@@ -1491,6 +1556,7 @@ class CurriculumService:
             return empty_res
 
         top_score, top_lesson = semantic_results[0]
+        top_has_symbol = _has_symbol_keyword_match(top_lesson, norm_search_prompt)
         filtered: List[Tuple[float, Dict[str, Any]]] = []
         seen_keys = set()
 
@@ -1505,17 +1571,20 @@ class CurriculumService:
             ):
                 continue
 
-            has_rel = (
-                _has_exact_kw(cand_lesson, padded_full)
-                or _has_topical_overlap(
-                    cand_lesson,
-                    clean_prompt,
-                    self._stop_words,
-                    conflict_groups=self._modifier_conflict_groups,
-                    domain_tokens=self._domain_specific_tokens,
+            if top_has_symbol:
+                has_rel = _has_symbol_keyword_match(cand_lesson, norm_search_prompt)
+            else:
+                has_rel = (
+                    _has_exact_kw(cand_lesson, padded_full)
+                    or _has_topical_overlap(
+                        cand_lesson,
+                        clean_prompt,
+                        self._stop_words,
+                        conflict_groups=self._modifier_conflict_groups,
+                        domain_tokens=self._domain_specific_tokens,
+                    )
+                    or (top_score - cand_score) <= 0.015
                 )
-                or (top_score - cand_score) <= 0.015
-            )
             if not has_rel:
                 continue
 

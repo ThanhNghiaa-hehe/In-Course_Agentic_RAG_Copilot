@@ -326,9 +326,79 @@ class TelemetryCriticService:
             warnings.append(f"Độ trễ TTFT cao ({ttft_ms}ms > {settings.CRITIC_LATENCY_THRESHOLD_MS}ms).")
             score -= settings.CRITIC_HIGH_LATENCY_PENALTY
 
-        # 3. Đánh giá Router & Multi-Turn Intent Fidelity (Zero Self-Flattery, đồng bộ toán học với router_node)
         router_svc = get_intent_router()
         curr_svc = get_curriculum_service()
+
+        # Kiểm toán 1 (PC-02): False Student Attribution Check
+        attr_prefixes = [
+            str(p).strip().lower()
+            for p in (router_svc._manifest_data.get("forbidden_attribution_prefixes") or ())
+            if str(p).strip()
+        ]
+        if attr_prefixes and len(clean_prompt.split()) <= 12:
+            from app.services.chat import _is_analogy_verification_query_text
+            if not _is_analogy_verification_query_text(clean_prompt):
+                prose_start_low = prose_before_footer.lstrip(" \t\r\n*-•\"'“”").lower()
+                if any(
+                    prose_start_low.startswith(ap)
+                    and (len(prose_start_low) == len(ap) or prose_start_low[len(ap)] in " \t,.:;!?")
+                    for ap in attr_prefixes
+                ):
+                    warnings.append(
+                        "Ảo giác gán ghép lời học viên (False Student Attribution): "
+                        "Trợ giảng tự nhận học viên đã mô tả kiến thức trong tài liệu tham khảo."
+                    )
+                    score -= 15
+
+        # Kiểm toán 2 (PC-02): Cross-Lesson Context Drift Check
+        raw_entry_seq = entry.get("lesson_seq")
+        entry_lesson_seq_chk = (
+            raw_entry_seq if isinstance(raw_entry_seq, int) and not isinstance(raw_entry_seq, bool) else None
+        )
+        explicit_seq_chk = curr_svc._extract_lesson_seq(clean_prompt.lower()) if clean_prompt else None
+        if (
+            intent == "course_query"
+            and retrieval_status == "grounded"
+            and entry_lesson_seq_chk is not None
+            and explicit_seq_chk is None
+        ):
+            src_seqs = [
+                int(s.get("lesson_seq"))
+                for s in (sources or [])
+                if isinstance(s, dict) and s.get("lesson_seq") is not None and not isinstance(s.get("lesson_seq"), bool)
+            ]
+            ts_seqs = [
+                int(t.get("lesson_seq"))
+                for t in (suggested_ts or [])
+                if isinstance(t, dict) and t.get("lesson_seq") is not None and not isinstance(t.get("lesson_seq"), bool)
+            ]
+            has_src_drift = bool(src_seqs) and all(seq != entry_lesson_seq_chk for seq in src_seqs)
+            has_ts_drift = (not src_seqs) and bool(ts_seqs) and all(seq != entry_lesson_seq_chk for seq in ts_seqs)
+            if has_src_drift or has_ts_drift:
+                warnings.append(
+                    f"Trôi ngữ cảnh liên bài (Cross-Lesson Context Drift): "
+                    f"Học viên đang ở Bài {entry_lesson_seq_chk} nhưng toàn bộ nguồn/mốc video trích xuất thuộc bài khác."
+                )
+                score -= 15
+
+        # Kiểm toán 3 (PC-01, M4): Out-of-Lesson Timestamp-Source Lesson Parity Check
+        if retrieval_status == "out_of_lesson" and suggested_ts:
+            mismatch_source = (
+                target_lesson_seq is not None
+                and any(
+                    int(s.get("lesson_seq")) != int(target_lesson_seq)
+                    for s in (sources or [])
+                    if isinstance(s, dict) and s.get("lesson_seq") is not None and not isinstance(s.get("lesson_seq"), bool)
+                )
+            )
+            if (not sources) or mismatch_source:
+                warnings.append(
+                    "Bất đối xứng dữ liệu nguồn (Timestamp-Source Lesson Parity Violation): "
+                    "Nguồn học liệu của out_of_lesson bị thiếu hoặc không khớp với target_lesson_seq."
+                )
+                score -= 10
+
+        # 3. Đánh giá Router & Multi-Turn Intent Fidelity (Zero Self-Flattery, đồng bộ toán học với router_node)
         is_pure_soc, _ = router_svc.is_pure_social(clean_prompt)
 
         is_intent_hijacked = False

@@ -863,10 +863,16 @@ class StreamingInternalArtifactSanitizer:
         "for ", "while ", "if ", "vector", "std::", "`",
     )
 
-    def __init__(self, forbid_video_opening: bool = False):
+    OPENING_BUFFER_BUDGET = 48
+    MAX_ATTRIBUTION_SENTENCE_CHARS = 160
+
+    def __init__(self, forbid_video_opening: bool = False, strip_false_attribution: bool = True):
         self.forbid_video_opening = forbid_video_opening
+        self.strip_false_attribution = strip_false_attribution
         self._checked_opening = False
         self._need_capitalize = False
+        self._stripping_attribution_sentence = False
+        self._attribution_strip_len = 0
         self._opening_buf = ""
         self._marker_buf = ""
         self._emitted_any = False
@@ -882,8 +888,28 @@ class StreamingInternalArtifactSanitizer:
 
         self._opening_buf += text
         openings = self._active_openings()
+        attr_prefixes = _load_forbidden_attribution_prefixes() if self.strip_false_attribution else ()
 
         while self._opening_buf:
+            if self._stripping_attribution_sentence:
+                end_pos = -1
+                for idx, ch in enumerate(self._opening_buf):
+                    self._attribution_strip_len += 1
+                    if ch in (".", "!", "?", "\n") or self._attribution_strip_len >= self.MAX_ATTRIBUTION_SENTENCE_CHARS:
+                        end_pos = idx + 1
+                        break
+                if end_pos == -1:
+                    self._opening_buf = ""
+                    return ""
+                rem = self._opening_buf[end_pos:].lstrip(" \t\r\n")
+                self._opening_buf = rem
+                self._stripping_attribution_sentence = False
+                self._attribution_strip_len = 0
+                self._need_capitalize = True
+                if not self._opening_buf:
+                    return ""
+                continue
+
             work = self._opening_buf.lstrip(" \t\r\n")
             if not work:
                 # Chỉ toàn khoảng trắng đầu luồng, chờ thêm ký tự thực
@@ -922,8 +948,25 @@ class StreamingInternalArtifactSanitizer:
             if stripped_one:
                 continue
 
-            # Kiểm tra xem chuỗi hiện tại có đang là tiền tố chưa hoàn chỉnh của một mẫu mở đầu cần lọc không
-            if any(pref.startswith(low) for pref in openings):
+            if attr_prefixes:
+                matched_attr = None
+                for apref in attr_prefixes:
+                    if low.startswith(apref):
+                        after = len(apref)
+                        if after == len(work) or work[after] in (" ", "\t", ",", ".", ":", ";", "!", "?"):
+                            matched_attr = apref
+                            break
+                if matched_attr is not None:
+                    self._stripping_attribution_sentence = True
+                    self._attribution_strip_len = len(matched_attr)
+                    self._opening_buf = work[len(matched_attr):]
+                    continue
+
+            # Chỉ đệm kiểm tra prefix trong ngân sách <= 48 ký tự đầu (0ms TTFT overhead cho câu thường)
+            if len(work) <= self.OPENING_BUFFER_BUDGET and (
+                any(pref.startswith(low) for pref in openings)
+                or (attr_prefixes and any(ap.startswith(low) for ap in attr_prefixes))
+            ):
                 self._opening_buf = work
                 return ""
 
@@ -997,6 +1040,11 @@ class StreamingInternalArtifactSanitizer:
 
     def flush(self) -> List[str]:
         out: List[str] = []
+        if self._stripping_attribution_sentence:
+            self._opening_buf = ""
+            self._stripping_attribution_sentence = False
+            self._attribution_strip_len = 0
+            self._checked_opening = True
         if not self._checked_opening and self._opening_buf:
             work = self._opening_buf
             if self._need_capitalize and work and work[0].isalpha() and work[0].islower():
@@ -1038,6 +1086,62 @@ def _load_forbidden_closing_prefixes() -> Tuple[str, ...]:
     except Exception as exc:
         logger.warning(f"[ChatService] Không đọc được forbidden_closing_prefixes: {exc}")
     return ()
+
+
+@lru_cache(maxsize=1)
+def _load_forbidden_attribution_prefixes() -> Tuple[str, ...]:
+    """Đọc danh sách tiền tố gán ghép sai lời học viên từ manifest (Data/Code Separation)."""
+    try:
+        if _ROUTER_MANIFEST_PATH.exists():
+            data = json.loads(_ROUTER_MANIFEST_PATH.read_text(encoding="utf-8"))
+            raw = data.get("forbidden_attribution_prefixes") or []
+            cleaned = [
+                str(item).strip().lower()
+                for item in raw
+                if isinstance(item, str) and str(item).strip()
+            ]
+            cleaned.sort(key=len, reverse=True)
+            return tuple(cleaned)
+    except Exception as exc:
+        logger.warning(f"[ChatService] Không đọc được forbidden_attribution_prefixes: {exc}")
+    return ()
+
+
+@lru_cache(maxsize=1)
+def _load_analogy_verification_2slot() -> Tuple[Tuple[str, ...], Tuple[str, ...]]:
+    """Đọc cặp khe nhận diện câu hỏi kiểm chứng ẩn dụ từ manifest (Data/Code Separation)."""
+    try:
+        if _ROUTER_MANIFEST_PATH.exists():
+            data = json.loads(_ROUTER_MANIFEST_PATH.read_text(encoding="utf-8"))
+            cfg = data.get("analogy_verification_2slot") or {}
+            comp = tuple(str(x).strip().lower() for x in (cfg.get("comparison_markers") or ()) if str(x).strip())
+            tail = tuple(str(x).strip().lower() for x in (cfg.get("verification_tail_markers") or ()) if str(x).strip())
+            if comp and tail:
+                return comp, tail
+    except Exception as exc:
+        logger.warning(f"[ChatService] Không đọc được analogy_verification_2slot: {exc}")
+    return (
+        ("giống như", "như là", "tức là", "hiểu là", "ví von"),
+        ("có đúng không", "có đúng k", "đúng không", "đúng k", "phải không", "phải k"),
+    )
+
+
+def _is_analogy_verification_query_text(prompt: Optional[str]) -> bool:
+    if not prompt:
+        return False
+    comp_markers, tail_markers = _load_analogy_verification_2slot()
+    alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in prompt.lower()).split())
+    padded = f" {alpha_clean} "
+    has_comp = any(
+        f" {' '.join(''.join(c if c.isalnum() else ' ' for c in m).split())} " in padded
+        for m in comp_markers
+    )
+    if not has_comp:
+        return False
+    return any(
+        f" {' '.join(''.join(c if c.isalnum() else ' ' for c in t).split())} " in padded
+        for t in tail_markers
+    )
 
 
 def _tokenize_words_simple(text: str) -> List[str]:
@@ -1084,7 +1188,7 @@ def _is_forbidden_closing_sentence(
     active_prefixes = prefixes if prefixes is not None else _load_forbidden_closing_prefixes()
     if not active_prefixes or not sentence:
         return False
-    if "`" in sentence:
+    if sentence.lstrip(" \t\r\n*-•>\"'“”(").startswith("`"):
         return False
     norm = sentence.strip(" \t\r\n*-•>\"'“”()[]{}:;,.!?").lower()
     if not norm:
@@ -1731,7 +1835,8 @@ class StreamingOutputPipeline:
     ):
         self.user_prompt = user_prompt
         self.artifact_sanitizer = StreamingInternalArtifactSanitizer(
-            forbid_video_opening=forbid_video_opening
+            forbid_video_opening=forbid_video_opening,
+            strip_false_attribution=not _is_analogy_verification_query_text(user_prompt),
         )
         self.ts_sanitizer = StreamingTimestampSanitizer(
             valid_secs=valid_secs if valid_secs is not None else set()
@@ -2015,7 +2120,7 @@ class ChatService:
             turn_count=turn_count,
             intent=final_state["intent"],
             used_fast_path=False,
-            retrieved_chunk_count=len(final_state["retrieved_chunks"]),
+            retrieved_chunk_count=len(final_state["retrieved_chunks"]) or len(final_state.get("sources", [])),
             is_approximate=final_state["is_approximate"],
             retrieval_status=final_state["retrieval_status"],
             is_low_confidence=final_state["is_low_confidence"],
