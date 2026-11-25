@@ -68,6 +68,8 @@ class Settings(BaseSettings):
     PARETO_PREREQUISITE_DOMINATE_MARGIN: float = 0.25
     PARETO_PREREQUISITE_CODE_MARGIN: float = 0.20
     PARETO_CURRICULUM_ALIGNED_MARGIN: float = 0.05
+    PARETO_UNRESOLVED_NAV_FUTURE_MIN: float = 0.40
+    PARETO_UNRESOLVED_NAV_MARGIN: float = -0.12
 
     # Multi-Turn Memory & Context Budget Settings (LangGraph)
     SLIDING_WINDOW_TURNS: int = 4

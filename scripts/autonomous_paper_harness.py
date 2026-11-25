@@ -532,10 +532,10 @@ class AutonomousPaperHarness:
             return out_file.read_text(encoding="utf-8")
 
         t0 = time.time()
-        self.tracker.start_phase(2, f"Soạn Thảo Section III (Bản {variant})", "@rag-architect", "gemini-4-hydrogen")
+        self.tracker.start_phase(2, f"Soạn Thảo Section III (Bản {variant})", "@rag-architect", "gemini-4-neon-high")
         logger.info("\n" + "=" * 78)
         logger.info(f"🧠 [HARNESS STAGE 1] SUBAGENT @rag-architect: SOẠN THẢO SECTION III (BẢN {variant})")
-        logger.info("   Model Assigned: gemini-4-hydrogen-high (Google New Deep Reasoning) / claude-sonnet-5-5-high")
+        logger.info("   Model Assigned: gemini-4-neon-high -> gemini-4-carbon-high (Brain Pool)")
         logger.info("=" * 78)
 
         prompt = (
@@ -561,21 +561,27 @@ class AutonomousPaperHarness:
         )
 
         agy_bin = shutil.which("agy") or "agy"
-        cmd = [agy_bin, "--model", "gemini-4-hydrogen-high", "--dangerously-skip-permissions", "--print", prompt]
+        from thinker_doer_pipeline import get_active_account_email, get_role_routing_plan, switch_to_account
 
-        ret_code, stdout_text, is_err = SubprocessWatchdog.run_command(cmd, inactivity_timeout_sec=180, total_timeout_sec=600, tracker=self.tracker)
-        if ret_code != 0 or is_err or not stdout_text.strip():
-            logger.warning("[Harness Fallback] Đổi sang model dự phòng gemini-4-argon-high...")
-            cmd[2] = "gemini-4-argon-high"
-            ret_code, stdout_text, is_err = SubprocessWatchdog.run_command(cmd, inactivity_timeout_sec=180, total_timeout_sec=600, tracker=self.tracker)
+        initial_email = get_active_account_email()
+        stdout_text = ""
+        try:
+            for model_id, acc_email in get_role_routing_plan("thinker"):
+                if not switch_to_account(acc_email):
+                    continue
+                self.tracker.start_phase(2, f"Soạn Thảo Section III (Bản {variant})", "@rag-architect", model_id)
+                cmd = [agy_bin, "--model", model_id, "--dangerously-skip-permissions", "--print", prompt]
+                ret_code, out_txt, is_err = SubprocessWatchdog.run_command(
+                    cmd, inactivity_timeout_sec=180, total_timeout_sec=600, tracker=self.tracker
+                )
+                if ret_code == 0 and not is_err and out_txt.strip():
+                    stdout_text = out_txt
+                    break
+                logger.warning(f"[Harness Fallback] Thất bại trên ({model_id} @ {acc_email}), chuyển bước kế tiếp...")
+        finally:
+            switch_to_account(initial_email)
 
-        if ret_code != 0 or is_err or not stdout_text.strip():
-            logger.warning("[Harness Fallback] Đổi sang model dự phòng gemini-4-hydrogen-medium...")
-            AccountPoolManager.rotate_account()
-            cmd[2] = "gemini-4-hydrogen-medium"
-            ret_code, stdout_text, is_err = SubprocessWatchdog.run_command(cmd, inactivity_timeout_sec=180, total_timeout_sec=600, tracker=self.tracker)
-
-        if ret_code != 0 or not stdout_text.strip():
+        if not stdout_text.strip():
             logger.info("[Harness Fallback] Kích hoạt Golden Academic Spec cho Section III...")
             stdout_text = self._get_golden_section_3(variant, metrics)
 
@@ -600,10 +606,10 @@ class AutonomousPaperHarness:
             return out_file.read_text(encoding="utf-8")
 
         t0 = time.time()
-        self.tracker.start_phase(3, f"Soạn Thảo Văn Bản Học Thuật (Bản {variant})", "@academic-scribe", "gemini-4-argon")
+        self.tracker.start_phase(3, f"Soạn Thảo Văn Bản Học Thuật (Bản {variant})", "@academic-scribe", "gemini-4-hydrogen-high")
         logger.info("\n" + "=" * 78)
         logger.info(f"✍️ [HARNESS STAGE 2] SUBAGENT @academic-scribe: SOẠN THẢO VĂN BẢN HỌC THUẬT (BẢN {variant})")
-        logger.info("   Model Assigned: gemini-4-argon-high / gemini-4-hydrogen-high")
+        logger.info("   Model Assigned: gemini-4-hydrogen-high (seanpaul1402 -> tranthehuy23) / fallback gemini-3.8-flash-high")
         logger.info("=" * 78)
 
         prompt = (
@@ -626,16 +632,27 @@ class AutonomousPaperHarness:
         )
 
         agy_bin = shutil.which("agy") or "agy"
-        cmd = [agy_bin, "--model", "gemini-4-argon-high", "--dangerously-skip-permissions", "--print", prompt]
+        from thinker_doer_pipeline import get_active_account_email, get_role_routing_plan, switch_to_account
 
-        ret_code, stdout_text, is_err = SubprocessWatchdog.run_command(cmd, inactivity_timeout_sec=240, total_timeout_sec=900, tracker=self.tracker)
-        if ret_code != 0 or is_err or not stdout_text.strip():
-            logger.warning("[Harness Fallback] Đổi model sang gemini-4-hydrogen-high...")
-            AccountPoolManager.rotate_account()
-            cmd[2] = "gemini-4-hydrogen-high"
-            ret_code, stdout_text, is_err = SubprocessWatchdog.run_command(cmd, inactivity_timeout_sec=240, total_timeout_sec=900, tracker=self.tracker)
+        initial_email = get_active_account_email()
+        stdout_text = ""
+        try:
+            for model_id, acc_email in get_role_routing_plan("scribe"):
+                if not switch_to_account(acc_email):
+                    continue
+                self.tracker.start_phase(3, f"Soạn Thảo Văn Bản Học Thuật (Bản {variant})", "@academic-scribe", model_id)
+                cmd = [agy_bin, "--model", model_id, "--dangerously-skip-permissions", "--print", prompt]
+                ret_code, out_txt, is_err = SubprocessWatchdog.run_command(
+                    cmd, inactivity_timeout_sec=240, total_timeout_sec=900, tracker=self.tracker
+                )
+                if ret_code == 0 and not is_err and out_txt.strip():
+                    stdout_text = out_txt
+                    break
+                logger.warning(f"[Harness Fallback] Thất bại trên ({model_id} @ {acc_email}), chuyển bước kế tiếp...")
+        finally:
+            switch_to_account(initial_email)
 
-        if ret_code != 0 or not stdout_text.strip():
+        if not stdout_text.strip():
             logger.info("[Harness Fallback] Kích hoạt Golden Academic Manuscript Spec...")
             stdout_text = self._get_golden_manuscript(variant, metrics)
 

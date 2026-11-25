@@ -136,6 +136,34 @@ class NLIArbiter:
                 self._label_map[hyp_text] = intent_key
         self._template = data.get("nli_template", "This text is about {}.")
 
+        raw_temporal_template = data.get("temporal_nli_template")
+        raw_temporal_labels = data.get("temporal_nli_labels")
+        raw_temporal_threshold = data.get("temporal_nli_offtopic_threshold")
+        if (
+            not isinstance(raw_temporal_template, str)
+            or not raw_temporal_template.strip()
+            or not isinstance(raw_temporal_labels, dict)
+            or not raw_temporal_labels.get("in_video")
+            or not raw_temporal_labels.get("off_topic")
+            or raw_temporal_threshold is None
+        ):
+            logger.warning(
+                "[NLIArbiter] Thiếu cấu hình temporal_nli_* trong router_intent_manifest.json; "
+                "dùng giá trị mặc định dự phòng."
+            )
+            self._temporal_template: str = "Câu này hỏi về {}."
+            in_video_lbl = "nội dung đang được giảng hoặc giải thích trong video bài học lập trình"
+            off_topic_lbl = "thể thao, bóng đá, quán ăn, nấu ăn, thời tiết hoặc đời sống ngoài lề"
+            self._temporal_offtopic_threshold: float = 0.60
+        else:
+            self._temporal_template = raw_temporal_template
+            in_video_lbl = str(raw_temporal_labels["in_video"])
+            off_topic_lbl = str(raw_temporal_labels["off_topic"])
+            self._temporal_offtopic_threshold = float(raw_temporal_threshold)
+
+        self._temporal_labels: List[str] = [in_video_lbl, off_topic_lbl]
+        self._temporal_offtopic_label: str = off_topic_lbl
+
     def _get_pipeline(self):
         """Khởi tạo trễ (Lazy Loading) để không làm chậm thời gian khởi động server."""
         if self._pipeline is None:
@@ -185,30 +213,33 @@ class NLIArbiter:
         ("phút thứ 6 nói về gì", "đoạn này là sao") nhằm phân tách khỏi ngữ cảnh đời sống
         ("phút thứ 6 trận bóng đá", "chỗ này quán ăn nào ngon").
         Trả về `(is_in_video_query, off_topic_score)`.
+        Áp dụng cơ chế fail-closed `(False, 1.0)` khi NLI không khả dụng hoặc lỗi suy luận.
         """
         pipe = self._get_pipeline()
-        if pipe is None:
-            return True, 0.0
+        if pipe is None or len(self._temporal_labels) < 2:
+            logger.warning(
+                "[NLIArbiter] Pipeline NLI không khả dụng trong verify_in_video_temporal_query; "
+                "trả fail-closed (False, 1.0)."
+            )
+            return False, 1.0
         try:
-            labels = [
-                "nội dung đang được giảng hoặc giải thích trong video bài học lập trình",
-                "thể thao, bóng đá, quán ăn, nấu ăn, thời tiết hoặc đời sống ngoài lề",
-            ]
             res = pipe(
                 prompt,
-                candidate_labels=labels,
-                hypothesis_template="Câu này hỏi về {}.",
+                candidate_labels=self._temporal_labels,
+                hypothesis_template=self._temporal_template,
                 multi_label=False,
             )
             off_topic_score = 0.0
             for lbl, sc in zip(res.get("labels", []), res.get("scores", [])):
-                if lbl == labels[1]:
+                if lbl == self._temporal_offtopic_label:
                     off_topic_score = float(sc)
                     break
-            return (off_topic_score < 0.60), off_topic_score
+            return (off_topic_score < self._temporal_offtopic_threshold), off_topic_score
         except Exception as e:
-            logger.debug(f"[NLIArbiter] Lỗi verify_in_video_temporal_query ({e}), cho phép giữ an toàn.")
-            return True, 0.0
+            logger.warning(
+                f"[NLIArbiter] Lỗi verify_in_video_temporal_query ({e}); trả fail-closed (False, 1.0)."
+            )
+            return False, 1.0
 
     def is_confirmation(self, prompt: str) -> tuple[bool, float]:
         """
@@ -872,7 +903,7 @@ class IntentRouter:
 
         # (iii) Thẩm định qua Stage 2 NLI Arbiter
         nli_intent, nli_conf = self._nli_arbiter.arbitrate(contextual_prompt)
-        if nli_intent == "course_query" or nli_conf >= settings.ROUTER_CONTEXTUAL_NLI_MIN_CONF:
+        if nli_intent == "course_query" and nli_conf >= settings.ROUTER_CONTEXTUAL_NLI_MIN_CONF:
             logger.info(f"[IntentRouter:Contextual] Cứu xét NLI Arbiter thành công ({nli_conf*100:.1f}%): '{clean_raw}' -> course_query")
             return RouterClassification(intent="course_query", direct_response=None, is_course_query=True), search_query
 

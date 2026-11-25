@@ -2128,7 +2128,11 @@ class ChatService:
             auto_seek_sec=auto_seek_sec,
             action=final_state.get("action"),
             suggested_timestamps=suggested_ts,
-            sources=final_state.get("sources", [])
+            sources=final_state.get("sources", []),
+            is_curriculum_navigation=bool(final_state.get("is_curriculum_navigation", False)),
+            curriculum_matched_seq=final_state.get("curriculum_matched_seq"),
+            scoring_source=final_state.get("scoring_source"),
+            skip_nav_rerank=bool(final_state.get("skip_nav_rerank", False)),
         )
         yield {
             "event": "metadata",
@@ -2282,8 +2286,16 @@ class ChatService:
                 ]
                 ts_joined = " | ".join(ts_items)
                 stripped_resp = full_assistant_response.rstrip(" |\t")
+                resp_lines = [ln for ln in full_assistant_response.splitlines() if ln.strip()]
+                last_line_low = resp_lines[-1].strip().lower() if resp_lines else ""
+                has_trailing_ts_label = (
+                    "mốc video bài giảng:" in last_line_low
+                    or last_line_low.startswith("📍")
+                )
                 if stripped_resp.endswith(("Mốc video bài giảng:**", "Mốc video bài giảng:")):
                     ts_footer = f" {ts_joined}"
+                elif has_trailing_ts_label:
+                    ts_footer = f" ({ts_joined})"
                 else:
                     ts_footer = f"\n\n📍 **Mốc video bài giảng:** {ts_joined}"
                 full_assistant_response += ts_footer

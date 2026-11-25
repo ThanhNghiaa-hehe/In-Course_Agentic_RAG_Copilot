@@ -7,7 +7,7 @@ Kiến trúc:
 - 3 Discrete Nodes chính:
   1. `router_node`: Multi-Class Semantic Router (Aurelio AI 2024).
   2. `retrieval_node`: True Hybrid Retrieval (Dense E5 + Sparse BM25 + In-HNSW Pre-filter).
-  3. `crag_grader_node`: Thẩm định tương quan CRAG Meta AI 2024 & Đóng gói Socratic Prompt.
+  3. `crag_grader_node`: Thẩm định tương quan CRAG (Yan et al., arXiv:2401.15884) & Đóng gói Socratic Prompt.
 - Conditional Edges: Phân luồng rẽ nhánh linh hoạt giữa Fast-Path và Course Retrieval.
 """
 
@@ -79,6 +79,10 @@ class AgentState(TypedDict):
     is_low_confidence: bool
     target_lesson_seq: Optional[int]
     future_best_chunk: Optional[Dict[str, Any]]
+    scoring_source: str
+    skip_nav_rerank: bool
+    curriculum_matched_seq: Optional[int]
+    curriculum_matched_course: Optional[str]
     suggested_timestamps: List[Dict[str, Any]]
     sources: List[Dict[str, Any]]
 
@@ -756,10 +760,20 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
                 logger.error(f"[LangGraph:retrieval_node] Lỗi truy xuất Qdrant/RAG với raw_prompt: {e}")
                 retrieval_res = RetrievalResult(chunks=[], status="coverage_gap")
 
-            # Bước 2: Contextual Fallback nếu raw_prompt bị coverage_gap hoặc is_low_confidence và search_query != raw_prompt
-            if (retrieval_res.status == "coverage_gap" or retrieval_res.is_low_confidence) and search_query != raw_prompt:
+            # Bước 2: Contextual Fallback khi raw_prompt bị coverage_gap, is_low_confidence,
+            # hoặc out_of_lesson thiếu đồng thuận syllabus (anaphoric false-OOL hijack) và search_query != raw_prompt
+            is_unverified_anaphoric_ool = bool(
+                retrieval_res.status == "out_of_lesson"
+                and retrieval_res.curriculum_matched_seq != retrieval_res.target_lesson_seq
+            )
+            if (
+                retrieval_res.status == "coverage_gap"
+                or retrieval_res.is_low_confidence
+                or is_unverified_anaphoric_ool
+            ) and search_query != raw_prompt:
                 logger.info(
-                    f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}), "
+                    f"[LangGraph:retrieval_node] raw_prompt thiếu thực thể ({retrieval_res.status}, "
+                    f"unverified_ool={is_unverified_anaphoric_ool}), "
                     f"kích hoạt Fallback với search_query: '{search_query[:45]}...'"
                 )
                 try:
@@ -773,7 +787,28 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
                         is_continuation_turn=is_cont_turn,
                         current_video_sec=effective_video_sec,
                     )
-                    if fallback_res.status in ("grounded", "out_of_lesson") and not fallback_res.is_low_confidence:
+                    if retrieval_res.status == "coverage_gap":
+                        accept_fallback = fallback_res.status in ("grounded", "out_of_lesson")
+                    elif is_unverified_anaphoric_ool:
+                        fb_scores = [
+                            float(c["confidence_score"])
+                            for c in (fallback_res.chunks or [])
+                            if c.get("confidence_score") is not None
+                        ]
+                        fb_high_conf = (not fb_scores) or (
+                            max(fb_scores) >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
+                        )
+                        accept_fallback = (
+                            fallback_res.status == "grounded"
+                            and not fallback_res.is_low_confidence
+                            and fb_high_conf
+                        )
+                    else:
+                        accept_fallback = (
+                            fallback_res.status in ("grounded", "out_of_lesson")
+                            and not fallback_res.is_low_confidence
+                        )
+                    if accept_fallback:
                         retrieval_res = fallback_res
                 except Exception as fb_err:
                     logger.warning(f"[LangGraph:retrieval_node] Lỗi truy xuất Fallback Contextual: {fb_err}")
@@ -785,6 +820,10 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
         "is_low_confidence": retrieval_res.is_low_confidence,
         "target_lesson_seq": retrieval_res.target_lesson_seq,
         "future_best_chunk": getattr(retrieval_res, "future_best_chunk", None),
+        "scoring_source": getattr(retrieval_res, "scoring_source", "cross_encoder"),
+        "skip_nav_rerank": bool(getattr(retrieval_res, "skip_nav_rerank", False)),
+        "curriculum_matched_seq": getattr(retrieval_res, "curriculum_matched_seq", None),
+        "curriculum_matched_course": getattr(retrieval_res, "curriculum_matched_course", None),
         "is_curriculum_navigation": is_curriculum_nav,
         "inherited_video_sec": inherited_video_sec,
         "missing_deictic_sec": missing_deictic_sec,
@@ -966,6 +1005,18 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             logger.debug(f"[LangGraph:crag_grader_node] Lỗi find_ambiguous_candidates: {amb_err}")
 
     is_ambiguous = bool(ambiguous_res.get("is_ambiguous") and ambiguous_res.get("candidates"))
+    f_chunk_state = state.get("future_best_chunk")
+    is_ce_resolved_future_nav = bool(
+        retrieval_status == "out_of_lesson"
+        and is_curriculum_nav
+        and target_lesson_seq is not None
+        and isinstance(f_chunk_state, dict)
+        and f_chunk_state.get("scoring_source") == "cross_encoder"
+        and float(f_chunk_state.get("confidence_score", f_chunk_state.get("score", 0.0)))
+        >= settings.PARETO_UNRESOLVED_NAV_FUTURE_MIN
+    )
+    if is_ce_resolved_future_nav and ambiguous_res.get("reason") != "multi_topic_disjunction":
+        is_ambiguous = False
     is_disjunction_ambiguous = is_ambiguous and ambiguous_res.get("reason") == "multi_topic_disjunction"
     is_ambiguous_grounded_nav = bool(
         retrieval_status == "grounded"
@@ -1163,16 +1214,23 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             )
             future_learning_text = _build_ambiguous_candidates_block(ambiguous_res)
 
-        elif is_curriculum_nav and not is_compound_concept_nav:
+        elif is_curriculum_nav and not is_compound_concept_nav and not is_ce_resolved_future_nav:
             # Hạng mục A & B (Mục 2.2 - Nhịp 1B): Chặn bơm raw future chunk khi điều hướng lộ trình
             active_system_prompt = CURRICULUM_OVERVIEW_PROMPT
             target_desc = f"Bài {target_lesson_seq} (khóa {target_course})" if target_lesson_seq else "các bài học sau"
-            match_res = c_svc.find_lesson_for_query(
-                raw_prompt,
-                current_lesson_seq=state["lesson_seq"],
-                preferred_course_id=state["course_id"]
-            )
-            target_lesson_dict = match_res[0] if match_res else None
+            target_lesson_dict = None
+            if target_lesson_seq is not None:
+                target_lesson_dict = c_svc.get_lesson_by_seq(
+                    int(target_lesson_seq),
+                    course_id=target_course,
+                )
+            if target_lesson_dict is None:
+                match_res = c_svc.find_lesson_for_query(
+                    raw_prompt,
+                    current_lesson_seq=state["lesson_seq"],
+                    preferred_course_id=state["course_id"]
+                )
+                target_lesson_dict = match_res[0] if match_res else None
             roadmap_bullets = []
             if target_lesson_dict:
                 t_course = target_lesson_dict.get("course_id", target_course)
@@ -1311,6 +1369,8 @@ async def crag_grader_node(state: AgentState) -> Dict[str, Any]:
             t_title_nav = (t_les_obj or {}).get("title") or (f_chunk or {}).get("video_title", f"Bài {target_lesson_seq}")
             t_course_nav = (t_les_obj or {}).get("course_id") or target_course
             if f_chunk and f_chunk.get("start_sec") is not None:
+                if bool(f_chunk.get("is_approximate", False)):
+                    has_approximate = True
                 suggested_timestamps.append({
                     "sec": f_sec,
                     "label": f_lbl,

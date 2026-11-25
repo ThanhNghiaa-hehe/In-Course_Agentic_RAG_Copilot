@@ -398,6 +398,40 @@ class TelemetryCriticService:
                 )
                 score -= 10
 
+        # Kiểm toán 4 (PC-06): Unresolved Curriculum Navigation & Degraded RRF Fallback Check
+        is_nav_logged = router.get("is_curriculum_navigation")
+        skip_nav_logged = bool(crag.get("skip_nav_rerank", False))
+        scoring_src = crag.get("scoring_source")
+        nav_src_seqs = [
+            int(s.get("lesson_seq"))
+            for s in (sources or [])
+            if isinstance(s, dict) and s.get("lesson_seq") is not None and not isinstance(s.get("lesson_seq"), bool)
+        ]
+        if (
+            intent == "course_query"
+            and retrieval_status == "grounded"
+            and is_nav_logged is True
+            and entry_lesson_seq_chk is not None
+            and explicit_seq_chk is None
+            and not curr_svc.has_current_lesson_reference(clean_prompt)
+            and not curr_svc.is_overview_query(clean_prompt)
+            and (skip_nav_logged or scoring_src == "nav_verified_rrf")
+            and bool(nav_src_seqs)
+            and all(seq == entry_lesson_seq_chk for seq in nav_src_seqs)
+        ):
+            warnings.append(
+                "Điều hướng lộ trình chưa được giải quyết bằng Cross-Encoder (Unresolved Curriculum Navigation): "
+                "Câu hỏi tìm bài học bị khóa ở bài hiện tại bằng lối tắt RRF."
+            )
+            score -= 15
+
+        if scoring_src == "rrf_fallback_degraded":
+            warnings.append(
+                "Chế độ suy giảm Cross-Encoder (Degraded RRF Fallback): "
+                "Điểm tin cậy được tính từ RRF thuần do Cross-Encoder không khả dụng."
+            )
+            score -= 5
+
         # 3. Đánh giá Router & Multi-Turn Intent Fidelity (Zero Self-Flattery, đồng bộ toán học với router_node)
         is_pure_soc, _ = router_svc.is_pure_social(clean_prompt)
 

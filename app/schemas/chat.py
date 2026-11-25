@@ -59,6 +59,10 @@ class StreamMetadataEvent(BaseModel):
         default_factory=list,
         description="Danh sách nguồn trích dẫn phục vụ hiển thị source cards trên UI"
     )
+    is_curriculum_navigation: bool = False
+    curriculum_matched_seq: Optional[int] = None
+    scoring_source: Optional[str] = None
+    skip_nav_rerank: bool = False
 
 
 class ChatExportLogRequest(BaseModel):

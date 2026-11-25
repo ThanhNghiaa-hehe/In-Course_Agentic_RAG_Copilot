@@ -110,6 +110,7 @@ class TurnSpec:
     forbid_zero_timestamp: bool = False
     forbid_substrings: Tuple[str, ...] = ()
     require_any_groups: Tuple[Tuple[str, ...], ...] = ()
+    expected_target_seqs: Tuple[int, ...] = ()
     note: str = ""
 
 
@@ -462,7 +463,362 @@ def build_suites() -> Dict[str, SuiteSpec]:
         ],
     )
 
-    return {"M1": m1, "M2": m2, "M3": m3}
+    s1 = SuiteSpec(
+        suite_id="S1",
+        title="Session S1 (Spec 003 Scenario 1, 7 turns: ++x/x++, 5/2 int div, Full-Code Refusal, Pseudocode Anchor, LIFO Stack->L43)",
+        default_course_id="cpp-core",
+        default_lesson_seq=3,
+        turns=[
+            TurnSpec(
+                turn_idx=1,
+                course_id="cpp-core",
+                lesson_seq=3,
+                current_video_sec=None,
+                prompt="hello",
+                expected_intents=("chit_chat",),
+                expected_statuses=("grounded",),
+                expect_fast_path=True,
+                expect_socratic_question=False,
+                note="Pure social greeting Fast-Path",
+            ),
+            TurnSpec(
+                turn_idx=2,
+                course_id="cpp-core",
+                lesson_seq=1,
+                current_video_sec=None,
+                prompt="trong c++ toán từ ++x và x++ khác nhau như thế nào?\nvà bài nào sẽ nói rõ về nó",
+                expected_intents=("course_query",),
+                expected_statuses=("out_of_lesson",),
+                expected_target_seqs=(3,),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                expect_timestamp_tag=True,
+                require_any_groups=(("bài 3",),),
+                note="PC-04: Compound ++x/x++ + lesson query resolves single Bài 3",
+            ),
+            TurnSpec(
+                turn_idx=3,
+                course_id="cpp-core",
+                lesson_seq=3,
+                current_video_sec=None,
+                prompt="thế nếu lấy 2 kiểu int như 5/2 thì sẽ ra số mấy và tại sao và làm sao để ép nó thành số thực",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                forbid_substrings=("bạn muốn biết thêm thông tin",),
+                note="PC-05: Integer division 5/2 grounded Bài 3 without generic closer",
+            ),
+            TurnSpec(
+                turn_idx=4,
+                course_id="cpp-core",
+                lesson_seq=3,
+                current_video_sec=None,
+                prompt="viết cho tôi một chương trình đầy đủ từ đầu đến cuối  có main()  nhập a, b rồi tính tổng, hiệu, tích, thương hai số luôn nha",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                note="PC-03: Full-code solicitation passes security guardrail into Socratic soft refusal",
+            ),
+            TurnSpec(
+                turn_idx=5,
+                course_id="cpp-core",
+                lesson_seq=3,
+                current_video_sec=None,
+                prompt="vậy đưa mã giả thôi cũng được",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                forbid_substrings=("bạn đã mô tả",),
+                note="PC-02: Pseudocode follow-up keeps Bài 3 anchor, no false student attribution",
+            ),
+            TurnSpec(
+                turn_idx=6,
+                course_id="cpp-core",
+                lesson_seq=2,
+                current_video_sec=None,
+                prompt="ý tôi là đưa ra mã giả toàn bộ chương trình có main)( tính các phép tính như tổng hiệu tích thương",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded", "out_of_lesson"),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                note="PC-03: Pseudocode full program request stays course_query",
+            ),
+            TurnSpec(
+                turn_idx=7,
+                course_id="cpp-core",
+                lesson_seq=2,
+                current_video_sec=None,
+                prompt="cấu trúc stack hoạt động theo nguyên lý LIFO và dùng để giải bài toán hình chữ nhật lớn nhất như thế nào",
+                expected_intents=("course_query",),
+                expected_statuses=("out_of_lesson",),
+                expected_target_seqs=(43,),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                expect_timestamp_tag=True,
+                require_any_groups=(("bài 43", "ngăn xếp", "stack"),),
+                note="PC-01: Stack LIFO routes to foundational Bài 43 (not Bài 19)",
+            ),
+        ],
+    )
+
+    m4 = SuiteSpec(
+        suite_id="M4",
+        title="Session M4 (Deep Knowledge A — cpp-core L7 Pass-by-Value vs Reference & L10 Big-O)",
+        default_course_id="cpp-core",
+        default_lesson_seq=7,
+        turns=[
+            TurnSpec(
+                turn_idx=1,
+                course_id="cpp-core",
+                lesson_seq=7,
+                current_video_sec=None,
+                prompt="Tại sao trong hàm void tang(int x) { x++; } khi gọi tang(a) ở ngoài main thì giá trị a không tăng lên?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                expect_timestamp_tag=True,
+                require_any_groups=(("tham trị", "bản sao", "sao chép", "tham chiếu"),),
+                note="L7 pass-by-value concept grounding + AST/video timestamp",
+            ),
+            TurnSpec(
+                turn_idx=2,
+                course_id="cpp-core",
+                lesson_seq=7,
+                current_video_sec=None,
+                prompt="Vậy nếu đổi thành void tang(int &x) thì khác gì ở cấp địa chỉ bộ nhớ, viết giúp tôi hàm swap(int &a, int &b) hoàn chỉnh luôn được không?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded", "out_of_lesson"),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("địa chỉ", "tham chiếu", "swap", "hoán vị"),),
+                note="L7/L8 pass-by-reference explanation + Socratic code solicitation refusal",
+            ),
+            TurnSpec(
+                turn_idx=3,
+                course_id="cpp-core",
+                lesson_seq=7,
+                current_video_sec=None,
+                prompt="Nếu truyền một vector<int> 100000 phần tử theo tham trị vào hàm trong vòng lặp thì độ phức tạp thời gian là bao nhiêu?",
+                expected_intents=("course_query",),
+                expected_statuses=("out_of_lesson", "grounded"),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("độ phức tạp", "o(n", "bài 10", "sao chép"),),
+                note="L7 -> L10 Big-O complexity cross-lesson probe",
+            ),
+        ],
+    )
+
+    m5 = SuiteSpec(
+        suite_id="M5",
+        title="Session M5 (Deep Knowledge B — cpp-core L25 Binary Search, lower_bound/upper_bound & Infinite Loop)",
+        default_course_id="cpp-core",
+        default_lesson_seq=25,
+        turns=[
+            TurnSpec(
+                turn_idx=1,
+                course_id="cpp-core",
+                lesson_seq=25,
+                current_video_sec=None,
+                prompt="Điều kiện bắt buộc trước khi dùng binary_search, lower_bound, upper_bound trên mảng là gì?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("sắp xếp", "tăng dần", "giảm dần", "sorted"),),
+                note="L25 sorted precondition grounding (Revision Non-Dominance vs L70)",
+            ),
+            TurnSpec(
+                turn_idx=2,
+                course_id="cpp-core",
+                lesson_seq=25,
+                current_video_sec=None,
+                prompt="Điểm khác biệt cốt lõi giữa lower_bound và upper_bound khi mảng có nhiều phần tử trùng nhau là gì?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("lower_bound", "upper_bound", ">=", "lớn hơn"),),
+                note="L25 lower_bound (>=) vs upper_bound (>) conceptual distinction",
+            ),
+            TurnSpec(
+                turn_idx=3,
+                course_id="cpp-core",
+                lesson_seq=25,
+                current_video_sec=None,
+                prompt="Code tìm kiếm nhị phân của tôi viết while (l < r) với mid = (l + r) / 2; if (a[mid] < x) l = mid; else r = mid; sao chạy bị lặp vô tận?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("l = mid", "mid + 1", "vô tận", "thu hẹp", "r = l + 1", "mid"),),
+                note="L25 binary search boundary infinite-loop Socratic debugging",
+            ),
+        ],
+    )
+
+    m6 = SuiteSpec(
+        suite_id="M6",
+        title="Session M6 (Deep Knowledge C — cpp-core L37 Recursion, Call Stack & L43 Explicit Stack)",
+        default_course_id="cpp-core",
+        default_lesson_seq=37,
+        turns=[
+            TurnSpec(
+                turn_idx=1,
+                course_id="cpp-core",
+                lesson_seq=37,
+                current_video_sec=None,
+                prompt="Hàm đệ quy không có điều kiện dừng thì bộ nhớ sẽ bị lỗi gì và tại sao?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("stack", "tràn", "điều kiện dừng", "ngăn xếp"),),
+                note="L37 recursion base-case & stack overflow grounding",
+            ),
+            TurnSpec(
+                turn_idx=2,
+                course_id="cpp-core",
+                lesson_seq=37,
+                current_video_sec=None,
+                prompt="Tại sao đệ quy Fibonacci f(n-1) + f(n-2) lại chậm hơn vòng lặp rất nhiều?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("trùng", "cây đệ quy", "lặp lại", "tính lại", "độ phức tạp"),),
+                note="L37 overlapping subproblems in recursion tree",
+            ),
+            TurnSpec(
+                turn_idx=3,
+                course_id="cpp-core",
+                lesson_seq=37,
+                current_video_sec=None,
+                prompt="Vậy muốn tự quản lý ngăn xếp không dùng đệ quy nữa thì học cấu trúc Stack ở bài nào và hai thao tác push pop tốn O(1) không?",
+                expected_intents=("course_query",),
+                expected_statuses=("out_of_lesson",),
+                expected_target_seqs=(43,),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("bài 43", "stack", "ngăn xếp"),),
+                note="L37 -> L43 Stack curriculum navigation & concept",
+            ),
+        ],
+    )
+
+    m7 = SuiteSpec(
+        suite_id="M7",
+        title="Session M7 (Deep Knowledge D — cpp-oop L53 Encapsulation/Destructor & L54 Static Member)",
+        default_course_id="cpp-oop",
+        default_lesson_seq=53,
+        turns=[
+            TurnSpec(
+                turn_idx=1,
+                course_id="cpp-oop",
+                lesson_seq=53,
+                current_video_sec=None,
+                prompt="Tại sao thuộc tính của class SinhVien thường để private còn hàm TinhGPA hoặc getter setter lại để public?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("private", "public", "đóng gói", "encapsulation"),),
+                note="L53 encapsulation & access specifier grounding",
+            ),
+            TurnSpec(
+                turn_idx=2,
+                course_id="cpp-oop",
+                lesson_seq=53,
+                current_video_sec=None,
+                prompt="Nếu tạo 3 object SinhVien rồi muốn đếm tổng số sinh viên đã tạo bằng biến dùng chung cho cả class thì học ở bài nào và dùng từ khóa gì?",
+                expected_intents=("course_query",),
+                expected_statuses=("out_of_lesson",),
+                expected_target_seqs=(54,),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("bài 54", "static"),),
+                note="L53 -> L54 static class member out_of_lesson routing",
+            ),
+            TurnSpec(
+                turn_idx=3,
+                course_id="cpp-oop",
+                lesson_seq=53,
+                current_video_sec=None,
+                prompt="Quay lại Bài 53: hàm hủy ~SinhVien() được gọi tự động vào thời điểm nào và khác gì với Constructor?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("destructor", "hàm hủy", "constructor", "phạm vi", "kết thúc"),),
+                note="L53 return-to-lesson topic shift & Destructor vs Constructor",
+            ),
+        ],
+    )
+
+    m8 = SuiteSpec(
+        suite_id="M8",
+        title="Session M8 (Deep Knowledge E — cpp-oop L57 Pointers vs Arrays & L58 Linked List)",
+        default_course_id="cpp-oop",
+        default_lesson_seq=57,
+        turns=[
+            TurnSpec(
+                turn_idx=1,
+                course_id="cpp-oop",
+                lesson_seq=57,
+                current_video_sec=None,
+                prompt="Phân biệt giúp tôi ý nghĩa dấu * khi viết int *p = &a; và khi viết *p = 20; sau đó",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("con trỏ", "địa chỉ", "giá trị", "giải tham chiếu"),),
+                note="L57 pointer declaration vs dereference grounded (no Two-Pointers L48 drift)",
+            ),
+            TurnSpec(
+                turn_idx=2,
+                course_id="cpp-oop",
+                lesson_seq=57,
+                current_video_sec=None,
+                prompt="Tên mảng a trong C++ liên hệ thế nào với &a[0], và tại sao a++ lại báo lỗi biên dịch trong khi p++ thì được?",
+                expected_intents=("course_query",),
+                expected_statuses=("grounded",),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("a[0]", "hằng", "địa chỉ", "con trỏ"),),
+                note="L57 array decay to const pointer vs mutable pointer arithmetic",
+            ),
+            TurnSpec(
+                turn_idx=3,
+                course_id="cpp-oop",
+                lesson_seq=57,
+                current_video_sec=None,
+                prompt="Nếu dùng con trỏ next để nối các Node rời rạc trong bộ nhớ thay cho mảng cố định thì học ở bài nào?",
+                expected_intents=("course_query",),
+                expected_statuses=("out_of_lesson",),
+                expected_target_seqs=(58,),
+                expect_fast_path=False,
+                expect_socratic_question=True,
+                require_any_groups=(("bài 58", "danh sách liên kết"),),
+                note="L57 -> L58 Linked List prerequisite routing (before L81 Update 2026)",
+            ),
+        ],
+    )
+
+    return {
+        "M1": m1,
+        "M2": m2,
+        "M3": m3,
+        "S1": s1,
+        "M4": m4,
+        "M5": m5,
+        "M6": m6,
+        "M7": m7,
+        "M8": m8,
+    }
 
 
 def _strip_code_and_footer_for_question_check(response_text: str) -> str:
@@ -529,6 +885,10 @@ def evaluate_turn_assertions(
 
     if actual_status not in spec.expected_statuses:
         failures.append(f"retrieval_status={actual_status!r} not in expected {spec.expected_statuses}")
+
+    actual_target_seq = entry.get("crag", {}).get("target_lesson_seq")
+    if spec.expected_target_seqs and actual_target_seq not in spec.expected_target_seqs:
+        failures.append(f"target_lesson_seq={actual_target_seq!r} not in expected {spec.expected_target_seqs}")
 
     if spec.expect_fast_path is not None and used_fast_path != spec.expect_fast_path:
         failures.append(f"used_fast_path={used_fast_path} != expected {spec.expect_fast_path}")
@@ -694,11 +1054,17 @@ async def run_single_turn_routing_only(
         "router": {
             "intent": final_state.get("intent", "unknown"),
             "used_fast_path": used_fp,
+            "is_curriculum_navigation": bool(final_state.get("is_curriculum_navigation", False)),
         },
         "crag": {
             "retrieval_status": status_val,
             "target_lesson_seq": final_state.get("target_lesson_seq"),
             "retrieved_chunk_count": len(final_state.get("retrieved_chunks", []) or []),
+            "curriculum_matched_seq": final_state.get("curriculum_matched_seq"),
+            "scoring_source": final_state.get("scoring_source"),
+            "skip_nav_rerank": bool(final_state.get("skip_nav_rerank", False)),
+            "is_low_confidence": bool(final_state.get("is_low_confidence", False)),
+            "is_approximate": bool(final_state.get("is_approximate", False)),
         },
         "timestamps": suggested_ts,
         "sources": final_state.get("sources", []) or [],
@@ -778,11 +1144,17 @@ async def run_single_turn(
         "router": {
             "intent": meta_dict.get("intent", "unknown"),
             "used_fast_path": bool(meta_dict.get("used_fast_path", False)),
+            "is_curriculum_navigation": bool(meta_dict.get("is_curriculum_navigation", False)),
         },
         "crag": {
             "retrieval_status": meta_dict.get("retrieval_status", "unknown"),
             "target_lesson_seq": meta_dict.get("target_lesson_seq"),
             "retrieved_chunk_count": int(meta_dict.get("retrieved_chunk_count", 0) or 0),
+            "curriculum_matched_seq": meta_dict.get("curriculum_matched_seq"),
+            "scoring_source": meta_dict.get("scoring_source"),
+            "skip_nav_rerank": bool(meta_dict.get("skip_nav_rerank", False)),
+            "is_low_confidence": bool(meta_dict.get("is_low_confidence", False)),
+            "is_approximate": bool(meta_dict.get("is_approximate", False)),
         },
         "timestamps": meta_dict.get("suggested_timestamps", []) or [],
         "sources": meta_dict.get("sources", []) or [],
@@ -942,7 +1314,14 @@ async def async_main(selected_suite: str, inter_turn_sleep: float, routing_only:
             return 2
 
     suites_map = build_suites()
-    target_ids: Sequence[str] = ("M1", "M2", "M3") if selected_suite == "all" else (selected_suite,)
+    if selected_suite == "all":
+        target_ids: Sequence[str] = tuple(suites_map.keys())
+    elif selected_suite == "core":
+        target_ids = ("M1", "M2", "M3")
+    elif selected_suite == "deep":
+        target_ids = ("S1", "M4", "M5", "M6", "M7", "M8")
+    else:
+        target_ids = (selected_suite,)
 
     chat_service = ChatService()
     results: List[Dict[str, Any]] = []
@@ -995,9 +1374,9 @@ def main() -> None:
     )
     parser.add_argument(
         "--suite",
-        choices=("M1", "M2", "M3", "all"),
+        choices=("M1", "M2", "M3", "S1", "M4", "M5", "M6", "M7", "M8", "core", "deep", "all"),
         default="all",
-        help="Select which multi-turn session suite to execute (M1, M2, M3, or all).",
+        help="Select suite(s): M1..M3, S1, M4..M8, core (M1..M3), deep (S1+M4..M8), or all.",
     )
     parser.add_argument(
         "--inter-turn-sleep",

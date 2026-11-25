@@ -6,20 +6,18 @@ Author Invariant:
 - Sole Author: Tran Thanh Nghia (Student ID: 23DH112252), Faculty of Information Technology, HUFLIT.
 - Academic Advisor (Consultative Mentorship): M.Sc. Tieu Phung Mai Suong (Acknowledged in Section VII).
 
-Two-Stage Unified Closed Loop:
-STAGE 1: Code Optimization & Benchmark Convergence Loop (Thinker-Doer Engine)
-  - Nhịp 1A: Auditor (@codebase-auditor, claude-sonnet-5-5-high) -> Technical Debt Audit
-  - Nhịp 1B: Thinker (@rag-architect & @solution-analyst, gemini-4-hydrogen-high) -> Architecture Spec
-  - Nhịp 2: Coder (@core-coder, gemini-4-argon-high) -> Atomic Implementation
-  - Fast AST Syntax Gate (0.5s py_compile)
-  - Nhịp 3: Verifier (@qa-tester & @grounding-evaluator, claude-sonnet-5-5-high) -> Pytest & Benchmarks
-  - Quality Gates Decision: Only transitions to Stage 2 when 100% Quality Gates PASS!
+Two-Stage Unified Closed Loop (Zero Argon):
+STAGE 1: Code Optimization & Sequential Cross-Layer Verification Gates
+  - Gate 1: Fast AST Syntax Gate (py_compile app/ & scripts/) + Zero Quick-Fix Diff Audit
+  - Gate 2: Sequential Isolated Pytest Regression Gate (11 suites, HF_HUB_OFFLINE=1)
+  - Gate 3: E2E Multi-Turn Matrix Harness (e2e_matrix_harness.py --routing-only or live)
+  - Gate 4: Macro Benchmark Freshness & Quality Gates (@codebase-auditor: gemini-4-carbon-high on Brain Pool)
 
 STAGE 2: Multi-Subagent Paper Studio & HJS Word Suite (Autonomous Paper Studio)
-  - Nhịp 4: Ground-Truth Data Freeze (@grounding-evaluator, gemini-3.8-flash-high)
-  - Nhịp 5: Section III Mathematical Architecture (@rag-architect, gemini-4-hydrogen-high)
-  - Nhịp 6: Academic Manuscript & Bilingual Suite (@academic-scribe, claude-sonnet-5-5-high)
-  - Nhịp 7: Quality & Compliance Invariant Gate (@codebase-auditor, claude-opus-5-5-high)
+  - Nhịp 4: Ground-Truth Data Freeze (@grounding-evaluator, gemini-4-hydrogen-high)
+  - Nhịp 5: Section III Mathematical Architecture (@rag-architect, gemini-4-neon-high -> carbon-high on Brain Pool)
+  - Nhịp 6: Academic Manuscript & Bilingual Suite (@academic-scribe, gemini-4-hydrogen-high -> flash-3.8 on Exec Pool)
+  - Nhịp 7: Quality & Compliance Invariant Gate (@codebase-auditor, gemini-4-carbon-high / claude-opus-5-5-high)
   - Nhịp 8: Deterministic OOXML Word Compiler (Produces Variant A & Variant B)
 """
 
@@ -38,7 +36,7 @@ import threading
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("MasterAutonomousHarness")
@@ -374,72 +372,178 @@ class MasterAutonomousHarness:
         self._save_checkpoint()
         logger.info(f"[State Machine] Step '{step_name}' -> COMPLETED ({duration:.1f}s)")
 
+    SEQUENTIAL_PYTEST_SUITES: Tuple[str, ...] = (
+        "tests/test_p0_regression.py",
+        "tests/test_playground_scenario1_fixes.py",
+        "tests/test_playground_e2e_convergence.py",
+        "tests/test_playback_temporal_and_disambiguation.py",
+        "tests/test_session_7aky9_debug_fixes.py",
+        "tests/test_stage13_context_hygiene.py",
+        "tests/test_group1_2_optimizations.py",
+        "tests/test_e2e_anti_parroting_and_critic.py",
+        "tests/test_chat_stream.py",
+        "tests/test_search_api.py",
+        "tests/test_unseen_edges_and_canonicalizer.py",
+        "tests/test_spec004_unified_workflow_hardening.py",
+    )
+
+    @staticmethod
+    def _latest_mtime(root_dirs: Sequence[Path], suffixes: Tuple[str, ...] = (".py", ".json")) -> float:
+        latest = 0.0
+        for rdir in root_dirs:
+            if not rdir.exists():
+                continue
+            for p in rdir.rglob("*"):
+                if p.is_file() and p.suffix in suffixes:
+                    try:
+                        mt = p.stat().st_mtime
+                        if mt > latest:
+                            latest = mt
+                    except OSError:
+                        pass
+        return latest
+
     # -------------------------------------------------------------------------
-    # STAGE 1: CODE OPTIMIZATION & BENCHMARK CONVERGENCE LOOP
+    # STAGE 1: CODE OPTIMIZATION & SEQUENTIAL CROSS-LAYER VERIFICATION GATES
     # -------------------------------------------------------------------------
-    def run_stage_1_optimization(self) -> bool:
-        self.tracker.start_stage(1, "Tối Ưu Hóa Mã Nguồn & Hội Tụ Benchmark")
+    def run_stage_1_optimization(
+        self,
+        *,
+        force_eval: bool = False,
+        live_llm: bool = False,
+        e2e_suite: str = "all",
+    ) -> bool:
+        self.tracker.start_stage(1, "Kiểm Chứng Liên Tầng & Hội Tụ Benchmark")
         logger.info("\n" + "=" * 80)
-        logger.info("🔧 [STAGE 1] CODE OPTIMIZATION & BENCHMARK CONVERGENCE LOOP")
+        logger.info("🔧 [STAGE 1] SEQUENTIAL CROSS-LAYER VERIFICATION HARNESS")
         logger.info("=" * 80)
 
-        # 1.1 Fast AST Syntax Gate
+        offline_env = dict(os.environ)
+        offline_env["HF_HUB_OFFLINE"] = "1"
+        offline_env["TRANSFORMERS_OFFLINE"] = "1"
+        py_exe = str(PROJECT_ROOT / ".venv" / "Scripts" / "python.exe")
+
+        # 1.1 Gate 1: Fast AST Syntax & Anti-Bypass Static Diff Gate
         t0 = time.time()
-        self.tracker.start_phase(1, "Fast AST Syntax Gate", "Compiler", "Python-AST")
+        self.tracker.start_phase(1, "Gate 1: AST & Zero Quick-Fix Gate", "Compiler", "Python-AST")
         syntax_errors = []
-        for py_path in Path("app").rglob("*.py"):
-            try:
-                import py_compile
-                py_compile.compile(str(py_path), doraise=True)
-            except Exception as e:
-                syntax_errors.append(f"{py_path.name}: {e}")
+        for folder in ("app", "scripts"):
+            for py_path in (PROJECT_ROOT / folder).rglob("*.py"):
+                try:
+                    import py_compile
+                    py_compile.compile(str(py_path), doraise=True)
+                except Exception as e:
+                    syntax_errors.append(f"{py_path.name}: {e}")
 
         if syntax_errors:
             logger.error(f"[AST Syntax Gate FAILED] {syntax_errors}")
-            self.tracker.end_phase("Fast AST Syntax Gate", success=False)
+            self.tracker.end_phase("Gate 1: AST & Zero Quick-Fix Gate", success=False)
             return False
 
-        self.tracker.end_phase("Fast AST Syntax Gate", success=True)
+        from thinker_doer_pipeline import audit_anti_bypass_git_diff
+        diff_violations = audit_anti_bypass_git_diff()
+        if diff_violations:
+            logger.error(f"[Anti-Bypass Diff Gate FAILED] {diff_violations}")
+            self.tracker.end_phase("Gate 1: AST & Zero Quick-Fix Gate", success=False)
+            return False
+
+        self.tracker.end_phase("Gate 1: AST & Zero Quick-Fix Gate", success=True)
         self.mark_step_done("STAGE_1_AST_GATE", time.time() - t0)
 
-        # 1.2 Automated Pytest Suite (Evidence Gate 1)
+        # 1.2 Gate 2: Sequential Isolated Pytest Regression Gate (12 suites)
         t0 = time.time()
-        self.tracker.start_phase(2, "Pytest Unit Regression Gate", "@qa-tester", "pytest-runner")
-        py_cmd = [str(PROJECT_ROOT / ".venv" / "Scripts" / "python.exe"), "-m", "pytest", "tests/test_chat_stream.py", "-q"]
-        ret_code, stdout, _ = ThreadedSubprocessWatchdog.run_command(py_cmd, inactivity_timeout_sec=120, total_timeout_sec=300, tracker=self.tracker)
-        if ret_code != 0:
-            logger.warning(f"[Pytest Gate FAILED] Output: {stdout[:200]}")
-            self.tracker.end_phase("Pytest Regression Gate", success=False)
-        else:
-            self.tracker.end_phase("Pytest Regression Gate", success=True)
-            self.mark_step_done("STAGE_1_PYTEST_GATE", time.time() - t0)
+        self.tracker.start_phase(2, "Gate 2: Sequential Pytest (12 Suites)", "@qa-tester", "pytest-isolated")
+        failed_suites: List[str] = []
+        for suite_rel in self.SEQUENTIAL_PYTEST_SUITES:
+            suite_path = PROJECT_ROOT / suite_rel
+            if not suite_path.exists():
+                continue
+            logger.info(f"[Gate 2] Running isolated suite: {suite_rel}")
+            py_cmd = [py_exe, "-m", "pytest", suite_rel, "-q", "--tb=short"]
+            ret_code, stdout, _ = ThreadedSubprocessWatchdog.run_command(
+                py_cmd,
+                inactivity_timeout_sec=180,
+                total_timeout_sec=360,
+                env=offline_env,
+                tracker=self.tracker,
+            )
+            if ret_code != 0:
+                logger.error(f"[Pytest Gate FAILED] {suite_rel}: {stdout[-300:]}")
+                failed_suites.append(suite_rel)
 
-        # 1.3 Check Existing Benchmark Integrity
+        if failed_suites:
+            self.tracker.end_phase("Gate 2: Sequential Pytest", success=False)
+            logger.error(f"[Gate 2 FAILED] Các suite lỗi: {failed_suites}")
+            return False
+
+        self.tracker.end_phase("Gate 2: Sequential Pytest", success=True)
+        self.mark_step_done("STAGE_1_PYTEST_GATE", time.time() - t0)
+
+        # 1.3 Gate 3: E2E Multi-Turn Matrix Harness (routing-only hoặc live_llm)
         t0 = time.time()
-        self.tracker.start_phase(3, "Audit Benchmark Integrity", "@grounding-evaluator", "gemini-3.8-flash")
+        mode_lbl = "live_llm" if live_llm else "routing_only"
+        self.tracker.start_phase(3, f"Gate 3: E2E Matrix ({e2e_suite}, {mode_lbl})", "@qa-tester", "e2e-matrix")
+        e2e_cmd = [py_exe, "scripts/e2e_matrix_harness.py", "--suite", e2e_suite]
+        if not live_llm:
+            e2e_cmd.append("--routing-only")
+        ret_code, stdout, _ = ThreadedSubprocessWatchdog.run_command(
+            e2e_cmd,
+            inactivity_timeout_sec=240,
+            total_timeout_sec=900,
+            env=offline_env,
+            tracker=self.tracker,
+        )
+        if ret_code != 0:
+            self.tracker.end_phase("Gate 3: E2E Matrix", success=False)
+            logger.error(f"[Gate 3 FAILED] e2e_matrix_harness exit={ret_code}")
+            return False
+
+        self.tracker.end_phase("Gate 3: E2E Matrix", success=True)
+        self.mark_step_done("STAGE_1_E2E_MATRIX_GATE", time.time() - t0)
+
+        # 1.4 Gate 4: Macro Benchmark Freshness & Quality Gates
+        t0 = time.time()
+        self.tracker.start_phase(4, "Gate 4: Macro Eval & Quality Gates", "@codebase-auditor", "gemini-4-carbon-high")
         mt_file = PROJECT_ROOT / "docs" / "benchmarks" / "multiturn_benchmark_results.json"
         s11_file = PROJECT_ROOT / "docs" / "benchmarks" / "latest_benchmark_results.json"
+        code_mtime = self._latest_mtime([PROJECT_ROOT / "app", PROJECT_ROOT / "data" / "metadata", PROJECT_ROOT / "data" / "curriculum"])
+        mt_stale = (not mt_file.exists()) or (mt_file.stat().st_mtime < code_mtime)
+        s11_stale = (not s11_file.exists()) or (s11_file.stat().st_mtime < code_mtime)
 
-        if not mt_file.exists() or not s11_file.exists():
-            logger.info("[Stage 1] Đang thực thi benchmark đa lượt & đơn lượt...")
-            # Run benchmarks if missing
-            subprocess.run([str(PROJECT_ROOT / ".venv" / "Scripts" / "python.exe"), "scripts/run_multiturn_benchmark.py"], capture_output=True)
-            subprocess.run([str(PROJECT_ROOT / ".venv" / "Scripts" / "python.exe"), "scripts/run_rag_benchmark.py", "--dataset", "tests/data/benchmark_golden_dataset.json"], capture_output=True)
+        if force_eval or mt_stale:
+            logger.info("[Gate 4] Chạy lại Multi-Turn Benchmark (50 sessions / 222 turns)...")
+            rc_mt, _, _ = ThreadedSubprocessWatchdog.run_command(
+                [py_exe, "scripts/run_multiturn_benchmark.py", "--mode", "retrieval"],
+                inactivity_timeout_sec=240,
+                total_timeout_sec=1200,
+                env=offline_env,
+                tracker=self.tracker,
+            )
+            if rc_mt != 0:
+                self.tracker.end_phase("Gate 4: Macro Eval & Quality Gates", success=False)
+                return False
 
-        self.tracker.end_phase("Audit Benchmark Integrity", success=True)
-        self.mark_step_done("STAGE_1_BENCHMARK_AUDIT", time.time() - t0)
+        if force_eval or s11_stale:
+            logger.info("[Gate 4] Chạy lại Stage 11 Golden 200 Benchmark...")
+            rc_s11, _, _ = ThreadedSubprocessWatchdog.run_command(
+                [py_exe, "scripts/run_rag_benchmark.py", "--dataset", "tests/data/benchmark_golden_dataset.json"],
+                inactivity_timeout_sec=240,
+                total_timeout_sec=1200,
+                env=offline_env,
+                tracker=self.tracker,
+            )
+            if rc_s11 != 0:
+                self.tracker.end_phase("Gate 4: Macro Eval & Quality Gates", success=False)
+                return False
 
-        # 1.4 Evaluate Quality Gates
-        t0 = time.time()
-        self.tracker.start_phase(4, "Nghiệm Thu Quality Gates", "@codebase-auditor", "gemini-4-argon-high")
         from thinker_doer_pipeline import evaluate_quality_gates
         passed, report = evaluate_quality_gates()
         self.checkpoint.stage1_quality_report = report
-        self.checkpoint.stage1_done = True
+        self.checkpoint.stage1_done = passed
         self.mark_step_done("STAGE_1_QUALITY_GATE", time.time() - t0)
-        self.tracker.end_phase("Nghiệm Thu Quality Gates", success=True)
+        self.tracker.end_phase("Gate 4: Macro Eval & Quality Gates", success=passed)
         self.tracker.log_message(f"Kết quả Quality Gates Stage 1: {report}")
-        return True
+        return passed
 
     # -------------------------------------------------------------------------
     # STAGE 2: MULTI-SUBAGENT PAPER STUDIO & HJS COMPILATION
@@ -458,11 +562,11 @@ class MasterAutonomousHarness:
 
         # 2.2 Process each variant
         for var in variants:
-            self.tracker.start_phase(2, f"Section III Toán Pareto (Bản {var})", "@rag-architect", "gemini-4-hydrogen-high")
+            self.tracker.start_phase(2, f"Section III Toán Pareto (Bản {var})", "@rag-architect", "gemini-4-neon-high")
             paper_harness.run_stage_1_architecture_section(metrics, variant=var)
             self.tracker.end_phase(f"Section III Toán Pareto (Bản {var})", success=True)
 
-            self.tracker.start_phase(3, f"Bản Thảo Học Thuật HJS (Bản {var})", "@academic-scribe", "gemini-4-argon-high")
+            self.tracker.start_phase(3, f"Bản Thảo Học Thuật HJS (Bản {var})", "@academic-scribe", "gemini-4-hydrogen-high")
             paper_harness.run_stage_2_manuscript_suite(metrics, variant=var)
             self.tracker.end_phase(f"Bản Thảo Học Thuật HJS (Bản {var})", success=True)
 
@@ -477,37 +581,51 @@ class MasterAutonomousHarness:
     # -------------------------------------------------------------------------
     # MASTER RUNNER
     # -------------------------------------------------------------------------
-    def execute(self, variants: List[str] = ["A", "B"]):
+    def execute(
+        self,
+        variants: List[str] = ["A", "B"],
+        *,
+        stage: str = "all",
+        force_eval: bool = False,
+        live_llm: bool = False,
+        e2e_suite: str = "all",
+    ):
         start_time = time.time()
         print("\n" + "=" * 80)
-        print("🏛️ UNIFIED MASTER AUTONOMOUS HARNESS: TWO-STAGE OVERNIGHT CLOSED LOOP")
+        print("🏛️ UNIFIED MASTER AUTONOMOUS HARNESS: TWO-STAGE CLOSED LOOP (ZERO ARGON)")
         print("   Author    : Tran Thanh Nghia (Student ID: 23DH112252)")
         print("   Mentor    : M.Sc. Tieu Phung Mai Suong (HUFLIT)")
-        print("   Stage 1   : Code & Benchmark Optimization (Fast AST + Pytest + Golden 200)")
-        print("   Stage 2   : Multi-Subagent Paper Studio (gemini-4-hydrogen + gemini-4-argon)")
+        print("   Stage 1   : AST + 11 Sequential Pytests + E2E Matrix + Macro Benchmark")
+        print("   Stage 2   : Multi-Subagent Paper Studio (Brain=Neon/Carbon, Exec=Hydrogen)")
         print("=" * 80 + "\n")
 
-        # Run Stage 1
-        st1_ok = self.run_stage_1_optimization()
-        if not st1_ok:
-            logger.error("[Master Harness] Giai đoạn 1 chưa hội tụ, dừng trước khi viết bài báo.")
-            self.tracker.close()
-            return
+        if stage in ("1", "all"):
+            st1_ok = self.run_stage_1_optimization(
+                force_eval=force_eval,
+                live_llm=live_llm,
+                e2e_suite=e2e_suite,
+            )
+            if not st1_ok:
+                logger.error("[Master Harness] Giai đoạn 1 chưa hội tụ, dừng trước khi chuyển bước.")
+                self.tracker.close()
+                sys.exit(1)
 
-        # Run Stage 2
-        st2_ok = self.run_stage_2_paper_studio(variants=variants)
+        if stage in ("2", "all"):
+            self.run_stage_2_paper_studio(variants=variants)
 
         total_elapsed = time.time() - start_time
         self.tracker.close()
 
         print("\n" + "=" * 80)
-        print(f"🎉 MASTER HARNESS HOÀN TẤT TOÀN DIỆN CẢ 2 GIAI ĐOẠN TRONG {total_elapsed:.1f} GIÂY!")
+        print(f"🎉 MASTER HARNESS HOÀN TẤT (stage={stage}) TRONG {total_elapsed:.1f} GIÂY!")
         print("=" * 80)
-        print("  • Stage 1 (Optimization) : [✔] 100% Cú pháp AST, 100% Pytest PASS, Khóa số liệu chuẩn.")
-        print("  • Stage 2 (Paper Studio) : [✔] Đã đóng gói thành công 2 bản thảo Word (.docx):")
-        print(f"    - Bản A (Kiến trúc & Giải thuật): docs/HJS_Paper_Variant_A_Algorithmic.docx")
-        print(f"    - Bản B (Phương pháp Sư phạm)   : docs/HJS_Paper_Variant_B_Socratic.docx")
-        print(f"    - Bản mặc định đồng bộ          : docs/HJS_Paper_Final.docx")
+        if stage in ("1", "all"):
+            print("  • Stage 1 (Verification) : [✔] AST + 11 Pytest Suites + E2E Matrix + Quality Gates PASS.")
+        if stage in ("2", "all"):
+            print("  • Stage 2 (Paper Studio) : [✔] Đã đóng gói 2 bản thảo Word (.docx):")
+            print("    - Bản A (Kiến trúc & Giải thuật): docs/HJS_Paper_Variant_A_Algorithmic.docx")
+            print("    - Bản B (Phương pháp Sư phạm)   : docs/HJS_Paper_Variant_B_Socratic.docx")
+            print("    - Bản mặc định đồng bộ          : docs/HJS_Paper_Final.docx")
         print("=" * 80 + "\n")
 
 
@@ -515,8 +633,12 @@ def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
-    parser = argparse.ArgumentParser(description="Unified Master Autonomous Harness")
+    parser = argparse.ArgumentParser(description="Unified Master Autonomous Harness (Zero Argon)")
+    parser.add_argument("--stage", choices=["1", "2", "all"], default="1", help="Chọn giai đoạn: 1 (Verify RAG - mặc định, bỏ qua Word), 2 (Paper), hoặc all")
     parser.add_argument("--variants", choices=["A", "B", "all"], default="all", help="Chọn biến thể bài báo (A, B hoặc all)")
+    parser.add_argument("--e2e-suite", choices=["core", "deep", "all", "M1", "M2", "M3", "S1", "M4", "M5", "M6", "M7", "M8"], default="all", help="Chọn bộ suite cho Gate 3 E2E Matrix")
+    parser.add_argument("--force-eval", action="store_true", help="Ép chạy lại Multi-Turn & Golden 200 kể cả khi JSON cũ mới hơn")
+    parser.add_argument("--live-llm", action="store_true", help="Chạy Gate 3 E2E Matrix với LLM thật thay vì --routing-only")
     parser.add_argument("--reset", action="store_true", help="Xóa sạch cache checkpoint và chạy lại từ đầu")
     args = parser.parse_args()
 
@@ -530,7 +652,13 @@ def main():
 
     harness = MasterAutonomousHarness()
     target_vars = ["A", "B"] if args.variants == "all" else [args.variants.upper()]
-    harness.execute(variants=target_vars)
+    harness.execute(
+        variants=target_vars,
+        stage=args.stage,
+        force_eval=args.force_eval,
+        live_llm=args.live_llm,
+        e2e_suite=args.e2e_suite,
+    )
 
 
 if __name__ == "__main__":
