@@ -9,6 +9,7 @@ In-Course Agentic RAG Copilot - Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT.
            để tải về local và chạy scripts/quantize_reranker_int8.py)
 """
 
+import inspect
 import json
 import os
 import random
@@ -25,7 +26,7 @@ import torch
 import torch.nn as nn
 from sklearn.model_selection import GroupShuffleSplit
 from torch.utils.data import DataLoader, Dataset
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
 
 MODEL_ID = os.environ.get("BASE_RERANKER_MODEL", "jinaai/jina-reranker-v2-base-multilingual")
 OUTPUT_DIR = Path("/kaggle/working/jina-reranker-v2-ft-fp32")
@@ -114,12 +115,22 @@ def collate_triplets(batch, tokenizer, max_len: int = 384):
     return pos_enc, neg_enc
 
 
+class _OnnxLogitsWrapper(nn.Module):
+    def __init__(self, model: nn.Module):
+        super().__init__()
+        self.model = model
+
+    def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+        return self.model(input_ids=input_ids, attention_mask=attention_mask).logits
+
+
 def export_onnx_fp32(model, tokenizer, out_dir: Path):
     onnx_dir = out_dir / "onnx"
     onnx_dir.mkdir(parents=True, exist_ok=True)
     onnx_path = onnx_dir / "model.onnx"
 
     model_cpu = model.to("cpu").eval()
+    wrapper = _OnnxLogitsWrapper(model_cpu).eval()
     sample = tokenizer(
         ["Vòng lặp while trong C++ hoạt động thế nào?"],
         ["[Bài giảng Video lesson-06.mp4 mốc 05:20]\nBài giảng về vòng lặp while và điều kiện dừng trong C++."],
@@ -129,27 +140,24 @@ def export_onnx_fp32(model, tokenizer, out_dir: Path):
         return_tensors="pt",
     )
     input_names = ["input_ids", "attention_mask"]
-    inputs = [sample["input_ids"], sample["attention_mask"]]
+    inputs = (sample["input_ids"], sample["attention_mask"])
     dynamic_axes = {
-        "input_ids": {0: "batch", 1: "seq"},
-        "attention_mask": {0: "batch", 1: "seq"},
-        "logits": {0: "batch"},
+        "input_ids": {0: "batch_size", 1: "sequence_length"},
+        "attention_mask": {0: "batch_size", 1: "sequence_length"},
+        "logits": {0: "batch_size"},
     }
-    if "token_type_ids" in sample:
-        input_names.append("token_type_ids")
-        inputs.append(sample["token_type_ids"])
-        dynamic_axes["token_type_ids"] = {0: "batch", 1: "seq"}
 
-    torch.onnx.export(
-        model_cpu,
-        tuple(inputs),
-        str(onnx_path),
-        input_names=input_names,
-        output_names=["logits"],
-        dynamic_axes=dynamic_axes,
-        opset_version=17,
-        do_constant_folding=True,
-    )
+    export_kwargs: Dict[str, Any] = {
+        "input_names": input_names,
+        "output_names": ["logits"],
+        "dynamic_axes": dynamic_axes,
+        "opset_version": 17,
+        "do_constant_folding": True,
+    }
+    if "dynamo" in inspect.signature(torch.onnx.export).parameters:
+        export_kwargs["dynamo"] = False
+
+    torch.onnx.export(wrapper, inputs, str(onnx_path), **export_kwargs)
     model_cpu.config.save_pretrained(str(out_dir))
     tokenizer.save_pretrained(str(out_dir))
     print(f"[Jina Kaggle] Exported ONNX FP32 -> {onnx_path} ({onnx_path.stat().st_size / (1024*1024):.2f} MB)")
@@ -168,9 +176,13 @@ def main():
     print(f"[Jina Kaggle] Base={MODEL_ID} | Train={len(train_rows)} | Val={len(val_rows)} (GroupShuffleSplit)")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    config = AutoConfig.from_pretrained(MODEL_ID, trust_remote_code=True)
+    if hasattr(config, "use_flash_attn"):
+        config.use_flash_attn = False
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
     model = AutoModelForSequenceClassification.from_pretrained(
         MODEL_ID,
+        config=config,
         trust_remote_code=True,
         torch_dtype=torch.float32,
     ).to(device)
@@ -188,12 +200,23 @@ def main():
         collate_fn=lambda b: collate_triplets(b, tokenizer),
     )
 
+    epochs = 3
     optimizer = torch.optim.AdamW(model.parameters(), lr=1.5e-5, weight_decay=0.01)
+    num_training_steps = max(1, len(train_loader) * epochs)
+    num_warmup_steps = max(1, int(0.10 * num_training_steps))
+    scheduler = get_linear_schedule_with_warmup(
+        optimizer,
+        num_warmup_steps=num_warmup_steps,
+        num_training_steps=num_training_steps,
+    )
     margin_loss_fn = nn.MarginRankingLoss(margin=1.2)
     bce_loss_fn = nn.BCEWithLogitsLoss()
 
-    epochs = 3
     pair_acc = 0.0
+    best_pair_acc = -1.0
+    best_pos_sig_mean = 0.0
+    best_neg_sig_mean = 0.0
+    best_state_dict = None
     for epoch in range(1, epochs + 1):
         model.train()
         total_loss = 0.0
@@ -214,10 +237,12 @@ def main():
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
+            scheduler.step()
             total_loss += float(loss.item())
 
         model.eval()
         val_hits, val_tot = 0, 0
+        pos_sig_sum, neg_sig_sum = 0.0, 0.0
         with torch.no_grad():
             for pos_enc, neg_enc in val_loader:
                 pos_enc = {k: v.to(device) for k, v in pos_enc.items()}
@@ -226,8 +251,23 @@ def main():
                 neg_logits = model(**neg_enc).logits.view(-1)
                 val_hits += int((pos_logits > neg_logits).sum().item())
                 val_tot += int(pos_logits.numel())
+                pos_sig_sum += float(torch.sigmoid(pos_logits).sum().item())
+                neg_sig_sum += float(torch.sigmoid(neg_logits).sum().item())
         pair_acc = (val_hits / max(1, val_tot)) * 100.0
-        print(f"[Jina Kaggle] Epoch {epoch}/{epochs} | TrainLoss={total_loss/max(1,len(train_loader)):.4f} | PairAcc={pair_acc:.2f}%")
+        val_pos_sig_mean = pos_sig_sum / max(1, val_tot)
+        val_neg_sig_mean = neg_sig_sum / max(1, val_tot)
+        print(
+            f"[Jina Kaggle] Epoch {epoch}/{epochs} | TrainLoss={total_loss/max(1,len(train_loader)):.4f} "
+            f"| PairAcc={pair_acc:.2f}% | PosSig={val_pos_sig_mean:.4f} | NegSig={val_neg_sig_mean:.4f}"
+        )
+        if pair_acc >= best_pair_acc:
+            best_pair_acc = pair_acc
+            best_pos_sig_mean = val_pos_sig_mean
+            best_neg_sig_mean = val_neg_sig_mean
+            best_state_dict = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+
+    if best_state_dict is not None:
+        model.load_state_dict(best_state_dict)
 
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
@@ -235,13 +275,25 @@ def main():
     export_onnx_fp32(model, tokenizer, OUTPUT_DIR)
 
     with open(OUTPUT_DIR / "training_summary.json", "w", encoding="utf-8") as f:
-        json.dump({"base_model": MODEL_ID, "train_triplets": len(train_rows), "val_pair_acc": round(pair_acc, 2)}, f, indent=2)
+        json.dump(
+            {
+                "base_model": MODEL_ID,
+                "train_triplets": len(train_rows),
+                "val_triplets": len(val_rows),
+                "val_pair_acc": round(best_pair_acc, 2),
+                "val_pos_sigmoid_mean": round(best_pos_sig_mean, 4),
+                "val_neg_sigmoid_mean": round(best_neg_sig_mean, 4),
+            },
+            f,
+            indent=2,
+        )
 
     with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for p in OUTPUT_DIR.rglob("*"):
             if p.is_file():
                 zf.write(p, arcname=p.relative_to(OUTPUT_DIR))
     print(f"[Jina Kaggle] Đã đóng gói hoàn chỉnh: {ZIP_PATH} ({ZIP_PATH.stat().st_size / (1024*1024):.2f} MB)")
+    shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 
 
 if __name__ == "__main__":

@@ -524,10 +524,15 @@ def _match_asr_phonetic_entries(
     is_ptr_or_arr = any(
         k in haystack for k in ("con trỏ", "pointer", "mảng", "array", "xâu", "chuỗi", "string", "struct", "cấp phát", "ma trận")
     )
+    is_sort_or_algo = course_id == "cpp-core" or any(
+        k in haystack for k in ("sắp xếp", "sort", "trộn", "chọn", "merge", "quick", "bubble", "selection", "insertion", "tìm kiếm", "thuật toán")
+    )
 
     selected_cats = ["general_cpp", "operators_and_control"]
     if is_ptr_or_arr or course_id == "cpp-core":
         selected_cats.append("pointers_and_arrays")
+    if is_sort_or_algo:
+        selected_cats.append("sorting_and_algorithms")
     if is_oop_or_stl:
         selected_cats.append("oop_and_stl")
 
@@ -694,8 +699,8 @@ def extract_lesson_lexicon(
         prompt_sections.append("Từ điển thuật ngữ C++ chuẩn:\n" + "\n".join(glossary_lines))
     if phonetic_matches:
         phonetic_lines = [
-            f"- Nhầm ASR [{', '.join(p['asr_noise'][:8])}] -> chuẩn ngữ cảnh: {p['canonical']}"
-            for p in phonetic_matches[:12]
+            f"- Nhầm ASR [{', '.join(p['asr_noise'][:14])}] -> chuẩn ngữ cảnh: {p['canonical']}"
+            for p in phonetic_matches
         ]
         prompt_sections.append("Lỗi đồng âm Whisper cần cảnh giác (CHỈ sửa khi khớp ngữ cảnh bài):\n" + "\n".join(phonetic_lines))
     if chapter_topics:
@@ -799,6 +804,37 @@ _ALLOWED_UNACCENTED_VN_OR_CPP: Set[str] = {
     "set", "multiset", "map", "multimap", "unordered_set", "unordered_map", "pair", "stack",
     "queue", "priority_queue", "deque", "list", "sort", "swap", "min", "max", "abs", "sqrt",
     "pow", "gcd", "lcm", "main", "include", "bits", "stdc", "cpp", "ctrl",
+    "line", "node", "input", "output", "index", "size", "length", "push", "pop", "back",
+    "front", "begin", "end", "insert", "erase", "find", "count", "first", "second",
+    "binary", "search", "merge", "quick", "bubble", "selection", "insertion", "matrix",
+    "tree", "graph", "heap", "object", "constructor", "destructor", "iterator", "function",
+    "method", "variable", "loop", "code", "run", "test", "debug", "compile", "error",
+    "file", "data", "type", "value", "key", "sum", "ans", "res", "tmp", "temp", "cnt",
+    "len", "pos", "idx", "cur", "prev", "next", "head", "tail", "left", "right", "mid",
+    "low", "high", "row", "col", "root", "leaf", "edge", "path", "dist", "cost", "dp",
+    "bfs", "dfs", "bit", "byte", "ram", "cpu", "ide", "oop", "stl", "dsa", "gpa", "id",
+    "name", "age", "score", "student", "stream", "ignore", "printf", "scanf", "plus",
+    "minus", "mod", "div", "and", "or", "not", "xor", "step", "part", "check", "print",
+    "read", "write", "open", "close", "copy", "move", "add", "sub", "mul", "init",
+    "clear", "empty", "top", "val", "num", "str", "arr", "vec", "mat", "ptr", "ref",
+    "obj", "cls", "func", "arg", "param", "ret", "var", "def", "inc", "dec", "lim",
+    "cap", "mem", "buf", "start", "stop", "done", "pass", "fail", "base", "child",
+    "parent", "super", "this", "self", "get", "set", "has", "is", "to", "in", "out",
+    "up", "down", "avg", "prod", "diff", "rem", "quo", "exp", "log", "sin", "cos",
+    "tan", "ceil", "floor", "round", "reverse", "unique", "lower", "upper", "bound",
+    "split", "join", "trim", "strip", "push_back", "pop_back", "emplace_back",
+    "make_pair", "size_t", "uint", "override", "extern", "enum", "union", "define",
+    "fstream", "sstream", "cstdlib", "cstdio", "ctime", "climits", "cctype", "numeric",
+    "functional", "utility", "memory", "tuple", "bitset", "regex", "chrono", "hpp",
+    "exe", "txt", "csv", "json", "xml", "html", "css", "sql", "http", "api", "url",
+    "gcc", "gpp", "clang", "mingw", "dev", "vscode", "codeblocks", "github", "git",
+    "linux", "windows", "mac", "os", "ascii", "utf", "eof", "nan", "inf", "tle", "mle",
+    "rte", "wa", "ac", "ce", "pe", "oj", "io", "stdin", "stdout", "stderr", "alt",
+    "shift", "tab", "enter", "esc", "del", "ins", "home", "space", "click", "scroll",
+    "save", "build", "clean", "edit", "view", "help", "menu", "window", "screen",
+    "folder", "dir", "abc", "xyz", "foo", "bar", "baz", "yes", "no", "hi", "hello",
+    "bye", "note", "tip", "demo", "example", "sample", "quiz", "lab", "doc", "docs",
+    "spec", "plan", "task", "job", "log", "info", "warn", "err", "trace",
 }
 
 _CORRUPTED_ASR_CHAR_RE = re.compile(
@@ -811,12 +847,15 @@ _CORRUPTED_ASR_CHAR_RE = re.compile(
     r"\U0001f000-\U0001faff]"
 )
 _REPEATED_CHAR_NOISE_RE = re.compile(r"([A-Za-z])\1{5,}")
-_SPACED_SINGLE_LETTER_LOOP_RE = re.compile(r"(?i)(?<!\w)([a-z])(?:\s+\1){3,}(?!\w)")
+_SPACED_SINGLE_LETTER_LOOP_RE = re.compile(r"(?i)(?<!\w)([a-z])(?:\s*[,;.]?\s*\1){3,}(?!\w)")
 _REPEATED_WORD_LOOP_RE = re.compile(r"(?i)(?<![\w+])([^\W\d_]{2,})(?:(?:\s*[,;]\s*|\s+)\1){2,}(?![\w+])")
+_REPEATED_PHRASE_LOOP_RE = re.compile(r"(?i)(?<!\w)([a-z0-9_]+\s+[a-z0-9_]+)(?:\s*[,;]\s*\1){2,}(?!\w)")
 _YOUTUBE_HALLUCINATION_RE = re.compile(
     r"(?i)[^.!?\n]*\b(?:if you have any question|leave feedback in comments|thanks for watching|"
     r"thank you for watching|please subscribe|like and subscribe|don't forget to subscribe|"
-    r"remember our sources)[^.!?\n]*[.!?]?"
+    r"remember our sources|in this video,?\s+i would like to|i would like to show you|"
+    r"many of you have requested this part|you should check this part|i will do it quickly|"
+    r"welcome to my channel)[^.!?\n]*[.!?]?"
 )
 
 
@@ -901,8 +940,30 @@ def _is_non_latin_foreign_script_codepoint(code: int) -> bool:
     )
 
 
+def _is_mixed_multilingual_whisper_gibberish(text: str) -> bool:
+    """Phát hiện đoạn ảo giác tiếng Anh/đa ngữ Whisper trộn lẫn 1–2 chữ tiếng Việt rời rạc."""
+    norm = unicodedata.normalize("NFC", text or "").strip()
+    if not norm or ASR_EMPTY_FALLBACK_TEXT in norm:
+        return False
+    if any(tok in norm for tok in ("{", "}", "#include", "[Mã nguồn")) or norm.endswith(";"):
+        return False
+    words = re.findall(r"[A-Za-zÀ-ỹ0-9_]+", norm)
+    if len(words) < 10:
+        return False
+    non_cpp_en = [
+        w for w in words
+        if w.isascii() and w.isalpha() and len(w) >= 3 and w.lower() not in _ALLOWED_UNACCENTED_VN_OR_CPP
+    ]
+    vn_words = [w for w in words if any(ch in VIETNAMESE_NFC_LETTERS for ch in w)]
+    return (
+        len(non_cpp_en) >= 5
+        and (len(non_cpp_en) / len(words)) >= 0.30
+        and (len(vn_words) / len(words)) < 0.25
+    )
+
+
 def _contains_corrupted_asr_artifacts(text: str) -> bool:
-    """Phát hiện ký tự ngoại lai, dấu Latin ngoại lai, Emoji, lặp rác hoặc ảo giác tiếng Anh Whisper."""
+    """Phát hiện ký tự ngoại lai, dấu Latin ngoại lai, Emoji, lặp rác hoặc ảo giác tiếng Anh/đa ngữ Whisper."""
     if not text:
         return False
     return (
@@ -912,18 +973,20 @@ def _contains_corrupted_asr_artifacts(text: str) -> bool:
         or bool(_REPEATED_CHAR_NOISE_RE.search(text))
         or bool(_SPACED_SINGLE_LETTER_LOOP_RE.search(text))
         or bool(_REPEATED_WORD_LOOP_RE.search(text))
+        or bool(_REPEATED_PHRASE_LOOP_RE.search(text))
         or bool(_YOUTUBE_HALLUCINATION_RE.search(text))
         or _is_pure_ascii_whisper_hallucination(text)
+        or _is_mixed_multilingual_whisper_gibberish(text)
     )
 
 
 def _sanitize_corrupted_asr_artifacts(text: str) -> str:
-    """Loại bỏ tất định ký tự ngoại lai, dấu Latin lạ, Emoji, lặp rác và ảo giác tiếng Anh ASR (bảo toàn 134 chữ NFC tiếng Việt)."""
+    """Loại bỏ tất định ký tự ngoại lai, dấu Latin lạ, Emoji, lặp rác và ảo giác tiếng Anh/đa ngữ ASR (bảo toàn 134 chữ NFC tiếng Việt)."""
     if not text:
         return ""
     norm = unicodedata.normalize("NFC", text)
     norm = _YOUTUBE_HALLUCINATION_RE.sub(" ", norm)
-    if _is_pure_ascii_whisper_hallucination(norm):
+    if _is_pure_ascii_whisper_hallucination(norm) or _is_mixed_multilingual_whisper_gibberish(norm):
         return ""
 
     cleaned_chars: List[str] = []
@@ -956,6 +1019,7 @@ def _sanitize_corrupted_asr_artifacts(text: str) -> str:
     stripped = _SPACED_SINGLE_LETTER_LOOP_RE.sub(" ", stripped)
     for _ in range(3):
         next_s = _REPEATED_WORD_LOOP_RE.sub(r"\1", stripped)
+        next_s = _REPEATED_PHRASE_LOOP_RE.sub(r"\1", next_s)
         if next_s == stripped:
             break
         stripped = next_s
@@ -964,7 +1028,7 @@ def _sanitize_corrupted_asr_artifacts(text: str) -> str:
     while ",," in collapsed:
         collapsed = collapsed.replace(",,", ",")
     collapsed = collapsed.strip(" ,;:")
-    if _is_pure_ascii_whisper_hallucination(collapsed):
+    if _is_pure_ascii_whisper_hallucination(collapsed) or _is_mixed_multilingual_whisper_gibberish(collapsed):
         return ""
     return collapsed
 
@@ -1208,6 +1272,7 @@ def _get_llm_client_kwargs(
         "api_keys": resolved_keys,
         "model": resolved_model,
         "timeout": float(timeout),
+        "json_mode": bool(use_gemini),
     }
 
 
@@ -1224,6 +1289,8 @@ def _is_retryable_llm_error(exc: Exception) -> bool:
 
 _RATE_LIMIT_LOCK = threading.Lock()
 _KEY_NEXT_ALLOWED: Dict[Tuple[str, str], float] = {}
+_KEY_429_STREAK: Dict[Tuple[str, str], int] = {}
+_COOLDOWN_LADDER_SEC: Tuple[float, ...] = (12.0, 30.0, 90.0, 300.0)
 
 
 def _reserve_key_wait(model_name: str, api_key: str, rpm_per_key: float) -> float:
@@ -1243,7 +1310,17 @@ def _penalize_key_cooldown(model_name: str, api_key: str, cooldown_sec: float = 
     bucket = (str(model_name), str(api_key))
     with _RATE_LIMIT_LOCK:
         now = time.monotonic()
-        _KEY_NEXT_ALLOWED[bucket] = max(_KEY_NEXT_ALLOWED.get(bucket, now), now + float(cooldown_sec))
+        streak = _KEY_429_STREAK.get(bucket, 0)
+        escalated = _COOLDOWN_LADDER_SEC[min(streak, len(_COOLDOWN_LADDER_SEC) - 1)]
+        _KEY_429_STREAK[bucket] = streak + 1
+        eff_cd = max(float(cooldown_sec), escalated)
+        _KEY_NEXT_ALLOWED[bucket] = max(_KEY_NEXT_ALLOWED.get(bucket, now), now + eff_cd)
+
+
+def _reset_key_streak(model_name: str, api_key: str) -> None:
+    bucket = (str(model_name), str(api_key))
+    with _RATE_LIMIT_LOCK:
+        _KEY_429_STREAK.pop(bucket, None)
 
 
 def default_openai_llm_fn(
@@ -1267,6 +1344,7 @@ def default_openai_llm_fn(
     )
     eff_timeout = float(cfg.get("timeout", timeout))
     rpm_per_key = float(cfg.get("rpm_per_key", 0.0))
+    use_json_mode = bool(cfg.get("json_mode", False))
     keys: List[str] = list(cfg.get("api_keys") or ([cfg["api_key"]] if cfg.get("api_key") else ["ollama"]))
     start_idx = next(_KEY_ROTATION_COUNTER) % len(keys)
     max_attempts = max(4, len(keys) * 2)
@@ -1279,14 +1357,25 @@ def default_openai_llm_fn(
             time.sleep(wait_sec)
         try:
             client = OpenAI(base_url=cfg["base_url"], api_key=active_key, timeout=eff_timeout, max_retries=0)
-            resp = client.chat.completions.create(
-                model=cfg["model"],
-                messages=[
+            req_kwargs: Dict[str, Any] = {
+                "model": cfg["model"],
+                "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt},
                 ],
-                temperature=0.1,
-            )
+                "temperature": 0.1,
+            }
+            if use_json_mode:
+                req_kwargs["response_format"] = {"type": "json_object"}
+            try:
+                resp = client.chat.completions.create(**req_kwargs)
+            except Exception as rf_exc:
+                if use_json_mode and "response_format" in str(rf_exc).lower():
+                    req_kwargs.pop("response_format", None)
+                    resp = client.chat.completions.create(**req_kwargs)
+                else:
+                    raise
+            _reset_key_streak(cfg["model"], active_key)
             return (resp.choices[0].message.content or "").strip()
         except Exception as exc:
             last_err = exc
@@ -1321,6 +1410,7 @@ async def async_openai_llm_fn(
     )
     eff_timeout = float(cfg.get("timeout", timeout))
     rpm_per_key = float(cfg.get("rpm_per_key", 0.0))
+    use_json_mode = bool(cfg.get("json_mode", False))
     keys: List[str] = list(cfg.get("api_keys") or ([cfg["api_key"]] if cfg.get("api_key") else ["ollama"]))
     start_idx = next(_KEY_ROTATION_COUNTER) % len(keys)
     max_attempts = max(4, len(keys) * 2)
@@ -1333,14 +1423,25 @@ async def async_openai_llm_fn(
             await asyncio.sleep(wait_sec)
         try:
             async with AsyncOpenAI(base_url=cfg["base_url"], api_key=active_key, timeout=eff_timeout, max_retries=0) as client:
-                resp = await client.chat.completions.create(
-                    model=cfg["model"],
-                    messages=[
+                req_kwargs: Dict[str, Any] = {
+                    "model": cfg["model"],
+                    "messages": [
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": user_prompt},
                     ],
-                    temperature=0.1,
-                )
+                    "temperature": 0.1,
+                }
+                if use_json_mode:
+                    req_kwargs["response_format"] = {"type": "json_object"}
+                try:
+                    resp = await client.chat.completions.create(**req_kwargs)
+                except Exception as rf_exc:
+                    if use_json_mode and "response_format" in str(rf_exc).lower():
+                        req_kwargs.pop("response_format", None)
+                        resp = await client.chat.completions.create(**req_kwargs)
+                    else:
+                        raise
+            _reset_key_streak(cfg["model"], active_key)
             return (resp.choices[0].message.content or "").strip()
         except Exception as exc:
             last_err = exc
@@ -1499,6 +1600,20 @@ def _apply_batch_candidates(
     return updated_batch
 
 
+def _resolve_target_indices(
+    total: int,
+    limit: Optional[int],
+    target_indices: Optional[Sequence[int]],
+) -> List[int]:
+    if target_indices is None:
+        active_count = total if limit is None else min(total, max(0, int(limit)))
+        return list(range(active_count))
+    idxs = sorted({int(i) for i in target_indices if 0 <= int(i) < total})
+    if limit is not None:
+        idxs = idxs[:max(0, int(limit))]
+    return idxs
+
+
 def canonicalize_lesson_chunks(
     chunks: Sequence[Dict[str, Any]],
     lexicon: Dict[str, Any],
@@ -1506,6 +1621,7 @@ def canonicalize_lesson_chunks(
     llm_fn: Optional[Callable[..., str]] = None,
     batch_size: int = 5,
     limit: Optional[int] = None,
+    target_indices: Optional[Sequence[int]] = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """
     Hiệu đính danh sách chunk transcript theo batch (sync) với Integrity Guardrail.
@@ -1514,11 +1630,11 @@ def canonicalize_lesson_chunks(
     caller = llm_fn or default_openai_llm_fn
     safe_batch_size = max(1, int(batch_size))
     total = len(chunks)
-    active_count = total if limit is None else min(total, max(0, int(limit)))
+    active_indices = _resolve_target_indices(total, limit, target_indices)
 
     stats: Dict[str, Any] = {
         "total_chunks": total,
-        "processed_chunks": active_count,
+        "processed_chunks": len(active_indices),
         "updated": 0,
         "unchanged": 0,
         "rejected": 0,
@@ -1527,10 +1643,17 @@ def canonicalize_lesson_chunks(
         "changes": [],
     }
 
-    result_chunks: List[Dict[str, Any]] = []
-    for start in range(0, active_count, safe_batch_size):
-        batch = chunks[start:min(start + safe_batch_size, active_count)]
-        sys_prompt, usr_prompt = build_correction_prompt(batch, lexicon)
+    result_chunks: List[Dict[str, Any]] = [dict(c) for c in chunks]
+    for start in range(0, len(active_indices), safe_batch_size):
+        idx_group = active_indices[start:start + safe_batch_size]
+        batch = [chunks[i] for i in idx_group]
+        nb_map = None
+        if target_indices is not None:
+            nb_map = {
+                str(chunks[i].get("chunk_id") or f"idx_{pos}"): _build_pass2_neighbor_context(chunks, i)
+                for pos, i in enumerate(idx_group)
+            }
+        sys_prompt, usr_prompt = build_correction_prompt(batch, lexicon, neighbor_contexts=nb_map)
         try:
             raw_resp = _invoke_sync_llm(caller, sys_prompt, usr_prompt)
             cand_map = _parse_llm_batch_response(raw_resp, batch)
@@ -1539,11 +1662,9 @@ def canonicalize_lesson_chunks(
             stats["rejection_reasons"].append({"chunk_id": f"batch_{start}", "reason": f"llm_error:{exc}"})
             cand_map = {}
 
-        result_chunks.extend(_apply_batch_candidates(batch, cand_map, stats))
-
-    if active_count < total:
-        for tail_chunk in chunks[active_count:]:
-            result_chunks.append(dict(tail_chunk))
+        updated_batch = _apply_batch_candidates(batch, cand_map, stats)
+        for orig_i, new_ch in zip(idx_group, updated_batch):
+            result_chunks[orig_i] = new_ch
 
     return result_chunks, stats
 
@@ -1556,21 +1677,29 @@ async def canonicalize_lesson_chunks_async(
     batch_size: int = 5,
     limit: Optional[int] = None,
     max_concurrency: int = 3,
+    target_indices: Optional[Sequence[int]] = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """Phiên bản async chạy song song có giới hạn concurrency cho OpenAI-compatible endpoint."""
     caller = llm_fn or async_openai_llm_fn
     safe_batch_size = max(1, int(batch_size))
     total = len(chunks)
-    active_count = total if limit is None else min(total, max(0, int(limit)))
+    active_indices = _resolve_target_indices(total, limit, target_indices)
     sem = asyncio.Semaphore(max(1, int(max_concurrency)))
 
-    batches: List[Sequence[Dict[str, Any]]] = [
-        chunks[start:min(start + safe_batch_size, active_count)]
-        for start in range(0, active_count, safe_batch_size)
+    idx_groups: List[List[int]] = [
+        active_indices[start:start + safe_batch_size]
+        for start in range(0, len(active_indices), safe_batch_size)
     ]
 
-    async def _run_one(b_idx: int, batch: Sequence[Dict[str, Any]]) -> Tuple[int, Dict[str, str], Optional[str]]:
-        sys_prompt, usr_prompt = build_correction_prompt(batch, lexicon)
+    async def _run_one(b_idx: int, idx_group: List[int]) -> Tuple[int, Dict[str, str], Optional[str]]:
+        batch = [chunks[i] for i in idx_group]
+        nb_map = None
+        if target_indices is not None:
+            nb_map = {
+                str(chunks[i].get("chunk_id") or f"idx_{pos}"): _build_pass2_neighbor_context(chunks, i)
+                for pos, i in enumerate(idx_group)
+            }
+        sys_prompt, usr_prompt = build_correction_prompt(batch, lexicon, neighbor_contexts=nb_map)
         async with sem:
             try:
                 raw_resp = await _invoke_async_llm(caller, sys_prompt, usr_prompt)
@@ -1578,11 +1707,11 @@ async def canonicalize_lesson_chunks_async(
             except Exception as exc:
                 return b_idx, {}, str(exc)
 
-    batch_results = await asyncio.gather(*[_run_one(i, b) for i, b in enumerate(batches)])
+    batch_results = await asyncio.gather(*[_run_one(i, g) for i, g in enumerate(idx_groups)])
 
     stats: Dict[str, Any] = {
         "total_chunks": total,
-        "processed_chunks": active_count,
+        "processed_chunks": len(active_indices),
         "updated": 0,
         "unchanged": 0,
         "rejected": 0,
@@ -1590,16 +1719,16 @@ async def canonicalize_lesson_chunks_async(
         "rejection_reasons": [],
         "changes": [],
     }
-    result_chunks: List[Dict[str, Any]] = []
+    result_chunks: List[Dict[str, Any]] = [dict(c) for c in chunks]
     for b_idx, cand_map, err in sorted(batch_results, key=lambda x: x[0]):
+        idx_group = idx_groups[b_idx]
+        batch = [chunks[i] for i in idx_group]
         if err:
             stats["errors"] += 1
             stats["rejection_reasons"].append({"chunk_id": f"batch_{b_idx}", "reason": f"llm_error:{err}"})
-        result_chunks.extend(_apply_batch_candidates(batches[b_idx], cand_map, stats))
-
-    if active_count < total:
-        for tail_chunk in chunks[active_count:]:
-            result_chunks.append(dict(tail_chunk))
+        updated_batch = _apply_batch_candidates(batch, cand_map, stats)
+        for orig_i, new_ch in zip(idx_group, updated_batch):
+            result_chunks[orig_i] = new_ch
 
     return result_chunks, stats
 
@@ -1607,6 +1736,25 @@ async def canonicalize_lesson_chunks_async(
 _STANDARD_UPPER_ALLOWLIST = {
     "C++", "OOP", "IDE", "RAM", "CPU", "GPU", "STL", "AST", "API", "SQL", "DNA", "ASCII", "UTF",
     "EOF", "NULL", "TRUE", "FALSE", "FIFO", "LIFO", "DFS", "BFS", "GCD", "LCM", "DP", "O",
+    "OK", "GPA", "ID", "AI", "IT", "DSA", "AC", "WA", "TLE", "MLE", "RTE", "CE", "PE",
+    "AB", "ABC", "XYZ", "PTR", "IO", "UI", "UX", "OS", "DB", "HTTP", "HTTPS", "REST",
+    "JSON", "XML", "HTML", "CSS", "PHP", "JS", "TS", "RUN", "POS", "NEG", "MAX", "MIN",
+    "SUM", "AVG", "CNT", "LEN", "IDX", "TMP", "ANS", "RES", "NUM", "STR", "ARR", "VEC",
+    "MAT", "MOD", "DIV", "XOR", "AND", "OR", "NOT", "BIT", "HEX", "BIN", "DEC", "OCT",
+    "INT", "CHAR", "BOOL", "VOID", "AUTO", "ENUM", "MAIN", "ENDL", "COUT", "CIN", "STD",
+    "CPP", "GCC", "EXE", "CMD", "CLI", "GUI", "URL", "URI", "IP", "DNS", "TCP", "UDP",
+    "SSH", "GIT", "VS", "DEV", "PC", "WIN", "MAC", "LN", "LOG", "SIN", "COS", "TAN",
+    "ABS", "POW", "SQRT",
+}
+_VALID_CPP_DOT_MEMBERS = {
+    "ignore", "getline", "get", "peek", "clear", "sync", "eof", "fail", "good", "bad",
+    "first", "second", "begin", "end", "rbegin", "rend", "size", "length", "empty",
+    "push", "pop", "top", "front", "back", "insert", "erase", "find", "count",
+    "lower", "upper", "at", "data", "resize", "reserve", "assign", "append", "substr",
+    "compare", "swap", "sort", "reverse", "unique", "merge", "splice", "remove",
+    "next", "prev", "val", "key", "left", "right", "name", "age", "gpa", "id",
+    "ma", "ten", "diem", "h", "hpp", "cpp", "c", "txt", "in", "out", "exe",
+    "mp4", "json", "csv", "py",
 }
 _SUSPICIOUS_ACRONYM_RE = re.compile(r"\b(?:[A-Z]{2,6}|[a-z]{2,12}\.[a-z]{2,6})\b")
 
@@ -1664,8 +1812,32 @@ def _is_suspicious_acronym_chunk(text: str, lexicon: Dict[str, Any]) -> Optional
             continue
         if tok.lower() in ast_lower:
             continue
+        if "." in tok:
+            rhs = tok.rsplit(".", 1)[-1].lower()
+            if rhs in _VALID_CPP_DOT_MEMBERS:
+                continue
         return tok
     return None
+
+
+def find_flagged_chunk_indices(
+    chunks: Sequence[Dict[str, Any]],
+    lexicon: Dict[str, Any],
+) -> List[int]:
+    """Trả về danh sách index đã sắp xếp của các chunk còn lỗi đồng âm, rác ASR hoặc acronym nghi vấn."""
+    forbidden_map = lexicon.get("forbidden_noise_map") or []
+    flagged: List[int] = []
+    for idx, ch in enumerate(chunks):
+        txt = str(ch.get("raw_text") or ch.get("text") or "").strip()
+        if not txt or ASR_EMPTY_FALLBACK_TEXT in txt:
+            continue
+        if (
+            _contains_corrupted_asr_artifacts(txt)
+            or _scan_residual_forbidden_noise(txt, forbidden_map)
+            or _is_suspicious_acronym_chunk(txt, lexicon)
+        ):
+            flagged.append(idx)
+    return flagged
 
 
 def run_supervisor_layer_a(
@@ -1675,6 +1847,7 @@ def run_supervisor_layer_a(
     *,
     pass1_stats: Optional[Dict[str, Any]] = None,
     active_limit: Optional[int] = None,
+    target_indices: Optional[Sequence[int]] = None,
 ) -> Dict[str, Any]:
     """
     Supervisor Layer A (Deterministic, 0 LLM cost):
@@ -1684,7 +1857,7 @@ def run_supervisor_layer_a(
     4. Gom danh sách chunk bị guardrail Pass 1 từ chối để chuyển Pass 2 retry đơn lẻ.
     """
     total = len(orig_chunks)
-    active_count = total if active_limit is None else min(total, max(0, int(active_limit)))
+    iter_indices = _resolve_target_indices(total, active_limit, target_indices)
     working = [dict(c) for c in candidate_chunks]
     if len(working) != total:
         # Khôi phục an toàn hoàn toàn nếu số lượng chunk bị thay đổi
@@ -1696,7 +1869,7 @@ def run_supervisor_layer_a(
             "recheck_hints": {},
             "modified_indices": [],
             "suspicious_unchanged_indices": [],
-            "pass1_rejected_indices": list(range(active_count)),
+            "pass1_rejected_indices": list(iter_indices),
         }
 
     protected_ast = _extract_protected_ast_tokens(lexicon)
@@ -1715,7 +1888,7 @@ def run_supervisor_layer_a(
     suspicious_unchanged_indices: List[int] = []
     pass1_rejected_indices: List[int] = []
 
-    for idx in range(active_count):
+    for idx in iter_indices:
         orig = orig_chunks[idx]
         cand = working[idx]
         cid = str(orig.get("chunk_id") or f"idx_{idx}")
@@ -2152,6 +2325,7 @@ async def canonicalize_lesson_two_pass_async(
     limit: Optional[int] = None,
     max_concurrency: int = 4,
     enable_supervisor: bool = True,
+    target_indices: Optional[Sequence[int]] = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """Smart 2-Pass + 2-Layer Supervisor pipeline (Async)."""
     caller = llm_fn or async_openai_llm_fn
@@ -2165,11 +2339,19 @@ async def canonicalize_lesson_two_pass_async(
         batch_size=batch_size,
         limit=limit,
         max_concurrency=max_concurrency,
+        target_indices=target_indices,
     )
-    active_count = stats["processed_chunks"]
+    active_limit_arg = None if target_indices is not None else stats["processed_chunks"]
 
     # Layer A (Deterministic)
-    layer_a = run_supervisor_layer_a(chunks, pass1_chunks, lexicon, pass1_stats=stats, active_limit=active_count)
+    layer_a = run_supervisor_layer_a(
+        chunks,
+        pass1_chunks,
+        lexicon,
+        pass1_stats=stats,
+        active_limit=active_limit_arg,
+        target_indices=target_indices,
+    )
     working = layer_a["chunks"]
 
     # Layer B (Cross-Model AI Auditor)
@@ -2243,12 +2425,19 @@ async def canonicalize_lesson_two_pass_async(
             )
 
     # Final Layer A metadata immutability check before finalizing
-    final_check = run_supervisor_layer_a(chunks, working, lexicon, active_limit=active_count)
+    final_check = run_supervisor_layer_a(
+        chunks,
+        working,
+        lexicon,
+        active_limit=active_limit_arg,
+        target_indices=target_indices,
+    )
     final_chunks = final_check["chunks"]
 
     # Recount actual changes relative to original chunks
+    eval_indices = _resolve_target_indices(len(chunks), active_limit_arg, target_indices)
     net_changes = []
-    for idx in range(active_count):
+    for idx in eval_indices:
         orig_txt = unicodedata.normalize("NFC", str(chunks[idx].get("raw_text") or chunks[idx].get("text") or "")).strip()
         fin_txt = unicodedata.normalize("NFC", str(final_chunks[idx].get("raw_text") or final_chunks[idx].get("text") or "")).strip()
         if fin_txt != orig_txt:
@@ -2264,7 +2453,7 @@ async def canonicalize_lesson_two_pass_async(
     stats.update(
         {
             "updated": len(net_changes),
-            "unchanged": active_count - len(net_changes),
+            "unchanged": len(eval_indices) - len(net_changes),
             "changes": net_changes,
             "supervisor_audited": sup_audited,
             "supervisor_reverted": len(sup_reverted),
@@ -2289,6 +2478,7 @@ def canonicalize_lesson_two_pass(
     batch_size: int = 8,
     limit: Optional[int] = None,
     enable_supervisor: bool = True,
+    target_indices: Optional[Sequence[int]] = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """Smart 2-Pass + 2-Layer Supervisor pipeline (Sync)."""
     caller = llm_fn or default_openai_llm_fn
@@ -2300,9 +2490,17 @@ def canonicalize_lesson_two_pass(
         llm_fn=caller,
         batch_size=batch_size,
         limit=limit,
+        target_indices=target_indices,
     )
-    active_count = stats["processed_chunks"]
-    layer_a = run_supervisor_layer_a(chunks, pass1_chunks, lexicon, pass1_stats=stats, active_limit=active_count)
+    active_limit_arg = None if target_indices is not None else stats["processed_chunks"]
+    layer_a = run_supervisor_layer_a(
+        chunks,
+        pass1_chunks,
+        lexicon,
+        pass1_stats=stats,
+        active_limit=active_limit_arg,
+        target_indices=target_indices,
+    )
     working = layer_a["chunks"]
 
     if enable_supervisor:
@@ -2362,11 +2560,18 @@ def canonicalize_lesson_two_pass(
                 stats["errors"] += 1
                 pass2_stats["rejection_reasons"].append({"chunk_id": f"pass2_{target_idx}", "reason": f"llm_error:{exc}"})
 
-    final_check = run_supervisor_layer_a(chunks, working, lexicon, active_limit=active_count)
+    final_check = run_supervisor_layer_a(
+        chunks,
+        working,
+        lexicon,
+        active_limit=active_limit_arg,
+        target_indices=target_indices,
+    )
     final_chunks = final_check["chunks"]
 
+    eval_indices = _resolve_target_indices(len(chunks), active_limit_arg, target_indices)
     net_changes = []
-    for idx in range(active_count):
+    for idx in eval_indices:
         orig_txt = unicodedata.normalize("NFC", str(chunks[idx].get("raw_text") or chunks[idx].get("text") or "")).strip()
         fin_txt = unicodedata.normalize("NFC", str(final_chunks[idx].get("raw_text") or final_chunks[idx].get("text") or "")).strip()
         if fin_txt != orig_txt:
@@ -2382,7 +2587,7 @@ def canonicalize_lesson_two_pass(
     stats.update(
         {
             "updated": len(net_changes),
-            "unchanged": active_count - len(net_changes),
+            "unchanged": len(eval_indices) - len(net_changes),
             "changes": net_changes,
             "supervisor_audited": sup_audited,
             "supervisor_reverted": len(sup_reverted),
@@ -2479,6 +2684,18 @@ class QdrantSyncResources:
             self._dense_model = get_embedding_service().dense_model
         return self._dense_model
 
+    def switch_dense_to_cpu(self) -> Any:
+        """Chuyển mô hình Dense E5 sang CPUExecutionProvider khi GPU 4GB VRAM bị tràn (OOM)."""
+        from fastembed import TextEmbedding
+
+        self._dense_model = None
+        self._dense_model = TextEmbedding(
+            model_name=settings.EMBEDDING_MODEL_NAME,
+            providers=["CPUExecutionProvider"],
+            threads=4,
+        )
+        return self._dense_model
+
     @property
     def sparse_model(self) -> Any:
         if self._sparse_model is None:
@@ -2507,7 +2724,7 @@ def upsert_lesson_chunks_to_qdrant(
     *,
     resources: Optional[QdrantSyncResources] = None,
 ) -> int:
-    """Idempotent UUIDv5 Qdrant upsert với Dense E5 ('passage: ') + Sparse BM25 (hỗ trợ singleton cache)."""
+    """Idempotent UUIDv5 Qdrant upsert với Dense E5 ('passage: ', micro-batch 8 + CPU OOM fallback) + Sparse BM25."""
     if not chunks:
         return 0
 
@@ -2519,7 +2736,23 @@ def upsert_lesson_chunks_to_qdrant(
     qdrant = res.qdrant
 
     texts = [str(c.get("raw_text") or c.get("text") or "") for c in chunks]
-    dense_embeddings = list(dense_model.embed([f"passage: {t}" for t in texts]))
+    passage_texts = [f"passage: {t}" for t in texts]
+    dense_embeddings: List[Any] = []
+    for s in range(0, len(passage_texts), 8):
+        batch_txts = passage_texts[s:s + 8]
+        try:
+            dense_embeddings.extend(list(dense_model.embed(batch_txts)))
+        except Exception as exc:
+            err_low = str(exc).lower()
+            if any(k in err_low for k in ("out of memory", "cuda", "cudnn")):
+                print(
+                    f"[QdrantSync] Cảnh báo VRAM CUDA ({lesson_id}): tự động fallback Dense E5 sang CPU cho các batch còn lại.",
+                    flush=True,
+                )
+                dense_model = res.switch_dense_to_cpu()
+                dense_embeddings.extend(list(dense_model.embed(batch_txts)))
+            else:
+                raise
     sparse_embeddings = list(sparse_model.embed(texts))
 
     points = []
@@ -2555,7 +2788,8 @@ def upsert_lesson_chunks_to_qdrant(
             )
         )
 
-    qdrant.upsert(collection_name=settings.QDRANT_COLLECTION_NAME, points=points)
+    for s in range(0, len(points), 100):
+        qdrant.upsert(collection_name=settings.QDRANT_COLLECTION_NAME, points=points[s:s + 100])
     return len(points)
 
 
@@ -2683,6 +2917,21 @@ def _parse_lessons_arg(raw_lessons: Optional[str]) -> Optional[List[int]]:
     return out or None
 
 
+def get_qdrant_video_transcript_count(resources: Optional[QdrantSyncResources] = None) -> int:
+    """Đếm chính xác số point `content_type == 'video_transcript'` hiện có trên Qdrant Cloud."""
+    from qdrant_client.http import models
+
+    res = resources if resources is not None else QdrantSyncResources()
+    cnt_resp = res.qdrant.count(
+        collection_name=settings.QDRANT_COLLECTION_NAME,
+        count_filter=models.Filter(
+            must=[models.FieldCondition(key="content_type", match=models.MatchValue(value="video_transcript"))]
+        ),
+        exact=True,
+    )
+    return int(getattr(cnt_resp, "count", 0))
+
+
 def run_canonicalization_cli(args: argparse.Namespace) -> int:
     parsed_lessons = _parse_lessons_arg(getattr(args, "lessons", None))
     targets = find_transcript_targets(
@@ -2693,7 +2942,7 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
         lesson_seqs=parsed_lessons,
     )
     if not targets:
-        print("[WARN] Không tìm thấy file *_chunks.json phù hợp bộ lọc.")
+        print("[WARN] Không tìm thấy file *_chunks.json phù hợp bộ lọc.", flush=True)
         return 0
 
     dry_run = not args.apply
@@ -2701,6 +2950,9 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
     use_supervisor = bool(getattr(args, "supervisor", False))
     if use_supervisor and not use_two_pass:
         use_two_pass = True
+    targeted_only = bool(getattr(args, "targeted_only", False))
+    sync_qdrant_all = bool(getattr(args, "sync_qdrant_all", False))
+    do_sync_qdrant = bool(getattr(args, "sync_qdrant", False)) or sync_qdrant_all
 
     llm_cfg = _get_llm_client_kwargs(
         use_gemini=bool(getattr(args, "gemini", False)),
@@ -2740,32 +2992,37 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
     ckpt_data = load_reclean_checkpoint(ckpt_path) if (not dry_run and ckpt_path) else {"lessons": {}}
     resume_mode = bool(getattr(args, "resume", False))
 
-    qdrant_resources = QdrantSyncResources() if (not dry_run and args.sync_qdrant) else None
+    qdrant_resources = QdrantSyncResources() if (not dry_run and do_sync_qdrant) else None
 
     mode_label = "DRY-RUN" if dry_run else "APPLY"
     sup_label = f" | Supervisor: {sup_cfg['model']}" if use_supervisor else ""
     pass_label = "2-Pass" if use_two_pass else "1-Pass"
-    print("=" * 76)
+    scope_label = " | Targeted-Only" if targeted_only else ""
+    print("=" * 76, flush=True)
     print(
-        f" AST CANONICALIZER [{mode_label} | {pass_label}] | Targets: {len(targets)} lessons | "
-        f"Batch size: {args.batch_size} | Model: {llm_cfg['model']}{sup_label}"
+        f" AST CANONICALIZER [{mode_label} | {pass_label}{scope_label}] | Targets: {len(targets)} lessons | "
+        f"Batch size: {args.batch_size} | Model: {llm_cfg['model']}{sup_label}",
+        flush=True,
     )
-    print("=" * 76)
+    print("=" * 76, flush=True)
 
     if dry_run and not llm_reachable:
         print(
             f"[DRY-RUN OFFLINE PLAN] LLM endpoint ({llm_cfg['base_url']}) is unreachable. "
-            "Generating deterministic dry-run plan without external calls or mutations."
+            "Generating deterministic dry-run plan without external calls or mutations.",
+            flush=True,
         )
 
     remaining_budget: Optional[int] = args.limit
     updated_seqs: List[int] = []
+    all_target_seqs: List[int] = []
     total_updated = 0
     total_rejected = 0
     total_pass2_fixed = 0
     total_sup_reverted = 0
     total_meta_reverts = 0
     total_qdrant_points = 0
+    total_flagged_chunks = 0
 
     for t in targets:
         if remaining_budget is not None and remaining_budget <= 0:
@@ -2776,32 +3033,55 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
         lid = t["lesson_id"]
         path: Path = t["path"]
         ckpt_key = f"{cid}:{lid}"
+        all_target_seqs.append(seq)
 
         if not dry_run and resume_mode and ckpt_data["lessons"].get(ckpt_key, {}).get("status") == "DONE":
-            print(f"  - [{cid}] {lid}: [SKIP checkpoint DONE]")
+            print(f"  - [{cid}] {lid}: [SKIP checkpoint DONE]", flush=True)
             continue
 
         chunks = json.loads(path.read_text(encoding="utf-8"))
         lexicon = extract_lesson_lexicon(cid, seq)
         lesson_limit = remaining_budget if remaining_budget is not None else None
+        t_indices = find_flagged_chunk_indices(chunks, lexicon) if targeted_only else None
+        if t_indices is not None:
+            total_flagged_chunks += len(t_indices)
 
         if dry_run and not llm_reachable:
-            planned_cnt = len(chunks) if lesson_limit is None else min(len(chunks), lesson_limit)
+            base_cnt = len(t_indices) if t_indices is not None else len(chunks)
+            planned_cnt = base_cnt if lesson_limit is None else min(base_cnt, lesson_limit)
             batches_cnt = (planned_cnt + max(1, args.batch_size) - 1) // max(1, args.batch_size)
+            flag_str = f", flagged={len(t_indices)}" if t_indices is not None else ""
             print(
-                f"  - [{cid}] {lid} ({path.name}): total_chunks={len(chunks)}, "
+                f"  - [{cid}] {lid} ({path.name}): total_chunks={len(chunks)}{flag_str}, "
                 f"planned_chunks={planned_cnt}, batches={batches_cnt}, "
                 f"ast={lexicon['has_ast']}, hotwords={len(lexicon['hotwords_list'])}, "
-                f"phonetic_rules={len(lexicon.get('asr_phonetic_entries', []))}"
+                f"phonetic_rules={len(lexicon.get('asr_phonetic_entries', []))}",
+                flush=True,
             )
             if chunks and planned_cnt > 0:
-                sys_p, usr_p = build_correction_prompt(chunks[:min(2, planned_cnt)], lexicon)
-                print(f"    sample_prompt_chars=(sys={len(sys_p)}, usr={len(usr_p)}) | top_hotwords={lexicon['hotwords_list'][:8]}")
+                sample_batch = [chunks[i] for i in (t_indices[:2] if t_indices else range(min(2, planned_cnt)))]
+                sys_p, usr_p = build_correction_prompt(sample_batch, lexicon)
+                print(
+                    f"    sample_prompt_chars=(sys={len(sys_p)}, usr={len(usr_p)}) | top_hotwords={lexicon['hotwords_list'][:8]}",
+                    flush=True,
+                )
             if remaining_budget is not None:
                 remaining_budget -= planned_cnt
             continue
 
-        if use_two_pass:
+        if t_indices is not None and len(t_indices) == 0:
+            new_chunks = [dict(c) for c in chunks]
+            stats = {
+                "total_chunks": len(chunks),
+                "processed_chunks": 0,
+                "updated": 0,
+                "unchanged": 0,
+                "rejected": 0,
+                "errors": 0,
+                "changes": [],
+            }
+            print(f"  - [{cid}] {lid}: [SKIP targeted-only: 0/{len(chunks)} flagged]", flush=True)
+        elif use_two_pass:
             if args.async_mode:
                 new_chunks, stats = asyncio.run(
                     canonicalize_lesson_two_pass_async(
@@ -2813,6 +3093,7 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
                         limit=lesson_limit,
                         max_concurrency=max_concurrency,
                         enable_supervisor=use_supervisor,
+                        target_indices=t_indices,
                     )
                 )
             else:
@@ -2824,6 +3105,7 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
                     batch_size=args.batch_size,
                     limit=lesson_limit,
                     enable_supervisor=use_supervisor,
+                    target_indices=t_indices,
                 )
         else:
             if args.async_mode:
@@ -2835,6 +3117,7 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
                         batch_size=args.batch_size,
                         limit=lesson_limit,
                         max_concurrency=max_concurrency,
+                        target_indices=t_indices,
                     )
                 )
             else:
@@ -2844,6 +3127,7 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
                     llm_fn=_cli_sync_llm,
                     batch_size=args.batch_size,
                     limit=lesson_limit,
+                    target_indices=t_indices,
                 )
 
         if remaining_budget is not None:
@@ -2855,20 +3139,22 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
         total_sup_reverted += stats.get("supervisor_reverted", 0)
         total_meta_reverts += stats.get("metadata_reverts", 0)
 
-        extra_info = ""
-        if use_two_pass:
-            extra_info = (
-                f", pass2=({stats.get('pass2_fixed', 0)}/{stats.get('pass2_attempted', 0)}), "
-                f"sup_audit={stats.get('supervisor_audited', 0)}, sup_reverted={stats.get('supervisor_reverted', 0)}, "
-                f"meta_reverts={stats.get('metadata_reverts', 0)}"
+        if stats["processed_chunks"] > 0:
+            extra_info = ""
+            if use_two_pass:
+                extra_info = (
+                    f", pass2=({stats.get('pass2_fixed', 0)}/{stats.get('pass2_attempted', 0)}), "
+                    f"sup_audit={stats.get('supervisor_audited', 0)}, sup_reverted={stats.get('supervisor_reverted', 0)}, "
+                    f"meta_reverts={stats.get('metadata_reverts', 0)}"
+                )
+            print(
+                f"  - [{cid}] {lid}: processed={stats['processed_chunks']}/{stats['total_chunks']}, "
+                f"updated={stats['updated']}, unchanged={stats['unchanged']}, "
+                f"rejected={stats['rejected']}, errors={stats['errors']}{extra_info}",
+                flush=True,
             )
-        print(
-            f"  - [{cid}] {lid}: processed={stats['processed_chunks']}/{stats['total_chunks']}, "
-            f"updated={stats['updated']}, unchanged={stats['unchanged']}, "
-            f"rejected={stats['rejected']}, errors={stats['errors']}{extra_info}"
-        )
-        for chg in stats["changes"][:3]:
-            print(f"    * {chg['chunk_id']} ({chg['start_sec']}s): {chg['before'][:70]} -> {chg['after'][:70]}")
+            for chg in stats["changes"][:3]:
+                print(f"    * {chg['chunk_id']} ({chg['start_sec']}s): {chg['before'][:70]} -> {chg['after'][:70]}", flush=True)
 
         pts = 0
         if not dry_run:
@@ -2877,16 +3163,16 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
                 tmp_json.write_text(json.dumps(new_chunks, ensure_ascii=False, indent=2), encoding="utf-8")
                 tmp_json.replace(path)
                 updated_seqs.append(seq)
-                if args.sync_qdrant:
-                    pts = upsert_lesson_chunks_to_qdrant(
-                        new_chunks,
-                        course_id=cid,
-                        lesson_id=lid,
-                        lesson_seq=seq,
-                        folder_name=t["folder_name"],
-                        resources=qdrant_resources,
-                    )
-                    total_qdrant_points += pts
+            if do_sync_qdrant and (stats["updated"] > 0 or sync_qdrant_all):
+                pts = upsert_lesson_chunks_to_qdrant(
+                    new_chunks,
+                    course_id=cid,
+                    lesson_id=lid,
+                    lesson_seq=seq,
+                    folder_name=t["folder_name"],
+                    resources=qdrant_resources,
+                )
+                total_qdrant_points += pts
             if ckpt_path is not None:
                 is_clean_done = stats["errors"] == 0 and stats.get("supervisor_errors", 0) == 0
                 ckpt_data["lessons"][ckpt_key] = {
@@ -2903,22 +3189,38 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
             if stats["errors"] >= 3 and stats["updated"] == 0:
                 print(
                     f"[STOP-QUOTA] Bài {lid} gặp {stats['errors']} lỗi LLM liên tiếp (nhiều khả năng hết RPD/quota ngày). "
-                    "Tạm dừng cụm an toàn để giữ checkpoint --resume."
+                    "Tạm dừng cụm an toàn để giữ checkpoint --resume.",
+                    flush=True,
                 )
                 break
 
     if dry_run:
-        print("[DRY-RUN] Complete. Zero files modified in data/, zero Qdrant upserts.")
+        if targeted_only:
+            print(f"[DRY-RUN] Complete. total_flagged_chunks={total_flagged_chunks}. Zero files modified.", flush=True)
+        else:
+            print("[DRY-RUN] Complete. Zero files modified in data/, zero Qdrant upserts.", flush=True)
     else:
-        if args.refresh_chapters and updated_seqs:
-            refreshed = refresh_video_chapters_for_lessons(updated_seqs)
-            print(f"[APPLY] Refreshed video_chapters for {refreshed} lessons in {MANIFEST_PATH}")
+        chapter_seqs = all_target_seqs if (args.refresh_chapters and sync_qdrant_all) else updated_seqs
+        if args.refresh_chapters and chapter_seqs:
+            refreshed = refresh_video_chapters_for_lessons(chapter_seqs)
+            print(f"[APPLY] Refreshed video_chapters for {refreshed} lessons in {MANIFEST_PATH}", flush=True)
         print(
             f"[APPLY] Complete. lessons_modified={len(updated_seqs)}, "
             f"chunks_updated={total_updated}, pass2_fixed={total_pass2_fixed}, "
             f"sup_reverted={total_sup_reverted}, meta_reverts={total_meta_reverts}, "
-            f"guardrail_rejected={total_rejected}, qdrant_upserted={total_qdrant_points}"
+            f"guardrail_rejected={total_rejected}, qdrant_upserted={total_qdrant_points}",
+            flush=True,
         )
+        if do_sync_qdrant and qdrant_resources is not None:
+            try:
+                q_count = get_qdrant_video_transcript_count(qdrant_resources)
+                local_total = sum(
+                    len(json.loads(item["path"].read_text(encoding="utf-8")))
+                    for item in find_transcript_targets()
+                )
+                print(f"[QDRANT PARITY] exact_count={q_count} vs local_chunks={local_total}", flush=True)
+            except Exception as q_exc:
+                print(f"[QDRANT PARITY] Warning: không thể kiểm đếm Qdrant exact_count ({q_exc})", flush=True)
     return 0
 
 
@@ -3044,6 +3346,18 @@ def build_arg_parser() -> argparse.ArgumentParser:
         action="store_true",
         default=False,
         help="With --apply, perform idempotent UUIDv5 Qdrant upsert for modified lessons.",
+    )
+    parser.add_argument(
+        "--sync-qdrant-all",
+        action="store_true",
+        default=False,
+        help="With --apply, upsert ALL targeted lessons to Qdrant (even if Stage 2 made 0 new edits, ensuring Stage 1 edits are synced).",
+    )
+    parser.add_argument(
+        "--targeted-only",
+        action="store_true",
+        default=False,
+        help="Send only flagged chunks (residual ASR homophones, gibberish, suspicious acronyms) with neighbor context to LLM.",
     )
     parser.add_argument(
         "--refresh-chapters",

@@ -1233,3 +1233,90 @@ def test_canonicalizer_sanitizes_corrupted_asr_artifacts_and_unblocks_guardrail(
     la_res = canon.run_supervisor_layer_a(la_chunks, la_chunks, lex_2)
     assert 0 in la_res["suspicious_unchanged_indices"]
     assert "CJK" in la_res["recheck_hints"].get(0, "")
+
+
+def test_canonicalizer_mixed_gibberish_loops_and_layer_a_allowlist():
+    # 1. Mixed multilingual Whisper gibberish + comma/phrase loops are caught and cleaned
+    mixed_gib = (
+        "Alimentar and Ctrl, Drake Provost G crashes, irac to n, unite, tracing new issue Cout 1 thì cout 2. "
+        "Greatist Aveblock Go see the gosp Clip passes Welcome to the platform heen hungry."
+    )
+    assert canon._contains_corrupted_asr_artifacts(mixed_gib) is True
+    assert canon._sanitize_corrupted_asr_artifacts(mixed_gib) == ""
+
+    comma_loop = "Chỗ này ta dùng biến y, y, y, y, y để kiểm tra tiếp."
+    assert canon._contains_corrupted_asr_artifacts(comma_loop) is True
+    cleaned_loop = canon._sanitize_corrupted_asr_artifacts(comma_loop)
+    assert "y, y, y, y" not in cleaned_loop and "kiểm tra tiếp" in cleaned_loop
+
+    phrase_loop = "Ta nối node 1, node 1, node 1 vào danh sách rồi gán 0, 0, 0."
+    assert canon._contains_corrupted_asr_artifacts(phrase_loop) is True
+    cleaned_phrase = canon._sanitize_corrupted_asr_artifacts(phrase_loop)
+    assert "node 1, node 1" not in cleaned_phrase and "0, 0, 0" in cleaned_phrase
+
+    # 2. Valid Vietnamese C++ lecture chunk with English code terms MUST NOT be flagged as gibberish
+    valid_vn_cpp = (
+        "Sau đó mình sẽ dùng một cái string là string line, tách ra bằng std::getline và cin.ignore để đọc xâu, "
+        "nhấn Ctrl+C hoặc Ctrl+N trong IDE rồi chạy thử nhé."
+    )
+    assert canon._contains_corrupted_asr_artifacts(valid_vn_cpp) is False
+
+    # 3. Layer A allowlists OK/GPA/cin.ignore/it.first/set.find/Ctrl+C while catching mat.hat & new homophones
+    lex_26 = canon.extract_lesson_lexicon("cpp-core", 26)
+    assert canon._is_suspicious_acronym_chunk("OK điểm GPA dùng cin.ignore, it.first và set.find nhé.", lex_26) is None
+    assert canon._is_suspicious_acronym_chunk("Thư viện mat.hat dùng để tính căn bậc hai.", lex_26) == "mat.hat"
+    assert canon._is_suspicious_acronym_chunk("Bấm Ctrl+C rồi viết cốt xót mảng nhanh hơn.", lex_26) is None
+
+    flagged_indices = canon.find_flagged_chunk_indices(
+        [
+            {"chunk_id": "ok_1", "raw_text": "OK điểm GPA dùng cin.ignore, it.first và set.find với Ctrl+C."},
+            {"chunk_id": "bad_1", "raw_text": "Các bạn dùng hàm xót để sắp xếp rồi viết cốt lại nhé."},
+            {"chunk_id": "empty_1", "raw_text": canon.ASR_EMPTY_FALLBACK_TEXT},
+        ],
+        lex_26,
+    )
+    assert flagged_indices == [1]
+
+
+@pytest.mark.asyncio
+async def test_canonicalizer_targeted_only_preserves_clean_chunks_and_attaches_neighbor_context():
+    lex_26 = canon.extract_lesson_lexicon("cpp-core", 26)
+    chunks = [
+        {"chunk_id": "c0", "start_sec": 10, "end_sec": 20, "start_label": "00:10", "end_label": "00:20",
+         "raw_text": "Hôm nay chúng ta học cách sắp xếp dãy số trong C++."},
+        {"chunk_id": "c1", "start_sec": 20, "end_sec": 30, "start_label": "00:20", "end_label": "00:30",
+         "raw_text": "Các bạn tự viết cốt phần hàm xót tăng dần trước nhé."},
+        {"chunk_id": "c2", "start_sec": 30, "end_sec": 40, "start_label": "00:30", "end_label": "00:40",
+         "raw_text": "Sau đó kiểm tra lại kết quả in ra màn hình."},
+    ]
+    t_idx = canon.find_flagged_chunk_indices(chunks, lex_26)
+    assert t_idx == [1]
+
+    seen_prompts = []
+
+    async def _mock_writer(sys_p: str, usr_p: str) -> str:
+        seen_prompts.append(usr_p)
+        return json.dumps({"c1": "Các bạn tự viết code phần hàm sort tăng dần trước nhé."}, ensure_ascii=False)
+
+    async def _mock_sup(sys_p: str, usr_p: str) -> str:
+        return json.dumps({"c1": {"verdict": "APPROVED", "hint": ""}}, ensure_ascii=False)
+
+    out_chunks, stats = await canon.canonicalize_lesson_two_pass_async(
+        chunks,
+        lex_26,
+        llm_fn=_mock_writer,
+        supervisor_llm_fn=_mock_sup,
+        batch_size=5,
+        enable_supervisor=True,
+        target_indices=t_idx,
+    )
+
+    assert len(out_chunks) == 3
+    assert out_chunks[0]["raw_text"] == chunks[0]["raw_text"]
+    assert out_chunks[2]["raw_text"] == chunks[2]["raw_text"]
+    assert out_chunks[1]["raw_text"] == "Các bạn tự viết code phần hàm sort tăng dần trước nhé."
+    assert stats["processed_chunks"] == 1
+    assert stats["updated"] == 1
+    assert "prev_context_readonly" in seen_prompts[0]
+    assert "next_context_readonly" in seen_prompts[0]
+    assert "c0" not in seen_prompts[0] and "c2" not in seen_prompts[0]

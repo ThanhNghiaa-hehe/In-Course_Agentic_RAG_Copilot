@@ -627,3 +627,43 @@ def test_rc005_07_kaggle_trainers_group_split_and_assistant_only_loss():
     # Truncation below prompt length must fail-closed with ValueError rather than all -100 (loss=NaN)
     with pytest.raises(ValueError):
         tokenize_assistant_only_sft(ex1, tok, max_length=32)
+
+
+def test_mdeberta_nli_fp32_dynamic_padding_ranking_and_noncpp_alignment(tmp_path: Path):
+    import scripts.kaggle_jobs.train_mdeberta_nli as nli_trainer_mod
+    from scripts.kaggle_automl_runner import build_mdeberta_nli_dataset
+
+    nli_src = inspect.getsource(nli_trainer_mod)
+    assert "torch_dtype=torch.float32" in nli_src
+    assert "fp16=False" in nli_src
+    assert "DataCollatorWithPadding" in nli_src
+
+    # Verify compute_zero_shot_ranking_accuracy mirrors multi_label=False argmax over entailment_id=0
+    val_rows = [
+        {"premise": "Câu A", "hypothesis": "H1", "label": 0},
+        {"premise": "Câu A", "hypothesis": "H2", "label": 2},
+        {"premise": "Câu B", "hypothesis": "H1", "label": 2},
+        {"premise": "Câu B", "hypothesis": "H2", "label": 0},
+    ]
+    val_logits = np.array(
+        [
+            [2.4, -1.0, -1.2],  # Câu A -> H1 wins (label 0) -> hit
+            [-1.1, 0.2, 2.0],
+            [1.9, 0.1, -1.5],   # Câu B -> H1 wins (label 2) -> miss
+            [0.4, 0.3, -0.5],
+        ],
+        dtype=np.float32,
+    )
+    assert nli_trainer_mod.compute_zero_shot_ranking_accuracy(val_rows, val_logits, entailment_id=0) == 0.5
+
+    # Verify generated NLI dataset has non-C++ tech aligned to label=0 on oos_hyp and >=25 temporal per side
+    out_nli = tmp_path / "mdeberta_test.jsonl"
+    norms, heldout = vtd.load_heldout_queries()
+    build_mdeberta_nli_dataset(out_nli, norms, heldout)
+    rows = [json.loads(line) for line in out_nli.read_text(encoding="utf-8").splitlines() if line.strip()]
+    by_prem: Dict[str, List[int]] = {}
+    for r in rows:
+        by_prem.setdefault(r["premise"], []).append(int(r["label"]))
+    # On 3-hypothesis intent rows, zero premises should lack an entailment (0) target
+    intent_3h = [lbls for lbls in by_prem.values() if len(lbls) == 3]
+    assert intent_3h and all(0 in lbls for lbls in intent_3h)

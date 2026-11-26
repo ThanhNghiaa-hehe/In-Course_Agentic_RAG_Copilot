@@ -25,6 +25,7 @@ from torch.utils.data import Dataset
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
+    DataCollatorWithPadding,
     EarlyStoppingCallback,
     Trainer,
     TrainingArguments,
@@ -59,6 +60,40 @@ def split_nli_rows_by_premise(
     return [items[i] for i in train_idx], [items[i] for i in val_idx]
 
 
+def compute_zero_shot_ranking_accuracy(
+    val_rows: Sequence[Dict[str, Any]],
+    val_logits: np.ndarray,
+    entailment_id: int = 0,
+) -> float:
+    """
+    Mô phỏng đúng ZeroShotClassificationPipeline.postprocess(..., multi_label=False):
+    trên các premise validation có đồng thời giả thuyết đúng (label == 0) và giả thuyết khác (label != 0),
+    kiểm tra xem `argmax(logits[:, entailment_id])` có chọn trúng giả thuyết có `label == 0` hay không.
+    """
+    if len(val_rows) == 0 or len(val_logits) != len(val_rows):
+        return 0.0
+
+    grouped: Dict[str, List[Tuple[int, float]]] = {}
+    for row, logit_vec in zip(val_rows, val_logits):
+        p_key = normalize_premise_group(row.get("premise", ""))
+        ent_score = float(logit_vec[entailment_id])
+        grouped.setdefault(p_key, []).append((int(row.get("label", -1)), ent_score))
+
+    hits = 0
+    total = 0
+    for entries in grouped.values():
+        has_pos = any(lbl == 0 for lbl, _ in entries)
+        has_neg = any(lbl != 0 for lbl, _ in entries)
+        if not (has_pos and has_neg):
+            continue
+        best_lbl, _ = max(entries, key=lambda x: x[1])
+        total += 1
+        if best_lbl == 0:
+            hits += 1
+
+    return round(hits / total, 4) if total > 0 else 0.0
+
+
 def find_dataset_file(filename: str) -> Path:
     candidates = list(Path("/kaggle/input").rglob(filename))
     if not candidates:
@@ -85,11 +120,9 @@ class NLIPairDataset(Dataset):
             row["hypothesis"],
             truncation=True,
             max_length=self.max_length,
-            padding="max_length",
-            return_tensors="pt",
         )
-        item = {k: v.squeeze(0) for k, v in enc.items()}
-        item["labels"] = torch.tensor(int(row["label"]), dtype=torch.long)
+        item = {k: list(v) for k, v in enc.items()}
+        item["labels"] = int(row["label"])
         return item
 
 
@@ -118,23 +151,32 @@ def main():
     print(f"[NLI Kaggle] Base={MODEL_ID} | Train={len(train_rows)} | Val={len(val_rows)} (GroupShuffleSplit by premise)")
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
-    model = AutoModelForSequenceClassification.from_pretrained(MODEL_ID)
+    # Ép FP32 rõ ràng vì config gốc của mDeBERTa-v3 đặt torch_dtype=float16 dễ tràn số/NaN trên DeBERTa-v2
+    model = AutoModelForSequenceClassification.from_pretrained(MODEL_ID, torch_dtype=torch.float32)
 
     # Bảo toàn ánh xạ label chuẩn NLI của MoritzLaurer/mDeBERTa-v3 (entailment=0, neutral=1, contradiction=2)
     print(f"[NLI Kaggle] label2id={model.config.label2id}")
+    entailment_id = int(model.config.label2id.get("entailment", 0))
 
     train_ds = NLIPairDataset(train_rows, tokenizer)
     val_ds = NLIPairDataset(val_rows, tokenizer)
+    collator = DataCollatorWithPadding(tokenizer=tokenizer, pad_to_multiple_of=8)
 
+    n_gpus = max(1, torch.cuda.device_count())
+    eff_batch = 16 * n_gpus
+    steps_per_epoch = max(1, (len(train_ds) + eff_batch - 1) // eff_batch)
+    warmup_steps = max(1, int(0.10 * steps_per_epoch * 5))
     train_args = TrainingArguments(
         output_dir="/kaggle/working/nli_checkpoints",
-        num_train_epochs=4,
+        num_train_epochs=5,
         per_device_train_batch_size=16,
         per_device_eval_batch_size=32,
-        learning_rate=2e-5,
-        weight_decay=0.01,
-        warmup_ratio=0.1,
-        fp16=torch.cuda.is_available(),
+        learning_rate=1.5e-5,
+        weight_decay=0.02,
+        warmup_steps=warmup_steps,
+        max_grad_norm=1.0,
+        fp16=False,
+        bf16=False,
         eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,
@@ -151,12 +193,16 @@ def main():
         args=train_args,
         train_dataset=train_ds,
         eval_dataset=val_ds,
+        data_collator=collator,
         compute_metrics=compute_metrics,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=2)],
     )
     trainer.train()
     eval_res = trainer.evaluate()
-    print(f"[NLI Kaggle] Validation metrics: {eval_res}")
+    pred_out = trainer.predict(val_ds)
+    zs_rank_acc = compute_zero_shot_ranking_accuracy(val_rows, pred_out.predictions, entailment_id=entailment_id)
+    eval_res["zero_shot_ranking_acc"] = zs_rank_acc
+    print(f"[NLI Kaggle] Validation metrics: {eval_res} | zero_shot_ranking_acc={zs_rank_acc:.4f}")
 
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
@@ -165,13 +211,25 @@ def main():
     tokenizer.save_pretrained(str(OUTPUT_DIR))
 
     with open(OUTPUT_DIR / "training_summary.json", "w", encoding="utf-8") as f:
-        json.dump({"base_model": MODEL_ID, "train_samples": len(train_rows), "eval": eval_res}, f, indent=2)
+        json.dump(
+            {
+                "base_model": MODEL_ID,
+                "train_samples": len(train_rows),
+                "val_samples": len(val_rows),
+                "eval": eval_res,
+                "zero_shot_ranking_acc": zs_rank_acc,
+            },
+            f,
+            indent=2,
+        )
 
     with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for p in OUTPUT_DIR.rglob("*"):
             if p.is_file():
                 zf.write(p, arcname=p.relative_to(OUTPUT_DIR))
     print(f"[NLI Kaggle] Đã đóng gói hoàn chỉnh: {ZIP_PATH} ({ZIP_PATH.stat().st_size / (1024*1024):.2f} MB)")
+    shutil.rmtree("/kaggle/working/nli_checkpoints", ignore_errors=True)
+    shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 
 
 if __name__ == "__main__":

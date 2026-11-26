@@ -293,10 +293,10 @@ def build_mdeberta_nli_dataset(out_file: Path, heldout_norms: Set[str], heldout_
         # Phân phối 3 nhãn XNLI chuẩn (§3.5): 0=entailment, 1=neutral, 2=contradiction (0 multi-entailment)
         if label_intent == "out_of_scope":
             if any(m in low for m in _NON_CPP_TECH_MARKERS):
-                # Ngôn ngữ/công nghệ ngoài khóa C++: không phải C++ (2), không phải xã giao (2), trung lập với ẩn dụ đời sống (1)
+                # Ngôn ngữ/công nghệ ngoài khóa C++: align với ZeroShotClassificationPipeline (entailment_id=0 trên oos_hyp có 'off-topic conversation')
                 _emit(txt, course_hyp, 2)
                 _emit(txt, chit_hyp, 2)
-                _emit(txt, oos_hyp, 1)
+                _emit(txt, oos_hyp, 0)
             elif grp != "hard_negative_hybrid" and any(m in low for m in _CASUAL_LIFE_MARKERS):
                 _emit(txt, oos_hyp, 0)
                 _emit(txt, chit_hyp, 1)
@@ -356,6 +356,31 @@ def build_mdeberta_nli_dataset(out_file: Path, heldout_norms: Set[str], heldout_
             "Ở phút 27 trên video bài giảng độ phức tạp của hai vòng lặp lồng nhau được tính ra sao?",
             "Khúc phút thứ 5 trong bài học giải thích thứ tự thực hiện các phép toán số học thế nào?",
             "Tại mốc phút 21 của video bài giảng cách cài đặt tiêu chí so sánh tùy chỉnh viết ra sao?",
+            "Khoảng phút 12 trong bài giảng thầy lưu ý lỗi tràn bộ nhớ nào khi dùng con trỏ?",
+            "Ở mốc phút 15 của video bài học ví dụ truyền mảng vào hàm hoạt động thế nào?",
+            "Đoạn phút 24 giảng viên phân tích khác biệt giữa tham trị và tham chiếu ra sao?",
+            "Tại phút thứ 4 của bài học phần tổng hợp lại kiến thức biến toàn cục nói gì?",
+            "Khúc phút 29 trong video cách đặt điều kiện biên cho thuật toán tìm kiếm viết thế nào?",
+            "Ở phút 17 bài giảng minh họa thao tác cấp phát và thu hồi bộ nhớ động ra sao?",
+            "Đoạn phút 20 của video giải thích nguyên lý hoạt động của hàm đệ quy như thế nào?",
+            "Tại mốc phút 10 trong bài giảng ví dụ kiểm tra số nguyên tố tối ưu vòng lặp ra sao?",
+            "Khoảng phút 26 của bài học thầy hướng dẫn đọc dữ liệu nhiều dòng từ bàn phím thế nào?",
+            "Ở phút thứ 7 trên trình phát video cách tổ chức hàm kiểm tra tính hợp lệ hoạt động ra sao?",
+            "Chỗ vừa giải thích trên bảng em theo chưa kịp, thầy nói chậm lại phần đó được không?",
+            "Đoạn này giảng viên đang biến đổi điều kiện kiểm tra như thế nào vậy ạ?",
+            "Khúc vừa rồi trên màn hình vì sao lại đổi dấu so sánh sang bé hơn thế?",
+            "Bước đang trình bày em chưa nắm rõ vai trò của biến trung gian vừa khai báo",
+            "Phần đang chiếu sao lại khởi tạo giá trị tích lũy từ một thay vì không vậy?",
+            "Chỗ này tác giả tách thêm hàm phụ để làm gọn chương trình đúng không ạ?",
+            "Đoạn mới lướt qua trên trình biên dịch vừa sửa lỗi thiếu dấu chấm phẩy ở dòng nào?",
+            "Khúc này em thấy có hai nhánh rẽ, làm sao biết lúc nào chương trình đi vào nhánh dưới?",
+            "Mấy dòng đang gõ trên màn hình có phải để kiểm tra trường hợp biên không ạ?",
+            "Phần vừa giảng xong em hơi rối ở chỗ cập nhật chỉ số sau mỗi lượt chạy",
+            "Đoạn này thầy minh họa cách kiểm tra đầu vào hợp lệ trước khi tính toán đúng không?",
+            "Chỗ đang hiển thị kết quả in ra khác với dự đoán ban đầu của em, vì sao thế ạ?",
+            "Khúc giảng ngay trước ví dụ này nhấn mạnh sai lầm phổ biến nào cần tránh vậy?",
+            "Bước chuyển đổi kiểu dữ liệu ngay chỗ này có làm mất phần thập phân không?",
+            "Phần giải thích vừa rồi trên slide tóm gọn lại ý chính là gì vậy ạ?",
         ]
         off_topic_temporal_premises = [
             "Hiệp hai trận giao hữu bóng đá quốc tế tối qua ở phút 75 cầu thủ nào ghi bàn?",
@@ -376,8 +401,33 @@ def build_mdeberta_nli_dataset(out_file: Path, heldout_norms: Set[str], heldout_
             "Tập giãn cơ vai gáy tại bàn làm việc khoảng 10 phút buổi chiều có đỡ mỏi lưng không?",
             "Rạp chiếu phim thương mại gần ngã tư chiếu suất cuối cùng vào lúc mấy giờ đêm?",
             "Đắp mặt nạ dưỡng ẩm thảo mộc trên da khoảng 15 phút rồi rửa sạch bằng nước mát đúng không?",
-            " Thời điểm hoàng hôn ngoài bãi biển đẹp nhất thường rơi vào khoảng mấy giờ chiều mùa hè?",
+            "Thời điểm hoàng hôn ngoài bãi biển đẹp nhất thường rơi vào khoảng mấy giờ chiều mùa hè?",
             "Ướp gia vị sườn non chua ngọt khoảng 35 phút trong ngăn mát tủ lạnh đã thấm đều chưa?",
+            "Khoai tây cắt múi cau chiên giòn trong chảo dầu nóng khoảng 8 phút đã vàng đều chưa?",
+            "Trận bóng rổ tối nay bắt đầu vào lúc mấy giờ tối theo lịch thi đấu chính thức?",
+            "Tưới lan hồ điệp vào khoảng 6 giờ sáng mỗi ngày có giúp rễ cây hút ẩm tốt hơn không?",
+            "Chuyến bay thẳng từ Đà Nẵng vào thành phố lúc 14 giờ chiều hạ cánh sau bao lâu?",
+            "Hấp bánh bao nhân thịt bằng xửng tre khoảng 18 phút tính từ lúc nước sôi thì chín tới chưa?",
+            "Quán cà phê sân vườn cuối hẻm thường đóng cửa nghỉ buổi tối vào mấy giờ?",
+            "Phơi quần áo ngoài ban công hướng nắng từ 9 giờ sáng đến trưa đã khô hẳn chưa?",
+            "Ngồi thiền hít thở sâu mỗi tối khoảng 12 phút trước khi ngủ có giúp thư giãn hơn không?",
+            "Sáng chủ nhật hội chợ nông sản địa phương khai mạc từ mấy giờ ở quảng trường?",
+            "Đoạn đường ven sông giờ cao điểm khoảng 5 giờ chiều có hay bị kẹt xe kéo dài không?",
+            "Chỗ này gửi xe máy qua đêm thu phí bao nhiêu tiền một lượt vậy?",
+            "Đoạn đường này giờ tan tầm buổi chiều có hay bị ngập nước sau mưa không?",
+            "Khúc phố này sáng sớm tiệm bánh mì nào mở cửa bán trước 6 giờ?",
+            "Chỗ này có trạm rút tiền tự động nào gần ngã ba không bạn ơi?",
+            "Đoạn hẻm phía trước xe ô tô bốn chỗ có chạy lọt vào được không?",
+            "Khúc công viên này buổi tối có bật đèn sáng cho người đi bộ tập thể dục không?",
+            "Chỗ đang đứng chờ bắt xe buýt tuyến đi ra bến xe trung tâm ở bên nào đường?",
+            "Phần vỉa hè khu chợ này cuối tuần có cho bày bán hoa tươi không?",
+            "Đoạn cầu vượt này cấm xe tải nặng lưu thông trong khung giờ nào?",
+            "Chỗ này sóng điện thoại di động hơi yếu, xung quanh có quán nước có wifi mạnh không?",
+            "Khúc bãi biển này mùa hè nước có êm và an toàn để trẻ nhỏ tắm không?",
+            "Phần đất trống bên cạnh siêu thị nghe nói sắp xây rạp chiếu phim phải không?",
+            "Đoạn quốc lộ đi qua đèo buổi tối có nhiều sương mù khó quan sát không?",
+            "Chỗ này gọi xe công nghệ ra nhà ga mất khoảng mấy chục nghìn tiền cước?",
+            "Khúc sông này cuối tuần có chuyến thuyền du lịch ngắm hoàng hôn chạy qua không?",
         ]
 
         for p_in in in_video_premises:
@@ -392,7 +442,7 @@ def build_mdeberta_nli_dataset(out_file: Path, heldout_norms: Set[str], heldout_
                 _emit(p_clean, in_vid_hyp, 2)
                 _emit(p_clean, off_hyp, 0)
 
-        for p_neu in neutral_candidates_for_temporal[:95]:
+        for p_neu in neutral_candidates_for_temporal[:105]:
             _emit(p_neu, in_vid_hyp, 1)
             _emit(p_neu, off_hyp, 1)
 
@@ -522,6 +572,8 @@ def build_jina_reranker_dataset(out_file: Path, heldout_norms: Set[str], heldout
                 continue
             raw_video_item = f"[Bài giảng Video {vid_title} mốc {start_lbl}]\n{clean_txt}"
             passage = truncate_rerank_text(raw_video_item, max_chars=600)
+            if _contains_corrupted_asr_artifacts(passage):
+                continue
             in_terms = _extract_in_chunk_terms(clean_txt, concepts)
             item = {
                 "kind": "video",

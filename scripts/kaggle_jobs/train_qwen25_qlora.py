@@ -193,14 +193,17 @@ def main():
         pad_to_multiple_of=8,
     )
 
+    warmup_steps = max(1, int(0.05 * max(1, (len(train_ds) + 7) // 8) * 2))
     train_args = TrainingArguments(
         output_dir="/kaggle/working/qwen25_checkpoints",
         num_train_epochs=2,
         per_device_train_batch_size=1,
+        per_device_eval_batch_size=1,
         gradient_accumulation_steps=8,
+        prediction_loss_only=True,
         learning_rate=2e-4,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.05,
+        warmup_steps=warmup_steps,
         fp16=True,
         logging_steps=10,
         eval_strategy="epoch",
@@ -237,6 +240,8 @@ def main():
             if p.is_file():
                 zf.write(p, arcname=p.relative_to(OUTPUT_DIR))
     print(f"[Qwen2.5 QLoRA] Đã đóng gói hoàn chỉnh: {ZIP_PATH} ({ZIP_PATH.stat().st_size / (1024*1024):.2f} MB)")
+    shutil.rmtree("/kaggle/working/qwen25_checkpoints", ignore_errors=True)
+    shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 
 
 if __name__ == "__main__":

@@ -157,7 +157,7 @@
     "end_sec": 932,
     "start_label": "14:24",
     "end_label": "15:32",
-    "raw_text": "10 mụ 6 sợi dây kìa, thế nó có thể log log là chắc chắn rồi đúng không? mình sẽ dùng 1 biến log log, an.f nào không? mình phải báo lại yu dinh là log log đi Rồi, bây giờ nhé, mình sẽ lập với điều kiện là chừng nào mà pq.size còn lớn hơn 1 nãy, thì khi nào mà pq.size nó bằng 1 thì nó sẽ dừng đúng không hay nó cách khác đấy chính là khi đó trong priority_queue của mình nó chỉ còn 1 sợi dây duy nhất thôi đây là sợi dây cuối cùng sau khi nối xong, thì bạn làm cái gì? bạn sẽ lấy ra 2 cái phần tử, lấy ra 2 sợi dây ngắn nhất đây chính là... long long, ok nó là top 1, nó sẽ bằng ngắn nhất rồi, sẽ bằng pq.top, nữa không? sau đó làm sao? sau bạn xóa cái sợi dây này đi, pq.top, xóa bạn lấy ra cái thằng thứ 2 thì khi đó cái thằng thứ 2 nó sẽ là cái thằng dài thứ 2 sau khi mà mình lấy ra 2 cái sợi dây ngắn nhất rồi thì khi đó cái chi phí nối dây của mình nó sẽ là tổng của 2 thằng này ok, sau đó làm sao bạn lại phải đẩy cái sợi dây mà nó có tổng là top 1, top 2 thì phải quay trở lại PQ"
+    "raw_text": "10 mũ 6 sợi dây kìa, thế nó có độ phức tạp O(N log N) là chắc chắn rồi đúng không? Mình sẽ dùng 1 biến long long, ans nào không? Mình phải khai báo lại ưu tiên là long long đi. Rồi, bây giờ nhé, mình sẽ lặp với điều kiện là chừng nào mà pq.size() còn lớn hơn 1 ấy, thì khi nào mà pq.size() nó bằng 1 thì nó sẽ dừng đúng không? Hay nói cách khác, đấy chính là khi đó trong priority_queue của mình nó chỉ còn 1 sợi dây duy nhất thôi, đây là sợi dây cuối cùng sau khi nối xong. Thì bạn làm cái gì? Bạn sẽ lấy ra 2 cái phần tử, lấy ra 2 sợi dây ngắn nhất, đây chính là... long long, ok, nó là top 1, nó sẽ bằng ngắn nhất rồi, sẽ bằng pq.top(), nữa không? Sau đó làm sao? Sau bạn xóa cái sợi dây này đi, pq.pop(), xóa, bạn lấy ra cái thằng thứ 2, thì khi đó cái thằng thứ 2 nó sẽ là cái thằng dài thứ 2. Sau khi mà mình lấy ra 2 cái sợi dây ngắn nhất rồi, thì khi đó cái chi phí nối dây của mình nó sẽ là tổng của 2 thằng này, ok. Sau đó làm sao, bạn lại phải đẩy cái sợi dây mà nó có tổng là top 1, top 2 thì phải quay trở lại PQ."
   },
   {
     "chunk_id": "chunk_914_979",
@@ -165,7 +165,7 @@
     "end_sec": 979,
     "start_label": "15:14",
     "end_label": "16:19",
-    "raw_text": "sau khi mà mình lấy ra 2 cái sợi dây ngắn nhất rồi thì khi đó cái chi phí nối dây của mình nó sẽ là tổng của 2 thằng này ok, sau đó làm sao bạn lại phải đẩy cái sợi dây mà nó có tỏng là top1, top2 thì phải quay trở lại PQ mình sẽ đặt là PQ.push, top1, top2 rất đơn giản thôi đúng không? nếu mà bạn biết sử dụng priority queue, rồi dưới này thì mình sẽ xe lây ra nx rồi được ok, thế còn trong trường gặp mà nó yêu cầu nối dây lớn nhất thì bạn làm thương tự nhá mình sẽ cứ lấy ra 2 cái sợi dây lớn nhất và mình khai bá priority queue kia kìa kìa mặc định Rồi 29 và 62 nhé, ok, đây chính là cái bài nối dây, mà chí phì tối dây là nhỏ nhất Thế 1 cái ví dụ nữa về priority_queue nhé, các bạn cứ thử code với chí phì lớn nhất Đấy là giá trị nhỏ nhất của sâu, người ta cho 1 cái sâu x bao gồm các kí tự in hoa từ A đến Z"
+    "raw_text": "sau khi mà mình lấy ra 2 cái sợi dây ngắn nhất rồi thì khi đó cái chi phí nối dây của mình nó sẽ là tổng của 2 thằng này ok, sau đó làm sao bạn lại phải đẩy cái sợi dây mà nó có tổng là top1, top2 thì phải quay trở lại PQ mình sẽ đặt là pq.push(top1 + top2) rất đơn giản thôi đúng không? Nếu mà bạn biết sử dụng priority_queue, rồi dưới này thì mình sẽ cout ra ans rồi được ok. Thế còn trong trường hợp mà nó yêu cầu nối dây lớn nhất thì bạn làm tương tự nhé, mình sẽ cứ lấy ra 2 cái sợi dây lớn nhất và mình khai báo priority_queue max ấy mà. Rồi 29 và 62 nhé, ok, đây chính là cái bài nối dây, mà chi phí nối dây là nhỏ nhất. Thế 1 cái ví dụ nữa về priority_queue nhé, các bạn cứ thử code với chi phí lớn nhất. Đấy là giá trị nhỏ nhất của xâu, người ta cho 1 cái xâu s bao gồm các kí tự in hoa từ A đến Z."
   },
   {
     "chunk_id": "chunk_950_1015",
@@ -205,7 +205,7 @@
     "end_sec": 1192,
     "start_label": "18:49",
     "end_label": "19:52",
-    "raw_text": "For chà x hay chấm app thì mình sẽ cho mrp của x cộng cộng Rồi, hình như nó có cho ca nữa Nhập ca trước đúng không? Sau đó thì mình sau khi mà bạn có tầm xuất hiện của các ký tự rồi bởi vì bạn sẽ cho nó vào priority queue nhé priority queue ư mặc biệt là mắc nhé mặc biệt là mắc nhé bởi vì ở đây mỗi lần mình muốn tìm ra cái tận xuất lớn nhất mà rồi bạn rượt qua cái thằng map cái kìa for auto itmap mình sẽ cho pq.push it.second nó là cái tận xuất xuất hiện của cái kí tự đó mình không cần phải nhít nó là thằng nào đâu nhé sau đó là bạn lập chừng nào mà qua k có lớn hơn không đó ok tức là mình sẽ lập k lần nhé lấy ra phần tử mà có tần xuất lớn nhất lấy ra tần xuất lớn nhất trong sâu F đây chính là mình sẽ dùng 1 biến là int tốt sẽ bằng PQ.top, sẽ lỡ trần tốt thằng lớn nhất đây đúng không?"
+    "raw_text": "For (char x : s) thì mình sẽ cho mp[x] cộng cộng. Rồi, hình như nó có cho k nữa, nhập k trước đúng không? Sau đó thì mình sau khi mà bạn có tần suất xuất hiện của các ký tự rồi, bởi vì bạn sẽ cho nó vào priority_queue nhé, priority_queue mặc định là max nhé, mặc định là max nhé bởi vì ở đây mỗi lần mình muốn tìm ra cái tần suất lớn nhất mà. Rồi bạn duyệt qua cái thằng map cơ kìa, for (auto it : mp) mình sẽ cho pq.push(it.second) nó là cái tần suất xuất hiện của cái ký tự đó, mình không cần phải biết nó là thằng nào đâu nhé. Sau đó là bạn lặp chừng nào mà k lớn hơn 0 đúng không? Ok, tức là mình sẽ lặp k lần nhé, lấy ra phần tử mà có tần suất lớn nhất. Lấy ra tần suất lớn nhất trong xâu s đây chính là mình sẽ dùng 1 biến là int top sẽ bằng pq.top(), lấy ra tần suất thằng lớn nhất đây đúng không?"
   },
   {
     "chunk_id": "chunk_1175_1237",
@@ -213,7 +213,7 @@
     "end_sec": 1237,
     "start_label": "19:35",
     "end_label": "20:37",
-    "raw_text": "lấy ra tần xuất lớn nhất trong sâu F đây chính là mình sẽ dùng 1 biến là int tốt sẽ bằng PQ.top, sẽ lỡ trần tốt thằng lớn nhất đây đúng không? sau đó mình sẽ hảm nó đi 1 đơn vị thôi từ 2 kia lại cái sâu có độ dài F không vượt quá 11.6 Ok, mình sẽ cho chữ chữ tốt, sau đó bạn push nó lại, bạn đẩy nó lại Đúng không? Ở mỗi bước thì bạn sẽ chọn ra cái tầm xuất thẳng có tầm xuất lớn nhất sau mình giảm đi một đơn vị đúng không? Mình chữ chữ ca đi nhé Từ từ, nhưng mà có một trường hợp đặc biệt đấy, chính là trường hợp mà nếu mà nó cho ca quá lớn thì bạn cẩn thận đấy nhé Vì trong trường hợp mà nó cho ca quá lớn, ví dụ như là cho ca mà nó có chiều dài mà quá cái chiều dài của cái sâu của bạn ấy Thì khi đó cái biệt tốt của mình nó sẽ ra xuộ ấm đấy Nhưng mà các bạn thấy trong trường hợp mà nó cho cái sâu, cái số lượng K nó trìa quá trìa dài của sâu F thì mình cũng sẽ không xóa nữa đúng không?"
+    "raw_text": "lấy ra tần suất lớn nhất trong xâu s đây chính là mình sẽ dùng 1 biến là int top sẽ bằng pq.top(), lấy ra tần suất thằng lớn nhất đây đúng không? Sau đó mình sẽ giảm nó đi 1 đơn vị thôi từ đề bài yêu cầu là xâu có độ dài s không vượt quá 10 mũ 6. Ok, mình sẽ cho--top, sau đó bạn push nó lại, bạn đẩy nó lại. Đúng không? Ở mỗi bước thì bạn sẽ chọn ra cái tần suất thằng có tần suất lớn nhất sau mình giảm đi một đơn vị đúng không? Mình trừ trừ k đi nhé. Từ từ, nhưng mà có một trường hợp đặc biệt đấy, chính là trường hợp mà nếu mà nó cho k quá lớn thì bạn cẩn thận đấy nhé. Vì trong trường hợp mà nó cho k quá lớn, ví dụ như là cho k mà nó có chiều dài mà quá cái chiều dài của cái xâu của bạn ấy. Thì khi đó cái biến top của mình nó sẽ ra số âm đấy. Nhưng mà các bạn thấy trong trường hợp mà nó cho cái xâu, cái số lượng k nó vượt quá chiều dài của xâu s thì mình cũng sẽ không xóa nữa đúng không?"
   },
   {
     "chunk_id": "chunk_1221_1285",
@@ -277,7 +277,7 @@
     "end_sec": 1541,
     "start_label": "24:38",
     "end_label": "25:41",
-    "raw_text": "run, bcc, 1, ABCC , 1, innerTk var text input run, add hashtag run, add run, add abcc, xanada 7, ab, bình phương, mắc kia, mắc, hình như mình chưa để ride with the key of mắc, đúng rồi mà tốt, chừ chừ tốt đúng không, pq.pop, pq.pop của it.second, đúng rồi mà nhỉ"
+    "raw_text": "run, bcc, 1, ABCC , 1, innerTk var text input run, add hashtag run, add run, add abcc, xanada 7, ab, bình phương, mắc kia, mắc, hình như mình chưa để priority_queue, đúng rồi mà tốt, trừ trừ tốt đúng không, pq.pop, pq.pop của it.second, đúng rồi mà nhỉ"
   },
   {
     "chunk_id": "chunk_1522_1585",
@@ -293,7 +293,7 @@
     "end_sec": 1627,
     "start_label": "26:02",
     "end_label": "27:07",
-    "raw_text": "Mắc của tốt với không, giảm ca đi, aner, et, mang không, sao cái sâu thứ 2 nó lại ra như thế này Chưa nhìn được cái lỗi sai map.inert for Thử thử nhá, thì mình cout ra cái map.size của C++ priority queue for auto-it hít chấm map push it.second đúng không? yk lớn không? lấy giờ top này à, mình chưa pop rồi ok chưa quên mất chưa xa nó ok, kế đã được dấu đại đây là 2 2, 0, bcc, 1, bcc"
+    "raw_text": "Mắc code với không, giảm ca đi, inner, et, mang không, sao cái sâu thứ 2 nó lại ra như thế này Chưa nhìn được cái lỗi sai map.insert for Thử thử nhá, thì mình cout ra cái map.size của C++ priority_queue for auto it : map push it.second đúng không? yk lớn không? lấy giá trị top này à, mình chưa pop rồi ok chưa quên mất chưa xoá nó ok, kết quả được dấu đại đây là 2 2, 0, bcc, 1, bcc"
   },
   {
     "chunk_id": "chunk_1610_1661",

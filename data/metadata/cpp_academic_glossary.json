@@ -140,8 +140,12 @@
         "asr_noise": ["si cộng cộng", "devcy cộng cộng", "dev c cộng cộng", "thần cốt blog", "cốt blog"]
       },
       {
-        "canonical": "code / IDE",
-        "asr_noise": ["viết cốt", "chạy cốt", "cái đập"]
+        "canonical": "code / viết code / file code / IDE",
+        "asr_noise": ["cốt", "viết cốt", "chạy cốt", "đoạn cốt", "dòng cốt", "thằng cốt", "file cốt", "cái đập"]
+      },
+      {
+        "canonical": "integer / int / tổng / nguyên tố / test case / dữ liệu / bàn phím / file bài tập",
+        "asr_noise": ["interger", "tỏng", "nghiên tố", "tét cây", "tiết cây", "dữ hiệu", "bàn phí", "phi bài tập", "cách ngào", "người nhau", "đề quy", "ngăn sếp"]
       },
       {
         "canonical": "cout / cin",
@@ -166,18 +170,28 @@
         "asr_noise": ["câu chúc", "cầu chức", "ịp", "ịp l", "sờ uých"]
       },
       {
-        "canonical": "++x / x++ / ++a / a++ (toán tử tăng giảm)",
-        "asr_noise": ["cộng cộng x", "cộng cộng a", "ích cộng cộng", "a cộng cộng", "trừ trừ x"]
+        "canonical": "vòng lặp / for / while / do-while",
+        "asr_noise": ["vòng lập", "lập for", "lập while", "lập do"]
+      },
+      {
+        "canonical": "++x / x++ / ++a / a++ / -- (toán tử tăng giảm)",
+        "asr_noise": ["cộng cộng x", "cộng cộng a", "ích cộng cộng", "a cộng cộng", "trừ trừ x", "chứ chứ"]
       }
     ],
     "pointers_and_arrays": [
       {
         "canonical": "con trỏ (pointer)",
-        "asr_noise": ["ctrl", "con cho", "con trỏ chuột"]
+        "asr_noise": ["con cho", "con trỏ chuột"]
       },
       {
         "canonical": "ký tự null / xâu ký tự / mảng",
-        "asr_noise": ["ký tự nôn", "sâu ký tự", "chửi ký tự", "mạng một chiều", "mạng hai chiều", "màng một chiều", "bna"]
+        "asr_noise": ["ký tự nôn", "sâu ký tự", "chửi ký tự", "mạng một chiều", "mạng hai chiều", "mạng 1 chiều", "mạng 2 chiều", "màng một chiều", "màng 1 chiều", "màng 2 chiều", "bna"]
+      }
+    ],
+    "sorting_and_algorithms": [
+      {
+        "canonical": "sort / sắp xếp / quick sort / merge sort / selection sort / trộn / chọn",
+        "asr_noise": ["xót", "ham xót", "squid xót", "chộn", "sắp sếp"]
       }
     ],
     "oop_and_stl": [
