@@ -1199,3 +1199,37 @@ async def test_spec6_anchored_deictic_current_with_player_sec_omits_prior_turn_c
         }
     )
     assert "[NGỮ CẢNH HỘI THOẠI LIÊN KẾT]" not in g_out["user_message_content"]
+
+
+def test_canonicalizer_sanitizes_corrupted_asr_artifacts_and_unblocks_guardrail():
+    """
+    [Root-Cause Transcript Fix]:
+    1. `_sanitize_corrupted_asr_artifacts` bóc sạch CJK/Hangul/Cyrillic/FFFD và chuỗi lặp rác Whisper.
+    2. `validate_canonical_chunk` phải đối chiếu trên bản `sanitized_orig` để không từ chối oan bản sửa sạch.
+    3. `run_supervisor_layer_a` phải phát hiện chunk còn sót ký tự CJK/FFFD để chuyển Pass 2.
+    """
+    dirty_orig = (
+        "C++, stick, c为 b mains, c为 c ấy là 匹是是 "
+        "uAAAAAAAAAAAAAAAAAAAA mình khai báo biến int a trong hàm main."
+    )
+    cleaned_cand = "C++, stick, b mains, c ấy là mình khai báo biến int a trong hàm main."
+
+    sanitized = canon._sanitize_corrupted_asr_artifacts(dirty_orig)
+    assert not canon._contains_corrupted_asr_artifacts(sanitized)
+    ok, reason = canon.validate_canonical_chunk(dirty_orig, cleaned_cand, targeted=False)
+    assert ok is True, f"Guardrail phải cho phép bản sửa đã bóc rác (got reason={reason})"
+
+    lex_2 = canon.extract_lesson_lexicon("cpp-core", 2)
+    la_chunks = [
+        {
+            "chunk_id": "asr_1",
+            "start_sec": 100,
+            "end_sec": 130,
+            "start_label": "01:40",
+            "end_label": "02:10",
+            "raw_text": "Trong bài hôm nay chúng ta gặp ký tự ảo giác 是 và 峽 trong transcript.",
+        }
+    ]
+    la_res = canon.run_supervisor_layer_a(la_chunks, la_chunks, lex_2)
+    assert 0 in la_res["suspicious_unchanged_indices"]
+    assert "CJK" in la_res["recheck_hints"].get(0, "")

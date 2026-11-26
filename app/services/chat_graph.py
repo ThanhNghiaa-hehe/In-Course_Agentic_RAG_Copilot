@@ -795,7 +795,7 @@ async def retrieval_node(state: AgentState) -> Dict[str, Any]:
                             for c in (fallback_res.chunks or [])
                             if c.get("confidence_score") is not None
                         ]
-                        fb_high_conf = (not fb_scores) or (
+                        fb_high_conf = bool(fb_scores) and (
                             max(fb_scores) >= settings.MODALITY_GATE_VIDEO_HIGH_CONFIDENCE
                         )
                         accept_fallback = (

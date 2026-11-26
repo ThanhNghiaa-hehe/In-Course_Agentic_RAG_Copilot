@@ -3,7 +3,7 @@
 
 **Tác giả:** Sinh viên Trần Thành Nghĩa (MSSV: `23DH112252`) — Khoa CNTT, HUFLIT  
 **Tập dữ liệu:** `multiturn_benchmark_dataset.json` (50 sessions, 222 turns)  
-**Thời gian thực thi:** 2026-11-25T20:16:17 ➔ 2026-11-25T20:21:12 (294.45s)  
+**Thời gian thực thi:** 2026-11-26T13:18:16 ➔ 2026-11-26T13:24:18 (362.36s)  
 **Mã tài liệu:** `HUFLIT-RAG-MULTITURN-RESULTS-2026-V1`  
 
 ---
@@ -28,11 +28,11 @@
 
 | Thước Đo Độ Trễ | Thời Gian Thực Đo (ms) | Đánh Giá Hiệu Năng Thời Gian Thực |
 | :--- | :---: | :--- |
-| **Mean Latency (Trung bình)** | **1325.26 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
-| **P50 Latency (Median)** | **1290.47 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
-| **P95 Latency (Phân vị 95)** | **2683.98 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
-| **P99 Latency (Phân vị 99)** | **3733.98 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
-| **Max Latency (Cực đại)** | **4796.93 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
+| **Mean Latency (Trung bình)** | **1631.22 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
+| **P50 Latency (Median)** | **1521.53 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
+| **P95 Latency (Phân vị 95)** | **3976.23 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
+| **P99 Latency (Phân vị 99)** | **4645.78 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
+| **Max Latency (Cực đại)** | **6642.84 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
 
 ---
 
@@ -40,10 +40,10 @@
 
 | Phân Lớp (Tier) | Sessions | Turns | Intent Acc | Status Acc | Strict WHR (±30s) | Multi-Grounding TS | Budget Comp | ARR / SRP | P50 Latency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 100.0% | 100.0% | 55.0% | 98.33% | 100.0% | **ARR 100.0%** | 1397.98 ms |
-| **Tier 2: Socratic Refusal** | 15 | 60 | 100.0% | 88.33% | 60.0% | 88.33% | 100.0% | **SRP 100.0%** | 1320.89 ms |
-| **Tier 3: Topic Switching** | 10 | 42 | 92.86% | 95.24% | 52.38% | 76.19% | 100.0% | **--** | 220.99 ms |
-| **Tier 4: Context Budget** | 10 | 60 | 100.0% | 90.0% | 41.67% | 88.33% | 100.0% | **--** | 1507.92 ms |
+| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 100.0% | 100.0% | 55.0% | 98.33% | 100.0% | **ARR 100.0%** | 1507.82 ms |
+| **Tier 2: Socratic Refusal** | 15 | 60 | 100.0% | 88.33% | 60.0% | 88.33% | 100.0% | **SRP 100.0%** | 1549.36 ms |
+| **Tier 3: Topic Switching** | 10 | 42 | 92.86% | 95.24% | 52.38% | 76.19% | 100.0% | **--** | 218.36 ms |
+| **Tier 4: Context Budget** | 10 | 60 | 100.0% | 90.0% | 41.67% | 88.33% | 100.0% | **--** | 2110.67 ms |
 
 ---
 

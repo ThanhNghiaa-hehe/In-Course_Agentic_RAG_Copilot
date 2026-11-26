@@ -185,6 +185,8 @@ class ThreadedSubprocessWatchdog:
         tracker: Optional[MasterProgressTracker] = None,
     ) -> Tuple[int, str, bool]:
         logger.info(f"[Watchdog] Executing: {' '.join(cmd[:6])}...")
+        run_env = dict(env) if env is not None else dict(os.environ)
+        run_env["PYTHONUNBUFFERED"] = "1"
         process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
@@ -193,7 +195,7 @@ class ThreadedSubprocessWatchdog:
             encoding="utf-8",
             errors="replace",
             shell=False,
-            env=env,
+            env=run_env,
         )
 
         output_lines: List[str] = []
@@ -385,6 +387,7 @@ class MasterAutonomousHarness:
         "tests/test_search_api.py",
         "tests/test_unseen_edges_and_canonicalizer.py",
         "tests/test_spec004_unified_workflow_hardening.py",
+        "tests/test_spec005_unified_dataset_workflow.py",
     )
 
     @staticmethod
@@ -421,6 +424,7 @@ class MasterAutonomousHarness:
         offline_env = dict(os.environ)
         offline_env["HF_HUB_OFFLINE"] = "1"
         offline_env["TRANSFORMERS_OFFLINE"] = "1"
+        offline_env["PYTHONUNBUFFERED"] = "1"
         py_exe = str(PROJECT_ROOT / ".venv" / "Scripts" / "python.exe")
 
         # 1.1 Gate 1: Fast AST Syntax & Anti-Bypass Static Diff Gate
@@ -450,9 +454,9 @@ class MasterAutonomousHarness:
         self.tracker.end_phase("Gate 1: AST & Zero Quick-Fix Gate", success=True)
         self.mark_step_done("STAGE_1_AST_GATE", time.time() - t0)
 
-        # 1.2 Gate 2: Sequential Isolated Pytest Regression Gate (12 suites)
+        # 1.2 Gate 2: Sequential Isolated Pytest Regression Gate (13 suites)
         t0 = time.time()
-        self.tracker.start_phase(2, "Gate 2: Sequential Pytest (12 Suites)", "@qa-tester", "pytest-isolated")
+        self.tracker.start_phase(2, "Gate 2: Sequential Pytest (13 Suites)", "@qa-tester", "pytest-isolated")
         failed_suites: List[str] = []
         for suite_rel in self.SEQUENTIAL_PYTEST_SUITES:
             suite_path = PROJECT_ROOT / suite_rel

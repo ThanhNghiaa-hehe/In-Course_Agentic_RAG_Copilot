@@ -174,10 +174,16 @@ class NLIArbiter:
                 if device_id == -1 and torch.get_num_threads() != 1:
                     torch.set_num_threads(1)
                 dev_name = "CUDA (GPU 0)" if device_id >= 0 else "CPU"
-                logger.info(f"[NLIArbiter] Đang nạp mô hình mDeBERTa-v3-base-xnli trên {dev_name}...")
+                local_ft_nli = PROJECT_ROOT / "data" / "models" / "mdeberta-v3-xnli-ft"
+                nli_model_source = (
+                    str(local_ft_nli)
+                    if (local_ft_nli / "config.json").exists()
+                    else "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
+                )
+                logger.info(f"[NLIArbiter] Đang nạp mô hình NLI ({nli_model_source}) trên {dev_name}...")
                 self._pipeline = pipeline(
                     "zero-shot-classification",
-                    model="MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+                    model=nli_model_source,
                     device=device_id
                 )
                 logger.info(f"[NLIArbiter] Nạp thành công mô hình NLI Arbiter trên {dev_name}.")
@@ -614,10 +620,18 @@ class IntentRouter:
             sims = np.dot(self._curriculum_nav_proto_matrix, qv)
             max_sim = float(np.max(sims))
 
-            # Cổng cách ly tương phản: Không nhận diện nhầm câu chào hỏi xã giao hoặc hỏi danh tính/sư phạm
+            # Cổng cách ly tương phản: Không nhận diện nhầm câu chào hỏi xã giao, hỏi danh tính/sư phạm hoặc xin lời khuyên (advice)
             sim_soc = self.get_pure_social_similarity(clean_p)
             sim_sys = self.get_system_identity_similarity(clean_p, query_vec=qv)
+            sim_chitchat = (
+                float(np.max(np.dot(self._chitchat_proto_matrix, qv)))
+                if (self._chitchat_proto_matrix is not None and len(self._chitchat_proto_matrix) > 0)
+                else 0.0
+            )
             if sim_sys >= 0.88:
+                return (False, max_sim)
+
+            if not has_nav_sig and not has_folded_sig and sim_chitchat >= 0.90 and sim_chitchat > max_sim + 0.02:
                 return (False, max_sim)
 
             has_domain = self.has_domain_entity(clean_p)
@@ -636,7 +650,7 @@ class IntentRouter:
                 if not (has_folded_sig and _has_curriculum_topic()):
                     return (False, max_sim)
 
-            if not has_nav_sig and max_sim <= max(sim_soc, sim_sys) + 0.02:
+            if not has_nav_sig and max_sim <= max(sim_soc, sim_sys, sim_chitchat) + 0.02:
                 # Cho phép cứu xét tiếp nếu khớp chữ ký điều hướng bỏ dấu + có chủ đề giáo trình
                 folded_sim = max_sim
                 if has_folded_sig and self._curriculum_nav_folded_proto_matrix is not None:
@@ -699,6 +713,28 @@ class IntentRouter:
                 if len(folded_syn.split()) >= 2 and f" {folded_syn} " in padded_folded:
                     return True
         return False
+
+    def _has_verified_curriculum_topic(self, clean_prompt: str) -> bool:
+        """Kiểm tra câu hỏi có khớp chủ đề bài học xác thực trong giáo trình (Zero Regex)."""
+        try:
+            from app.services.curriculum import get_curriculum_service, _has_topical_overlap
+            c_svc = get_curriculum_service()
+            matched = c_svc.find_lesson_for_query(clean_prompt)
+            if not matched:
+                return False
+            m_lesson, _ = matched
+            return bool(
+                _has_topical_overlap(
+                    m_lesson,
+                    clean_prompt,
+                    c_svc._stop_words,
+                    conflict_groups=c_svc._modifier_conflict_groups,
+                    domain_tokens=c_svc._domain_specific_tokens,
+                )
+            )
+        except Exception as e:
+            logger.debug(f"[IntentRouter] Lỗi kiểm tra _has_verified_curriculum_topic ({e}).")
+            return False
 
     def compute_drift_similarity(self, prompt: str, anchor_query: Optional[str]) -> float:
         """
@@ -1040,19 +1076,7 @@ class IntentRouter:
                     # ----------------------------------------------------
                     has_curriculum_topic = False
                     if top1_class == "out_of_scope" and p_course < 0.16:
-                        try:
-                            from app.services.curriculum import get_curriculum_service, _has_topical_overlap
-                            c_svc = get_curriculum_service()
-                            matched = c_svc.find_lesson_for_query(clean_prompt)
-                            if matched:
-                                m_lesson, _ = matched
-                                has_curriculum_topic = _has_topical_overlap(
-                                    m_lesson, clean_prompt, c_svc._stop_words,
-                                    conflict_groups=c_svc._modifier_conflict_groups,
-                                    domain_tokens=c_svc._domain_specific_tokens
-                                )
-                        except Exception as e:
-                            logger.debug(f"[IntentRouter] Lỗi kiểm tra has_curriculum_topic ({e}).")
+                        has_curriculum_topic = self._has_verified_curriculum_topic(clean_prompt)
 
                     is_ambiguous_slm = (
                         (margin < 0.22) or
@@ -1101,37 +1125,38 @@ class IntentRouter:
                                 )
                         elif nli_intent == "out_of_scope":
                             if top1_class == "course_query":
-                                if nli_conf >= 0.85 and p_oos > p_course:
+                                topic_verified = has_curriculum_topic or self._has_verified_curriculum_topic(clean_prompt)
+                                has_student_code = _detect_student_cpp_ast(clean_prompt)
+                                if (
+                                    nli_conf >= 0.80
+                                    and p_oos >= 0.22
+                                    and (p_course - p_oos) < 0.25
+                                    and not topic_verified
+                                    and not has_student_code
+                                ):
                                     logger.info(
-                                        f"[IntentRouter-Cascade] NLI Arbiter áp đảo SLM course_query (NLI={nli_conf*100:.1f}%, P_oos={p_oos:.3f}) -> out_of_scope"
+                                        f"[IntentRouter-Cascade] NLI Arbiter lật SLM course_query phân vân "
+                                        f"(NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}, P_oos={p_oos:.3f}) -> out_of_scope"
                                     )
                                     return RouterClassification(
                                         intent="out_of_scope",
                                         direct_response=OFFTOPIC_CASUAL_RESPONSES,
-                                        is_course_query=False
+                                        is_course_query=False,
                                     )
                                 else:
                                     logger.info(
-                                        f"[IntentRouter-Cascade] Recall-First Protection bảo vệ SLM course_query (NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
+                                        f"[IntentRouter-Cascade] Recall-First Protection bảo vệ SLM course_query "
+                                        f"(NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}, P_oos={p_oos:.3f}, "
+                                        f"topic={topic_verified}, ast={has_student_code}) -> course_query"
                                     )
                                     return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
                             else:
                                 if (p_course >= 0.20 or has_curriculum_topic) and p_oos < 0.90:
-                                    from app.services.curriculum import get_curriculum_service, _has_topical_overlap
-                                    c_svc = get_curriculum_service()
-                                    matched = c_svc.find_lesson_for_query(clean_prompt)
-                                    if matched and nli_conf < 0.72:
-                                        m_lesson, _ = matched
-                                        is_verified_topic = _has_topical_overlap(
-                                            m_lesson, clean_prompt, c_svc._stop_words,
-                                            conflict_groups=c_svc._modifier_conflict_groups,
-                                            domain_tokens=c_svc._domain_specific_tokens
+                                    if nli_conf < 0.72 and (has_curriculum_topic or self._has_verified_curriculum_topic(clean_prompt)):
+                                        logger.info(
+                                            f"[IntentRouter-Cascade] Curriculum Semantic Rescue (NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
                                         )
-                                        if is_verified_topic:
-                                            logger.info(
-                                                f"[IntentRouter-Cascade] Curriculum Semantic Rescue (Lesson {m_lesson.get('seq')}, NLI={nli_conf*100:.1f}%, P_course={p_course:.3f}) -> course_query"
-                                            )
-                                            return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+                                        return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
 
                                 logger.info(f"[IntentRouter-Cascade] NLI Arbiter phân định -> out_of_scope ({nli_conf*100:.1f}%)")
                                 return RouterClassification(

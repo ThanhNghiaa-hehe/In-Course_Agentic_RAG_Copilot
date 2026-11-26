@@ -734,6 +734,92 @@ def extract_lesson_hotwords(
     return ", ".join(lexicon["hotwords_list"][:max(1, int(max_hotwords))])
 
 
+VIETNAMESE_NFC_LETTERS: Set[str] = set(
+    "àáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩị"
+    "òóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
+    "ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊ"
+    "ÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴ"
+)
+assert len(VIETNAMESE_NFC_LETTERS) == 134, f"Expected 134 Vietnamese NFC letters, got {len(VIETNAMESE_NFC_LETTERS)}"
+
+ASR_EMPTY_FALLBACK_TEXT = "[Đoạn thao tác mã nguồn C++ trên màn hình]"
+
+_SAFE_NON_ASCII_PUNCT: Set[str] = {"–", "—", "•", "…", "“", "”", "‘", "’"}
+
+_FOREIGN_LATIN_FOLD_MAP: Dict[str, str] = {
+    "ı": "i",
+    "İ": "I",
+    "ł": "l",
+    "Ł": "L",
+    "ø": "o",
+    "Ø": "O",
+    "ß": "ss",
+    "æ": "ae",
+    "Æ": "AE",
+    "œ": "oe",
+    "Œ": "OE",
+    "ð": "d",
+    "Ð": "D",
+    "þ": "th",
+    "Þ": "Th",
+}
+
+_SUBSCRIPT_SUPERSCRIPT_MAP: Dict[str, str] = {
+    "₀": "0",
+    "₁": "1",
+    "₂": "2",
+    "₃": "3",
+    "₄": "4",
+    "₅": "5",
+    "₆": "6",
+    "₇": "7",
+    "₈": "8",
+    "₉": "9",
+    "⁰": "0",
+    "¹": "1",
+    "²": "2",
+    "³": "3",
+    "⁴": "4",
+    "⁵": "5",
+    "⁶": "6",
+    "⁷": "7",
+    "⁸": "8",
+    "⁹": "9",
+}
+
+_ALLOWED_UNACCENTED_VN_OR_CPP: Set[str] = {
+    "cho", "ta", "la", "va", "co", "khi", "trong", "nhu", "hay", "con", "thi", "roi",
+    "nam", "em", "anh", "cac", "ban", "bai", "ham", "mang", "so", "ok",
+    "int", "long", "short", "float", "double", "char", "bool", "void", "auto", "const",
+    "static", "struct", "class", "public", "private", "protected", "virtual", "friend",
+    "inline", "template", "typename", "using", "namespace", "std", "return", "if", "else",
+    "switch", "case", "default", "for", "while", "do", "break", "continue", "new", "delete",
+    "nullptr", "null", "true", "false", "sizeof", "typedef", "cin", "cout", "endl",
+    "getline", "iostream", "iomanip", "cmath", "cstring", "algorithm", "string", "vector",
+    "set", "multiset", "map", "multimap", "unordered_set", "unordered_map", "pair", "stack",
+    "queue", "priority_queue", "deque", "list", "sort", "swap", "min", "max", "abs", "sqrt",
+    "pow", "gcd", "lcm", "main", "include", "bits", "stdc", "cpp", "ctrl",
+}
+
+_CORRUPTED_ASR_CHAR_RE = re.compile(
+    r"[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u30ff"
+    r"\uac00-\ud7af\u1100-\u11ff\u3130-\u318f\u0400-\u04ff"
+    r"\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff\u0600-\u06ff"
+    r"\u0900-\u0dff\u0e00-\u0e7f\uff00-\uffef\ufffd"
+    r"\u202a-\u202e\u2066-\u2069\u2080-\u20cf\u2190-\u22ff"
+    r"\u25a0-\u27bf\ufe00-\ufe0f\u00bc-\u00be\u00d7"
+    r"\U0001f000-\U0001faff]"
+)
+_REPEATED_CHAR_NOISE_RE = re.compile(r"([A-Za-z])\1{5,}")
+_SPACED_SINGLE_LETTER_LOOP_RE = re.compile(r"(?i)(?<!\w)([a-z])(?:\s+\1){3,}(?!\w)")
+_REPEATED_WORD_LOOP_RE = re.compile(r"(?i)(?<![\w+])([^\W\d_]{2,})(?:(?:\s*[,;]\s*|\s+)\1){2,}(?![\w+])")
+_YOUTUBE_HALLUCINATION_RE = re.compile(
+    r"(?i)[^.!?\n]*\b(?:if you have any question|leave feedback in comments|thanks for watching|"
+    r"thank you for watching|please subscribe|like and subscribe|don't forget to subscribe|"
+    r"remember our sources)[^.!?\n]*[.!?]?"
+)
+
+
 def _contains_cjk_or_hangul(text: str) -> bool:
     """Kiểm tra ký tự ảo giác CJK, Kana, Hangul hoặc replacement character."""
     for ch in text:
@@ -743,7 +829,7 @@ def _contains_cjk_or_hangul(text: str) -> bool:
             or (0x3400 <= code <= 0x4DBF)    # CJK Extension A
             or (0x20000 <= code <= 0x2A6DF)  # CJK Extension B
             or (0xF900 <= code <= 0xFAFF)    # CJK Compatibility Ideographs
-            or (0x3040 <= code <= 0x30FF)    # Hiragana & Katakana
+            or (0x3000 <= code <= 0x30FF)    # CJK Punctuation, Hiragana & Katakana
             or (0xAC00 <= code <= 0xD7AF)    # Hangul Syllables
             or (0x1100 <= code <= 0x11FF)    # Hangul Jamo
             or (0x3130 <= code <= 0x318F)    # Hangul Compatibility Jamo
@@ -751,6 +837,136 @@ def _contains_cjk_or_hangul(text: str) -> bool:
         ):
             return True
     return False
+
+
+def _has_foreign_or_corrupted_codepoint(text: str) -> bool:
+    """Kiểm tra ký tự ngoài ASCII + 134 chữ cái tiếng Việt NFC + dấu câu chuẩn."""
+    norm = unicodedata.normalize("NFC", text)
+    for ch in norm:
+        if ord(ch) > 127 and ch not in VIETNAMESE_NFC_LETTERS and ch not in _SAFE_NON_ASCII_PUNCT:
+            return True
+    return False
+
+
+def _is_pure_ascii_whisper_hallucination(text: str) -> bool:
+    """Phát hiện chuỗi ảo giác tiếng Anh / ASCII vô nghĩa của Whisper khi video im lặng gõ code."""
+    norm = unicodedata.normalize("NFC", text or "").strip()
+    if not norm or ASR_EMPTY_FALLBACK_TEXT in norm:
+        return False
+    # Không đánh dấu nhầm mã nguồn C++ thật (chứa block {}, chỉ thị #include, header [Mã nguồn ...] hoặc kết thúc ';')
+    if any(tok in norm for tok in ("{", "}", "#include", "[Mã nguồn")) or norm.endswith(";"):
+        return False
+    vn_count = sum(1 for ch in norm if ch in VIETNAMESE_NFC_LETTERS)
+    if vn_count >= 3:
+        return False
+    if norm.count("->") >= 4 and vn_count < 3:
+        return True
+    if vn_count > 0:
+        return False
+
+    alpha_words = re.findall(r"[A-Za-z]{2,}", norm)
+    if len(alpha_words) < 2:
+        return False
+    foreign_en_words = [w for w in alpha_words if w.lower() not in _ALLOWED_UNACCENTED_VN_OR_CPP]
+    ratio = len(foreign_en_words) / len(alpha_words)
+    if len(alpha_words) >= 3 and len(foreign_en_words) >= 2 and ratio >= 0.45:
+        return True
+    if len(alpha_words) >= 2 and len(norm) < 35 and len(foreign_en_words) >= 1 and ratio >= 0.50:
+        return True
+    return False
+
+
+def _is_non_latin_foreign_script_codepoint(code: int) -> bool:
+    return (
+        (0x0370 <= code <= 0x05FF)      # Greek, Cyrillic, Armenian, Hebrew
+        or (0x0600 <= code <= 0x0DFF)   # Arabic, Syriac, Indic, Devanagari, Gujarati, Tamil
+        or (0x0E00 <= code <= 0x137F)   # Thai, Lao, Tibetan, Myanmar, Georgian, Hangul Jamo, Ethiopic
+        or (0x1F00 <= code <= 0x1FFF)   # Greek Extended
+        or (0x202A <= code <= 0x202E)   # Bidi controls
+        or (0x2066 <= code <= 0x2069)   # Bidi isolates
+        or (0x20A0 <= code <= 0x20CF)   # Currency symbols
+        or (0x2190 <= code <= 0x22FF)   # Arrows & Mathematical operators
+        or (0x25A0 <= code <= 0x27BF)   # Geometric shapes, Misc symbols, Dingbats
+        or (0x3000 <= code <= 0x30FF)   # CJK Punctuation, Hiragana, Katakana
+        or (0x3130 <= code <= 0x318F)   # Hangul Compatibility Jamo
+        or (0x3400 <= code <= 0x4DBF)   # CJK Extension A
+        or (0x4E00 <= code <= 0x9FFF)   # CJK Unified Ideographs
+        or (0xAC00 <= code <= 0xD7AF)   # Hangul Syllables
+        or (0xF900 <= code <= 0xFAFF)   # CJK Compatibility Ideographs
+        or (0xFE00 <= code <= 0xFE0F)   # Variation Selectors
+        or (0xFF00 <= code <= 0xFFEF)   # Halfwidth & Fullwidth Forms
+        or code == 0xFFFD               # Replacement character
+        or (0x1F000 <= code <= 0x1FAFF) # Emoji & Pictographs
+        or (0x20000 <= code <= 0x2FA1F) # CJK Extensions B..F
+    )
+
+
+def _contains_corrupted_asr_artifacts(text: str) -> bool:
+    """Phát hiện ký tự ngoại lai, dấu Latin ngoại lai, Emoji, lặp rác hoặc ảo giác tiếng Anh Whisper."""
+    if not text:
+        return False
+    return (
+        _contains_cjk_or_hangul(text)
+        or bool(_CORRUPTED_ASR_CHAR_RE.search(text))
+        or _has_foreign_or_corrupted_codepoint(text)
+        or bool(_REPEATED_CHAR_NOISE_RE.search(text))
+        or bool(_SPACED_SINGLE_LETTER_LOOP_RE.search(text))
+        or bool(_REPEATED_WORD_LOOP_RE.search(text))
+        or bool(_YOUTUBE_HALLUCINATION_RE.search(text))
+        or _is_pure_ascii_whisper_hallucination(text)
+    )
+
+
+def _sanitize_corrupted_asr_artifacts(text: str) -> str:
+    """Loại bỏ tất định ký tự ngoại lai, dấu Latin lạ, Emoji, lặp rác và ảo giác tiếng Anh ASR (bảo toàn 134 chữ NFC tiếng Việt)."""
+    if not text:
+        return ""
+    norm = unicodedata.normalize("NFC", text)
+    norm = _YOUTUBE_HALLUCINATION_RE.sub(" ", norm)
+    if _is_pure_ascii_whisper_hallucination(norm):
+        return ""
+
+    cleaned_chars: List[str] = []
+    for ch in norm:
+        code = ord(ch)
+        if code <= 127 or ch in VIETNAMESE_NFC_LETTERS or ch in _SAFE_NON_ASCII_PUNCT:
+            cleaned_chars.append(ch)
+        elif ch == "→":
+            cleaned_chars.append("->")
+        elif ch == "×":
+            cleaned_chars.append("*")
+        elif ch in _SUBSCRIPT_SUPERSCRIPT_MAP:
+            cleaned_chars.append(_SUBSCRIPT_SUPERSCRIPT_MAP[ch])
+        elif ch in _FOREIGN_LATIN_FOLD_MAP:
+            cleaned_chars.append(_FOREIGN_LATIN_FOLD_MAP[ch])
+        elif _is_non_latin_foreign_script_codepoint(code):
+            cleaned_chars.append(" ")
+        elif unicodedata.category(ch).startswith("L"):
+            decomposed = unicodedata.normalize("NFD", ch)
+            ascii_base = "".join(
+                c for c in decomposed
+                if not unicodedata.category(c).startswith("M") and ord(c) <= 127 and c.isalpha()
+            )
+            cleaned_chars.append(ascii_base if ascii_base else " ")
+        else:
+            cleaned_chars.append(" ")
+
+    stripped = "".join(cleaned_chars)
+    stripped = _REPEATED_CHAR_NOISE_RE.sub(" ", stripped)
+    stripped = _SPACED_SINGLE_LETTER_LOOP_RE.sub(" ", stripped)
+    for _ in range(3):
+        next_s = _REPEATED_WORD_LOOP_RE.sub(r"\1", stripped)
+        if next_s == stripped:
+            break
+        stripped = next_s
+
+    collapsed = " ".join(stripped.split())
+    while ",," in collapsed:
+        collapsed = collapsed.replace(",,", ",")
+    collapsed = collapsed.strip(" ,;:")
+    if _is_pure_ascii_whisper_hallucination(collapsed):
+        return ""
+    return collapsed
 
 
 def _non_punct_tokens(text: str) -> List[str]:
@@ -784,7 +1000,7 @@ def validate_canonical_chunk(
         return False, "empty_output"
     if not orig:
         return False, "empty_original"
-    if _contains_cjk_or_hangul(cand):
+    if _contains_cjk_or_hangul(cand) or _contains_corrupted_asr_artifacts(cand):
         return False, "cjk_or_hangul_hallucination"
     if (cand.lstrip().startswith(("{", "[")) and not orig.lstrip().startswith(("{", "["))) or (
         '"chunk_id"' in cand and '"chunk_id"' not in orig
@@ -793,23 +1009,29 @@ def validate_canonical_chunk(
     if "$" in cand and "$" not in orig:
         return False, "latex_syntax_injection"
 
-    min_len = 0.74 if targeted else 0.82
+    # Khi bản gốc chứa rác CJK/Hangul/FFFD/lặp ký tự, đối chiếu tỷ lệ trên bản đã bóc rác để tránh từ chối nhầm khi xóa rác
+    orig_had_asr_garbage = _contains_corrupted_asr_artifacts(orig)
+    orig_basis = _sanitize_corrupted_asr_artifacts(orig) if orig_had_asr_garbage else orig
+    if not orig_basis:
+        orig_basis = orig
+
+    min_len = 0.74 if (targeted or orig_had_asr_garbage) else 0.82
     max_len = 1.18
-    min_wc = 0.70 if targeted else 0.80
+    min_wc = 0.70 if (targeted or orig_had_asr_garbage) else 0.80
     max_wc = 1.20
     min_jaccard = 0.55
 
-    len_ratio = len(cand) / max(len(orig), 1)
+    len_ratio = len(cand) / max(len(orig_basis), 1)
     if len_ratio < min_len or len_ratio > max_len:
         return False, f"length_ratio_out_of_bounds:{len_ratio:.3f}"
 
-    orig_words = orig.split()
+    orig_words = orig_basis.split()
     cand_words = cand.split()
     wc_ratio = len(cand_words) / max(len(orig_words), 1)
     if wc_ratio < min_wc or wc_ratio > max_wc:
         return False, f"word_count_ratio_out_of_bounds:{wc_ratio:.3f}"
 
-    orig_tokens = _non_punct_tokens(orig)
+    orig_tokens = _non_punct_tokens(orig_basis)
     cand_tokens = _non_punct_tokens(cand)
     if not orig_tokens or not cand_tokens:
         return False, "no_non_punct_tokens"
@@ -1521,7 +1743,13 @@ def run_supervisor_layer_a(
                 pass1_rejected_indices.append(idx)
                 recheck_hints[idx] = "Pass 1 bị guardrail từ chối (chú ý sửa tối giản, tránh tóm tắt/mất chữ)"
 
-        # 3. Quét cụm từ cấm/đồng âm Whisper còn sót trên cand_text
+        # 3. Quét ký tự rác ASR + cụm từ cấm/đồng âm Whisper còn sót trên cand_text
+        if _contains_corrupted_asr_artifacts(cand_text):
+            existing = recheck_hints.get(idx, "")
+            recheck_hints[idx] = (existing + "; " if existing else "") + "Chứa ký tự ảo giác CJK/Hangul/FFFD/lặp rác ASR cần bóc sạch"
+            if cand_text == orig_text:
+                suspicious_unchanged_indices.append(idx)
+
         hits = _scan_residual_forbidden_noise(cand_text, forbidden_map)
         suspicious_tok = _is_suspicious_acronym_chunk(cand_text, lexicon)
         if hits:
@@ -2247,15 +2475,15 @@ class QdrantSyncResources:
     @property
     def dense_model(self) -> Any:
         if self._dense_model is None:
-            from fastembed import TextEmbedding
-            self._dense_model = TextEmbedding(settings.EMBEDDING_MODEL_NAME)
+            from app.services.embedding import get_embedding_service
+            self._dense_model = get_embedding_service().dense_model
         return self._dense_model
 
     @property
     def sparse_model(self) -> Any:
         if self._sparse_model is None:
-            from fastembed import SparseTextEmbedding
-            self._sparse_model = SparseTextEmbedding(settings.SPARSE_MODEL_NAME)
+            from app.services.embedding import get_embedding_service
+            self._sparse_model = get_embedding_service().sparse_model
         return self._sparse_model
 
     @property
@@ -2694,6 +2922,95 @@ def run_canonicalization_cli(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_repair_asr_artifacts_cli(args: argparse.Namespace) -> int:
+    """Rửa sạch tất định các chunk dính CJK/Hangul/Cyrillic/FFFD/chuỗi lặp rác và đồng bộ Qdrant + video_chapters."""
+    lesson_seqs = _parse_lessons_arg(getattr(args, "lessons", None))
+    targets = find_transcript_targets(
+        course_id=args.course,
+        lesson_seq=args.lesson,
+        start_lesson=args.start_lesson,
+        end_lesson=args.end_lesson,
+        lesson_seqs=lesson_seqs,
+    )
+    if not targets:
+        print("[WARN] Không tìm thấy file *_chunks.json phù hợp bộ lọc.")
+        return 1
+
+    apply_changes = bool(getattr(args, "apply", False))
+    sync_qdrant = bool(getattr(args, "sync_qdrant", False))
+    refresh_chapters = bool(getattr(args, "refresh_chapters", False))
+    sync_resources = QdrantSyncResources() if (apply_changes and sync_qdrant) else None
+
+    total_chunks_repaired = 0
+    repaired_lessons: List[int] = []
+    total_qdrant_points = 0
+
+    for item in targets:
+        path = Path(item["path"])
+        chunks = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(chunks, list):
+            continue
+
+        lesson_changed = 0
+        changed_chunks_only: List[Dict[str, Any]] = []
+        updated_chunks: List[Dict[str, Any]] = []
+        for ch in chunks:
+            new_ch = dict(ch)
+            orig_txt = str(new_ch.get("raw_text") or new_ch.get("text") or "")
+            if _contains_corrupted_asr_artifacts(orig_txt):
+                cleaned_txt = _sanitize_corrupted_asr_artifacts(orig_txt)
+                if not cleaned_txt or (
+                    len(cleaned_txt) < 15
+                    and not any(c in VIETNAMESE_NFC_LETTERS for c in cleaned_txt)
+                    and not any(ch.isdigit() for ch in cleaned_txt)
+                ):
+                    cleaned_txt = ASR_EMPTY_FALLBACK_TEXT
+                if cleaned_txt != orig_txt:
+                    new_ch["raw_text"] = cleaned_txt
+                    if "text" in new_ch:
+                        new_ch["text"] = cleaned_txt
+                    lesson_changed += 1
+                    changed_chunks_only.append(new_ch)
+            updated_chunks.append(new_ch)
+
+        if lesson_changed == 0:
+            continue
+
+        total_chunks_repaired += lesson_changed
+        repaired_lessons.append(int(item["lesson_seq"]))
+        print(
+            f"[ASR-Repair] {item['course_id']}/{item['lesson_id']}: "
+            f"cleaned={lesson_changed}/{len(updated_chunks)} chunks (apply={apply_changes})",
+            flush=True,
+        )
+
+        if apply_changes:
+            tmp_json = path.with_suffix(".tmp.json")
+            tmp_json.write_text(json.dumps(updated_chunks, ensure_ascii=False, indent=2), encoding="utf-8")
+            tmp_json.replace(path)
+            if sync_qdrant and sync_resources is not None and changed_chunks_only:
+                total_qdrant_points += upsert_lesson_chunks_to_qdrant(
+                    changed_chunks_only,
+                    item["course_id"],
+                    item["lesson_id"],
+                    item["lesson_seq"],
+                    item["folder_name"],
+                    resources=sync_resources,
+                )
+
+    refreshed_chapters = 0
+    if apply_changes and refresh_chapters:
+        all_seqs = sorted({int(item["lesson_seq"]) for item in targets})
+        refreshed_chapters = refresh_video_chapters_for_lessons(all_seqs)
+
+    print(
+        f"[ASR-Repair DONE] lessons_modified={len(repaired_lessons)}, "
+        f"chunks_repaired={total_chunks_repaired}, qdrant_upserted={total_qdrant_points}, "
+        f"chapters_refreshed={refreshed_chapters}"
+    )
+    return 0
+
+
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Data-Centric Offline Transcript Canonicalizer & Visual-Proxy Hotword Generator"
@@ -2703,6 +3020,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
         action="store_true",
         default=False,
         help="Inspect all 83 lessons and print AST/manifest lexicon + hotword readiness (zero external calls).",
+    )
+    parser.add_argument(
+        "--repair-asr-artifacts",
+        action="store_true",
+        default=False,
+        help="Deterministically sanitize chunks with CJK/Hangul/Cyrillic/FFFD/repeated-char Whisper noise.",
     )
     parser.add_argument(
         "--dry-run",
@@ -2767,6 +3090,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.audit_hotwords:
         return run_audit_hotwords(course_id=args.course, lesson_seq=args.lesson)
+
+    if args.repair_asr_artifacts:
+        return run_repair_asr_artifacts_cli(args)
 
     # Safe by default: nếu không truyền --apply thì luôn chạy dry-run
     if not args.apply and not args.dry_run:

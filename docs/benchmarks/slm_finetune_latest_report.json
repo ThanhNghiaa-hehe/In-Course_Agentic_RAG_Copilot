@@ -1,0 +1,69 @@
+{
+  "timestamp": "2026-11-26 12:44:36",
+  "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
+  "promoted": false,
+  "corpus_audit": {
+    "base_samples": 496,
+    "accepted_hard_pool": 58,
+    "total_clean_samples": 552,
+    "class_distribution": {
+      "course_query": 231,
+      "chit_chat": 134,
+      "out_of_scope": 187
+    },
+    "leaked_rejected_count": 0,
+    "leaked_rejected_preview": [],
+    "exact_conflict_rejected_count": 0,
+    "conflict_drops_count": 1,
+    "heldout_queries_checked": 522
+  },
+  "hyperparams": {
+    "epochs": 90,
+    "lr": 0.0012,
+    "weight_decay": 0.001,
+    "label_smoothing": 0.06,
+    "hard_neg_weight": 1.0,
+    "optimal_temperature": 0.639
+  },
+  "cv_metrics": {
+    "mean_acc": 95.29,
+    "std_acc": 1.48,
+    "mean_macro_f1": 95.58,
+    "std_macro_f1": 1.42,
+    "cal_oof_ece": 0.0181,
+    "cal_oof_brier": 0.0704
+  },
+  "baseline_metrics": {
+    "golden_acc": 87.5,
+    "golden_macro_f1": 84.67,
+    "golden_ece": 0.0521,
+    "adversarial_hybrid_acc": 70.0,
+    "ood_stress_acc": 86.0
+  },
+  "candidate_metrics": {
+    "golden_acc": 87.0,
+    "golden_macro_f1": 84.14,
+    "golden_ece": 0.1018,
+    "adversarial_hybrid_acc": 70.0,
+    "ood_stress_acc": 86.0,
+    "p50_ms": 0.0252,
+    "p99_ms": 0.0469,
+    "confusion_matrix": [
+      [
+        23,
+        2,
+        0
+      ],
+      [
+        0,
+        126,
+        17
+      ],
+      [
+        1,
+        6,
+        25
+      ]
+    ]
+  }
+}

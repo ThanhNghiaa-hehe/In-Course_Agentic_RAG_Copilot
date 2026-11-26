@@ -10,8 +10,11 @@ Kiến trúc Phối Hợp Đa Tác Nhân Khép Kín (Self-Iterative Optimization
        (Bật `--prefer-claude` để thử `claude-opus-5-5-high` / `claude-sonnet-5-5-high` trước).
      - Auditor (`codebase-auditor`):
        `gemini-4-carbon-high` trên `thanhnghiat42` -> `thanhnghiaa1402`, dự phòng `gemini-4-neon-high`.
-  2. POOL THỰC THI & THẨM ĐỊNH (Exec Pool: seanpaul1402@gmail.com, dự phòng tranthehuy23@gmail.com):
-     - Coder (`core-coder`): `gemini-4-hydrogen-high` (dự phòng `gemini-4-hydrogen-medium`).
+  2. POOL THỰC THI & THẨM ĐỊNH:
+     - Coder (`core-coder`, sửa code/data):
+       Ưu tiên `gemini-4-carbon-high` trên Brain Pool (`thanhnghiat42` -> `thanhnghiaa1402`);
+       hết quota mới dự phòng sang `gemini-4-neon-high` (`thanhnghiat42` -> `thanhnghiaa1402`);
+       cuối cùng mới hạ về Exec Pool `gemini-4-hydrogen-high` (`seanpaul1402` -> `tranthehuy23`).
      - Verifier (`grounding-evaluator` / `qa-tester`): `gemini-4-hydrogen-high` (hoặc `--light-verifier` dùng `gemini-3.8-flash-high`).
      - Scribe (`academic-scribe`): `gemini-4-hydrogen-high` (dự phòng `gemini-3.8-flash-high`).
 Tự động chuyển đúng tài khoản theo vai trò qua `antigravity-server.exe switch <email>` (KHÔNG xoay vòng mù).
@@ -36,22 +39,25 @@ EXEC_ACCOUNTS = ("seanpaul1402@gmail.com", "tranthehuy23@gmail.com")
 # BẢNG ÁNH XẠ MÔ HÌNH THEO VAI TRÒ & ĐÚNG POOL TÀI KHOẢN (0% Argon, Model-First Across Scoped Accounts)
 ROLE_ROUTING_PLANS = {
     "thinker": [
-        ("gemini-4-neon-high", "thanhnghiat42@gmail.com"),
         ("gemini-4-neon-high", "thanhnghiaa1402@gmail.com"),
-        ("gemini-4-carbon-high", "thanhnghiat42@gmail.com"),
+        ("gemini-4-neon-high", "thanhnghiat42@gmail.com"),
         ("gemini-4-carbon-high", "thanhnghiaa1402@gmail.com"),
+        ("gemini-4-carbon-high", "thanhnghiat42@gmail.com"),
     ],
     "auditor": [
-        ("gemini-4-carbon-high", "thanhnghiat42@gmail.com"),
         ("gemini-4-carbon-high", "thanhnghiaa1402@gmail.com"),
-        ("gemini-4-neon-high", "thanhnghiat42@gmail.com"),
+        ("gemini-4-carbon-high", "thanhnghiat42@gmail.com"),
         ("gemini-4-neon-high", "thanhnghiaa1402@gmail.com"),
+        ("gemini-4-neon-high", "thanhnghiat42@gmail.com"),
     ],
     "coder": [
+        # Ưu tiên thanhnghiaa1402 (100% quota) -> dự phòng thanhnghiat42 -> Exec Pool
+        ("gemini-4-carbon-high", "thanhnghiaa1402@gmail.com"),
+        ("gemini-4-carbon-high", "thanhnghiat42@gmail.com"),
+        ("gemini-4-neon-high", "thanhnghiaa1402@gmail.com"),
+        ("gemini-4-neon-high", "thanhnghiat42@gmail.com"),
         ("gemini-4-hydrogen-high", "seanpaul1402@gmail.com"),
         ("gemini-4-hydrogen-high", "tranthehuy23@gmail.com"),
-        ("gemini-4-hydrogen-medium", "seanpaul1402@gmail.com"),
-        ("gemini-4-hydrogen-medium", "tranthehuy23@gmail.com"),
     ],
     "verifier": [
         ("gemini-4-hydrogen-high", "seanpaul1402@gmail.com"),
@@ -61,9 +67,10 @@ ROLE_ROUTING_PLANS = {
         ("gemini-3.8-flash-high", "tranthehuy23@gmail.com"),
     ],
     "verifier_runner": [
+        ("gemini-4-hydrogen-high", "seanpaul1402@gmail.com"),
+        ("gemini-4-hydrogen-high", "tranthehuy23@gmail.com"),
         ("gemini-3.8-flash-high", "seanpaul1402@gmail.com"),
         ("gemini-3.8-flash-high", "tranthehuy23@gmail.com"),
-        ("gemini-4-hydrogen-high", "seanpaul1402@gmail.com"),
     ],
     "scribe": [
         ("gemini-4-hydrogen-high", "seanpaul1402@gmail.com"),
@@ -93,14 +100,14 @@ ACCOUNT_MODEL_PROFILES = {
     "thanhnghiat42@gmail.com": {
         "auditor":  "gemini-4-carbon-high",
         "thinker":  "gemini-4-neon-high",
-        "coder":    "gemini-4-hydrogen-high",
+        "coder":    "gemini-4-carbon-high",
         "verifier": "gemini-4-hydrogen-high",
         "scribe":   "gemini-4-hydrogen-high",
     },
     "thanhnghiaa1402@gmail.com": {
         "auditor":  "gemini-4-carbon-high",
         "thinker":  "gemini-4-neon-high",
-        "coder":    "gemini-4-hydrogen-high",
+        "coder":    "gemini-4-carbon-high",
         "verifier": "gemini-4-hydrogen-high",
         "scribe":   "gemini-4-hydrogen-high",
     },
@@ -140,7 +147,7 @@ MODEL_FALLBACK_CHAINS = {
 DEFAULT_PROFILE = {
     "thinker":  "gemini-4-neon-high",
     "auditor":  "gemini-4-carbon-high",
-    "coder":    "gemini-4-hydrogen-high",
+    "coder":    "gemini-4-carbon-high",
     "verifier": "gemini-4-hydrogen-high",
     "scribe":   "gemini-4-hydrogen-high",
 }
@@ -395,11 +402,13 @@ def execute_phase(
     Thực thi một nhịp của quy trình với cơ chế ĐỊNH TUYẾN THEO ĐÚNG POOL TÀI KHOẢN & MODEL:
     - Thinker: `gemini-4-neon-high` (`thanhnghiat42` -> `thanhnghiaa1402`) -> `gemini-4-carbon-high` (`thanhnghiat42` -> `thanhnghiaa1402`).
     - Auditor: `gemini-4-carbon-high` (`thanhnghiat42` -> `thanhnghiaa1402`) -> `gemini-4-neon-high` (`thanhnghiat42` -> `thanhnghiaa1402`).
-    - Coder / Verifier / Scribe: `gemini-4-hydrogen-high` (`seanpaul1402` -> `tranthehuy23`) -> fallback nhẹ cùng pool.
+    - Coder (sửa code/data): `gemini-4-carbon-high` qua các account khả dụng -> hết quota sang `gemini-4-neon-high` qua các account khả dụng -> dự phòng `gemini-4-hydrogen-high`.
+    - Verifier / Scribe: `gemini-4-hydrogen-high` (`seanpaul1402` -> `tranthehuy23`) -> fallback nhẹ cùng pool.
     - Kiểm chứng danh sách model thực tế qua `agy models` trên đúng account vừa chuyển trước khi gọi.
     """
     attempt = 0
     cooldown_cycles = 0
+    account_models_cache: dict[str, list[str]] = {}
 
     while True:
         plan = get_role_routing_plan(
@@ -413,7 +422,9 @@ def execute_phase(
                 print(f"[Account Router] Bỏ qua cặp ({active_model} @ {target_email}) vì switch thất bại.")
                 continue
 
-            available_models = get_available_models()
+            if target_email not in account_models_cache:
+                account_models_cache[target_email] = get_available_models()
+            available_models = account_models_cache[target_email]
             if available_models and active_model not in available_models:
                 print(f"[Model Guard] Model '{active_model}' không khả dụng trên {target_email} -> thử cặp kế tiếp.")
                 continue
@@ -559,10 +570,12 @@ def run_deterministic_verification_harness(
     *,
     force_eval: bool = True,
     live_llm: bool = False,
+    with_dataset_gate: bool = False,
 ) -> tuple[int, str]:
     """
     Chạy TRỰC TIẾP bằng Python (0% qua LLM trung gian) bộ kiểm chứng Stage 1 của `master_autonomous_harness.py`:
-    AST + Anti-Bypass Diff -> 11 Sequential Pytests -> E2E Matrix (M1..M8 + S1) -> Macro Benchmarks.
+    AST + Anti-Bypass Diff -> 12 Sequential Pytests -> E2E Matrix (M1..M8 + S1) -> Macro Benchmarks.
+    Nếu `with_dataset_gate=True`, chạy tiếp `validate_training_datasets.py --mode validate --with-e5`.
     Ghi log đầy đủ vào `.agent/harness_stage1_latest.log` để Verifier kiểm toán.
     """
     py_exe = str(Path(sys.executable))
@@ -601,9 +614,32 @@ def run_deterministic_verification_harness(
         lines.append(line)
     proc.wait()
 
+    rc = proc.returncode
+    if with_dataset_gate:
+        ds_cmd = [py_exe, "scripts/validate_training_datasets.py", "--mode", "validate", "--with-e5"]
+        lines.append(f"\n=== DATASET VALIDATION GATE ===\nLệnh: {' '.join(ds_cmd)}\n")
+        print(f"\n[Deterministic Harness] Đang chạy Dataset Validation Gate: {' '.join(ds_cmd)}")
+        ds_proc = subprocess.Popen(
+            ds_cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            env=env,
+            shell=False,
+        )
+        for line in ds_proc.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            lines.append(line)
+        ds_proc.wait()
+        if rc == 0 and ds_proc.returncode != 0:
+            rc = ds_proc.returncode
+
     full_log = "".join(lines)
     log_path.write_text(full_log, encoding="utf-8")
-    return proc.returncode, full_log
+    return rc, full_log
 
 
 def evaluate_quality_gates(
@@ -611,6 +647,7 @@ def evaluate_quality_gates(
     min_artifact_ts: float = 0.0,
     harness_exit_code: int | None = None,
     require_verdict: bool = False,
+    with_dataset_gate: bool = False,
 ) -> tuple[bool, str]:
     """
     Kiểm toán tự động Quality Gates sau mỗi vòng lặp tối ưu:
@@ -693,7 +730,23 @@ def evaluate_quality_gates(
     else:
         issues.append("Chưa tìm thấy logs/playground_debug/e2e_matrix_latest_summary.json")
 
-    # 4. Kiểm tra Verdict độc lập của Verifier (grounding-evaluator)
+    # 4. Kiểm tra Dataset Validation Gate (nếu bật --dataset-gate)
+    if with_dataset_gate:
+        ds_report = Path("docs/benchmarks/dataset_validation_report.json")
+        if not ds_report.exists():
+            issues.append("Chưa tìm thấy docs/benchmarks/dataset_validation_report.json")
+        else:
+            try:
+                if min_artifact_ts > 0 and ds_report.stat().st_mtime < min_artifact_ts:
+                    issues.append("dataset_validation_report.json là file cũ trước khi Coder sửa")
+                ds_data = json.loads(ds_report.read_text(encoding="utf-8"))
+                if not ds_data.get("all_passed", False):
+                    failed_models = [k for k, v in ds_data.get("models", {}).items() if not v.get("passed")]
+                    issues.append(f"Dataset Validation Gate thất bại (failed={failed_models})")
+            except Exception as e:
+                issues.append(f"Lỗi phân tích dataset_validation_report.json: {e}")
+
+    # 5. Kiểm tra Verdict độc lập của Verifier (grounding-evaluator)
     if require_verdict:
         verdict_file = Path(".agent/verification_verdict.md")
         if not verdict_file.exists():
@@ -719,6 +772,7 @@ def run_pipeline(
     spec_path: str = "",
     prefer_claude: bool = False,
     light_verifier: bool = False,
+    with_dataset_gate: bool = False,
 ):
     """
     Vận hành toàn bộ quy trình Multi-Subagent Khép Kín (pstack Spec-Driven Closed Loop):
@@ -826,6 +880,7 @@ def run_pipeline(
             harness_rc, harness_log = run_deterministic_verification_harness(
                 force_eval=True,
                 live_llm=False,
+                with_dataset_gate=with_dataset_gate,
             )
             harness_tail = harness_log[-3500:] if len(harness_log) > 3500 else harness_log
 
@@ -857,6 +912,7 @@ def run_pipeline(
                 min_artifact_ts=coder_done_ts,
                 harness_exit_code=harness_rc,
                 require_verdict=True,
+                with_dataset_gate=with_dataset_gate,
             )
             loop_duration = round(time.time() - loop_start, 1)
             tracker.log_gate(is_passed, summary_report)
@@ -894,6 +950,7 @@ if __name__ == "__main__":
     parser.add_argument("--loops", "-l", type=int, default=3, help="Số vòng lặp tối đa tự động hội tụ (mặc định: 3)")
     parser.add_argument("--prefer-claude", action="store_true", help="Ưu tiên Claude Opus/Sonnet 5.5 cho Thinker/Auditor trước khi dùng Neon/Carbon")
     parser.add_argument("--light-verifier", action="store_true", help="Dùng gemini-3.8-flash-high làm model chính cho pha Verifier để tiết kiệm Hydrogen High")
+    parser.add_argument("--dataset-gate", action="store_true", help="Chạy kèm Dataset Validation Gate (`validate_training_datasets.py --with-e5`)")
     args = parser.parse_args()
 
     target_file = Path(args.file) if args.file else Path(".agent/prompt_mission.md")
@@ -912,4 +969,5 @@ if __name__ == "__main__":
         spec_path=args.spec,
         prefer_claude=args.prefer_claude,
         light_verifier=args.light_verifier,
+        with_dataset_gate=args.dataset_gate,
     )

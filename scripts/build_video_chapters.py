@@ -83,7 +83,7 @@ def sanitize_transcript_text(text: str) -> str:
 
 def is_garbage_segment(text: str) -> bool:
     """Phát hiện đoạn Whisper ảo giác (toàn từ tiếng Anh rời rạc vô nghĩa khi video im lặng gõ code)."""
-    if not text:
+    if not text or "[Đoạn thao tác mã nguồn" in text:
         return True
     words = [w.strip(".,;:?!'\"()[]{}").lower() for w in text.split()]
     words = [w for w in words if w]

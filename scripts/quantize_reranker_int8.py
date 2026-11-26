@@ -14,6 +14,7 @@ Mục đích:
 - Sau khi lượng tử hóa thành công, người dùng có thể xóa an toàn thư mục FP32 tạm thời.
 """
 
+import argparse
 import sys
 import shutil
 import time
@@ -32,10 +33,20 @@ from onnxruntime.quantization import quantize_dynamic, QuantType
 from fastembed.common.utils import define_cache_dir
 
 
-def find_source_fp32_model() -> tuple[Path, Path]:
+def find_source_fp32_model(source_dir: str | None = None) -> tuple[Path, Path]:
     """
-    Định vị thư mục snapshot chứa mô hình gốc model.onnx trong cache của fastembed.
+    Định vị thư mục snapshot chứa mô hình gốc model.onnx trong `source_dir` tùy chọn
+    hoặc trong cache của fastembed.
     """
+    if source_dir:
+        src_path = Path(source_dir).resolve()
+        onnx_candidate = src_path / "onnx" / "model.onnx"
+        if not onnx_candidate.exists():
+            onnx_candidate = src_path / "model.onnx"
+        if not onnx_candidate.exists():
+            raise FileNotFoundError(f"[LỖI] Không tìm thấy file model.onnx trong: {src_path}")
+        return src_path, onnx_candidate
+
     cache_root = define_cache_dir()
     jina_cache_dir = cache_root / "models--jinaai--jina-reranker-v2-base-multilingual"
     snapshots_dir = jina_cache_dir / "snapshots"
@@ -60,13 +71,13 @@ def find_source_fp32_model() -> tuple[Path, Path]:
     return snapshot_path, model_onnx_path
 
 
-def quantize_reranker_to_int8():
+def quantize_reranker_to_int8(source_dir: str | None = None):
     print("=" * 78)
     print("  TIẾN TRÌNH LƯỢNG TỬ HÓA ONNX PTQ INT8 - JINA RERANKER V2 (M-05c)")
     print("  Tác giả: Trần Thành Nghĩa (MSSV: 23DH112252) - HUFLIT")
     print("=" * 78)
 
-    snapshot_dir, source_onnx_path = find_source_fp32_model()
+    snapshot_dir, source_onnx_path = find_source_fp32_model(source_dir=source_dir)
     source_size_mb = source_onnx_path.stat().st_size / (1024 * 1024)
     print(f"\n[1/4] Đã tìm thấy mô hình gốc FP32:")
     print(f"      Đường dẫn: {source_onnx_path}")
@@ -131,4 +142,7 @@ def quantize_reranker_to_int8():
 
 
 if __name__ == "__main__":
-    quantize_reranker_to_int8()
+    parser = argparse.ArgumentParser(description="Quantize Jina Reranker v2 FP32 ONNX -> INT8")
+    parser.add_argument("--source-dir", type=str, default=None, help="Thư mục model FP32 tùy chọn chứa onnx/model.onnx")
+    cli_args = parser.parse_args()
+    quantize_reranker_to_int8(source_dir=cli_args.source_dir)

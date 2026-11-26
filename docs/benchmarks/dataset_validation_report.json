@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-11-26 14:18:07",
+  "mode": "validate",
+  "with_e5_conflict": true,
+  "heldout_queries_checked": 522,
+  "all_passed": true,
+  "models": {
+    "slm_router": {
+      "model": "slm_router",
+      "path": "D:\\In_Course_Agentic_RAG_Copilot\\data\\metadata\\router_training_corpus_v2_9_hybrid.json",
+      "total_in": 551,
+      "total_clean": 551,
+      "duplicates_removed": 0,
+      "exact_duplicate_conflict_count": 0,
+      "audit_synced": true,
+      "leaked_count": 0,
+      "leaked_preview": [],
+      "class_distribution": {
+        "course_query": 231,
+        "chit_chat": 133,
+        "out_of_scope": 187
+      },
+      "imbalance_ratio": 1.74,
+      "fatal_conflict_count": 0,
+      "fatal_conflicts_preview": [],
+      "e5_cone_overlap_count": 253,
+      "e5_cone_overlap_preview": [
+        {
+          "sim": 0.8822,
+          "jaccard": 0.2333,
+          "a_intent": "course_query",
+          "a_text": "Cách sử dụng hàm std::sort kết hợp với operator< để sắp xếp danh sách đối t",
+          "b_intent": "out_of_scope",
+          "b_text": "Dùng std::sort để sắp xếp danh sách bạn bè có giúp tôi hết cô đơn vào cuối "
+        },
+        {
+          "sim": 0.8754,
+          "jaccard": 0.0625,
+          "a_intent": "course_query",
+          "a_text": "Cú pháp giải phóng bộ nhớ động bằng toán tử delete và delete[] trong C++?",
+          "b_intent": "out_of_scope",
+          "b_text": "Hàm hủy destructor trong C++ có xóa bỏ hết các khoản nợ thẻ tín dụng ngoài "
+        },
+        {
+          "sim": 0.8813,
+          "jaccard": 0.0588,
+          "a_intent": "course_query",
+          "a_text": "Thầy ơi em ví con trỏ giống như địa chỉ nhà của một người thì có đúng không",
+          "b_intent": "chit_chat",
+          "b_text": "Tạm biệt nhé, mai mình sẽ lại nhờ bạn giải đáp thêm các thắc mắc về con trỏ"
+        },
+        {
+          "sim": 0.8714,
+          "jaccard": 0.1389,
+          "a_intent": "course_query",
+          "a_text": "Vòng lặp while có tương đương với việc thực hiện một hành động lặp đi lặp l",
+          "b_intent": "out_of_scope",
+          "b_text": "Chạy vòng lặp do-while trên laptop có giúp cây cảnh ngoài ban công tự động "
+        },
+        {
+          "sim": 0.8771,
+          "jaccard": 0.0882,
+          "a_intent": "course_query",
+          "a_text": "Vòng lặp while có tương đương với việc thực hiện một hành động lặp đi lặp l",
+          "b_intent": "out_of_scope",
+          "b_text": "Lệnh continue trong vòng lặp có thể bỏ qua cảnh kẹt xe giờ tan tầm ngoài đư"
+        }
+      ],
+      "passed": true
+    },
+    "mdeberta_nli": {
+      "model": "mdeberta_nli",
+      "path": "D:\\In_Course_Agentic_RAG_Copilot\\scratch\\kaggle_bundle\\mdeberta_nli\\dataset\\mdeberta_nli_train.jsonl",
+      "total_in": 1923,
+      "total_clean": 1923,
+      "duplicates_removed": 0,
+      "leaked_count": 0,
+      "bad_schema_count": 0,
+      "bad_hypothesis_count": 0,
+      "multi_entailment_count": 0,
+      "temporal_imbalance_count": 0,
+      "temporal_distribution": {
+        "in_video": {
+          "0": 20,
+          "2": 20,
+          "1": 95
+        },
+        "off_topic": {
+          "2": 20,
+          "0": 20,
+          "1": 95
+        }
+      },
+      "label_distribution": {
+        "0": 560,
+        "2": 1007,
+        "1": 356
+      },
+      "neutral_ratio": 0.1851,
+      "min_label_ratio": 0.1851,
+      "label_imbalance_ratio": 2.83,
+      "passed": true
+    },
+    "jina_reranker": {
+      "model": "jina_reranker",
+      "path": "D:\\In_Course_Agentic_RAG_Copilot\\scratch\\kaggle_bundle\\jina_reranker\\dataset\\jina_reranker_train.jsonl",
+      "total_in": 661,
+      "total_clean": 661,
+      "leaked_count": 0,
+      "bad_triplets_count": 0,
+      "over_600_chars_count": 0,
+      "header_shortcut_count": 0,
+      "false_negative_count": 0,
+      "synthetic_passage_count": 0,
+      "garbled_unicode_count": 0,
+      "intra_lesson_negative_count": 137,
+      "code_ast_triplet_count": 30,
+      "asr_homophone_warnings": 0,
+      "passed": true
+    },
+    "qwen25_qlora": {
+      "model": "qwen25_qlora",
+      "path": "D:\\In_Course_Agentic_RAG_Copilot\\scratch\\kaggle_bundle\\qwen25_qlora\\dataset\\qwen25_socratic_train.jsonl",
+      "total_in": 284,
+      "total_clean": 284,
+      "lessons_covered": 83,
+      "leaked_count": 0,
+      "bad_schema_count": 0,
+      "bad_system_prompt_count": 0,
+      "invalid_timestamp_count": 0,
+      "bad_socratic_ending_count": 0,
+      "truncation_count": 0,
+      "code_leak_count": 0,
+      "unique_user_openings": 17,
+      "unique_assistant_openings": 36,
+      "passed": true
+    }
+  }
+}
