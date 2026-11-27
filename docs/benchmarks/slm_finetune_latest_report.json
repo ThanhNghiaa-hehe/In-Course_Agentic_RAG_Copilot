@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-11-26 12:44:36",
+  "timestamp": "2026-11-27 22:48:36",
   "author": "Trần Thành Nghĩa (MSSV: 23DH112252)",
-  "promoted": false,
+  "promoted": true,
   "corpus_audit": {
-    "base_samples": 496,
-    "accepted_hard_pool": 58,
-    "total_clean_samples": 552,
+    "base_samples": 495,
+    "accepted_hard_pool": 98,
+    "total_clean_samples": 591,
     "class_distribution": {
-      "course_query": 231,
-      "chit_chat": 134,
-      "out_of_scope": 187
+      "course_query": 267,
+      "chit_chat": 149,
+      "out_of_scope": 175
     },
     "leaked_rejected_count": 0,
     "leaked_rejected_preview": [],
@@ -18,46 +18,46 @@
     "heldout_queries_checked": 522
   },
   "hyperparams": {
-    "epochs": 90,
-    "lr": 0.0012,
-    "weight_decay": 0.001,
-    "label_smoothing": 0.06,
+    "epochs": 60,
+    "lr": 0.001,
+    "weight_decay": 0.03,
+    "label_smoothing": 0.08,
     "hard_neg_weight": 1.0,
-    "optimal_temperature": 0.639
+    "optimal_temperature": 0.571
   },
   "cv_metrics": {
-    "mean_acc": 95.29,
-    "std_acc": 1.48,
-    "mean_macro_f1": 95.58,
-    "std_macro_f1": 1.42,
-    "cal_oof_ece": 0.0181,
-    "cal_oof_brier": 0.0704
+    "mean_acc": 94.75,
+    "std_acc": 2.57,
+    "mean_macro_f1": 94.7,
+    "std_macro_f1": 2.62,
+    "cal_oof_ece": 0.0152,
+    "cal_oof_brier": 0.078
   },
   "baseline_metrics": {
     "golden_acc": 87.5,
     "golden_macro_f1": 84.67,
     "golden_ece": 0.0521,
     "adversarial_hybrid_acc": 70.0,
-    "ood_stress_acc": 86.0
+    "ood_stress_acc": 87.0
   },
   "candidate_metrics": {
-    "golden_acc": 87.0,
-    "golden_macro_f1": 84.14,
-    "golden_ece": 0.1018,
-    "adversarial_hybrid_acc": 70.0,
-    "ood_stress_acc": 86.0,
-    "p50_ms": 0.0252,
-    "p99_ms": 0.0469,
+    "golden_acc": 88.0,
+    "golden_macro_f1": 84.63,
+    "golden_ece": 0.066,
+    "adversarial_hybrid_acc": 77.5,
+    "ood_stress_acc": 92.0,
+    "p50_ms": 0.0222,
+    "p99_ms": 0.0767,
     "confusion_matrix": [
       [
-        23,
-        2,
+        22,
+        3,
         0
       ],
       [
         0,
-        126,
-        17
+        129,
+        14
       ],
       [
         1,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-27 00:01:35",
+  "timestamp": "2026-11-27 22:43:20",
   "mode": "validate",
   "with_e5_conflict": true,
   "heldout_queries_checked": 522,
@@ -8,39 +8,23 @@
     "slm_router": {
       "model": "slm_router",
       "path": "D:\\In_Course_Agentic_RAG_Copilot\\data\\metadata\\router_training_corpus_v2_9_hybrid.json",
-      "total_in": 551,
-      "total_clean": 551,
+      "total_in": 591,
+      "total_clean": 591,
       "duplicates_removed": 0,
       "exact_duplicate_conflict_count": 0,
       "audit_synced": true,
       "leaked_count": 0,
       "leaked_preview": [],
       "class_distribution": {
-        "course_query": 231,
-        "chit_chat": 133,
-        "out_of_scope": 187
+        "course_query": 267,
+        "chit_chat": 149,
+        "out_of_scope": 175
       },
-      "imbalance_ratio": 1.74,
+      "imbalance_ratio": 1.79,
       "fatal_conflict_count": 0,
       "fatal_conflicts_preview": [],
-      "e5_cone_overlap_count": 253,
+      "e5_cone_overlap_count": 302,
       "e5_cone_overlap_preview": [
-        {
-          "sim": 0.8822,
-          "jaccard": 0.2333,
-          "a_intent": "course_query",
-          "a_text": "Cách sử dụng hàm std::sort kết hợp với operator< để sắp xếp danh sách đối t",
-          "b_intent": "out_of_scope",
-          "b_text": "Dùng std::sort để sắp xếp danh sách bạn bè có giúp tôi hết cô đơn vào cuối "
-        },
-        {
-          "sim": 0.8754,
-          "jaccard": 0.0625,
-          "a_intent": "course_query",
-          "a_text": "Cú pháp giải phóng bộ nhớ động bằng toán tử delete và delete[] trong C++?",
-          "b_intent": "out_of_scope",
-          "b_text": "Hàm hủy destructor trong C++ có xóa bỏ hết các khoản nợ thẻ tín dụng ngoài "
-        },
         {
           "sim": 0.8813,
           "jaccard": 0.0588,
@@ -50,7 +34,7 @@
           "b_text": "Tạm biệt nhé, mai mình sẽ lại nhờ bạn giải đáp thêm các thắc mắc về con trỏ"
         },
         {
-          "sim": 0.8714,
+          "sim": 0.8715,
           "jaccard": 0.1389,
           "a_intent": "course_query",
           "a_text": "Vòng lặp while có tương đương với việc thực hiện một hành động lặp đi lặp l",
@@ -58,12 +42,28 @@
           "b_text": "Chạy vòng lặp do-while trên laptop có giúp cây cảnh ngoài ban công tự động "
         },
         {
-          "sim": 0.8771,
-          "jaccard": 0.0882,
+          "sim": 0.8761,
+          "jaccard": 0.1364,
           "a_intent": "course_query",
-          "a_text": "Vòng lặp while có tương đương với việc thực hiện một hành động lặp đi lặp l",
+          "a_text": "Hàm trong lập trình có giống như một chiếc máy xay sinh tố, nhận đầu vào là",
           "b_intent": "out_of_scope",
-          "b_text": "Lệnh continue trong vòng lặp có thể bỏ qua cảnh kẹt xe giờ tan tầm ngoài đư"
+          "b_text": "Đặt tên hàm là phaTraThaoMoc() trong trình soạn thảo mã nguồn có làm ấm nướ"
+        },
+        {
+          "sim": 0.8904,
+          "jaccard": 0.2143,
+          "a_intent": "course_query",
+          "a_text": "Tham chiếu reference & trong C++ có giống như việc đặt biệt danh cho một ng",
+          "b_intent": "out_of_scope",
+          "b_text": "Từ khóa friend trong C++ có giúp tôi kết bạn với người nổi tiếng trên Faceb"
+        },
+        {
+          "sim": 0.9158,
+          "jaccard": 0.3077,
+          "a_intent": "course_query",
+          "a_text": "Ép kiểu dữ liệu type casting có giống như việc đổ nước từ chiếc ca lớn sang",
+          "b_intent": "out_of_scope",
+          "b_text": "Ép kiểu dữ liệu type casting có biến hóa đá thành vàng được không?"
         }
       ],
       "passed": true
@@ -121,8 +121,8 @@
     "qwen25_qlora": {
       "model": "qwen25_qlora",
       "path": "D:\\In_Course_Agentic_RAG_Copilot\\scratch\\kaggle_bundle\\qwen25_qlora\\dataset\\qwen25_socratic_train.jsonl",
-      "total_in": 284,
-      "total_clean": 284,
+      "total_in": 287,
+      "total_clean": 287,
       "lessons_covered": 83,
       "leaked_count": 0,
       "bad_schema_count": 0,
@@ -131,8 +131,8 @@
       "bad_socratic_ending_count": 0,
       "truncation_count": 0,
       "code_leak_count": 0,
-      "unique_user_openings": 17,
-      "unique_assistant_openings": 36,
+      "unique_user_openings": 154,
+      "unique_assistant_openings": 215,
       "passed": true
     }
   }

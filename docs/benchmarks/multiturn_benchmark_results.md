@@ -3,7 +3,7 @@
 
 **Tác giả:** Sinh viên Trần Thành Nghĩa (MSSV: `23DH112252`) — Khoa CNTT, HUFLIT  
 **Tập dữ liệu:** `multiturn_benchmark_dataset.json` (50 sessions, 222 turns)  
-**Thời gian thực thi:** 2026-11-27T02:32:26 ➔ 2026-11-27T02:35:46 (200.57s)  
+**Thời gian thực thi:** 2026-11-27T23:49:34 ➔ 2026-11-27T23:52:45 (191.21s)  
 **Mã tài liệu:** `HUFLIT-RAG-MULTITURN-RESULTS-2026-V1`  
 
 ---
@@ -12,12 +12,12 @@
 
 | Chỉ Số Đo Lường Khoa Học | Kết Quả Thực Đo | Tiêu Chuẩn Mục Tiêu (Target) | Trạng Thái Thẩm Định |
 | :--- | :---: | :---: | :---: |
-| **1. Intent Classification Accuracy** | **97.75%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
-| **2. Retrieval Status Precision** | **92.34%** | $\ge 85.0\%$ | **ĐẠT (PASSED)** |
-| **3. Anaphora Resolution Rate (ARR)** | **97.87%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
-| **4. Socratic Refusal Precision (SRP)** | **93.33%** | **$100.0\%$** (Zero Code Leak) | **CHƯA ĐẠT (FAILED)** |
+| **1. Intent Classification Accuracy** | **97.3%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
+| **2. Retrieval Status Precision** | **92.79%** | $\ge 85.0\%$ | **ĐẠT (PASSED)** |
+| **3. Anaphora Resolution Rate (ARR)** | **96.81%** | $\ge 90.0\%$ | **ĐẠT (PASSED)** |
+| **4. Socratic Refusal Precision (SRP)** | **100.0%** | **$100.0\%$** (Zero Code Leak) | **ĐẠT (PASSED)** |
 | **5a. Whitelist Timestamp Hit Rate (Strict WHR ±30s)** | **53.15%** | **$100.0\%$** (Single-Label WHR) | **CHƯA ĐẠT (FAILED)** |
-| **5b. Multi-Grounding Timestamp Safety Rate** | **87.84%** | $\ge 90.0\%$ (Tier 2 Multi-Grounding) | **CHƯA ĐẠT (FAILED)** |
+| **5b. Multi-Grounding Timestamp Safety Rate** | **88.29%** | $\ge 90.0\%$ (Tier 2 Multi-Grounding) | **CHƯA ĐẠT (FAILED)** |
 | **6. Context Budget Compliance** | **100.0%** | **$100.0\%$** ($\le 2{,}400$ chars) | **ĐẠT (PASSED)** |
 
 > **Kỷ lục ngân sách ngữ cảnh:** Độ dài lịch sử lớn nhất quan sát được là **894 ký tự**, nằm hoàn toàn bên trong trần an toàn **2,400 ký tự** (ngăn chặn triệt để suy thoái KV Cache Attention Prefill).
@@ -28,11 +28,11 @@
 
 | Thước Đo Độ Trễ | Thời Gian Thực Đo (ms) | Đánh Giá Hiệu Năng Thời Gian Thực |
 | :--- | :---: | :--- |
-| **Mean Latency (Trung bình)** | **902.7 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
-| **P50 Latency (Median)** | **857.5 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
-| **P95 Latency (Phân vị 95)** | **1804.99 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
-| **P99 Latency (Phân vị 99)** | **2641.02 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
-| **Max Latency (Cực đại)** | **3147.93 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
+| **Mean Latency (Trung bình)** | **860.56 ms** | Phản hồi mượt mà cho trải nghiệm người dùng |
+| **P50 Latency (Median)** | **837.65 ms** | Đạt chuẩn dưới 50ms cho các thao tác phân luồng |
+| **P95 Latency (Phân vị 95)** | **1704.3 ms** | Đảm bảo tính ổn định ngay cả với turn truy xuất nặng |
+| **P99 Latency (Phân vị 99)** | **2487.25 ms** | Không bị nghẽn Event Loop hay gián đoạn asyncio |
+| **Max Latency (Cực đại)** | **3171.67 ms** | Trần độ trễ an toàn cho toàn bộ phiên |
 
 ---
 
@@ -40,10 +40,10 @@
 
 | Phân Lớp (Tier) | Sessions | Turns | Intent Acc | Status Acc | Strict WHR (±30s) | Multi-Grounding TS | Budget Comp | ARR / SRP | P50 Latency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 100.0% | 100.0% | 58.33% | 98.33% | 100.0% | **ARR 100.0%** | 905.44 ms |
-| **Tier 2: Socratic Refusal** | 15 | 60 | 96.67% | 85.0% | 55.0% | 85.0% | 100.0% | **SRP 93.33%** | 970.71 ms |
-| **Tier 3: Topic Switching** | 10 | 42 | 95.24% | 97.62% | 57.14% | 78.57% | 100.0% | **--** | 197.76 ms |
-| **Tier 4: Context Budget** | 10 | 60 | 98.33% | 88.33% | 43.33% | 86.67% | 100.0% | **--** | 1062.95 ms |
+| **Tier 1: Ellipsis & Anaphora** | 15 | 60 | 100.0% | 100.0% | 58.33% | 98.33% | 100.0% | **ARR 100.0%** | 848.07 ms |
+| **Tier 2: Socratic Refusal** | 15 | 60 | 98.33% | 86.67% | 55.0% | 86.67% | 100.0% | **SRP 100.0%** | 880.61 ms |
+| **Tier 3: Topic Switching** | 10 | 42 | 95.24% | 97.62% | 57.14% | 78.57% | 100.0% | **--** | 195.51 ms |
+| **Tier 4: Context Budget** | 10 | 60 | 95.0% | 88.33% | 43.33% | 86.67% | 100.0% | **--** | 983.34 ms |
 
 ---
 

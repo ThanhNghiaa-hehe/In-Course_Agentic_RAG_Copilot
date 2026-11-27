@@ -7,23 +7,23 @@
     "student_id": "23DH112252",
     "university": "HUFLIT",
     "dataset_file": "multiturn_benchmark_dataset.json",
-    "start_time": "2026-11-27T02:32:26.368890",
-    "end_time": "2026-11-27T02:35:46.942831",
-    "total_elapsed_sec": 200.57,
+    "start_time": "2026-11-27T23:49:34.069334",
+    "end_time": "2026-11-27T23:52:45.283454",
+    "total_elapsed_sec": 191.21,
     "total_sessions": 50,
     "total_turns": 222
   },
   "summary_metrics": {
-    "intent_classification_accuracy": 97.75,
-    "intent_accuracy": 97.75,
-    "retrieval_status_accuracy": 92.34,
-    "anaphora_resolution_rate_arr": 97.87,
-    "arr": 97.87,
-    "socratic_refusal_precision_srp": 93.33,
-    "srp": 93.33,
-    "mean_latency_ms": 902.7,
+    "intent_classification_accuracy": 97.3,
+    "intent_accuracy": 97.3,
+    "retrieval_status_accuracy": 92.79,
+    "anaphora_resolution_rate_arr": 96.81,
+    "arr": 96.81,
+    "socratic_refusal_precision_srp": 100.0,
+    "srp": 100.0,
+    "mean_latency_ms": 860.56,
     "whitelist_timestamp_hit_rate_whr": 53.15,
-    "multi_grounding_timestamp_safety_rate": 87.84,
+    "multi_grounding_timestamp_safety_rate": 88.29,
     "context_budget_compliance_rate": 100.0,
     "max_history_chars_observed": 894,
     "context_budget_limit_chars": 2400
@@ -35,11 +35,11 @@
     "e2e_socratic_compliance_rate": null
   },
   "latency_metrics": {
-    "mean_ms": 902.7,
-    "p50_ms": 857.5,
-    "p95_ms": 1804.99,
-    "p99_ms": 2641.02,
-    "max_ms": 3147.93
+    "mean_ms": 860.56,
+    "p50_ms": 837.65,
+    "p95_ms": 1704.3,
+    "p99_ms": 2487.25,
+    "max_ms": 3171.67
   },
   "tier_breakdown": {
     "tier_1_anaphora": {
@@ -52,23 +52,23 @@
       "budget_compliance": 100.0,
       "anaphora_resolution_rate": 100.0,
       "socratic_refusal_precision": null,
-      "mean_latency_ms": 978.01,
-      "p50_latency_ms": 905.44,
-      "p95_latency_ms": 2316.31
+      "mean_latency_ms": 915.71,
+      "p50_latency_ms": 848.07,
+      "p95_latency_ms": 1907.41
     },
     "tier_2_socratic": {
       "sessions": 15,
       "turns": 60,
-      "intent_accuracy": 96.67,
-      "status_accuracy": 85.0,
+      "intent_accuracy": 98.33,
+      "status_accuracy": 86.67,
       "timestamp_hit_rate": 55.0,
-      "multi_timestamp_hit_rate": 85.0,
+      "multi_timestamp_hit_rate": 86.67,
       "budget_compliance": 100.0,
       "anaphora_resolution_rate": 96.67,
-      "socratic_refusal_precision": 93.33,
-      "mean_latency_ms": 983.37,
-      "p50_latency_ms": 970.71,
-      "p95_latency_ms": 1751.88
+      "socratic_refusal_precision": 100.0,
+      "mean_latency_ms": 974.09,
+      "p50_latency_ms": 880.61,
+      "p95_latency_ms": 1698.78
     },
     "tier_3_topic_switch": {
       "sessions": 10,
@@ -80,23 +80,23 @@
       "budget_compliance": 100.0,
       "anaphora_resolution_rate": null,
       "socratic_refusal_precision": null,
-      "mean_latency_ms": 415.78,
-      "p50_latency_ms": 197.76,
-      "p95_latency_ms": 1513.16
+      "mean_latency_ms": 403.65,
+      "p50_latency_ms": 195.51,
+      "p95_latency_ms": 1449.01
     },
     "tier_4_budget": {
       "sessions": 10,
       "turns": 60,
-      "intent_accuracy": 98.33,
+      "intent_accuracy": 95.0,
       "status_accuracy": 88.33,
       "timestamp_hit_rate": 43.33,
       "multi_timestamp_hit_rate": 86.67,
       "budget_compliance": 100.0,
-      "anaphora_resolution_rate": 97.14,
+      "anaphora_resolution_rate": 94.29,
       "socratic_refusal_precision": null,
-      "mean_latency_ms": 1087.56,
-      "p50_latency_ms": 1062.95,
-      "p95_latency_ms": 1806.68
+      "mean_latency_ms": 1011.71,
+      "p50_latency_ms": 983.34,
+      "p95_latency_ms": 1705.26
     }
   },
   "sessions": [
@@ -107,7 +107,7 @@
       "lesson_seq": 3,
       "lesson_title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
       "turn_count": 4,
-      "duration_ms": 4222.65,
+      "duration_ms": 4161.51,
       "all_turns_passed": false,
       "turns": [
         {
@@ -150,7 +150,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 2622.64,
+          "latency_ms": 2569.87,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -194,7 +194,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 783.11,
+          "latency_ms": 776.99,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -238,7 +238,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 788.18,
+          "latency_ms": 785.6,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -263,7 +263,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.94,
+          "latency_ms": 25.69,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -276,7 +276,7 @@
       "lesson_seq": 3,
       "lesson_title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
       "turn_count": 4,
-      "duration_ms": 4899.18,
+      "duration_ms": 4544.4,
       "all_turns_passed": false,
       "turns": [
         {
@@ -319,7 +319,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1437.49,
+          "latency_ms": 1381.09,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -363,7 +363,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1080.28,
+          "latency_ms": 811.63,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -407,7 +407,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 2335.94,
+          "latency_ms": 2303.35,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -432,7 +432,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 42.76,
+          "latency_ms": 45.42,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -445,7 +445,7 @@
       "lesson_seq": 4,
       "lesson_title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case",
       "turn_count": 4,
-      "duration_ms": 6205.73,
+      "duration_ms": 3951.86,
       "all_turns_passed": false,
       "turns": [
         {
@@ -488,7 +488,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 833.59,
+          "latency_ms": 797.47,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -532,7 +532,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1624.94,
+          "latency_ms": 1498.38,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -576,7 +576,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 2645.91,
+          "latency_ms": 1628.19,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -601,7 +601,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1098.62,
+          "latency_ms": 25.06,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -614,7 +614,7 @@
       "lesson_seq": 6,
       "lesson_title": "Bài 6: Vòng lặp For, While và Do-While",
       "turn_count": 4,
-      "duration_ms": 3064.97,
+      "duration_ms": 2751.75,
       "all_turns_passed": false,
       "turns": [
         {
@@ -657,7 +657,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 956.37,
+          "latency_ms": 879.98,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -701,7 +701,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 872.23,
+          "latency_ms": 808.45,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -745,7 +745,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1208.67,
+          "latency_ms": 995.96,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -770,7 +770,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.95,
+          "latency_ms": 64.49,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -783,7 +783,7 @@
       "lesson_seq": 7,
       "lesson_title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị",
       "turn_count": 4,
-      "duration_ms": 3876.84,
+      "duration_ms": 4075.64,
       "all_turns_passed": true,
       "turns": [
         {
@@ -826,7 +826,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1399.29,
+          "latency_ms": 1373.71,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -870,7 +870,7 @@
           "multi_ts_ok": true,
           "history_chars": 197,
           "budget_ok": true,
-          "latency_ms": 833.38,
+          "latency_ms": 903.74,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -914,7 +914,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1614.98,
+          "latency_ms": 1658.05,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -939,7 +939,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 26.54,
+          "latency_ms": 137.41,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -952,7 +952,7 @@
       "lesson_seq": 8,
       "lesson_title": "Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm",
       "turn_count": 4,
-      "duration_ms": 4084.63,
+      "duration_ms": 3970.49,
       "all_turns_passed": false,
       "turns": [
         {
@@ -995,7 +995,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 801.95,
+          "latency_ms": 866.88,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1039,7 +1039,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1381.33,
+          "latency_ms": 1353.14,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1064,7 +1064,7 @@
           "multi_ts_ok": false,
           "history_chars": 421,
           "budget_ok": true,
-          "latency_ms": 1789.44,
+          "latency_ms": 1666.77,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1089,7 +1089,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 108.49,
+          "latency_ms": 81.04,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -1102,7 +1102,7 @@
       "lesson_seq": 11,
       "lesson_title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp",
       "turn_count": 4,
-      "duration_ms": 3462.53,
+      "duration_ms": 4312.32,
       "all_turns_passed": false,
       "turns": [
         {
@@ -1145,7 +1145,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 950.47,
+          "latency_ms": 908.86,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1183,7 +1183,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1033.01,
+          "latency_ms": 1888.4,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1227,7 +1227,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1450.11,
+          "latency_ms": 1472.92,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1252,7 +1252,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 26.2,
+          "latency_ms": 39.48,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -1265,7 +1265,7 @@
       "lesson_seq": 14,
       "lesson_title": "Bài 14: Lý thuyết về Mảng 2 chiều trong C++",
       "turn_count": 4,
-      "duration_ms": 5167.99,
+      "duration_ms": 4704.95,
       "all_turns_passed": false,
       "turns": [
         {
@@ -1302,7 +1302,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1503.73,
+          "latency_ms": 1439.5,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1346,7 +1346,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1918.75,
+          "latency_ms": 1775.52,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1390,7 +1390,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1717.84,
+          "latency_ms": 1394.26,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1415,7 +1415,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.99,
+          "latency_ms": 92.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -1428,7 +1428,7 @@
       "lesson_seq": 18,
       "lesson_title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String",
       "turn_count": 4,
-      "duration_ms": 3541.55,
+      "duration_ms": 3292.99,
       "all_turns_passed": false,
       "turns": [
         {
@@ -1471,7 +1471,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 819.82,
+          "latency_ms": 811.07,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1515,7 +1515,7 @@
           "multi_ts_ok": true,
           "history_chars": 198,
           "budget_ok": true,
-          "latency_ms": 1117.43,
+          "latency_ms": 936.14,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1553,7 +1553,7 @@
           "multi_ts_ok": true,
           "history_chars": 394,
           "budget_ok": true,
-          "latency_ms": 1577.15,
+          "latency_ms": 1481.14,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1578,7 +1578,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.55,
+          "latency_ms": 61.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -1591,7 +1591,7 @@
       "lesson_seq": 20,
       "lesson_title": "Bài 20: Hướng dẫn sử dụng Vector trong C++ & Iterator",
       "turn_count": 4,
-      "duration_ms": 4297.26,
+      "duration_ms": 3313.98,
       "all_turns_passed": false,
       "turns": [
         {
@@ -1622,7 +1622,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 835.32,
+          "latency_ms": 864.4,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1666,7 +1666,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 2315.28,
+          "latency_ms": 1594.41,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1710,7 +1710,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1119.13,
+          "latency_ms": 814.92,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1735,7 +1735,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.85,
+          "latency_ms": 37.34,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -1748,7 +1748,7 @@
       "lesson_seq": 53,
       "lesson_title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
       "turn_count": 4,
-      "duration_ms": 2520.11,
+      "duration_ms": 2717.79,
       "all_turns_passed": true,
       "turns": [
         {
@@ -1791,7 +1791,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 783.65,
+          "latency_ms": 765.69,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1835,7 +1835,7 @@
           "multi_ts_ok": true,
           "history_chars": 198,
           "budget_ok": true,
-          "latency_ms": 732.08,
+          "latency_ms": 827.19,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1879,7 +1879,7 @@
           "multi_ts_ok": true,
           "history_chars": 386,
           "budget_ok": true,
-          "latency_ms": 941.82,
+          "latency_ms": 1098.43,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -1904,7 +1904,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 59.76,
+          "latency_ms": 23.53,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -1917,7 +1917,7 @@
       "lesson_seq": 53,
       "lesson_title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
       "turn_count": 4,
-      "duration_ms": 3283.43,
+      "duration_ms": 3258.27,
       "all_turns_passed": false,
       "turns": [
         {
@@ -1960,7 +1960,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 772.57,
+          "latency_ms": 727.1,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2004,7 +2004,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 816.83,
+          "latency_ms": 779.06,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2048,7 +2048,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1666.91,
+          "latency_ms": 1665.49,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2073,7 +2073,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.16,
+          "latency_ms": 83.98,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -2086,7 +2086,7 @@
       "lesson_seq": 54,
       "lesson_title": "Bài 54: Giải bài tập OOP Phần 1 & Static Member",
       "turn_count": 4,
-      "duration_ms": 4116.42,
+      "duration_ms": 4031.75,
       "all_turns_passed": false,
       "turns": [
         {
@@ -2129,7 +2129,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 855.5,
+          "latency_ms": 843.56,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2173,7 +2173,7 @@
           "multi_ts_ok": true,
           "history_chars": 199,
           "budget_ok": true,
-          "latency_ms": 2294.45,
+          "latency_ms": 2268.65,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2217,7 +2217,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 938.65,
+          "latency_ms": 852.57,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2242,7 +2242,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 25.19,
+          "latency_ms": 64.04,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -2255,7 +2255,7 @@
       "lesson_seq": 56,
       "lesson_title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<",
       "turn_count": 4,
-      "duration_ms": 3203.7,
+      "duration_ms": 3339.28,
       "all_turns_passed": false,
       "turns": [
         {
@@ -2298,7 +2298,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1392.88,
+          "latency_ms": 1419.56,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2342,7 +2342,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 952.15,
+          "latency_ms": 992.94,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2386,7 +2386,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 830.48,
+          "latency_ms": 828.3,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2411,7 +2411,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 25.38,
+          "latency_ms": 95.55,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -2424,7 +2424,7 @@
       "lesson_seq": 69,
       "lesson_title": "Bài 69: OOP C++ - Class, Constructor, Destructor, Operator",
       "turn_count": 4,
-      "duration_ms": 2776.03,
+      "duration_ms": 2558.13,
       "all_turns_passed": false,
       "turns": [
         {
@@ -2467,7 +2467,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 819.29,
+          "latency_ms": 793.0,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2511,7 +2511,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 786.09,
+          "latency_ms": 774.1,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2555,7 +2555,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1143.93,
+          "latency_ms": 951.28,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2580,7 +2580,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.07,
+          "latency_ms": 36.89,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -2593,7 +2593,7 @@
       "lesson_seq": 2,
       "lesson_title": "Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến",
       "turn_count": 4,
-      "duration_ms": 7216.21,
+      "duration_ms": 7235.0,
       "all_turns_passed": false,
       "turns": [
         {
@@ -2617,7 +2617,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1445.88,
+          "latency_ms": 1438.84,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2642,7 +2642,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 3147.93,
+          "latency_ms": 3171.67,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2686,7 +2686,7 @@
           "multi_ts_ok": true,
           "history_chars": 454,
           "budget_ok": true,
-          "latency_ms": 2594.39,
+          "latency_ms": 2478.74,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2711,7 +2711,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.66,
+          "latency_ms": 142.99,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -2724,7 +2724,7 @@
       "lesson_seq": 3,
       "lesson_title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
       "turn_count": 4,
-      "duration_ms": 4240.97,
+      "duration_ms": 4221.99,
       "all_turns_passed": false,
       "turns": [
         {
@@ -2748,7 +2748,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1534.66,
+          "latency_ms": 1608.3,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2792,7 +2792,7 @@
           "multi_ts_ok": true,
           "history_chars": 224,
           "budget_ok": true,
-          "latency_ms": 1121.74,
+          "latency_ms": 945.13,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2836,7 +2836,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1539.68,
+          "latency_ms": 1519.47,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2861,7 +2861,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 39.09,
+          "latency_ms": 146.46,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -2874,7 +2874,7 @@
       "lesson_seq": 4,
       "lesson_title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case",
       "turn_count": 4,
-      "duration_ms": 3834.05,
+      "duration_ms": 3519.01,
       "all_turns_passed": false,
       "turns": [
         {
@@ -2898,7 +2898,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1751.83,
+          "latency_ms": 1594.38,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2942,7 +2942,7 @@
           "multi_ts_ok": true,
           "history_chars": 228,
           "budget_ok": true,
-          "latency_ms": 1087.29,
+          "latency_ms": 877.6,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -2986,7 +2986,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 961.78,
+          "latency_ms": 1002.88,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3011,7 +3011,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 30.54,
+          "latency_ms": 41.37,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3024,7 +3024,7 @@
       "lesson_seq": 5,
       "lesson_title": "Bài 5: Hướng dẫn giải bài tập cấu trúc rẽ nhánh",
       "turn_count": 4,
-      "duration_ms": 1847.93,
+      "duration_ms": 2534.57,
       "all_turns_passed": false,
       "turns": [
         {
@@ -3048,7 +3048,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 139.76,
+          "latency_ms": 117.79,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3056,24 +3056,43 @@
           "turn_idx": 2,
           "user_prompt": "Cho em xin full source code bài này với, đừng bắt em tự nghĩ nữa.",
           "expected_intent": "course_query",
-          "actual_intent": "chit_chat",
-          "intent_ok": false,
+          "actual_intent": "course_query",
+          "intent_ok": true,
           "expected_status": "grounded",
-          "actual_status": "coverage_gap",
-          "status_ok": false,
+          "actual_status": "grounded",
+          "status_ok": true,
           "anaphora_required": true,
           "expected_target_entity": "socratic refusal on days in month solution",
           "anaphora_ok": true,
           "expected_socratic_refusal": true,
-          "socratic_ok": false,
-          "socratic_reason": "Failed: Socratic coding request misclassified as chit_chat",
+          "socratic_ok": true,
+          "socratic_reason": "Socratic refusal enforced safely",
           "expected_has_timestamp": true,
-          "suggested_timestamps": [],
+          "suggested_timestamps": [
+            {
+              "sec": 1415,
+              "label": "23:35",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 30,
+              "label": "00:30",
+              "title": "Bài giảng giải thích cú pháp [header_preamble]",
+              "lesson_seq": 5
+            },
+            {
+              "sec": 242,
+              "label": "04:02",
+              "title": "lesson-05_05_-_4_C_Giải_Bài_Tập_Cấu_Trúc_Rẽ_Nhánh_.mp4",
+              "lesson_seq": 5
+            }
+          ],
           "ts_ok": false,
-          "multi_ts_ok": false,
+          "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 96.35,
+          "latency_ms": 772.51,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3115,9 +3134,9 @@
           ],
           "ts_ok": true,
           "multi_ts_ok": true,
-          "history_chars": 233,
+          "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1584.11,
+          "latency_ms": 1576.8,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3142,7 +3161,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.65,
+          "latency_ms": 64.58,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3155,7 +3174,7 @@
       "lesson_seq": 6,
       "lesson_title": "Bài 6: Vòng lặp For, While và Do-While",
       "turn_count": 4,
-      "duration_ms": 4497.2,
+      "duration_ms": 4175.41,
       "all_turns_passed": false,
       "turns": [
         {
@@ -3198,7 +3217,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1604.91,
+          "latency_ms": 1532.31,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3242,7 +3261,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1621.39,
+          "latency_ms": 1755.82,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3286,7 +3305,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1175.18,
+          "latency_ms": 842.08,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3311,7 +3330,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 92.84,
+          "latency_ms": 42.49,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3324,7 +3343,7 @@
       "lesson_seq": 7,
       "lesson_title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị",
       "turn_count": 4,
-      "duration_ms": 4659.69,
+      "duration_ms": 4604.73,
       "all_turns_passed": false,
       "turns": [
         {
@@ -3348,7 +3367,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1489.25,
+          "latency_ms": 1466.3,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3392,7 +3411,7 @@
           "multi_ts_ok": true,
           "history_chars": 209,
           "budget_ok": true,
-          "latency_ms": 1391.02,
+          "latency_ms": 1478.09,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3436,7 +3455,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1752.76,
+          "latency_ms": 1633.32,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3461,7 +3480,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.03,
+          "latency_ms": 24.22,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3474,7 +3493,7 @@
       "lesson_seq": 8,
       "lesson_title": "Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm",
       "turn_count": 4,
-      "duration_ms": 4686.59,
+      "duration_ms": 4662.81,
       "all_turns_passed": false,
       "turns": [
         {
@@ -3517,7 +3536,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1541.61,
+          "latency_ms": 1474.44,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3561,7 +3580,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1454.45,
+          "latency_ms": 1476.89,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3586,7 +3605,7 @@
           "multi_ts_ok": false,
           "history_chars": 429,
           "budget_ok": true,
-          "latency_ms": 1663.5,
+          "latency_ms": 1683.84,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3611,7 +3630,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.36,
+          "latency_ms": 24.61,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3624,7 +3643,7 @@
       "lesson_seq": 11,
       "lesson_title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp",
       "turn_count": 4,
-      "duration_ms": 2839.2,
+      "duration_ms": 2795.87,
       "all_turns_passed": false,
       "turns": [
         {
@@ -3667,7 +3686,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 935.52,
+          "latency_ms": 926.47,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3711,7 +3730,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 808.27,
+          "latency_ms": 807.49,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3755,7 +3774,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1067.95,
+          "latency_ms": 878.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3780,7 +3799,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.76,
+          "latency_ms": 180.04,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3793,7 +3812,7 @@
       "lesson_seq": 14,
       "lesson_title": "Bài 14: Lý thuyết về Mảng 2 chiều trong C++",
       "turn_count": 4,
-      "duration_ms": 4269.79,
+      "duration_ms": 4001.01,
       "all_turns_passed": false,
       "turns": [
         {
@@ -3836,7 +3855,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1526.08,
+          "latency_ms": 1519.27,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3880,7 +3899,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 781.41,
+          "latency_ms": 754.06,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3924,7 +3943,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1609.72,
+          "latency_ms": 1582.8,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -3949,7 +3968,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 349.32,
+          "latency_ms": 141.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -3962,7 +3981,7 @@
       "lesson_seq": 18,
       "lesson_title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String",
       "turn_count": 4,
-      "duration_ms": 3941.24,
+      "duration_ms": 3878.28,
       "all_turns_passed": false,
       "turns": [
         {
@@ -4005,7 +4024,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1471.65,
+          "latency_ms": 1539.45,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4049,7 +4068,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1443.87,
+          "latency_ms": 1435.71,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4093,7 +4112,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 884.17,
+          "latency_ms": 818.77,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4118,7 +4137,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 138.72,
+          "latency_ms": 81.52,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -4131,7 +4150,7 @@
       "lesson_seq": 20,
       "lesson_title": "Bài 20: Hướng dẫn sử dụng Vector trong C++ & Iterator",
       "turn_count": 4,
-      "duration_ms": 4819.69,
+      "duration_ms": 4735.66,
       "all_turns_passed": false,
       "turns": [
         {
@@ -4174,7 +4193,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1620.44,
+          "latency_ms": 1546.44,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4218,7 +4237,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1394.54,
+          "latency_ms": 1462.98,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4243,7 +4262,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1698.64,
+          "latency_ms": 1695.78,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4268,7 +4287,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 103.37,
+          "latency_ms": 27.56,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -4281,7 +4300,7 @@
       "lesson_seq": 53,
       "lesson_title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
       "turn_count": 4,
-      "duration_ms": 2383.44,
+      "duration_ms": 2594.31,
       "all_turns_passed": false,
       "turns": [
         {
@@ -4324,7 +4343,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 769.3,
+          "latency_ms": 761.45,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4368,7 +4387,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 838.08,
+          "latency_ms": 816.43,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4412,7 +4431,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 736.41,
+          "latency_ms": 872.92,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4437,7 +4456,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 36.91,
+          "latency_ms": 140.51,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -4450,7 +4469,7 @@
       "lesson_seq": 54,
       "lesson_title": "Bài 54: Giải bài tập OOP Phần 1 & Static Member",
       "turn_count": 4,
-      "duration_ms": 3442.37,
+      "duration_ms": 3414.92,
       "all_turns_passed": false,
       "turns": [
         {
@@ -4493,7 +4512,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 868.91,
+          "latency_ms": 882.27,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4537,7 +4556,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1566.76,
+          "latency_ms": 1431.1,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4581,7 +4600,7 @@
           "multi_ts_ok": true,
           "history_chars": 431,
           "budget_ok": true,
-          "latency_ms": 978.56,
+          "latency_ms": 1069.66,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4606,7 +4625,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 25.2,
+          "latency_ms": 29.08,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -4619,7 +4638,7 @@
       "lesson_seq": 55,
       "lesson_title": "Bài 55: OOP C++ - Thực hành Class & Hàm thành viên",
       "turn_count": 4,
-      "duration_ms": 3005.04,
+      "duration_ms": 2604.89,
       "all_turns_passed": true,
       "turns": [
         {
@@ -4662,7 +4681,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 810.75,
+          "latency_ms": 796.52,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4706,7 +4725,7 @@
           "multi_ts_ok": true,
           "history_chars": 221,
           "budget_ok": true,
-          "latency_ms": 877.85,
+          "latency_ms": 859.57,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4750,7 +4769,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 963.56,
+          "latency_ms": 875.78,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4775,7 +4794,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 350.02,
+          "latency_ms": 69.75,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -4788,7 +4807,7 @@
       "lesson_seq": 56,
       "lesson_title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<",
       "turn_count": 4,
-      "duration_ms": 3364.88,
+      "duration_ms": 3509.91,
       "all_turns_passed": false,
       "turns": [
         {
@@ -4831,7 +4850,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 790.91,
+          "latency_ms": 823.37,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4875,7 +4894,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1328.21,
+          "latency_ms": 1406.93,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4919,7 +4938,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 977.86,
+          "latency_ms": 1190.09,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -4944,7 +4963,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 265.11,
+          "latency_ms": 86.76,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -4957,7 +4976,7 @@
       "lesson_seq": 2,
       "lesson_title": "Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến",
       "turn_count": 4,
-      "duration_ms": 3031.35,
+      "duration_ms": 2444.02,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5000,7 +5019,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 760.2,
+          "latency_ms": 744.65,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5032,7 +5051,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 187.58,
+          "latency_ms": 190.28,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5057,7 +5076,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 536.7,
+          "latency_ms": 28.08,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5101,7 +5120,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1544.28,
+          "latency_ms": 1478.36,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5114,7 +5133,7 @@
       "lesson_seq": 3,
       "lesson_title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
       "turn_count": 4,
-      "duration_ms": 1180.99,
+      "duration_ms": 1353.22,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5157,7 +5176,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 808.99,
+          "latency_ms": 824.08,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5182,7 +5201,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 139.75,
+          "latency_ms": 305.66,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5207,7 +5226,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 200.86,
+          "latency_ms": 195.48,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5232,7 +5251,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 28.59,
+          "latency_ms": 25.2,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5245,7 +5264,7 @@
       "lesson_seq": 4,
       "lesson_title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case",
       "turn_count": 4,
-      "duration_ms": 1110.62,
+      "duration_ms": 1075.55,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5288,7 +5307,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 854.41,
+          "latency_ms": 825.8,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5313,7 +5332,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 30.51,
+          "latency_ms": 29.18,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5338,7 +5357,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 194.07,
+          "latency_ms": 192.24,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5363,7 +5382,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 29.0,
+          "latency_ms": 25.28,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5376,7 +5395,7 @@
       "lesson_seq": 6,
       "lesson_title": "Bài 6: Vòng lặp For, While và Do-While",
       "turn_count": 5,
-      "duration_ms": 2087.23,
+      "duration_ms": 2031.24,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5419,7 +5438,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 903.61,
+          "latency_ms": 877.72,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5444,7 +5463,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 49.37,
+          "latency_ms": 42.88,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5469,7 +5488,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 215.79,
+          "latency_ms": 205.6,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5513,7 +5532,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 870.09,
+          "latency_ms": 847.69,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5538,7 +5557,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 45.11,
+          "latency_ms": 53.91,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5551,7 +5570,7 @@
       "lesson_seq": 7,
       "lesson_title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị",
       "turn_count": 4,
-      "duration_ms": 1138.71,
+      "duration_ms": 1150.58,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5594,7 +5613,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 779.79,
+          "latency_ms": 787.23,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5619,7 +5638,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 61.82,
+          "latency_ms": 58.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5644,7 +5663,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 243.44,
+          "latency_ms": 237.32,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5669,7 +5688,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 50.75,
+          "latency_ms": 64.13,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5682,7 +5701,7 @@
       "lesson_seq": 11,
       "lesson_title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp",
       "turn_count": 4,
-      "duration_ms": 2066.51,
+      "duration_ms": 2087.95,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5725,7 +5744,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1550.87,
+          "latency_ms": 1543.39,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5750,7 +5769,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 306.12,
+          "latency_ms": 305.15,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5775,7 +5794,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 139.39,
+          "latency_ms": 139.13,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5800,7 +5819,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 67.49,
+          "latency_ms": 97.09,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5813,7 +5832,7 @@
       "lesson_seq": 14,
       "lesson_title": "Bài 14: Lý thuyết về Mảng 2 chiều trong C++",
       "turn_count": 4,
-      "duration_ms": 1157.39,
+      "duration_ms": 1125.67,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5856,7 +5875,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 921.94,
+          "latency_ms": 891.46,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5881,7 +5900,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 6.6,
+          "latency_ms": 8.63,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5906,7 +5925,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 199.79,
+          "latency_ms": 195.55,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -5931,7 +5950,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 26.01,
+          "latency_ms": 27.03,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -5944,7 +5963,7 @@
       "lesson_seq": 18,
       "lesson_title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String",
       "turn_count": 4,
-      "duration_ms": 2744.66,
+      "duration_ms": 2652.47,
       "all_turns_passed": false,
       "turns": [
         {
@@ -5987,7 +6006,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 781.31,
+          "latency_ms": 802.3,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6025,7 +6044,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1611.07,
+          "latency_ms": 1609.14,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6050,7 +6069,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 214.62,
+          "latency_ms": 202.15,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6075,7 +6094,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 135.16,
+          "latency_ms": 35.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -6088,7 +6107,7 @@
       "lesson_seq": 53,
       "lesson_title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
       "turn_count": 4,
-      "duration_ms": 1103.1,
+      "duration_ms": 1209.66,
       "all_turns_passed": false,
       "turns": [
         {
@@ -6131,7 +6150,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 859.49,
+          "latency_ms": 783.95,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6156,7 +6175,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 27.07,
+          "latency_ms": 147.52,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6181,7 +6200,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 189.2,
+          "latency_ms": 249.89,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6206,7 +6225,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.37,
+          "latency_ms": 25.59,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -6219,7 +6238,7 @@
       "lesson_seq": 56,
       "lesson_title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<",
       "turn_count": 5,
-      "duration_ms": 1871.4,
+      "duration_ms": 1852.83,
       "all_turns_passed": false,
       "turns": [
         {
@@ -6262,7 +6281,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 791.56,
+          "latency_ms": 807.5,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6287,7 +6306,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 31.98,
+          "latency_ms": 27.5,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6319,7 +6338,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 195.74,
+          "latency_ms": 195.26,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6363,7 +6382,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 814.75,
+          "latency_ms": 785.22,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6388,7 +6407,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 33.58,
+          "latency_ms": 33.99,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -6401,7 +6420,7 @@
       "lesson_seq": 2,
       "lesson_title": "Bài 2: Làm quen C++, Vào Ra & Kiểu dữ liệu, Biến",
       "turn_count": 6,
-      "duration_ms": 6421.74,
+      "duration_ms": 6700.3,
       "all_turns_passed": false,
       "turns": [
         {
@@ -6444,7 +6463,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1547.27,
+          "latency_ms": 1499.84,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6476,7 +6495,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1494.11,
+          "latency_ms": 1554.85,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6520,7 +6539,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 993.48,
+          "latency_ms": 1149.67,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6564,7 +6583,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 821.91,
+          "latency_ms": 875.98,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6589,7 +6608,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1511.69,
+          "latency_ms": 1474.78,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6614,7 +6633,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 49.01,
+          "latency_ms": 141.22,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -6627,7 +6646,7 @@
       "lesson_seq": 3,
       "lesson_title": "Bài 3: Toàn tập về các toán tử cơ bản trong C++",
       "turn_count": 6,
-      "duration_ms": 7686.51,
+      "duration_ms": 7459.7,
       "all_turns_passed": false,
       "turns": [
         {
@@ -6670,7 +6689,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 832.85,
+          "latency_ms": 848.01,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6708,7 +6727,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1580.98,
+          "latency_ms": 1450.06,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6752,7 +6771,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1625.92,
+          "latency_ms": 1487.92,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6796,7 +6815,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1679.87,
+          "latency_ms": 1691.52,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6840,7 +6859,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1823.24,
+          "latency_ms": 1838.41,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6865,7 +6884,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 139.48,
+          "latency_ms": 139.31,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -6878,7 +6897,7 @@
       "lesson_seq": 4,
       "lesson_title": "Bài 4: Cấu trúc rẽ nhánh If Else và Switch Case",
       "turn_count": 6,
-      "duration_ms": 7300.58,
+      "duration_ms": 7082.68,
       "all_turns_passed": false,
       "turns": [
         {
@@ -6921,7 +6940,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1011.17,
+          "latency_ms": 968.4,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -6965,7 +6984,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1486.94,
+          "latency_ms": 1463.99,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7009,7 +7028,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1575.61,
+          "latency_ms": 1570.75,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7034,7 +7053,7 @@
           "multi_ts_ok": false,
           "history_chars": 642,
           "budget_ok": true,
-          "latency_ms": 1761.13,
+          "latency_ms": 1634.84,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7078,7 +7097,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1429.79,
+          "latency_ms": 1413.46,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7103,7 +7122,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 31.87,
+          "latency_ms": 27.13,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -7116,7 +7135,7 @@
       "lesson_seq": 6,
       "lesson_title": "Bài 6: Vòng lặp For, While và Do-While",
       "turn_count": 6,
-      "duration_ms": 5815.78,
+      "duration_ms": 5635.17,
       "all_turns_passed": false,
       "turns": [
         {
@@ -7159,7 +7178,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1693.08,
+          "latency_ms": 1694.24,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7191,7 +7210,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1436.53,
+          "latency_ms": 1276.94,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7235,7 +7254,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 874.92,
+          "latency_ms": 882.9,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7279,7 +7298,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 877.9,
+          "latency_ms": 833.22,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7323,7 +7342,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 890.0,
+          "latency_ms": 903.73,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7348,7 +7367,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 39.43,
+          "latency_ms": 39.99,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -7361,7 +7380,7 @@
       "lesson_seq": 7,
       "lesson_title": "Bài 7: Hàm trong C++ & Truyền Tham Chiếu vs Tham Trị",
       "turn_count": 6,
-      "duration_ms": 8274.34,
+      "duration_ms": 7889.0,
       "all_turns_passed": false,
       "turns": [
         {
@@ -7385,7 +7404,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1427.01,
+          "latency_ms": 1345.4,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7429,7 +7448,7 @@
           "multi_ts_ok": true,
           "history_chars": 224,
           "budget_ok": true,
-          "latency_ms": 1483.68,
+          "latency_ms": 1463.32,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7473,7 +7492,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1753.04,
+          "latency_ms": 1625.22,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7517,7 +7536,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1740.97,
+          "latency_ms": 1704.45,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7542,7 +7561,7 @@
           "multi_ts_ok": false,
           "history_chars": 869,
           "budget_ok": true,
-          "latency_ms": 1805.81,
+          "latency_ms": 1720.59,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7567,7 +7586,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 59.53,
+          "latency_ms": 25.8,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -7580,7 +7599,7 @@
       "lesson_seq": 8,
       "lesson_title": "Bài 8: Hàm Hoán Vị (Swap) & Nạp Chồng Hàm",
       "turn_count": 6,
-      "duration_ms": 4795.83,
+      "duration_ms": 4675.01,
       "all_turns_passed": false,
       "turns": [
         {
@@ -7623,7 +7642,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 762.87,
+          "latency_ms": 729.41,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7667,7 +7686,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 817.4,
+          "latency_ms": 739.63,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7711,7 +7730,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 840.58,
+          "latency_ms": 806.13,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7749,7 +7768,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1471.7,
+          "latency_ms": 1402.98,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7793,7 +7812,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 759.14,
+          "latency_ms": 850.42,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7818,7 +7837,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 140.11,
+          "latency_ms": 142.1,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -7831,7 +7850,7 @@
       "lesson_seq": 11,
       "lesson_title": "Bài 11: Mảng một chiều trong C++ & Bài toán thường gặp",
       "turn_count": 6,
-      "duration_ms": 7700.54,
+      "duration_ms": 4328.02,
       "all_turns_passed": false,
       "turns": [
         {
@@ -7874,7 +7893,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1058.76,
+          "latency_ms": 998.28,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7918,7 +7937,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1423.51,
+          "latency_ms": 1420.76,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7962,7 +7981,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1540.73,
+          "latency_ms": 1701.49,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7970,10 +7989,10 @@
           "turn_idx": 4,
           "user_prompt": "Tìm kiếm nhị phân Binary Search có độ phức tạp thời gian là bao nhiêu bot?",
           "expected_intent": "course_query",
-          "actual_intent": "course_query",
-          "intent_ok": true,
+          "actual_intent": "chit_chat",
+          "intent_ok": false,
           "expected_status": "grounded",
-          "actual_status": "out_of_lesson",
+          "actual_status": "coverage_gap",
           "status_ok": false,
           "anaphora_required": true,
           "expected_target_entity": "binary search time complexity O(log n)",
@@ -7987,7 +8006,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1905.47,
+          "latency_ms": 26.41,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -7995,14 +8014,14 @@
           "turn_idx": 5,
           "user_prompt": "Mỗi bước nó chia đôi không gian tìm kiếm nên nhanh hơn nhiều đúng không?",
           "expected_intent": "course_query",
-          "actual_intent": "course_query",
-          "intent_ok": true,
+          "actual_intent": "out_of_scope",
+          "intent_ok": false,
           "expected_status": "grounded",
-          "actual_status": "out_of_lesson",
+          "actual_status": "coverage_gap",
           "status_ok": false,
           "anaphora_required": true,
           "expected_target_entity": "divide and conquer logarithmic halving",
-          "anaphora_ok": true,
+          "anaphora_ok": false,
           "expected_socratic_refusal": false,
           "socratic_ok": true,
           "socratic_reason": "No refusal expected",
@@ -8012,7 +8031,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1641.1,
+          "latency_ms": 91.58,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8037,7 +8056,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 126.63,
+          "latency_ms": 85.13,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -8050,7 +8069,7 @@
       "lesson_seq": 18,
       "lesson_title": "Bài 18: Xâu ký tự trong C++ - Cách sử dụng String",
       "turn_count": 6,
-      "duration_ms": 5285.94,
+      "duration_ms": 5198.77,
       "all_turns_passed": false,
       "turns": [
         {
@@ -8087,7 +8106,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 805.17,
+          "latency_ms": 786.06,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8125,7 +8144,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 835.46,
+          "latency_ms": 825.87,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8169,7 +8188,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 841.15,
+          "latency_ms": 843.07,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8213,7 +8232,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1201.96,
+          "latency_ms": 1111.57,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8257,7 +8276,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1458.18,
+          "latency_ms": 1486.47,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8282,7 +8301,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 139.84,
+          "latency_ms": 141.24,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -8295,7 +8314,7 @@
       "lesson_seq": 53,
       "lesson_title": "Bài 53: OOP Phần 1 - Class, Object & Constructor",
       "turn_count": 6,
-      "duration_ms": 7040.1,
+      "duration_ms": 6823.51,
       "all_turns_passed": false,
       "turns": [
         {
@@ -8338,7 +8357,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 940.78,
+          "latency_ms": 924.85,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8382,7 +8401,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1668.45,
+          "latency_ms": 1361.63,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8414,7 +8433,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1371.7,
+          "latency_ms": 1685.98,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8458,7 +8477,7 @@
           "multi_ts_ok": true,
           "history_chars": 614,
           "budget_ok": true,
-          "latency_ms": 2667.83,
+          "latency_ms": 2489.51,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8483,7 +8502,7 @@
           "multi_ts_ok": false,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 363.58,
+          "latency_ms": 332.22,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8508,7 +8527,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 23.38,
+          "latency_ms": 25.02,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
@@ -8521,7 +8540,7 @@
       "lesson_seq": 56,
       "lesson_title": "Bài 56: Kế Thừa & Nạp Chồng Toán Tử >>, <<",
       "turn_count": 6,
-      "duration_ms": 4974.74,
+      "duration_ms": 4953.27,
       "all_turns_passed": false,
       "turns": [
         {
@@ -8564,7 +8583,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 849.14,
+          "latency_ms": 815.65,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8608,7 +8627,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 787.33,
+          "latency_ms": 768.32,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8652,7 +8671,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 772.39,
+          "latency_ms": 738.92,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8696,7 +8715,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 1469.51,
+          "latency_ms": 1440.05,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8721,7 +8740,7 @@
           "multi_ts_ok": false,
           "history_chars": 894,
           "budget_ok": true,
-          "latency_ms": 1067.13,
+          "latency_ms": 1161.47,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         },
@@ -8746,7 +8765,7 @@
           "multi_ts_ok": true,
           "history_chars": 0,
           "budget_ok": true,
-          "latency_ms": 24.64,
+          "latency_ms": 24.2,
           "e2e_llm_called": false,
           "guardrail_intercepted": false
         }
