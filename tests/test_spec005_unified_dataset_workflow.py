@@ -577,8 +577,8 @@ def test_rc005_07_kaggle_trainers_group_split_and_assistant_only_loss():
         {extract_qwen_lesson_group(r) for r in va_qwen}
     )
 
-    # 4. Qwen2.5 max_length=2048, assistant-only loss masking, and Seq2Seq collator preservation
-    assert MAX_SEQ_LENGTH == 2048
+    # 4. Qwen2.5 max_length=3072, assistant-only loss masking, and Seq2Seq collator preservation
+    assert MAX_SEQ_LENGTH == 3072
     qwen_src = inspect.getsource(qwen_trainer_mod)
     assert "DataCollatorForLanguageModeling" not in qwen_src
     assert "DataCollatorForSeq2Seq" in qwen_src

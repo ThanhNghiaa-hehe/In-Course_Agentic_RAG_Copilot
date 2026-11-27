@@ -25,7 +25,7 @@ from sklearn.model_selection import GroupShuffleSplit
 MODEL_ID = os.environ.get("BASE_QWEN_MODEL", "Qwen/Qwen2.5-Coder-7B-Instruct")
 OUTPUT_DIR = Path("/kaggle/working/qwen25-coder-7b-socratic-lora")
 ZIP_PATH = Path("/kaggle/working/model_bundle.zip")
-MAX_SEQ_LENGTH = 2048
+MAX_SEQ_LENGTH = 3072
 
 _NGUON_BAI_RE = re.compile(r"Nguồn Bài\s+(\d+)")
 
@@ -185,6 +185,7 @@ def main():
     raw_val_ds = Dataset.from_list(val_rows)
     train_ds = raw_train_ds.map(_tok_fn, remove_columns=list(raw_train_ds.column_names))
     val_ds = raw_val_ds.map(_tok_fn, remove_columns=list(raw_val_ds.column_names))
+    print(f"[Qwen2.5 QLoRA] Tokenized max_len: train={max(len(x['input_ids']) for x in train_ds)} | val={max(len(x['input_ids']) for x in val_ds)} (cap={MAX_SEQ_LENGTH})")
 
     collator = DataCollatorForSeq2Seq(
         tokenizer=tokenizer,

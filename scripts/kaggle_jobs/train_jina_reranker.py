@@ -9,6 +9,8 @@ In-Course Agentic RAG Copilot - Trần Thành Nghĩa (MSSV: 23DH112252), HUFLIT.
            để tải về local và chạy scripts/quantize_reranker_int8.py)
 """
 
+import importlib
+import importlib.metadata
 import inspect
 import json
 import os
@@ -26,7 +28,6 @@ import torch
 import torch.nn as nn
 from sklearn.model_selection import GroupShuffleSplit
 from torch.utils.data import DataLoader, Dataset
-from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
 
 MODEL_ID = os.environ.get("BASE_RERANKER_MODEL", "jinaai/jina-reranker-v2-base-multilingual")
 OUTPUT_DIR = Path("/kaggle/working/jina-reranker-v2-ft-fp32")
@@ -65,11 +66,20 @@ def split_jina_triplets_by_group(
 
 
 def ensure_deps():
+    try:
+        tf_ver = importlib.metadata.version("transformers")
+        tf_major = int(str(tf_ver).split(".", 1)[0])
+    except Exception:
+        tf_major = 0
+    if tf_major == 0 or tf_major >= 5:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "transformers==4.49.0"])
+
     for pkg in ("einops", "onnx", "onnxscript"):
         try:
             __import__(pkg)
         except ImportError:
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
+    importlib.invalidate_caches()
 
 
 def find_dataset_file(filename: str) -> Path:
@@ -165,6 +175,10 @@ def export_onnx_fp32(model, tokenizer, out_dir: Path):
 
 def main():
     ensure_deps()
+    import transformers
+    from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
+    print(f"[Jina Kaggle] transformers=={transformers.__version__}")
+
     seed = 42
     random.seed(seed)
     torch.manual_seed(seed)

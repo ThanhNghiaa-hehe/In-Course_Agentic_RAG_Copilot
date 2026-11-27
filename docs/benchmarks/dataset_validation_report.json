@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-26 22:16:48",
+  "timestamp": "2026-11-27 00:01:35",
   "mode": "validate",
   "with_e5_conflict": true,
   "heldout_queries_checked": 522,
@@ -71,8 +71,8 @@
     "mdeberta_nli": {
       "model": "mdeberta_nli",
       "path": "D:\\In_Course_Agentic_RAG_Copilot\\scratch\\kaggle_bundle\\mdeberta_nli\\dataset\\mdeberta_nli_train.jsonl",
-      "total_in": 1953,
-      "total_clean": 1953,
+      "total_in": 2043,
+      "total_clean": 2043,
       "duplicates_removed": 0,
       "leaked_count": 0,
       "bad_schema_count": 0,
@@ -81,31 +81,31 @@
       "temporal_imbalance_count": 0,
       "temporal_distribution": {
         "in_video": {
-          "0": 30,
-          "2": 30,
-          "1": 90
+          "0": 45,
+          "2": 45,
+          "1": 105
         },
         "off_topic": {
-          "2": 30,
-          "0": 30,
-          "1": 90
+          "2": 45,
+          "0": 45,
+          "1": 105
         }
       },
       "label_distribution": {
-        "0": 611,
-        "2": 1027,
-        "1": 315
+        "0": 641,
+        "2": 1057,
+        "1": 345
       },
-      "neutral_ratio": 0.1613,
-      "min_label_ratio": 0.1613,
-      "label_imbalance_ratio": 3.26,
+      "neutral_ratio": 0.1689,
+      "min_label_ratio": 0.1689,
+      "label_imbalance_ratio": 3.06,
       "passed": true
     },
     "jina_reranker": {
       "model": "jina_reranker",
       "path": "D:\\In_Course_Agentic_RAG_Copilot\\scratch\\kaggle_bundle\\jina_reranker\\dataset\\jina_reranker_train.jsonl",
-      "total_in": 663,
-      "total_clean": 663,
+      "total_in": 662,
+      "total_clean": 662,
       "leaked_count": 0,
       "bad_triplets_count": 0,
       "over_600_chars_count": 0,
@@ -113,9 +113,9 @@
       "false_negative_count": 0,
       "synthetic_passage_count": 0,
       "garbled_unicode_count": 0,
-      "intra_lesson_negative_count": 139,
+      "intra_lesson_negative_count": 138,
       "code_ast_triplet_count": 30,
-      "asr_homophone_warnings": 51,
+      "asr_homophone_warnings": 25,
       "passed": true
     },
     "qwen25_qlora": {
