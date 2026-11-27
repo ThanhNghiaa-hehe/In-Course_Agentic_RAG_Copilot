@@ -764,6 +764,33 @@ def _sanitize_assistant_prose(text: str) -> str:
 
 
 def build_qwen25_socratic_dataset(out_file: Path, heldout_norms: Set[str], heldout_list: Sequence[str]) -> int:
+    distilled_path = PROJECT_ROOT / "data" / "training" / "qwen25_socratic_distilled_v2.jsonl"
+    if distilled_path.exists():
+        raw_distilled = [
+            json.loads(ln)
+            for ln in distilled_path.read_text(encoding="utf-8").splitlines()
+            if ln.strip()
+        ]
+        clean_distilled: List[Dict[str, Any]] = []
+        for row in raw_distilled:
+            msgs = row.get("messages") or []
+            if len(msgs) != 3:
+                continue
+            user_txt = str(msgs[1].get("content") or "")
+            q_part = user_txt.split("\n[NGỮ CẢNH")[0].replace("[CÂU HỎI THẮC MẮC CỦA HỌC VIÊN]", "").strip()
+            if _is_clean_text(q_part, heldout_norms, heldout_list):
+                clean_distilled.append({"lesson_seq": row.get("lesson_seq"), "messages": msgs})
+        if len(clean_distilled) >= 160:
+            out_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(out_file, "w", encoding="utf-8") as f:
+                for r in clean_distilled:
+                    f.write(json.dumps(r, ensure_ascii=False) + "\n")
+            print(
+                f"[qwen25_qlora] Using Teacher-Distilled v2 dataset ({len(clean_distilled)} rows) from {distilled_path}",
+                flush=True,
+            )
+            return len(clean_distilled)
+
     lessons = _load_all_lessons()
     chunks_by_seq = _load_recleaned_chunks_by_seq()
     les_by_seq = {int(l["seq"]): l for l in lessons}

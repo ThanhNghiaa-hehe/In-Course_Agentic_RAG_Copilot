@@ -168,10 +168,10 @@ def main():
     model = prepare_model_for_kbit_training(model)
 
     lora_config = LoraConfig(
-        r=16,
-        lora_alpha=32,
+        r=8,
+        lora_alpha=16,
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-        lora_dropout=0.05,
+        lora_dropout=0.10,
         bias="none",
         task_type="CAUSAL_LM",
     )
@@ -194,7 +194,7 @@ def main():
         pad_to_multiple_of=8,
     )
 
-    warmup_steps = max(1, int(0.05 * max(1, (len(train_ds) + 7) // 8) * 2))
+    warmup_steps = max(2, int(0.10 * max(1, (len(train_ds) + 7) // 8) * 2))
     train_args = TrainingArguments(
         output_dir="/kaggle/working/qwen25_checkpoints",
         num_train_epochs=2,
@@ -202,7 +202,8 @@ def main():
         per_device_eval_batch_size=1,
         gradient_accumulation_steps=8,
         prediction_loss_only=True,
-        learning_rate=2e-4,
+        learning_rate=5e-5,
+        weight_decay=0.05,
         lr_scheduler_type="cosine",
         warmup_steps=warmup_steps,
         fp16=True,
