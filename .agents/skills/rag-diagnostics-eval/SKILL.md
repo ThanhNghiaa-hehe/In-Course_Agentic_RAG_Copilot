@@ -118,4 +118,10 @@ Triệt tiêu hoàn toàn hiện tượng pha loãng ma trận Cross-Attention k
 * **GPU CUDA:** Khi có card NVIDIA (RTX 2050 4GB VRAM), tự động nạp `mDeBERTa-v3` lên VRAM với `batch_size = 32`, tăng tốc độ suy luận lên > 50 câu/giây (< 1s cho 5 câu).
 * **CPU Fallback:** Khi chạy CPU, tự động tối ưu hóa `torch.set_num_threads` và cắt tỉa `max_length = 384` để chống nghẽn luồng.
 
+---
+
+## 6. Tài Liệu Tham Chiếu Chuyên Sâu
+- [evaluation-and-calibration-invariants.md](./references/evaluation-and-calibration-invariants.md): Chuẩn EDD Benchmark-First, Data-Centric Label Audit (P13), Calibration ECE/Brier, Anti-Surrogate Evaluation, Data Decontamination ($J < 0.70$) và các mốc kỷ lục đối chiếu.
+
+
 

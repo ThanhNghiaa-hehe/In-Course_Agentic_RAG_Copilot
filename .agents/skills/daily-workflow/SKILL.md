@@ -1,6 +1,6 @@
 ---
 name: daily-workflow
-description: Professional 4-week Agile engineering roadmap, enterprise Git commit standards (Conventional Commits), and Academic Mentor daily progress reporting runbook.
+description: Professional 4-week Agile engineering roadmap, EduChatbot SOTA Backlog Roadmap (E1-E5), enterprise Git commit standards (Conventional Commits), and Academic Mentor daily progress reporting runbook.
 ---
 
 # Enterprise Daily Workflow & Academic Mentor Reporting Runbook
@@ -79,6 +79,36 @@ Hệ thống bước vào giai đoạn nước rút hoàn thiện đồ án vớ
    - **Milestone 4.5: Offline Decoupled RAGAS Triad Evaluator (0% Regex):** [ĐÃ HOÀN THÀNH - 05/11/2026]
      - Khảo thí ngoại tuyến 167 câu qua Markdown AST Parser (`markdown-it-py`), Tree-sitter C++ và W3C HTMLParser: No-Hallucination **`86.52%`**, Calibrated Faithfulness **`73.40%`**, Strict In-Course Grounding **`60.27%`**, Answer Relevance **`91.36%`**, Context Precision **`94.70%`**.
      - Vượt qua toàn diện 10/10 bài kiểm thử hồi quy `pytest tests/ -v` (100% Passed).
+
+### Giai đoạn Mở rộng (Backlog — EduChatbot SOTA Roadmap, Chỉ Triển Khai Khi Người Dùng Ra Lệnh)
+
+> **Command-Gated Execution Policy:** Các hạng mục `E1–E5` dưới đây nằm trong hàng đợi mở rộng sau khi chốt cột mốc hiện tại. AI **KHÔNG tự ý triển khai** nếu người dùng chưa chỉ định rõ (ví dụ: *"triển khai E1"*).
+> Tham khảo thêm nhật ký các chặng lịch sử trước đó tại [milestone-history.md](./references/milestone-history.md).
+
+- **[ ] E1 — Adaptive Hint Escalation & Socratic Reply Handling** (*CodeAid CHI 2024*, *CS50.ai SIGCSE 2024*):
+  - *Mục tiêu:* Nhận diện chính xác lượt học viên trả lời ngược câu hỏi Socratic của bot (đáp ngắn như `"0 hoặc 1"`, `"false"`, hoặc `"em chịu"`) mà không đẩy nhầm sang `chit_chat`/`out_of_scope`; đồng thời theo dõi `stuck_turns` trong LangGraph State để leo thang gợi ý 3 nấc (**Nấc 1:** gợi ý khái niệm -> **Nấc 2:** bảng vết / pseudocode khuyết -> **Nấc 3:** chỉ đích danh dòng logic sai, vẫn giữ **Zero Full-Code Dump**).
+  - *File dự kiến:* `app/services/chat_graph.py`, `app/agent/router.py`, `app/agent/prompts.py`.
+  - *Tiêu chí xong:* Unit test + kịch bản đa lượt `TelemetryCritic >= 85/100`, không rò rỉ `#include` / `int main()`.
+
+- **[ ] E2 — Structured Debug Mode + Tree-sitter AST Pre-Check** (*CodeHelp Koli Calling 2023*, *Iris ITiCSE 2024*):
+  - *Mục tiêu:* Tách trường nhập `student_code` và `compiler_error` khỏi câu hỏi tự nhiên để tránh làm loãng vector Dense E5/BM25; chạy Tree-sitter C++ pre-check bắt lỗi cú pháp/phạm vi trước khi truy xuất RAG & gọi LLM.
+  - *File dự kiến:* `app/schemas/chat.py`, `app/templates/playground.html`, `app/services/chat_graph.py`.
+  - *Tiêu chí xong:* Giữ nguyên tương thích ngược khi bỏ trống `student_code`/`compiler_error`; test debug code lỗi không bị rơi `coverage_gap` oan.
+
+- **[ ] E3 — Interactive Step-by-Step Dry-Run / Variable Trace Table** (*LearnLM Google DeepMind*, *CS50.ai*):
+  - *Mục tiêu:* Với các câu hỏi về vòng lặp, con trỏ hoặc đệ quy, sinh bảng vết biến từng bước (`i | a[i] | sum`) chừa trống 1–2 bước cuối để học viên tự suy luận và điền tiếp.
+  - *File dự kiến:* `app/agent/prompts.py`.
+  - *Tiêu chí xong:* Render bảng Markdown sạch trên `playground.html` và kết thúc bằng đúng 1 câu hỏi Socratic `?`.
+
+- **[ ] E4 — Student Feedback & Teacher Confusion Heatmap (Polyglot SQL Analytics)** (*Iris ITiCSE 2024*, *Khanmigo*):
+  - *Mục tiêu:* Bổ sung đánh giá `Hữu ích` / `Khó hiểu` dưới mỗi lượt trả lời trên Playground, lưu telemetry theo `(course_id, lesson_seq, video_sec)` vào tầng SQL (Single Source of Truth) để tổng hợp bản đồ điểm nghẽn video cho giảng viên.
+  - *File dự kiến:* `app/templates/playground.html`, `app/api/v1/chat.py`, tầng lưu trữ SQL Polyglot Persistence.
+  - *Tiêu chí xong:* API ghi nhận feedback idempotent và truy vấn thống kê được điểm nghẽn theo `(lesson_seq, video_sec)`.
+
+- **[ ] E5 — End-of-Lesson Micro-Quiz / Active Recall** (*Khanmigo*, *LearnLM*):
+  - *Mục tiêu:* Nút *"Kiểm tra nhanh 1 câu"* cuối bài học sinh câu hỏi dự đoán output (`Trace code`) hoặc trắc nghiệm khái niệm bám sát 100% chunk bài giảng hiện tại.
+  - *File dự kiến:* `app/api/v1/chat.py`, `app/services/chat.py`, `app/templates/playground.html`.
+  - *Tiêu chí xong:* Quiz luôn trích đúng ngữ cảnh bài học hiện tại, phản hồi chấm đáp án theo phong cách Socratic.
 
 > 🔒 **Cadence Invariant (Quy Chuẩn Chuyển Giao Tự Động):**
 > Khi hoàn tất bất kỳ Milestone nào trong danh sách trên, AI **BẮT BUỘC** phải:

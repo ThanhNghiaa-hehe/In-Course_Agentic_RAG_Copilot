@@ -53,3 +53,6 @@ description: Chuyên gia thiết kế UI/UX cấp cao, triệt tiêu hoàn toàn
 - [ ] Trợ năng chuẩn WCAG: Đầy đủ `aria-label` cho nút icon-only, tỷ lệ tương phản $\ge 4.5:1$.
 - [ ] Trình bày rõ ràng các chỉ số đo lường (Latency ms, Tokens, Điểm số xác suất, Trace ID).
 
+## 7. Tài Liệu Tham Chiếu Cho Studio Học Tập (EdTech 3-Column Light Theme)
+- [studio-3col-contract.md](./references/studio-3col-contract.md): Quy chuẩn Studio 3 cột (340px Syllabus 83 bài + Flex-1 YouTube IFrame + 390px Socratic Panel), Light Theme EdTech (`#f8fafc`/`#4f46e5`), và Video Sync Cross-Lesson (*Zero Auto-Seek*).
+

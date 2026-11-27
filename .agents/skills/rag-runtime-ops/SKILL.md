@@ -40,3 +40,6 @@ When tuning remote LLM latency or diagnosing slow TTFT:
 - Canvas: Pure white `#ffffff` background, crisp typography.
 - Palette: At most 3 restrained Slate / Indigo / Teal tones (no neon gradients).
 - Rendering: Vector output (e.g., `matplotlib` exported at 300 DPI), zero emoji icons, zero overlapping labels.
+
+## 6. Reference Protocols
+- [windows-serving-protocols.md](./references/windows-serving-protocols.md): Windows IPv4/PowerShell CLI hygiene, HF `blobs/` extract rule, RTX 2050 4GB compatibility, Kaggle Remote LLM resilience, 8K token budget, and `faster-whisper`/Silero VAD settings.
