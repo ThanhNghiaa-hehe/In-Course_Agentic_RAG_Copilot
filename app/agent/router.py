@@ -487,6 +487,10 @@ class IntentRouter:
             return (False, 0.0)
         if self.is_context_dependent(clean_p):
             return (False, 0.0)
+        from app.services.curriculum import get_curriculum_service
+        curr_svc = get_curriculum_service()
+        if curr_svc.has_current_lesson_reference(clean_p) or curr_svc.is_overview_query(clean_p):
+            return (False, 0.0)
         sim = self.get_pure_social_similarity(clean_p)
         return (sim >= settings.ROUTER_PURE_SOCIAL_THRESHOLD, sim)
 
@@ -771,14 +775,18 @@ class IntentRouter:
         if not clean_p:
             return False
 
-        # 1. Anaphora Signatures từ manifest JSON
+        alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in clean_p.lower()).split())
+        padded_alpha = f" {alpha_clean} "
+
+        # 1. Anaphora Signatures từ manifest JSON (đối chiếu trên chuỗi đã tách dấu câu)
         anaphora_sigs = self._manifest_data.get("anaphora_signatures", [])
         clean_lower = f" {clean_p.lower()} "
         for sig in anaphora_sigs:
             sig_clean = sig.strip().lower()
             if not sig_clean:
                 continue
-            if f" {sig_clean} " in clean_lower or clean_lower.startswith(f" {sig_clean} ") or clean_lower.endswith(f" {sig_clean} "):
+            sig_norm = " ".join("".join(c if c.isalnum() else " " for c in sig_clean).split())
+            if f" {sig_clean} " in clean_lower or (sig_norm and f" {sig_norm} " in padded_alpha):
                 return True
 
         # 2. Elliptical Fragmentary Interrogative (chỉ kích hoạt khi câu hỏi ngắn thiếu thực thể kỹ thuật độc lập)
@@ -789,14 +797,12 @@ class IntentRouter:
         # 3. Discourse Elaboration / Clarification Follow-ups (Data-Driven Manifest, Zero Substring Leakage)
         # Chỉ kích hoạt khi câu không chứa thực thể độc lập và toàn bộ từ còn lại ngoài chữ ký đào sâu là hư từ lịch sự hoặc anaphora (chặn "nấu mì chi tiết hơn")
         elab_sigs = self._manifest_data.get("follow_up_elaboration_signatures", [])
-        if elab_sigs and len(words) <= 8 and not self.has_domain_entity(clean_p):
+        if elab_sigs and len(words) <= 16 and not self.has_domain_entity(clean_p):
             sorted_elab_sigs = sorted(
                 (str(s) for s in elab_sigs if str(s).strip()),
                 key=len,
                 reverse=True,
             )
-            alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in clean_p.lower()).split())
-            padded_alpha = f" {alpha_clean} "
             matched_elab = None
             for sig in sorted_elab_sigs:
                 sig_norm = " ".join("".join(c if c.isalnum() else " " for c in sig.lower()).split())
@@ -1023,6 +1029,30 @@ class IntentRouter:
             )
 
         # ----------------------------------------------------
+        # 0c2. TẦNG 0c2: Current-Lesson Overview/Section Gate (Data-Driven Manifest)
+        # ----------------------------------------------------
+        from app.services.curriculum import get_curriculum_service
+        curr_svc_cls = get_curriculum_service()
+        section_markers = self._manifest_data.get("crag_section_markers", [])
+        is_cur_overview_or_section = curr_svc_cls.has_current_lesson_reference(clean_prompt) and (
+            curr_svc_cls.is_overview_query(clean_prompt)
+            or any(str(m).strip().lower() in lower_prompt for m in section_markers if str(m).strip())
+        )
+        if (
+            is_cur_overview_or_section
+            and not self.is_social_acknowledgment(clean_prompt)[0]
+            and self.get_system_identity_similarity(clean_prompt) < 0.88
+        ):
+            logger.info(
+                f"[IntentRouter] Tầng 0c2 Current-Lesson Overview/Section Gate: '{clean_prompt[:40]}...' -> course_query"
+            )
+            return RouterClassification(
+                intent="course_query",
+                direct_response=None,
+                is_course_query=True,
+            )
+
+        # ----------------------------------------------------
         # 1. TẦNG 1: Fast-Path SLM ONNX INT8 Deep Neural Classifier (0% LinearSVC)
         # ----------------------------------------------------
         if self._slm_session is not None:
@@ -1107,7 +1137,9 @@ class IntentRouter:
                                     direct_response=self._select_chitchat_response(clean_prompt, query_vec=query_vec),
                                     is_course_query=False
                                 )
-                            elif p_course >= 0.25 or has_curriculum_topic or top1_class == "course_query":
+                            elif top1_class == "course_query" or p_course >= 0.25 or (
+                                has_curriculum_topic and p_oos < 0.85
+                            ):
                                 logger.info(
                                     f"[IntentRouter-Cascade] Rigorous Chit-Chat Verification Gate: "
                                     f"Bác bỏ chit_chat (P_chit={p_chit:.3f} < 0.12, P_course={p_course:.3f}) -> course_query"
@@ -1151,6 +1183,22 @@ class IntentRouter:
                                     )
                                     return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
                             else:
+                                if (
+                                    self.is_code_solicitation(clean_prompt)
+                                    and p_oos < 0.85
+                                    and p_course >= 0.20
+                                    and (
+                                        self.has_domain_entity(clean_prompt)
+                                        or _detect_student_cpp_ast(clean_prompt)
+                                        or has_curriculum_topic
+                                        or self._has_verified_curriculum_topic(clean_prompt)
+                                    )
+                                ):
+                                    logger.info(
+                                        "[IntentRouter-Cascade] Pedagogical Code-Solicitation Protection -> course_query (Socratic soft refusal)"
+                                    )
+                                    return RouterClassification(intent="course_query", direct_response=None, is_course_query=True)
+
                                 if (p_course >= 0.20 or has_curriculum_topic) and p_oos < 0.90:
                                     if nli_conf < 0.72 and (has_curriculum_topic or self._has_verified_curriculum_topic(clean_prompt)):
                                         logger.info(
@@ -1196,8 +1244,27 @@ class IntentRouter:
         )
 
     def check_confirmation(self, prompt: str) -> tuple[bool, float]:
-        """Phán định ý định đồng ý/xác nhận hành động đàm thoại từ học viên (Zero-Regex NLI)."""
-        return self._nli_arbiter.is_confirmation(prompt)
+        """Phán định ý định đồng ý/xác nhận hành động đàm thoại từ học viên (Speech-Act Guard + E5/NLI)."""
+        clean_p = self._normalize_text(prompt)
+        if not clean_p or "?" in clean_p or len(clean_p.split()) > 10:
+            return (False, 0.0)
+        if (
+            self.has_domain_entity(clean_p)
+            or _detect_student_cpp_ast(clean_p)
+            or self.is_code_solicitation(clean_p)
+        ):
+            return (False, 0.0)
+        alpha_clean = " ".join("".join(c if c.isalnum() else " " for c in clean_p.lower()).split())
+        padded_alpha = f" {alpha_clean} "
+        for sig in self._manifest_data.get("curriculum_navigation_signatures", []):
+            sig_norm = " ".join("".join(c if c.isalnum() else " " for c in str(sig).lower()).split())
+            if sig_norm and f" {sig_norm} " in padded_alpha:
+                return (False, 0.0)
+        for qs in self._manifest_data.get("question_starters", []):
+            qs_norm = " ".join("".join(c if c.isalnum() else " " for c in str(qs).lower()).split())
+            if qs_norm and f" {qs_norm} " in padded_alpha:
+                return (False, 0.0)
+        return self._nli_arbiter.is_confirmation(clean_p)
 
 
 # Singleton instance để tái sử dụng toàn backend

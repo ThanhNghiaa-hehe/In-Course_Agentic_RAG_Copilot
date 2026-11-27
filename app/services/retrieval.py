@@ -1528,9 +1528,28 @@ class RetrievalService:
 
         has_curr_ref = c_svc.has_current_lesson_reference(query_text)
         is_overview = c_svc.is_overview_query(query_text)
+        is_section_seeking = bool(
+            c_svc.is_video_section_seeking_query(query_text)
+            and not is_curriculum_navigation
+            and not c_svc._names_other_lesson_topic(
+                query_text,
+                current_lesson_seq=current_lesson_seq,
+                preferred_course_id=course_id,
+            )
+        )
+        explicit_current_lesson_anchor = bool(
+            (has_curr_ref or is_section_seeking)
+            and explicit_seq is None
+            and not is_curriculum_navigation
+            and not c_svc._names_other_lesson_topic(
+                query_text,
+                current_lesson_seq=current_lesson_seq,
+                preferred_course_id=course_id,
+            )
+        )
         is_future_curriculum_target = (
             False
-            if is_temporal_current_lesson
+            if (is_temporal_current_lesson or explicit_current_lesson_anchor)
             else bool(
                 curriculum_matched_seq is not None
                 and int(curriculum_matched_seq) > int(current_lesson_seq)
@@ -1559,7 +1578,7 @@ class RetrievalService:
             focused_lesson_seq = int(current_lesson_seq)
         elif explicit_seq is not None and explicit_seq <= current_lesson_seq:
             focused_lesson_seq = int(explicit_seq)
-        elif (has_curr_ref or is_overview) and not is_future_curriculum_target:
+        elif (has_curr_ref or is_overview or is_section_seeking) and not is_future_curriculum_target:
             focused_lesson_seq = int(current_lesson_seq)
         elif nav_label_verified_in_window:
             focused_lesson_seq = int(curriculum_matched_seq)
@@ -1892,7 +1911,7 @@ class RetrievalService:
                 if (
                     focused_lesson_seq is not None
                     and int(item.get("lesson_seq") or 0) == focused_lesson_seq
-                    and (has_curr_ref or is_overview or skip_nav_rerank)
+                    and (has_curr_ref or is_overview or is_section_seeking or skip_nav_rerank)
                 ):
                     target_floor = (
                         max(effective_code_threshold, settings.MODALITY_GATE_AST_THRESHOLD)

@@ -28,7 +28,7 @@ try:
 except Exception:
     _CPP_PARSER = None
 
-from app.agent.router import get_intent_router
+from app.agent.router import get_intent_router, RouterClassification, OFFTOPIC_CASUAL_RESPONSES
 from app.services.curriculum import get_curriculum_service
 from app.services.retrieval import get_retrieval_service, RetrievalResult
 from app.agent.guardrails import get_session_rate_limiter, normalize_user_input
@@ -217,6 +217,25 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     history = state.get("messages", [])
     raw_prompt = normalize_user_input(state.get("prompt", ""))
     pending_nav = state.get("pending_navigation")
+
+    # Tầng 0 ưu tiên tối cao (OWASP LLM01): Chặn Prompt Injection TRƯỚC mọi nhánh Action/Confirmation Dispatcher
+    is_safe_early, refusal_reason_early = router._security_guardrail.validate_input(raw_prompt)
+    if not is_safe_early:
+        logger.warning(
+            f"[LangGraph:router_node] SecurityInputGuardrail Tầng 0 chặn đầu vào trước Dispatcher: '{raw_prompt[:40]}...'"
+        )
+        return {
+            "prompt": raw_prompt,
+            "intent": "out_of_scope",
+            "direct_response": refusal_reason_early,
+            "is_course_query": False,
+            "search_query": None,
+            "last_course_query": state.get("last_course_query"),
+            "last_turn_intent": "out_of_scope",
+            "is_curriculum_navigation": False,
+            "pending_navigation": None,
+            "action": None,
+        }
 
     # 0. Nhận diện Mệnh Lệnh Chuyển Bài Trực Tiếp (Conversational UI Action Dispatcher - Mục 3.2 & 4.1)
     requested_nav_seq = curr_svc.extract_requested_nav_seq_raw(raw_prompt)
@@ -474,19 +493,21 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
     if is_curriculum_nav:
         time_ref = curr_svc.extract_video_time_reference(raw_prompt)
         explicit_seq = curr_svc._extract_lesson_seq(raw_prompt.lower())
-        is_temporal_current = (
-            time_ref is not None
-            and explicit_seq is None
-            and not curr_svc._names_other_lesson_topic(
-                raw_prompt,
-                current_lesson_seq=state.get("lesson_seq"),
-                preferred_course_id=state.get("course_id"),
-            )
+        names_other_topic = curr_svc._names_other_lesson_topic(
+            raw_prompt,
+            current_lesson_seq=state.get("lesson_seq"),
+            preferred_course_id=state.get("course_id"),
         )
-        if is_temporal_current:
+        is_temporal_current = time_ref is not None and explicit_seq is None and not names_other_topic
+        is_explicit_current_lesson = (
+            curr_svc.has_current_lesson_reference(raw_prompt)
+            and explicit_seq is None
+            and not names_other_topic
+        )
+        if is_temporal_current or is_explicit_current_lesson:
             logger.info(
-                f"[LangGraph:router_node] Bước 2 Temporal Guard: '{raw_prompt[:40]}...' "
-                "là truy vấn mốc video bài hiện tại -> không chuyển sang Curriculum Navigation."
+                f"[LangGraph:router_node] Bước 2 Current-Lesson/Temporal Guard: '{raw_prompt[:40]}...' "
+                "thuộc bài hiện tại -> không chuyển sang Curriculum Navigation."
             )
             is_curriculum_nav = False
 
@@ -569,6 +590,22 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
                 }
             else:
                 non_course_clf = classification
+        elif (
+            prev_turn_intent == "out_of_scope"
+            and not is_in_video_time_ref
+            and not is_pure_soc
+            and not is_soc_ack
+            and router.is_context_dependent(raw_prompt)
+        ):
+            logger.info(
+                f"[LangGraph:router_node] Bước 3 OOS Discourse Continuity Guard: "
+                f"'{raw_prompt[:35]}...' nối tiếp lượt out_of_scope -> giữ out_of_scope"
+            )
+            non_course_clf = RouterClassification(
+                intent="out_of_scope",
+                direct_response=OFFTOPIC_CASUAL_RESPONSES,
+                is_course_query=False,
+            )
         else:
             non_course_clf = raw_clf
 
@@ -591,7 +628,15 @@ async def router_node(state: AgentState) -> Dict[str, Any]:
         if (is_in_video_time_ref or is_section_seeking) and not is_pure_soc and not is_soc_ack and sim_sys < 0.88:
             slm_probs = router._get_slm_probs(raw_prompt)
             p_oos = float(slm_probs[2]) if slm_probs is not None else 0.0
-            if p_oos < 0.75:
+            oos_cap = (
+                0.90
+                if (
+                    is_in_video_time_ref
+                    and (router.has_domain_entity(raw_prompt) or curr_svc.has_current_lesson_reference(raw_prompt))
+                )
+                else 0.75
+            )
+            if p_oos < oos_cap:
                 is_in_video, offtopic_score = router._nli_arbiter.verify_in_video_temporal_query(raw_prompt)
                 if is_in_video:
                     logger.info(
